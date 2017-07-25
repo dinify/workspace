@@ -162,7 +162,7 @@ const Login = ({ lastError }: LoginProps) =>
       />
       <FormBox className="vhs-blur">
         <FormBoxHeader>
-          Login to Dashboard
+          Dashboard
         </FormBoxHeader>
         <FormBoxBody>
           <form onSubmit={() => console.log('submited')}>

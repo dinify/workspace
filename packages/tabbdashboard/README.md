@@ -1,3 +1,8 @@
+# Deployment
+- npm run build
+- eb deploy
+
+
 # Universal React
 ## Based on:
 - [React](https://facebook.github.io/react/) and [React Native](https://facebook.github.io/react-native/) ❤️
