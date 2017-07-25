@@ -1,5 +1,7 @@
 # Deployment
 - npm run build
+- git add --all
+- git commit -m "build 231"
 - eb deploy
 
 
