@@ -41,27 +41,6 @@ const Logo = styled.div`
   }
 `;
 
-const Menu = styled.ul`
-  margin-top: 80px;
-`;
-
-const MenuItem = styled.li`
-  list-style: none;
-  margin: 10px 0;
-  font-size: 14px;
-  text-transform: uppercase;
-  font-weight: 300;
-  letter-spacing: 2px;
-  a {
-    text-decoration: none;
-    color: rgba(255,255,255,0.6);
-    cursor: pointer;
-    &:hover {
-      color: white;
-    }
-  }
-`;
-
 const Content = styled.div`
   position: absolute;
   left: 240px;
@@ -86,37 +65,8 @@ type LoginProps = {
   lastError: Error,
 };
 
-
-
-const MenuLink = ({ title, to }) => (
-  <MenuItem>
-    <Link to={to}>
-      {title}
-    </Link>
-  </MenuItem>
-)
-
-const Settings = ({ lastError }: LoginProps) =>
+const Main = ({ lastError }: LoginProps) =>
   (<div>
-    <Sidebar>
-      <Logo>
-        <img
-          src={require('./logo.svg')}
-        />
-        <span>
-          dshbrd
-        </span>
-      </Logo>
-
-      <Menu>
-        <MenuLink title="Main" to="/" />
-        <MenuLink title="Billing" to="/login" />
-        <MenuLink title="Guests" to="/" />
-        <MenuLink title="Sales" to="/" />
-        <MenuLink title="Engagement" to="/" />
-      </Menu>
-    </Sidebar>
-    <Content>
       <Header>
 
       </Header>
@@ -148,10 +98,9 @@ const Settings = ({ lastError }: LoginProps) =>
         </FormBoxBody>
     	</FormBox>
 
-    </Content>
   </div>);
 
 export default connect(
   state => ({}),
   {},
-)(Settings);
+)(Main);

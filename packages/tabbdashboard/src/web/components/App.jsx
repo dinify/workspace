@@ -1,15 +1,14 @@
 // @flow
-
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import { appIsRunning } from '../../selectors/viewer'
 import media from '../../common/helpers/media'
-import Viewer from './Viewer'
+
 import Login from './Login'
-import Settings from './Settings'
-import Analytics from './Analytics'
+import Dashboard from './Dashboard'
+import Admin from './Admin'
 
 const Content = styled.div`
   font-family: 'Montserrat', sans-serif;
@@ -36,12 +35,11 @@ const App = ({ appLoading }: AppProps) =>
     <Content>
       {appLoading && <AppLoader>App is loading...</AppLoader>}
       {!appLoading &&
-        <div>
-          <Route exact path="/" component={Viewer} />
-          <Route path="/login" component={Login} />
-          <Route path="/settings" component={Settings} />
-          <Route path="/analytics" component={Analytics} />
-        </div>}
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/admin" component={Admin} />
+        </Switch>}
     </Content>
   </Router>);
 

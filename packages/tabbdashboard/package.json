@@ -2,6 +2,7 @@
   "name": "tabbdashboard",
   "version": "0.0.9",
   "description": "Universal React solution based on React Native and Create React App.",
+  "author": "Lukas Vanek",
   "scripts": {
     "start-native-cli": "node node_modules/react-native/local-cli/cli.js start",
     "start-ios": "react-native run-ios --simulator=\"iPhone 7\"",
@@ -16,7 +17,7 @@
     "precommit": "jest --env=jsdom && flow && lint-staged"
   },
   "dependencies": {
-    "grid-styled": "^2.0.0-9",
+    "grid-styled": "^2.0.0-10",
     "native-base": "2.3.0",
     "normalize-path": "^2.1.1",
     "ramda": "0.23.0",
@@ -81,5 +82,5 @@
       "./setupJest.js"
     ],
     "preset": "react-native"
-  }  
+  }
 }
