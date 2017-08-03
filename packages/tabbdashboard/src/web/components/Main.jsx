@@ -53,12 +53,14 @@ const Content = styled.div`
 `;
 
 const Header = styled.div`
-  position: absolute;
-  left: 0;
+  position: fixed;
+  left: 240px;
   top: 0;
   height: 60px;
-  width: 100%;
+  width: calc(100% - 240px);
   background: #FFF;
+  line-height: 60px;
+  padding-left: 30px;
 `;
 
 type LoginProps = {
@@ -68,14 +70,27 @@ type LoginProps = {
 const Main = ({ lastError }: LoginProps) =>
   (<div>
       <Header>
-
+        Home
       </Header>
+
+      <FormBox>
+        <FormBoxHead>Category</FormBoxHead>
+        <FormBoxBody>
+          <input placeholder="Restaurant" type="text" />
+        </FormBoxBody>
+    	</FormBox>
 
     	<FormBox>
         <FormBoxHead>Restaurant Name</FormBoxHead>
         <FormBoxBody>
           <input placeholder="Enter name here" type="text" />
-          <FormBoxSubmit>SAVE</FormBoxSubmit>
+        </FormBoxBody>
+    	</FormBox>
+
+      <FormBox>
+        <FormBoxHead>Main Image</FormBoxHead>
+        <FormBoxBody>
+          <input placeholder="Enter name here" type="text" />
         </FormBoxBody>
     	</FormBox>
 
@@ -85,7 +100,6 @@ const Main = ({ lastError }: LoginProps) =>
           <input placeholder="Name in charge" type="text" />
           <input placeholder="Email address" type="text" />
           <input placeholder="Mobile number" type="text" />
-          <FormBoxSubmit>SAVE</FormBoxSubmit>
         </FormBoxBody>
     	</FormBox>
 
@@ -94,6 +108,56 @@ const Main = ({ lastError }: LoginProps) =>
         <FormBoxBody>
           <input placeholder="https://www.facebook.com" type="text" />
           <input placeholder="https://www.instagram.com" type="text" />
+        </FormBoxBody>
+    	</FormBox>
+
+
+      <FormBox>
+        <FormBoxHead>Location</FormBoxHead>
+        <FormBoxBody>
+          <input placeholder="Longitude" type="text" />
+          <input placeholder="Latitude" type="text" />
+        </FormBoxBody>
+    	</FormBox>
+
+
+      <FormBox>
+        <FormBoxHead>Business Hours</FormBoxHead>
+        <FormBoxBody>
+          <input placeholder="Weekday" type="text" />
+          <input placeholder="Weekend" type="text" />
+        </FormBoxBody>
+    	</FormBox>
+
+      <FormBox>
+        <FormBoxHead>Banking Information</FormBoxHead>
+        <FormBoxBody>
+          <input placeholder="Bank name" type="text" />
+          <input placeholder="Enter beneficiary name" type="text" />
+          <input placeholder="Enter IBAN number" type="text" />
+        </FormBoxBody>
+    	</FormBox>
+
+      <FormBox>
+        <FormBoxHead>Options</FormBoxHead>
+        <FormBoxBody>
+          <input placeholder="Enter option category" type="text" />
+        </FormBoxBody>
+    	</FormBox>
+
+      <FormBox>
+        <FormBoxHead>Add-Ons</FormBoxHead>
+        <FormBoxBody>
+          <input placeholder="Enter add-on item name" type="text" />
+          <input placeholder="Price" type="text" />
+        </FormBoxBody>
+    	</FormBox>
+
+      <FormBox>
+        <FormBoxHead>Set Tablet(s)</FormBoxHead>
+        <FormBoxBody>
+          <input placeholder="Tablet ID" type="text" />
+          <input placeholder="Password" type="text" />
           <FormBoxSubmit>SAVE</FormBoxSubmit>
         </FormBoxBody>
     	</FormBox>

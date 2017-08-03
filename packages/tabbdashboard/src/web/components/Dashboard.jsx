@@ -18,7 +18,7 @@ import EngagementSection from './Engagement'
 import { Menu, MenuLink } from './Menu'
 
 const Sidebar = styled.div`
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   height: 100vh;
@@ -53,7 +53,7 @@ const Content = styled.div`
   position: absolute;
   left: 240px;
   top: 0;
-  height: 100vh;
+  min-height: 100vh;
   width: calc(100% - 240px);
   background: #EFF3F6;
   color: #354052;

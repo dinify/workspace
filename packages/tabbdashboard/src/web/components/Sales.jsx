@@ -6,12 +6,14 @@ import type { Error } from '../../flow';
 import { Link } from 'react-router-dom';
 
 const Header = styled.div`
-  position: absolute;
-  left: 0;
+  position: fixed;
+  left: 240px;
   top: 0;
   height: 60px;
-  width: 100%;
+  width: calc(100% - 240px);
   background: #FFF;
+  line-height: 60px;
+  padding-left: 30px;
 `;
 
 type LoginProps = {
