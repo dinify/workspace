@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import type { Error } from '../../flow';
 import { Link } from 'react-router-dom';
+import { Form, Text } from 'react-form'
 
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './FormBox';
 
 import Input from 'react-enhanced-form'
+
+import { updateInitAction } from '../../ducks/restaurant'
 
 const Sidebar = styled.div`
   position: absolute;
@@ -66,9 +69,10 @@ const Header = styled.div`
 type LoginProps = {
   lastError: Error,
   loggedRestaurant: ?Object,
+  update: typeof updateInitAction,
 };
 
-const Main = ({ lastError, loggedRestaurant }: LoginProps) =>
+const Main = ({ lastError, loggedRestaurant, update }: LoginProps) =>
   (<div>
       <Header>
         Very first demo of settings
@@ -84,7 +88,32 @@ const Main = ({ lastError, loggedRestaurant }: LoginProps) =>
     	<FormBox>
         <FormBoxHead>Restaurant Name</FormBoxHead>
         <FormBoxBody>
-          <input placeholder="Enter name here" type="text" value={loggedRestaurant.restaurantName} />
+
+
+          <Form
+            onSubmit={({ restaurantName }) => {
+              console.log('Success!', { restaurantName });
+              update({ restaurantName });
+            }}
+            defaultValues={{
+              restaurantName: loggedRestaurant.restaurantName
+            }}
+            validate={({ restaurantName }) => {
+              return {
+                restaurantName: !restaurantName ? 'Restaurant Name is required' : undefined,
+              }
+            }}
+          >
+            {({submitForm}) => {
+              return (
+                <form onSubmit={submitForm}>
+                  <Text field='restaurantName' placeholder='Restaurant Name' />
+                  <FormBoxSubmit>SAVE</FormBoxSubmit>
+                </form>
+              )
+            }}
+          </Form>
+
         </FormBoxBody>
     	</FormBox>
 
@@ -169,5 +198,7 @@ export default connect(
   state => ({
     loggedRestaurant: state.restaurant.loggedRestaurant
   }),
-  {},
+  {
+    update: updateInitAction,
+  },
 )(Main);

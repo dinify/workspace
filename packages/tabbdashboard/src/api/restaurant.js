@@ -28,8 +28,8 @@ export function ChangeCategory({ restaurantId, category }) {
   return Put({ path: `restaurant/${restaurantId}/category` }, { category })
 }
 
-export function ChangeName({ restaurantId, name }) {
-  return Put({ path: `restaurant/${restaurantId}/name` }, { name })
+export function ChangeName({ restaurantId, restaurantName }) {
+  return Put({ path: `restaurant/${restaurantId}/name` }, { name: restaurantName })
 }
 
 export function ChangeContact({ restaurantId, mobileNumber, emailAddress, nameInCharge }) {

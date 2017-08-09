@@ -3,7 +3,7 @@
 import { Observable } from 'rxjs';
 import R from 'ramda';
 //import { getJoke } from '../selectors/viewer';
-import { Login as LoginCall, GetLoggedRestaurant } from '../api/restaurant';
+import { Login as LoginCall, GetLoggedRestaurant, ChangeName } from '../api/restaurant';
 import type { EpicDependencies, Error, Action } from '../flow';
 import { browserHistory } from 'react-router';
 
@@ -12,6 +12,9 @@ export const LOGIN_INIT = 'universalreact/restaurant/LOGIN_INIT';
 export const LOGIN_DONE = 'universalreact/restaurant/LOGIN_DONE';
 export const LOGIN_FAIL = 'universalreact/restaurant/LOGIN_FAIL';
 export const LOGGED_FETCHED_DONE = 'LOGGED_FETCHED_DONE';
+
+export const UPDATE_INIT = 'universalreact/restaurant/UPDATE_INIT';
+export const UPDATE_DONE = 'universalreact/restaurant/UPDATE_DONE';
 
 type State = {
   searchLoading: boolean,
@@ -39,6 +42,8 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assoc('appRun', true)(state);
     case LOGGED_FETCHED_DONE:
       return R.assoc('loggedRestaurant', action.payload)(state);
+    case UPDATE_INIT:
+      return R.assocPath(['loggedRestaurant', 'restaurantName'], action.payload.restaurantName)(state);
     default:
       return state;
   }
@@ -52,6 +57,14 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 // Action Creators
+export function updateInitAction({ restaurantName }) {
+  return { type: UPDATE_INIT, payload: { restaurantName }};
+}
+
+export function updateDoneAction() {
+  return { type: UPDATE_DONE };
+}
+
 export function loginInitAction({ username, password }) {
   return { type: LOGIN_INIT, payload: { username, password }};
 }
@@ -104,4 +117,13 @@ const loginEpic = (action$: Observable) =>
         .catch(error => Observable.of(loginFailAction(error)))
     );
 
-export const epics = [bootstrapEpic, loginEpic];
+const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType(UPDATE_INIT)
+    .switchMap(({ payload: { restaurantName } }) =>
+      Observable.fromPromise(ChangeName({ restaurantId: getState().restaurant.loggedRestaurant.id, restaurantName }))
+        .map(updateDoneAction)
+        .catch(error => console.log(error))
+    );
+
+export const epics = [bootstrapEpic, updateEpic];
