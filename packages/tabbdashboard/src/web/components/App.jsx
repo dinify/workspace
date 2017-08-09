@@ -7,6 +7,7 @@ import { appIsRunning } from '../../selectors/restaurant'
 import media from '../../common/helpers/media'
 
 import Login from './Login'
+import Signup from './Signup'
 import Dashboard from './Dashboard'
 import Admin from './Admin'
 import Viewer from './Viewer'
@@ -38,6 +39,7 @@ const App = ({ appLoading }: AppProps) =>
       {!appLoading &&
         <Switch>
           <Route exact path="/" component={Login} />
+          <Route path="/signup" component={Signup} />
           <Route path="/test" component={Viewer} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/admin" component={Admin} />

@@ -3,13 +3,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import type { Error } from '../../flow'
-import { Link } from 'react-router-dom';
 
 import { Form, Text } from 'react-form'
 import { getJoke, isSearchLoading, getLastError } from '../../selectors/viewer';
 
 import { loginInitAction } from '../../ducks/restaurant'
-
 import { HorizontalLine } from './styled/HorizontalLine'
 
 const Content = styled.div`
@@ -45,14 +43,6 @@ const FormBoxBody = styled.div`
   justify-content: center;
   padding-top: 10px;
   padding-bottom: 20px;
-  text-align: center;
-  a {
-    color: rgba(255,255,255,0.6);
-    font-size: 12px;
-    &:hover {
-      color: white;
-    }
-  }
 `;
 
 const TextInput = styled(Text)`
@@ -119,37 +109,8 @@ const TopRight = styled.div`
 `;
 
 
-const Login = ({ lastError, doLogin }: LoginProps) =>
+const Signup = ({ lastError, doLogin }: LoginProps) =>
   (<Content>
-      {/*
-      <TopRight className="vhs-right">
-
-        <form onSubmit={() => console.log('submited')}>
-          <Input
-            type='text'
-            value=''
-            placeholder='Administrator'
-            onChange={(data, error) => console.log('change', data, error)}
-            onMount={(data,error) => console.log('mount', data, error)}
-            style={SmallInputStyle}
-            required
-          />
-          <Input
-            type='password'
-            value=''
-            placeholder='Password'
-            onChange={(data, error) => console.log('change', data, error)}
-            onMount={(data,error) => console.log('mount', data, error)}
-            style={SmallInputStyle}
-            required
-          />
-          <Button>ENTER</Button>
-        </form>
-
-      </TopRight>
-      */}
-
-
       <img
         src={require('./logo.svg')}
         style={{
@@ -161,14 +122,14 @@ const Login = ({ lastError, doLogin }: LoginProps) =>
       />
       <FormBox className="vhs-blur">
         <FormBoxHeader>
-          Dashboard
+          Sign up your restaurant
         </FormBoxHeader>
         <FormBoxBody>
 
           <Form
             onSubmit={({ username, password }) => {
               console.log('Success!', { username, password });
-              doLogin({ username, password });
+              //doLogin({ username, password });
             }}
             validate={({ username, password }) => {
               return {
@@ -180,11 +141,16 @@ const Login = ({ lastError, doLogin }: LoginProps) =>
             {({submitForm}) => {
               return (
                 <form onSubmit={submitForm}>
-                  <TextInput field="username" placeholder="Restaurant Name" />
-                  <TextInput field="password" type="password" placeholder="Password" />
-                  <FormBoxSubmit>ENTER</FormBoxSubmit>
-                  <HorizontalLine mt={20} mb={20} />
-                  <Link to="/signup">Not using TABB yet? Sign Up here!</Link>
+                  <TextInput field='emailAddress' placeholder='Email address' />
+                  <TextInput field='password' type="password" placeholder='Password' />
+
+                  <HorizontalLine />
+
+                  <TextInput field='restaurantName' placeholder='Restaurant Name' />
+                  <TextInput field='nameInCharge' placeholder='Name in charge' />
+                  <TextInput field='Mobile number' placeholder='Mobile number' />
+
+                  <FormBoxSubmit>SIGN UP</FormBoxSubmit>
                 </form>
               )
             }}
@@ -203,4 +169,4 @@ export default connect(
   {
     doLogin: loginInitAction,
   },
-)(Login);
+)(Signup);

@@ -97,7 +97,7 @@ const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
       .mergeMap((loggedUser) => Observable.of(loggedFetchedAction(loggedUser), appBootstrap()))
       .catch(error => {
         console.log(error);
-        if (window.location.pathname !== '/') window.location.replace("/");
+        if (window.location.pathname !== '/' && window.location.pathname !== '/signup') window.location.replace("/");
         return Observable.of(appBootstrap());
       });
 
