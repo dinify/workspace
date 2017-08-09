@@ -91,8 +91,6 @@ export function appBootstrap() {
 // Epics
 const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$.ofType('persist/REHYDRATE').mergeMap(() => {
-
-
     return Observable.fromPromise(GetLoggedRestaurant())
       .mergeMap((loggedUser) => Observable.of(loggedFetchedAction(loggedUser), appBootstrap()))
       .catch(error => {
@@ -100,12 +98,6 @@ const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
         if (window.location.pathname !== '/' && window.location.pathname !== '/signup') window.location.replace("/");
         return Observable.of(appBootstrap());
       });
-
-    // if there is no gif fetched already, fetch the random one
-    //const joke = getJoke(getState());
-    //if (!joke) {
-    //  return Observable.of(appBootstrap(), fetchInitAction());
-    //}
   });
 
 const loginEpic = (action$: Observable) =>
@@ -126,4 +118,4 @@ const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
         .catch(error => console.log(error))
     );
 
-export const epics = [bootstrapEpic, updateEpic];
+export const epics = [bootstrapEpic, loginEpic, updateEpic];
