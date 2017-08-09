@@ -1,10 +1,13 @@
 // @flow
-import React from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import type { Error } from '../../flow';
+import React from 'react'
+import { connect } from 'react-redux'
+import styled from 'styled-components'
+import type { Error } from '../../flow'
 
-import Input from 'react-enhanced-form'
+import { Form, Text } from 'react-form'
+import { getJoke, isSearchLoading, getLastError } from '../../selectors/viewer';
+
+import { loginInitAction } from '../../ducks/restaurant'
 
 const Content = styled.div`
   position: relative;
@@ -41,35 +44,19 @@ const FormBoxBody = styled.div`
   padding-bottom: 20px;
 `;
 
-const InputStyle = {
-  default: {
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    margin: '10px 0 0 0',
-    outline: 'none',
-    padding: '10px 15px',
-    border: '1px solid rgba(255,255,255,0.4)',
-    borderRadius: '5px',
-    color: 'white',
-    width: '250px'
-  },
-  onFocus: { borderColor: 'rgb(39, 174, 96)' },
-  //onError: { border: '1px solid rgb(192, 57, 43)' }
-}
-
-const SmallInputStyle = {
-  default: {
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    margin: '10px 0 0 0',
-    outline: 'none',
-    padding: '10px 15px',
-    border: '1px solid rgba(255,255,255,0.4)',
-    borderRadius: '5px',
-    color: 'white',
-    width: '180px'
-  },
-  onFocus: { borderColor: 'rgb(39, 174, 96)' },
-  //onError: { border: '1px solid rgb(192, 57, 43)' }
-}
+const TextInput = styled(Text)`
+  background-color: rgba(255,255,255,0.2);
+  margin: 10px 0 0 0;
+  outline: none;
+  padding: 10px 15px;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 5px;
+  color: white;
+  width: 250px;
+  &:focus {
+    border-color: rgba(255,255,255,0.4);
+  }
+`;
 
 const FormBoxSubmit = styled.button`
   background-color: rgb(38,156,244);
@@ -110,6 +97,7 @@ const Button = styled.button`
 
 type LoginProps = {
   lastError: Error,
+  doLogin: typeof loginInitAction,
 };
 
 const TopRight = styled.div`
@@ -120,7 +108,7 @@ const TopRight = styled.div`
 `;
 
 
-const Login = ({ lastError }: LoginProps) =>
+const Login = ({ lastError, doLogin }: LoginProps) =>
   (<Content>
       {/*
       <TopRight className="vhs-right">
@@ -165,32 +153,41 @@ const Login = ({ lastError }: LoginProps) =>
           Dashboard
         </FormBoxHeader>
         <FormBoxBody>
-          <form onSubmit={() => console.log('submited')}>
-            <Input
-              type='text'
-              value=''
-              placeholder='Restaurant Name'
-              onChange={(data, error) => console.log('change', data, error)}
-              onMount={(data,error) => console.log('mount', data, error)}
-              style={InputStyle}
-              required
-            />
-            <Input
-              type='password'
-              value=''
-              placeholder='Password'
-              onChange={(data, error) => console.log('change', data, error)}
-              onMount={(data,error) => console.log('mount', data, error)}
-              style={InputStyle}
-              required
-            />
-            <FormBoxSubmit>ENTER</FormBoxSubmit>
-          </form>
+
+          <Form
+            onSubmit={({ username, password }) => {
+              console.log('Success!', { username, password });
+              doLogin({ username, password });
+            }}
+            validate={({ username, password }) => {
+              return {
+                username: !username ? 'Name is required' : undefined,
+                password: !password ? 'Password is required' : undefined
+              }
+            }}
+          >
+            {({submitForm}) => {
+              return (
+                <form onSubmit={submitForm}>
+                  <TextInput field='username' placeholder='Restaurant Name' />
+                  <TextInput field='password' type="password" placeholder='Password' />
+                  <FormBoxSubmit>ENTER</FormBoxSubmit>
+                </form>
+              )
+            }}
+          </Form>
+
         </FormBoxBody>
       </FormBox>
   </Content>);
 
 export default connect(
-  state => ({}),
-  {},
+  state => ({
+    joke: getJoke(state),
+    isLoading: isSearchLoading(state),
+    lastError: getLastError(state),
+  }),
+  {
+    doLogin: loginInitAction,
+  },
 )(Login);

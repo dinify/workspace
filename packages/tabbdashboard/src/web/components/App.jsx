@@ -3,12 +3,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
-import { appIsRunning } from '../../selectors/viewer'
+import { appIsRunning } from '../../selectors/restaurant'
 import media from '../../common/helpers/media'
 
 import Login from './Login'
 import Dashboard from './Dashboard'
 import Admin from './Admin'
+import Viewer from './Viewer'
 
 const Content = styled.div`
   font-family: 'Montserrat', sans-serif;
@@ -37,6 +38,7 @@ const App = ({ appLoading }: AppProps) =>
       {!appLoading &&
         <Switch>
           <Route exact path="/" component={Login} />
+          <Route path="/test" component={Viewer} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/admin" component={Admin} />
         </Switch>}

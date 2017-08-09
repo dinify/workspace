@@ -65,12 +65,13 @@ const Header = styled.div`
 
 type LoginProps = {
   lastError: Error,
+  loggedRestaurant: ?Object,
 };
 
-const Main = ({ lastError }: LoginProps) =>
+const Main = ({ lastError, loggedRestaurant }: LoginProps) =>
   (<div>
       <Header>
-        Home
+        Very first demo of settings
       </Header>
 
       <FormBox>
@@ -83,7 +84,7 @@ const Main = ({ lastError }: LoginProps) =>
     	<FormBox>
         <FormBoxHead>Restaurant Name</FormBoxHead>
         <FormBoxBody>
-          <input placeholder="Enter name here" type="text" />
+          <input placeholder="Enter name here" type="text" value={loggedRestaurant.restaurantName} />
         </FormBoxBody>
     	</FormBox>
 
@@ -165,6 +166,8 @@ const Main = ({ lastError }: LoginProps) =>
   </div>);
 
 export default connect(
-  state => ({}),
+  state => ({
+    loggedRestaurant: state.restaurant.loggedRestaurant
+  }),
   {},
 )(Main);

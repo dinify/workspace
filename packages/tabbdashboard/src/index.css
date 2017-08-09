@@ -28,10 +28,16 @@ body, html {
    color:    #ccc;
 }
 
+
+.FormError {
+  font-size: 12px;
+  margin: 10px 5px;
+}
+
 /*
     VHS
     Post-future CSS animations
- 
+
 */
 
 .vhs-flash {

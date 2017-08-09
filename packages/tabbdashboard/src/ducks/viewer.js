@@ -6,7 +6,6 @@ import { getJoke } from '../selectors/viewer';
 import { getRandomJoke } from '../api/search';
 import type { EpicDependencies, Error, Action } from '../flow';
 
-export const BOOTSTRAP = 'universalreact/viewer/BOOTSTRAP';
 export const SEARCH = 'universalreact/viewer/SEARCH';
 export const FETCH_INIT = 'universalreact/viewer/FETCH_INIT';
 export const FETCH_SUCCESS = 'universalreact/viewer/FETCH_SUCCESS';
@@ -48,8 +47,7 @@ export default function reducer(state: State = initialState, action: Action) {
         lastError: R.always(error),
       })(state);
     }
-    case BOOTSTRAP:
-      return R.assoc('appRun', true)(state);
+
     default:
       return state;
   }
@@ -58,10 +56,6 @@ export default function reducer(state: State = initialState, action: Action) {
 // Action Creators
 export function performSearch() {
   return { type: SEARCH };
-}
-
-export function appBootstrap() {
-  return { type: BOOTSTRAP };
 }
 
 export function fetchInitAction() {
@@ -77,15 +71,7 @@ export function fetchErrorAction(error: Error) {
 }
 
 // Epics
-const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
-  action$.ofType('persist/REHYDRATE').switchMap(() => {
-    // if there is no gif fetched already, fetch the random one
-    const joke = getJoke(getState());
-    if (!joke) {
-      return Observable.of(appBootstrap(), fetchInitAction());
-    }
-    return Observable.of(appBootstrap());
-  });
+
 
 const fetchEpic = (action$: Observable) =>
   action$
@@ -96,4 +82,4 @@ const fetchEpic = (action$: Observable) =>
         .catch(error => Observable.of(fetchErrorAction(error))),
     );
 
-export const epics = [bootstrapEpic, fetchEpic];
+export const epics = [fetchEpic];
