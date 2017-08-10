@@ -20,6 +20,9 @@ export const FormBoxBody = styled.div`
   background: #fff;
   border-radius: 0 0 5px 5px;
   padding: 0 10px 10px 10px;
+  padding-top: ${p => p.pt || 0}px;
+  padding-bottom: ${p => p.pb || 10}px;
+  text-align: ${p => p.center ? 'center' : 'left'};
   input {
     border: 1px solid #CED0DA;
     margin-top: 10px;

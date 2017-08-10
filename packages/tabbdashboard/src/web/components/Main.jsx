@@ -6,11 +6,21 @@ import type { Error } from '../../flow';
 import { Link } from 'react-router-dom';
 import { Form, Text } from 'react-form'
 
+
+import SwitchButton from 'react-switch-button';
+import 'react-switch-button/dist/react-switch-button.css';
+
+
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './FormBox';
 
 import Input from 'react-enhanced-form'
 
-import { updateInitAction } from '../../ducks/restaurant'
+import {
+  updateInitAction,
+  updateCategoryInitAction,
+  updateSocialInitAction,
+  updateContactInitAction,
+} from '../../ducks/restaurant'
 
 const Sidebar = styled.div`
   position: absolute;
@@ -70,18 +80,35 @@ type LoginProps = {
   lastError: Error,
   loggedRestaurant: ?Object,
   update: typeof updateInitAction,
+  updateCategory: typeof updateCategoryInitAction,
+  updateSocial: typeof updateSocialInitAction,
+  updateContact: typeof updateContactInitAction,
 };
 
-const Main = ({ lastError, loggedRestaurant, update }: LoginProps) =>
+const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocial, updateContact }: LoginProps) =>
   (<div>
       <Header>
         Very first demo of settings
       </Header>
 
       <FormBox>
-        <FormBoxHead>Category</FormBoxHead>
-        <FormBoxBody>
-          <input placeholder="Restaurant" type="text" />
+        <FormBoxHead>Type of Restaurant</FormBoxHead>
+        <FormBoxBody center pt={20} pb={20}>
+          <SwitchButton
+            name="switch-type"
+            label="Classic"
+            labelRight="QLESS"
+            type="switch"
+            defaultChecked={loggedRestaurant.category === 'QUEUELESS'}
+            onChange={() => {
+              if(loggedRestaurant.category === 'RESTAURANT') {
+                // by now it's gonna be QLESS
+                updateCategory({ category: 'QUEUELESS'})
+              } else { // it's QLESS, so by now it's gonna be RESTAURANT
+                updateCategory({ category: 'RESTAURANT'})
+              }
+            }}
+          />
         </FormBoxBody>
     	</FormBox>
 
@@ -120,24 +147,72 @@ const Main = ({ lastError, loggedRestaurant, update }: LoginProps) =>
       <FormBox>
         <FormBoxHead>Main Image</FormBoxHead>
         <FormBoxBody>
-          <input placeholder="Enter name here" type="text" />
+
         </FormBoxBody>
     	</FormBox>
 
       <FormBox>
         <FormBoxHead>Contact Information</FormBoxHead>
         <FormBoxBody>
-          <input placeholder="Name in charge" type="text" />
-          <input placeholder="Email address" type="text" />
-          <input placeholder="Mobile number" type="text" />
+
+          <Form
+            onSubmit={(contact) => {
+              console.log('Success!', contact);
+              updateContact(contact);
+            }}
+            defaultValues={loggedRestaurant.contact}
+            validate={({ nameInCharge, email, mobile }) => {
+              return {
+                nameInCharge: !nameInCharge ? 'Name is required' : undefined,
+                email: !email ? 'Email is required' : undefined,
+                mobile: !mobile ? 'Mobile is required' : undefined,
+              }
+            }}
+          >
+            {({submitForm}) => {
+              return (
+                <form onSubmit={submitForm}>
+                  <Text field='nameInCharge' placeholder='Name in charge' />
+                  <Text field='email' placeholder='Email address' />
+                  <Text field='mobile' placeholder='Mobile number' />
+
+                  <FormBoxSubmit>SAVE</FormBoxSubmit>
+                </form>
+              )
+            }}
+          </Form>
+
         </FormBoxBody>
     	</FormBox>
 
       <FormBox>
         <FormBoxHead>Social Media</FormBoxHead>
         <FormBoxBody>
-          <input placeholder="https://www.facebook.com" type="text" />
-          <input placeholder="https://www.instagram.com" type="text" />
+
+          <Form
+            onSubmit={(social) => {
+              updateSocial(social);
+            }}
+            defaultValues={loggedRestaurant.socialMedia}
+            validate={({ facebookURL, instagramURL }) => {
+              return {
+                facebookURL: !facebookURL ? 'Facebook URL is required' : undefined,
+                instagramURL: !instagramURL ? 'Instagram URL is required' : undefined,
+              }
+            }}
+          >
+            {({submitForm}) => {
+              return (
+                <form onSubmit={submitForm}>
+                  <Text field='facebookURL' placeholder='https://www.facebook.com/myRestaurant' />
+                  <Text field='instagramURL' placeholder='https://www.instagram.com/myRestaurant' />
+
+                  <FormBoxSubmit>SAVE</FormBoxSubmit>
+                </form>
+              )
+            }}
+          </Form>
+
         </FormBoxBody>
     	</FormBox>
 
@@ -200,5 +275,8 @@ export default connect(
   }),
   {
     update: updateInitAction,
+    updateCategory: updateCategoryInitAction,
+    updateSocial: updateSocialInitAction,
+    updateContact: updateContactInitAction,
   },
 )(Main);

@@ -73,7 +73,7 @@ const Dashboard = ({ location }) =>
       </Logo>
 
       <Menu>
-        <MenuLink l={location} title="Home" to="/dashboard" />
+        <MenuLink l={location} title="Settings" to="/dashboard" />
         <MenuLink l={location} title="Billing" to="/dashboard/billing" />
         <MenuLink l={location} title="Guests" to="/dashboard/guests" />
         <MenuLink l={location} title="Sales" to="/dashboard/sales" />

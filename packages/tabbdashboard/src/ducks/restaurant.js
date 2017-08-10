@@ -3,7 +3,14 @@
 import { Observable } from 'rxjs';
 import R from 'ramda';
 //import { getJoke } from '../selectors/viewer';
-import { Login as LoginCall, GetLoggedRestaurant, ChangeName } from '../api/restaurant';
+import {
+  Login as LoginCall,
+  GetLoggedRestaurant,
+  ChangeName,
+  ChangeCategory,
+  ChangeContact,
+  ChangeSocial
+} from '../api/restaurant';
 import type { EpicDependencies, Error, Action } from '../flow';
 import { browserHistory } from 'react-router';
 
@@ -14,6 +21,9 @@ export const LOGIN_FAIL = 'universalreact/restaurant/LOGIN_FAIL';
 export const LOGGED_FETCHED_DONE = 'LOGGED_FETCHED_DONE';
 
 export const UPDATE_INIT = 'universalreact/restaurant/UPDATE_INIT';
+export const UPDATE_CATEGORY_INIT = 'universalreact/restaurant/UPDATE_CATEGORY_INIT';
+export const UPDATE_CONTACT_INIT = 'universalreact/restaurant/UPDATE_CONTACT_INIT';
+export const UPDATE_SOCIAL_INIT = 'universalreact/restaurant/UPDATE_SOCIAL_INIT';
 export const UPDATE_DONE = 'universalreact/restaurant/UPDATE_DONE';
 
 type State = {
@@ -44,6 +54,8 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assoc('loggedRestaurant', action.payload)(state);
     case UPDATE_INIT:
       return R.assocPath(['loggedRestaurant', 'restaurantName'], action.payload.restaurantName)(state);
+      case UPDATE_CATEGORY_INIT:
+        return R.assocPath(['loggedRestaurant', 'category'], action.payload.category)(state);
     default:
       return state;
   }
@@ -63,6 +75,18 @@ export function updateInitAction({ restaurantName }) {
 
 export function updateDoneAction() {
   return { type: UPDATE_DONE };
+}
+
+export function updateCategoryInitAction({ category }) {
+  return { type: UPDATE_CATEGORY_INIT, payload: { category }};
+}
+
+export function updateContactInitAction({ nameInCharge, email, mobile }) {
+  return { type: UPDATE_CONTACT_INIT, payload: { nameInCharge, email, mobile }};
+}
+
+export function updateSocialInitAction({ facebookURL, instagramURL }) {
+  return { type: UPDATE_SOCIAL_INIT, payload: { facebookURL, instagramURL }};
 }
 
 export function loginInitAction({ username, password }) {
@@ -118,4 +142,37 @@ const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
         .catch(error => console.log(error))
     );
 
-export const epics = [bootstrapEpic, loginEpic, updateEpic];
+const updateCategoryEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType(UPDATE_CATEGORY_INIT)
+    .switchMap(({ payload: { category } }) =>
+      Observable.fromPromise(ChangeCategory({ restaurantId: getState().restaurant.loggedRestaurant.id, category }))
+        .map(updateDoneAction)
+        .catch(error => console.log(error))
+    );
+
+const updateContactEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType(UPDATE_CONTACT_INIT)
+    .switchMap(({ payload: { nameInCharge, email, mobile } }) =>
+      Observable.fromPromise(ChangeContact({
+        restaurantId: getState().restaurant.loggedRestaurant.id,
+        nameInCharge, email, mobile
+      }))
+        .map(updateDoneAction)
+        .catch(error => console.log(error))
+    );
+
+const updateSocialEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType(UPDATE_SOCIAL_INIT)
+    .switchMap(({ payload: { facebookURL, instagramURL } }) =>
+      Observable.fromPromise(ChangeSocial({
+        restaurantId: getState().restaurant.loggedRestaurant.id,
+        facebookURL, instagramURL
+      }))
+        .map(updateDoneAction)
+        .catch(error => console.log(error))
+    );
+
+export const epics = [bootstrapEpic, loginEpic, updateEpic, updateCategoryEpic, updateContactEpic, updateSocialEpic];

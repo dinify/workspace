@@ -32,8 +32,8 @@ export function ChangeName({ restaurantId, restaurantName }) {
   return Put({ path: `restaurant/${restaurantId}/name` }, { name: restaurantName })
 }
 
-export function ChangeContact({ restaurantId, mobileNumber, emailAddress, nameInCharge }) {
-  return Put({ path: `restaurant/${restaurantId}/contact` }, { mobileNumber, emailAddress, nameInCharge })
+export function ChangeContact({ restaurantId, mobile, email, nameInCharge }) {
+  return Put({ path: `restaurant/${restaurantId}/contact` }, { mobileNumber: mobile, emailAddress: email, nameInCharge })
 }
 
 export function ChangeSocial({ restaurantId, facebookURL, instagramURL }) {
