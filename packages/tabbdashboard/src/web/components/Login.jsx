@@ -166,13 +166,13 @@ const Login = ({ lastError, doLogin }: LoginProps) =>
         <FormBoxBody>
 
           <Form
-            onSubmit={({ username, password }) => {
-              console.log('Success!', { username, password });
-              doLogin({ username, password });
+            onSubmit={({ email, password }) => {
+              console.log('Success!', { email, password });
+              doLogin({ email, password });
             }}
-            validate={({ username, password }) => {
+            validate={({ email, password }) => {
               return {
-                username: !username ? 'Name is required' : undefined,
+                email: !email ? 'Emal is required' : undefined,
                 password: !password ? 'Password is required' : undefined
               }
             }}
@@ -180,7 +180,7 @@ const Login = ({ lastError, doLogin }: LoginProps) =>
             {({submitForm}) => {
               return (
                 <form onSubmit={submitForm}>
-                  <TextInput field="username" placeholder="Restaurant Name" />
+                  <TextInput field="email" placeholder="Email" />
                   <TextInput field="password" type="password" placeholder="Password" />
                   <FormBoxSubmit>ENTER</FormBoxSubmit>
                   <HorizontalLine mt={20} mb={20} />

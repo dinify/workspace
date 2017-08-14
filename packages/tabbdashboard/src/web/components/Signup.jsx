@@ -7,7 +7,7 @@ import type { Error } from '../../flow'
 import { Form, Text } from 'react-form'
 import { getJoke, isSearchLoading, getLastError } from '../../selectors/viewer';
 
-import { loginInitAction } from '../../ducks/restaurant'
+import { signupInitAction } from '../../ducks/restaurant'
 import { HorizontalLine } from './styled/HorizontalLine'
 
 const Content = styled.div`
@@ -98,7 +98,7 @@ const Button = styled.button`
 
 type LoginProps = {
   lastError: Error,
-  doLogin: typeof loginInitAction,
+  doSignup: typeof signupInitAction,
 };
 
 const TopRight = styled.div`
@@ -109,7 +109,7 @@ const TopRight = styled.div`
 `;
 
 
-const Signup = ({ lastError, doLogin }: LoginProps) =>
+const Signup = ({ lastError, doSignup }: LoginProps) =>
   (<Content>
       <img
         src={require('./logo.svg')}
@@ -127,28 +127,32 @@ const Signup = ({ lastError, doLogin }: LoginProps) =>
         <FormBoxBody>
 
           <Form
-            onSubmit={({ username, password }) => {
-              console.log('Success!', { username, password });
-              //doLogin({ username, password });
+            onSubmit={({ email, password, restaurantName, nameInCharge, mobile }) => {
+              console.log('Success!', { email, password, restaurantName, nameInCharge, mobile });
+              doSignup({ email, password, restaurantName, nameInCharge, mobile });
             }}
-            validate={({ username, password }) => {
+            validate={({ email, password, restaurantName, nameInCharge, mobile }) => {
               return {
-                username: !username ? 'Name is required' : undefined,
-                password: !password ? 'Password is required' : undefined
+                email: !email ? 'Name is required' : undefined,
+                password: !password ? 'Password is required' : undefined,
+
+                restaurantName: !restaurantName ? 'Restaurant Name is required' : undefined,
+                nameInCharge: !nameInCharge ? 'Password is required' : undefined,
+                mobileNumber: !mobile ? 'Mobile number is required' : undefined,
               }
             }}
           >
-            {({submitForm}) => {
+            {({submitForm}) =>  {
               return (
                 <form onSubmit={submitForm}>
-                  <TextInput field='emailAddress' placeholder='Email address' />
+                  <TextInput field='email' placeholder='Email address' />
                   <TextInput field='password' type="password" placeholder='Password' />
 
                   <HorizontalLine />
 
                   <TextInput field='restaurantName' placeholder='Restaurant Name' />
                   <TextInput field='nameInCharge' placeholder='Name in charge' />
-                  <TextInput field='Mobile number' placeholder='Mobile number' />
+                  <TextInput field='mobile' placeholder='Mobile number' />
 
                   <FormBoxSubmit>SIGN UP</FormBoxSubmit>
                 </form>
@@ -162,11 +166,8 @@ const Signup = ({ lastError, doLogin }: LoginProps) =>
 
 export default connect(
   state => ({
-    joke: getJoke(state),
-    isLoading: isSearchLoading(state),
-    lastError: getLastError(state),
   }),
   {
-    doLogin: loginInitAction,
+    doSignup: signupInitAction,
   },
 )(Signup);

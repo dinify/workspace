@@ -5,6 +5,7 @@ import R from 'ramda';
 //import { getJoke } from '../selectors/viewer';
 import {
   Login as LoginCall,
+  Signup as SignupCall,
   GetLoggedRestaurant,
   ChangeName,
   ChangeCategory,
@@ -18,6 +19,11 @@ export const BOOTSTRAP = 'universalreact/restaurant/BOOTSTRAP';
 export const LOGIN_INIT = 'universalreact/restaurant/LOGIN_INIT';
 export const LOGIN_DONE = 'universalreact/restaurant/LOGIN_DONE';
 export const LOGIN_FAIL = 'universalreact/restaurant/LOGIN_FAIL';
+
+export const SIGNUP_INIT = 'universalreact/restaurant/SIGNUP_INIT';
+export const SIGNUP_DONE = 'universalreact/restaurant/SIGNUP_DONE';
+export const SIGNUP_FAIL = 'universalreact/restaurant/SIGNUP_FAIL';
+
 export const LOGGED_FETCHED_DONE = 'LOGGED_FETCHED_DONE';
 
 export const UPDATE_INIT = 'universalreact/restaurant/UPDATE_INIT';
@@ -89,8 +95,8 @@ export function updateSocialInitAction({ facebookURL, instagramURL }) {
   return { type: UPDATE_SOCIAL_INIT, payload: { facebookURL, instagramURL }};
 }
 
-export function loginInitAction({ username, password }) {
-  return { type: LOGIN_INIT, payload: { username, password }};
+export function loginInitAction({ email, password }) {
+  return { type: LOGIN_INIT, payload: { email, password }};
 }
 
 export function loginDoneAction(res: object) {
@@ -106,6 +112,18 @@ export function loggedFetchedAction(res: object) {
 
 export function loginFailAction(err: Error) {
   return { type: LOGIN_FAIL, payload: err };
+}
+
+export function signupInitAction({ email, password, restaurantName, nameInCharge, mobile }) {
+  return { type: SIGNUP_INIT, payload: { email, password, restaurantName, nameInCharge, mobile }};
+}
+export function signupDoneAction(res: object) {
+  //window.location.replace("/");
+  console.log(res);
+  return { type: SIGNUP_DONE, payload: res };
+}
+export function signupFailAction(err: Error) {
+  return { type: SIGNUP_FAIL, payload: err };
 }
 
 export function appBootstrap() {
@@ -127,10 +145,19 @@ const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
 const loginEpic = (action$: Observable) =>
   action$
     .ofType(LOGIN_INIT)
-    .switchMap(({ payload: { username, password } }) =>
-      Observable.fromPromise(LoginCall({ username, password }))
+    .switchMap(({ payload: { email, password } }) =>
+      Observable.fromPromise(LoginCall({ email, password }))
         .map(loginDoneAction)
         .catch(error => Observable.of(loginFailAction(error)))
+    );
+
+const signupEpic = (action$: Observable) =>
+  action$
+    .ofType(SIGNUP_INIT)
+    .switchMap(({ payload: { email, password, restaurantName, nameInCharge, mobile } }) =>
+      Observable.fromPromise(SignupCall({ email, password, restaurantName, nameInCharge, mobile }))
+        .map(signupDoneAction)
+        .catch(error => Observable.of(signupFailAction(error)))
     );
 
 const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
@@ -175,4 +202,12 @@ const updateSocialEpic = (action$: Observable, { getState }: EpicDependencies) =
         .catch(error => console.log(error))
     );
 
-export const epics = [bootstrapEpic, loginEpic, updateEpic, updateCategoryEpic, updateContactEpic, updateSocialEpic];
+export const epics = [
+  bootstrapEpic,
+  loginEpic,
+  signupEpic,
+  updateEpic,
+  updateCategoryEpic,
+  updateContactEpic,
+  updateSocialEpic
+];

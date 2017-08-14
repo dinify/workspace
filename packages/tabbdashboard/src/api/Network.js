@@ -16,7 +16,7 @@ function getCookie(cname) {
     return "";
 }
 
-export function Request(url, options = {}, login) {
+export function Request(url, options = {}, noToken) {
   return new Promise((resolve, reject) => {
     if (!url) reject(new Error('URL parameter required'));
     const token = getCookie('access_token');
@@ -27,7 +27,7 @@ export function Request(url, options = {}, login) {
       }
     };
 
-    if (token.length > 0 && !login) defaultOptions.headers.Authorization = `Bearer ${token}`;
+    if (token.length > 0 && !noToken) defaultOptions.headers.Authorization = `Bearer ${token}`;
 
     options = Object.assign(options, defaultOptions);
     console.log(options);
@@ -83,7 +83,7 @@ export function Post(urlParts, body = {}) {
   return Request(buildURL(urlParts), {
     method: 'POST',
     body: JSON.stringify(body),
-  }, urlParts.login);
+  }, urlParts.noToken);
 }
 
 export function Put(urlParts, body = {}) {

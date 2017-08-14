@@ -1,9 +1,9 @@
 import { Get, Post, Put, Delete } from './Network'
 
 
-export function Login({ username, password }) {
-  return Post({ path: 'restaurant/auth/restauration', login: true }, {
-    username,
+export function Login({ email, password }) {
+  return Post({ path: 'restaurant/auth/restauration', noToken: true }, {
+    username: email,
     password,
     grant_type: "password",
     client_id: "1",
@@ -14,6 +14,16 @@ export function Login({ username, password }) {
 
 export function Logout() {
   return Delete({ path: 'restaurant/auth/restauration' })
+}
+
+export function Signup({ email, password, restaurantName, nameInCharge, mobile }) {
+  return Post({ path: 'restaurant/register', noToken: true }, {
+    email,
+    password,
+    name: restaurantName,
+    nameChargue: nameInCharge,
+    number: mobile,
+  })
 }
 
 export function GetRestaurant({ restaurantId }) {
