@@ -6,14 +6,12 @@ import type { Error } from '../../flow';
 import { Link } from 'react-router-dom';
 import { Form, Text } from 'react-form'
 
-
 import SwitchButton from 'react-switch-button';
 import 'react-switch-button/dist/react-switch-button.css';
 
-
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './FormBox';
-
-import Input from 'react-enhanced-form'
+import { Header } from './styled/Header';
+import { Sidebar } from './styled/Sidebar';
+import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './styled/FormBox';
 
 import {
   updateInitAction,
@@ -21,17 +19,6 @@ import {
   updateSocialInitAction,
   updateContactInitAction,
 } from '../../ducks/restaurant'
-
-const Sidebar = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 240px;
-  display: flex;
-  align-items: top;
-  justify-content: center;
-`;
 
 const Logo = styled.div`
   position: absolute;
@@ -54,26 +41,12 @@ const Logo = styled.div`
   }
 `;
 
-const Content = styled.div`
-  position: absolute;
-  left: 240px;
-  top: 0;
-  height: 100vh;
-  width: calc(100% - 240px);
-  background: #EFF3F6;
-  color: #354052;
-  padding: 70px 20px 0 20px;
-`;
-
-const Header = styled.div`
-  position: fixed;
-  left: 240px;
-  top: 0;
-  height: 60px;
-  width: calc(100% - 240px);
-  background: #FFF;
-  line-height: 60px;
-  padding-left: 30px;
+const SecondaryMenu = styled.ul`
+  list-style-type: none;
+  li {
+    display: inline-block;
+    margin-right: 10px;
+  }
 `;
 
 type LoginProps = {
@@ -88,7 +61,12 @@ type LoginProps = {
 const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocial, updateContact }: LoginProps) =>
   (<div>
       <Header>
-        Very first demo of settings
+        <SecondaryMenu>
+          <li><Link to="/">Main</Link></li>
+          <li><Link to="/">Options</Link></li>
+          <li><Link to="/">Add-Ons</Link></li>
+          <li><Link to="/">Tablets</Link></li>
+        </SecondaryMenu>
       </Header>
 
       <FormBox>
@@ -115,7 +93,6 @@ const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocia
     	<FormBox>
         <FormBoxHead>Restaurant Name</FormBoxHead>
         <FormBoxBody>
-
 
           <Form
             onSubmit={({ restaurantName }) => {

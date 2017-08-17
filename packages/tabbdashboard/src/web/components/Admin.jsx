@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import type { Error } from '../../flow';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './FormBox';
+import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './styled/FormBox';
 
 import Input from 'react-enhanced-form'
 
