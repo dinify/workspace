@@ -3,13 +3,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import type { Error } from '../../flow';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom'
 
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './styled/FormBox';
 
 import Input from 'react-enhanced-form'
 
-import MainSection from './Main'
+import SettingsSection from './Settings'
 import BillingSection from './Billing'
 import GuestsSection from './Guests'
 import SalesSection from './Sales'
@@ -73,7 +73,7 @@ const Dashboard = ({ location }) =>
       </Logo>
 
       <Menu>
-        <MenuLink l={location} title="Settings" to="/dashboard" />
+        <MenuLink l={location} title="Settings" to="/dashboard/settings" />
         <MenuLink l={location} title="Billing" to="/dashboard/billing" />
         <MenuLink l={location} title="Guests" to="/dashboard/guests" />
         <MenuLink l={location} title="Sales" to="/dashboard/sales" />
@@ -82,7 +82,8 @@ const Dashboard = ({ location }) =>
     </Sidebar>
     <Content>
 
-      <Route exact path="/dashboard" component={MainSection} />
+      <Redirect from="/dashboard/" to="/dashboard/settings" />
+      <Route path="/dashboard/settings" component={SettingsSection} />
       <Route path="/dashboard/billing" component={BillingSection} />
       <Route path="/dashboard/guests" component={GuestsSection} />
       <Route path="/dashboard/sales" component={SalesSection} />

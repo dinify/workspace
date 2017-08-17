@@ -9,7 +9,6 @@ import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './styled/FormB
 
 import Input from 'react-enhanced-form'
 
-import MainSection from './Main'
 import BillingSection from './Billing'
 import GuestsSection from './Guests'
 import SalesSection from './Sales'
@@ -80,7 +79,7 @@ const Dashboard = ({ location }) =>
     </Sidebar>
     <Content>
 
-      <Route exact path="/admin" component={MainSection} />
+      
       <Route path="/admin/analytics" component={GuestsSection} />
       <Route path="/admin/billing" component={BillingSection} />
 
