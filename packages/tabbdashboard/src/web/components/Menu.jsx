@@ -14,19 +14,27 @@ export const MenuItem = styled.li`
   text-transform: uppercase;
   font-weight: 300;
   letter-spacing: 2px;
+  vertical-align: middle;
   a {
     text-decoration: none;
     color: ${({active}) => active ? 'white': 'rgba(255,255,255,0.6)'};
     cursor: pointer;
+    vertical-align: middle;
     &:hover {
       color: white;
     }
   }
+  i {
+    font-size: 24px;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
 `
 
-export const MenuLink = ({ title, to, l }) => (
+export const MenuLink = ({ title, to, l, iconName = 'ion-gear-b' }) => (
   <MenuItem active={l.pathname.indexOf(to) > -1}>
     <Link to={to}>
+      <i className={iconName} />
       {title}
     </Link>
   </MenuItem>

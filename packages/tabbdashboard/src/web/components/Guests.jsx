@@ -19,12 +19,17 @@ const Header = styled.div`
 type LoginProps = {
   lastError: Error,
 };
-
+const TODO = styled.div`
+  text-align: center;
+  padding: 20px;
+  color: rgba(0,0,0,0.3)
+`;
 const Guests = ({ lastError }: LoginProps) =>
   (<div>
     <Header>
       Guests
     </Header>
+    <TODO>work in progress</TODO>
   </div>);
 
 export default connect(

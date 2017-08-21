@@ -27,6 +27,12 @@ type MainProps = {
   updateContact: typeof updateContactInitAction,
 };
 
+const TODO = styled.div`
+  text-align: center;
+  padding: 20px;
+  color: rgba(0,0,0,0.3)
+`;
+
 const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocial, updateContact }: MainProps) =>
   (<div>
   <FormBox>
@@ -84,7 +90,7 @@ const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocia
   <FormBox>
     <FormBoxHead>Main Image</FormBoxHead>
     <FormBoxBody>
-
+      <TODO>work in progress</TODO>
     </FormBoxBody>
   </FormBox>
 
@@ -159,6 +165,7 @@ const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocia
     <FormBoxBody>
       <input placeholder="Longitude" type="text" />
       <input placeholder="Latitude" type="text" />
+      <FormBoxSubmit>SAVE</FormBoxSubmit>
     </FormBoxBody>
   </FormBox>
 
@@ -168,6 +175,7 @@ const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocia
     <FormBoxBody>
       <input placeholder="Weekday" type="text" />
       <input placeholder="Weekend" type="text" />
+      <FormBoxSubmit>SAVE</FormBoxSubmit>
     </FormBoxBody>
   </FormBox>
 
@@ -177,6 +185,7 @@ const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocia
       <input placeholder="Bank name" type="text" />
       <input placeholder="Enter beneficiary name" type="text" />
       <input placeholder="Enter IBAN number" type="text" />
+      <FormBoxSubmit>SAVE</FormBoxSubmit>
     </FormBoxBody>
   </FormBox>
 

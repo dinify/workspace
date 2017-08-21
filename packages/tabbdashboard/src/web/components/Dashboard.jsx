@@ -6,8 +6,11 @@ import type { Error } from '../../flow';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom'
 
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './styled/FormBox';
+import { HorizontalLine } from './styled/HorizontalLine';
 
 import Input from 'react-enhanced-form'
+
+import { logoutInitAction } from '../../ducks/restaurant';
 
 import SettingsSection from './Settings'
 import BillingSection from './Billing'
@@ -60,7 +63,32 @@ const Content = styled.div`
   padding: 70px 20px 0 20px;
 `;
 
-const Dashboard = ({ location }) =>
+
+const MenuItem = styled.li`
+  list-style: none;
+  margin: 10px 0;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 2px;
+  vertical-align: middle;
+  a {
+    text-decoration: none;
+    color: ${({active}) => active ? 'white': 'rgba(255,255,255,0.6)'};
+    cursor: pointer;
+    vertical-align: middle;
+    &:hover {
+      color: white;
+    }
+  }
+  i {
+    font-size: 24px;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+`
+
+const Dashboard = ({ location, logout }) =>
   (<div>
     <Sidebar>
       <Logo>
@@ -73,11 +101,18 @@ const Dashboard = ({ location }) =>
       </Logo>
 
       <Menu>
-        <MenuLink l={location} title="Settings" to="/dashboard/settings" />
-        <MenuLink l={location} title="Billing" to="/dashboard/billing" />
-        <MenuLink l={location} title="Guests" to="/dashboard/guests" />
-        <MenuLink l={location} title="Sales" to="/dashboard/sales" />
-        <MenuLink l={location} title="Engagement" to="/dashboard/engagement" />
+        <MenuLink l={location} iconName="ion-gear-b" title="Settings" to="/dashboard/settings" />
+        <MenuLink l={location} iconName="ion-social-usd" title="Billing" to="/dashboard/billing" />
+        <MenuLink l={location} iconName="ion-ios-people" title="Guests" to="/dashboard/guests" />
+        <MenuLink l={location} iconName="ion-cash" title="Sales" to="/dashboard/sales" />
+        <MenuLink l={location} iconName="ion-ios-analytics" title="Engagement" to="/dashboard/engagement" />
+        <HorizontalLine />
+        <MenuItem onClick={logout}>
+          <a>
+            <i className="ion-android-exit" />
+            <span>LOG OUT</span>
+          </a>
+        </MenuItem>
       </Menu>
     </Sidebar>
     <Content>
@@ -94,5 +129,7 @@ const Dashboard = ({ location }) =>
 
 export default connect(
   state => ({}),
-  {},
+  {
+    logout: logoutInitAction
+  },
 )(Dashboard);

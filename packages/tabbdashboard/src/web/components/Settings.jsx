@@ -15,7 +15,7 @@ import {
   updateCategoryInitAction,
   updateSocialInitAction,
   updateContactInitAction,
-} from '../../ducks/restaurant'
+} from '../../ducks/restaurant';
 
 import MainSection from './SettingsSection/Main.jsx';
 import AddonsSection from './SettingsSection/AddOns.jsx';

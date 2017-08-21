@@ -70,7 +70,7 @@ const Billing = ({ lastError }: LoginProps) =>
         </TableRow>
       </TableHead>
       <tbody>
-        {R.range(0, 30).map((n) =>
+        {R.range(10, 50).map((n) =>
           <TableRow>
             <TD>17/12</TD>
             <TD>{18394958203+n}</TD>

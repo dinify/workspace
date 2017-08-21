@@ -6,11 +6,12 @@ import R from 'ramda';
 import {
   Login as LoginCall,
   Signup as SignupCall,
+  Logout as LogoutCall,
   GetLoggedRestaurant,
   ChangeName,
   ChangeCategory,
   ChangeContact,
-  ChangeSocial
+  ChangeSocial,
 } from '../api/restaurant';
 import type { EpicDependencies, Error, Action } from '../flow';
 import { browserHistory } from 'react-router';
@@ -19,6 +20,9 @@ export const BOOTSTRAP = 'universalreact/restaurant/BOOTSTRAP';
 export const LOGIN_INIT = 'universalreact/restaurant/LOGIN_INIT';
 export const LOGIN_DONE = 'universalreact/restaurant/LOGIN_DONE';
 export const LOGIN_FAIL = 'universalreact/restaurant/LOGIN_FAIL';
+
+export const LOGOUT_INIT = 'universalreact/restaurant/LOGOUT_INIT';
+export const LOGOUT_DONE = 'universalreact/restaurant/LOGOUT_DONE';
 
 export const SIGNUP_INIT = 'universalreact/restaurant/SIGNUP_INIT';
 export const SIGNUP_DONE = 'universalreact/restaurant/SIGNUP_DONE';
@@ -99,10 +103,20 @@ export function loginInitAction({ email, password }) {
   return { type: LOGIN_INIT, payload: { email, password }};
 }
 
+export function logoutInitAction() {
+  return { type: LOGOUT_INIT };
+}
+
 export function loginDoneAction(res: object) {
   setCookie('access_token', res.access_token, 30);
   window.location.replace("/dashboard");
   return { type: LOGIN_DONE, payload: res };
+}
+
+export function logoutDoneAction(res: object) {
+  setCookie('access_token', '', 1);
+  window.location.replace("/");
+  return { type: LOGOUT_DONE, payload: res };
 }
 
 export function loggedFetchedAction(res: object) {
@@ -148,6 +162,15 @@ const loginEpic = (action$: Observable) =>
     .switchMap(({ payload: { email, password } }) =>
       Observable.fromPromise(LoginCall({ email, password }))
         .map(loginDoneAction)
+        .catch(error => Observable.of(loginFailAction(error)))
+    );
+
+const logoutEpic = (action$: Observable) =>
+  action$
+    .ofType(LOGOUT_INIT)
+    .switchMap(() =>
+      Observable.fromPromise(LogoutCall())
+        .map(logoutDoneAction)
         .catch(error => Observable.of(loginFailAction(error)))
     );
 
@@ -206,6 +229,7 @@ export const epics = [
   bootstrapEpic,
   loginEpic,
   signupEpic,
+  logoutEpic,
   updateEpic,
   updateCategoryEpic,
   updateContactEpic,
