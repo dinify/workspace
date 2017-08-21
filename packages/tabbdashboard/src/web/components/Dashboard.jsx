@@ -26,9 +26,6 @@ const Sidebar = styled.div`
   top: 0;
   height: 100vh;
   width: 240px;
-  display: flex;
-  align-items: top;
-  justify-content: center;
 `;
 
 const Logo = styled.div`
@@ -85,6 +82,8 @@ const MenuItem = styled.li`
     font-size: 24px;
     vertical-align: middle;
     margin-right: 10px;
+    width: 26px;
+    display: inline-block;
   }
 `
 
@@ -114,6 +113,7 @@ const Dashboard = ({ location, logout }) =>
           </a>
         </MenuItem>
       </Menu>
+
     </Sidebar>
     <Content>
       <Switch>

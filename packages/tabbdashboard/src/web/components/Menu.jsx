@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 export const Menu = styled.ul`
+  width: 160px;
+  margin-left: 53px;
   margin-top: 80px;
 `
 
@@ -18,6 +20,7 @@ export const MenuItem = styled.li`
   a {
     text-decoration: none;
     color: ${({active}) => active ? 'white': 'rgba(255,255,255,0.6)'};
+    transition: 140ms color ease-in-out;
     cursor: pointer;
     vertical-align: middle;
     &:hover {
@@ -28,6 +31,8 @@ export const MenuItem = styled.li`
     font-size: 24px;
     vertical-align: middle;
     margin-right: 10px;
+    width: 26px;
+    display: inline-block;
   }
 `
 
