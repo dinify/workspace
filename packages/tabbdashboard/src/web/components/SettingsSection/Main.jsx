@@ -2,21 +2,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import type { Error } from '../../flow';
+import type { Error } from '../../../flow';
 import { Link } from 'react-router-dom';
 import { Form, Text } from 'react-form';
 
 import SwitchButton from 'react-switch-button';
 import 'react-switch-button/dist/react-switch-button.css';
 
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './styled/FormBox';
+import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from '../styled/FormBox';
 
 import {
   updateInitAction,
   updateCategoryInitAction,
   updateSocialInitAction,
   updateContactInitAction,
-} from '../../ducks/restaurant'
+} from '../../../ducks/restaurant'
 
 type MainProps = {
   lastError: Error,
@@ -180,29 +180,6 @@ const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocia
     </FormBoxBody>
   </FormBox>
 
-  <FormBox>
-    <FormBoxHead>Options</FormBoxHead>
-    <FormBoxBody>
-      <input placeholder="Enter option category" type="text" />
-    </FormBoxBody>
-  </FormBox>
-
-  <FormBox>
-    <FormBoxHead>Add-Ons</FormBoxHead>
-    <FormBoxBody>
-      <input placeholder="Enter add-on item name" type="text" />
-      <input placeholder="Price" type="text" />
-    </FormBoxBody>
-  </FormBox>
-
-  <FormBox>
-    <FormBoxHead>Set Tablet(s)</FormBoxHead>
-    <FormBoxBody>
-      <input placeholder="Tablet ID" type="text" />
-      <input placeholder="Password" type="text" />
-      <FormBoxSubmit>SAVE</FormBoxSubmit>
-    </FormBoxBody>
-  </FormBox>
 </div>);
 
 export default connect(
@@ -215,4 +192,4 @@ state => ({
   updateSocial: updateSocialInitAction,
   updateContact: updateContactInitAction,
 },
-)(Settings);
+)(Main);

@@ -33,20 +33,20 @@ export const FormBoxBody = styled.div`
   }
 `
 export const FormBoxSubmit = styled.button`
-  background-color: rgb(38,156,244);
+  background-color: ${p => p.primary ? 'rgb(38,156,244)' : 'rgb(230,234,240)'};
   margin: 10px 0 0 0;
   outline: none;
   padding: 10px 15px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid ${p => p.primary ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'};
   cursor: pointer;
   border-radius: 5px;
-  color: white;
+  color: ${p => p.primary ? 'white' : '#666'};
   width: 100%;
   &:hover {
-    background-color: rgb(28,146,234);
+    background-color: ${p => p.primary ? 'rgb(28,146,234)' : 'rgb(220,224,230)'};
   }
   &:active {
-    background-color: rgb(18,126,214);
+    background-color: ${p => p.primary ? 'rgb(18,126,214)' : 'rgb(210,214,220)'};
     border-color: transparent;
   }
 `

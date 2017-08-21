@@ -1,4 +1,19 @@
-missing in settings: food category: Esteban has a list of them
+missing in settings: food category:
+Qibla
+Sharq
+Mirqab
+Salmiya
+Hawally
+Farwaniya
+Mubarak Al Kabeer
+Ahmadi
+Shuwaikh
+The Avenues/Rai
+Jahra
+Jabriya
+Gulf Road seaside
+
+
 
 
 Location: bigger areas, imortant for Kuwaities

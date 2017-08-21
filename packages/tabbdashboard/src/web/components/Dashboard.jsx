@@ -81,14 +81,14 @@ const Dashboard = ({ location }) =>
       </Menu>
     </Sidebar>
     <Content>
-
-      <Redirect from="/dashboard/" to="/dashboard/settings" />
-      <Route path="/dashboard/settings" component={SettingsSection} />
-      <Route path="/dashboard/billing" component={BillingSection} />
-      <Route path="/dashboard/guests" component={GuestsSection} />
-      <Route path="/dashboard/sales" component={SalesSection} />
-      <Route path="/dashboard/engagement" component={EngagementSection} />
-
+      <Switch>
+        <Redirect exact from="/dashboard" to="/dashboard/settings" />
+        <Route path="/dashboard/settings" component={SettingsSection} />
+        <Route path="/dashboard/billing" component={BillingSection} />
+        <Route path="/dashboard/guests" component={GuestsSection} />
+        <Route path="/dashboard/sales" component={SalesSection} />
+        <Route path="/dashboard/engagement" component={EngagementSection} />
+      </Switch>
     </Content>
   </div>);
 
