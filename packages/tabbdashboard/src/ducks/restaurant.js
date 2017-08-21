@@ -50,11 +50,17 @@ const initialState = {
   joke: null,
   lastError: null,
   loggedRestaurant: null,
+  updateDone: null,
 };
 
 // Reducer
 export default function reducer(state: State = initialState, action: Action) {
   console.log(action);
+  if(action.type.indexOf('UPDATE') > -1 && action.type.indexOf('INIT') > -1) {
+    // update init
+    state = R.assoc('updateDone', 'updating')(state);
+    console.log('UPDATE INIT');
+  }
   switch (action.type) {
     case LOGIN_DONE:
       return state;
@@ -64,8 +70,10 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assoc('loggedRestaurant', action.payload)(state);
     case UPDATE_INIT:
       return R.assocPath(['loggedRestaurant', 'restaurantName'], action.payload.restaurantName)(state);
-      case UPDATE_CATEGORY_INIT:
-        return R.assocPath(['loggedRestaurant', 'category'], action.payload.category)(state);
+    case UPDATE_CATEGORY_INIT:
+      return R.assocPath(['loggedRestaurant', 'category'], action.payload.category)(state);
+    case UPDATE_DONE:
+      return R.assoc('updateDone', 'done')(state);
     default:
       return state;
   }

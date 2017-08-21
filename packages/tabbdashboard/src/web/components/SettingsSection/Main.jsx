@@ -25,6 +25,7 @@ type MainProps = {
   updateCategory: typeof updateCategoryInitAction,
   updateSocial: typeof updateSocialInitAction,
   updateContact: typeof updateContactInitAction,
+  updateDone: Any,
 };
 
 const TODO = styled.div`
@@ -33,8 +34,14 @@ const TODO = styled.div`
   color: rgba(0,0,0,0.3)
 `;
 
-const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocial, updateContact }: MainProps) =>
+const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocial, updateContact, updateDone }: MainProps) =>
   (<div>
+
+    <div style={{textAlign: 'center'}}>
+      {updateDone === 'updating' ? 'Updating...' : ''}
+      {updateDone === 'done' ? 'Everything is up to date.' : ''}
+    </div>
+
   <FormBox>
     <FormBoxHead>Type of Restaurant</FormBoxHead>
     <FormBoxBody center pt={20} pb={20}>
@@ -189,11 +196,13 @@ const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocia
     </FormBoxBody>
   </FormBox>
 
+
 </div>);
 
 export default connect(
 state => ({
-  loggedRestaurant: state.restaurant.loggedRestaurant
+  loggedRestaurant: state.restaurant.loggedRestaurant,
+  updateDone: state.restaurant.updateDone
 }),
 {
   update: updateInitAction,
