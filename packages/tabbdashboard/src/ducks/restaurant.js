@@ -12,6 +12,7 @@ import {
   ChangeCategory,
   ChangeContact,
   ChangeSocial,
+  ChangeLocation,
 } from '../api/restaurant';
 import type { EpicDependencies, Error, Action } from '../flow';
 import { browserHistory } from 'react-router';
@@ -34,6 +35,7 @@ export const UPDATE_INIT = 'universalreact/restaurant/UPDATE_INIT';
 export const UPDATE_CATEGORY_INIT = 'universalreact/restaurant/UPDATE_CATEGORY_INIT';
 export const UPDATE_CONTACT_INIT = 'universalreact/restaurant/UPDATE_CONTACT_INIT';
 export const UPDATE_SOCIAL_INIT = 'universalreact/restaurant/UPDATE_SOCIAL_INIT';
+export const UPDATE_LOCATION_INIT = 'universalreact/restaurant/UPDATE_LOCATION_INIT';
 export const UPDATE_DONE = 'universalreact/restaurant/UPDATE_DONE';
 
 type State = {
@@ -72,6 +74,10 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assocPath(['loggedRestaurant', 'restaurantName'], action.payload.restaurantName)(state);
     case UPDATE_CATEGORY_INIT:
       return R.assocPath(['loggedRestaurant', 'category'], action.payload.category)(state);
+    case UPDATE_LOCATION_INIT: {
+      state = R.assocPath(['loggedRestaurant', 'location', 'longitude'], Number(action.payload.longitude))(state);
+      return R.assocPath(['loggedRestaurant', 'location', 'latitude'], Number(action.payload.latitude))(state);
+    }
     case UPDATE_DONE:
       return R.assoc('updateDone', 'done')(state);
     default:
@@ -105,6 +111,10 @@ export function updateContactInitAction({ nameInCharge, email, mobile }) {
 
 export function updateSocialInitAction({ facebookURL, instagramURL }) {
   return { type: UPDATE_SOCIAL_INIT, payload: { facebookURL, instagramURL }};
+}
+
+export function updateLocationInitAction({ name, longitude, latitude }) {
+  return { type: UPDATE_LOCATION_INIT, payload: { name, longitude, latitude }};
 }
 
 export function loginInitAction({ email, password }) {
@@ -232,6 +242,17 @@ const updateSocialEpic = (action$: Observable, { getState }: EpicDependencies) =
         .map(updateDoneAction)
         .catch(error => console.log(error))
     );
+const updateLocationEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType(UPDATE_LOCATION_INIT)
+    .switchMap(({ payload: { name, longitude, latitude } }) =>
+      Observable.fromPromise(ChangeLocation({
+        restaurantId: getState().restaurant.loggedRestaurant.id,
+        name, longitude, latitude
+      }))
+        .map(updateDoneAction)
+        .catch(error => console.log(error))
+    );
 
 export const epics = [
   bootstrapEpic,
@@ -241,5 +262,6 @@ export const epics = [
   updateEpic,
   updateCategoryEpic,
   updateContactEpic,
-  updateSocialEpic
+  updateSocialEpic,
+  updateLocationEpic
 ];

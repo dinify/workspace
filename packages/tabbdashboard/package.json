@@ -25,6 +25,7 @@
     "react-dom": "15.4.1",
     "react-enhanced-form": "^1.4.5",
     "react-form": "^1.3.0",
+    "react-google-maps": "^7.2.0",
     "react-localization": "^0.1.1",
     "react-native": "0.42.0",
     "react-redux": "5.0.4",

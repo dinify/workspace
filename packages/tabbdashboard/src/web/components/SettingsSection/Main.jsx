@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import type { Error } from '../../../flow';
 import { Link } from 'react-router-dom';
-import { Form, Text } from 'react-form';
-
+import { Form, Text, Select } from 'react-form';
+import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import SwitchButton from 'react-switch-button';
 import 'react-switch-button/dist/react-switch-button.css';
+
+import _ from 'underscore';
 
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from '../styled/FormBox';
 
@@ -16,6 +18,7 @@ import {
   updateCategoryInitAction,
   updateSocialInitAction,
   updateContactInitAction,
+  updateLocationInitAction,
 } from '../../../ducks/restaurant'
 
 type MainProps = {
@@ -25,8 +28,30 @@ type MainProps = {
   updateCategory: typeof updateCategoryInitAction,
   updateSocial: typeof updateSocialInitAction,
   updateContact: typeof updateContactInitAction,
+  updateLocation: typeof updateLocationInitAction,
   updateDone: Any,
 };
+
+// Wrap all `react-google-maps` components with `withGoogleMap` HOC
+// and name it GettingStartedGoogleMap
+
+
+const GettingStartedGoogleMap = withGoogleMap(props => (
+  <GoogleMap
+    ref={props.onMapLoad}
+    defaultZoom={10}
+    defaultCenter={{ lat: props.lat, lng: props.lng }}
+    onClick={props.onMapClick}
+  >
+      <Marker
+        position={{
+            lat: props.lat,
+            lng: props.lng,
+        }}
+        onRightClick={() => props.onMarkerRightClick(1)}
+      />
+  </GoogleMap>
+));
 
 const TODO = styled.div`
   text-align: center;
@@ -34,7 +59,32 @@ const TODO = styled.div`
   color: rgba(0,0,0,0.3)
 `;
 
-const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocial, updateContact, updateDone }: MainProps) =>
+const areaNames = [
+  'Qibla',
+  'Sharq',
+  'Mirqab',
+  'Salmiya',
+  'Hawally',
+  'Farwaniya',
+  'Mubarak Al Kabeer',
+  'Ahmadi',
+  'Shuwaikh',
+  'The Avenues Rai',
+  'Jahra',
+  'Jabriya',
+  'Gulf Road seaside',
+].map((a) => ({label: a, value: a.toUpperCase()}));
+
+const Main = ({
+  lastError,
+  loggedRestaurant,
+  update,
+  updateCategory,
+  updateSocial,
+  updateContact,
+  updateLocation,
+  updateDone,
+}: MainProps) =>
   (<div>
 
     <div style={{textAlign: 'center'}}>
@@ -170,9 +220,48 @@ const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocia
   <FormBox>
     <FormBoxHead>Location</FormBoxHead>
     <FormBoxBody>
-      <input placeholder="Longitude" type="text" />
-      <input placeholder="Latitude" type="text" />
-      <FormBoxSubmit>SAVE</FormBoxSubmit>
+
+      <Form
+        onSubmit={(loc) => {
+          console.log(loc);
+          updateLocation(loc);
+        }}
+        defaultValues={loggedRestaurant.location}
+        validate={({ name, longitude, latitude }) => {
+          return {
+            name: !name ? 'Area name is required' : undefined,
+            longitude: !longitude ? 'Longitude is required' : undefined,
+            latitude: !latitude ? 'Latitude URL is required' : undefined,
+          }
+        }}
+      >
+        {({submitForm}) => {
+          return (
+            <form onSubmit={submitForm}>
+              <Select
+                field='name'
+                options={areaNames}
+              />
+              <GettingStartedGoogleMap
+                containerElement={
+                  <div style={{ height: `200px`, margin: '10px 0' }} />
+                }
+                mapElement={
+                  <div style={{ height: `200px` }} />
+                }
+                onMapLoad={_.noop}
+                onMapClick={_.noop}
+                onMarkerRightClick={_.noop}
+                lng={loggedRestaurant.location.longitude}
+                lat={loggedRestaurant.location.latitude}
+              />
+              <Text field='longitude' placeholder='Longitude' />
+              <Text field='latitude' placeholder='Latitude' />
+              <FormBoxSubmit>SAVE</FormBoxSubmit>
+            </form>
+          )
+        }}
+      </Form>
     </FormBoxBody>
   </FormBox>
 
@@ -209,5 +298,6 @@ state => ({
   updateCategory: updateCategoryInitAction,
   updateSocial: updateSocialInitAction,
   updateContact: updateContactInitAction,
+  updateLocation: updateLocationInitAction,
 },
 )(Main);

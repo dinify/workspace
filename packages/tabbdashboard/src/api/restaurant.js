@@ -49,3 +49,7 @@ export function ChangeContact({ restaurantId, mobile, email, nameInCharge }) {
 export function ChangeSocial({ restaurantId, facebookURL, instagramURL }) {
   return Put({ path: `restaurant/${restaurantId}/social` }, { facebookURL, instagramURL })
 }
+
+export function ChangeLocation({ restaurantId, name, longitude, latitude }) {
+  return Put({ path: `restaurant/${restaurantId}/location` }, { name, longitude, latitude })
+}
