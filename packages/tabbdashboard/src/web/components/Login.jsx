@@ -88,69 +88,15 @@ const FormBoxSubmit = styled.button`
   }
 `;
 
-const Button = styled.button`
-  background-color: rgb(255,152,121);
-  margin: 20px 0 0 0;
-  outline: none;
-  padding: 10px 15px;
-  border: 1px solid rgba(255,255,255,0.1);
-  cursor: pointer;
-  border-radius: 5px;
-  color: white;
-  &:hover {
-    background-color: rgb(245,142,111);
-  }
-  &:active {
-    background-color: rgb(225,122,91);
-    border-color: transparent;
-  }
-`;
-
 type LoginProps = {
   lastError: Error,
   doLogin: typeof loginInitAction,
 };
 
-const TopRight = styled.div`
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 600px;
-`;
-
-
 const Login = ({ lastError, doLogin }: LoginProps) =>
   (<Content>
-      {/*
-      <TopRight className="vhs-right">
-
-        <form onSubmit={() => console.log('submited')}>
-          <Input
-            type='text'
-            value=''
-            placeholder='Administrator'
-            onChange={(data, error) => console.log('change', data, error)}
-            onMount={(data,error) => console.log('mount', data, error)}
-            style={SmallInputStyle}
-            required
-          />
-          <Input
-            type='password'
-            value=''
-            placeholder='Password'
-            onChange={(data, error) => console.log('change', data, error)}
-            onMount={(data,error) => console.log('mount', data, error)}
-            style={SmallInputStyle}
-            required
-          />
-          <Button>ENTER</Button>
-        </form>
-
-      </TopRight>
-      */}
-
-
       <img
+        alt='TABB'
         src={require('./logo.svg')}
         style={{
           marginTop: '-50px',

@@ -2,13 +2,13 @@ import { Get, Post, Put, Delete } from './Network'
 
 
 export function Login({ email, password }) {
-  return Post({ path: 'restaurant/auth/restauration', noToken: true }, {
+  return Post({ path: 'oauth2/authentication', noToken: true }, {
     username: email,
     password,
     grant_type: "password",
     client_id: "1",
     client_secret: "secretKey",
-    scope: "*"
+    scope: "restaurant"
   })
 }
 

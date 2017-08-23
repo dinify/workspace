@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import type { Error } from '../../flow'
 
 import { Form, Text } from 'react-form'
-import { getJoke, isSearchLoading, getLastError } from '../../selectors/viewer';
+import { isSearchLoading, getLastError } from '../../selectors/viewer';
 
 import { signupInitAction } from '../../ducks/restaurant'
 import { HorizontalLine } from './styled/HorizontalLine'
