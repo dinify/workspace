@@ -19,6 +19,7 @@ import {
   updateSocialInitAction,
   updateContactInitAction,
   updateLocationInitAction,
+  updateBankInitAction,
 } from '../../../ducks/restaurant'
 
 type MainProps = {
@@ -29,13 +30,12 @@ type MainProps = {
   updateSocial: typeof updateSocialInitAction,
   updateContact: typeof updateContactInitAction,
   updateLocation: typeof updateLocationInitAction,
+  updateBank: typeof updateBankInitAction,
   updateDone: Any,
 };
 
 // Wrap all `react-google-maps` components with `withGoogleMap` HOC
 // and name it GettingStartedGoogleMap
-
-
 const GettingStartedGoogleMap = withGoogleMap(props => (
   <GoogleMap
     ref={props.onMapLoad}
@@ -75,6 +75,17 @@ const areaNames = [
   'Gulf Road seaside',
 ].map((a) => ({label: a, value: a.toUpperCase()}));
 
+const MainContrainer = styled.div`
+  column-count: 3;
+  column-gap: 0;
+  @media (max-width: 1150px) {
+    column-count: 2;
+  }
+  @media (max-width: 860px) {
+    column-count: 1;
+  }
+`
+
 const Main = ({
   lastError,
   loggedRestaurant,
@@ -83,14 +94,46 @@ const Main = ({
   updateSocial,
   updateContact,
   updateLocation,
+  updateBank,
   updateDone,
 }: MainProps) =>
-  (<div>
+  (<MainContrainer>
 
-    <div style={{textAlign: 'center'}}>
+    <div style={{marginLeft: '10px'}}>
       {updateDone === 'updating' ? 'Updating...' : ''}
       {updateDone === 'done' ? 'Everything is up to date.' : ''}
     </div>
+
+    <FormBox>
+      <FormBoxHead>Restaurant Name</FormBoxHead>
+      <FormBoxBody>
+
+        <Form
+          onSubmit={({ restaurantName }) => {
+            console.log('Success!', { restaurantName });
+            update({ restaurantName });
+          }}
+          defaultValues={{
+            restaurantName: loggedRestaurant.restaurantName
+          }}
+          validate={({ restaurantName }) => {
+            return {
+              restaurantName: !restaurantName ? 'Restaurant Name is required' : undefined,
+            }
+          }}
+        >
+          {({submitForm}) => {
+            return (
+              <form onSubmit={submitForm}>
+                <Text field='restaurantName' placeholder='Restaurant Name' />
+                <FormBoxSubmit>SAVE</FormBoxSubmit>
+              </form>
+            )
+          }}
+        </Form>
+
+      </FormBoxBody>
+    </FormBox>
 
   <FormBox>
     <FormBoxHead>Type of Restaurant</FormBoxHead>
@@ -113,36 +156,6 @@ const Main = ({
     </FormBoxBody>
   </FormBox>
 
-  <FormBox>
-    <FormBoxHead>Restaurant Name</FormBoxHead>
-    <FormBoxBody>
-
-      <Form
-        onSubmit={({ restaurantName }) => {
-          console.log('Success!', { restaurantName });
-          update({ restaurantName });
-        }}
-        defaultValues={{
-          restaurantName: loggedRestaurant.restaurantName
-        }}
-        validate={({ restaurantName }) => {
-          return {
-            restaurantName: !restaurantName ? 'Restaurant Name is required' : undefined,
-          }
-        }}
-      >
-        {({submitForm}) => {
-          return (
-            <form onSubmit={submitForm}>
-              <Text field='restaurantName' placeholder='Restaurant Name' />
-              <FormBoxSubmit>SAVE</FormBoxSubmit>
-            </form>
-          )
-        }}
-      </Form>
-
-    </FormBoxBody>
-  </FormBox>
 
   <FormBox>
     <FormBoxHead>Main Image</FormBoxHead>
@@ -266,27 +279,40 @@ const Main = ({
   </FormBox>
 
 
-  <FormBox>
-    <FormBoxHead>Business Hours</FormBoxHead>
-    <FormBoxBody>
-      <input placeholder="Weekday" type="text" />
-      <input placeholder="Weekend" type="text" />
-      <FormBoxSubmit>SAVE</FormBoxSubmit>
-    </FormBoxBody>
-  </FormBox>
 
   <FormBox>
     <FormBoxHead>Banking Information</FormBoxHead>
     <FormBoxBody>
-      <input placeholder="Bank name" type="text" />
-      <input placeholder="Enter beneficiary name" type="text" />
-      <input placeholder="Enter IBAN number" type="text" />
-      <FormBoxSubmit>SAVE</FormBoxSubmit>
+      <Form
+        onSubmit={(bank) => {
+          console.log('Success!', bank);
+          updateBank(bank);
+        }}
+        defaultValues={loggedRestaurant.bank}
+        validate={({ name, beneficiaryName, IBAN }) => {
+          return {
+            name: !name ? 'Bank name is required' : undefined,
+            beneficiaryName: !beneficiaryName ? 'Beneficiary Name is required' : undefined,
+            IBAN: !IBAN ? 'IBAN is required' : undefined,
+          }
+        }}
+      >
+        {({submitForm}) => {
+          return (
+            <form onSubmit={submitForm}>
+              <Text field='name' placeholder='Bank name' />
+              <Text field='beneficiaryName' placeholder='Beneficiary name' />
+              <Text field='IBAN' placeholder='IBAN number' />
+              <FormBoxSubmit>SAVE</FormBoxSubmit>
+            </form>
+          )
+        }}
+      </Form>
     </FormBoxBody>
   </FormBox>
 
 
-</div>);
+</MainContrainer>);
 
 export default connect(
 state => ({
@@ -299,5 +325,6 @@ state => ({
   updateSocial: updateSocialInitAction,
   updateContact: updateContactInitAction,
   updateLocation: updateLocationInitAction,
+  updateBank: updateBankInitAction,
 },
 )(Main);

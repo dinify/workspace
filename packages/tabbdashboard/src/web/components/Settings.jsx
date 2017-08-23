@@ -37,7 +37,7 @@ const Settings = ({ lastError, loggedRestaurant, update, updateCategory, updateS
       <Header>
 
         <HorMenu>
-          <HorMenuLink l={location} title="Main" to="/dashboard/settings/main" />
+          <HorMenuLink l={location} title="Main Information" to="/dashboard/settings/main" />
           <HorMenuLink l={location} title="Options" to="/dashboard/settings/options" />
           <HorMenuLink l={location} title="Add-Ons" to="/dashboard/settings/addons" />
           <HorMenuLink l={location} title="Tablets" to="/dashboard/settings/tablets" />

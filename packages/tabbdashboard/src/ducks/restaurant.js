@@ -13,6 +13,7 @@ import {
   ChangeContact,
   ChangeSocial,
   ChangeLocation,
+  ChangeBank,
 } from '../api/restaurant';
 import type { EpicDependencies, Error, Action } from '../flow';
 import { browserHistory } from 'react-router';
@@ -36,6 +37,7 @@ export const UPDATE_CATEGORY_INIT = 'universalreact/restaurant/UPDATE_CATEGORY_I
 export const UPDATE_CONTACT_INIT = 'universalreact/restaurant/UPDATE_CONTACT_INIT';
 export const UPDATE_SOCIAL_INIT = 'universalreact/restaurant/UPDATE_SOCIAL_INIT';
 export const UPDATE_LOCATION_INIT = 'universalreact/restaurant/UPDATE_LOCATION_INIT';
+export const UPDATE_BANK_INIT = 'universalreact/restaurant/UPDATE_BANK_INIT';
 export const UPDATE_DONE = 'universalreact/restaurant/UPDATE_DONE';
 
 type State = {
@@ -78,6 +80,9 @@ export default function reducer(state: State = initialState, action: Action) {
       state = R.assocPath(['loggedRestaurant', 'location', 'longitude'], Number(action.payload.longitude))(state);
       return R.assocPath(['loggedRestaurant', 'location', 'latitude'], Number(action.payload.latitude))(state);
     }
+    case UPDATE_BANK_INIT: {
+      return R.assocPath(['loggedRestaurant', 'bank'], action.payload)(state);
+    }
     case UPDATE_DONE:
       return R.assoc('updateDone', 'done')(state);
     default:
@@ -115,6 +120,10 @@ export function updateSocialInitAction({ facebookURL, instagramURL }) {
 
 export function updateLocationInitAction({ name, longitude, latitude }) {
   return { type: UPDATE_LOCATION_INIT, payload: { name, longitude, latitude }};
+}
+
+export function updateBankInitAction({ name, beneficiaryName, IBAN }) {
+  return { type: UPDATE_BANK_INIT, payload: { name, beneficiaryName, IBAN }};
 }
 
 export function loginInitAction({ email, password }) {
@@ -253,7 +262,17 @@ const updateLocationEpic = (action$: Observable, { getState }: EpicDependencies)
         .map(updateDoneAction)
         .catch(error => console.log(error))
     );
-
+const updateBankEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType(UPDATE_BANK_INIT)
+    .switchMap(({ payload: { name, beneficiaryName, IBAN } }) =>
+      Observable.fromPromise(ChangeBank({
+        restaurantId: getState().restaurant.loggedRestaurant.id,
+        name, beneficiaryName, IBAN
+      }))
+        .map(updateDoneAction)
+        .catch(error => console.log(error))
+    );
 export const epics = [
   bootstrapEpic,
   loginEpic,
@@ -263,5 +282,6 @@ export const epics = [
   updateCategoryEpic,
   updateContactEpic,
   updateSocialEpic,
-  updateLocationEpic
+  updateLocationEpic,
+  updateBankEpic
 ];

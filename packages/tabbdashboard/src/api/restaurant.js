@@ -53,3 +53,7 @@ export function ChangeSocial({ restaurantId, facebookURL, instagramURL }) {
 export function ChangeLocation({ restaurantId, name, longitude, latitude }) {
   return Put({ path: `restaurant/${restaurantId}/location` }, { name, longitude, latitude })
 }
+
+export function ChangeBank({ restaurantId, name, beneficiaryName, IBAN }) {
+  return Put({ path: `restaurant/${restaurantId}/bank` }, { name, beneficiaryName, IBAN })
+}
