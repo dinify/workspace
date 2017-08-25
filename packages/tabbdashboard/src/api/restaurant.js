@@ -69,6 +69,10 @@ export function AddTablet({ restaurantId, login_id, pass_enc, name }) {
   return Post({ path: `restaurant/${restaurantId}/shop` }, { login_id, pass_enc, name })
 }
 
+export function GetBills({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/billing` })
+}
+
 //export function RemoveTablet({ restaurantId, login_id }) {
 //  return Delete({ path: `restaurant/${restaurantId}/shop` }, { login_id })
 //}

@@ -6,6 +6,10 @@ import styled from 'styled-components';
 import type { Error } from '../../flow';
 import { Link } from 'react-router-dom';
 
+import {
+  getBillsInitAction,
+} from '../../ducks/restaurant'
+
 const Header = styled.div`
   position: fixed;
   left: 240px;
@@ -48,50 +52,62 @@ type LoginProps = {
   lastError: Error,
 };
 
-const Billing = ({ lastError }: LoginProps) =>
-  (<div>
-    <Header>
-      Billing
-    </Header>
+class Billing extends React.Component {
+  componentDidMount() {
+    const {getBills} = this.props;
+    getBills();
+  }
+  render() {
+    const { lastError, bills } = this.props;
+    return (
+      <div>
+        <Header>
+          Billing
+        </Header>
 
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TH>Date/Month</TH>
-          <TH>Transaction No.</TH>
-          <TH>Guest ID</TH>
-          <TH>Order Type</TH>
-          <TH>Check-in</TH>
-          <TH>Check-out</TH>
-          <TH>Sales</TH>
-          <TH>Payment</TH>
-          <TH>Fee Transaction/Payment</TH>
-          <TH>Gratitude</TH>
-        </TableRow>
-      </TableHead>
-      <tbody>
-        {R.range(10, 50).map((n) =>
-          <TableRow>
-            <TD>17/12</TD>
-            <TD>{18394958203+n}</TD>
-            <TD>Ahmad23</TD>
-            <TD>Dine-in</TD>
-            <TD>13:12:{n}</TD>
-            <TD>13:14:{n}</TD>
-            <TD>7.324KD</TD>
-            <TD>CASH</TD>
-            <TD>0.199KD/0.000KD</TD>
-            <TD>0.079KD</TD>
-          </TableRow>
-        )}
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TH>Date/Month</TH>
+              <TH>Transaction No.</TH>
+              <TH>Guest ID</TH>
+              <TH>Order Type</TH>
+              <TH>Check-in</TH>
+              <TH>Check-out</TH>
+              <TH>Sales</TH>
+              <TH>Payment</TH>
+              <TH>Fee Transaction/Payment</TH>
+              <TH>Gratitude</TH>
+            </TableRow>
+          </TableHead>
+          <tbody>
+            {bills.map((bill, i) =>
+              <TableRow key={i}>
+                <TD>24/08</TD>
+                <TD>{bill.id}</TD>
+                <TD>{bill.user}</TD>
+                <TD>Dine-in</TD>
+                <TD>{bill.check_in}</TD>
+                <TD>{bill.check_out}</TD>
+                <TD>{bill.sub_total}KD</TD>
+                <TD>{bill.payment_method}</TD>
+                <TD>{bill.total}KD/{bill.sub_total}KD</TD>
+                <TD>{bill.gratitude}</TD>
+              </TableRow>
+            )}
+          </tbody>
+        </Table>
 
-
-      </tbody>
-    </Table>
-
-  </div>);
+      </div>
+    )
+  }
+}
 
 export default connect(
-  state => ({}),
-  {},
+  state => ({
+    bills: state.restaurant.bills
+  }),
+  {
+    getBills: getBillsInitAction
+  },
 )(Billing);

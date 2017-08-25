@@ -15,7 +15,8 @@ import {
   ChangeLocation,
   ChangeBank,
   ChangeHours,
-  AddTablet
+  AddTablet,
+  GetBills
 } from '../api/restaurant';
 import type { EpicDependencies, Error, Action } from '../flow';
 import { browserHistory } from 'react-router';
@@ -46,6 +47,9 @@ export const UPDATE_DONE = 'universalreact/restaurant/UPDATE_DONE';
 export const ADD_TABLET_INIT = 'universalreact/restaurant/ADD_TABLET_INIT';
 export const ADD_TABLET_DONE = 'universalreact/restaurant/ADD_TABLET_DONE';
 
+export const GET_BILLS_INIT = 'universalreact/restaurant/GET_BILLS_INIT';
+export const GET_BILLS_DONE = 'universalreact/restaurant/GET_BILLS_DONE';
+
 type State = {
   searchLoading: boolean,
   appRun: boolean,
@@ -62,6 +66,7 @@ const initialState = {
   loggedRestaurant: null,
   updateDone: null,
   addTabletDone: null,
+  bills: []
 };
 
 // Reducer
@@ -107,6 +112,8 @@ export default function reducer(state: State = initialState, action: Action) {
     }
     case ADD_TABLET_DONE:
       return R.assoc('addTabletDone', 'done')(state);
+    case GET_BILLS_DONE:
+      return R.assoc('bills', action.payload)(state);
     default:
       return state;
   }
@@ -203,6 +210,10 @@ export function addTabletInitAction({ login_id, pass_enc, name }) {
 export function addTabletDoneAction() {
   return { type: ADD_TABLET_DONE };
 }
+
+
+export const getBillsInitAction = () => ({ type: GET_BILLS_INIT })
+export const getBillsDoneAction = (payload) => ({ type: GET_BILLS_DONE, payload })
 
 // Epics
 const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
@@ -328,6 +339,17 @@ const addTabletEpic = (action$: Observable, { getState }: EpicDependencies) =>
         .map(addTabletDoneAction)
         .catch(error => console.log(error))
     );
+
+const getBillsEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType(GET_BILLS_INIT)
+    .switchMap(() =>
+      Observable.fromPromise(GetBills({
+        restaurantId: getState().restaurant.loggedRestaurant.id
+      }))
+        .map(getBillsDoneAction)
+        .catch(error => console.log(error))
+    );
 export const epics = [
   bootstrapEpic,
   loginEpic,
@@ -340,5 +362,6 @@ export const epics = [
   updateLocationEpic,
   updateHoursEpic,
   updateBankEpic,
-  addTabletEpic
+  addTabletEpic,
+  getBillsEpic,
 ];

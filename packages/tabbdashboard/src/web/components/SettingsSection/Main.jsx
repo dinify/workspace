@@ -205,43 +205,6 @@ const Main = ({
   </FormBox>
 
   <FormBox>
-    <FormBoxHead>Social Media</FormBoxHead>
-    <FormBoxBody>
-
-      <Form
-        onSubmit={(social) => {
-          updateSocial(social);
-        }}
-        defaultValues={loggedRestaurant.socialMedia}
-        validate={({ facebookURL, instagramURL }) => {
-          return {
-            facebookURL: !facebookURL ? 'Facebook URL is required' : undefined,
-            instagramURL: !instagramURL ? 'Instagram URL is required' : undefined,
-          }
-        }}
-      >
-        {({submitForm}) => {
-          return (
-            <form onSubmit={submitForm}>
-              <FieldWrapper>
-                <i className="ion-social-facebook" />
-                <Text field='facebookURL' placeholder='https://www.facebook.com/myRestaurant' />
-              </FieldWrapper>
-              <FieldWrapper>
-                <i className="ion-social-instagram-outline" />
-                <Text field='instagramURL' placeholder='https://www.instagram.com/myRestaurant' />
-              </FieldWrapper>
-              <FormBoxSubmit>SAVE</FormBoxSubmit>
-            </form>
-          )
-        }}
-      </Form>
-
-    </FormBoxBody>
-  </FormBox>
-
-
-  <FormBox>
     <FormBoxHead>Location</FormBoxHead>
     <FormBoxBody>
 
@@ -286,6 +249,42 @@ const Main = ({
           )
         }}
       </Form>
+    </FormBoxBody>
+  </FormBox>
+
+  <FormBox>
+    <FormBoxHead>Social Media</FormBoxHead>
+    <FormBoxBody>
+
+      <Form
+        onSubmit={(social) => {
+          updateSocial(social);
+        }}
+        defaultValues={loggedRestaurant.socialMedia}
+        validate={({ facebookURL, instagramURL }) => {
+          return {
+            facebookURL: !facebookURL ? 'Facebook URL is required' : undefined,
+            instagramURL: !instagramURL ? 'Instagram URL is required' : undefined,
+          }
+        }}
+      >
+        {({submitForm}) => {
+          return (
+            <form onSubmit={submitForm}>
+              <FieldWrapper>
+                <i className="ion-social-facebook" />
+                <Text field='facebookURL' placeholder='https://www.facebook.com/myRestaurant' />
+              </FieldWrapper>
+              <FieldWrapper>
+                <i className="ion-social-instagram-outline" />
+                <Text field='instagramURL' placeholder='https://www.instagram.com/myRestaurant' />
+              </FieldWrapper>
+              <FormBoxSubmit>SAVE</FormBoxSubmit>
+            </form>
+          )
+        }}
+      </Form>
+
     </FormBoxBody>
   </FormBox>
 
