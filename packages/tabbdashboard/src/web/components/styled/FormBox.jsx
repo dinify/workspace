@@ -31,12 +31,16 @@ export const FormBoxBody = styled.div`
     border-radius: 5px;
     background: rgba(239,243,246,0.7);
   }
+  .FormInput {
+    display: ${p => p.half ? 'inline-block' : 'block'};
+    width: ${p => p.half ? '46.7%' : '100%'};
+  }
   select {
     height: 34px;
   }
 `
 export const FormBoxSubmit = styled.button`
-  background-color: ${p => p.primary ? 'rgb(38,156,244)' : 'rgb(230,234,240)'};
+  background-color: ${p => p.primary ? 'rgb(38,156,244)' : 'rgb(220,224,230)'};
   margin: 10px 0 0 0;
   outline: none;
   padding: 10px 15px;
@@ -46,10 +50,32 @@ export const FormBoxSubmit = styled.button`
   color: ${p => p.primary ? 'white' : '#666'};
   width: 100%;
   &:hover {
-    background-color: ${p => p.primary ? 'rgb(28,146,234)' : 'rgb(220,224,230)'};
+    background-color: ${p => p.primary ? 'rgb(28,146,234)' : 'rgb(210,214,220)'};
   }
   &:active {
-    background-color: ${p => p.primary ? 'rgb(18,126,214)' : 'rgb(210,214,220)'};
+    background-color: ${p => p.primary ? 'rgb(18,126,214)' : 'rgb(200,204,210)'};
     border-color: transparent;
   }
+`
+
+export const FieldWrapper = styled.div`
+  position: relative;
+  input {
+    padding-left: 35px;
+  }
+  i {
+    position: absolute;
+    display: block;
+    width: 30px;
+    top: 11px;
+    left: 5px;
+    font-size: 28px;
+    text-align: center;
+  }
+`
+
+export const Label = styled.div`
+  font-size: 12px;
+  margin-top: 12px;
+  margin-bottom: -6px;
 `

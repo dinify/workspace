@@ -21,6 +21,7 @@ import MainSection from './SettingsSection/Main.jsx';
 import AddonsSection from './SettingsSection/AddOns.jsx';
 import OptionsSection from './SettingsSection/Options.jsx';
 import TabletsSection from './SettingsSection/Tablets.jsx';
+import LocalizationSection from './SettingsSection/Localization.jsx';
 
 
 type SettingsProps = {
@@ -41,6 +42,7 @@ const Settings = ({ lastError, loggedRestaurant, update, updateCategory, updateS
           <HorMenuLink l={location} title="Options" to="/dashboard/settings/options" />
           <HorMenuLink l={location} title="Add-Ons" to="/dashboard/settings/addons" />
           <HorMenuLink l={location} title="Tablets" to="/dashboard/settings/tablets" />
+          <HorMenuLink l={location} title="Localization" to="/dashboard/settings/localization" />
         </HorMenu>
       </Header>
 
@@ -50,6 +52,7 @@ const Settings = ({ lastError, loggedRestaurant, update, updateCategory, updateS
         <Route path="/dashboard/settings/options" component={OptionsSection} />
         <Route path="/dashboard/settings/addons" component={AddonsSection} />
         <Route path="/dashboard/settings/tablets" component={TabletsSection} />
+        <Route path="/dashboard/settings/localization" component={LocalizationSection} />
       </Switch>
 
   </div>);

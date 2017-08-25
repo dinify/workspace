@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import R from 'ramda';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import type { Error } from '../../../flow';
@@ -11,7 +12,7 @@ import 'react-switch-button/dist/react-switch-button.css';
 
 import _ from 'underscore';
 
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from '../styled/FormBox';
+import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label } from '../styled/FormBox';
 
 import {
   updateInitAction,
@@ -61,7 +62,9 @@ const TODO = styled.div`
   color: rgba(0,0,0,0.3)
 `;
 
-const areaNames = [
+const areaNames = R.sort((a, b) => {
+  return a.localeCompare(b);
+},[
   'Qibla',
   'Sharq',
   'Mirqab',
@@ -75,7 +78,7 @@ const areaNames = [
   'Jahra',
   'Jabriya',
   'Gulf Road seaside',
-].map((a) => ({label: a, value: a.toUpperCase()}));
+]).map((a) => ({label: a, value: a.toUpperCase()}));
 
 const MainContrainer = styled.div`
   column-count: 3;
@@ -220,9 +223,14 @@ const Main = ({
         {({submitForm}) => {
           return (
             <form onSubmit={submitForm}>
-              <Text field='facebookURL' placeholder='https://www.facebook.com/myRestaurant' />
-              <Text field='instagramURL' placeholder='https://www.instagram.com/myRestaurant' />
-
+              <FieldWrapper>
+                <i className="ion-social-facebook" />
+                <Text field='facebookURL' placeholder='https://www.facebook.com/myRestaurant' />
+              </FieldWrapper>
+              <FieldWrapper>
+                <i className="ion-social-instagram-outline" />
+                <Text field='instagramURL' placeholder='https://www.instagram.com/myRestaurant' />
+              </FieldWrapper>
               <FormBoxSubmit>SAVE</FormBoxSubmit>
             </form>
           )
@@ -283,7 +291,7 @@ const Main = ({
 
   <FormBox>
     <FormBoxHead>Business Hours</FormBoxHead>
-    <FormBoxBody>
+    <FormBoxBody half>
       <Form
         onSubmit={(hours) => {
           console.log('Success!', hours);
@@ -299,9 +307,13 @@ const Main = ({
         {({submitForm}) => {
           return (
             <form onSubmit={submitForm}>
+              <Label>Workday</Label>
               <Text field='weekdayFrom' placeholder='Weekday from' />
+              <span> - </span>
               <Text field='weekdayTo' placeholder='Weekday to' />
+              <Label>Weekend</Label>
               <Text field='weekendFrom' placeholder='Weekend from' />
+              <span> - </span>
               <Text field='weekendTo' placeholder='Weekend to' />
               <FormBoxSubmit>SAVE</FormBoxSubmit>
             </form>

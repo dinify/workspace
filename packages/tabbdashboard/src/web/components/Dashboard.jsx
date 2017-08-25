@@ -13,6 +13,7 @@ import Input from 'react-enhanced-form'
 import { logoutInitAction } from '../../ducks/restaurant';
 
 import SettingsSection from './Settings'
+import MenucontrolSection from './Menucontrol'
 import BillingSection from './Billing'
 import GuestsSection from './Guests'
 import SalesSection from './Sales'
@@ -101,6 +102,7 @@ const Dashboard = ({ location, logout }) =>
 
       <Menu>
         <MenuLink l={location} iconName="ion-gear-b" title="Settings" to="/dashboard/settings" />
+        <MenuLink l={location} iconName="ion-ios-book" title="Menu" to="/dashboard/menucontrol" />
         <MenuLink l={location} iconName="ion-social-usd" title="Billing" to="/dashboard/billing" />
         <MenuLink l={location} iconName="ion-ios-people" title="Guests" to="/dashboard/guests" />
         <MenuLink l={location} iconName="ion-cash" title="Sales" to="/dashboard/sales" />
@@ -119,6 +121,7 @@ const Dashboard = ({ location, logout }) =>
       <Switch>
         <Redirect exact from="/dashboard" to="/dashboard/settings" />
         <Route path="/dashboard/settings" component={SettingsSection} />
+        <Route path="/dashboard/menucontrol" component={MenucontrolSection} />
         <Route path="/dashboard/billing" component={BillingSection} />
         <Route path="/dashboard/guests" component={GuestsSection} />
         <Route path="/dashboard/sales" component={SalesSection} />
