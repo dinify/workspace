@@ -59,7 +59,7 @@ export const HorMenuItem = styled.li`
   letter-spacing: 1px;
   a {
     text-decoration: none;
-    color: ${({active}) => active ? 'black': 'rgba(0,0,0,0.6)'};
+    color: ${({active}) => active ? 'black': 'rgba(0,0,0,0.45)'};
     cursor: pointer;
     &:hover {
       color: black;

@@ -57,3 +57,18 @@ export function ChangeLocation({ restaurantId, name, longitude, latitude }) {
 export function ChangeBank({ restaurantId, name, beneficiaryName, IBAN }) {
   return Put({ path: `restaurant/${restaurantId}/bank` }, { name, beneficiaryName, IBAN })
 }
+
+export function ChangeHours({ restaurantId, weekdayFrom, weekdayTo, weekendFrom, weekendTo }) {
+  return Put({ path: `restaurant/${restaurantId}/businesshours` }, {
+    weekday: {from: Number(weekdayFrom), to: Number(weekdayTo)},
+    weekend: {from: Number(weekendFrom), to: Number(weekendTo)}
+  })
+}
+
+export function AddTablet({ restaurantId, login_id, pass_enc, name }) {
+  return Post({ path: `restaurant/${restaurantId}/shop` }, { login_id, pass_enc, name })
+}
+
+//export function RemoveTablet({ restaurantId, login_id }) {
+//  return Delete({ path: `restaurant/${restaurantId}/shop` }, { login_id })
+//}

@@ -14,6 +14,8 @@ import {
   ChangeSocial,
   ChangeLocation,
   ChangeBank,
+  ChangeHours,
+  AddTablet
 } from '../api/restaurant';
 import type { EpicDependencies, Error, Action } from '../flow';
 import { browserHistory } from 'react-router';
@@ -38,7 +40,11 @@ export const UPDATE_CONTACT_INIT = 'universalreact/restaurant/UPDATE_CONTACT_INI
 export const UPDATE_SOCIAL_INIT = 'universalreact/restaurant/UPDATE_SOCIAL_INIT';
 export const UPDATE_LOCATION_INIT = 'universalreact/restaurant/UPDATE_LOCATION_INIT';
 export const UPDATE_BANK_INIT = 'universalreact/restaurant/UPDATE_BANK_INIT';
+export const UPDATE_HOURS_INIT = 'universalreact/restaurant/UPDATE_HOURS_INIT';
 export const UPDATE_DONE = 'universalreact/restaurant/UPDATE_DONE';
+
+export const ADD_TABLET_INIT = 'universalreact/restaurant/ADD_TABLET_INIT';
+export const ADD_TABLET_DONE = 'universalreact/restaurant/ADD_TABLET_DONE';
 
 type State = {
   searchLoading: boolean,
@@ -55,6 +61,7 @@ const initialState = {
   lastError: null,
   loggedRestaurant: null,
   updateDone: null,
+  addTabletDone: null,
 };
 
 // Reducer
@@ -80,11 +87,26 @@ export default function reducer(state: State = initialState, action: Action) {
       state = R.assocPath(['loggedRestaurant', 'location', 'longitude'], Number(action.payload.longitude))(state);
       return R.assocPath(['loggedRestaurant', 'location', 'latitude'], Number(action.payload.latitude))(state);
     }
+    case UPDATE_HOURS_INIT: {
+      const { weekdayFrom, weekdayTo, weekendFrom, weekendTo } = action.payload;
+      return R.assocPath(['loggedRestaurant', 'businessHours'], {
+        weekday: {from: weekdayFrom, to: weekdayTo},
+        weekend: {from: weekendFrom, to: weekendTo}
+      })(state);
+    }
     case UPDATE_BANK_INIT: {
       return R.assocPath(['loggedRestaurant', 'bank'], action.payload)(state);
     }
     case UPDATE_DONE:
       return R.assoc('updateDone', 'done')(state);
+    case ADD_TABLET_INIT: {
+      const { login_id, name } = action.payload;
+      const newTablet = { login_id, name };
+      state = R.assoc('addTabletDone', 'adding')(state);
+      return R.assocPath(['loggedRestaurant', 'tablets'], [...state.loggedRestaurant.tablets, newTablet])(state);
+    }
+    case ADD_TABLET_DONE:
+      return R.assoc('addTabletDone', 'done')(state);
     default:
       return state;
   }
@@ -124,6 +146,10 @@ export function updateLocationInitAction({ name, longitude, latitude }) {
 
 export function updateBankInitAction({ name, beneficiaryName, IBAN }) {
   return { type: UPDATE_BANK_INIT, payload: { name, beneficiaryName, IBAN }};
+}
+
+export function updateHoursInitAction({ weekdayFrom, weekdayTo, weekendFrom, weekendTo }) {
+  return { type: UPDATE_HOURS_INIT, payload: { weekdayFrom, weekdayTo, weekendFrom, weekendTo }};
 }
 
 export function loginInitAction({ email, password }) {
@@ -169,6 +195,13 @@ export function signupFailAction(err: Error) {
 
 export function appBootstrap() {
   return { type: BOOTSTRAP };
+}
+
+export function addTabletInitAction({ login_id, pass_enc, name }) {
+  return { type: ADD_TABLET_INIT, payload: { login_id, pass_enc, name }};
+}
+export function addTabletDoneAction() {
+  return { type: ADD_TABLET_DONE };
 }
 
 // Epics
@@ -273,6 +306,28 @@ const updateBankEpic = (action$: Observable, { getState }: EpicDependencies) =>
         .map(updateDoneAction)
         .catch(error => console.log(error))
     );
+const updateHoursEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType(UPDATE_HOURS_INIT)
+    .switchMap(({ payload: { weekdayFrom, weekdayTo, weekendFrom, weekendTo } }) =>
+      Observable.fromPromise(ChangeHours({
+        restaurantId: getState().restaurant.loggedRestaurant.id,
+        weekdayFrom, weekdayTo, weekendFrom, weekendTo
+      }))
+        .map(updateDoneAction)
+        .catch(error => console.log(error))
+    );
+const addTabletEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType(ADD_TABLET_INIT)
+    .switchMap(({ payload: { login_id, pass_enc, name } }) =>
+      Observable.fromPromise(AddTablet({
+        restaurantId: getState().restaurant.loggedRestaurant.id,
+        login_id, pass_enc, name
+      }))
+        .map(addTabletDoneAction)
+        .catch(error => console.log(error))
+    );
 export const epics = [
   bootstrapEpic,
   loginEpic,
@@ -283,5 +338,7 @@ export const epics = [
   updateContactEpic,
   updateSocialEpic,
   updateLocationEpic,
-  updateBankEpic
+  updateHoursEpic,
+  updateBankEpic,
+  addTabletEpic
 ];

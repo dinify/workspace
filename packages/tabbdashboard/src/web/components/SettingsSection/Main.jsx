@@ -19,6 +19,7 @@ import {
   updateSocialInitAction,
   updateContactInitAction,
   updateLocationInitAction,
+  updateHoursInitAction,
   updateBankInitAction,
 } from '../../../ducks/restaurant'
 
@@ -31,6 +32,7 @@ type MainProps = {
   updateContact: typeof updateContactInitAction,
   updateLocation: typeof updateLocationInitAction,
   updateBank: typeof updateBankInitAction,
+  updateHours: typeof updateHoursInitAction,
   updateDone: Any,
 };
 
@@ -95,6 +97,7 @@ const Main = ({
   updateContact,
   updateLocation,
   updateBank,
+  updateHours,
   updateDone,
 }: MainProps) =>
   (<MainContrainer>
@@ -278,7 +281,35 @@ const Main = ({
     </FormBoxBody>
   </FormBox>
 
-
+  <FormBox>
+    <FormBoxHead>Business Hours</FormBoxHead>
+    <FormBoxBody>
+      <Form
+        onSubmit={(hours) => {
+          console.log('Success!', hours);
+          updateHours(hours);
+        }}
+        defaultValues={{
+          weekdayFrom: loggedRestaurant.businessHours.weekday.from,
+          weekdayTo: loggedRestaurant.businessHours.weekday.to,
+          weekendFrom: loggedRestaurant.businessHours.weekend.from,
+          weekendTo: loggedRestaurant.businessHours.weekend.to
+        }}
+      >
+        {({submitForm}) => {
+          return (
+            <form onSubmit={submitForm}>
+              <Text field='weekdayFrom' placeholder='Weekday from' />
+              <Text field='weekdayTo' placeholder='Weekday to' />
+              <Text field='weekendFrom' placeholder='Weekend from' />
+              <Text field='weekendTo' placeholder='Weekend to' />
+              <FormBoxSubmit>SAVE</FormBoxSubmit>
+            </form>
+          )
+        }}
+      </Form>
+    </FormBoxBody>
+  </FormBox>
 
   <FormBox>
     <FormBoxHead>Banking Information</FormBoxHead>
@@ -325,6 +356,7 @@ state => ({
   updateSocial: updateSocialInitAction,
   updateContact: updateContactInitAction,
   updateLocation: updateLocationInitAction,
+  updateHours: updateHoursInitAction,
   updateBank: updateBankInitAction,
 },
 )(Main);

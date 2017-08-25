@@ -12,41 +12,90 @@ import 'react-switch-button/dist/react-switch-button.css';
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from '../styled/FormBox';
 
 import {
-  updateInitAction,
-  updateCategoryInitAction,
-  updateSocialInitAction,
-  updateContactInitAction,
+  addTabletInitAction,
 } from '../../../ducks/restaurant'
 
 type MainProps = {
   lastError: Error,
   loggedRestaurant: ?Object,
-  update: typeof updateInitAction,
-  updateCategory: typeof updateCategoryInitAction,
-  updateSocial: typeof updateSocialInitAction,
-  updateContact: typeof updateContactInitAction,
+  addTablet: Any,
 };
 
-const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocial, updateContact }: MainProps) =>
+const Tablet = styled.div`
+  margin: 10px;
+  background: black;
+  width: 200px;
+  height: 140px;
+  line-height: 30px;
+  text-align: center;
+  color: white;
+  border-radius: 5px;
+  display: inline-block;
+`
+
+const TabletCred = styled.div`
+  font-weight: 200;
+  i {
+    font-weight: 500;
+    font-size: 20px;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  span {
+    vertical-align: middle;
+  }
+`
+
+const Main = ({ lastError, loggedRestaurant, addTablet, addTabletDone }: MainProps) =>
 (<div>
+  <div style={{marginLeft: '10px'}}>
+    {addTabletDone === 'adding' ? 'Adding...' : ''}
+    {addTabletDone === 'done' ? 'Tablet added' : ''}
+  </div>
+  {loggedRestaurant.tablets.map((tablet,i) =>
+    <Tablet key={i}>
+      <div style={{marginBottom: '10px'}}>{tablet.name}</div>
+      <TabletCred>
+        <i className="ion-ios-person" />
+        <span>{tablet.login_id}</span>
+      </TabletCred>
+      <TabletCred>
+        <i className="ion-key" />
+        <span>********</span>
+      </TabletCred>
+    </Tablet>
+  )}
   <FormBox>
-    <FormBoxHead>Set Tablet(s)</FormBoxHead>
+    <FormBoxHead>Register New Tablet</FormBoxHead>
     <FormBoxBody>
-      <input placeholder="Tablet ID" type="text" />
-      <input placeholder="Password" type="text" />
-      <FormBoxSubmit>SAVE</FormBoxSubmit>
+
+      <Form
+        onSubmit={(tablet) => {
+          console.log('Success!', tablet);
+          addTablet(tablet);
+        }}
+      >
+        {({submitForm}) => {
+          return (
+            <form onSubmit={submitForm}>
+              <Text field='name' placeholder='Tablet Name' />
+              <Text field='login_id' placeholder='Tablet Username' />
+              <Text field='pass_enc' placeholder='Tablet Password' />
+              <FormBoxSubmit>ADD</FormBoxSubmit>
+            </form>
+          )
+        }}
+      </Form>
     </FormBoxBody>
   </FormBox>
 </div>);
 
 export default connect(
 state => ({
-  loggedRestaurant: state.restaurant.loggedRestaurant
+  loggedRestaurant: state.restaurant.loggedRestaurant,
+  addTabletDone: state.restaurant.addTabletDone
 }),
 {
-  update: updateInitAction,
-  updateCategory: updateCategoryInitAction,
-  updateSocial: updateSocialInitAction,
-  updateContact: updateContactInitAction,
+  addTablet: addTabletInitAction,
 },
 )(Main);
