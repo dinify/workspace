@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import type { Error } from '../../../flow';
 import { Link } from 'react-router-dom';
 import { Form, Text } from 'react-form';
-
+import QRCode from 'qrcode.react'
 import SwitchButton from 'react-switch-button';
 import 'react-switch-button/dist/react-switch-button.css';
 
@@ -63,6 +63,8 @@ const Main = ({ lastError, loggedRestaurant, addTablet, addTabletDone }: MainPro
         <i className="ion-key" />
         <span>********</span>
       </TabletCred>
+      {/*<QRCode value="http://facebook.github.io/react/" />*/}
+
     </Tablet>
   )}
   <FormBox>

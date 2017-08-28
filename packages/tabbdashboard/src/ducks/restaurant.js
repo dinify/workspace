@@ -16,7 +16,10 @@ import {
   ChangeBank,
   ChangeHours,
   AddTablet,
-  GetBills
+  GetBills,
+  GetCategories,
+  RemoveCategory,
+  AddCategory
 } from '../api/restaurant';
 import type { EpicDependencies, Error, Action } from '../flow';
 import { browserHistory } from 'react-router';
@@ -50,6 +53,9 @@ export const ADD_TABLET_DONE = 'universalreact/restaurant/ADD_TABLET_DONE';
 export const GET_BILLS_INIT = 'universalreact/restaurant/GET_BILLS_INIT';
 export const GET_BILLS_DONE = 'universalreact/restaurant/GET_BILLS_DONE';
 
+export const GET_CATEGORIES_INIT = 'universalreact/restaurant/GET_CATEGORIES_INIT';
+export const GET_CATEGORIES_DONE = 'universalreact/restaurant/GET_CATEGORIES_DONE';
+
 type State = {
   searchLoading: boolean,
   appRun: boolean,
@@ -66,7 +72,8 @@ const initialState = {
   loggedRestaurant: null,
   updateDone: null,
   addTabletDone: null,
-  bills: []
+  bills: [],
+  categories: []
 };
 
 // Reducer
@@ -114,6 +121,8 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assoc('addTabletDone', 'done')(state);
     case GET_BILLS_DONE:
       return R.assoc('bills', action.payload)(state);
+    case GET_CATEGORIES_DONE:
+      return R.assoc('categories', action.payload)(state);
     default:
       return state;
   }
@@ -214,6 +223,13 @@ export function addTabletDoneAction() {
 
 export const getBillsInitAction = () => ({ type: GET_BILLS_INIT })
 export const getBillsDoneAction = (payload) => ({ type: GET_BILLS_DONE, payload })
+
+export const getCategoriesInitAction = () => ({ type: GET_CATEGORIES_INIT })
+export const getCategoriesDoneAction = (payload) => ({ type: GET_CATEGORIES_DONE, payload })
+
+export const rmCategoryInitAction = (payload) => ({ type: 'RM_CATEGORY_INIT', payload })
+
+export const addCategoryInitAction = (payload) => ({ type: 'ADD_CATEGORY_INIT', payload })
 
 // Epics
 const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
@@ -350,6 +366,39 @@ const getBillsEpic = (action$: Observable, { getState }: EpicDependencies) =>
         .map(getBillsDoneAction)
         .catch(error => console.log(error))
     );
+
+const getCategoriesEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType(GET_CATEGORIES_INIT)
+    .switchMap(() =>
+      Observable.fromPromise(GetCategories({
+        restaurantId: getState().restaurant.loggedRestaurant.id
+      }))
+        .map(getCategoriesDoneAction)
+        .catch(error => console.log(error))
+    );
+const rmCategoryEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType('RM_CATEGORY_INIT')
+    .switchMap(({ payload: { categoryId } }) =>
+      Observable.fromPromise(RemoveCategory({
+        restaurantId: getState().restaurant.loggedRestaurant.id,
+        categoryId
+      }))
+        .map(getCategoriesInitAction)
+        .catch(error => console.log(error))
+    );
+const addCategoryEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType('ADD_CATEGORY_INIT')
+    .switchMap(({ payload: { categoryName } }) =>
+      Observable.fromPromise(AddCategory({
+        restaurantId: getState().restaurant.loggedRestaurant.id,
+        categoryName
+      }))
+        .map(getCategoriesInitAction)
+        .catch(error => console.log(error))
+    );
 export const epics = [
   bootstrapEpic,
   loginEpic,
@@ -364,4 +413,7 @@ export const epics = [
   updateBankEpic,
   addTabletEpic,
   getBillsEpic,
+  getCategoriesEpic,
+  rmCategoryEpic,
+  addCategoryEpic,
 ];

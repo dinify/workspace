@@ -10,7 +10,6 @@ import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import SwitchButton from 'react-switch-button';
 import 'react-switch-button/dist/react-switch-button.css';
 
-import _ from 'underscore';
 
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label } from '../styled/FormBox';
 
@@ -236,9 +235,6 @@ const Main = ({
                 mapElement={
                   <div style={{ height: `200px` }} />
                 }
-                onMapLoad={_.noop}
-                onMapClick={_.noop}
-                onMarkerRightClick={_.noop}
                 lng={loggedRestaurant.location.longitude}
                 lat={loggedRestaurant.location.latitude}
               />

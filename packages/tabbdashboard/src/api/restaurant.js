@@ -73,6 +73,18 @@ export function GetBills({ restaurantId }) {
   return Get({ path: `restaurant/${restaurantId}/billing` })
 }
 
+export function GetCategories({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/categories` })
+}
+
+export function RemoveCategory({ restaurantId, categoryId }) {
+  return Delete({ path: `restaurant/${restaurantId}/category/${categoryId}` })
+}
+
+export function AddCategory({ restaurantId, categoryName }) {
+  return Post({ path: `restaurant/${restaurantId}/category` }, { name: categoryName })
+}
+
 //export function RemoveTablet({ restaurantId, login_id }) {
 //  return Delete({ path: `restaurant/${restaurantId}/shop` }, { login_id })
 //}
