@@ -23,7 +23,7 @@ export const FormBoxBody = styled.div`
   padding-top: ${p => p.pt || 0}px;
   padding-bottom: ${p => p.pb || 10}px;
   text-align: ${p => p.center ? 'center' : 'left'};
-  input, select {
+  input, select, textarea {
     border: 1px solid #CED0DA;
     margin-top: 10px;
     width: 100%;

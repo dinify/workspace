@@ -33,6 +33,18 @@ const Tablet = styled.div`
   display: inline-block;
 `
 
+const Desk = styled.div`
+  margin: 300px;
+  background: white;
+  width: 200px;
+  height: 220px;
+  line-height: 30px;
+  text-align: center;
+  color: black;
+  border-radius: 5px;
+  display: block;
+`
+
 const TabletCred = styled.div`
   font-weight: 200;
   i {
@@ -63,9 +75,18 @@ const Main = ({ lastError, loggedRestaurant, addTablet, addTabletDone }: MainPro
         <i className="ion-key" />
         <span>********</span>
       </TabletCred>
-      {/*<QRCode value="http://facebook.github.io/react/" />*/}
-
     </Tablet>
+  )}
+  {loggedRestaurant.tablets.map((tablet,i) =>
+    <div>
+      {tablet.tables.map((table,j) =>
+        <Desk key={j}>
+          <div style={{marginBottom: '10px'}}>{table.position}</div>
+          <QRCode value={`000${loggedRestaurant.id}-${table.position}`} />
+          <div>{`000${loggedRestaurant.id}-${table.position}`}</div>
+        </Desk>
+      )}
+    </div>
   )}
   <FormBox>
     <FormBoxHead>Register New Tablet</FormBoxHead>

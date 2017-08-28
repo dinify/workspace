@@ -85,6 +85,10 @@ export function AddCategory({ restaurantId, categoryName }) {
   return Post({ path: `restaurant/${restaurantId}/category` }, { name: categoryName })
 }
 
+export function RemoveFood({ restaurantId, categoryId, foodId }) {
+  return Delete({ path: `restaurant/${restaurantId}/category/${categoryId}/food/${foodId}` })
+}
+
 //export function RemoveTablet({ restaurantId, login_id }) {
 //  return Delete({ path: `restaurant/${restaurantId}/shop` }, { login_id })
 //}

@@ -19,7 +19,8 @@ import {
   GetBills,
   GetCategories,
   RemoveCategory,
-  AddCategory
+  AddCategory,
+  RemoveFood
 } from '../api/restaurant';
 import type { EpicDependencies, Error, Action } from '../flow';
 import { browserHistory } from 'react-router';
@@ -73,7 +74,8 @@ const initialState = {
   updateDone: null,
   addTabletDone: null,
   bills: [],
-  categories: []
+  categories: [],
+  selectedCategoryId: null
 };
 
 // Reducer
@@ -123,6 +125,10 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assoc('bills', action.payload)(state);
     case GET_CATEGORIES_DONE:
       return R.assoc('categories', action.payload)(state);
+    case 'SELECT_CATEGORY':
+      return R.assoc('selectedCategoryId', action.payload.categoryId)(state);
+    case 'SELECT_FOOD':
+      return R.assoc('selectedFoodId', action.payload.foodId)(state);
     default:
       return state;
   }
@@ -133,6 +139,13 @@ function setCookie(cname, cvalue, exdays) {
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+export function selectCategoryAction({ categoryId }) {
+  return { type: 'SELECT_CATEGORY', payload: { categoryId }};
+}
+export function selectFoodAction({ foodId }) {
+  return { type: 'SELECT_FOOD', payload: { foodId }};
 }
 
 // Action Creators
@@ -230,6 +243,11 @@ export const getCategoriesDoneAction = (payload) => ({ type: GET_CATEGORIES_DONE
 export const rmCategoryInitAction = (payload) => ({ type: 'RM_CATEGORY_INIT', payload })
 
 export const addCategoryInitAction = (payload) => ({ type: 'ADD_CATEGORY_INIT', payload })
+
+
+export const rmFoodInitAction = (payload) => ({ type: 'RM_FOOD_INIT', payload })
+
+export const addFoodInitAction = (payload) => ({ type: 'ADD_FOOD_INIT', payload })
 
 // Epics
 const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
@@ -399,6 +417,17 @@ const addCategoryEpic = (action$: Observable, { getState }: EpicDependencies) =>
         .map(getCategoriesInitAction)
         .catch(error => console.log(error))
     );
+const rmFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType('RM_FOOD_INIT')
+    .switchMap(({ payload: { categoryId, foodId } }) =>
+      Observable.fromPromise(RemoveFood({
+        restaurantId: getState().restaurant.loggedRestaurant.id,
+        categoryId, foodId
+      }))
+        .map(getCategoriesInitAction)
+        .catch(error => console.log(error))
+    );
 export const epics = [
   bootstrapEpic,
   loginEpic,
@@ -416,4 +445,5 @@ export const epics = [
   getCategoriesEpic,
   rmCategoryEpic,
   addCategoryEpic,
+  rmFoodEpic,
 ];

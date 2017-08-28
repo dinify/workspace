@@ -61,8 +61,8 @@ const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocia
       </TableTag>
 
       <Form
-        onSubmit={({ name, price }) => {
-          console.log('Success!', { name, price });
+        onSubmit={(val) => {
+          console.log('Success!', val);
           //update({ restaurantName });
         }}
         validate={({ name, price }) => {
@@ -76,7 +76,7 @@ const Main = ({ lastError, loggedRestaurant, update, updateCategory, updateSocia
           return (
             <form onSubmit={submitForm}>
               <Text field='name' placeholder='Add-on name' />
-              <Number field='price' placeholder='Price' />
+              <Text type="number" field='price' placeholder='Price' />
               <FormBoxSubmit>ADD</FormBoxSubmit>
             </form>
           )

@@ -64,13 +64,14 @@ export function Request(url, options = {}, noToken) {
 }
 
 
+
 const buildURL = ({
   subdom = 'tabb-api',
   endpoint = 'eu-central-1.elasticbeanstalk.com',
   prefix = 'api/v1',
   path
 }) => `http://${subdom}.${endpoint}/${prefix}/${path}`;
-
+//`http://localhost:3005/${prefix}/${path}`;//
 // urlParts = { token, ?subdom, ?endpoint, ?prefix, path }
 
 export function Get(urlParts, cookie) {
