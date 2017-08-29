@@ -7,7 +7,8 @@ export const FormBox = styled.div`
   border-radius: 5px;
   border: 1px solid #CED0DA;
   vertical-align: top;
-  margin: 10px
+  margin: 10px;
+  overflow: hidden;
 `
 export const FormBoxHead = styled.div`
   background: #F2F4F7;

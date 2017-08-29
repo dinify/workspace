@@ -145,7 +145,7 @@ const Main = ({
     <FormBoxBody center pt={20} pb={20}>
       <SwitchButton
         name="switch-type"
-        label="Classic"
+        label="Restaurant"
         labelRight="QLESS"
         type="switch"
         defaultChecked={loggedRestaurant.category === 'QUEUELESS'}

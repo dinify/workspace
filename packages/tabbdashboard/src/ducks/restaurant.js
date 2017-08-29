@@ -20,7 +20,9 @@ import {
   GetCategories,
   RemoveCategory,
   AddCategory,
-  RemoveFood
+  RemoveFood,
+  UpdateFood,
+  AddFood,
 } from '../api/restaurant';
 import type { EpicDependencies, Error, Action } from '../flow';
 import { browserHistory } from 'react-router';
@@ -244,10 +246,12 @@ export const rmCategoryInitAction = (payload) => ({ type: 'RM_CATEGORY_INIT', pa
 
 export const addCategoryInitAction = (payload) => ({ type: 'ADD_CATEGORY_INIT', payload })
 
-
 export const rmFoodInitAction = (payload) => ({ type: 'RM_FOOD_INIT', payload })
 
 export const addFoodInitAction = (payload) => ({ type: 'ADD_FOOD_INIT', payload })
+
+export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', payload })
+
 
 // Epics
 const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
@@ -428,6 +432,30 @@ const rmFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
         .map(getCategoriesInitAction)
         .catch(error => console.log(error))
     );
+const updateFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType('UPDATE_FOOD_INIT')
+    .switchMap(({ payload: { categoryId, foodId, name, description, price } }) =>
+      Observable.fromPromise(UpdateFood({
+        restaurantId: getState().restaurant.loggedRestaurant.id,
+        categoryId, foodId,
+        name, description, price
+      }))
+        .map(getCategoriesInitAction)
+        .catch(error => console.log(error))
+    );
+const addFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType('ADD_FOOD_INIT')
+    .switchMap(({ payload: { categoryId, foodName } }) =>
+      Observable.fromPromise(AddFood({
+        restaurantId: getState().restaurant.loggedRestaurant.id,
+        categoryId,
+        foodName
+      }))
+        .map(getCategoriesInitAction)
+        .catch(error => console.log(error))
+    );
 export const epics = [
   bootstrapEpic,
   loginEpic,
@@ -446,4 +474,6 @@ export const epics = [
   rmCategoryEpic,
   addCategoryEpic,
   rmFoodEpic,
+  updateFoodEpic,
+  addFoodEpic,
 ];

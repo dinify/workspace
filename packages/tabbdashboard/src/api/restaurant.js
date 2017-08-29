@@ -1,5 +1,5 @@
 import { Get, Post, Put, Delete } from './Network'
-
+import R from 'ramda'
 
 export function Login({ email, password }) {
   return Post({ path: 'oauth2/authentication', noToken: true }, {
@@ -87,6 +87,15 @@ export function AddCategory({ restaurantId, categoryName }) {
 
 export function RemoveFood({ restaurantId, categoryId, foodId }) {
   return Delete({ path: `restaurant/${restaurantId}/category/${categoryId}/food/${foodId}` })
+}
+
+export function UpdateFood({ restaurantId, categoryId, foodId, name, description, price, calories, used, order }) {
+  const updateObject = R.pickBy(R.identity, { name, description, price, calories, used, order })
+  return Put({ path: `restaurant/${restaurantId}/category/${categoryId}/food/${foodId}` }, updateObject)
+}
+
+export function AddFood({ restaurantId, categoryId, foodName }) {
+  return Post({ path: `restaurant/${restaurantId}/category/${categoryId}/food` }, { name: foodName })
 }
 
 //export function RemoveTablet({ restaurantId, login_id }) {
