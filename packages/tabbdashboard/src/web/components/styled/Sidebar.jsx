@@ -10,4 +10,7 @@ export const Sidebar = styled.div`
   display: flex;
   align-items: top;
   justify-content: center;
+  @media print {
+    display: none;
+  }
 `;

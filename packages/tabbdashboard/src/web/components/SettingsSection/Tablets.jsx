@@ -8,8 +8,9 @@ import { Form, Text } from 'react-form';
 import QRCode from 'qrcode.react'
 import SwitchButton from 'react-switch-button';
 import 'react-switch-button/dist/react-switch-button.css';
+import { HorizontalLine } from '../styled/HorizontalLine'
 
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from '../styled/FormBox';
+import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, Label } from '../styled/FormBox';
 
 import {
   addTabletInitAction,
@@ -34,7 +35,7 @@ const Tablet = styled.div`
 `
 
 const Desk = styled.div`
-  margin: 300px;
+  margin: 20px;
   background: white;
   width: 200px;
   height: 220px;
@@ -42,7 +43,7 @@ const Desk = styled.div`
   text-align: center;
   color: black;
   border-radius: 5px;
-  display: block;
+  display: inline-block;
 `
 
 const TabletCred = styled.div`
@@ -77,17 +78,6 @@ const Main = ({ lastError, loggedRestaurant, addTablet, addTabletDone }: MainPro
       </TabletCred>
     </Tablet>
   )}
-  {loggedRestaurant.tablets.map((tablet,i) =>
-    <div>
-      {tablet.tables.map((table,j) =>
-        <Desk key={j}>
-          <div style={{marginBottom: '10px'}}>{table.position}</div>
-          <QRCode value={`000${loggedRestaurant.id}-${table.position}`} />
-          <div>{`000${loggedRestaurant.id}-${table.position}`}</div>
-        </Desk>
-      )}
-    </div>
-  )}
   <FormBox>
     <FormBoxHead>Register New Tablet</FormBoxHead>
     <FormBoxBody>
@@ -111,6 +101,24 @@ const Main = ({ lastError, loggedRestaurant, addTablet, addTabletDone }: MainPro
       </Form>
     </FormBoxBody>
   </FormBox>
+  {loggedRestaurant.tablets.sort((a,b) => a.id - b.id).map((tablet,i) =>
+    <div>
+      <Label>
+        {tablet.name}
+      </Label>
+      {tablet.tables.sort((a,b) => a.position - b.position).map((table,j) =>
+        table.position > 0 ?
+          <Desk key={j}>
+            <div style={{marginBottom: '10px'}}>{table.position}</div>
+            <QRCode value={`000${loggedRestaurant.id}-${table.position < 10 ? '0'+table.position : table.position}`} />
+            <div>{`000${loggedRestaurant.id}-${table.position < 10 ? '0'+table.position : table.position}`}</div>
+          </Desk>
+        : ''
+      )}
+      <HorizontalLine dark />
+    </div>
+  )}
+
 </div>);
 
 export default connect(

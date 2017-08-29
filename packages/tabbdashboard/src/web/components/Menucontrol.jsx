@@ -121,7 +121,7 @@ const RemoveButton = styled.button`
 const HeadLine = styled.div`
   height: 50px;
   line-height: 50px;
-  padding-left: 20px;
+  padding-left: 15px;
 `
 
 const H = styled.div`
@@ -130,6 +130,7 @@ const H = styled.div`
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing: 1px;
+  margin-right: 20px;
 `
 
 const MealDetail = styled.div`
@@ -218,6 +219,7 @@ const FoodImage = styled.div`
   height: 200px;
   background-image: url(${(p) => p.imageURL});
   background-size: cover;
+  background-position: center;
 `
 
 class Menucontrol extends React.Component {

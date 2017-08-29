@@ -27,6 +27,9 @@ const Sidebar = styled.div`
   top: 0;
   height: 100vh;
   width: 240px;
+  @media print {
+    display: none;
+  }
 `;
 
 const Logo = styled.div`

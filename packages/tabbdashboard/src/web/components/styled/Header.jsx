@@ -11,4 +11,7 @@ export const Header = styled.div`
   background: #FFF;
   line-height: 60px;
   padding-left: 30px;
+  @media print {
+    display: none;
+  }
 `;
