@@ -11,7 +11,7 @@ export const Menu = styled.ul`
 
 export const MenuItem = styled.li`
   list-style: none;
-  margin: 10px 0;
+  margin: 16px 0;
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 300;
@@ -39,7 +39,7 @@ export const MenuItem = styled.li`
 export const MenuLink = ({ title, to, l, iconName = 'ion-gear-b' }) => (
   <MenuItem active={l.pathname.indexOf(to) > -1}>
     <Link to={to}>
-      <i className={iconName} />
+      <i className="material-icons">{iconName}</i>
       {title}
     </Link>
   </MenuItem>

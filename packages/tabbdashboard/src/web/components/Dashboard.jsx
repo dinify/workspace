@@ -67,7 +67,7 @@ const Content = styled.div`
 
 const MenuItem = styled.li`
   list-style: none;
-  margin: 10px 0;
+  margin: 16px 0;
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 300;
@@ -104,16 +104,16 @@ const Dashboard = ({ location, logout }) =>
       </Logo>
 
       <Menu>
-        <MenuLink l={location} iconName="ion-gear-b" title="Settings" to="/dashboard/settings" />
-        <MenuLink l={location} iconName="ion-ios-book" title="Menu" to="/dashboard/menucontrol" />
-        <MenuLink l={location} iconName="ion-social-usd" title="Billing" to="/dashboard/billing" />
-        <MenuLink l={location} iconName="ion-ios-people" title="Guests" to="/dashboard/guests" />
-        <MenuLink l={location} iconName="ion-cash" title="Sales" to="/dashboard/sales" />
-        <MenuLink l={location} iconName="ion-ios-analytics" title="Engagement" to="/dashboard/engagement" />
+        <MenuLink l={location} iconName="settings" title="Settings" to="/dashboard/settings" />
+        <MenuLink l={location} iconName="restaurant_menu" title="Menu" to="/dashboard/menucontrol" />
+        <MenuLink l={location} iconName="attach_money" title="Billing" to="/dashboard/billing" />
+        <MenuLink l={location} iconName="group" title="Guests" to="/dashboard/guests" />
+        <MenuLink l={location} iconName="assessment" title="Sales" to="/dashboard/sales" />
+        <MenuLink l={location} iconName="show_chart" title="Engagement" to="/dashboard/engagement" />
         <HorizontalLine />
         <MenuItem onClick={logout}>
           <a>
-            <i className="ion-android-exit" />
+            <i className="material-icons">exit_to_app</i>
             <span>LOG OUT</span>
           </a>
         </MenuItem>

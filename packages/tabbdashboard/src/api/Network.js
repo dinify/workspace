@@ -1,5 +1,4 @@
 // @flow
-
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -15,23 +14,18 @@ function getCookie(cname) {
     }
     return "";
 }
-
 export function Request(url, options = {}, noToken) {
   return new Promise((resolve, reject) => {
     if (!url) reject(new Error('URL parameter required'));
     const token = getCookie('access_token');
-
     const defaultOptions = {
       headers: {
         'Content-Type': 'application/json'
       }
     };
-
     if (token.length > 0 && !noToken) defaultOptions.headers.Authorization = `Bearer ${token}`;
-
     options = Object.assign(options, defaultOptions);
     console.log(options);
-
     fetch(url, options)
       .then(res =>
         res.text().then(text => ({
@@ -63,15 +57,13 @@ export function Request(url, options = {}, noToken) {
   });
 }
 
-
-
 const buildURL = ({
   subdom = 'tabb-api',
   endpoint = 'eu-central-1.elasticbeanstalk.com',
   prefix = 'api/v1',
   path
-}) => `http://${subdom}.${endpoint}/${prefix}/${path}`;
-//`http://localhost:3005/${prefix}/${path}`;//
+}) => `http://localhost:3005/${prefix}/${path}`;//`http://${subdom}.${endpoint}/${prefix}/${path}`;
+//
 // urlParts = { token, ?subdom, ?endpoint, ?prefix, path }
 
 export function Get(urlParts, cookie) {
@@ -79,21 +71,18 @@ export function Get(urlParts, cookie) {
   if (cookie) opts.headers = { cookie };
   return Request(buildURL(urlParts), opts);
 }
-
 export function Post(urlParts, body = {}) {
   return Request(buildURL(urlParts), {
     method: 'POST',
     body: JSON.stringify(body),
   }, urlParts.noToken);
 }
-
 export function Put(urlParts, body = {}) {
   return Request(buildURL(urlParts), {
     method: 'PUT',
     body: JSON.stringify(body),
   });
 }
-
 export function Delete(urlParts, body = {}) {
   return Request(buildURL(urlParts), {
     method: 'DELETE',

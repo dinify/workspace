@@ -5,10 +5,9 @@ import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import configureEpics from './configureEpics';
 
-import viewer from './ducks/viewer';
 import restaurant from './ducks/restaurant';
 
-const commonReducers = { viewer, restaurant };
+const commonReducers = { restaurant };
 
 const configureStore = (options, storage) => {
   const { initialState, platformDeps = {}, platformEpics = [], platformReducers = {} } = options;
@@ -31,7 +30,7 @@ const configureStore = (options, storage) => {
   const store = createStore(reducers, initialState, enhancers);
 
   // let the magic happen :–)
-  persistStore(store, { blacklist: ['ui', 'restaurant', 'viewer'], storage }); // .purge() // in case you want to purge the store
+  persistStore(store, { blacklist: ['ui', 'restaurant'], storage }); // .purge() // in case you want to purge the store
 
   return store;
 };

@@ -10,7 +10,6 @@ import Login from './Login'
 import Signup from './Signup'
 import Dashboard from './Dashboard'
 import Admin from './Admin'
-import Viewer from './Viewer'
 
 const Content = styled.div`
   font-family: 'Montserrat', sans-serif;
@@ -40,7 +39,6 @@ const App = ({ appLoading }: AppProps) =>
         <Switch>
           <Route exact path="/" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route path="/test" component={Viewer} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/admin" component={Admin} />
         </Switch>}

@@ -110,10 +110,11 @@ const RemoveButton = styled.button`
   background: transparent;
   border: none;
   color: rgba(255,255,255,0.3);
-  font-size: 16px;
+  font-size: 12px;
   padding: 0 10px;
   cursor: pointer;
   i {
+    font-size: 16px;
     transition: all 125ms ease-in-out;
   }
 `
@@ -256,11 +257,11 @@ class Menucontrol extends React.Component {
         <SolidContainer>
 
                   <CategoriesList>
-                    {categories.sort((a,b) => a.id - b.id).map((c) =>
-                      <CategoryItem selected={c.id === selectedCategoryId} onClick={() => selectCategory({categoryId: c.id})}>
+                    {categories.sort((a,b) => a.id - b.id).map((c, i) =>
+                      <CategoryItem key={i} selected={c.id === selectedCategoryId} onClick={() => selectCategory({categoryId: c.id})}>
                         <span>{c.name}</span>
                         <RemoveButton onClick={() => rmCategory({categoryId: c.id})}>
-                          <i className="ion-ios-trash" />
+                          <i className="material-icons">delete</i>
                         </RemoveButton>
                       </CategoryItem>
                     )}
@@ -281,7 +282,7 @@ class Menucontrol extends React.Component {
                             <form onSubmit={submitForm}>
                               <NewFoodInput field='categoryName' placeholder='Add a new category' />
                               <NewFoodButton>
-                                <i className="ion-plus" />
+                                <i className="material-icons">add</i>
                               </NewFoodButton>
                             </form>
                           )
@@ -292,11 +293,11 @@ class Menucontrol extends React.Component {
                   </CategoriesList>
 
                   {selectedCategory ? <FoodList>
-                    {selectedCategory.foods.sort((a,b) => a.id - b.id).map((food) =>
-                      <FoodItem selected={food.id === selectedFoodId} onClick={() => selectFood({foodId: food.id})}>
+                    {selectedCategory.foods.sort((a,b) => a.id - b.id).map((food, i) =>
+                      <FoodItem key={i} selected={food.id === selectedFoodId} onClick={() => selectFood({foodId: food.id})}>
                         <span>{food.name}</span>
                         <RemoveButton onClick={() => rmFood({foodId: food.id, categoryId: selectedCategoryId})}>
-                          <i className="ion-ios-trash" />
+                          <i className="material-icons">delete</i>
                         </RemoveButton>
                       </FoodItem>
                     )}
@@ -317,7 +318,7 @@ class Menucontrol extends React.Component {
                             <form onSubmit={submitForm}>
                               <NewFoodInput field='name' placeholder='Add a new dish' />
                               <NewFoodButton>
-                                <i className="ion-plus" />
+                                <i className="material-icons">add</i>
                               </NewFoodButton>
                             </form>
                           )
@@ -328,7 +329,7 @@ class Menucontrol extends React.Component {
 
                   <MealDetail>
                     {selectedFood ? <FormBox>
-                      <FoodImage imageURL={`https://s3.eu-central-1.amazonaws.com/tabb-images/food/FOOD_${selectedFood.id}.jpg`} />
+                      <FoodImage imageURL={`https://s3.eu-central-1.amazonaws.com/tabb/tabb-food-image/FOOD_${selectedFood.id}`} />
                         <FormBoxBody>
                           <Form
                             onSubmit={(fields) => {
@@ -357,8 +358,8 @@ class Menucontrol extends React.Component {
 
                                   <Label>Nutrition</Label>
                                   <TableTag>
-                                    {selectedFood.nutrition.map((nutr) =>
-                                      <tr>
+                                    {selectedFood.nutrition.map((nutr, i) =>
+                                      <tr key={i}>
                                         <Td>{nutr.nutrient}</Td>
                                         <Td>{nutr.content}</Td>
                                       </tr>
