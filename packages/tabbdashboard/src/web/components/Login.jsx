@@ -3,10 +3,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import type { Error } from '../../flow'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 import { Form, Text } from 'react-form'
-import { getJoke, isSearchLoading, getLastError } from '../../selectors/viewer';
 
 import { loginInitAction } from '../../ducks/restaurant'
 
@@ -141,11 +140,7 @@ const Login = ({ lastError, doLogin }: LoginProps) =>
   </Content>);
 
 export default connect(
-  state => ({
-    joke: getJoke(state),
-    isLoading: isSearchLoading(state),
-    lastError: getLastError(state),
-  }),
+  state => ({}),
   {
     doLogin: loginInitAction,
   },
