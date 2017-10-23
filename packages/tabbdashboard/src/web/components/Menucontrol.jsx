@@ -116,11 +116,14 @@ const ToggleContainer = styled.div`
   position: absolute;
   right: 7px;
   top: 5px;
+  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label {
+    background: transparent;
+  }
   .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"]:checked + label {
-    ${p => p.food ? 'background-color: rgb(169, 77, 72);' : ''}
+    background: transparent;
   }
   .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"]:checked + label:after {
-    ${p => p.food ? 'background-color: rgb(169, 77, 72);' : ''}
+    background-color: ${p => p.food ? 'rgb(169, 77, 72);' : 'rgb(53, 75, 92)'};
   }
 `
 
