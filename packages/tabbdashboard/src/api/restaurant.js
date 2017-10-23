@@ -1,4 +1,4 @@
-import { Get, Post, Put, Delete } from './Network'
+import { Get, Post, Put, Delete, PostMultipart } from './Network'
 import R from 'ramda'
 
 export function Login({ email, password }) {
@@ -96,6 +96,10 @@ export function UpdateFood({ restaurantId, categoryId, foodId, name, description
 
 export function AddFood({ restaurantId, categoryId, foodName }) {
   return Post({ path: `restaurant/${restaurantId}/category/${categoryId}/food` }, { name: foodName })
+}
+
+export function UploadMainImage({ file }) {
+  return PostMultipart({ path: `api/v2/restaurant/upload`, v2: true}, { file })
 }
 
 //export function RemoveTablet({ restaurantId, login_id }) {

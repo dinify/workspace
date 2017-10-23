@@ -23,6 +23,7 @@ import {
   RemoveFood,
   UpdateFood,
   AddFood,
+  UploadMainImage
 } from '../api/restaurant';
 import type { EpicDependencies, Error, Action } from '../flow';
 import { browserHistory } from 'react-router';
@@ -252,8 +253,19 @@ export const addFoodInitAction = (payload) => ({ type: 'ADD_FOOD_INIT', payload 
 
 export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', payload })
 
+export const uploadMainImageInitAction = (payload) => ({ type: 'UPDATE_MAINIMAGE_INIT', payload })
 
-// Epics
+
+// Epic
+const uploadEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+    .ofType('UPDATE_MAINIMAGE_INIT')
+    .switchMap(({ payload: { file } }) =>
+      Observable.fromPromise(UploadMainImage({ file }))
+        .map(updateDoneAction)
+        .catch(error => Observable.of(console.log(error)))
+    );
+
 const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$.ofType('persist/REHYDRATE').mergeMap(() => {
     return Observable.fromPromise(GetLoggedRestaurant())
@@ -457,6 +469,7 @@ const addFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
         .catch(error => console.log(error))
     );
 export const epics = [
+  uploadEpic,
   bootstrapEpic,
   loginEpic,
   signupEpic,

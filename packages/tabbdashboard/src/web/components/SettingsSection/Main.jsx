@@ -1,14 +1,16 @@
 // @flow
-import React from 'react';
-import R from 'ramda';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import type { Error } from '../../../flow';
-import { Link } from 'react-router-dom';
-import { Form, Text, Select } from 'react-form';
-import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
-import SwitchButton from 'react-switch-button';
-import 'react-switch-button/dist/react-switch-button.css';
+import React from 'react'
+import R from 'ramda'
+import { connect } from 'react-redux'
+import styled from 'styled-components'
+import type { Error } from '../../../flow'
+import { Link } from 'react-router-dom'
+import { Form, Text, Select } from 'react-form'
+import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import SwitchButton from 'react-switch-button'
+import 'react-switch-button/dist/react-switch-button.css'
+import Dropzone from 'react-dropzone'
+
 
 
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label } from '../styled/FormBox';
@@ -21,6 +23,7 @@ import {
   updateLocationInitAction,
   updateHoursInitAction,
   updateBankInitAction,
+  uploadMainImageInitAction
 } from '../../../ducks/restaurant'
 
 type MainProps = {
@@ -101,6 +104,7 @@ const Main = ({
   updateBank,
   updateHours,
   updateDone,
+  uploadMainImage
 }: MainProps) =>
   (<MainContrainer>
 
@@ -165,7 +169,27 @@ const Main = ({
   <FormBox>
     <FormBoxHead>Main Image</FormBoxHead>
     <FormBoxBody>
-      <TODO>work in progress</TODO>
+      <Dropzone
+        accept="image/jpg, image/jpeg, image/png"
+        onDrop={(accepted, rejected) => {
+          if (accepted && accepted.length > 0) uploadMainImage({ file: accepted[0] })
+        }}
+        style={{
+          width: '250px',
+          padding: '10px',
+          fontSize: '11px',
+          border: '1px dashed #ccc',
+          margin: '10px 0'
+        }}
+      >
+        <p>Try dropping your photo here, or click to select file to upload.</p>
+        <p>Only *.jpg and *.png image will be accepted</p>
+      </Dropzone>
+
+      <img
+        src={`https://s3.eu-central-1.amazonaws.com/tabb/tabb-restaurant-image/RESTAURANT_${loggedRestaurant.id}?datetime=${Date.now()}`}
+        width="250"
+      />
     </FormBoxBody>
   </FormBox>
 
@@ -365,5 +389,6 @@ state => ({
   updateLocation: updateLocationInitAction,
   updateHours: updateHoursInitAction,
   updateBank: updateBankInitAction,
+  uploadMainImage: uploadMainImageInitAction
 },
 )(Main);
