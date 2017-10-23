@@ -76,30 +76,28 @@ export function GetBills({ restaurantId }) {
 export function GetCategories({ restaurantId }) {
   return Get({ path: `restaurant/${restaurantId}/categories` })
 }
-
-export function RemoveCategory({ restaurantId, categoryId }) {
-  return Delete({ path: `restaurant/${restaurantId}/category/${categoryId}` })
-}
-
 export function AddCategory({ restaurantId, categoryName }) {
   return Post({ path: `restaurant/${restaurantId}/category` }, { name: categoryName })
 }
-
-export function RemoveFood({ restaurantId, categoryId, foodId }) {
-  return Delete({ path: `restaurant/${restaurantId}/category/${categoryId}/food/${foodId}` })
-}
-
 export function UpdateFood({ restaurantId, categoryId, foodId, name, description, price, calories, used, order }) {
   const updateObject = R.pickBy(R.identity, { name, description, price, calories, used, order })
   return Put({ path: `restaurant/${restaurantId}/category/${categoryId}/food/${foodId}` }, updateObject)
 }
-
 export function AddFood({ restaurantId, categoryId, foodName }) {
   return Post({ path: `restaurant/${restaurantId}/category/${categoryId}/food` }, { name: foodName })
 }
 
+
+
+// API V2
 export function UploadMainImage({ file }) {
-  return PostMultipart({ path: `api/v2/restaurant/upload`, v2: true}, { file })
+  return PostMultipart({ path: `api/v2/restaurant/upload`, v2: true }, { file })
+}
+export function ToggleCategory({ categoryId, enabled }) {
+  return Put({ path: `api/v2/restaurant/disable/category/${categoryId}`, v2: true }, { enabled })
+}
+export function ToggleFood({ foodId, enabled }) {
+  return Put({ path: `api/v2/restaurant/disable/food/${foodId}`, v2: true }, { enabled })
 }
 
 //export function RemoveTablet({ restaurantId, login_id }) {

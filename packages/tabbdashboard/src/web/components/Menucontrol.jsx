@@ -1,14 +1,16 @@
 // @flow
-import React from 'react';
-import R from 'ramda';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import type { Error } from '../../flow';
-import { Link } from 'react-router-dom';
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label } from './styled/FormBox';
-import { Header } from './styled/Header';
+import React from 'react'
+import R from 'ramda'
+import { connect } from 'react-redux'
+import styled from 'styled-components'
+import type { Error } from '../../flow'
+import { Link } from 'react-router-dom'
+import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label } from './styled/FormBox'
+import { Header } from './styled/Header'
+import { lighten } from 'polished'
+import SwitchButton from 'react-switch-button'
 
-import { Form, Text, Select, Textarea } from 'react-form';
+import { Form, Text, Select, Textarea } from 'react-form'
 
 import {
   getCategoriesInitAction,
@@ -68,7 +70,10 @@ const CategoryItem = styled.li`
   border-radius: 5px;
   margin-bottom: 10px;
   font-weight: 300;
-  background-color: ${(p) => p.selected ? 'rgb(0, 20, 50)' : 'rgb(53, 75, 92)'};
+  background-color: ${(p) => {
+    if (p.disabled) return p.selected ? 'rgb(30, 30, 50)' : lighten(0.3, 'rgb(53, 75, 92)');
+    return p.selected ? 'rgb(0, 20, 50)' : 'rgb(53, 75, 92)';
+  }};
   font-size: 12px;
   cursor: pointer;
   &:hover {
@@ -95,7 +100,10 @@ const FoodItem = styled.li`
   border-radius: 5px;
   margin-bottom: 10px;
   font-weight: 300;
-  background-color: ${(p) => p.selected ? 'rgb(70, 0, 0)' : 'rgb(169, 77, 72)'};
+  background-color: ${(p) => {
+    if (p.disabled) return p.selected ? 'rgb(60, 50, 50)' : lighten(0.3, 'rgb(169, 77, 72)');
+    return p.selected ? 'rgb(70, 0, 0)' : 'rgb(169, 77, 72)';
+  }};
   font-size: 12px;
   &:hover {
     i {
@@ -104,19 +112,10 @@ const FoodItem = styled.li`
   }
 `
 
-const RemoveButton = styled.button`
+const ToggleContainer = styled.div`
   position: absolute;
   right: 7px;
-  background: transparent;
-  border: none;
-  color: rgba(255,255,255,0.3);
-  font-size: 12px;
-  padding: 0 10px;
-  cursor: pointer;
-  i {
-    font-size: 16px;
-    transition: all 125ms ease-in-out;
-  }
+  top: 5px;
 `
 
 const HeadLine = styled.div`
@@ -258,11 +257,20 @@ class Menucontrol extends React.Component {
 
                   <CategoriesList>
                     {categories.sort((a,b) => a.id - b.id).map((c, i) =>
-                      <CategoryItem key={i} selected={c.id === selectedCategoryId} onClick={() => selectCategory({categoryId: c.id})}>
+                      <CategoryItem key={i} selected={c.id === selectedCategoryId} disabled={!c.used} onClick={() => selectCategory({categoryId: c.id})}>
                         <span>{c.name}</span>
-                        <RemoveButton onClick={() => rmCategory({categoryId: c.id})}>
-                          <i className="material-icons">delete</i>
-                        </RemoveButton>
+                        <ToggleContainer>
+                          <SwitchButton
+                            name={`switch-food-${c.id}`}
+                            type="switch"
+                            defaultChecked={c.used}
+                            onChange={() => {
+                              if(c.used) {
+                                rmCategory({ categoryId: c.id, enabled: false })
+                              } else rmCategory({ categoryId: c.id, enabled: true })
+                            }}
+                          />
+                        </ToggleContainer>
                       </CategoryItem>
                     )}
                     <NewCategory>
@@ -294,11 +302,20 @@ class Menucontrol extends React.Component {
 
                   {selectedCategory ? <FoodList>
                     {selectedCategory.foods.sort((a,b) => a.id - b.id).map((food, i) =>
-                      <FoodItem key={i} selected={food.id === selectedFoodId} onClick={() => selectFood({foodId: food.id})}>
+                      <FoodItem key={i} selected={food.id === selectedFoodId} disabled={!food.used} onClick={() => selectFood({foodId: food.id})}>
                         <span>{food.name}</span>
-                        <RemoveButton onClick={() => rmFood({foodId: food.id, categoryId: selectedCategoryId})}>
-                          <i className="material-icons">delete</i>
-                        </RemoveButton>
+                        <ToggleContainer>
+                          <SwitchButton
+                            name={`switch-food-${food.id}`}
+                            type="switch"
+                            defaultChecked={food.used}
+                            onChange={() => {
+                              if(food.used) {
+                                rmFood({ foodId: food.id, enabled: false })
+                              } else rmFood({ foodId: food.id, enabled: true })
+                            }}
+                          />
+                        </ToggleContainer>
                       </FoodItem>
                     )}
                     <NewFood>

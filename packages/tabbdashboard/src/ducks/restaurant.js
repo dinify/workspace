@@ -18,9 +18,9 @@ import {
   AddTablet,
   GetBills,
   GetCategories,
-  RemoveCategory,
+  ToggleCategory,
   AddCategory,
-  RemoveFood,
+  ToggleFood,
   UpdateFood,
   AddFood,
   UploadMainImage
@@ -414,11 +414,8 @@ const getCategoriesEpic = (action$: Observable, { getState }: EpicDependencies) 
 const rmCategoryEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
     .ofType('RM_CATEGORY_INIT')
-    .switchMap(({ payload: { categoryId } }) =>
-      Observable.fromPromise(RemoveCategory({
-        restaurantId: getState().restaurant.loggedRestaurant.id,
-        categoryId
-      }))
+    .switchMap(({ payload: { categoryId, enabled } }) =>
+      Observable.fromPromise(ToggleCategory({ categoryId, enabled }))
         .map(getCategoriesInitAction)
         .catch(error => console.log(error))
     );
@@ -436,11 +433,8 @@ const addCategoryEpic = (action$: Observable, { getState }: EpicDependencies) =>
 const rmFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
     .ofType('RM_FOOD_INIT')
-    .switchMap(({ payload: { categoryId, foodId } }) =>
-      Observable.fromPromise(RemoveFood({
-        restaurantId: getState().restaurant.loggedRestaurant.id,
-        categoryId, foodId
-      }))
+    .switchMap(({ payload: { foodId, enabled } }) =>
+      Observable.fromPromise(ToggleFood({ foodId, enabled }))
         .map(getCategoriesInitAction)
         .catch(error => console.log(error))
     );
