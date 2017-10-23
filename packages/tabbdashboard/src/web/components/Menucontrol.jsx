@@ -116,6 +116,12 @@ const ToggleContainer = styled.div`
   position: absolute;
   right: 7px;
   top: 5px;
+  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"]:checked + label {
+    ${p => p.food ? 'background-color: rgb(169, 77, 72);' : ''}
+  }
+  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"]:checked + label:after {
+    ${p => p.food ? 'background-color: rgb(169, 77, 72);' : ''}
+  }
 `
 
 const HeadLine = styled.div`
@@ -259,9 +265,9 @@ class Menucontrol extends React.Component {
                     {categories.sort((a,b) => a.id - b.id).map((c, i) =>
                       <CategoryItem key={i} selected={c.id === selectedCategoryId} disabled={!c.used} onClick={() => selectCategory({categoryId: c.id})}>
                         <span>{c.name}</span>
-                        <ToggleContainer>
+                        <ToggleContainer category>
                           <SwitchButton
-                            name={`switch-food-${c.id}`}
+                            name={`switch-category-${c.id}`}
                             type="switch"
                             defaultChecked={c.used}
                             onChange={() => {
@@ -304,7 +310,7 @@ class Menucontrol extends React.Component {
                     {selectedCategory.foods.sort((a,b) => a.id - b.id).map((food, i) =>
                       <FoodItem key={i} selected={food.id === selectedFoodId} disabled={!food.used} onClick={() => selectFood({foodId: food.id})}>
                         <span>{food.name}</span>
-                        <ToggleContainer>
+                        <ToggleContainer food>
                           <SwitchButton
                             name={`switch-food-${food.id}`}
                             type="switch"
