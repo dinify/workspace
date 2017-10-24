@@ -116,6 +116,9 @@ const ToggleContainer = styled.div`
   position: absolute;
   right: 7px;
   top: 5px;
+  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label:before {
+    background: rgba(255,255,255,0.8);
+  }
   .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label {
     background: transparent;
   }
@@ -124,6 +127,12 @@ const ToggleContainer = styled.div`
   }
   .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"]:checked + label:after {
     background-color: ${p => p.food ? 'rgb(169, 77, 72);' : 'rgb(53, 75, 92)'};
+  }
+  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label:after {
+    background-color: ${p => {
+      if (p.food) return lighten(0.3, 'rgb(169, 77, 72)')
+      else return lighten(0.3, 'rgb(53, 75, 92)')
+    }}
   }
 `
 
@@ -266,7 +275,7 @@ class Menucontrol extends React.Component {
 
                   <CategoriesList>
                     {categories.sort((a,b) => a.id - b.id).map((c, i) =>
-                      <CategoryItem key={i} selected={c.id === selectedCategoryId} disabled={!c.used} onClick={() => selectCategory({categoryId: c.id})}>
+                      <CategoryItem key={c.id} selected={c.id === selectedCategoryId} disabled={!c.used} onClick={() => selectCategory({categoryId: c.id})}>
                         <span>{c.name}</span>
                         <ToggleContainer category>
                           <SwitchButton
@@ -311,7 +320,7 @@ class Menucontrol extends React.Component {
 
                   {selectedCategory ? <FoodList>
                     {selectedCategory.foods.sort((a,b) => a.id - b.id).map((food, i) =>
-                      <FoodItem key={i} selected={food.id === selectedFoodId} disabled={!food.used} onClick={() => selectFood({foodId: food.id})}>
+                      <FoodItem key={food.id} selected={food.id === selectedFoodId} disabled={!food.used} onClick={() => selectFood({foodId: food.id})}>
                         <span>{food.name}</span>
                         <ToggleContainer food>
                           <SwitchButton
