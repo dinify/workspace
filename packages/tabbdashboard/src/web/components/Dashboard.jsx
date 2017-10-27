@@ -1,24 +1,18 @@
 // @flow
-import React from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import type { Error } from '../../flow';
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom'
-
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './styled/FormBox';
-import { HorizontalLine } from './styled/HorizontalLine';
-
+import React from 'react'
+import { connect } from 'react-redux'
+import styled from 'styled-components'
+import { Route, Switch, Redirect } from 'react-router-dom'
+import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './styled/FormBox'
+import { HorizontalLine } from './styled/HorizontalLine'
 import Input from 'react-enhanced-form'
-
-import { logoutInitAction } from '../../ducks/restaurant';
-
+import { logoutInitAction } from '../../ducks/restaurant'
 import SettingsSection from './Settings'
 import MenucontrolSection from './Menucontrol'
 import BillingSection from './Billing'
 import GuestsSection from './Guests'
 import SalesSection from './Sales'
 import EngagementSection from './Engagement'
-
 import { Menu, MenuLink } from './Menu'
 
 const Sidebar = styled.div`
@@ -30,7 +24,7 @@ const Sidebar = styled.div`
   @media print {
     display: none;
   }
-`;
+`
 
 const Logo = styled.div`
   position: absolute;
@@ -51,7 +45,7 @@ const Logo = styled.div`
     font-weight: 100;
     vertical-align: middle;
   }
-`;
+`
 
 const Content = styled.div`
   position: absolute;
@@ -62,7 +56,7 @@ const Content = styled.div`
   background: #EFF3F6;
   color: #354052;
   padding: 70px 20px 0 20px;
-`;
+`
 
 
 const MenuItem = styled.li`
@@ -131,11 +125,11 @@ const Dashboard = ({ location, logout }) =>
         <Route path="/dashboard/engagement" component={EngagementSection} />
       </Switch>
     </Content>
-  </div>);
+  </div>)
 
 export default connect(
   state => ({}),
   {
     logout: logoutInitAction
   },
-)(Dashboard);
+)(Dashboard)

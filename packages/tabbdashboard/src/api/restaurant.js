@@ -87,8 +87,6 @@ export function AddFood({ restaurantId, categoryId, foodName }) {
   return Post({ path: `restaurant/${restaurantId}/category/${categoryId}/food` }, { name: foodName })
 }
 
-
-
 // API V2
 export function UploadMainImage({ file }) {
   return PostMultipart({ path: `api/v2/restaurant/upload`, v2: true }, { file })

@@ -19,7 +19,6 @@ import {
 } from '../../../ducks/restaurant'
 
 type MainProps = {
-  lastError: Error,
   loggedRestaurant: ?Object,
   update: typeof updateInitAction,
   updateCategory: typeof updateCategoryInitAction,
@@ -27,7 +26,7 @@ type MainProps = {
   updateContact: typeof updateContactInitAction,
 };
 
-const Localization = ({ lastError, loggedRestaurant, update, updateCategory, updateSocial, updateContact }: MainProps) =>
+const Localization = ({ loggedRestaurant, update, updateCategory, updateSocial, updateContact }: MainProps) =>
 (<div>
   Work in progress
 </div>);

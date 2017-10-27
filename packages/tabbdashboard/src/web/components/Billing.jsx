@@ -1,10 +1,7 @@
 // @flow
-import React from 'react';
-import R from 'ramda';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import type { Error } from '../../flow';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { connect } from 'react-redux'
+import styled from 'styled-components'
 
 import {
   getBillsInitAction,
@@ -19,46 +16,40 @@ const Header = styled.div`
   background: #FFF;
   line-height: 60px;
   padding-left: 30px;
-`;
-
-
+`
 const Table = styled.table`
   width: 100%;
   border-spacing: 0;
   margin: 20px 0;
-`;
+`
 const TableHead = styled.thead`
   background: #F2F4F7;
   border-radius: 5px 5px 0 0;
   padding: 10px;
   font-size: 14px;
   text-align: left;
-`;
+`
 const TableRow = styled.tr`
   &:nth-child(even) {
     background-color: rgba(0,0,0,0.07);
   }
-`;
+`
 const TH = styled.th`
   border-bottom: 1px solid rgba(0,0,0,0.07);
   padding: 10px;
-`;
+`
 const TD = styled.td`
   font-size: 12px;
   padding: 10px;
-`;
-
-type LoginProps = {
-  lastError: Error,
-};
+`
 
 class Billing extends React.Component {
   componentDidMount() {
-    const {getBills} = this.props;
-    getBills();
+    const { getBills } = this.props
+    getBills()
   }
   render() {
-    const { lastError, bills } = this.props;
+    const { bills } = this.props
     return (
       <div>
         <Header>
@@ -97,7 +88,6 @@ class Billing extends React.Component {
             )}
           </tbody>
         </Table>
-
       </div>
     )
   }
@@ -110,4 +100,4 @@ export default connect(
   {
     getBills: getBillsInitAction
   },
-)(Billing);
+)(Billing)
