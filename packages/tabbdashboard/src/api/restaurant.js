@@ -98,6 +98,16 @@ export function ToggleFood({ foodId, enabled }) {
   return Put({ path: `api/v2/restaurant/disable/food/${foodId}`, v2: true }, { enabled })
 }
 
+export function GetFoodoptions({ foodId }) {
+  return Get({ path: `api/v2/restaurant/food/${foodId}/options`, v2: true })
+}
+export function AddFoodoption({ foodId, optionName }) {
+  return Post({ path: `api/v2/restaurant/food/${foodId}/option`, v2: true }, { optionName })
+}
+export function RmFoodoption({ foodId, optionName }) {
+  return Delete({ path: `api/v2/restaurant/food/${foodId}/option`, v2: true }, { optionName })
+}
+
 //export function RemoveTablet({ restaurantId, login_id }) {
 //  return Delete({ path: `restaurant/${restaurantId}/shop` }, { login_id })
 //}

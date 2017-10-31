@@ -20,7 +20,10 @@ import {
   selectFoodAction,
   rmFoodInitAction,
   updateFoodInitAction,
-  addFoodInitAction
+  addFoodInitAction,
+  getFoodOptionsInit,
+  rmFoodOptionInit,
+  addFoodOptionInit
 } from '../../ducks/restaurant'
 
 const Table = styled.table`
@@ -248,7 +251,8 @@ class Menucontrol extends React.Component {
   render() {
     const { loggedRestaurant, categories, rmCategory, addCategory,
       selectedCategoryId, selectCategory,
-      selectedFoodId, selectFood, rmFood, updateFood, addFood
+      selectedFoodId, selectFood, rmFood, updateFood, addFood,
+      getFoodOptions, foodOptions, rmFoodOption, addFoodOption
     } = this.props;
 
     let selectedCategory = null;
@@ -258,6 +262,7 @@ class Menucontrol extends React.Component {
     let selectedFood = null;
     if (selectedCategory) {
       selectedFood = R.find(R.propEq('id', selectedFoodId))(selectedCategory.foods);
+      if (!foodOptions[selectedFoodId] && selectedFoodId) getFoodOptions({ foodId: selectedFoodId })
     }
     return (
       <div>
@@ -391,15 +396,8 @@ class Menucontrol extends React.Component {
                                   <Label>Price</Label>
                                   <Text type="number" field='price' placeholder='Price' />
 
-                                  <Label>Nutrition</Label>
-                                  <TableTag>
-                                    {selectedFood.nutrition.map((nutr, i) =>
-                                      <tr key={i}>
-                                        <Td>{nutr.nutrient}</Td>
-                                        <Td>{nutr.content}</Td>
-                                      </tr>
-                                    )}
-                                  </TableTag>
+                                  <FormBoxSubmit primary>SAVE</FormBoxSubmit>
+
                                   {/*
                                     <Label>Ingredients</Label>
                                     <TableTag>
@@ -412,12 +410,46 @@ class Menucontrol extends React.Component {
                                   */}
 
 
-                                  <FormBoxSubmit primary>SAVE</FormBoxSubmit>
+
                                 </form>
                               )
                             }}
                           </Form>
-
+                          <Label>Nutrition</Label>
+                          <TableTag>
+                            {selectedFood.nutrition.map((nutr, i) =>
+                              <tr key={i}>
+                                <Td>{nutr.nutrient}</Td>
+                                <Td>{nutr.content}</Td>
+                              </tr>
+                            )}
+                          </TableTag>
+                          <Label>Options</Label>
+                          {foodOptions[selectedFoodId] ? foodOptions[selectedFoodId].map((option, i) =>
+                            <div key={i}>
+                              {option.name}
+                              <button onClick={() => rmFoodOption({foodId: selectedFoodId, optionName: option.name})}>x</button>
+                            </div>
+                          ) : 'No options'}
+                          <Form
+                            onSubmit={({ optionName }) => {
+                              addFoodOption({ foodId: selectedFoodId, optionName })
+                            }}
+                            validate={({ optionName }) => {
+                              return {
+                                optionName: !optionName ? 'Name is required' : undefined
+                              }
+                            }}
+                          >
+                            {({submitForm}) => {
+                              return (
+                                <form onSubmit={submitForm}>
+                                  <Text field='optionName' placeholder='Name of option' />
+                                  <FormBoxSubmit primary>ADD OPTION</FormBoxSubmit>
+                                </form>
+                              )
+                            }}
+                          </Form>
                         </FormBoxBody>
                     </FormBox> : ''}
                   </MealDetail>
@@ -433,7 +465,8 @@ export default connect(
     loggedRestaurant: state.restaurant.loggedRestaurant,
     categories: state.restaurant.categories,
     selectedCategoryId: state.restaurant.selectedCategoryId,
-    selectedFoodId: state.restaurant.selectedFoodId
+    selectedFoodId: state.restaurant.selectedFoodId,
+    foodOptions: state.restaurant.foodOptions
   }),
   {
     getCategories: getCategoriesInitAction,
@@ -444,5 +477,8 @@ export default connect(
     rmFood: rmFoodInitAction,
     updateFood: updateFoodInitAction,
     addFood: addFoodInitAction,
+    getFoodOptions: getFoodOptionsInit,
+    rmFoodOption: rmFoodOptionInit,
+    addFoodOption: addFoodOptionInit
   },
 )(Menucontrol);

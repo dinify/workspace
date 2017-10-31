@@ -2,28 +2,7 @@
 import { Observable } from 'rxjs'
 import R from 'ramda'
 
-import {
-  Login as LoginCall,
-  Signup as SignupCall,
-  Logout as LogoutCall,
-  GetLoggedRestaurant,
-  ChangeName,
-  ChangeCategory,
-  ChangeContact,
-  ChangeSocial,
-  ChangeLocation,
-  ChangeBank,
-  ChangeHours,
-  AddTablet,
-  GetBills,
-  GetCategories,
-  ToggleCategory,
-  AddCategory,
-  ToggleFood,
-  UpdateFood,
-  AddFood,
-  UploadMainImage
-} from '../api/restaurant'
+import * as API from '../api/restaurant'
 import type { EpicDependencies, Error, Action } from '../flow'
 
 export const BOOTSTRAP = 'universalreact/restaurant/BOOTSTRAP'
@@ -68,7 +47,8 @@ const initialState = {
   addTabletDone: null,
   bills: [],
   categories: [],
-  selectedCategoryId: null
+  selectedCategoryId: null,
+  foodOptions: {}
 }
 
 // Reducer
@@ -121,6 +101,9 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assoc('selectedCategoryId', action.payload.categoryId)(state)
     case 'SELECT_FOOD':
       return R.assoc('selectedFoodId', action.payload.foodId)(state)
+    case 'API_GET_FOODOPTIONS_DONE': {
+      return R.assocPath(['foodOptions', action.payload.foodId], action.payload.response)(state)
+    }
     default:
       return state
   }
@@ -175,19 +158,30 @@ export const addFoodInitAction = (payload) => ({ type: 'ADD_FOOD_INIT', payload 
 export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', payload })
 export const uploadMainImageInitAction = (payload) => ({ type: 'UPDATE_MAINIMAGE_INIT', payload })
 
+export const getFoodOptionsInit = (payload) => ({ type: 'API_GET_FOODOPTIONS_INIT', payload })
+
+export const rmFoodOptionInit = (payload) => ({ type: 'API_RM_FOODOPTION_INIT', payload: {
+  ...payload,
+  successActionType: 'API_GET_FOODOPTIONS_INIT'
+}})
+export const addFoodOptionInit = (payload) => ({ type: 'API_ADD_FOODOPTION_INIT', payload: {
+  ...payload,
+  successActionType: 'API_GET_FOODOPTIONS_INIT'
+}})
+
 // Epic
 const uploadEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType('UPDATE_MAINIMAGE_INIT')
   .switchMap(({ payload: { file } }) =>
-    Observable.fromPromise(UploadMainImage({ file }))
+    Observable.fromPromise(API.UploadMainImage({ file }))
       .map(updateDoneAction)
       .catch(error => Observable.of(console.log(error)))
   )
 
 const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$.ofType('persist/REHYDRATE').mergeMap(() => {
-    return Observable.fromPromise(GetLoggedRestaurant())
+    return Observable.fromPromise(API.GetLoggedRestaurant())
     .mergeMap((loggedUser) => Observable.of(loggedFetchedAction(loggedUser), appBootstrap()))
     .catch(error => {
       console.log(error)
@@ -200,7 +194,7 @@ const loginEpic = (action$: Observable) =>
   action$
   .ofType(LOGIN_INIT)
   .switchMap(({ payload: { email, password } }) =>
-    Observable.fromPromise(LoginCall({ email, password }))
+    Observable.fromPromise(API.Login({ email, password }))
       .map(loginDoneAction)
       .catch(error => Observable.of(loginFailAction(error)))
   )
@@ -209,7 +203,7 @@ const logoutEpic = (action$: Observable) =>
   action$
   .ofType(LOGOUT_INIT)
   .switchMap(() =>
-    Observable.fromPromise(LogoutCall())
+    Observable.fromPromise(API.Logout())
     .map(logoutDoneAction)
     .catch(error => Observable.of(loginFailAction(error)))
   )
@@ -218,7 +212,7 @@ const signupEpic = (action$: Observable) =>
   action$
   .ofType(SIGNUP_INIT)
   .switchMap(({ payload: { email, password, restaurantName, nameInCharge, mobile } }) =>
-    Observable.fromPromise(SignupCall({ email, password, restaurantName, nameInCharge, mobile }))
+    Observable.fromPromise(API.Signup({ email, password, restaurantName, nameInCharge, mobile }))
     .map(signupDoneAction)
     .catch(error => Observable.of(signupFailAction(error)))
   )
@@ -227,7 +221,7 @@ const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType(UPDATE_INIT)
   .switchMap(({ payload: { restaurantName } }) =>
-    Observable.fromPromise(ChangeName({ restaurantId: getState().restaurant.loggedRestaurant.id, restaurantName }))
+    Observable.fromPromise(API.ChangeName({ restaurantId: getState().restaurant.loggedRestaurant.id, restaurantName }))
     .map(updateDoneAction)
     .catch(error => console.log(error))
   )
@@ -236,7 +230,7 @@ const updateCategoryEpic = (action$: Observable, { getState }: EpicDependencies)
   action$
   .ofType(UPDATE_CATEGORY_INIT)
   .switchMap(({ payload: { category } }) =>
-    Observable.fromPromise(ChangeCategory({ restaurantId: getState().restaurant.loggedRestaurant.id, category }))
+    Observable.fromPromise(API.ChangeCategory({ restaurantId: getState().restaurant.loggedRestaurant.id, category }))
     .map(updateDoneAction)
     .catch(error => console.log(error))
   )
@@ -245,7 +239,7 @@ const updateContactEpic = (action$: Observable, { getState }: EpicDependencies) 
   action$
   .ofType(UPDATE_CONTACT_INIT)
   .switchMap(({ payload: { nameInCharge, email, mobile } }) =>
-    Observable.fromPromise(ChangeContact({
+    Observable.fromPromise(API.ChangeContact({
       restaurantId: getState().restaurant.loggedRestaurant.id,
       nameInCharge, email, mobile
     }))
@@ -257,7 +251,7 @@ const updateSocialEpic = (action$: Observable, { getState }: EpicDependencies) =
   action$
   .ofType(UPDATE_SOCIAL_INIT)
   .switchMap(({ payload: { facebookURL, instagramURL } }) =>
-    Observable.fromPromise(ChangeSocial({
+    Observable.fromPromise(API.ChangeSocial({
       restaurantId: getState().restaurant.loggedRestaurant.id,
       facebookURL, instagramURL
     }))
@@ -268,7 +262,7 @@ const updateLocationEpic = (action$: Observable, { getState }: EpicDependencies)
   action$
   .ofType(UPDATE_LOCATION_INIT)
   .switchMap(({ payload: { name, longitude, latitude } }) =>
-    Observable.fromPromise(ChangeLocation({
+    Observable.fromPromise(API.ChangeLocation({
       restaurantId: getState().restaurant.loggedRestaurant.id,
       name, longitude, latitude
     }))
@@ -279,7 +273,7 @@ const updateBankEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType(UPDATE_BANK_INIT)
   .switchMap(({ payload: { name, beneficiaryName, IBAN } }) =>
-    Observable.fromPromise(ChangeBank({
+    Observable.fromPromise(API.ChangeBank({
       restaurantId: getState().restaurant.loggedRestaurant.id,
       name, beneficiaryName, IBAN
     }))
@@ -290,7 +284,7 @@ const updateHoursEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType(UPDATE_HOURS_INIT)
   .switchMap(({ payload: { weekdayFrom, weekdayTo, weekendFrom, weekendTo } }) =>
-    Observable.fromPromise(ChangeHours({
+    Observable.fromPromise(API.ChangeHours({
       restaurantId: getState().restaurant.loggedRestaurant.id,
       weekdayFrom, weekdayTo, weekendFrom, weekendTo
     }))
@@ -301,7 +295,7 @@ const addTabletEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType(ADD_TABLET_INIT)
   .switchMap(({ payload: { login_id, pass_enc, name } }) =>
-    Observable.fromPromise(AddTablet({
+    Observable.fromPromise(API.AddTablet({
       restaurantId: getState().restaurant.loggedRestaurant.id,
       login_id, pass_enc, name
     }))
@@ -312,7 +306,7 @@ const getBillsEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType(GET_BILLS_INIT)
   .switchMap(() =>
-    Observable.fromPromise(GetBills({
+    Observable.fromPromise(API.GetBills({
       restaurantId: getState().restaurant.loggedRestaurant.id
     }))
       .map(getBillsDoneAction)
@@ -322,7 +316,7 @@ const getCategoriesEpic = (action$: Observable, { getState }: EpicDependencies) 
   action$
   .ofType(GET_CATEGORIES_INIT)
   .switchMap(() =>
-    Observable.fromPromise(GetCategories({
+    Observable.fromPromise(API.GetCategories({
       restaurantId: getState().restaurant.loggedRestaurant.id
     }))
       .map(getCategoriesDoneAction)
@@ -332,7 +326,7 @@ const rmCategoryEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType('RM_CATEGORY_INIT')
   .switchMap(({ payload: { categoryId, enabled } }) =>
-    Observable.fromPromise(ToggleCategory({ categoryId, enabled }))
+    Observable.fromPromise(API.ToggleCategory({ categoryId, enabled }))
       .map(getCategoriesInitAction)
       .catch(error => console.log(error))
   )
@@ -340,7 +334,7 @@ const addCategoryEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType('ADD_CATEGORY_INIT')
   .switchMap(({ payload: { categoryName } }) =>
-    Observable.fromPromise(AddCategory({
+    Observable.fromPromise(API.AddCategory({
       restaurantId: getState().restaurant.loggedRestaurant.id,
       categoryName
     }))
@@ -351,7 +345,7 @@ const rmFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType('RM_FOOD_INIT')
   .switchMap(({ payload: { foodId, enabled } }) =>
-    Observable.fromPromise(ToggleFood({ foodId, enabled }))
+    Observable.fromPromise(API.ToggleFood({ foodId, enabled }))
       .map(getCategoriesInitAction)
       .catch(error => console.log(error))
   )
@@ -359,7 +353,7 @@ const updateFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType('UPDATE_FOOD_INIT')
   .switchMap(({ payload: { categoryId, foodId, name, description, price } }) =>
-    Observable.fromPromise(UpdateFood({
+    Observable.fromPromise(API.UpdateFood({
       restaurantId: getState().restaurant.loggedRestaurant.id,
       categoryId, foodId,
       name, description, price
@@ -371,7 +365,7 @@ const addFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType('ADD_FOOD_INIT')
   .switchMap(({ payload: { categoryId, foodName } }) =>
-    Observable.fromPromise(AddFood({
+    Observable.fromPromise(API.AddFood({
       restaurantId: getState().restaurant.loggedRestaurant.id,
       categoryId,
       foodName
@@ -379,6 +373,53 @@ const addFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
       .map(getCategoriesInitAction)
       .catch(error => console.log(error))
   )
+
+const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
+const camel = (str) => capitalize(str.toLowerCase())
+const ActionEssence = (str) => camel(str.split('_')[2])
+
+
+
+const apiGetEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+  .filter(action => action.type.includes('API_GET') && action.type.includes('INIT'))
+  .switchMap(({ type, payload }) => {
+    const essence = ActionEssence(type)
+    const doneActionType = type.replace('INIT', 'DONE')
+    return Observable.fromPromise(API[`Get${essence}`](payload))
+      .map((response) => ({ type: doneActionType, payload: {...payload, response} }))
+      .catch(error => Observable.of(console.log(error)))
+  })
+
+const apiDoneAction = (doneActionType, payload, response) => ({ type: doneActionType, payload: {...payload, response} })
+
+const apiRmEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+  .filter(action => action.type.includes('API_RM') && action.type.includes('INIT'))
+  .mergeMap(({ type, payload }) => {
+    const essence = ActionEssence(type)
+    const doneActionType = type.replace('INIT', 'DONE')
+    return Observable.fromPromise(API[`Rm${essence}`](payload))
+      .mergeMap((response) => Observable.of(
+        apiDoneAction(doneActionType, payload, response),
+        getFoodOptionsInit(payload)
+      ))
+      .catch(error => Observable.of(console.log(error)))
+  })
+
+const apiAddEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+  .filter(action => action.type.includes('API_ADD') && action.type.includes('INIT'))
+  .mergeMap(({ type, payload }) => {
+    const essence = ActionEssence(type)
+    const doneActionType = type.replace('INIT', 'DONE')
+    return Observable.fromPromise(API[`Add${essence}`](payload))
+      .mergeMap((response) => Observable.of(
+        apiDoneAction(doneActionType, payload, response),
+        getFoodOptionsInit(payload)
+      ))
+      .catch(error => Observable.of(console.log(error)))
+  })
 
 export const epics = [
   uploadEpic,
@@ -401,4 +442,7 @@ export const epics = [
   rmFoodEpic,
   updateFoodEpic,
   addFoodEpic,
+  apiGetEpic,
+  apiRmEpic,
+  apiAddEpic
 ]

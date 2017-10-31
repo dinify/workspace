@@ -58,7 +58,6 @@ const Content = styled.div`
   padding: 70px 20px 0 20px;
 `
 
-
 const MenuItem = styled.li`
   list-style: none;
   margin: 16px 0;
@@ -96,7 +95,6 @@ const Dashboard = ({ location, logout }) =>
           Dashboard
         </span>
       </Logo>
-
       <Menu>
         <MenuLink l={location} iconName="settings" title="Settings" to="/dashboard/settings" />
         <MenuLink l={location} iconName="restaurant_menu" title="Menu" to="/dashboard/menucontrol" />
@@ -112,7 +110,6 @@ const Dashboard = ({ location, logout }) =>
           </a>
         </MenuItem>
       </Menu>
-
     </Sidebar>
     <Content>
       <Switch>
