@@ -48,7 +48,8 @@ const initialState = {
   bills: [],
   categories: [],
   selectedCategoryId: null,
-  foodOptions: {}
+  foodOptions: {},
+  foodIngredients: {}
 }
 
 // Reducer
@@ -103,6 +104,9 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assoc('selectedFoodId', action.payload.foodId)(state)
     case 'API_GET_FOODOPTIONS_DONE': {
       return R.assocPath(['foodOptions', action.payload.foodId], action.payload.response)(state)
+    }
+    case 'API_GET_FOODINGREDIENTS_DONE': {
+      return R.assocPath(['foodIngredients', action.payload.foodId], action.payload.response)(state)
     }
     default:
       return state
@@ -159,15 +163,36 @@ export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', pa
 export const uploadMainImageInitAction = (payload) => ({ type: 'UPDATE_MAINIMAGE_INIT', payload })
 
 export const getFoodOptionsInit = (payload) => ({ type: 'API_GET_FOODOPTIONS_INIT', payload })
+export const rmFoodOptionInit = (payload) => ({
+  type: 'API_RM_FOODOPTION_INIT',
+  payload: {
+    ...payload,
+    successActionType: 'API_GET_FOODOPTIONS_INIT'
+  }
+})
+export const addFoodOptionInit = (payload) => ({
+  type: 'API_ADD_FOODOPTION_INIT',
+  payload: {
+    ...payload,
+    successActionType: 'API_GET_FOODOPTIONS_INIT'
+  }
+})
 
-export const rmFoodOptionInit = (payload) => ({ type: 'API_RM_FOODOPTION_INIT', payload: {
-  ...payload,
-  successActionType: 'API_GET_FOODOPTIONS_INIT'
-}})
-export const addFoodOptionInit = (payload) => ({ type: 'API_ADD_FOODOPTION_INIT', payload: {
-  ...payload,
-  successActionType: 'API_GET_FOODOPTIONS_INIT'
-}})
+export const getFoodIngredientsInit = (payload) => ({ type: 'API_GET_FOODINGREDIENTS_INIT', payload })
+export const rmFoodIngredientInit = (payload) => ({
+  type: 'API_RM_FOODINGREDIENT_INIT',
+  payload: {
+    ...payload,
+    successActionType: 'API_GET_FOODINGREDIENTS_INIT'
+  }
+})
+export const addFoodIngredientInit = (payload) => ({
+  type: 'API_ADD_FOODINGREDIENT_INIT',
+  payload: {
+    ...payload,
+    successActionType: 'API_GET_FOODINGREDIENTS_INIT'
+  }
+})
 
 // Epic
 const uploadEpic = (action$: Observable, { getState }: EpicDependencies) =>
@@ -392,6 +417,7 @@ const apiGetEpic = (action$: Observable, { getState }: EpicDependencies) =>
   })
 
 const apiDoneAction = (doneActionType, payload, response) => ({ type: doneActionType, payload: {...payload, response} })
+const apiCustomDoneAction = (type, payload) => ({ type, payload })
 
 const apiRmEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
@@ -402,7 +428,7 @@ const apiRmEpic = (action$: Observable, { getState }: EpicDependencies) =>
     return Observable.fromPromise(API[`Rm${essence}`](payload))
       .mergeMap((response) => Observable.of(
         apiDoneAction(doneActionType, payload, response),
-        getFoodOptionsInit(payload)
+        apiCustomDoneAction(payload.successActionType, payload)
       ))
       .catch(error => Observable.of(console.log(error)))
   })
@@ -416,7 +442,7 @@ const apiAddEpic = (action$: Observable, { getState }: EpicDependencies) =>
     return Observable.fromPromise(API[`Add${essence}`](payload))
       .mergeMap((response) => Observable.of(
         apiDoneAction(doneActionType, payload, response),
-        getFoodOptionsInit(payload)
+        apiCustomDoneAction(payload.successActionType, payload)
       ))
       .catch(error => Observable.of(console.log(error)))
   })

@@ -64,10 +64,10 @@ const buildURL = ({
   path,
   v2
 }) => {
-  if (v2) return `https://apijs.dev.gotabb.com/${path}`
+  if (v2) return `https://apijs.dev.gotabb.com/${path}`//`http://localhost:3005/${path}`
   return `http://${subdom}.${endpoint}/${prefix}/${path}`
 }
-//`http://localhost:3005/${prefix}/${path}`;//
+//`http://localhost:3005/${path}`;//
 // urlParts = { token, ?subdom, ?endpoint, ?prefix, path }
 
 export function Get(urlParts, cookie) {

@@ -23,7 +23,10 @@ import {
   addFoodInitAction,
   getFoodOptionsInit,
   rmFoodOptionInit,
-  addFoodOptionInit
+  addFoodOptionInit,
+  getFoodIngredientsInit,
+  rmFoodIngredientInit,
+  addFoodIngredientInit,
 } from '../../ducks/restaurant'
 
 const Table = styled.table`
@@ -252,7 +255,8 @@ class Menucontrol extends React.Component {
     const { loggedRestaurant, categories, rmCategory, addCategory,
       selectedCategoryId, selectCategory,
       selectedFoodId, selectFood, rmFood, updateFood, addFood,
-      getFoodOptions, foodOptions, rmFoodOption, addFoodOption
+      getFoodOptions, foodOptions, rmFoodOption, addFoodOption,
+      getFoodIngredients, foodIngredients, rmFoodIngredient, addFoodIngredient
     } = this.props;
 
     let selectedCategory = null;
@@ -263,6 +267,7 @@ class Menucontrol extends React.Component {
     if (selectedCategory) {
       selectedFood = R.find(R.propEq('id', selectedFoodId))(selectedCategory.foods);
       if (!foodOptions[selectedFoodId] && selectedFoodId) getFoodOptions({ foodId: selectedFoodId })
+      if (!foodIngredients[selectedFoodId] && selectedFoodId) getFoodIngredients({ foodId: selectedFoodId })
     }
     return (
       <div>
@@ -424,6 +429,7 @@ class Menucontrol extends React.Component {
                               </tr>
                             )}
                           </TableTag>
+
                           <Label>Options</Label>
                           {foodOptions[selectedFoodId] ? foodOptions[selectedFoodId].map((option, i) =>
                             <div key={i}>
@@ -450,6 +456,34 @@ class Menucontrol extends React.Component {
                               )
                             }}
                           </Form>
+
+                          <Label>Ingredients</Label>
+                          {foodIngredients[selectedFoodId] ? foodIngredients[selectedFoodId].map((ingredient, i) =>
+                            <div key={i}>
+                              {ingredient.name}
+                              <button onClick={() => rmFoodIngredient({foodId: selectedFoodId, ingredientName: ingredient.name})}>x</button>
+                            </div>
+                          ) : 'No ingredients'}
+                          <Form
+                            onSubmit={({ ingredientName }) => {
+                              addFoodIngredient({ foodId: selectedFoodId, ingredientName })
+                            }}
+                            validate={({ ingredientName }) => {
+                              return {
+                                ingredientName: !ingredientName ? 'Name is required' : undefined
+                              }
+                            }}
+                          >
+                            {({submitForm}) => {
+                              return (
+                                <form onSubmit={submitForm}>
+                                  <Text field='ingredientName' placeholder='Name of ingredient' />
+                                  <FormBoxSubmit primary>ADD INGREDIENT</FormBoxSubmit>
+                                </form>
+                              )
+                            }}
+                          </Form>
+
                         </FormBoxBody>
                     </FormBox> : ''}
                   </MealDetail>
@@ -466,7 +500,8 @@ export default connect(
     categories: state.restaurant.categories,
     selectedCategoryId: state.restaurant.selectedCategoryId,
     selectedFoodId: state.restaurant.selectedFoodId,
-    foodOptions: state.restaurant.foodOptions
+    foodOptions: state.restaurant.foodOptions,
+    foodIngredients: state.restaurant.foodIngredients
   }),
   {
     getCategories: getCategoriesInitAction,
@@ -479,6 +514,9 @@ export default connect(
     addFood: addFoodInitAction,
     getFoodOptions: getFoodOptionsInit,
     rmFoodOption: rmFoodOptionInit,
-    addFoodOption: addFoodOptionInit
+    addFoodOption: addFoodOptionInit,
+    getFoodIngredients: getFoodIngredientsInit,
+    rmFoodIngredient: rmFoodIngredientInit,
+    addFoodIngredient: addFoodIngredientInit,
   },
 )(Menucontrol);
