@@ -76,7 +76,7 @@ export const FieldWrapper = styled.div`
 `
 
 export const Label = styled.div`
-  font-size: 12px;
-  margin-top: 12px;
-  margin-bottom: -6px;
+  font-size: 14px;
+  margin-top: 18px;
+  margin-bottom: -4px;
 `

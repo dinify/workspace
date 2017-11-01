@@ -64,7 +64,6 @@ const CategoriesList = styled.ul`
   list-style: none;
   margin: 10px;
   width: 250px;
-  width: 280px;
   vertical-align: top;
 `
 
@@ -93,7 +92,7 @@ const FoodList = styled.ul`
   display: inline-block;
   list-style: none;
   margin: 10px;
-  width: 280px;
+  width: 250px;
   vertical-align: top;
 `
 
@@ -150,7 +149,7 @@ const HeadLine = styled.div`
 
 const H = styled.div`
   display: inline-block;
-  width: 280px;
+  width: 250px;
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing: 1px;
@@ -159,7 +158,7 @@ const H = styled.div`
 
 const MealDetail = styled.div`
   display: inline-block;
-  width: 300px;
+  width: 250px;
   vertical-align: top;
 `
 
@@ -235,7 +234,7 @@ const NewFoodButton = styled.button`
   cursor: pointer;
 `
 const SolidContainer = styled.div`
-  width: 1000px;
+  width: 1100px;
 `
 
 const FoodImage = styled.div`
@@ -245,6 +244,66 @@ const FoodImage = styled.div`
   background-size: cover;
   background-position: center;
 `
+
+const customItemColors = [
+  '#ef5350',
+  '#7E57C2',
+  '#29B6F6',
+  '#9CCC65',
+  '#FFCA28',
+  '#8D6E63',
+  '#ef5350',
+  '#7E57C2',
+  '#29B6F6',
+  '#9CCC65',
+  '#FFCA28',
+  '#8D6E63'
+]
+
+export const Customizations = styled.div`
+  margin-top: 10px;
+`
+
+export const CustomItem = styled.div`
+  display: inline-block;
+  background: ${p => customItemColors[p.bgIndex] ? customItemColors[p.bgIndex] : 'black'};
+  margin: 3px;
+  border-radius: 40px;
+  color: white;
+  padding: 3px 12px;
+  letter-spacing: 0.3px;
+  font-weight: 400;
+  font-size: 12px;
+  button {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: rgba(255,255,255,0.6);
+    margin-left: 5px;
+    &:hover {
+      color: white;
+    }
+  }
+`
+
+const ListOfCustomizations =  ({ list, rmButtonFunction }) => {
+	if (list && list.length > 0) {
+		return (
+			<Customizations>
+				{list.map((customization, i) =>
+          <CustomItem key={i} bgIndex={i}>
+            <span style={{whiteSpace: 'nowrap'}}>{customization.name}</span>
+            <button onClick={() => rmButtonFunction(customization)}>
+              <i className="ion-close" />
+            </button>
+          </CustomItem>
+				)}
+			</Customizations>
+		)
+	}
+	return null
+}
 
 class Menucontrol extends React.Component {
   componentDidMount() {
@@ -373,7 +432,7 @@ class Menucontrol extends React.Component {
                   </FoodList> : ''}
 
                   <MealDetail>
-                    {selectedFood ? <FormBox>
+                    {selectedFood ? <FormBox style={{width: '230px'}}>
                       <FoodImage imageURL={`https://s3.eu-central-1.amazonaws.com/tabb/tabb-food-image/FOOD_${selectedFood.id}`} />
                         <FormBoxBody>
                           <Form
@@ -400,91 +459,82 @@ class Menucontrol extends React.Component {
                                   <Textarea style={{height: '100px'}} field='description' placeholder='Description' />
                                   <Label>Price</Label>
                                   <Text type="number" field='price' placeholder='Price' />
-
                                   <FormBoxSubmit primary>SAVE</FormBoxSubmit>
-
-                                  {/*
-                                    <Label>Ingredients</Label>
-                                    <TableTag>
-                                      {selectedFood.ingredients.map((ingredient) =>
-                                        <tr>
-                                          <Td>{ingredient.name}</Td>
-                                        </tr>
-                                      )}
-                                    </TableTag>
-                                  */}
-
-
-
                                 </form>
                               )
                             }}
                           </Form>
-                          <Label>Nutrition</Label>
-                          <TableTag>
-                            {selectedFood.nutrition.map((nutr, i) =>
-                              <tr key={i}>
-                                <Td>{nutr.nutrient}</Td>
-                                <Td>{nutr.content}</Td>
-                              </tr>
-                            )}
-                          </TableTag>
-
-                          <Label>Options</Label>
-                          {foodOptions[selectedFoodId] ? foodOptions[selectedFoodId].map((option, i) =>
-                            <div key={i}>
-                              {option.name}
-                              <button onClick={() => rmFoodOption({foodId: selectedFoodId, optionName: option.name})}>x</button>
-                            </div>
-                          ) : 'No options'}
-                          <Form
-                            onSubmit={({ optionName }) => {
-                              addFoodOption({ foodId: selectedFoodId, optionName })
-                            }}
-                            validate={({ optionName }) => {
-                              return {
-                                optionName: !optionName ? 'Name is required' : undefined
-                              }
-                            }}
-                          >
-                            {({submitForm}) => {
-                              return (
-                                <form onSubmit={submitForm}>
-                                  <Text field='optionName' placeholder='Name of option' />
-                                  <FormBoxSubmit primary>ADD OPTION</FormBoxSubmit>
-                                </form>
-                              )
-                            }}
-                          </Form>
-
-                          <Label>Ingredients</Label>
-                          {foodIngredients[selectedFoodId] ? foodIngredients[selectedFoodId].map((ingredient, i) =>
-                            <div key={i}>
-                              {ingredient.name}
-                              <button onClick={() => rmFoodIngredient({foodId: selectedFoodId, ingredientName: ingredient.name})}>x</button>
-                            </div>
-                          ) : 'No ingredients'}
-                          <Form
-                            onSubmit={({ ingredientName }) => {
-                              addFoodIngredient({ foodId: selectedFoodId, ingredientName })
-                            }}
-                            validate={({ ingredientName }) => {
-                              return {
-                                ingredientName: !ingredientName ? 'Name is required' : undefined
-                              }
-                            }}
-                          >
-                            {({submitForm}) => {
-                              return (
-                                <form onSubmit={submitForm}>
-                                  <Text field='ingredientName' placeholder='Name of ingredient' />
-                                  <FormBoxSubmit primary>ADD INGREDIENT</FormBoxSubmit>
-                                </form>
-                              )
-                            }}
-                          </Form>
-
                         </FormBoxBody>
+                    </FormBox> : ''}
+                  </MealDetail>
+                  <MealDetail>
+                    {selectedFood ? <FormBox style={{width: '230px'}}>
+                      <FormBoxBody>
+                        <Label>Nutrition</Label>
+                        <TableTag>
+                          {selectedFood.nutrition.map((nutr, i) =>
+                            <tr key={i}>
+                              <Td>{nutr.nutrient}</Td>
+                              <Td>{nutr.content}</Td>
+                            </tr>
+                          )}
+                        </TableTag>
+
+                        <Label>Options</Label>
+
+                        {foodOptions[selectedFoodId] ?
+                          <ListOfCustomizations
+                            list={foodOptions[selectedFoodId]}
+                            rmButtonFunction={(option) => rmFoodOption({foodId: selectedFoodId, optionName: option.name})}
+                          />
+                        : 'No options'}
+                        <Form
+                          onSubmit={({ optionName }) => {
+                            addFoodOption({ foodId: selectedFoodId, optionName })
+                          }}
+                          validate={({ optionName }) => {
+                            return {
+                              optionName: !optionName ? 'Name is required' : undefined
+                            }
+                          }}
+                        >
+                          {({submitForm}) => {
+                            return (
+                              <form onSubmit={submitForm}>
+                                <Text field='optionName' placeholder='Name of new option' />
+                                <FormBoxSubmit primary>ADD OPTION</FormBoxSubmit>
+                              </form>
+                            )
+                          }}
+                        </Form>
+
+                        <Label>Ingredients</Label>
+                        {foodIngredients[selectedFoodId] ?
+                          <ListOfCustomizations
+                            list={foodIngredients[selectedFoodId]}
+                            rmButtonFunction={(ingredient) => rmFoodIngredient({foodId: selectedFoodId, ingredientName: ingredient.name})}
+                          />
+                        : 'No ingredients'}
+                        <Form
+                          onSubmit={({ ingredientName }) => {
+                            addFoodIngredient({ foodId: selectedFoodId, ingredientName })
+                          }}
+                          validate={({ ingredientName }) => {
+                            return {
+                              ingredientName: !ingredientName ? 'Name is required' : undefined
+                            }
+                          }}
+                        >
+                          {({submitForm}) => {
+                            return (
+                              <form onSubmit={submitForm}>
+                                <Text field='ingredientName' placeholder='Name of new ingredient' />
+                                <FormBoxSubmit primary>ADD INGREDIENT</FormBoxSubmit>
+                              </form>
+                            )
+                          }}
+                        </Form>
+                      </FormBoxBody>
                     </FormBox> : ''}
                   </MealDetail>
         </SolidContainer>
