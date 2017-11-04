@@ -118,6 +118,16 @@ export function RmFoodingredient({ foodId, ingredientName }) {
   return Delete({ path: `api/v2/restaurant/food/${foodId}/ingredient`, v2: true }, { ingredientName })
 }
 
+export function GetFoodaddons({ foodId }) {
+  return Get({ path: `api/v2/restaurant/food/${foodId}/addons`, v2: true })
+}
+export function AddFoodaddon({ foodId, addonId }) {
+  return Post({ path: `api/v2/restaurant/food/${foodId}/addon`, v2: true }, { addonId })
+}
+export function RmFoodaddon({ foodId, addonId }) {
+  return Delete({ path: `api/v2/restaurant/food/${foodId}/addon`, v2: true }, { addonId })
+}
+
 //export function RemoveTablet({ restaurantId, login_id }) {
 //  return Delete({ path: `restaurant/${restaurantId}/shop` }, { login_id })
 //}

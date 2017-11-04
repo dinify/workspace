@@ -27,6 +27,8 @@ import {
   getFoodIngredientsInit,
   rmFoodIngredientInit,
   addFoodIngredientInit,
+  getFoodAddonsInit,
+  rmFoodAddonInit
 } from '../../ducks/restaurant'
 
 const Table = styled.table`
@@ -315,7 +317,8 @@ class Menucontrol extends React.Component {
       selectedCategoryId, selectCategory,
       selectedFoodId, selectFood, rmFood, updateFood, addFood,
       getFoodOptions, foodOptions, rmFoodOption, addFoodOption,
-      getFoodIngredients, foodIngredients, rmFoodIngredient, addFoodIngredient
+      getFoodIngredients, foodIngredients, rmFoodIngredient, addFoodIngredient,
+      getFoodAddons, foodAddons, rmFoodAddon
     } = this.props;
 
     let selectedCategory = null;
@@ -327,6 +330,7 @@ class Menucontrol extends React.Component {
       selectedFood = R.find(R.propEq('id', selectedFoodId))(selectedCategory.foods);
       if (!foodOptions[selectedFoodId] && selectedFoodId) getFoodOptions({ foodId: selectedFoodId })
       if (!foodIngredients[selectedFoodId] && selectedFoodId) getFoodIngredients({ foodId: selectedFoodId })
+      if (!foodAddons[selectedFoodId] && selectedFoodId) getFoodAddons({ foodId: selectedFoodId })
     }
     return (
       <div>
@@ -534,6 +538,15 @@ class Menucontrol extends React.Component {
                             )
                           }}
                         </Form>
+
+
+                        <Label>Addons</Label>
+                        {foodAddons[selectedFoodId] ?
+                          <ListOfCustomizations
+                            list={foodAddons[selectedFoodId].map((o) => ({...o, ...o.AddonObject}))}
+                            rmButtonFunction={(addon) => rmFoodAddon({foodId: selectedFoodId, addonId: addon.id})}
+                          />
+                        : 'No addon'}
                       </FormBoxBody>
                     </FormBox> : ''}
                   </MealDetail>
@@ -551,7 +564,8 @@ export default connect(
     selectedCategoryId: state.restaurant.selectedCategoryId,
     selectedFoodId: state.restaurant.selectedFoodId,
     foodOptions: state.restaurant.foodOptions,
-    foodIngredients: state.restaurant.foodIngredients
+    foodIngredients: state.restaurant.foodIngredients,
+    foodAddons: state.restaurant.foodAddons
   }),
   {
     getCategories: getCategoriesInitAction,
@@ -568,5 +582,7 @@ export default connect(
     getFoodIngredients: getFoodIngredientsInit,
     rmFoodIngredient: rmFoodIngredientInit,
     addFoodIngredient: addFoodIngredientInit,
+    getFoodAddons: getFoodAddonsInit,
+    rmFoodAddon: rmFoodAddonInit,
   },
 )(Menucontrol);
