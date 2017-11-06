@@ -150,7 +150,12 @@ export const logoutDoneAction = (res: object) => {
 export const loggedFetchedAction = (payload) => ({ type: LOGGED_FETCHED_DONE, payload })
 export const loginFailAction = (err: Error) => ({ type: LOGIN_FAIL, payload: err })
 export const signupInitAction = (payload) => ({ type: SIGNUP_INIT, payload })
-export const signupDoneAction = (payload) => ({ type: SIGNUP_DONE, payload })
+
+export const signupDoneAction = (res: object) => {
+  window.location.replace('/')
+  return { type: SIGNUP_DONE, payload: res }
+}
+
 export const signupFailAction = (err: Error) => ({ type: SIGNUP_FAIL, payload: err })
 export const appBootstrap = () => ({ type: BOOTSTRAP })
 export const addTabletInitAction = (payload) => ({ type: ADD_TABLET_INIT, payload })
