@@ -1,0 +1,8 @@
+node_modules
+android
+ios
+public
+src
+yarn.lock
+.DS_Store
+.elasticbeanstalk
