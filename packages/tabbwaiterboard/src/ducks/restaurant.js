@@ -1,5 +1,4 @@
 // @flow
-
 import { Observable } from 'rxjs';
 import R from 'ramda';
 import * as API from '../api/restaurant';
@@ -235,6 +234,7 @@ const audio = new Audio('/static/take-this.mp3')
 let counts = {}
 const isSomethingNew = (payload, type) => {
   if (counts[type] !== undefined && payload.length > counts[type]) {
+    audio.volume = 1
     audio.play()
   }
   counts[type] = payload.length
