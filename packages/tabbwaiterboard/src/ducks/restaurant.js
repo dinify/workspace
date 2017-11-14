@@ -29,10 +29,10 @@ const initialState = {
   acceptedBookings: [],
   sales: 0,
   timer: {
-    oh: 80,
-    o: 60,
+    oh: 60,
+    o: 40,
     sc: 20,
-    p: 15
+    p: 10
   },
   order_ahead_enabled: null,
 };

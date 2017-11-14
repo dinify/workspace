@@ -58,7 +58,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime }) => {
   				</Form>
   			: ''}
   			<Text color={color}>
-          {datetime ? moment(bill.paid).format('DD/MM/YYYY HH:mm') : ''} {bill.BillObject.payment_method ? bill.BillObject.payment_method.replace('_',' ').replace('K NET','ONLINE') : ''}
+          {datetime ? moment(bill.paid).subtract(3, 'h').format('DD/MM/YYYY HH:mm') : ''} {bill.BillObject.payment_method ? bill.BillObject.payment_method.replace('_',' ').replace('K NET','ONLINE') : ''}
   			</Text>
         <CheckButton bg={color} onClick={() => confirmBill({billId: bill.id})} flash={!noconfirm && isItOutdated(bill.requested, timer.p)} invisible={noconfirm}>
           <i className="ion-checkmark" />

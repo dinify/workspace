@@ -109,6 +109,10 @@ export function GetBillsOfUserInRestaurant({ userId }) {
   return Get({ path: `api/v2/waiterboard/bills/user/${userId}` })
 }
 
+export function GetOrdersOfUserInRestaurant({ userId }) {
+  return Get({ path: `api/v2/waiterboard/orders/user/${userId}` })
+}
+
 export function SetOrderAheadEnabled({ restaurantId, enabled }) {
   return Put({ path: `api/v2/restaurant/${restaurantId}/order_ahead_enabled`}, { enabled })
 }

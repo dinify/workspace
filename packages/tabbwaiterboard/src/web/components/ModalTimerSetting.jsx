@@ -62,7 +62,7 @@ class ModalTimerSetting extends React.Component {
             handleStyle={handleStyle(c['oh'])}
             defaultValue={timer.oh}
             min={10}
-            max={120}
+            max={60}
             onChange={(val) => this.onChange('oh', val)}
             onAfterChange={(val) => this.afterChange('oh', val)}
             style={sliderStyle}
@@ -76,7 +76,7 @@ class ModalTimerSetting extends React.Component {
             handleStyle={handleStyle(c['s2'])}
             defaultValue={timer.o}
             min={10}
-            max={120}
+            max={60}
             onChange={(val) => this.onChange('o', val)}
             onAfterChange={(val) => this.afterChange('o', val)}
             style={sliderStyle}
@@ -90,7 +90,7 @@ class ModalTimerSetting extends React.Component {
             handleStyle={handleStyle(c['s4'])}
             defaultValue={timer.sc}
             min={10}
-            max={120}
+            max={60}
             onChange={(val) => this.onChange('sc', val)}
             onAfterChange={(val) => this.afterChange('sc', val)}
             style={sliderStyle}
@@ -104,7 +104,7 @@ class ModalTimerSetting extends React.Component {
             handleStyle={handleStyle(c['s5'])}
             defaultValue={timer.p}
             min={10}
-            max={120}
+            max={60}
             onChange={(val) => this.onChange('p', val)}
             onAfterChange={(val) => this.afterChange('p', val)}
             style={sliderStyle}
