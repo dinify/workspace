@@ -19,6 +19,24 @@ type State = {
   loggedUser: ?Object,
 };
 
+function getCookie(cname) {
+  let name = cname + "="
+  let decodedCookie = decodeURIComponent(document.cookie)
+  let ca = decodedCookie.split(';')
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i]
+    while (c.charAt(0) === ' ') c = c.substring(1)
+    if (c.indexOf(name) === 0) return c.substring(name.length, c.length)
+  }
+  return false
+}
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
 const initialState = {
   searchLoading: false,
   appRun: false,
@@ -29,10 +47,10 @@ const initialState = {
   acceptedBookings: [],
   sales: 0,
   timer: {
-    oh: 60,
-    o: 40,
-    sc: 20,
-    p: 10
+    oh: Number(getCookie('timer-oh')) || 60,
+    o: Number(getCookie('timer-o')) || 40,
+    sc: Number(getCookie('timer-sc')) || 20,
+    p: Number(getCookie('timer-p')) || 10
   },
   order_ahead_enabled: null,
 };
@@ -106,8 +124,10 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assoc('acceptedBookings', action.payload)(state);
     case 'GET_SALES_DONE':
       return R.assoc('sales', action.payload.sales)(state);
-    case 'SET_TIMER':
+    case 'SET_TIMER': {
+      setCookie('timer-'+action.payload.key, action.payload.val, 30);
       return R.assocPath(['timer', action.payload.key], action.payload.val)(state);
+    }
     case 'CONFIRMATION_DONE': {
       switch (action.payload.type) {
         case 'Order':
@@ -129,12 +149,6 @@ export default function reducer(state: State = initialState, action: Action) {
   }
 }
 
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
 
 // Action Creators
 export function loginInitAction({ email, password }) {
@@ -229,7 +243,7 @@ const getTablesEpic = (action$: Observable) =>
 let bookingsCount = 0
 let servicesCount = 0
 
-const audio = new Audio('/static/take-this.mp3')
+const audio = new Audio('/static/stuffed-and-dropped.mp3')
 
 let counts = {}
 const isSomethingNew = (payload, type) => {
