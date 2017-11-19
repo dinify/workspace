@@ -20,6 +20,7 @@
     "grid-styled": "^2.0.0-10",
     "native-base": "2.3.0",
     "normalize-path": "^2.1.1",
+    "numeral": "^2.0.6",
     "polished": "^1.8.1",
     "qrcode.react": "^0.7.1",
     "ramda": "0.23.0",

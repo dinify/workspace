@@ -2,6 +2,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+import moment from 'moment'
+import numeral from 'numeral'
 
 import {
   getBillsInitAction,
@@ -59,7 +61,7 @@ class Billing extends React.Component {
         <Table>
           <TableHead>
             <TableRow>
-              <TH>Date/Month</TH>
+              <TH>Date/Month/Year</TH>
               <TH>Transaction No.</TH>
               <TH>Guest ID</TH>
               <TH>Order Type</TH>
@@ -74,12 +76,12 @@ class Billing extends React.Component {
           <tbody>
             {bills.map((bill, i) =>
               <TableRow key={i}>
-                <TD>24/08</TD>
-                <TD>{bill.id}</TD>
-                <TD>{bill.user}</TD>
-                <TD>Dine-in</TD>
-                <TD>{bill.check_in}</TD>
-                <TD>{bill.check_out}</TD>
+                <TD>{moment(bill.check_in).get('date')}/{moment(bill.check_in).get('month')}/{moment(bill.check_in).get('year')}</TD>
+                <TD>{numeral(bill.id).format('00000000')}</TD>
+                <TD>{bill.UserObject.email}</TD>
+                <TD>{Number(bill.TableObject.position) === 0 ? 'Order Ahead' : 'Dine-in'}</TD>
+                <TD>{moment(bill.check_in).subtract(3, 'h').format('HH:mm')}</TD>
+                <TD>{moment(bill.check_out).subtract(3, 'h').format('HH:mm')}</TD>
                 <TD>{bill.sub_total}KD</TD>
                 <TD>{bill.payment_method}</TD>
                 <TD>{bill.total}KD/{bill.sub_total}KD</TD>
