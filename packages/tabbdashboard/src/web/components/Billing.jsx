@@ -5,6 +5,9 @@ import styled from 'styled-components'
 import moment from 'moment'
 import numeral from 'numeral'
 
+import ReactTable from "react-table";
+import "react-table/react-table.css";
+
 import {
   getBillsInitAction,
 } from '../../ducks/restaurant'
@@ -19,30 +22,14 @@ const Header = styled.div`
   line-height: 60px;
   padding-left: 30px;
 `
-const Table = styled.table`
-  width: 100%;
-  border-spacing: 0;
-  margin: 20px 0;
-`
-const TableHead = styled.thead`
-  background: #F2F4F7;
-  border-radius: 5px 5px 0 0;
-  padding: 10px;
-  font-size: 14px;
-  text-align: left;
-`
-const TableRow = styled.tr`
-  &:nth-child(even) {
-    background-color: rgba(0,0,0,0.07);
+
+const BillingPage = styled.div`
+  .rt-td {
+    font-size: 12px;
   }
-`
-const TH = styled.th`
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-  padding: 10px;
-`
-const TD = styled.td`
-  font-size: 12px;
-  padding: 10px;
+  .rt-thead {
+    font-size: 12px;
+  }
 `
 
 class Billing extends React.Component {
@@ -51,46 +38,78 @@ class Billing extends React.Component {
     getBills()
   }
   render() {
-    const { bills } = this.props
+    let { bills } = this.props
+
     return (
-      <div>
+      <BillingPage>
         <Header>
           Billing
         </Header>
 
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TH>Date/Month/Year</TH>
-              <TH>Transaction No.</TH>
-              <TH>Guest ID</TH>
-              <TH>Order Type</TH>
-              <TH>Check-in</TH>
-              <TH>Check-out</TH>
-              <TH>Sales</TH>
-              <TH>Payment</TH>
-              <TH>Fee Transaction/Payment</TH>
-              <TH>Gratitude</TH>
-            </TableRow>
-          </TableHead>
-          <tbody>
-            {bills.map((bill, i) =>
-              <TableRow key={i}>
-                <TD>{moment(bill.check_in).get('date')}/{moment(bill.check_in).get('month')}/{moment(bill.check_in).get('year')}</TD>
-                <TD>{numeral(bill.id).format('00000000')}</TD>
-                <TD>{bill.UserObject.email}</TD>
-                <TD>{Number(bill.TableObject.position) === 0 ? 'Order Ahead' : 'Dine-in'}</TD>
-                <TD>{moment(bill.check_in).subtract(3, 'h').format('HH:mm')}</TD>
-                <TD>{moment(bill.check_out).subtract(3, 'h').format('HH:mm')}</TD>
-                <TD>{bill.sub_total}KD</TD>
-                <TD>{bill.payment_method}</TD>
-                <TD>{bill.total}KD/{bill.sub_total}KD</TD>
-                <TD>{bill.gratitude}</TD>
-              </TableRow>
-            )}
-          </tbody>
-        </Table>
-      </div>
+        <ReactTable
+          data={bills}
+          columns={[
+            {
+              Header: "Date/Month/Year",
+              accessor: bill => moment(bill.check_in).format('DD/MM/YYYY'),
+              id: 'check_in_date'
+            },
+            {
+              Header: "Transaction No.",
+              accessor: bill => numeral(bill.id).format('00000000'),
+              id: 'id'
+            },
+            {
+              Header: "Guest E-Mail",
+              accessor: bill => (
+                <span>
+                  <strong>{bill.UserObject.email.split('@')[0]}</strong>
+                  <span>@</span>
+                  <span>{bill.UserObject.email.split('@')[1]}</span>
+                </span>
+              ),
+              id: 'user'
+            },
+            {
+              Header: "Order Type",
+              accessor: bill => Number(bill.TableObject.position) === 0 ? 'Order Ahead' : 'Dine-in',
+              id: 'orderType'
+            },
+            {
+              Header: "Check-in",
+              accessor: bill => moment(bill.check_in).subtract(3, 'h').format('HH:mm'),
+              id: 'check_in'
+            },
+            {
+              Header: "Check-out",
+              accessor: bill => moment(bill.check_out).subtract(3, 'h').format('HH:mm'),
+              id: 'check_out'
+            },
+            {
+              Header: "Sales",
+              accessor: bill => `${bill.sub_total} KD`,
+              id: 'sales'
+            },
+            {
+              Header: "Payment",
+              accessor: bill => bill.payment_method.replace('K_NET','ONLINE').replace('_',' '),
+              id: 'payment'
+            },
+            {
+              Header: "Fee Transaction/Payment",
+              accessor: bill =>  `${bill.total}KD / ${bill.sub_total}`,
+              id: 'fee'
+            },
+            {
+              Header: "Gratitude",
+              accessor: bill => `${bill.gratitude} KD`,
+              id: 'gratitude'
+            },
+          ]}
+          defaultPageSize={25}
+          className="-striped -highlight"
+        />
+      </BillingPage>
     )
   }
 }
