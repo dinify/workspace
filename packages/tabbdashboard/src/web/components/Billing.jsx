@@ -1,4 +1,5 @@
 // @flow
+import 'react-dates/initialize';
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -7,7 +8,10 @@ import numeral from 'numeral'
 import R from 'ramda'
 
 import ReactTable from "react-table";
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+
 import "react-table/react-table.css";
+import 'react-dates/lib/css/_datepicker.css';
 
 import {
   getBillsInitAction,
@@ -21,13 +25,20 @@ const Header = styled.div`
   height: 60px;
   width: calc(100% - 240px);
   background: #FFF;
-  line-height: 60px;
   padding-left: 30px;
+`
+
+const Title = styled.span`
+  margin-right: 50px;
+  line-height: 60px;
 `
 
 const BillingPage = styled.div`
   .rt-td {
     font-size: 12px;
+    strong {
+      color: black;
+    }
   }
   .rt-thead {
     font-size: 12px;
@@ -35,25 +46,48 @@ const BillingPage = styled.div`
 `
 
 class Billing extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      focusedInput: null,
+      startDate: moment().subtract(30, 'days'),
+      endDate: moment()
+    }
+  }
   componentDidMount() {
     const { getBills } = this.props
-    getBills()
+    const { startDate, endDate } = this.state
+    getBills({ from: startDate, to: endDate })
   }
   render() {
-    let { bills } = this.props
+    let { bills, getBills } = this.props
 
     return (
       <BillingPage>
         <Header>
-          Billing
+          <Title>Billing</Title>
+          <div style={{float: "right", padding: '6px 20px 7px 0'}}>
+            <DateRangePicker
+              isOutsideRange={() => false}
+              anchorDirection="right"
+              startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+              endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+              onDatesChange={({ startDate, endDate }) => {
+                this.setState({ startDate, endDate })
+                getBills({ from: startDate, to: endDate })
+              }} // PropTypes.func.isRequired,
+              focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+              onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+            />
+          </div>
         </Header>
 
         <ReactTable
           data={bills}
           columns={[
             {
-              Header: "Date/Month/Year",
-              accessor: bill => moment(bill.check_in).format('DD/MM/YYYY'),
+              Header: "Year/Month/Date",
+              accessor: bill => moment(bill.check_in).format('YYYY/MM/DD'),
               id: 'check_in_date',
               Footer: 'TOTAL'
             },

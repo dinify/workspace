@@ -69,8 +69,8 @@ export function AddTablet({ restaurantId, login_id, pass_enc, name }) {
   return Post({ path: `restaurant/${restaurantId}/shop` }, { login_id, pass_enc, name })
 }
 
-export function GetBills() {
-  return Get({ path: `api/v2/restaurant/billing`, v2: true })
+export function GetBills({ from, to }) {
+  return Post({ path: `api/v2/restaurant/billing`, v2: true }, { from, to })
 }
 
 export function GetCategories({ restaurantId }) {

@@ -160,7 +160,7 @@ export const signupFailAction = (err: Error) => ({ type: SIGNUP_FAIL, payload: e
 export const appBootstrap = () => ({ type: BOOTSTRAP })
 export const addTabletInitAction = (payload) => ({ type: ADD_TABLET_INIT, payload })
 export const addTabletDoneAction = () => ({ type: ADD_TABLET_DONE })
-export const getBillsInitAction = () => ({ type: GET_BILLS_INIT })
+export const getBillsInitAction = (payload) => ({ type: GET_BILLS_INIT, payload })
 export const getBillsDoneAction = (payload) => ({ type: GET_BILLS_DONE, payload })
 export const getCategoriesInitAction = () => ({ type: GET_CATEGORIES_INIT })
 export const getCategoriesDoneAction = (payload) => ({ type: GET_CATEGORIES_DONE, payload })
@@ -355,9 +355,10 @@ const addTabletEpic = (action$: Observable, { getState }: EpicDependencies) =>
 const getBillsEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType(GET_BILLS_INIT)
-  .switchMap(() =>
+  .switchMap(({ payload: { from, to } }) =>
     Observable.fromPromise(API.GetBills({
-      restaurantId: getState().restaurant.loggedRestaurant.id
+      from,
+      to
     }))
       .map(getBillsDoneAction)
       .catch(error => console.log(error))
