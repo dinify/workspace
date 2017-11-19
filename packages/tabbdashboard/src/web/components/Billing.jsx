@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import moment from 'moment'
 import numeral from 'numeral'
+import R from 'ramda'
 
 import ReactTable from "react-table";
 import "react-table/react-table.css";
@@ -15,6 +16,7 @@ import {
 const Header = styled.div`
   position: fixed;
   left: 240px;
+  z-index: 1000000;
   top: 0;
   height: 60px;
   width: calc(100% - 240px);
@@ -52,7 +54,8 @@ class Billing extends React.Component {
             {
               Header: "Date/Month/Year",
               accessor: bill => moment(bill.check_in).format('DD/MM/YYYY'),
-              id: 'check_in_date'
+              id: 'check_in_date',
+              Footer: 'TOTAL'
             },
             {
               Header: "Transaction No.",
@@ -88,7 +91,8 @@ class Billing extends React.Component {
             {
               Header: "Sales",
               accessor: bill => `${bill.sub_total} KD`,
-              id: 'sales'
+              id: 'sales',
+              Footer: `${R.pluck('sub_total')(bills).reduce((a, b) => Number(a) + Number(b), 0)} KD`
             },
             {
               Header: "Payment",
@@ -98,12 +102,18 @@ class Billing extends React.Component {
             {
               Header: "Fee Transaction/Payment",
               accessor: bill =>  `${bill.total}KD / ${bill.sub_total}`,
-              id: 'fee'
+              id: 'fee',
+              Footer: (<span>
+                <span>{numeral(R.pluck('total')(bills).reduce((a, b) => Number(a) + Number(b), 0)).format('0')}KD</span>
+                <span> / </span>
+                <span>{numeral(R.pluck('sub_total')(bills).reduce((a, b) => Number(a) + Number(b), 0)).format('0')}KD</span>
+              </span>)
             },
             {
               Header: "Gratitude",
               accessor: bill => `${bill.gratitude} KD`,
-              id: 'gratitude'
+              id: 'gratitude',
+              Footer: `${R.pluck('gratitude')(bills).reduce((a, b) => Number(a) + Number(b), 0)} KD`
             },
           ]}
           defaultPageSize={25}
