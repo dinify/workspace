@@ -23,13 +23,20 @@ export default function reducer(state: State = initialState, action: Action) {
         if(state.all[guest.UserObject.id] && state.all[guest.UserObject.id].bills) {
           guestsObject[guest.UserObject.id].bills = state.all[guest.UserObject.id].bills
         }
+        if(state.all[guest.UserObject.id] && state.all[guest.UserObject.id].orders) {
+          guestsObject[guest.UserObject.id].orders = state.all[guest.UserObject.id].orders
+        }
       })
       return R.assoc('all', guestsObject)(state);
     }
 
     case 'GET_BILLSOFUSER_DONE': {
       const { userId, bills } = action.payload;
-      return R.assocPath(['all',userId, 'bills'], bills)(state);
+      return R.assocPath(['all', userId, 'bills'], bills)(state);
+    }
+    case 'GET_ORDERSOFUSER_DONE': {
+      const { userId, orders } = action.payload;
+      return R.assocPath(['all', userId, 'orders'], orders)(state);
     }
 
     case 'CLEAR_TABLE_DONE': {

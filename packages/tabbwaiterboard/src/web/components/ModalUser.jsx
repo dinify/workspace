@@ -3,11 +3,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { clearUser } from '../../ducks/tables'
-import { getBillsOfUser } from '../../ducks/restaurant'
+import { getBillsOfUser, getOrdersOfUser } from '../../ducks/restaurant'
 import R from 'ramda'
 import numeral from 'numeral'
 
 import Bill from './Events/Bill'
+import Order from './Events/Order'
 
 const Header = styled.div`
   position: absolute;
@@ -75,7 +76,7 @@ const Body = styled.div`
   padding: 0 30px;
   box-sizing: border-box;
   overflow: auto;
-  .Bill {
+  .Bill, .Order {
     width: 100%
   }
 `;
@@ -129,7 +130,7 @@ class ModalUser extends React.Component {
 
   render(){
 
-    const { payload: { userId }, guests, clearUser, getBillsOfUser } = this.props;
+    const { payload: { userId }, guests, clearUser, getBillsOfUser, getOrdersOfUser } = this.props;
 
     const user = guests[userId]
 
@@ -140,6 +141,7 @@ class ModalUser extends React.Component {
     let visitsCount = 0
     let favs = []
 
+    if (user.orders === undefined) getOrdersOfUser({ userId })
     if (user.bills === undefined) getBillsOfUser({ userId })
     else if (user.bills.length > 0) {
       const totals = R.pluck('total')(R.pluck('BillObject')(user.bills))
@@ -211,6 +213,11 @@ class ModalUser extends React.Component {
         </Header>
 
         <Body>
+          {user.orders && user.orders.orders.length > 0 ?
+            user.orders.orders.map((order, i) =>
+              <Order key={i} order={order} noconfirm datetime />
+            )
+          : ''}
           {user.bills ?
             user.bills.map((bill, i) =>
               <Bill key={i} bill={bill} noconfirm datetime />
@@ -229,6 +236,7 @@ export default connect(
   }),
   {
     clearUser,
-    getBillsOfUser
+    getBillsOfUser,
+    getOrdersOfUser
   }
 )(ModalUser);

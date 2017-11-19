@@ -6,6 +6,7 @@ import { confirmOrder } from '../../../ducks/restaurant'
 import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, FoodItem, Color } from '../styled/Events'
 import User from './user'
 import { isItOutdated } from '../../../common/helpers/time'
+import moment from 'moment'
 
 const color = colorsByStages['s2']
 
@@ -24,8 +25,8 @@ const ListOfCustomizations = ({ list }) => {
 	return null
 }
 
-const Order = ({ order, confirmOrder, removed, timer }) => (
-	<ActionBox className={removed ? 'vhs-zoom vhs-reverse' : ''}>
+const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime }) => (
+	<ActionBox className={removed ? 'vhs-zoom vhs-reverse Order' : 'Order'}>
     <Header>
 
       <TableId bg={color}>
@@ -34,9 +35,15 @@ const Order = ({ order, confirmOrder, removed, timer }) => (
 
       <User user={order.UserObject} />
 
-      <CheckButton bg={color} onClick={() => confirmOrder({orderId: order.id})} flash={isItOutdated(order.requested, timer.o)}>
-        <i className="ion-checkmark" />
-      </CheckButton>
+			<Text color={color}>
+				{datetime ? moment(order.processed).format('DD/MM/YYYY HH:mm') : ''}
+			</Text>
+
+			{!noconfirm ?
+				<CheckButton bg={color} onClick={() => confirmOrder({orderId: order.id})} flash={isItOutdated(order.requested, timer.o)}>
+	        <i className="ion-checkmark" />
+	      </CheckButton>
+			: ''}
 
     </Header>
 

@@ -210,7 +210,7 @@ export const setOHEnabled = () => ({ type: 'SET_OHENABLED_INIT' })
 export const getTodayBillsOfTable = (payload) => ({ type: 'GET_BILLSOFTABLE_INIT', payload })
 
 export const getBillsOfUser = (payload) => ({ type: 'GET_BILLSOFUSER_INIT', payload })
-
+export const getOrdersOfUser = (payload) => ({ type: 'GET_ORDERSOFUSER_INIT', payload })
 
 
 
@@ -243,7 +243,7 @@ const getTablesEpic = (action$: Observable) =>
 let bookingsCount = 0
 let servicesCount = 0
 
-const audio = new Audio('/static/stuffed-and-dropped.mp3')
+const audio = new Audio('/static/triad.wav')
 
 let counts = {}
 const isSomethingNew = (payload, type) => {
@@ -359,7 +359,14 @@ const getBillsOfUserEpic = (action$: Observable) =>
         .map((payload) => ({ type: 'GET_BILLSOFUSER_DONE', payload: { bills: payload, userId } }))
         .catch(error => Observable.of({ type: 'GET_BILLSOFUSER_FAIL' }))
     );
-
+const getOrdersOfUserEpic = (action$: Observable) =>
+  action$
+    .ofType('GET_ORDERSOFUSER_INIT')
+    .switchMap(({ payload: { userId } }) =>
+      Observable.fromPromise(API.GetOrdersOfUserInRestaurant({ userId }))
+        .map((payload) => ({ type: 'GET_ORDERSOFUSER_DONE', payload: { orders: payload, userId } }))
+        .catch(error => Observable.of({ type: 'GET_ORDERSOFUSER_FAIL' }))
+    );
 const setOHEnabledEpic = (action$: Observable, { getState, dispatch }) =>
   action$
     .ofType('SET_OHENABLED_INIT')
@@ -383,5 +390,6 @@ export const epics = [
   getTablesEpic,
   getBillsOfTableEpic,
   getBillsOfUserEpic,
+  getOrdersOfUserEpic,
   setOHEnabledEpic
 ];
