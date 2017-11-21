@@ -50,18 +50,17 @@ export function ChangeSocial({ restaurantId, facebookURL, instagramURL }) {
   return Put({ path: `restaurant/${restaurantId}/social` }, { facebookURL, instagramURL })
 }
 
-export function ChangeLocation({ restaurantId, name, longitude, latitude }) {
-  return Put({ path: `restaurant/${restaurantId}/location` }, { name, longitude, latitude })
-}
-
 export function ChangeBank({ restaurantId, name, beneficiaryName, IBAN }) {
   return Put({ path: `restaurant/${restaurantId}/bank` }, { name, beneficiaryName, IBAN })
 }
 
+export function ChangeLocation({ restaurantId, name, longitude, latitude }) {
+  return Put({ path: `api/v2/restaurant/${restaurantId}/location`, v2: true }, { name, longitude, latitude })
+}
+
 export function ChangeHours({ restaurantId, weekdayFrom, weekdayTo, weekendFrom, weekendTo }) {
-  return Put({ path: `restaurant/${restaurantId}/businesshours` }, {
-    weekday: {from: Number(weekdayFrom), to: Number(weekdayTo)},
-    weekend: {from: Number(weekendFrom), to: Number(weekendTo)}
+  return Put({ path: `api/v2/restaurant/${restaurantId}/businesshours`, v2: true }, {
+    weekdayFrom, weekdayTo, weekendFrom, weekendTo
   })
 }
 

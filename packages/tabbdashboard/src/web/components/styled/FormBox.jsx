@@ -73,6 +73,9 @@ export const FieldWrapper = styled.div`
     font-size: 28px;
     text-align: center;
   }
+  a i {
+    color: grey;
+  }
 `
 
 export const Label = styled.div`

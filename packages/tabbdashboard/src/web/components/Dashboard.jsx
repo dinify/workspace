@@ -97,7 +97,7 @@ const Dashboard = ({ location, logout }) =>
       </Logo>
       <Menu>
         <MenuLink l={location} iconName="settings" title="Settings" to="/dashboard/settings" />
-        <MenuLink l={location} iconName="restaurant_menu" title="Menu" to="/dashboard/menucontrol" />
+        <MenuLink l={location} iconName="restaurant_menu" title="Menu" to="/dashboard/menu" />
         <MenuLink l={location} iconName="attach_money" title="Billing" to="/dashboard/billing" />
         <MenuLink l={location} iconName="group" title="Guests" to="/dashboard/guests" />
         <MenuLink l={location} iconName="assessment" title="Sales" to="/dashboard/sales" />
@@ -115,7 +115,7 @@ const Dashboard = ({ location, logout }) =>
       <Switch>
         <Redirect exact from="/dashboard" to="/dashboard/settings" />
         <Route path="/dashboard/settings" component={SettingsSection} />
-        <Route path="/dashboard/menucontrol" component={MenucontrolSection} />
+        <Route path="/dashboard/menu" component={MenucontrolSection} />
         <Route path="/dashboard/billing" component={BillingSection} />
         <Route path="/dashboard/guests" component={GuestsSection} />
         <Route path="/dashboard/sales" component={SalesSection} />

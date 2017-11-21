@@ -11,8 +11,6 @@ import SwitchButton from 'react-switch-button'
 import 'react-switch-button/dist/react-switch-button.css'
 import Dropzone from 'react-dropzone'
 
-
-
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label } from '../styled/FormBox';
 
 import {
@@ -48,13 +46,22 @@ const GettingStartedGoogleMap = withGoogleMap(props => (
     defaultCenter={{ lat: props.lat, lng: props.lng }}
     onClick={props.onMapClick}
   >
-      <Marker
-        position={{
-            lat: props.lat,
-            lng: props.lng,
-        }}
-        onRightClick={() => props.onMarkerRightClick(1)}
-      />
+    <Marker
+      draggable={true}
+      onDragEnd={(o) => {
+        console.log(o.latLng.lat(), o.latLng.lng())
+        props.updateLocation({
+          name: props.loggedRestaurant.location.name,
+          longitude: o.latLng.lng(), 
+          latitude: o.latLng.lat()
+        })
+      }}
+      position={{
+        lat: props.lat,
+        lng: props.lng
+      }}
+      onRightClick={() => props.onMarkerRightClick(1)}
+    />
   </GoogleMap>
 ));
 
@@ -230,11 +237,9 @@ const Main = ({
   <FormBox>
     <FormBoxHead>Location</FormBoxHead>
     <FormBoxBody>
-
       <Form
-        onSubmit={(loc) => {
-          console.log(loc);
-          updateLocation(loc);
+        onSubmit={({ name, longitude, latitude }) => {
+          updateLocation({ name, longitude, latitude })
         }}
         defaultValues={loggedRestaurant.location}
         validate={({ name, longitude, latitude }) => {
@@ -253,6 +258,8 @@ const Main = ({
                 options={areaNames}
               />
               <GettingStartedGoogleMap
+                updateLocation={updateLocation}
+                loggedRestaurant={loggedRestaurant}
                 containerElement={
                   <div style={{ height: `200px`, margin: '10px 0' }} />
                 }
@@ -275,7 +282,6 @@ const Main = ({
   <FormBox>
     <FormBoxHead>Social Media</FormBoxHead>
     <FormBoxBody>
-
       <Form
         onSubmit={(social) => {
           updateSocial(social);
@@ -292,12 +298,16 @@ const Main = ({
           return (
             <form onSubmit={submitForm}>
               <FieldWrapper>
-                <i className="ion-social-facebook" />
-                <Text field='facebookURL' placeholder='https://www.facebook.com/myRestaurant' />
+                <Link to={`https://${loggedRestaurant.socialMedia.facebookURL}`} target="_blank">
+                  <i className="ion-social-facebook" />
+                </Link>
+                <Text field='facebookURL' placeholder='www.facebook.com/myRestaurant' />
               </FieldWrapper>
               <FieldWrapper>
-                <i className="ion-social-instagram-outline" />
-                <Text field='instagramURL' placeholder='https://www.instagram.com/myRestaurant' />
+                <Link to={`https://${loggedRestaurant.socialMedia.instagramURL}`} target="_blank">
+                  <i className="ion-social-instagram-outline" />
+                </Link>
+                <Text field='instagramURL' placeholder='www.instagram.com/myRestaurant' />
               </FieldWrapper>
               <FormBoxSubmit>SAVE</FormBoxSubmit>
             </form>

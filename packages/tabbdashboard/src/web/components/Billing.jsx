@@ -126,7 +126,7 @@ class Billing extends React.Component {
               Header: "Sales",
               accessor: bill => `${bill.sub_total} KD`,
               id: 'sales',
-              Footer: `${R.pluck('sub_total')(bills).reduce((a, b) => Number(a) + Number(b), 0)} KD`
+              Footer: `${numeral(R.pluck('sub_total')(bills).reduce((a, b) => Number(a) + Number(b), 0)).format('0.000')} KD`
             },
             {
               Header: "Payment",
@@ -147,7 +147,7 @@ class Billing extends React.Component {
               Header: "Gratitude",
               accessor: bill => `${bill.gratitude} KD`,
               id: 'gratitude',
-              Footer: `${R.pluck('gratitude')(bills).reduce((a, b) => Number(a) + Number(b), 0)} KD`
+              Footer: `${numeral(R.pluck('gratitude')(bills).reduce((a, b) => Number(a) + Number(b), 0)).format('0.000')} KD`
             },
           ]}
           defaultPageSize={25}
