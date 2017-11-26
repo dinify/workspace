@@ -10,6 +10,7 @@ import Login from './Login'
 import Signup from './Signup'
 import Dashboard from './Dashboard'
 import Admin from './Admin'
+import Qr from './Qr'
 
 const Content = styled.div`
   font-family: 'Montserrat', sans-serif;
@@ -41,6 +42,7 @@ const App = ({ appLoading }: AppProps) =>
           <Route path="/signup" component={Signup} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/admin" component={Admin} />
+          <Route path="/qr/:code" component={Qr} />
         </Switch>}
     </Content>
   </Router>);

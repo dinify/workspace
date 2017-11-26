@@ -9,6 +9,7 @@ import QRCode from 'qrcode.react'
 import SwitchButton from 'react-switch-button';
 import 'react-switch-button/dist/react-switch-button.css';
 import { HorizontalLine } from '../styled/HorizontalLine'
+import numeral from 'numeral'
 
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, Label } from '../styled/FormBox';
 
@@ -128,9 +129,11 @@ const Main = ({ lastError, loggedRestaurant, createWaiterboard, addTabletDone, a
                 <DeleteDesk onClick={() => deleteTable({ id: table.id })}>
                   <i className="ion-ios-close-outline" />
                 </DeleteDesk>
-                <div style={{marginBottom: '10px'}}>Table {table.position}</div>
-                <QRCode value={`000${loggedRestaurant.id}-${table.position < 10 ? '0'+table.position : table.position}`} />
-                <div>{`000${loggedRestaurant.id}-${table.position < 10 ? '0'+table.position : table.position}`}</div>
+                <Link to={`/qr/${numeral(loggedRestaurant.id).format('0000')}-${table.position < 10 ? '0'+table.position : table.position}`}>
+                  <div style={{marginBottom: '10px'}}>Table {table.position}</div>
+                </Link>
+                <QRCode value={`${numeral(loggedRestaurant.id).format('0000')}-${table.position < 10 ? '0'+table.position : table.position}`} />
+                <div>{`${numeral(loggedRestaurant.id).format('0000')}-${table.position < 10 ? '0'+table.position : table.position}`}</div>
               </Desk>
             : ''
           )}
