@@ -13,7 +13,8 @@ import { HorizontalLine } from '../styled/HorizontalLine'
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, Label } from '../styled/FormBox';
 
 import {
-  addTabletInitAction,
+  createWaiterboardInitAction,
+  addTablesToWBInitAction
 } from '../../../ducks/restaurant'
 
 type MainProps = {
@@ -59,7 +60,7 @@ const TabletCred = styled.div`
   }
 `
 
-const Main = ({ lastError, loggedRestaurant, addTablet, addTabletDone }: MainProps) =>
+const Main = ({ lastError, loggedRestaurant, createWaiterboard, addTabletDone, addTablesToWB }: MainProps) =>
 (<div>
   <div style={{marginLeft: '10px'}}>
     {addTabletDone === 'adding' ? 'Adding...' : ''}
@@ -81,20 +82,19 @@ const Main = ({ lastError, loggedRestaurant, addTablet, addTabletDone }: MainPro
   <FormBox>
     <FormBoxHead>Register New Tablet</FormBoxHead>
     <FormBoxBody>
-
       <Form
-        onSubmit={(tablet) => {
-          console.log('Success!', tablet);
-          addTablet(tablet);
+        onSubmit={(wb) => {
+          console.log('Success!', wb);
+          createWaiterboard(wb)
         }}
       >
         {({submitForm}) => {
           return (
             <form onSubmit={submitForm}>
-              <Text field='name' placeholder='Tablet Name' />
-              <Text field='login_id' placeholder='Tablet Username' />
-              <Text field='pass_enc' placeholder='Tablet Password' />
-              <FormBoxSubmit>ADD</FormBoxSubmit>
+              <Text field='name' placeholder='Waiterboard Name' />
+              <Text field='login' placeholder='Waiterboard Login' />
+              <Text field='password' placeholder='Waiterboard Password' />
+              <FormBoxSubmit>CREATE</FormBoxSubmit>
             </form>
           )
         }}
@@ -106,7 +106,7 @@ const Main = ({ lastError, loggedRestaurant, addTablet, addTabletDone }: MainPro
       <Label>
         {tablet.name}
       </Label>
-      {tablet.tables.sort((a,b) => a.position - b.position).map((table,j) =>
+      {tablet.tables.length > 0 ? tablet.tables.sort((a,b) => a.position - b.position).map((table,j) =>
         table.position > 0 ?
           <Desk key={j}>
             <div style={{marginBottom: '10px'}}>{table.position}</div>
@@ -114,12 +114,35 @@ const Main = ({ lastError, loggedRestaurant, addTablet, addTabletDone }: MainPro
             <div>{`000${loggedRestaurant.id}-${table.position < 10 ? '0'+table.position : table.position}`}</div>
           </Desk>
         : ''
-      )}
+      )
+      :
+      <FormBox>
+        <FormBoxHead>Add tables in range</FormBoxHead>
+        <FormBoxBody half>
+          <Form
+            onSubmit={({from, to}) => {
+              addTablesToWB({from, to, waiterboardId: tablet.id})
+            }}
+          >
+            {({submitForm}) => {
+              return (
+                <form onSubmit={submitForm}>
+                  <Text type="number" field='from' placeholder='From' />
+                  <span> - </span>
+                  <Text type="number" field='to' placeholder='To' />
+                  <FormBoxSubmit>ADD</FormBoxSubmit>
+                </form>
+              )
+            }}
+          </Form>
+        </FormBoxBody>
+      </FormBox>
+      }
       <HorizontalLine dark />
     </div>
   )}
-
 </div>);
+
 
 export default connect(
 state => ({
@@ -127,6 +150,7 @@ state => ({
   addTabletDone: state.restaurant.addTabletDone
 }),
 {
-  addTablet: addTabletInitAction,
+  createWaiterboard: createWaiterboardInitAction,
+  addTablesToWB: addTablesToWBInitAction
 },
 )(Main);

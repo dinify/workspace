@@ -16,15 +16,26 @@ export function Logout() {
   return Delete({ path: 'restaurant/auth/restauration' })
 }
 
+
+// TODO: active false by default; not null order ahead
 export function Signup({ email, password, restaurantName, nameInCharge, mobile }) {
   return Post({ path: 'restaurant/register', noToken: true }, {
     email,
     password,
     name: restaurantName,
     nameChargue: nameInCharge,
-    number: mobile,
+    number: mobile
   })
 }
+//export function Signup({ email, password, restaurantName, nameInCharge, mobile }) {
+//  return Post({ path: 'api/v2/restaurant/register', noToken: true, v2: true }, {
+//    email,
+//    password,
+//    restaurantName,
+//    nameInCharge,
+//    mobile,
+//  })
+//}
 
 export function GetRestaurant({ restaurantId }) {
   return Get({ path: `restaurant/${restaurantId}` })
@@ -64,9 +75,20 @@ export function ChangeHours({ restaurantId, weekdayFrom, weekdayTo, weekendFrom,
   })
 }
 
-export function AddTablet({ restaurantId, login_id, pass_enc, name }) {
-  return Post({ path: `restaurant/${restaurantId}/shop` }, { login_id, pass_enc, name })
+
+
+
+//export function AddTablet({ restaurantId, login_id, pass_enc, name }) {
+//  return Post({ path: `restaurant/${restaurantId}/shop` }, { login_id, pass_enc, name })
+//}
+
+export function CreateWaiterboard({ login, password, name }) {
+  console.log(login, password, name);
+  return Post({ path: `api/v2/restaurant/waiterboard/register`, v2: true }, { login, password, name })
 }
+
+
+
 
 export function GetBills({ from, to }) {
   return Post({ path: `api/v2/restaurant/billing`, v2: true }, { from, to })
@@ -125,6 +147,10 @@ export function AddFoodaddon({ foodId, addonId }) {
 }
 export function RmFoodaddon({ foodId, addonId }) {
   return Delete({ path: `api/v2/restaurant/food/${foodId}/addon`, v2: true }, { addonId })
+}
+
+export function AddTables({ from, to, waiterboardId }) {
+  return Post({ path: `api/v2/restaurant/waiterboard/tables`, v2: true }, { from, to, waiterboardId })
 }
 
 //export function RemoveTablet({ restaurantId, login_id }) {

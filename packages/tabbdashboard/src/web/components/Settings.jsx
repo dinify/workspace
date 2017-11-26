@@ -15,21 +15,19 @@ import LocalizationSection from './SettingsSection/Localization.jsx';
 
 const Settings = ({ location }) =>
   (<div>
-      <Header>
-        <HorMenu>
-          <HorMenuLink l={location} title="Main Information" to="/dashboard/settings/main" />
-          <HorMenuLink l={location} title="Tables" to="/dashboard/settings/tables" />
-          <HorMenuLink l={location} title="Localization" to="/dashboard/settings/localization" />
-        </HorMenu>
-      </Header>
-
-      <Switch>
-        <Redirect exact from="/dashboard/settings" to="/dashboard/settings/main" />
-        <Route path="/dashboard/settings/main" component={MainSection} />
-        <Route path="/dashboard/settings/tables" component={TablesSection} />
-        <Route path="/dashboard/settings/localization" component={LocalizationSection} />
-      </Switch>
-
+    <Header>
+      <HorMenu>
+        <HorMenuLink l={location} title="Main Information" to="/dashboard/settings/main" />
+        <HorMenuLink l={location} title="Tables" to="/dashboard/settings/tables" />
+        <HorMenuLink l={location} title="Localization" to="/dashboard/settings/localization" />
+      </HorMenu>
+    </Header>
+    <Switch>
+      <Redirect exact from="/dashboard/settings" to="/dashboard/settings/main" />
+      <Route path="/dashboard/settings/main" component={MainSection} />
+      <Route path="/dashboard/settings/tables" component={TablesSection} />
+      <Route path="/dashboard/settings/localization" component={LocalizationSection} />
+    </Switch>
   </div>);
 
 export default Settings

@@ -23,8 +23,8 @@ export const UPDATE_LOCATION_INIT = 'universalreact/restaurant/UPDATE_LOCATION_I
 export const UPDATE_BANK_INIT = 'universalreact/restaurant/UPDATE_BANK_INIT'
 export const UPDATE_HOURS_INIT = 'universalreact/restaurant/UPDATE_HOURS_INIT'
 export const UPDATE_DONE = 'universalreact/restaurant/UPDATE_DONE'
-export const ADD_TABLET_INIT = 'universalreact/restaurant/ADD_TABLET_INIT'
-export const ADD_TABLET_DONE = 'universalreact/restaurant/ADD_TABLET_DONE'
+export const ADD_WB_INIT = 'universalreact/restaurant/ADD_WB_INIT'
+export const ADD_WB_DONE = 'universalreact/restaurant/ADD_WB_DONE'
 export const GET_BILLS_INIT = 'universalreact/restaurant/GET_BILLS_INIT'
 export const GET_BILLS_DONE = 'universalreact/restaurant/GET_BILLS_DONE'
 export const GET_CATEGORIES_INIT = 'universalreact/restaurant/GET_CATEGORIES_INIT'
@@ -87,13 +87,13 @@ export default function reducer(state: State = initialState, action: Action) {
     }
     case UPDATE_DONE:
       return R.assoc('updateDone', 'done')(state)
-    case ADD_TABLET_INIT: {
-      const { login_id, name } = action.payload
-      const newTablet = { login_id, name }
+    case ADD_WB_INIT: {
+      const { login, name } = action.payload
+      const newTablet = { login, name }
       state = R.assoc('addTabletDone', 'adding')(state)
       return R.assocPath(['loggedRestaurant', 'tablets'], [...state.loggedRestaurant.tablets, newTablet])(state)
     }
-    case ADD_TABLET_DONE:
+    case ADD_WB_DONE:
       return R.assoc('addTabletDone', 'done')(state)
     case GET_BILLS_DONE:
       return R.assoc('bills', action.payload)(state)
@@ -158,8 +158,8 @@ export const signupDoneAction = (res: object) => {
 
 export const signupFailAction = (err: Error) => ({ type: SIGNUP_FAIL, payload: err })
 export const appBootstrap = () => ({ type: BOOTSTRAP })
-export const addTabletInitAction = (payload) => ({ type: ADD_TABLET_INIT, payload })
-export const addTabletDoneAction = () => ({ type: ADD_TABLET_DONE })
+export const createWaiterboardInitAction = (payload) => ({ type: ADD_WB_INIT, payload })
+export const createWaiterboardDoneAction = () => ({ type: ADD_WB_DONE })
 export const getBillsInitAction = (payload) => ({ type: GET_BILLS_INIT, payload })
 export const getBillsDoneAction = (payload) => ({ type: GET_BILLS_DONE, payload })
 export const getCategoriesInitAction = () => ({ type: GET_CATEGORIES_INIT })
@@ -170,6 +170,9 @@ export const rmFoodInitAction = (payload) => ({ type: 'RM_FOOD_INIT', payload })
 export const addFoodInitAction = (payload) => ({ type: 'ADD_FOOD_INIT', payload })
 export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', payload })
 export const uploadMainImageInitAction = (payload) => ({ type: 'UPDATE_MAINIMAGE_INIT', payload })
+
+export const addTablesToWBInitAction = (payload) => ({ type: 'API_ADD_TABLES_INIT', payload })
+export const addTablesToWBDoneAction = () => ({ type: 'API_ADD_TABLES_DONE' })
 
 export const getFoodOptionsInit = (payload) => ({ type: 'API_GET_FOODOPTIONS_INIT', payload })
 export const rmFoodOptionInit = (payload) => ({
@@ -341,16 +344,15 @@ const updateHoursEpic = (action$: Observable, { getState }: EpicDependencies) =>
       .map(updateDoneAction)
       .catch(error => console.log(error))
   )
-const addTabletEpic = (action$: Observable, { getState }: EpicDependencies) =>
+const createWaiterboardEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
-  .ofType(ADD_TABLET_INIT)
-  .switchMap(({ payload: { login_id, pass_enc, name } }) =>
-    Observable.fromPromise(API.AddTablet({
-      restaurantId: getState().restaurant.loggedRestaurant.id,
-      login_id, pass_enc, name
+  .ofType(ADD_WB_INIT)
+  .switchMap(({ payload: { name, login, password } }) =>
+    Observable.fromPromise(API.CreateWaiterboard({
+      name, login, password
     }))
-      .map(addTabletDoneAction)
-      .catch(error => console.log(error))
+    .map(createWaiterboardDoneAction)
+    .catch(error => console.log(error))
   )
 const getBillsEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
@@ -443,7 +445,10 @@ const apiGetEpic = (action$: Observable, { getState }: EpicDependencies) =>
   })
 
 const apiDoneAction = (doneActionType, payload, response) => ({ type: doneActionType, payload: {...payload, response} })
-const apiCustomDoneAction = (type, payload) => ({ type, payload })
+const apiCustomDoneAction = (type, payload) => {
+  if (!type) return {type: 'NO_CUSTOM_DONEFC'}
+  return { type, payload }
+}
 
 const apiRmEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
@@ -486,7 +491,7 @@ export const epics = [
   updateLocationEpic,
   updateHoursEpic,
   updateBankEpic,
-  addTabletEpic,
+  createWaiterboardEpic,
   getBillsEpic,
   getCategoriesEpic,
   rmCategoryEpic,
