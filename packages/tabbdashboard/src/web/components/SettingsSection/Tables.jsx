@@ -14,7 +14,8 @@ import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, Label } from '../styl
 
 import {
   createWaiterboardInitAction,
-  addTablesToWBInitAction
+  addTablesToWBInitAction,
+  addTableToWBInitAction
 } from '../../../ducks/restaurant'
 
 type MainProps = {
@@ -60,7 +61,7 @@ const TabletCred = styled.div`
   }
 `
 
-const Main = ({ lastError, loggedRestaurant, createWaiterboard, addTabletDone, addTablesToWB }: MainProps) =>
+const Main = ({ lastError, loggedRestaurant, createWaiterboard, addTabletDone, addTablesToWB, addTableToWB }: MainProps) =>
 (<div>
   <div style={{marginLeft: '10px'}}>
     {addTabletDone === 'adding' ? 'Adding...' : ''}
@@ -106,15 +107,37 @@ const Main = ({ lastError, loggedRestaurant, createWaiterboard, addTabletDone, a
       <Label>
         {tablet.name}
       </Label>
-      {tablet.tables.length > 0 ? tablet.tables.sort((a,b) => a.position - b.position).map((table,j) =>
-        table.position > 0 ?
-          <Desk key={j}>
-            <div style={{marginBottom: '10px'}}>{table.position}</div>
-            <QRCode value={`000${loggedRestaurant.id}-${table.position < 10 ? '0'+table.position : table.position}`} />
-            <div>{`000${loggedRestaurant.id}-${table.position < 10 ? '0'+table.position : table.position}`}</div>
-          </Desk>
-        : ''
-      )
+      {tablet.tables && tablet.tables.length > 0 ?
+        <span>
+          {tablet.tables.sort((a,b) => a.position - b.position).map((table,j) =>
+            table.position > 0 ?
+              <Desk key={j}>
+                <div style={{marginBottom: '10px'}}>Table {table.position}</div>
+                <QRCode value={`000${loggedRestaurant.id}-${table.position < 10 ? '0'+table.position : table.position}`} />
+                <div>{`000${loggedRestaurant.id}-${table.position < 10 ? '0'+table.position : table.position}`}</div>
+              </Desk>
+            : ''
+          )}
+          <FormBox>
+            <FormBoxHead>Add table</FormBoxHead>
+            <FormBoxBody>
+              <Form
+                onSubmit={({ position }) => {
+                  addTableToWB({ position, waiterboardId: tablet.id })
+                }}
+              >
+                {({submitForm}) => {
+                  return (
+                    <form onSubmit={submitForm}>
+                      <Text type="number" field='position' placeholder='Position' />
+                      <FormBoxSubmit>ADD</FormBoxSubmit>
+                    </form>
+                  )
+                }}
+              </Form>
+            </FormBoxBody>
+          </FormBox>
+        </span>
       :
       <FormBox>
         <FormBoxHead>Add tables in range</FormBoxHead>
@@ -151,6 +174,7 @@ state => ({
 }),
 {
   createWaiterboard: createWaiterboardInitAction,
-  addTablesToWB: addTablesToWBInitAction
+  addTablesToWB: addTablesToWBInitAction,
+  addTableToWB: addTableToWBInitAction
 },
 )(Main);

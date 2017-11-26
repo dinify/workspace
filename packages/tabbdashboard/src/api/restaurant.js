@@ -153,6 +153,10 @@ export function AddTables({ from, to, waiterboardId }) {
   return Post({ path: `api/v2/restaurant/waiterboard/tables`, v2: true }, { from, to, waiterboardId })
 }
 
+export function AddTable({ position, waiterboardId }) {
+  return Post({ path: `api/v2/restaurant/waiterboard/table`, v2: true }, { position, waiterboardId })
+}
+
 //export function RemoveTablet({ restaurantId, login_id }) {
 //  return Delete({ path: `restaurant/${restaurantId}/shop` }, { login_id })
 //}
