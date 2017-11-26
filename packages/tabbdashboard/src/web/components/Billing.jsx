@@ -34,6 +34,7 @@ const Title = styled.span`
 `
 
 const BillingPage = styled.div`
+  font-family: sans-serif;
   .rt-td {
     font-size: 12px;
     strong {
@@ -98,6 +99,7 @@ class Billing extends React.Component {
             },
             {
               Header: "Guest E-Mail",
+              minWidth: 200,
               accessor: bill => (
                 <span>
                   <strong>{bill.UserObject.email.split('@')[0]}</strong>
@@ -126,6 +128,9 @@ class Billing extends React.Component {
               Header: "Sales",
               accessor: bill => `${bill.sub_total} KD`,
               id: 'sales',
+              style: {
+                textAlign: 'right'
+              },
               Footer: `${numeral(R.pluck('sub_total')(bills).reduce((a, b) => Number(a) + Number(b), 0)).format('0.000')} KD`
             },
             {
@@ -134,19 +139,20 @@ class Billing extends React.Component {
               id: 'payment'
             },
             {
-              Header: "Fee Transaction/Payment",
-              accessor: bill =>  `${bill.total}KD / ${bill.sub_total}`,
+              Header: "Transaction Fee",
+              accessor: bill =>  `${numeral(bill.sub_total*0.025).format('0.000')} KD`,
               id: 'fee',
               Footer: (<span>
-                <span>{numeral(R.pluck('total')(bills).reduce((a, b) => Number(a) + Number(b), 0)).format('0')}KD</span>
-                <span> / </span>
-                <span>{numeral(R.pluck('sub_total')(bills).reduce((a, b) => Number(a) + Number(b), 0)).format('0')}KD</span>
+                <span>{numeral(R.pluck('sub_total')(bills).reduce((a, b) => Number(a) + Number(b)*0.025, 0)).format('0.000')}KD</span>
               </span>)
             },
             {
               Header: "Gratitude",
               accessor: bill => `${bill.gratitude} KD`,
               id: 'gratitude',
+              style: {
+                textAlign: 'right'
+              },
               Footer: `${numeral(R.pluck('gratitude')(bills).reduce((a, b) => Number(a) + Number(b), 0)).format('0.000')} KD`
             },
           ]}

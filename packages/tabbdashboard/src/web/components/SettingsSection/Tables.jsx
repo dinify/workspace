@@ -137,7 +137,7 @@ const Main = ({ lastError, loggedRestaurant, createWaiterboard, addTabletDone, a
               </Desk>
             : ''
           )}
-          <FormBox>
+          <FormBox style={{margin: '20px', width: '200px'}}>
             <FormBoxHead>Add table</FormBoxHead>
             <FormBoxBody>
               <Form

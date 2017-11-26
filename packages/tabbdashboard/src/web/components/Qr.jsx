@@ -15,7 +15,7 @@ const QRpage = styled.div`
 
 const Qr = (location) => {
   return (<QRpage>
-    <QRCode value={location.match.params.code} size={512} />
+    <QRCode value={location.match.params.code} size={256} />
   </QRpage>)
 }
 

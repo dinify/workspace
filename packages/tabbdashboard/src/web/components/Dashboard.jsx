@@ -99,9 +99,11 @@ const Dashboard = ({ location, logout }) =>
         <MenuLink l={location} iconName="settings" title="Settings" to="/dashboard/settings" />
         <MenuLink l={location} iconName="restaurant_menu" title="Menu" to="/dashboard/menu" />
         <MenuLink l={location} iconName="attach_money" title="Billing" to="/dashboard/billing" />
-        <MenuLink l={location} iconName="group" title="Guests" to="/dashboard/guests" />
-        <MenuLink l={location} iconName="assessment" title="Sales" to="/dashboard/sales" />
-        <MenuLink l={location} iconName="show_chart" title="Engagement" to="/dashboard/engagement" />
+        {
+        //<MenuLink l={location} iconName="group" title="Guests" to="/dashboard/guests" />
+        //<MenuLink l={location} iconName="assessment" title="Sales" to="/dashboard/sales" />
+        //<MenuLink l={location} iconName="show_chart" title="Engagement" to="/dashboard/engagement" />
+        }
         <HorizontalLine />
         <MenuItem onClick={logout}>
           <a>
