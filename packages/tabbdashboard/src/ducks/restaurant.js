@@ -171,6 +171,14 @@ export const addFoodInitAction = (payload) => ({ type: 'ADD_FOOD_INIT', payload 
 export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', payload })
 export const uploadMainImageInitAction = (payload) => ({ type: 'UPDATE_MAINIMAGE_INIT', payload })
 
+export const deleteTableInitAction = (payload) => ({
+  type: 'API_RM_TABLE_INIT',
+  payload: {
+    ...payload,
+    successActionType: 'persist/REHYDRATE'
+  }
+})
+
 export const addTablesToWBInitAction = (payload) => ({
   type: 'API_ADD_TABLES_INIT',
   payload: {

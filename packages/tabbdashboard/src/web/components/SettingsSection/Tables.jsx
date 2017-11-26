@@ -15,7 +15,8 @@ import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, Label } from '../styl
 import {
   createWaiterboardInitAction,
   addTablesToWBInitAction,
-  addTableToWBInitAction
+  addTableToWBInitAction,
+  deleteTableInitAction
 } from '../../../ducks/restaurant'
 
 type MainProps = {
@@ -37,6 +38,7 @@ const Tablet = styled.div`
 `
 
 const Desk = styled.div`
+  position: relative;
   margin: 20px;
   background: white;
   width: 200px;
@@ -46,6 +48,17 @@ const Desk = styled.div`
   color: black;
   border-radius: 5px;
   display: inline-block;
+`
+
+const DeleteDesk = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 18px;
+  padding: 5px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
 `
 
 const TabletCred = styled.div`
@@ -61,7 +74,7 @@ const TabletCred = styled.div`
   }
 `
 
-const Main = ({ lastError, loggedRestaurant, createWaiterboard, addTabletDone, addTablesToWB, addTableToWB }: MainProps) =>
+const Main = ({ lastError, loggedRestaurant, createWaiterboard, addTabletDone, addTablesToWB, addTableToWB, deleteTable }: MainProps) =>
 (<div>
   <div style={{marginLeft: '10px'}}>
     {addTabletDone === 'adding' ? 'Adding...' : ''}
@@ -112,6 +125,9 @@ const Main = ({ lastError, loggedRestaurant, createWaiterboard, addTabletDone, a
           {tablet.tables.sort((a,b) => a.position - b.position).map((table,j) =>
             table.position > 0 ?
               <Desk key={j}>
+                <DeleteDesk onClick={() => deleteTable({ id: table.id })}>
+                  <i className="ion-ios-close-outline" />
+                </DeleteDesk>
                 <div style={{marginBottom: '10px'}}>Table {table.position}</div>
                 <QRCode value={`000${loggedRestaurant.id}-${table.position < 10 ? '0'+table.position : table.position}`} />
                 <div>{`000${loggedRestaurant.id}-${table.position < 10 ? '0'+table.position : table.position}`}</div>
@@ -175,6 +191,7 @@ state => ({
 {
   createWaiterboard: createWaiterboardInitAction,
   addTablesToWB: addTablesToWBInitAction,
-  addTableToWB: addTableToWBInitAction
+  addTableToWB: addTableToWBInitAction,
+  deleteTable: deleteTableInitAction
 },
 )(Main);
