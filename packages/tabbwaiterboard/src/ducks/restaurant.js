@@ -312,14 +312,8 @@ const loginEpic = (action$: Observable) =>
         .catch(error => Observable.of(loginFailAction(error)))
     );
 
-//const logoutEpic = (action$: Observable) =>
-//  action$
-//    .ofType(LOGOUT_INIT)
-//    .switchMap(() =>
-//      Observable.fromPromise(API.Logout())
-//        .map(logoutDoneAction)
-//        .catch(error => Observable.of(loginFailAction(error)))
-//    );
+const logoutEpic = (action$: Observable) =>
+  action$.ofType(LOGOUT_INIT).map(logoutDoneAction)
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 const camel = (str) => capitalize(str.toLowerCase())
@@ -385,7 +379,7 @@ export const epics = [
   bootstrapEpic,
   guestsPollingEpic,
   loginEpic,
-  //logoutEpic,
+  logoutEpic,
   confirmationEpic,
   getTablesEpic,
   getBillsOfTableEpic,

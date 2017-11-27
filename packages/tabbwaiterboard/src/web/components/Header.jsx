@@ -31,9 +31,30 @@ const Value = styled.span`
   margin-right: 10px;
 `;
 
+const Button = styled.button`
+  color: white;
+  i {
+    font-size: 19px;
+    margin-top: 3px;
+  }
+  background: transparent;
+  vertical-align: middle;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  &:hover {
+    border-color: white;
+  }
+`;
+
 class Header extends React.Component {
   render(){
-    const { tablesCount = 0, guestsCount = 0, salesVolume = 0, children, waiterboardName } = this.props;
+    const { tablesCount = 0, guestsCount = 0, salesVolume = 0, children, waiterboardName, logout } = this.props;
     return (
     	<HeaderBar>
         <Container>
@@ -42,6 +63,9 @@ class Header extends React.Component {
           <Label>Tables</Label><Value>{tablesCount}</Value>
           <Label>Guests</Label><Value>{guestsCount}</Value>
           <Label>Sales</Label><Value>{numeral(salesVolume).format('0.000')}KD</Value>
+          <Button onClick={logout} title="Logout">
+            <i className="material-icons">exit_to_app</i>
+          </Button>
         </Container>
     	</HeaderBar>
     )

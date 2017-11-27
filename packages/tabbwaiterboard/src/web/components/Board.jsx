@@ -20,7 +20,7 @@ import ModalTimerSetting from './ModalTimerSetting'
 import Event from './Events/Event'
 
 import { toggleFrames, toggleModal } from '../../ducks/ui'
-import { setOHEnabled } from '../../ducks/restaurant'
+import { setOHEnabled, logoutInitAction } from '../../ducks/restaurant'
 
 const OneBoard = styled.div`
   position: fixed;
@@ -127,7 +127,8 @@ const Board = ({
   guestsCount,
   setOHEnabled,
   order_ahead_enabled,
-  bookings
+  bookings,
+  logout
 }: BoardProps) => {
 
   const frames = ['actions','tables']
@@ -151,6 +152,7 @@ const Board = ({
       guestsCount={R.values(guests).length}
       salesVolume={sales}
       waiterboardName={waiterboardName}
+      logout={logout}
     >
       <SwipeButton onClick={() => toggleFrames(frameIndex ? 0 : 1)}>Slide to {frames[frameIndex]}</SwipeButton>
       <Menu>
@@ -240,6 +242,7 @@ export default connect(
   {
     toggleFrames,
     toggleModal,
-    setOHEnabled
+    setOHEnabled,
+    logout: logoutInitAction
   },
 )(Board)
