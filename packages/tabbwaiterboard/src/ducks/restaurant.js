@@ -243,7 +243,7 @@ const getTablesEpic = (action$: Observable) =>
 let bookingsCount = 0
 let servicesCount = 0
 
-const audio = new Audio('/static/triad.wav')
+const audio = new Audio('/static/GLASS.wav')
 
 let counts = {}
 const isSomethingNew = (payload, type) => {
