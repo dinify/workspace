@@ -161,6 +161,10 @@ export function RmTable({ id }) {
   return Delete({ path: `api/v2/restaurant/waiterboard/table`, v2: true }, { id })
 }
 
+export function RmWb({ id }) {
+  return Delete({ path: `api/v2/restaurant/waiterboard`, v2: true }, { id })
+}
+
 //export function RemoveTablet({ restaurantId, login_id }) {
 //  return Delete({ path: `restaurant/${restaurantId}/shop` }, { login_id })
 //}

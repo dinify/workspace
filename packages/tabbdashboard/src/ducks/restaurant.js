@@ -179,6 +179,14 @@ export const deleteTableInitAction = (payload) => ({
   }
 })
 
+export const deleteWBInitAction = (payload) => ({
+  type: 'API_RM_WB_INIT',
+  payload: {
+    ...payload,
+    successActionType: 'persist/REHYDRATE'
+  }
+})
+
 export const addTablesToWBInitAction = (payload) => ({
   type: 'API_ADD_TABLES_INIT',
   payload: {

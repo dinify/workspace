@@ -472,14 +472,48 @@ class Menucontrol extends React.Component {
                     {selectedFood ? <FormBox style={{width: '230px'}}>
                       <FormBoxBody>
                         <Label>Nutrition</Label>
-                        <TableTag>
-                          {selectedFood.nutrition.map((nutr, i) =>
-                            <tr key={i}>
-                              <Td>{nutr.nutrient}</Td>
-                              <Td>{nutr.content}</Td>
-                            </tr>
-                          )}
-                        </TableTag>
+                        <Form
+                          onSubmit={({ optionName }) => {
+                            addFoodOption({ foodId: selectedFoodId, optionName })
+                          }}
+                          defaultValues={{
+                            calories: R.prop('content', R.find(R.propEq('nutrient', 'Total Calories'))(selectedFood.nutrition) || {}),
+                            protein: R.prop('content', R.find(R.propEq('nutrient', 'Protein'))(selectedFood.nutrition) || {}),
+                            fat: R.prop('content', R.find(R.propEq('nutrient', 'Total Fat'))(selectedFood.nutrition) || {}),
+                            carb: R.prop('content', R.find(R.propEq('nutrient', 'Total Carb'))(selectedFood.nutrition) || {}),
+                          }}
+                          validate={({ optionName }) => {
+                            return {
+                              optionName: !optionName ? 'Name is required' : undefined
+                            }
+                          }}
+                        >
+                          {({submitForm}) => {
+                            return (
+                              <form onSubmit={submitForm}>
+                                <TableTag>
+                                  <tr>
+                                    <Td>Total Calories</Td>
+                                    <Td><Text field='calories' placeholder='' /></Td>
+                                  </tr>
+                                  <tr>
+                                    <Td>Protein</Td>
+                                    <Td><Text field='protein' placeholder='' /></Td>
+                                  </tr>
+                                  <tr>
+                                    <Td>Total Fat</Td>
+                                    <Td><Text field='fat' placeholder='' /></Td>
+                                  </tr>
+                                  <tr>
+                                    <Td>Total Carb</Td>
+                                    <Td><Text field='carb' placeholder='' /></Td>
+                                  </tr>
+                                </TableTag>
+                                <FormBoxSubmit primary>UPDATE NUTRITION</FormBoxSubmit>
+                              </form>
+                            )
+                          }}
+                        </Form>
 
                         <Label>Options</Label>
 
@@ -544,6 +578,26 @@ class Menucontrol extends React.Component {
                             rmButtonFunction={(addon) => rmFoodAddon({foodId: selectedFoodId, addonId: addon.id})}
                           />
                         : 'No addon'}
+                        <Form
+                          onSubmit={({ ingredientName }) => {
+                            addFoodIngredient({ foodId: selectedFoodId, ingredientName })
+                          }}
+                          validate={({ ingredientName }) => {
+                            return {
+                              ingredientName: !ingredientName ? 'Name is required' : undefined
+                            }
+                          }}
+                        >
+                          {({submitForm}) => {
+                            return (
+                              <form onSubmit={submitForm}>
+                                <Text field='name' placeholder='Name of new addon' />
+                                <Text field='price' type="number" placeholder='Price of new addon' />
+                                <FormBoxSubmit primary>ADD</FormBoxSubmit>
+                              </form>
+                            )
+                          }}
+                        </Form>
                       </FormBoxBody>
                     </FormBox> : ''}
                   </MealDetail>

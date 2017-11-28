@@ -17,7 +17,8 @@ import {
   createWaiterboardInitAction,
   addTablesToWBInitAction,
   addTableToWBInitAction,
-  deleteTableInitAction
+  deleteTableInitAction,
+  deleteWBInitAction
 } from '../../../ducks/restaurant'
 
 type MainProps = {
@@ -27,6 +28,7 @@ type MainProps = {
 };
 
 const Tablet = styled.div`
+  position: relative;
   margin: 10px;
   background: black;
   width: 200px;
@@ -62,6 +64,18 @@ const DeleteDesk = styled.button`
   border: none;
 `
 
+const DeleteWB = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 18px;
+  padding: 5px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: white;
+`
+
 const TabletCred = styled.div`
   font-weight: 200;
   i {
@@ -75,18 +89,30 @@ const TabletCred = styled.div`
   }
 `
 
-const Main = ({ lastError, loggedRestaurant, createWaiterboard, addTabletDone, addTablesToWB, addTableToWB, deleteTable }: MainProps) =>
+const Main = ({
+  lastError,
+  loggedRestaurant,
+  createWaiterboard,
+  addTabletDone,
+  addTablesToWB,
+  addTableToWB,
+  deleteTable,
+  deleteWB
+}: MainProps) =>
 (<div>
   <div style={{marginLeft: '10px'}}>
     {addTabletDone === 'adding' ? 'Adding...' : ''}
     {addTabletDone === 'done' ? 'Tablet added' : ''}
   </div>
-  {loggedRestaurant.tablets.map((tablet,i) =>
+  {loggedRestaurant.tablets.map((wb,i) =>
     <Tablet key={i}>
-      <div style={{marginBottom: '10px'}}>{tablet.name}</div>
+      <DeleteWB onClick={() => deleteWB({ id: wb.id })}>
+        <i className="ion-ios-close-outline" />
+      </DeleteWB>
+      <div style={{marginBottom: '10px'}}>{wb.name}</div>
       <TabletCred>
         <i className="ion-ios-person" />
-        <span>{tablet.login_id}</span>
+        <span>{wb.login_id}</span>
       </TabletCred>
       <TabletCred>
         <i className="ion-key" />
@@ -185,7 +211,6 @@ const Main = ({ lastError, loggedRestaurant, createWaiterboard, addTabletDone, a
   )}
 </div>);
 
-
 export default connect(
 state => ({
   loggedRestaurant: state.restaurant.loggedRestaurant,
@@ -195,6 +220,7 @@ state => ({
   createWaiterboard: createWaiterboardInitAction,
   addTablesToWB: addTablesToWBInitAction,
   addTableToWB: addTableToWBInitAction,
-  deleteTable: deleteTableInitAction
+  deleteTable: deleteTableInitAction,
+  deleteWB: deleteWBInitAction,
 },
 )(Main);
