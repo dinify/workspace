@@ -171,6 +171,8 @@ export const addFoodInitAction = (payload) => ({ type: 'ADD_FOOD_INIT', payload 
 export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', payload })
 export const uploadMainImageInitAction = (payload) => ({ type: 'UPDATE_MAINIMAGE_INIT', payload })
 
+export const updateFoodNutritionInit = (payload) => ({ type: 'UPDATE_NUTRITION_INIT', payload })
+
 export const deleteTableInitAction = (payload) => ({
   type: 'API_RM_TABLE_INIT',
   payload: {
@@ -506,6 +508,15 @@ const apiAddEpic = (action$: Observable, { getState }: EpicDependencies) =>
       .catch(error => Observable.of(console.log(error)))
   })
 
+const updateNutritionEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+  .ofType('UPDATE_NUTRITION_INIT')
+  .switchMap(({ payload }) =>
+    Observable.fromPromise(API.UpdateNutrition(payload))
+      .map(() => ({ type: 'UPDATE_NUTRITION_DONE' }))
+      .catch(error => console.log(error))
+  )
+
 export const epics = [
   uploadEpic,
   bootstrapEpic,
@@ -529,5 +540,6 @@ export const epics = [
   addFoodEpic,
   apiGetEpic,
   apiRmEpic,
-  apiAddEpic
+  apiAddEpic,
+  updateNutritionEpic
 ]

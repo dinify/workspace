@@ -28,7 +28,8 @@ import {
   rmFoodIngredientInit,
   addFoodIngredientInit,
   getFoodAddonsInit,
-  rmFoodAddonInit
+  rmFoodAddonInit,
+  updateFoodNutritionInit
 } from '../../../ducks/restaurant'
 
 const Table = styled.table`
@@ -318,7 +319,8 @@ class Menucontrol extends React.Component {
       selectedFoodId, selectFood, rmFood, updateFood, addFood,
       getFoodOptions, foodOptions, rmFoodOption, addFoodOption,
       getFoodIngredients, foodIngredients, rmFoodIngredient, addFoodIngredient,
-      getFoodAddons, foodAddons, rmFoodAddon
+      getFoodAddons, foodAddons, rmFoodAddon,
+      updateFoodNutrition
     } = this.props;
 
     let selectedCategory = null;
@@ -473,19 +475,14 @@ class Menucontrol extends React.Component {
                       <FormBoxBody>
                         <Label>Nutrition</Label>
                         <Form
-                          onSubmit={({ optionName }) => {
-                            addFoodOption({ foodId: selectedFoodId, optionName })
+                          onSubmit={(nutrition) => {
+                            updateFoodNutrition({ foodId: selectedFoodId, ...nutrition })
                           }}
                           defaultValues={{
                             calories: R.prop('content', R.find(R.propEq('nutrient', 'Total Calories'))(selectedFood.nutrition) || {}),
                             protein: R.prop('content', R.find(R.propEq('nutrient', 'Protein'))(selectedFood.nutrition) || {}),
                             fat: R.prop('content', R.find(R.propEq('nutrient', 'Total Fat'))(selectedFood.nutrition) || {}),
                             carb: R.prop('content', R.find(R.propEq('nutrient', 'Total Carb'))(selectedFood.nutrition) || {}),
-                          }}
-                          validate={({ optionName }) => {
-                            return {
-                              optionName: !optionName ? 'Name is required' : undefined
-                            }
                           }}
                         >
                           {({submitForm}) => {
@@ -635,5 +632,6 @@ export default connect(
     addFoodIngredient: addFoodIngredientInit,
     getFoodAddons: getFoodAddonsInit,
     rmFoodAddon: rmFoodAddonInit,
+    updateFoodNutrition: updateFoodNutritionInit,
   },
 )(Menucontrol);
