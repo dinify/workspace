@@ -266,6 +266,14 @@ export const addFoodAddonInit = (payload) => ({
   }
 })
 
+export const updateAddonPriceInit = (payload) => ({
+  type: 'API_ADD_ADDONPRICE_INIT',
+  payload: {
+    ...payload,
+    successActionType: 'API_GET_ADDONS_INIT'
+  }
+})
+
 // Epic
 const uploadEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$

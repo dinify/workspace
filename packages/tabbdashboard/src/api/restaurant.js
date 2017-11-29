@@ -177,6 +177,10 @@ export function AddAddon({ name, price }) {
   return Post({ path: `api/v2/restaurant/addon`, v2: true }, { name, price })
 }
 
+export function AddAddonprice({ addonId, price }) {
+  return Post({ path: `api/v2/restaurant/addon/${addonId}`, v2: true }, { price })
+}
+
 //export function RemoveTablet({ restaurantId, login_id }) {
 //  return Delete({ path: `restaurant/${restaurantId}/shop` }, { login_id })
 //}

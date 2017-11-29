@@ -15,7 +15,8 @@ import { Form, Text, Select, Textarea } from 'react-form'
 import {
   getCategoriesInitAction,
   getAddonsInit,
-  addAddonInit
+  addAddonInit,
+  updateAddonPriceInit
 } from '../../../ducks/restaurant'
 
 const Table = styled.table`
@@ -73,6 +74,9 @@ const AddonItem = styled.li`
     i {
       color: white;
     }
+  }
+  div, form {
+    display: inline-block;
   }
 `
 
@@ -201,8 +205,22 @@ const NewFood = styled.li`
     }
   }
 `
+const OnItemInput = styled(Text)`
+  position: relative;
+  top: -3px;
+  background: rgba(0,0,0,.05);
+  text-align: right;
+  width: 60px;
+  padding: 4px;
+  border-radius: 3px;
+  color: white;
+  border: none;
+  outline: none;
+  border: 1px solid rgba(0,0,0,.05);
+`
 
-const NewFoodInput = styled(Text)`
+
+const NewAddonInput = styled(Text)`
   background: transparent;
   width: 230px;
   padding: 5px;
@@ -210,9 +228,10 @@ const NewFoodInput = styled(Text)`
   border: none;
   outline: none;
 `
-const NewFoodButton = styled.button`
+
+const NewAddonButton = styled.button`
   position: absolute;
-  top: 0px;
+  top: 11px;
   right: 5px;
   background: rgba(0, 0, 0, 0);
   border: none;
@@ -233,73 +252,13 @@ const FoodImage = styled.div`
   background-position: center;
 `
 
-const customItemColors = [
-  '#ef5350',
-  '#7E57C2',
-  '#29B6F6',
-  '#9CCC65',
-  '#FFCA28',
-  '#8D6E63',
-  '#ef5350',
-  '#7E57C2',
-  '#29B6F6',
-  '#9CCC65',
-  '#FFCA28',
-  '#8D6E63'
-]
-
-export const Customizations = styled.div`
-  margin-top: 10px;
-`
-
-export const CustomItem = styled.div`
-  display: inline-block;
-  background: ${p => customItemColors[p.bgIndex] ? customItemColors[p.bgIndex] : 'black'};
-  margin: 3px;
-  border-radius: 40px;
-  color: white;
-  padding: 3px 12px;
-  letter-spacing: 0.3px;
-  font-weight: 400;
-  font-size: 12px;
-  button {
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: rgba(255,255,255,0.6);
-    margin-left: 5px;
-    &:hover {
-      color: white;
-    }
-  }
-`
-
-const ListOfCustomizations =  ({ list, rmButtonFunction }) => {
-	if (list && list.length > 0) {
-		return (
-			<Customizations>
-				{list.map((customization, i) =>
-          <CustomItem key={i} bgIndex={i}>
-            <span style={{whiteSpace: 'nowrap'}}>{customization.name}</span>
-            <button onClick={() => rmButtonFunction(customization)}>
-              <i className="ion-close" />
-            </button>
-          </CustomItem>
-				)}
-			</Customizations>
-		)
-	}
-	return null
-}
-
 class Menucontrol extends React.Component {
   componentDidMount() {
     const { loggedRestaurant, getAddons } = this.props;
     getAddons();
   }
   render() {
-    const { loggedRestaurant, addons, addAddon } = this.props;
+    const { loggedRestaurant, addons, addAddon, updateAddonPrice } = this.props;
 
     return (
       <div>
@@ -307,7 +266,32 @@ class Menucontrol extends React.Component {
           <AddonsList>
             {addons.sort((a,b) => a.id - b.id).map((addon, i) =>
               <AddonItem key={addon.id} >
+                <div style={{verticalAlign: 'middle'}}>
                 <span>{addon.name}</span>
+                </div>
+                <div style={{float: 'right', verticalAlign: 'middle'}}>
+                  <Form
+                    onSubmit={({ price }) => {
+                      updateAddonPrice({ addonId: addon.id, price })
+                    }}
+                    defaultValues={{
+                      price: addon.price
+                    }}
+                  >
+                    {({submitForm}) => {
+                      return (
+                        <form onSubmit={submitForm}>
+                          <OnItemInput
+                            field='price'
+                            placeholder='Price'
+                            type='number'
+                          />
+                          <span> KD</span>
+                        </form>
+                      )
+                    }}
+                  </Form>
+                </div>
               </AddonItem>
             )}
             <NewAddon>
@@ -325,11 +309,15 @@ class Menucontrol extends React.Component {
                 {({submitForm}) => {
                   return (
                     <form onSubmit={submitForm}>
-                      <NewFoodInput field='name' placeholder='Name of new addon' />
-                      <NewFoodInput field='price' type="number" placeholder='Price of new addon' />
-                      <NewFoodButton>
+                      <NewAddonInput
+                        field='name'
+                        placeholder='Name of new addon'
+                        style={{borderBottom: '1px solid white', width: '200px'}}
+                      />
+                      <NewAddonInput field='price' type="number" placeholder='Price of new addon' />
+                      <NewAddonButton>
                         <i className="material-icons">add</i>
-                      </NewFoodButton>
+                      </NewAddonButton>
                     </form>
                   )
                 }}
@@ -349,5 +337,6 @@ export default connect(
   {
     getAddons: getAddonsInit,
     addAddon: addAddonInit,
+    updateAddonPrice: updateAddonPriceInit
   },
 )(Menucontrol);
