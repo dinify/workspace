@@ -1,12 +1,11 @@
-const items = [
+const reasons = [
   'Pracovni duvody',
   'Pracovní vytížení',
   'Pracovni schuzka',
   'Lékař',
   'Rodinné důvody',
-  'KOnference NATO',
   'Nemocen',
   'návštěva lékaře'
 ]
 
-console.log(items[Math.floor(Math.random()*items.length)]);
+console.log(reasons[Math.floor(Math.random()*reasons.length)]);

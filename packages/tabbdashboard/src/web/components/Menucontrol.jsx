@@ -18,7 +18,7 @@ const Menucontrol = ({ location }) =>
         <HorMenu>
           <HorMenuLink l={location} title="Menu Control" to="/dashboard/menu/control" />
           <HorMenuLink l={location} title="" to="/dashboard/menu/options" />
-          <HorMenuLink l={location} title="" to="/dashboard/menu/addons" />
+          <HorMenuLink l={location} title="Addons" to="/dashboard/menu/addons" />
         </HorMenu>
       </Header>
 

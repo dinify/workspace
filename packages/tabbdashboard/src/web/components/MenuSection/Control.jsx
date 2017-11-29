@@ -29,7 +29,8 @@ import {
   addFoodIngredientInit,
   getFoodAddonsInit,
   rmFoodAddonInit,
-  updateFoodNutritionInit
+  updateFoodNutritionInit,
+  addFoodAddonInit
 } from '../../../ducks/restaurant'
 
 const Table = styled.table`
@@ -319,7 +320,7 @@ class Menucontrol extends React.Component {
       selectedFoodId, selectFood, rmFood, updateFood, addFood,
       getFoodOptions, foodOptions, rmFoodOption, addFoodOption,
       getFoodIngredients, foodIngredients, rmFoodIngredient, addFoodIngredient,
-      getFoodAddons, foodAddons, rmFoodAddon,
+      getFoodAddons, foodAddons, rmFoodAddon, addFoodAddon,
       updateFoodNutrition
     } = this.props;
 
@@ -577,7 +578,7 @@ class Menucontrol extends React.Component {
                         : 'No addon'}
                         <Form
                           onSubmit={({ ingredientName }) => {
-                            addFoodIngredient({ foodId: selectedFoodId, ingredientName })
+                            addFoodAddon({ foodId: selectedFoodId, ingredientName })
                           }}
                           validate={({ ingredientName }) => {
                             return {
@@ -632,6 +633,7 @@ export default connect(
     addFoodIngredient: addFoodIngredientInit,
     getFoodAddons: getFoodAddonsInit,
     rmFoodAddon: rmFoodAddonInit,
+    addFoodAddon: addFoodAddonInit,
     updateFoodNutrition: updateFoodNutritionInit,
   },
 )(Menucontrol);

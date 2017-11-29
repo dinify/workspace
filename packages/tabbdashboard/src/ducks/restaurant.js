@@ -50,7 +50,8 @@ const initialState = {
   selectedCategoryId: null,
   foodOptions: {},
   foodIngredients: {},
-  foodAddons: {}
+  foodAddons: {},
+  addons: []
 }
 
 // Reducer
@@ -111,6 +112,9 @@ export default function reducer(state: State = initialState, action: Action) {
     }
     case 'API_GET_FOODADDONS_DONE': {
       return R.assocPath(['foodAddons', action.payload.foodId], action.payload.response)(state)
+    }
+    case 'API_GET_ADDONS_DONE': {
+      return R.assoc('addons', action.payload.response)(state)
     }
     default:
       return state
@@ -217,6 +221,16 @@ export const addFoodOptionInit = (payload) => ({
   payload: {
     ...payload,
     successActionType: 'API_GET_FOODOPTIONS_INIT'
+  }
+})
+
+export const getAddonsInit = () => ({ type: 'API_GET_ADDONS_INIT' })
+
+export const addAddonInit = (payload) => ({
+  type: 'API_ADD_ADDON_INIT',
+  payload: {
+    ...payload,
+    successActionType: 'API_GET_ADDONS_INIT'
   }
 })
 

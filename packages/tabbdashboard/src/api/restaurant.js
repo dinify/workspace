@@ -169,6 +169,14 @@ export function UpdateNutrition({ foodId, calories, protein, fat, carb }) {
   return Post({ path: `api/v2/restaurant/food/${foodId}/nutrition`, v2: true }, { calories, protein, fat, carb })
 }
 
+export function GetAddons() {
+  return Get({ path: `api/v2/restaurant/addons`, v2: true })
+}
+
+export function AddAddon({ name, price }) {
+  return Post({ path: `api/v2/restaurant/addon`, v2: true }, { name, price })
+}
+
 //export function RemoveTablet({ restaurantId, login_id }) {
 //  return Delete({ path: `restaurant/${restaurantId}/shop` }, { login_id })
 //}
