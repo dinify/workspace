@@ -62,7 +62,7 @@ const buildURL = ({
   path
 }) => {
   //return `http://localhost:3005/${path}`
-  return `https://apijs.dev.gotabb.com/${path}`
+  return `http://tabb-apiv2.eu-central-1.elasticbeanstalk.com/${path}`
 }//`https://${subdom}.${endpoint}/${path}`//
 
 // urlParts = { token, ?subdom, ?endpoint, ?prefix, path }
