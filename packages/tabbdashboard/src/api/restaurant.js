@@ -18,13 +18,11 @@ export function Logout() {
 
 
 // TODO: active false by default; not null order ahead
-export function Signup({ email, password, restaurantName, nameInCharge, mobile }) {
-  return Post({ path: 'restaurant/register', noToken: true }, {
-    email,
-    password,
-    name: restaurantName,
-    nameChargue: nameInCharge,
-    number: mobile
+export function Signup({ name, subdomain }) {
+  return Post({
+    path: 'restaurant/create', noToken: true, v3: true
+  }, {
+    name, subdomain
   })
 }
 //export function Signup({ email, password, restaurantName, nameInCharge, mobile }) {

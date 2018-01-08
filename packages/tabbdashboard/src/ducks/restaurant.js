@@ -316,8 +316,8 @@ const logoutEpic = (action$: Observable) =>
 const signupEpic = (action$: Observable) =>
   action$
   .ofType(SIGNUP_INIT)
-  .switchMap(({ payload: { email, password, restaurantName, nameInCharge, mobile } }) =>
-    Observable.fromPromise(API.Signup({ email, password, restaurantName, nameInCharge, mobile }))
+  .switchMap(({ payload: { name, subdomain } }) =>
+    Observable.fromPromise(API.Signup({ name, subdomain }))
     .map(signupDoneAction)
     .catch(error => Observable.of(signupFailAction(error)))
   )

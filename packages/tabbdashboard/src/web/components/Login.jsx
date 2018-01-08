@@ -24,17 +24,17 @@ const FormBox = styled.div`
   color: white;
   background-color: rgb(34,44,60);
   width: 280px;
-  border-radius: 8px;
 `;
 
 const FormBoxHeader = styled.div`
+  background: rgba(0,0,0,0.1);
+  padding: 20px;
+  font-size: 16px;
   color: white;
-  background-color: rgb(49,67,95);
+  text-transform: uppercase;
   text-align: center;
-  height: 50px;
-  line-height: 50px;
-  border-radius: 8px 8px 0 0;
-  font-weight: 300;
+  letter-spacing: 2px;
+  font-weight: 200;
 `;
 
 const FormBoxBody = styled.div`
@@ -59,8 +59,7 @@ const TextInput = styled(Text)`
   margin: 10px 0 0 0;
   outline: none;
   padding: 10px 15px;
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 5px;
+  border: none;
   color: white;
   width: 250px;
   &:focus {
@@ -73,9 +72,8 @@ const FormBoxSubmit = styled.button`
   margin: 20px 0 0 0;
   outline: none;
   padding: 10px 15px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: none;
   cursor: pointer;
-  border-radius: 5px;
   color: white;
   width: 250px;
   &:hover {
