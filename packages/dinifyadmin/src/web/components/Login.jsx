@@ -104,14 +104,14 @@ const Login = ({ lastError, doLogin }: LoginProps) =>
       />
       <FormBox className="vhs-blur">
         <FormBoxHeader>
-          Dashboard
+          Administration
         </FormBoxHeader>
         <FormBoxBody>
 
           <Form
             onSubmit={({ email, password }) => {
               console.log('Success!', { email, password });
-              doLogin({ email, password });
+              //doLogin({ email, password });
             }}
             validate={({ email, password }) => {
               return {
@@ -126,8 +126,6 @@ const Login = ({ lastError, doLogin }: LoginProps) =>
                   <TextInput field="email" placeholder="Email" />
                   <TextInput field="password" type="password" placeholder="Password" />
                   <FormBoxSubmit>ENTER</FormBoxSubmit>
-                  <HorizontalLine mt={20} mb={20} />
-                  <Link to="/signup">Not using TABB yet? Sign Up here!</Link>
                 </form>
               )
             }}
