@@ -103,7 +103,7 @@ const Signup = ({ lastError, doSignup }: LoginProps) =>
       />
       <FormBox className="vhs-blur">
         <FormBoxHeader>
-          Sign up your restaurant
+          Registration
         </FormBoxHeader>
         <FormBoxBody>
 
@@ -111,8 +111,10 @@ const Signup = ({ lastError, doSignup }: LoginProps) =>
             onSubmit={(form) => {
               doSignup(form);
             }}
-            validate={({ name, subdomain }) => {
+            validate={({ email, password, name, subdomain }) => {
               return {
+                email: !email ? 'Email is required' : undefined,
+                password: !password ? 'Password is required' : undefined,
                 name: !name ? 'Restaurant Name is required' : undefined,
                 subdomain: !subdomain ? 'Subdomain is required' : undefined,
               }
@@ -121,6 +123,9 @@ const Signup = ({ lastError, doSignup }: LoginProps) =>
             {({submitForm}) =>  {
               return (
                 <form onSubmit={submitForm}>
+
+                  <TextInput field='email' placeholder='Your Email' />
+                  <TextInput field='password' placeholder='Password' />
 
                   <TextInput field='name' placeholder='Restaurant Name' />
                   <TextInput field='subdomain' placeholder='Subdomain' />
