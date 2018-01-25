@@ -1,13 +1,8 @@
 branch-defaults:
   master:
-    environment: tabb-dashboard
-  v2:
-    environment: tabb-dashboardv2
+    environment: tabb-admin
 environment-defaults:
-  tabb-dashboard:
-    branch: null
-    repository: null
-  tabb-dashboardv2:
+  tabb-admin:
     branch: null
     repository: null
 global:
