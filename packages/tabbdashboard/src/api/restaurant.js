@@ -1,39 +1,36 @@
 import { Get, Post, Put, Delete, PostMultipart } from './Network'
 import R from 'ramda'
 
-export function Login({ email, password }) {
-  return Post({ path: 'oauth2/authentication', noToken: true }, {
-    username: email,
+export function RegisterUser({ email, password }) {
+  return Post({
+    path: 'user/register', noToken: true, v3: true
+  }, {
+    email,
     password,
-    grant_type: "password",
-    client_id: "1",
-    client_secret: "secretKey",
-    scope: "restaurant"
+    name: "NONAME",
+    gender: "OTHER",
+    phone: "0000000000",
+    birth_date: "1/1/1990"
+  })
+}
+export function LoginUser({ email, password }) {
+  return Post({
+    path: 'user/login', noToken: true, v3: true
+  }, {
+    email, password
+  })
+}
+export function CreateRestaurant({ name, subdomain }) {
+  return Post({
+    path: 'restaurant/create', v3: true
+  }, {
+    name, subdomain
   })
 }
 
 export function Logout() {
   return Delete({ path: 'restaurant/auth/restauration' })
 }
-
-
-// TODO: active false by default; not null order ahead
-export function Signup({ name, subdomain }) {
-  return Post({
-    path: 'restaurant/create', noToken: true, v3: true
-  }, {
-    name, subdomain
-  })
-}
-//export function Signup({ email, password, restaurantName, nameInCharge, mobile }) {
-//  return Post({ path: 'api/v2/restaurant/register', noToken: true, v2: true }, {
-//    email,
-//    password,
-//    restaurantName,
-//    nameInCharge,
-//    mobile,
-//  })
-//}
 
 export function GetRestaurant({ restaurantId }) {
   return Get({ path: `restaurant/${restaurantId}` })

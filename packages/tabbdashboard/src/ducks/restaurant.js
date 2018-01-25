@@ -141,26 +141,14 @@ export const updateBankInitAction = (payload) => ({ type: UPDATE_BANK_INIT, payl
 export const updateHoursInitAction = (payload) => ({ type: UPDATE_HOURS_INIT, payload })
 export const loginInitAction = (payload) => ({ type: LOGIN_INIT, payload })
 export const logoutInitAction = () => ({ type: LOGOUT_INIT })
-export const loginDoneAction = (res: object) => {
-  setCookie('access_token', res.access_token, 30)
-  window.location.replace('/dashboard')
-  return { type: LOGIN_DONE, payload: res }
-}
 export const logoutDoneAction = (res: object) => {
   setCookie('access_token', '', 1)
   window.location.replace('/')
   return { type: LOGOUT_DONE, payload: res }
 }
 export const loggedFetchedAction = (payload) => ({ type: LOGGED_FETCHED_DONE, payload })
-export const loginFailAction = (err: Error) => ({ type: LOGIN_FAIL, payload: err })
 export const signupInitAction = (payload) => ({ type: SIGNUP_INIT, payload })
 
-export const signupDoneAction = (res: object) => {
-  window.location.replace('/')
-  return { type: SIGNUP_DONE, payload: res }
-}
-
-export const signupFailAction = (err: Error) => ({ type: SIGNUP_FAIL, payload: err })
 export const appBootstrap = () => ({ type: BOOTSTRAP })
 export const createWaiterboardInitAction = (payload) => ({ type: ADD_WB_INIT, payload })
 export const createWaiterboardDoneAction = () => ({ type: ADD_WB_DONE })
@@ -295,15 +283,6 @@ const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
     })
   })
 
-const loginEpic = (action$: Observable) =>
-  action$
-  .ofType(LOGIN_INIT)
-  .switchMap(({ payload: { email, password } }) =>
-    Observable.fromPromise(API.Login({ email, password }))
-      .map(loginDoneAction)
-      .catch(error => Observable.of(loginFailAction(error)))
-  )
-
 const logoutEpic = (action$: Observable) =>
   action$
   .ofType(LOGOUT_INIT)
@@ -313,14 +292,64 @@ const logoutEpic = (action$: Observable) =>
     .catch(error => Observable.of(loginFailAction(error)))
   )
 
-const signupEpic = (action$: Observable) =>
+export const signupDoneAction = (payload: object) => {
+  console.log(payload)
+  //window.location.replace('/')
+  return { type: LOGIN_INIT, payload: { ...payload, crRest: true } }
+}
+
+export const signupFailAction = (err: Error) => ({ type: SIGNUP_FAIL, payload: err })
+
+const registrationEpic = (action$: Observable, { getState }) =>
   action$
   .ofType(SIGNUP_INIT)
-  .switchMap(({ payload: { name, subdomain } }) =>
-    Observable.fromPromise(API.Signup({ name, subdomain }))
-    .map(signupDoneAction)
-    .catch(error => Observable.of(signupFailAction(error)))
-  )
+  .switchMap(({ payload: { email, password, name, subdomain } }) => {
+    const logged = getState().restaurant.loggedRestaurant;
+    if (!logged) { // register new user, log in, create new restaurant
+      return Observable.fromPromise(API.RegisterUser({ email, password }))
+      .map(() => signupDoneAction({ email, password, name, subdomain }))
+      .catch(error => Observable.of(signupFailAction(error)))
+    } else { // create restaurant
+
+    }
+  })
+
+export const loginFailAction = (err: Error) => ({ type: LOGIN_FAIL, payload: err })
+
+export const loginDoneAction = (res: object) => {
+  window.location.replace('/dashboard')
+  return { type: LOGIN_DONE, payload: res }
+}
+
+const loginEpic = (action$: Observable, { getState }) =>
+  action$
+  .ofType(LOGIN_INIT)
+  .switchMap(({ payload: { email, password, crRest, name, subdomain } }) => {
+    return Observable.fromPromise(API.LoginUser({ email, password }))
+    .map((res) => {
+      setCookie('access_token', res.token, 30)
+      if (crRest) {
+        return { type: 'CREATE_RESTAURANT_INIT', payload: { name, subdomain } }
+      } else {
+        loginDoneAction(res)
+      }
+    })
+    .catch(error => Observable.of(loginFailAction(error)))
+  })
+
+export const createRestaurantDoneAction = (res: object) => {
+  window.location.replace('/dashboard')
+  return { type: 'CREATE_RESTAURANT_DONE', payload: res }
+}
+
+const createRestaurantEpic = (action$: Observable, { getState }) =>
+  action$
+  .ofType('CREATE_RESTAURANT_INIT')
+  .switchMap(({ payload: { name, subdomain } }) => {
+    return Observable.fromPromise(API.CreateRestaurant({ name, subdomain }))
+    .map(createRestaurantDoneAction)
+    .catch(error => Observable.of(loginFailAction(error)))
+  })
 
 const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
@@ -543,7 +572,8 @@ export const epics = [
   uploadEpic,
   bootstrapEpic,
   loginEpic,
-  signupEpic,
+  registrationEpic,
+  createRestaurantEpic,
   logoutEpic,
   updateEpic,
   updateCategoryEpic,

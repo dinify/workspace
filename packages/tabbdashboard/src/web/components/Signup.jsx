@@ -125,7 +125,7 @@ const Signup = ({ lastError, doSignup }: LoginProps) =>
                 <form onSubmit={submitForm}>
 
                   <TextInput field='email' placeholder='Your Email' />
-                  <TextInput field='password' placeholder='Password' />
+                  <TextInput field='password' type="password" placeholder='Password' />
 
                   <TextInput field='name' placeholder='Restaurant Name' />
                   <TextInput field='subdomain' placeholder='Subdomain' />
