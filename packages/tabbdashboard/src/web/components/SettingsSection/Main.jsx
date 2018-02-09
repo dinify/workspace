@@ -51,8 +51,8 @@ const GettingStartedGoogleMap = withGoogleMap(props => (
       onDragEnd={(o) => {
         console.log(o.latLng.lat(), o.latLng.lng())
         props.updateLocation({
-          name: props.loggedRestaurant.location.name,
-          longitude: o.latLng.lng(), 
+          name: "name must be here",
+          longitude: o.latLng.lng(),
           latitude: o.latLng.lat()
         })
       }}
@@ -123,34 +123,31 @@ const Main = ({
     <FormBox>
       <FormBoxHead>Restaurant Name</FormBoxHead>
       <FormBoxBody>
-
         <Form
-          onSubmit={({ restaurantName }) => {
-            console.log('Success!', { restaurantName });
-            update({ restaurantName });
+          onSubmit={({ name }) => {
+            update({ name });
           }}
           defaultValues={{
-            restaurantName: loggedRestaurant.restaurantName
+            name: loggedRestaurant.name
           }}
-          validate={({ restaurantName }) => {
+          validate={({ name }) => {
             return {
-              restaurantName: !restaurantName ? 'Restaurant Name is required' : undefined,
+              name: !name ? 'Restaurant Name is required' : undefined,
             }
           }}
         >
           {({submitForm}) => {
             return (
               <form onSubmit={submitForm}>
-                <Text field='restaurantName' placeholder='Restaurant Name' />
+                <Text field='name' placeholder='Restaurant Name' />
                 <FormBoxSubmit>SAVE</FormBoxSubmit>
               </form>
             )
           }}
         </Form>
-
       </FormBoxBody>
     </FormBox>
-
+{/*
   <FormBox>
     <FormBoxHead>Type of Restaurant</FormBoxHead>
     <FormBoxBody center pt={20} pb={20}>
@@ -171,7 +168,7 @@ const Main = ({
       />
     </FormBoxBody>
   </FormBox>
-
+*/}
 
   <FormBox>
     <FormBoxHead>Main Image</FormBoxHead>
@@ -241,7 +238,10 @@ const Main = ({
         onSubmit={({ name, longitude, latitude }) => {
           updateLocation({ name, longitude, latitude })
         }}
-        defaultValues={loggedRestaurant.location}
+        defaultValues={{
+          longitude: loggedRestaurant.longitude,
+          latitude: loggedRestaurant.latitude
+        }}
         validate={({ name, longitude, latitude }) => {
           return {
             name: !name ? 'Area name is required' : undefined,
@@ -266,8 +266,8 @@ const Main = ({
                 mapElement={
                   <div style={{ height: `200px` }} />
                 }
-                lng={loggedRestaurant.location.longitude}
-                lat={loggedRestaurant.location.latitude}
+                lng={loggedRestaurant.longitude}
+                lat={loggedRestaurant.latitude}
               />
               <Text field='longitude' placeholder='Longitude' />
               <Text field='latitude' placeholder='Latitude' />
@@ -278,7 +278,7 @@ const Main = ({
       </Form>
     </FormBoxBody>
   </FormBox>
-
+{/*
   <FormBox>
     <FormBoxHead>Social Media</FormBoxHead>
     <FormBoxBody>
@@ -314,9 +314,10 @@ const Main = ({
           )
         }}
       </Form>
-
     </FormBoxBody>
   </FormBox>
+*/}
+
 
   <FormBox>
     <FormBoxHead>Business Hours</FormBoxHead>
@@ -327,10 +328,10 @@ const Main = ({
           updateHours(hours);
         }}
         defaultValues={{
-          weekdayFrom: loggedRestaurant.businessHours.weekday.from,
-          weekdayTo: loggedRestaurant.businessHours.weekday.to,
-          weekendFrom: loggedRestaurant.businessHours.weekend.from,
-          weekendTo: loggedRestaurant.businessHours.weekend.to
+          weekdayFrom: loggedRestaurant.open_hours,
+          weekdayTo: loggedRestaurant.open_hours,
+          weekendFrom: loggedRestaurant.open_hours,
+          weekendTo: loggedRestaurant.open_hours
         }}
       >
         {({submitForm}) => {

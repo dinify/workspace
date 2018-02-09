@@ -69,7 +69,7 @@ export default function reducer(state: State = initialState, action: Action) {
     case LOGGED_FETCHED_DONE:
       return R.assoc('loggedRestaurant', action.payload)(state)
     case UPDATE_INIT:
-      return R.assocPath(['loggedRestaurant', 'restaurantName'], action.payload.restaurantName)(state)
+      return R.assocPath(['loggedRestaurant', 'name'], action.payload.name)(state)
     case UPDATE_CATEGORY_INIT:
       return R.assocPath(['loggedRestaurant', 'category'], action.payload.category)(state)
     case UPDATE_LOCATION_INIT: {
@@ -354,8 +354,8 @@ const createRestaurantEpic = (action$: Observable, { getState }) =>
 const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType(UPDATE_INIT)
-  .switchMap(({ payload: { restaurantName } }) =>
-    Observable.fromPromise(API.ChangeName({ restaurantId: getState().restaurant.loggedRestaurant.id, restaurantName }))
+  .switchMap(({ payload: { name } }) =>
+    Observable.fromPromise(API.ChangeName({ restaurantId: getState().restaurant.loggedRestaurant.id, name }))
     .map(updateDoneAction)
     .catch(error => console.log(error))
   )

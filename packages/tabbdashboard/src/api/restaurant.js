@@ -37,15 +37,15 @@ export function GetRestaurant({ restaurantId }) {
 }
 
 export function GetLoggedRestaurant() {
-  return Get({ path: `restaurant/logged` })
+  return Get({ path: `restaurant/all`, v3: true })
 }
 
 export function ChangeCategory({ restaurantId, category }) {
   return Put({ path: `restaurant/${restaurantId}/category` }, { category })
 }
 
-export function ChangeName({ restaurantId, restaurantName }) {
-  return Put({ path: `restaurant/${restaurantId}/name` }, { name: restaurantName })
+export function ChangeName({ restaurantId, name }) {
+  return Post({ path: `restaurant/${restaurantId}`, v3: true }, { name })
 }
 
 export function ChangeContact({ restaurantId, mobile, email, nameInCharge }) {
