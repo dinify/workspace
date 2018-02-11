@@ -289,7 +289,7 @@ const logoutEpic = (action$: Observable) =>
   .switchMap(() =>
     Observable.fromPromise(API.Logout())
     .map(logoutDoneAction)
-    .catch(error => Observable.of(loginFailAction(error)))
+    .catch(error => Observable.of(logoutDoneAction()))
   )
 
 export const signupDoneAction = (payload: object) => {
@@ -303,10 +303,10 @@ export const signupFailAction = (err: Error) => ({ type: SIGNUP_FAIL, payload: e
 const registrationEpic = (action$: Observable, { getState }) =>
   action$
   .ofType(SIGNUP_INIT)
-  .switchMap(({ payload: { email, password, name, subdomain } }) => {
-    const logged = getState().restaurant.loggedRestaurant;
+  .switchMap(({ payload: { name, phone, email, password, restaurantName, subdomain } }) => {
+    const logged = getState().restaurant.loggedRestaurant
     if (!logged) { // register new user, log in, create new restaurant
-      return Observable.fromPromise(API.RegisterUser({ email, password }))
+      return Observable.fromPromise(API.RegisterUser({ name, phone, email, password }))
       .map(() => signupDoneAction({ email, password, name, subdomain }))
       .catch(error => Observable.of(signupFailAction(error)))
     } else { // create restaurant
@@ -329,7 +329,7 @@ const loginEpic = (action$: Observable, { getState }) =>
     .map((res) => {
       setCookie('access_token', res.token, 30)
       if (crRest) {
-        return { type: 'CREATE_RESTAURANT_INIT', payload: { name, subdomain } }
+        return { type: 'CREATE_RESTAURANT_INIT', payload: { name, subdomain, email, password } }
       } else {
         loginDoneAction(res)
       }
@@ -337,17 +337,17 @@ const loginEpic = (action$: Observable, { getState }) =>
     .catch(error => Observable.of(loginFailAction(error)))
   })
 
-export const createRestaurantDoneAction = (res: object) => {
-  window.location.replace('/dashboard')
-  return { type: 'CREATE_RESTAURANT_DONE', payload: res }
+export const createRestaurantDoneAction = ({ email, password }) => {
+  return { type: LOGIN_INIT, payload: { email, password } }
+  //return { type: 'CREATE_RESTAURANT_DONE', payload: res }
 }
 
 const createRestaurantEpic = (action$: Observable, { getState }) =>
   action$
   .ofType('CREATE_RESTAURANT_INIT')
-  .switchMap(({ payload: { name, subdomain } }) => {
+  .switchMap(({ payload: { name, subdomain, email, password } }) => {
     return Observable.fromPromise(API.CreateRestaurant({ name, subdomain }))
-    .map(createRestaurantDoneAction)
+    .map(() => createRestaurantDoneAction({ email, password }))
     .catch(error => Observable.of(loginFailAction(error)))
   })
 

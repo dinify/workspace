@@ -111,11 +111,13 @@ const Signup = ({ lastError, doSignup }: LoginProps) =>
             onSubmit={(form) => {
               doSignup(form);
             }}
-            validate={({ email, password, name, subdomain }) => {
+            validate={({ name, phone, email, password, restaurantName, subdomain }) => {
               return {
+                name: !name ? 'Your name is required' : undefined,
+                phone: !phone ? 'Your phone is required' : undefined,
                 email: !email ? 'Email is required' : undefined,
                 password: !password ? 'Password is required' : undefined,
-                name: !name ? 'Restaurant Name is required' : undefined,
+                restaurantName: !name ? 'Restaurant Name is required' : undefined,
                 subdomain: !subdomain ? 'Subdomain is required' : undefined,
               }
             }}
@@ -124,10 +126,12 @@ const Signup = ({ lastError, doSignup }: LoginProps) =>
               return (
                 <form onSubmit={submitForm}>
 
+                  <TextInput field='name' placeholder='Your Name' />
+                  <TextInput field='phone' placeholder='Phone Number' />
                   <TextInput field='email' placeholder='Your Email' />
                   <TextInput field='password' type="password" placeholder='Password' />
 
-                  <TextInput field='name' placeholder='Restaurant Name' />
+                  <TextInput field='restaurantName' placeholder='Restaurant Name' />
                   <TextInput field='subdomain' placeholder='Subdomain' />
 
                   <FormBoxSubmit>SIGN UP</FormBoxSubmit>

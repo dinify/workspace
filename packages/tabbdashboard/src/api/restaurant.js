@@ -1,15 +1,15 @@
 import { Get, Post, Put, Delete, PostMultipart } from './Network'
 import R from 'ramda'
 
-export function RegisterUser({ email, password }) {
+export function RegisterUser({ name, phone, email, password}) {
   return Post({
     path: 'user/register', noToken: true, v3: true
   }, {
     email,
     password,
-    name: "NONAME",
+    name,
+    phone,
     gender: "OTHER",
-    phone: "0000000000",
     birth_date: "1/1/1990"
   })
 }
@@ -29,7 +29,7 @@ export function CreateRestaurant({ name, subdomain }) {
 }
 
 export function Logout() {
-  return Delete({ path: 'restaurant/auth/restauration' })
+  return Delete({ path: 'restaurant/auth/restauration', v3: true })
 }
 
 export function GetRestaurant({ restaurantId }) {
