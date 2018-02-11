@@ -33,7 +33,7 @@ export function Request(url, options = {}, noToken) {
       ))
       .then(res => {
         //console.log(res.status);
-        if (res.status === 401 && window.location.pathname !== '/') window.location.replace('/')
+        //if (res.status === 401 && window.location.pathname !== '/') window.location.replace('/')
         try {
           return { status: res.status, json: JSON.parse(res.text) }
         } catch (err) {

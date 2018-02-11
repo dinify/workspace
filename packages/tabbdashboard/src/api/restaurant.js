@@ -37,7 +37,7 @@ export function GetRestaurant({ restaurantId }) {
 }
 
 export function GetLoggedRestaurant() {
-  return Get({ path: `restaurant/all`, v3: true })
+  return Get({ path: `restaurant/my/all`, v3: true })
 }
 
 export function ChangeCategory({ restaurantId, category }) {
@@ -48,8 +48,12 @@ export function ChangeName({ restaurantId, name }) {
   return Post({ path: `restaurant/${restaurantId}`, v3: true }, { name })
 }
 
-export function ChangeContact({ restaurantId, mobile, email, nameInCharge }) {
-  return Put({ path: `restaurant/${restaurantId}/contact` }, { mobileNumber: mobile, emailAddress: email, nameInCharge })
+export function ChangeContact({ restaurantId, phone, email, website }) {
+  return Post({ path: `restaurant/${restaurantId}`, v3: true }, {
+    contact: {
+      phone, email, website
+    }
+  })
 }
 
 export function ChangeSocial({ restaurantId, facebookURL, instagramURL }) {
@@ -89,8 +93,8 @@ export function GetBills({ from, to }) {
   return Post({ path: `api/v2/restaurant/billing`, v2: true }, { from, to })
 }
 
-export function GetCategories({ restaurantId }) {
-  return Get({ path: `restaurant/${restaurantId}/categories` })
+export function GetCategories() {
+  return Get({ path: `restaurant/my/categories`, v3: true })
 }
 export function AddCategory({ restaurantId, categoryName }) {
   return Post({ path: `restaurant/${restaurantId}/category` }, { name: categoryName })

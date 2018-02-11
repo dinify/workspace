@@ -372,10 +372,10 @@ const updateCategoryEpic = (action$: Observable, { getState }: EpicDependencies)
 const updateContactEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType(UPDATE_CONTACT_INIT)
-  .switchMap(({ payload: { nameInCharge, email, mobile } }) =>
+  .switchMap(({ payload: { website, email, phone } }) =>
     Observable.fromPromise(API.ChangeContact({
       restaurantId: getState().restaurant.loggedRestaurant.id,
-      nameInCharge, email, mobile
+      website, email, phone
     }))
     .map(updateDoneAction)
     .catch(error => console.log(error))

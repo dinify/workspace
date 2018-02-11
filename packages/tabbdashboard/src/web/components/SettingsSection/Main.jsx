@@ -207,20 +207,20 @@ const Main = ({
           updateContact(contact);
         }}
         defaultValues={loggedRestaurant.contact}
-        validate={({ nameInCharge, email, mobile }) => {
+        validate={({ website, email, phone }) => {
           return {
-            nameInCharge: !nameInCharge ? 'Name is required' : undefined,
+            website: !website ? 'Website is required' : undefined,
             email: !email ? 'Email is required' : undefined,
-            mobile: !mobile ? 'Mobile is required' : undefined,
+            phone: !phone ? 'Phone is required' : undefined,
           }
         }}
       >
         {({submitForm}) => {
           return (
             <form onSubmit={submitForm}>
-              <Text field='nameInCharge' placeholder='Name in charge' />
+              <Text field='website' placeholder='Website' />
               <Text field='email' placeholder='Email address' />
-              <Text field='mobile' placeholder='Mobile number' />
+              <Text field='phone' placeholder='Phone number' />
 
               <FormBoxSubmit>SAVE</FormBoxSubmit>
             </form>
