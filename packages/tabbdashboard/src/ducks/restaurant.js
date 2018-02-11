@@ -99,7 +99,7 @@ export default function reducer(state: State = initialState, action: Action) {
     case GET_BILLS_DONE:
       return R.assoc('bills', action.payload)(state)
     case GET_CATEGORIES_DONE:
-      return R.assoc('categories', action.payload)(state)
+      return R.assoc('categories', action.payload.data)(state)
     case 'SELECT_CATEGORY':
       return R.assoc('selectedCategoryId', action.payload.categoryId)(state)
     case 'SELECT_FOOD':

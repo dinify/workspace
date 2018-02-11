@@ -316,7 +316,7 @@ class Menucontrol extends React.Component {
   componentDidMount() {
     const { loggedRestaurant, getCategories, getAddons } = this.props;
     getCategories();
-    getAddons();
+    //getAddons();
   }
   render() {
     const { loggedRestaurant, categories, rmCategory, addCategory,
