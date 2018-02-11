@@ -86,9 +86,6 @@ export function CreateWaiterboard({ login, password, name }) {
   return Post({ path: `api/v2/restaurant/waiterboard/register`, v2: true }, { login, password, name })
 }
 
-
-
-
 export function GetBills({ from, to }) {
   return Post({ path: `api/v2/restaurant/billing`, v2: true }, { from, to })
 }
@@ -96,15 +93,19 @@ export function GetBills({ from, to }) {
 export function GetCategories() {
   return Get({ path: `restaurant/my/categories`, v3: true })
 }
-export function AddCategory({ restaurantId, categoryName }) {
-  return Post({ path: `restaurant/${restaurantId}/category` }, { name: categoryName })
+// Create Category
+export function AddCategory({ categoryName }) {
+  return Post({ path: `menu/category/create`, v3: true }, { name: categoryName })
 }
+// Create Item
+export function AddFood({ categoryId, foodName }) {
+  return Post({ path: `menu/item/create`, v3: true }, { name: foodName, menu_category_id: categoryId })
+}
+
+
 export function UpdateFood({ restaurantId, categoryId, foodId, name, description, price, calories, used, order }) {
   const updateObject = R.pickBy(R.identity, { name, description, price, calories, used, order })
   return Put({ path: `restaurant/${restaurantId}/category/${categoryId}/food/${foodId}` }, updateObject)
-}
-export function AddFood({ restaurantId, categoryId, foodName }) {
-  return Post({ path: `restaurant/${restaurantId}/category/${categoryId}/food` }, { name: foodName })
 }
 
 // API V2

@@ -396,7 +396,7 @@ class Menucontrol extends React.Component {
           </CategoriesList>
 
           {selectedCategory ? <FoodList>
-            {selectedCategory.foods.sort((a,b) => a.id - b.id).map((food, i) =>
+            {selectedCategory.items.sort((a,b) => a.id - b.id).map((food, i) =>
               <FoodItem key={food.id} selected={food.id === selectedFoodId} disabled={!food.used} onClick={() => selectFood({foodId: food.id})}>
                 <span>{food.name}</span>
                 <ToggleContainer food>
