@@ -488,7 +488,6 @@ const updateFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
   .ofType('UPDATE_FOOD_INIT')
   .switchMap(({ payload: { categoryId, foodId, name, description, price } }) =>
     Observable.fromPromise(API.UpdateFood({
-      restaurantId: getState().restaurant.loggedRestaurant.id,
       categoryId, foodId,
       name, description, price
     }))
@@ -500,7 +499,6 @@ const addFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
   .ofType('ADD_FOOD_INIT')
   .switchMap(({ payload: { categoryId, foodName } }) =>
     Observable.fromPromise(API.AddFood({
-      restaurantId: getState().restaurant.loggedRestaurant.id,
       categoryId,
       foodName
     }))

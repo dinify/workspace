@@ -99,7 +99,14 @@ export function AddCategory({ categoryName }) {
 }
 // Create Item
 export function AddFood({ categoryId, foodName }) {
-  return Post({ path: `menu/item/create`, v3: true }, { name: foodName, menu_category_id: categoryId })
+  return Post({ path: `menu/item/create`, v3: true }, {
+    name: foodName,
+  	menu_category_id: categoryId,
+      "price": {
+          "amount": 2,
+          "currency": "KWD"
+      }
+    })
 }
 
 

@@ -330,11 +330,13 @@ class Menucontrol extends React.Component {
 
     let selectedCategory = null;
     if (selectedCategoryId) {
+      console.log(selectedCategoryId)
+      console.log(categories)
       selectedCategory = R.find(R.propEq('id', selectedCategoryId))(categories);
     }
     let selectedFood = null;
     if (selectedCategory) {
-      selectedFood = R.find(R.propEq('id', selectedFoodId))(selectedCategory.foods);
+      selectedFood = R.find(R.propEq('id', selectedFoodId))(selectedCategory.items);
       if (!foodOptions[selectedFoodId] && selectedFoodId) getFoodOptions({ foodId: selectedFoodId })
       if (!foodIngredients[selectedFoodId] && selectedFoodId) getFoodIngredients({ foodId: selectedFoodId })
       if (!foodAddons[selectedFoodId] && selectedFoodId) getFoodAddons({ foodId: selectedFoodId })
