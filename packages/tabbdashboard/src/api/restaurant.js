@@ -74,9 +74,6 @@ export function ChangeHours({ restaurantId, weekdayFrom, weekdayTo, weekendFrom,
   })
 }
 
-
-
-
 //export function AddTablet({ restaurantId, login_id, pass_enc, name }) {
 //  return Post({ path: `restaurant/${restaurantId}/shop` }, { login_id, pass_enc, name })
 //}
@@ -108,7 +105,6 @@ export function AddFood({ categoryId, foodName }) {
       }
     })
 }
-
 
 export function UpdateFood({ restaurantId, categoryId, foodId, name, description, price, calories, used, order }) {
   const updateObject = R.pickBy(R.identity, { name, description, price, calories, used, order })

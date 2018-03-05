@@ -1,17 +1,34 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
+import {
+  connect
+} from 'react-redux';
 import styled from 'styled-components';
-import type { Error } from '../../../flow';
-import { Link } from 'react-router-dom';
-import { Form, Text } from 'react-form';
+import type {
+  Error
+} from '../../../flow';
+import {
+  Link
+} from 'react-router-dom';
+import {
+  Form,
+  Text
+} from 'react-form';
 import QRCode from 'qrcode.react'
 import SwitchButton from 'react-switch-button';
 import 'react-switch-button/dist/react-switch-button.css';
-import { HorizontalLine } from '../styled/HorizontalLine'
+import {
+  HorizontalLine
+} from '../styled/HorizontalLine'
 import numeral from 'numeral'
 
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, Label } from '../styled/FormBox';
+import {
+  FormBox,
+  FormBoxHead,
+  FormBoxBody,
+  FormBoxSubmit,
+  Label
+} from '../styled/FormBox';
 
 import {
   createWaiterboardInitAction,
@@ -23,11 +40,11 @@ import {
 
 type MainProps = {
   lastError: Error,
-  loggedRestaurant: ?Object,
+  loggedRestaurant: ? Object,
   addTablet: Any,
 };
 
-const Tablet = styled.div`
+const Tablet = styled.div `
   position: relative;
   margin: 10px;
   background: black;
@@ -40,7 +57,7 @@ const Tablet = styled.div`
   display: inline-block;
 `
 
-const Desk = styled.div`
+const Desk = styled.div `
   position: relative;
   margin: 20px;
   background: white;
@@ -53,7 +70,7 @@ const Desk = styled.div`
   display: inline-block;
 `
 
-const DeleteDesk = styled.button`
+const DeleteDesk = styled.button `
   position: absolute;
   top: 0;
   right: 0;
@@ -64,7 +81,7 @@ const DeleteDesk = styled.button`
   border: none;
 `
 
-const DeleteWB = styled.button`
+const DeleteWB = styled.button `
   position: absolute;
   top: 0;
   right: 0;
@@ -76,7 +93,7 @@ const DeleteWB = styled.button`
   color: white;
 `
 
-const TabletCred = styled.div`
+const TabletCred = styled.div `
   font-weight: 200;
   i {
     font-weight: 500;
@@ -90,16 +107,16 @@ const TabletCred = styled.div`
 `
 
 const Main = ({
-  lastError,
-  loggedRestaurant,
-  createWaiterboard,
-  addTabletDone,
-  addTablesToWB,
-  addTableToWB,
-  deleteTable,
-  deleteWB
-}: MainProps) =>
-(<div>
+    lastError,
+    loggedRestaurant,
+    createWaiterboard,
+    addTabletDone,
+    addTablesToWB,
+    addTableToWB,
+    deleteTable,
+    deleteWB
+  }: MainProps) =>
+  (<div>
   <div style={{marginLeft: '10px'}}>
     {addTabletDone === 'adding' ? 'Adding...' : ''}
     {addTabletDone === 'done' ? 'Tablet added' : ''}
@@ -212,15 +229,14 @@ const Main = ({
 </div>);
 
 export default connect(
-state => ({
-  loggedRestaurant: state.restaurant.loggedRestaurant,
-  addTabletDone: state.restaurant.addTabletDone
-}),
-{
-  createWaiterboard: createWaiterboardInitAction,
-  addTablesToWB: addTablesToWBInitAction,
-  addTableToWB: addTableToWBInitAction,
-  deleteTable: deleteTableInitAction,
-  deleteWB: deleteWBInitAction,
-},
+  state => ({
+    loggedRestaurant: state.restaurant.loggedRestaurant,
+    addTabletDone: state.restaurant.addTabletDone
+  }), {
+    createWaiterboard: createWaiterboardInitAction,
+    addTablesToWB: addTablesToWBInitAction,
+    addTableToWB: addTableToWBInitAction,
+    deleteTable: deleteTableInitAction,
+    deleteWB: deleteWBInitAction,
+  },
 )(Main);

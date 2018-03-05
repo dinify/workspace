@@ -1,11 +1,25 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
+import {
+  connect
+} from 'react-redux';
 import styled from 'styled-components';
-import type { Error } from '../../flow';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import type {
+  Error
+} from '../../flow';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom'
 
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './styled/FormBox';
+import {
+  FormBox,
+  FormBoxHead,
+  FormBoxBody,
+  FormBoxSubmit
+} from './styled/FormBox';
 
 import Input from 'react-enhanced-form'
 
@@ -14,9 +28,12 @@ import GuestsSection from './Guests'
 import SalesSection from './Sales'
 import EngagementSection from './Engagement'
 
-import { Menu, MenuLink } from './Menu'
+import {
+  Menu,
+  MenuLink
+} from './Menu'
 
-const Sidebar = styled.div`
+const Sidebar = styled.div `
   position: absolute;
   left: 0;
   top: 0;
@@ -27,7 +44,7 @@ const Sidebar = styled.div`
   justify-content: center;
 `;
 
-const Logo = styled.div`
+const Logo = styled.div `
   position: absolute;
   top: 0;
   left: 0;
@@ -48,7 +65,7 @@ const Logo = styled.div`
   }
 `;
 
-const Content = styled.div`
+const Content = styled.div `
   position: absolute;
   left: 240px;
   top: 0;
@@ -59,7 +76,9 @@ const Content = styled.div`
   padding: 70px 20px 0 20px;
 `;
 
-const Dashboard = ({ location }) =>
+const Dashboard = ({
+    location
+  }) =>
   (<div>
     <Sidebar>
       <Logo>
@@ -79,7 +98,7 @@ const Dashboard = ({ location }) =>
     </Sidebar>
     <Content>
 
-      
+
       <Route path="/admin/analytics" component={GuestsSection} />
       <Route path="/admin/billing" component={BillingSection} />
 
@@ -87,6 +106,5 @@ const Dashboard = ({ location }) =>
   </div>);
 
 export default connect(
-  state => ({}),
-  {},
+  state => ({}), {},
 )(Dashboard);

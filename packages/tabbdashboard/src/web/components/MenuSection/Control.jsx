@@ -1,16 +1,38 @@
 // @flow
 import React from 'react'
 import R from 'ramda'
-import { connect } from 'react-redux'
+import {
+  connect
+} from 'react-redux'
 import styled from 'styled-components'
-import type { Error } from '../../../flow'
-import { Link } from 'react-router-dom'
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label } from '../styled/FormBox'
-import { Header } from '../styled/Header'
-import { lighten } from 'polished'
+import type {
+  Error
+} from '../../../flow'
+import {
+  Link
+} from 'react-router-dom'
+import {
+  FormBox,
+  FormBoxHead,
+  FormBoxBody,
+  FormBoxSubmit,
+  FieldWrapper,
+  Label
+} from '../styled/FormBox'
+import {
+  Header
+} from '../styled/Header'
+import {
+  lighten
+} from 'polished'
 import SwitchButton from 'react-switch-button'
 
-import { Form, Text, Select, Textarea } from 'react-form'
+import {
+  Form,
+  Text,
+  Select,
+  Textarea
+} from 'react-form'
 
 import {
   getCategoriesInitAction,
@@ -34,28 +56,28 @@ import {
   addAddonInit
 } from '../../../ducks/restaurant'
 
-const Table = styled.table`
+const Table = styled.table `
   width: 100%;
   border-spacing: 0;
   margin: 20px 0;
 `;
-const TableHead = styled.thead`
+const TableHead = styled.thead `
   background: #F2F4F7;
   border-radius: 5px 5px 0 0;
   padding: 10px;
   font-size: 14px;
   text-align: left;
 `;
-const TableRow = styled.tr`
+const TableRow = styled.tr `
   &:nth-child(even) {
     background-color: rgba(0,0,0,0.07);
   }
 `;
-const TH = styled.th`
+const TH = styled.th `
   border-bottom: 1px solid rgba(0,0,0,0.07);
   padding: 10px;
 `;
-const TD = styled.td`
+const TD = styled.td `
   font-size: 12px;
   padding: 10px;
 `;
@@ -64,7 +86,7 @@ type LoginProps = {
   lastError: Error,
 };
 
-const CategoriesList = styled.ul`
+const CategoriesList = styled.ul `
   display: inline-block;
   list-style: none;
   margin: 10px;
@@ -72,7 +94,7 @@ const CategoriesList = styled.ul`
   vertical-align: top;
 `
 
-const CategoryItem = styled.li`
+const CategoryItem = styled.li `
   position: relative;
   background: black;
   color: white;
@@ -93,7 +115,7 @@ const CategoryItem = styled.li`
   }
 `
 
-const FoodList = styled.ul`
+const FoodList = styled.ul `
   display: inline-block;
   list-style: none;
   margin: 10px;
@@ -101,7 +123,7 @@ const FoodList = styled.ul`
   vertical-align: top;
 `
 
-const FoodItem = styled.li`
+const FoodItem = styled.li `
   position: relative;
   background: black;
   color: white;
@@ -122,7 +144,7 @@ const FoodItem = styled.li`
   }
 `
 
-const ToggleContainer = styled.div`
+const ToggleContainer = styled.div `
   position: absolute;
   right: 7px;
   top: 5px;
@@ -146,13 +168,13 @@ const ToggleContainer = styled.div`
   }
 `
 
-const HeadLine = styled.div`
+const HeadLine = styled.div `
   height: 50px;
   line-height: 50px;
   padding-left: 15px;
 `
 
-const H = styled.div`
+const H = styled.div `
   display: inline-block;
   width: 250px;
   text-transform: uppercase;
@@ -161,17 +183,17 @@ const H = styled.div`
   margin-right: 20px;
 `
 
-const MealDetail = styled.div`
+const MealDetail = styled.div `
   display: inline-block;
   width: 250px;
   vertical-align: top;
 `
 
-const TableTag = styled.table`
+const TableTag = styled.table `
   width: 100%;
   border-spacing: 0;
 `;
-const Td = styled.td`
+const Td = styled.td `
   color: ${props => props.color};
   font-weight: 300;
   padding: 5px 0;
@@ -183,7 +205,7 @@ const Td = styled.td`
   }
 `;
 
-const NewCategory = styled.li`
+const NewCategory = styled.li `
   position: relative;
   background: black;
   color: white;
@@ -201,7 +223,7 @@ const NewCategory = styled.li`
   }
 `
 
-const NewFood = styled.li`
+const NewFood = styled.li `
   position: relative;
   background: black;
   color: white;
@@ -219,7 +241,8 @@ const NewFood = styled.li`
   }
 `
 
-const NewFoodInput = styled(Text)`
+const NewFoodInput = styled(Text)
+`
   background: transparent;
   width: 230px;
   padding: 5px;
@@ -227,7 +250,7 @@ const NewFoodInput = styled(Text)`
   border: none;
   outline: none;
 `
-const NewFoodButton = styled.button`
+const NewFoodButton = styled.button `
   position: absolute;
   top: 0px;
   right: 5px;
@@ -238,11 +261,11 @@ const NewFoodButton = styled.button`
   padding: 10px;
   cursor: pointer;
 `
-const SolidContainer = styled.div`
+const SolidContainer = styled.div `
   width: 1100px;
 `
 
-const FoodImage = styled.div`
+const FoodImage = styled.div `
   width: 100%;
   height: 200px;
   background-image: url(${(p) => p.imageURL});
@@ -265,11 +288,11 @@ const customItemColors = [
   '#8D6E63'
 ]
 
-export const Customizations = styled.div`
+export const Customizations = styled.div `
   margin-top: 10px;
 `
 
-export const CustomItem = styled.div`
+export const CustomItem = styled.div `
   display: inline-block;
   background: ${p => customItemColors[p.bgIndex] ? customItemColors[p.bgIndex] : 'black'};
   margin: 3px;
@@ -292,10 +315,13 @@ export const CustomItem = styled.div`
   }
 `
 
-const ListOfCustomizations =  ({ list, rmButtonFunction }) => {
-	if (list && list.length > 0) {
-		return (
-			<Customizations>
+const ListOfCustomizations = ({
+  list,
+  rmButtonFunction
+}) => {
+  if (list && list.length > 0) {
+    return (
+      <Customizations>
 				{list.map((customization, i) =>
           <CustomItem key={i} bgIndex={i}>
             <span style={{whiteSpace: 'nowrap'}}>
@@ -307,25 +333,48 @@ const ListOfCustomizations =  ({ list, rmButtonFunction }) => {
           </CustomItem>
 				)}
 			</Customizations>
-		)
-	}
-	return null
+    )
+  }
+  return null
 }
 
 class Menucontrol extends React.Component {
   componentDidMount() {
-    const { loggedRestaurant, getCategories, getAddons } = this.props;
+    const {
+      loggedRestaurant,
+      getCategories,
+      getAddons
+    } = this.props;
     getCategories();
     //getAddons();
   }
   render() {
-    const { loggedRestaurant, categories, rmCategory, addCategory,
-      selectedCategoryId, selectCategory,
-      selectedFoodId, selectFood, rmFood, updateFood, addFood,
-      getFoodOptions, foodOptions, rmFoodOption, addFoodOption,
-      getFoodIngredients, foodIngredients, rmFoodIngredient, addFoodIngredient,
-      getFoodAddons, foodAddons, rmFoodAddon, addFoodAddon,
-      updateFoodNutrition, addons
+    const {
+      loggedRestaurant,
+      categories,
+      rmCategory,
+      addCategory,
+      selectedCategoryId,
+      selectCategory,
+      selectedFoodId,
+      selectFood,
+      rmFood,
+      updateFood,
+      addFood,
+      getFoodOptions,
+      foodOptions,
+      rmFoodOption,
+      addFoodOption,
+      getFoodIngredients,
+      foodIngredients,
+      rmFoodIngredient,
+      addFoodIngredient,
+      getFoodAddons,
+      foodAddons,
+      rmFoodAddon,
+      addFoodAddon,
+      updateFoodNutrition,
+      addons
     } = this.props;
 
     let selectedCategory = null;
@@ -337,13 +386,22 @@ class Menucontrol extends React.Component {
     let selectedFood = null;
     if (selectedCategory) {
       selectedFood = R.find(R.propEq('id', selectedFoodId))(selectedCategory.items);
-      if (!foodOptions[selectedFoodId] && selectedFoodId) getFoodOptions({ foodId: selectedFoodId })
-      if (!foodIngredients[selectedFoodId] && selectedFoodId) getFoodIngredients({ foodId: selectedFoodId })
-      if (!foodAddons[selectedFoodId] && selectedFoodId) getFoodAddons({ foodId: selectedFoodId })
+      if (!foodOptions[selectedFoodId] && selectedFoodId) getFoodOptions({
+        foodId: selectedFoodId
+      })
+      if (!foodIngredients[selectedFoodId] && selectedFoodId) getFoodIngredients({
+        foodId: selectedFoodId
+      })
+      if (!foodAddons[selectedFoodId] && selectedFoodId) getFoodAddons({
+        foodId: selectedFoodId
+      })
     }
 
     const addonsForSelect = addons.map((addon) => {
-      return {label: addon.name, value: addon.id}
+      return {
+        label: addon.name,
+        value: addon.id
+      }
     })
     return (
       <div>
@@ -355,15 +413,15 @@ class Menucontrol extends React.Component {
         <SolidContainer>
           <CategoriesList>
             {categories.sort((a,b) => a.id - b.id).map((c, i) =>
-              <CategoryItem key={c.id} selected={c.id === selectedCategoryId} disabled={!c.used} onClick={() => selectCategory({categoryId: c.id})}>
+              <CategoryItem key={c.id} selected={c.id === selectedCategoryId} disabled={!c.published} onClick={() => selectCategory({categoryId: c.id})}>
                 <span>{c.name}</span>
                 <ToggleContainer category>
                   <SwitchButton
                     name={`switch-category-${c.id}`}
                     type="switch"
-                    defaultChecked={c.used}
+                    defaultChecked={c.published}
                     onChange={() => {
-                      if(c.used) {
+                      if(c.published) {
                         rmCategory({ categoryId: c.id, enabled: false })
                       } else rmCategory({ categoryId: c.id, enabled: true })
                     }}
@@ -399,15 +457,15 @@ class Menucontrol extends React.Component {
 
           {selectedCategory ? <FoodList>
             {selectedCategory.items.sort((a,b) => a.id - b.id).map((food, i) =>
-              <FoodItem key={food.id} selected={food.id === selectedFoodId} disabled={!food.used} onClick={() => selectFood({foodId: food.id})}>
+              <FoodItem key={food.id} selected={food.id === selectedFoodId} disabled={!food.published} onClick={() => selectFood({foodId: food.id})}>
                 <span>{food.name}</span>
                 <ToggleContainer food>
                   <SwitchButton
                     name={`switch-food-${food.id}`}
                     type="switch"
-                    defaultChecked={food.used}
+                    defaultChecked={food.published}
                     onChange={() => {
-                      if(food.used) {
+                      if(food.published) {
                         rmFood({ foodId: food.id, enabled: false })
                       } else rmFood({ foodId: food.id, enabled: true })
                     }}
@@ -608,8 +666,8 @@ class Menucontrol extends React.Component {
           </MealDetail>
         </SolidContainer>
       </div>);
-    }
   }
+}
 
 export default connect(
   state => ({
@@ -621,8 +679,7 @@ export default connect(
     foodIngredients: state.restaurant.foodIngredients,
     foodAddons: state.restaurant.foodAddons,
     addons: state.restaurant.addons
-  }),
-  {
+  }), {
     getCategories: getCategoriesInitAction,
     rmCategory: rmCategoryInitAction,
     addCategory: addCategoryInitAction,

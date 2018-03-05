@@ -1,16 +1,38 @@
 // @flow
 import React from 'react'
 import R from 'ramda'
-import { connect } from 'react-redux'
+import {
+  connect
+} from 'react-redux'
 import styled from 'styled-components'
-import type { Error } from '../../../flow'
-import { Link } from 'react-router-dom'
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label } from '../styled/FormBox'
-import { Header } from '../styled/Header'
-import { lighten } from 'polished'
+import type {
+  Error
+} from '../../../flow'
+import {
+  Link
+} from 'react-router-dom'
+import {
+  FormBox,
+  FormBoxHead,
+  FormBoxBody,
+  FormBoxSubmit,
+  FieldWrapper,
+  Label
+} from '../styled/FormBox'
+import {
+  Header
+} from '../styled/Header'
+import {
+  lighten
+} from 'polished'
 import SwitchButton from 'react-switch-button'
 
-import { Form, Text, Select, Textarea } from 'react-form'
+import {
+  Form,
+  Text,
+  Select,
+  Textarea
+} from 'react-form'
 
 import {
   getCategoriesInitAction,
@@ -19,28 +41,28 @@ import {
   updateAddonPriceInit
 } from '../../../ducks/restaurant'
 
-const Table = styled.table`
+const Table = styled.table `
   width: 100%;
   border-spacing: 0;
   margin: 20px 0;
 `;
-const TableHead = styled.thead`
+const TableHead = styled.thead `
   background: #F2F4F7;
   border-radius: 5px 5px 0 0;
   padding: 10px;
   font-size: 14px;
   text-align: left;
 `;
-const TableRow = styled.tr`
+const TableRow = styled.tr `
   &:nth-child(even) {
     background-color: rgba(0,0,0,0.07);
   }
 `;
-const TH = styled.th`
+const TH = styled.th `
   border-bottom: 1px solid rgba(0,0,0,0.07);
   padding: 10px;
 `;
-const TD = styled.td`
+const TD = styled.td `
   font-size: 12px;
   padding: 10px;
 `;
@@ -49,7 +71,7 @@ type LoginProps = {
   lastError: Error,
 };
 
-const AddonsList = styled.ul`
+const AddonsList = styled.ul `
   display: inline-block;
   list-style: none;
   margin: 10px;
@@ -57,7 +79,7 @@ const AddonsList = styled.ul`
   vertical-align: top;
 `
 
-const AddonItem = styled.li`
+const AddonItem = styled.li `
   position: relative;
   background: black;
   color: white;
@@ -80,7 +102,7 @@ const AddonItem = styled.li`
   }
 `
 
-const FoodList = styled.ul`
+const FoodList = styled.ul `
   display: inline-block;
   list-style: none;
   margin: 10px;
@@ -88,7 +110,7 @@ const FoodList = styled.ul`
   vertical-align: top;
 `
 
-const FoodItem = styled.li`
+const FoodItem = styled.li `
   position: relative;
   background: black;
   color: white;
@@ -109,7 +131,7 @@ const FoodItem = styled.li`
   }
 `
 
-const ToggleContainer = styled.div`
+const ToggleContainer = styled.div `
   position: absolute;
   right: 7px;
   top: 5px;
@@ -133,13 +155,13 @@ const ToggleContainer = styled.div`
   }
 `
 
-const HeadLine = styled.div`
+const HeadLine = styled.div `
   height: 50px;
   line-height: 50px;
   padding-left: 15px;
 `
 
-const H = styled.div`
+const H = styled.div `
   display: inline-block;
   width: 250px;
   text-transform: uppercase;
@@ -148,17 +170,17 @@ const H = styled.div`
   margin-right: 20px;
 `
 
-const MealDetail = styled.div`
+const MealDetail = styled.div `
   display: inline-block;
   width: 250px;
   vertical-align: top;
 `
 
-const TableTag = styled.table`
+const TableTag = styled.table `
   width: 100%;
   border-spacing: 0;
 `;
-const Td = styled.td`
+const Td = styled.td `
   color: ${props => props.color};
   font-weight: 300;
   padding: 5px 0;
@@ -170,7 +192,7 @@ const Td = styled.td`
   }
 `;
 
-const NewAddon = styled.li`
+const NewAddon = styled.li `
   position: relative;
   background: black;
   color: white;
@@ -188,7 +210,7 @@ const NewAddon = styled.li`
   }
 `
 
-const NewFood = styled.li`
+const NewFood = styled.li `
   position: relative;
   background: black;
   color: white;
@@ -205,7 +227,8 @@ const NewFood = styled.li`
     }
   }
 `
-const OnItemInput = styled(Text)`
+const OnItemInput = styled(Text)
+`
   position: relative;
   top: -3px;
   background: rgba(0,0,0,.05);
@@ -220,7 +243,8 @@ const OnItemInput = styled(Text)`
 `
 
 
-const NewAddonInput = styled(Text)`
+const NewAddonInput = styled(Text)
+`
   background: transparent;
   width: 230px;
   padding: 5px;
@@ -229,7 +253,7 @@ const NewAddonInput = styled(Text)`
   outline: none;
 `
 
-const NewAddonButton = styled.button`
+const NewAddonButton = styled.button `
   position: absolute;
   top: 11px;
   right: 5px;
@@ -240,11 +264,11 @@ const NewAddonButton = styled.button`
   padding: 10px;
   cursor: pointer;
 `
-const SolidContainer = styled.div`
+const SolidContainer = styled.div `
   width: 1100px;
 `
 
-const FoodImage = styled.div`
+const FoodImage = styled.div `
   width: 100%;
   height: 200px;
   background-image: url(${(p) => p.imageURL});
@@ -254,11 +278,19 @@ const FoodImage = styled.div`
 
 class Menucontrol extends React.Component {
   componentDidMount() {
-    const { loggedRestaurant, getAddons } = this.props;
+    const {
+      loggedRestaurant,
+      getAddons
+    } = this.props;
     getAddons();
   }
   render() {
-    const { loggedRestaurant, addons, addAddon, updateAddonPrice } = this.props;
+    const {
+      loggedRestaurant,
+      addons,
+      addAddon,
+      updateAddonPrice
+    } = this.props;
 
     return (
       <div>
@@ -326,15 +358,14 @@ class Menucontrol extends React.Component {
           </AddonsList>
         </SolidContainer>
       </div>);
-    }
   }
+}
 
 export default connect(
   state => ({
     loggedRestaurant: state.restaurant.loggedRestaurant,
     addons: state.restaurant.addons
-  }),
-  {
+  }), {
     getAddons: getAddonsInit,
     addAddon: addAddonInit,
     updateAddonPrice: updateAddonPriceInit

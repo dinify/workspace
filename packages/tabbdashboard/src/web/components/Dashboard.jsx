@@ -1,21 +1,39 @@
 // @flow
 import React from 'react'
-import { connect } from 'react-redux'
+import {
+  connect
+} from 'react-redux'
 import styled from 'styled-components'
-import { Route, Switch, Redirect } from 'react-router-dom'
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './styled/FormBox'
-import { HorizontalLine } from './styled/HorizontalLine'
+import {
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom'
+import {
+  FormBox,
+  FormBoxHead,
+  FormBoxBody,
+  FormBoxSubmit
+} from './styled/FormBox'
+import {
+  HorizontalLine
+} from './styled/HorizontalLine'
 import Input from 'react-enhanced-form'
-import { logoutInitAction } from '../../ducks/restaurant'
+import {
+  logoutInitAction
+} from '../../ducks/restaurant'
 import SettingsSection from './Settings'
 import MenucontrolSection from './Menucontrol'
 import BillingSection from './Billing'
 import GuestsSection from './Guests'
 import SalesSection from './Sales'
 import EngagementSection from './Engagement'
-import { Menu, MenuLink } from './Menu'
+import {
+  Menu,
+  MenuLink
+} from './Menu'
 
-const Sidebar = styled.div`
+const Sidebar = styled.div `
   position: fixed;
   left: 0;
   top: 0;
@@ -26,7 +44,7 @@ const Sidebar = styled.div`
   }
 `
 
-const Logo = styled.div`
+const Logo = styled.div `
   position: absolute;
   top: 0;
   left: 0;
@@ -47,7 +65,7 @@ const Logo = styled.div`
   }
 `
 
-const Content = styled.div`
+const Content = styled.div `
   position: absolute;
   left: 240px;
   top: 0;
@@ -58,7 +76,7 @@ const Content = styled.div`
   padding: 70px 20px 0 20px;
 `
 
-const MenuItem = styled.li`
+const MenuItem = styled.li `
   list-style: none;
   margin: 16px 0;
   font-size: 14px;
@@ -84,7 +102,10 @@ const MenuItem = styled.li`
   }
 `
 
-const Dashboard = ({ location, logout }) =>
+const Dashboard = ({
+    location,
+    logout
+  }) =>
   (<div>
     <Sidebar>
       <Logo>
@@ -127,8 +148,7 @@ const Dashboard = ({ location, logout }) =>
   </div>)
 
 export default connect(
-  state => ({}),
-  {
+  state => ({}), {
     logout: logoutInitAction
   },
 )(Dashboard)

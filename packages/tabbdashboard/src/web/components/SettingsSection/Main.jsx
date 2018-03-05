@@ -1,17 +1,38 @@
 // @flow
 import React from 'react'
 import R from 'ramda'
-import { connect } from 'react-redux'
+import {
+  connect
+} from 'react-redux'
 import styled from 'styled-components'
-import type { Error } from '../../../flow'
-import { Link } from 'react-router-dom'
-import { Form, Text, Select } from 'react-form'
-import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import type {
+  Error
+} from '../../../flow'
+import {
+  Link
+} from 'react-router-dom'
+import {
+  Form,
+  Text,
+  Select
+} from 'react-form'
+import {
+  withGoogleMap,
+  GoogleMap,
+  Marker
+} from "react-google-maps"
 import SwitchButton from 'react-switch-button'
 import 'react-switch-button/dist/react-switch-button.css'
 import Dropzone from 'react-dropzone'
 
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label } from '../styled/FormBox';
+import {
+  FormBox,
+  FormBoxHead,
+  FormBoxBody,
+  FormBoxSubmit,
+  FieldWrapper,
+  Label
+} from '../styled/FormBox';
 
 import {
   updateInitAction,
@@ -26,7 +47,7 @@ import {
 
 type MainProps = {
   lastError: Error,
-  loggedRestaurant: ?Object,
+  loggedRestaurant: ? Object,
   update: typeof updateInitAction,
   updateCategory: typeof updateCategoryInitAction,
   updateSocial: typeof updateSocialInitAction,
@@ -65,7 +86,7 @@ const GettingStartedGoogleMap = withGoogleMap(props => (
   </GoogleMap>
 ));
 
-const TODO = styled.div`
+const TODO = styled.div `
   text-align: center;
   padding: 20px;
   color: rgba(0,0,0,0.3)
@@ -73,7 +94,7 @@ const TODO = styled.div`
 
 const areaNames = R.sort((a, b) => {
   return a.localeCompare(b);
-},[
+}, [
   'Qibla',
   'Sharq',
   'Mirqab',
@@ -87,9 +108,12 @@ const areaNames = R.sort((a, b) => {
   'Jahra',
   'Jabriya',
   'Gulf Road seaside',
-]).map((a) => ({label: a, value: a.toUpperCase()}));
+]).map((a) => ({
+  label: a,
+  value: a.toUpperCase()
+}));
 
-const MainContrainer = styled.div`
+const MainContrainer = styled.div `
   column-count: 3;
   column-gap: 0;
   @media (max-width: 1150px) {
@@ -101,18 +125,18 @@ const MainContrainer = styled.div`
 `
 
 const Main = ({
-  lastError,
-  loggedRestaurant,
-  update,
-  updateCategory,
-  updateSocial,
-  updateContact,
-  updateLocation,
-  updateBank,
-  updateHours,
-  updateDone,
-  uploadMainImage
-}: MainProps) =>
+    lastError,
+    loggedRestaurant,
+    update,
+    updateCategory,
+    updateSocial,
+    updateContact,
+    updateLocation,
+    updateBank,
+    updateHours,
+    updateDone,
+    uploadMainImage
+  }: MainProps) =>
   (<MainContrainer>
 
     <div style={{marginLeft: '10px'}}>
@@ -388,18 +412,17 @@ const Main = ({
 </MainContrainer>);
 
 export default connect(
-state => ({
-  loggedRestaurant: state.restaurant.loggedRestaurant,
-  updateDone: state.restaurant.updateDone
-}),
-{
-  update: updateInitAction,
-  updateCategory: updateCategoryInitAction,
-  updateSocial: updateSocialInitAction,
-  updateContact: updateContactInitAction,
-  updateLocation: updateLocationInitAction,
-  updateHours: updateHoursInitAction,
-  updateBank: updateBankInitAction,
-  uploadMainImage: uploadMainImageInitAction
-},
+  state => ({
+    loggedRestaurant: state.restaurant.loggedRestaurant,
+    updateDone: state.restaurant.updateDone
+  }), {
+    update: updateInitAction,
+    updateCategory: updateCategoryInitAction,
+    updateSocial: updateSocialInitAction,
+    updateContact: updateContactInitAction,
+    updateLocation: updateLocationInitAction,
+    updateHours: updateHoursInitAction,
+    updateBank: updateBankInitAction,
+    uploadMainImage: uploadMainImageInitAction
+  },
 )(Main);

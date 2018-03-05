@@ -1,15 +1,26 @@
 // @flow
 import React from 'react'
-import { connect } from 'react-redux'
+import {
+  connect
+} from 'react-redux'
 import styled from 'styled-components'
-import type { Error } from '../../flow'
+import type {
+  Error
+} from '../../flow'
 
-import { Form, Text } from 'react-form'
+import {
+  Form,
+  Text
+} from 'react-form'
 
-import { signupInitAction } from '../../ducks/restaurant'
-import { HorizontalLine } from './styled/HorizontalLine'
+import {
+  signupInitAction
+} from '../../ducks/restaurant'
+import {
+  HorizontalLine
+} from './styled/HorizontalLine'
 
-const Content = styled.div`
+const Content = styled.div `
   position: relative;
   height: 100vh;
   display: flex;
@@ -18,13 +29,13 @@ const Content = styled.div`
   flex-direction: column;
 `
 
-const FormBox = styled.div`
+const FormBox = styled.div `
   color: white;
   background-color: rgb(34,44,60);
   width: 280px;
 `;
 
-const FormBoxHeader = styled.div`
+const FormBoxHeader = styled.div `
   background: rgba(0,0,0,0.1);
   padding: 20px;
   font-size: 16px;
@@ -35,7 +46,7 @@ const FormBoxHeader = styled.div`
   font-weight: 200;
 `;
 
-const FormBoxBody = styled.div`
+const FormBoxBody = styled.div `
   color: white;
   display: flex;
   align-items: center;
@@ -52,7 +63,8 @@ const FormBoxBody = styled.div`
   }
 `;
 
-const TextInput = styled(Text)`
+const TextInput = styled(Text)
+`
   background-color: rgba(255,255,255,0.2);
   margin: 10px 0 0 0;
   outline: none;
@@ -65,7 +77,7 @@ const TextInput = styled(Text)`
   }
 `;
 
-const FormBoxSubmit = styled.button`
+const FormBoxSubmit = styled.button `
   background-color: rgb(38,156,244);
   margin: 20px 0 0 0;
   outline: none;
@@ -89,7 +101,10 @@ type LoginProps = {
 }
 
 
-const Signup = ({ lastError, doSignup }: LoginProps) =>
+const Signup = ({
+    lastError,
+    doSignup
+  }: LoginProps) =>
   (<Content>
       <img
         src={require('./logo.svg')}
@@ -145,9 +160,7 @@ const Signup = ({ lastError, doSignup }: LoginProps) =>
   </Content>);
 
 export default connect(
-  state => ({
-  }),
-  {
+  state => ({}), {
     doSignup: signupInitAction,
   },
 )(Signup);
