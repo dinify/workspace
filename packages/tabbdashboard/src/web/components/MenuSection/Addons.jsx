@@ -1,38 +1,16 @@
 // @flow
 import React from 'react'
 import R from 'ramda'
-import {
-  connect
-} from 'react-redux'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
-import type {
-  Error
-} from '../../../flow'
-import {
-  Link
-} from 'react-router-dom'
-import {
-  FormBox,
-  FormBoxHead,
-  FormBoxBody,
-  FormBoxSubmit,
-  FieldWrapper,
-  Label
-} from '../styled/FormBox'
-import {
-  Header
-} from '../styled/Header'
-import {
-  lighten
-} from 'polished'
+import type { Error } from '../../../flow'
+import { Link } from 'react-router-dom'
+import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label } from '../styled/FormBox'
+import { Header } from '../styled/Header'
+import { lighten } from 'polished'
 import SwitchButton from 'react-switch-button'
 
-import {
-  Form,
-  Text,
-  Select,
-  Textarea
-} from 'react-form'
+import { Form, Text, Select, Textarea } from 'react-form'
 
 import {
   getCategoriesInitAction,

@@ -106,9 +106,16 @@ export function AddFood({ categoryId, foodName }) {
     })
 }
 
-export function UpdateFood({ restaurantId, categoryId, foodId, name, description, price, calories, used, order }) {
-  const updateObject = R.pickBy(R.identity, { name, description, price, calories, used, order })
-  return Put({ path: `restaurant/${restaurantId}/category/${categoryId}/food/${foodId}` }, updateObject)
+export function UpdateFood({ foodId, name, description, price, calories }) {
+  return Post({ path: `menu/item/${foodId}`, v3: true }, {
+    name: name || undefined,
+    description: description || undefined,
+    price: {
+      amount: price || 1,
+      currency: "KWD"
+    },
+    calories: calories || undefined
+  })
 }
 
 // API V2

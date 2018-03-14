@@ -1,59 +1,24 @@
 // @flow
 import React from 'react'
 import R from 'ramda'
-import {
-  connect
-} from 'react-redux'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
-import type {
-  Error
-} from '../../../flow'
-import {
-  Link
-} from 'react-router-dom'
-import {
-  FormBox,
-  FormBoxHead,
-  FormBoxBody,
-  FormBoxSubmit,
-  FieldWrapper,
-  Label
-} from '../styled/FormBox'
-import {
-  Header
-} from '../styled/Header'
-import {
-  lighten
-} from 'polished'
+import type { Error } from '../../../flow'
+import { Link } from 'react-router-dom'
+import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label } from '../styled/FormBox'
+import { Header } from '../styled/Header'
+import { lighten } from 'polished'
 import SwitchButton from 'react-switch-button'
 
-import {
-  Form,
-  Text,
-  Select,
-  Textarea
-} from 'react-form'
+import { Form, Text, Select, Textarea } from 'react-form'
 
 import {
-  getCategoriesInitAction,
-  rmCategoryInitAction,
-  addCategoryInitAction,
-  selectCategoryAction,
-  selectFoodAction,
-  rmFoodInitAction,
-  updateFoodInitAction,
-  addFoodInitAction,
-  getFoodOptionsInit,
-  rmFoodOptionInit,
-  addFoodOptionInit,
-  getFoodIngredientsInit,
-  rmFoodIngredientInit,
-  addFoodIngredientInit,
-  getFoodAddonsInit,
-  rmFoodAddonInit,
-  updateFoodNutritionInit,
-  addFoodAddonInit,
-  addAddonInit
+  getCategoriesInitAction, rmCategoryInitAction, addCategoryInitAction,
+  selectCategoryAction, selectFoodAction, rmFoodInitAction, updateFoodInitAction,
+  addFoodInitAction, getFoodOptionsInit, rmFoodOptionInit, addFoodOptionInit,
+  getFoodIngredientsInit, rmFoodIngredientInit, addFoodIngredientInit,
+  getFoodAddonsInit, rmFoodAddonInit, updateFoodNutritionInit,
+  addFoodAddonInit, addAddonInit
 } from '../../../ducks/restaurant'
 
 const Table = styled.table `
@@ -241,8 +206,7 @@ const NewFood = styled.li `
   }
 `
 
-const NewFoodInput = styled(Text)
-`
+const NewFoodInput = styled(Text)`
   background: transparent;
   width: 230px;
   padding: 5px;
@@ -379,20 +343,18 @@ class Menucontrol extends React.Component {
 
     let selectedCategory = null;
     if (selectedCategoryId) {
-      console.log(selectedCategoryId)
-      console.log(categories)
       selectedCategory = R.find(R.propEq('id', selectedCategoryId))(categories);
     }
     let selectedFood = null;
     if (selectedCategory) {
       selectedFood = R.find(R.propEq('id', selectedFoodId))(selectedCategory.items);
-      if (!foodOptions[selectedFoodId] && selectedFoodId) getFoodOptions({
+      if (!foodOptions[selectedFoodId] && selectedFoodId && false) getFoodOptions({
         foodId: selectedFoodId
       })
-      if (!foodIngredients[selectedFoodId] && selectedFoodId) getFoodIngredients({
+      if (!foodIngredients[selectedFoodId] && selectedFoodId && false) getFoodIngredients({
         foodId: selectedFoodId
       })
-      if (!foodAddons[selectedFoodId] && selectedFoodId) getFoodAddons({
+      if (!foodAddons[selectedFoodId] && selectedFoodId && false) getFoodAddons({
         foodId: selectedFoodId
       })
     }
@@ -506,10 +468,14 @@ class Menucontrol extends React.Component {
                   <Form
                     onSubmit={(fields) => {
                       fields.foodId = selectedFood.id
-                      fields.categoryId = selectedCategoryId
+                      console.log(fields);
                       updateFood(fields)
                     }}
-                    defaultValues={selectedFood}
+                    defaultValues={{
+                      name: selectedFood.name,
+                      description: selectedFood.description || '',
+                      price: selectedFood.price.amount,
+                    }}
                     validate={({ name, description, price }) => {
                       return {
                         name: !name ? 'Name is required' : undefined,
@@ -545,32 +511,34 @@ class Menucontrol extends React.Component {
                     updateFoodNutrition({ foodId: selectedFoodId, ...nutrition })
                   }}
                   defaultValues={{
-                    calories: R.prop('content', R.find(R.propEq('nutrient', 'Total Calories'))(selectedFood.nutrition) || {}),
-                    protein: R.prop('content', R.find(R.propEq('nutrient', 'Protein'))(selectedFood.nutrition) || {}),
-                    fat: R.prop('content', R.find(R.propEq('nutrient', 'Total Fat'))(selectedFood.nutrition) || {}),
-                    carb: R.prop('content', R.find(R.propEq('nutrient', 'Total Carb'))(selectedFood.nutrition) || {}),
+                    calories: R.prop('content', {}),
+                    protein: R.prop('content', {}),
+                    fat: R.prop('content', {}),
+                    carb: R.prop('content', {}),
                   }}
                 >
                   {({submitForm}) => {
                     return (
                       <form onSubmit={submitForm}>
                         <TableTag>
-                          <tr>
-                            <Td>Total Calories</Td>
-                            <Td><Text field='calories' placeholder='' /></Td>
-                          </tr>
-                          <tr>
-                            <Td>Protein</Td>
-                            <Td><Text field='protein' placeholder='' /></Td>
-                          </tr>
-                          <tr>
-                            <Td>Total Fat</Td>
-                            <Td><Text field='fat' placeholder='' /></Td>
-                          </tr>
-                          <tr>
-                            <Td>Total Carb</Td>
-                            <Td><Text field='carb' placeholder='' /></Td>
-                          </tr>
+                          <tbody>
+                            <tr>
+                              <Td>Total Calories</Td>
+                              <Td><Text field='calories' placeholder='' /></Td>
+                            </tr>
+                            <tr>
+                              <Td>Protein</Td>
+                              <Td><Text field='protein' placeholder='' /></Td>
+                            </tr>
+                            <tr>
+                              <Td>Total Fat</Td>
+                              <Td><Text field='fat' placeholder='' /></Td>
+                            </tr>
+                            <tr>
+                              <Td>Total Carb</Td>
+                              <Td><Text field='carb' placeholder='' /></Td>
+                            </tr>
+                          </tbody>
                         </TableTag>
                         <FormBoxSubmit primary>UPDATE NUTRITION</FormBoxSubmit>
                       </form>

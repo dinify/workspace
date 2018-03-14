@@ -48,6 +48,7 @@ const initialState = {
   bills: [],
   categories: [],
   selectedCategoryId: null,
+  selectedFoodId: null,
   foodOptions: {},
   foodIngredients: {},
   foodAddons: {},
@@ -154,7 +155,7 @@ export const createWaiterboardInitAction = (payload) => ({ type: ADD_WB_INIT, pa
 export const createWaiterboardDoneAction = () => ({ type: ADD_WB_DONE })
 export const getBillsInitAction = (payload) => ({ type: GET_BILLS_INIT, payload })
 export const getBillsDoneAction = (payload) => ({ type: GET_BILLS_DONE, payload })
-export const getCategoriesInitAction = () => ({ type: GET_CATEGORIES_INIT })
+export const getCategoriesInitAction = () => ({ type: 'GET_CATEGORIES_INIT' })
 export const getCategoriesDoneAction = (payload) => ({ type: GET_CATEGORIES_DONE, payload })
 export const rmCategoryInitAction = (payload) => ({ type: 'RM_CATEGORY_INIT', payload })
 export const addCategoryInitAction = (payload) => ({ type: 'ADD_CATEGORY_INIT', payload })
@@ -448,7 +449,7 @@ const getBillsEpic = (action$: Observable, { getState }: EpicDependencies) =>
   )
 const getCategoriesEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
-  .ofType(GET_CATEGORIES_INIT)
+  .ofType('GET_CATEGORIES_INIT')
   .switchMap(() =>
     Observable.fromPromise(API.GetCategories({
       restaurantId: getState().restaurant.loggedRestaurant.id
@@ -475,7 +476,7 @@ const addCategoryEpic = (action$: Observable, { getState }: EpicDependencies) =>
       .map(getCategoriesInitAction)
       .catch(error => console.log(error))
   )
-const rmFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
+const rmFoodEpic = (action$: Observable) =>
   action$
   .ofType('RM_FOOD_INIT')
   .switchMap(({ payload: { foodId, enabled } }) =>
@@ -483,17 +484,16 @@ const rmFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
       .map(getCategoriesInitAction)
       .catch(error => console.log(error))
   )
-const updateFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
+
+const updateFoodEpic = (action$: Observable) =>
   action$
   .ofType('UPDATE_FOOD_INIT')
-  .switchMap(({ payload: { categoryId, foodId, name, description, price } }) =>
-    Observable.fromPromise(API.UpdateFood({
-      categoryId, foodId,
-      name, description, price
-    }))
-      .map(getCategoriesInitAction)
-      .catch(error => console.log(error))
+  .switchMap(({ payload: { foodId, name, description, price } }) =>
+    Observable.fromPromise(API.UpdateFood({ foodId, name, description, price }))
+    .map(getCategoriesInitAction)
+    .catch(error => Observable.of(console.log(error)))
   )
+
 const addFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType('ADD_FOOD_INIT')
