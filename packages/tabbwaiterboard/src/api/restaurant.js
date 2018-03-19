@@ -2,13 +2,10 @@ import { Get, Post, Put, Delete } from './Network'
 
 
 export function Login({ email, password }) {
-  return Post({ path: 'api/v1/oauth2/authentication', noToken: true }, {
-    username: email,
-    password,
-    grant_type: "password",
-    client_id: "1",
-    client_secret: "secretKey",
-    scope: "shop"
+  return Post({
+    path: 'user/login', noToken: true, v3: true
+  }, {
+    email, password
   })
 }
 //
@@ -34,28 +31,28 @@ export function GetLoggedWaiterboard() {
   return Get({ path: `api/v2/waiterboard/logged` })
 }
 
-export function GetTables() {
-  return Get({ path: `api/v2/waiterboard/tables` })
+export function GetTables({waiterboardId}) {
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/tables` })
 }
 
 export function CheckOut({ tableId }) {
-  return Delete({ path: `api/v2/waiterboard/checkout/${tableId}` })
+  return Post({ v3: true, path: `table/${tableId}/checkout` })
 }
 
 export function CheckOutUser({ userId }) {
-  return Delete({ path: `api/v2/waiterboard/checkout_user/${userId}` })
+  return Post({ v3: true, path: `guest/${userId}/checkout` })
 }
 
-export function GetBookings() {
-  return Get({ path: `api/v2/waiterboard/bookings` })
+export function GetBookings({restaurantId}) {
+  return Get({ v3: true, path: `restaurant/${restaurantId}/bookings` })
 }
 
 export function GetBookingsAccepted() {
   return Get({ path: `api/v2/waiterboard/bookings_accepted` })
 }
 
-export function GetGuests() {
-  return Get({ path: `api/v2/waiterboard/guests` })
+export function GetGuests({waiterboardId}) {
+  return Get({ v3: true, path: `/waiterboard/${waiterboardId}/guests` })
 }
 
 export function ConfirmBooking({ bookingId }) {
@@ -71,11 +68,11 @@ export function ConfirmService({ serviceId }) {
 }
 
 export function GetOrders() {
-  return Get({ path: `api/v2/waiterboard/orders` })
+  return Get({ v3: true, path: `/waiterboard/${waiterboardId}/orders` })
 }
 
 export function ConfirmOrder({ orderId }) {
-  return Post({ path: `api/v2/waiterboard/order/${orderId}/confirm` })
+  return Post({ v3: true, path: `/order/${orderId}/confirm` })
 }
 export function ConfirmOrderahead({ orderId }) {
   return Post({ path: `api/v2/waiterboard/orderahead/${orderId}/confirm` })

@@ -15,10 +15,11 @@ export function Request(url, options = {}, noToken) {
   return new Promise((resolve, reject) => {
     if (!url) reject(new Error('URL parameter required'))
     const token = getCookie('access_token')
-    const defaultOptions = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
+    let defaultOptions = {}
+    if (!options.headers) {
+      defaultOptions.headers = { 'Content-Type': 'application/json' }
+    } else {
+      defaultOptions.headers = options.headers
     }
     if (token.length > 0 && !noToken) defaultOptions.headers.Authorization = `Bearer ${token}`
     options = Object.assign(options, defaultOptions)
@@ -32,7 +33,7 @@ export function Request(url, options = {}, noToken) {
       ))
       .then(res => {
         //console.log(res.status);
-        if (res.status === 401 && window.location.pathname !== '/') window.location.replace('/')
+        //if (res.status === 401 && window.location.pathname !== '/') window.location.replace('/')
         try {
           return { status: res.status, json: JSON.parse(res.text) }
         } catch (err) {
@@ -57,14 +58,18 @@ export function Request(url, options = {}, noToken) {
 }
 
 const buildURL = ({
-  subdom = 'apijs',
-  endpoint = 'gotabb.com',
-  path
+  subdom = 'tabb-api',
+  endpoint = 'eu-central-1.elasticbeanstalk.com',
+  prefix = 'api/v1',
+  path,
+  v2,
+  v3
 }) => {
-  //return `http://localhost:3005/${path}`
-  return `http://tabb-apiv2.eu-central-1.elasticbeanstalk.com/${path}`
-}//`https://${subdom}.${endpoint}/${path}`//
-
+  if (v2) return `http://tabb-apiv2.eu-central-1.elasticbeanstalk.com/${path}`//`http://localhost:3005/${path}`//
+  if (v3) return `https://api.dev.tabb.global/${path}`
+  return `http://${subdom}.${endpoint}/${prefix}/${path}`
+}
+//`http://localhost:3005/${path}`;//
 // urlParts = { token, ?subdom, ?endpoint, ?prefix, path }
 
 export function Get(urlParts, cookie) {
@@ -76,6 +81,17 @@ export function Post(urlParts, body = {}) {
   return Request(buildURL(urlParts), {
     method: 'POST',
     body: JSON.stringify(body),
+  }, urlParts.noToken)
+}
+export function PostMultipart(urlParts, body = {}) {
+  const formData = new FormData()
+  for(let key in body) {
+    formData.append(key, body[key]);
+  }
+  return Request(buildURL(urlParts), {
+    method: 'POST',
+    headers: {},
+    body: formData,
   }, urlParts.noToken)
 }
 export function Put(urlParts, body = {}) {

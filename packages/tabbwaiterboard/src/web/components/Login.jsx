@@ -47,7 +47,7 @@ const Login = ({ lastError, doLogin }: LoginProps) =>
             }}
             validate={({ email, password }) => {
               return {
-                email: !email ? 'Username is required' : undefined,
+                email: !email ? 'Email is required' : undefined,
                 password: !password ? 'Password is required' : undefined
               }
             }}
@@ -55,7 +55,7 @@ const Login = ({ lastError, doLogin }: LoginProps) =>
             {({submitForm}) => {
               return (
                 <form onSubmit={submitForm}>
-                  <Text field="email" placeholder="Username" />
+                  <Text field="email" placeholder="Email" />
                   <Text field="password" type="password" placeholder="Password" />
                   <FormBoxSubmit>ENTER</FormBoxSubmit>
                 </form>
