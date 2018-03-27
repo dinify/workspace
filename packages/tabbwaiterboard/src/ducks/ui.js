@@ -32,10 +32,9 @@ const initialState = {
 export default function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
 
-    case 'LOGGED_FETCHED_DONE': {
-      return R.assoc('waiterboardName', action.payload.login_id)(state);
-      return state;
-    }
+    //case 'LOGGED_FETCHED_DONE': {
+    //  return R.assoc('waiterboardName', action.payload.login_id)(state);
+    //}
 
     case 'TOGGLE_FRAMES': {
       return R.assoc('frameIndex', action.payload.i)(state);

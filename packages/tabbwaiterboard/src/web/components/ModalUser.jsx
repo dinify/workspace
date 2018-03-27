@@ -63,9 +63,6 @@ const Label = styled.div`
   border-wadius: 20px;
 `;
 
-const NumHighlight = styled.span`
-  color: rgb(246,157,0);
-`;
 
 const Body = styled.div`
   position: absolute;
@@ -78,33 +75,6 @@ const Body = styled.div`
   overflow: auto;
   .Bill, .Order {
     width: 100%
-  }
-`;
-
-const TableTag = styled.table`
-  width: 100%;
-  border-spacing: 0;
-  margin-bottom: 30px;
-`;
-
-const Th = styled.th`
-  color: ${props => props.color};
-  font-weight: 300;
-  border-bottom: 1px solid ${props => props.color};
-  padding-bottom: 5px;
-  &:first-child {
-    text-align: left
-  }
-`;
-const Td = styled.td`
-  color: ${props => props.color};
-  font-weight: 300;
-  padding: 5px 0;
-  font-size: 14px;
-  border-bottom: 1px dashed #999;
-  color: #666;
-  &:first-child {
-    text-align: left;
   }
 `;
 

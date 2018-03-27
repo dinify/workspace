@@ -42,7 +42,6 @@ const Login = ({ lastError, doLogin }: LoginProps) =>
 
           <Form
             onSubmit={({ email, password }) => {
-              console.log('Success!', { email, password });
               doLogin({ email, password });
             }}
             validate={({ email, password }) => {

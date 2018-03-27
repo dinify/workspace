@@ -3,7 +3,7 @@ import React from 'react'
 import { colorsByStages } from '../../colors'
 import { connect } from 'react-redux';
 import { confirmOrder } from '../../../ducks/restaurant'
-import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, FoodItem, Color } from '../styled/Events'
+import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, FoodItem } from '../styled/Events'
 import User from './user'
 import { isItOutdated } from '../../../common/helpers/time'
 import moment from 'moment'

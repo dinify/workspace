@@ -29,6 +29,13 @@ export const FormBoxBody = styled.div`
     padding: 10px;
     margin: 20px 20px 0;
   }
+  &.modry {
+    padding: 10px 10px 0 10px;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+  }
 `
 export const FormBoxSubmit = styled.button`
   background-color: rgb(231,76,60);
@@ -45,5 +52,18 @@ export const FormBoxSubmit = styled.button`
   }
   &:active {
     transform: scale(0.95);
+  }
+`
+
+export const FormBoxChoice = styled.div`
+  background-color: rgba(0,0,0,0.2);
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 20px 0;
+  text-align: center;
+  cursor: pointer;
+  transition: background 100ms ease-in-out;
+  &:hover {
+    background: black;
   }
 `

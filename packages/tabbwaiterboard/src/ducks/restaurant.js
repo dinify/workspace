@@ -2,7 +2,7 @@
 import { Observable } from 'rxjs';
 import R from 'ramda';
 import * as API from '../api/restaurant';
-import type { EpicDependencies, Error, Action } from '../flow';
+import type { Error, Action } from '../flow';
 
 export const BOOTSTRAP = 'BOOTSTRAP';
 export const LOGIN_INIT = 'LOGIN_INIT';
@@ -160,7 +160,7 @@ export function logoutInitAction() {
 }
 
 export function loginDoneAction(res: object) {
-  setCookie('access_token', res.access_token, 30);
+  setCookie('access_token', res.token, 30);
   window.location.replace("/board");
   return { type: LOGIN_DONE, payload: res };
 }
@@ -217,11 +217,11 @@ export const getOrdersOfUser = (payload) => ({ type: 'GET_ORDERSOFUSER_INIT', pa
 // Epics
 const bootstrapEpic = (action$: Observable, { getState, dispatch }: EpicDependencies) =>
   action$.ofType('persist/REHYDRATE').mergeMap(() => {
-    return Observable.fromPromise(API.GetLoggedWaiterboard())
+    return Observable.fromPromise(API.GetLoggedRestaurant())
       .mergeMap((loggedUser) => {
-        API.GetOrderAheadEnabled({ restaurantId: loggedUser.restaurant }).then((payload) => {
-          dispatch({ type: 'GET_OHENABLED_DONE', payload });
-        })
+        //API.GetOrderAheadEnabled({ restaurantId: loggedUser.id }).then((payload) => {
+        //  dispatch({ type: 'GET_OHENABLED_DONE', payload });
+        //})
         return Observable.of(loggedFetchedAction(loggedUser), appBootstrap(), getTablesInit(), guestsPollingInit())
       })
       .catch(error => {
@@ -239,9 +239,6 @@ const getTablesEpic = (action$: Observable) =>
         .map((payload) => ({ type: 'GET_TABLES_DONE', payload }))
         .catch(error => Observable.of({ type: 'GET_TABLES_FAIL' }))
     );
-
-let bookingsCount = 0
-let servicesCount = 0
 
 const audio = new Audio('/static/GLASS.wav')
 
@@ -297,7 +294,7 @@ const guestsPollingEpic = (action$: Observable, { dispatch }) =>
           isSomethingNew(payload, 'sales')
           dispatch({ type: 'GET_SALES_DONE', payload });
         })
-        return {type: 'GUESTS_POLLING_DONE', payload: {}};
+        return { type: 'GUESTS_POLLING_DONE', payload: {} };
       }
       loadInitData();
       return Observable.interval(3000).map(loadInitData);
@@ -305,12 +302,15 @@ const guestsPollingEpic = (action$: Observable, { dispatch }) =>
 
 const loginEpic = (action$: Observable) =>
   action$
-    .ofType(LOGIN_INIT)
-    .switchMap(({ payload: { email, password } }) =>
-      Observable.fromPromise(API.Login({ email, password }))
-        .map(loginDoneAction)
-        .catch(error => Observable.of(loginFailAction(error)))
-    );
+  .ofType(LOGIN_INIT)
+  .switchMap(({ payload: { email, password } }) => {
+    console.log("login epic");
+    if (email) console.log("em");
+    if (password) console.log("pass");
+    return Observable.fromPromise(API.Login({ email, password }))
+      .map(loginDoneAction)
+      .catch(error => Observable.of(loginFailAction(error)))
+  })
 
 const logoutEpic = (action$: Observable) =>
   action$.ofType(LOGOUT_INIT).map(logoutDoneAction)

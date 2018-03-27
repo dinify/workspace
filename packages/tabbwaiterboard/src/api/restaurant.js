@@ -1,4 +1,4 @@
-import { Get, Post, Put, Delete } from './Network'
+import { Get, Post, Put } from './Network'
 
 
 export function Login({ email, password }) {
@@ -8,25 +8,11 @@ export function Login({ email, password }) {
     email, password
   })
 }
-//
-//export function Logout() {
-//  return Delete({ path: 'restaurant/auth/restauration' })
-//}
-//
-//export function Signup({ email, password, restaurantName, nameInCharge, mobile }) {
-//  return Post({ path: 'restaurant/register', noToken: true }, {
-//    email,
-//    password,
-//    name: restaurantName,
-//    nameChargue: nameInCharge,
-//    number: mobile,
-//  })
-//}
-//
-//export function GetRestaurant({ restaurantId }) {
-//  return Get({ path: `restaurant/${restaurantId}` })
-//}
-//
+
+export function GetLoggedRestaurant() {
+  return Get({ path: `restaurant/my/all`, v3: true })
+}
+
 export function GetLoggedWaiterboard() {
   return Get({ path: `api/v2/waiterboard/logged` })
 }
@@ -67,7 +53,7 @@ export function ConfirmService({ serviceId }) {
   return Post({ path: `api/v2/waiterboard/service_call/${serviceId}/confirm` })
 }
 
-export function GetOrders() {
+export function GetOrders({waiterboardId}) {
   return Get({ v3: true, path: `/waiterboard/${waiterboardId}/orders` })
 }
 

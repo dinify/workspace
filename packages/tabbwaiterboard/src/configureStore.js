@@ -1,6 +1,6 @@
 import { createEpicMiddleware } from 'redux-observable';
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
-import { composeWithDevTools } from 'remote-redux-devtools';
+//import { composeWithDevTools } from 'remote-redux-devtools';
 import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import configureEpics from './configureEpics';
@@ -35,20 +35,20 @@ const configureStore = (options, storage) => {
   }
 
   // Firebase config
-  const firebaseConfig = {
-    apiKey: 'AIzaSyABS31YC1SUtzjyFlM97xD1be0R5XnwZZ4',
-    authDomain: '<your-auth-domain>',
-    databaseURL: 'https://tabb-4f53c.firebaseio.com',
-    storageBucket: '<your-storage-bucket>'
-  }
+  //const firebaseConfig = {
+  //  apiKey: 'AIzaSyABS31YC1SUtzjyFlM97xD1be0R5XnwZZ4',
+  //  authDomain: '<your-auth-domain>',
+  //  databaseURL: 'https://tabb-4f53c.firebaseio.com',
+  //  storageBucket: '<your-storage-bucket>'
+  //}
   // react-redux-firebase options
-  const config = {
-    userProfile: 'users', // firebase root where user profiles are stored
-    enableLogging: false, // enable/disable Firebase's database logging
-  }
+  //const config = {
+  //  userProfile: 'users', // firebase root where user profiles are stored
+  //  enableLogging: false, // enable/disable Firebase's database logging
+  //}
 
 
-  const enhancers = composeWithDevTools(applyMiddleware(...middlewares), autoRehydrate());
+  const enhancers = compose(applyMiddleware(...middlewares), autoRehydrate());
 
   const store = createStore(reducers, initialState, enhancers);
 

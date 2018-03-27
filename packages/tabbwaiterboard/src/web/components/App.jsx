@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import { appIsRunning } from '../../selectors/restaurant'
 import media from '../../common/helpers/media'
 import Board from './Board'
+import SelectWB from './SelectWB'
 import Login from './Login'
 
 const Content = styled.div`
@@ -35,7 +36,8 @@ const App = ({ appLoading }: AppProps) =>
       {!appLoading &&
         <div>
           <Route exact path="/" component={Login} />
-          <Route path="/board" component={Board} />
+          <Route path="/board" exact component={SelectWB} />
+          <Route path="/board/:id" exact component={Board} />
         </div>}
     </Content>
   </Router>);

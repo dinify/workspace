@@ -7,7 +7,6 @@ import { clearTable } from '../../ducks/tables';
 import R from 'ramda'
 import S from 'string'
 import { toggleModal } from '../../ducks/ui';
-import { isItOutdated } from '../../common/helpers/time'
 
 const TableBox = styled.div`
   display: inline-block;
@@ -114,7 +113,6 @@ const Rectangle = styled.div`
 
 // TODO click to table: half screen: bills of the day, half screen: enlarged table
 
-const okTime = 10
 const Sign = ({ guest, timer }) => {
   let flash = false
   if (guest.status === 's2') {
