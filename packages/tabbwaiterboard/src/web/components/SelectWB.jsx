@@ -25,7 +25,7 @@ const SelectWB = ({ lastError, logged }) =>
           marginBottom: '40px',
           width: '70px'
         }}
-        className="vhs-pop"
+        className="vhs-blur"
       />
       <FormBox className="vhs-pop">
         <FormBoxHead>
