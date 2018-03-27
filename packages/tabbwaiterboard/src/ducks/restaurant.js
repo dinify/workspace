@@ -222,7 +222,7 @@ const bootstrapEpic = (action$: Observable, { getState, dispatch }: EpicDependen
         //API.GetOrderAheadEnabled({ restaurantId: loggedUser.id }).then((payload) => {
         //  dispatch({ type: 'GET_OHENABLED_DONE', payload });
         //})
-        return Observable.of(loggedFetchedAction(loggedUser), appBootstrap(), getTablesInit(), guestsPollingInit())
+        return Observable.of(loggedFetchedAction(loggedUser), appBootstrap()) // getTablesInit(), guestsPollingInit()
       })
       .catch(error => {
         console.log(error);
