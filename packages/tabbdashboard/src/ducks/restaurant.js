@@ -373,23 +373,17 @@ const updateCategoryEpic = (action$: Observable, { getState }: EpicDependencies)
 const updateContactEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType(UPDATE_CONTACT_INIT)
-  .switchMap(({ payload: { website, email, phone } }) =>
-    Observable.fromPromise(API.ChangeContact({
-      restaurantId: getState().restaurant.loggedRestaurant.id,
-      website, email, phone
-    }))
+  .switchMap(({ payload }) =>
+    Observable.fromPromise(API.ChangeContact({ ...payload }))
     .map(updateDoneAction)
     .catch(error => console.log(error))
   )
 
-const updateSocialEpic = (action$: Observable, { getState }: EpicDependencies) =>
+const updateSocialEpic = (action$: Observable) =>
   action$
   .ofType(UPDATE_SOCIAL_INIT)
-  .switchMap(({ payload: { facebookURL, instagramURL } }) =>
-    Observable.fromPromise(API.ChangeSocial({
-      restaurantId: getState().restaurant.loggedRestaurant.id,
-      facebookURL, instagramURL
-    }))
+  .switchMap(({ payload }) =>
+    Observable.fromPromise(API.ChangeSocial({ ...payload }))
     .map(updateDoneAction)
     .catch(error => console.log(error))
   )
@@ -407,11 +401,8 @@ const updateLocationEpic = (action$: Observable, { getState }: EpicDependencies)
 const updateBankEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType(UPDATE_BANK_INIT)
-  .switchMap(({ payload: { name, beneficiaryName, IBAN } }) =>
-    Observable.fromPromise(API.ChangeBank({
-      restaurantId: getState().restaurant.loggedRestaurant.id,
-      name, beneficiaryName, IBAN
-    }))
+  .switchMap(({ payload }) =>
+    Observable.fromPromise(API.ChangeBank({ ...payload }))
     .map(updateDoneAction)
     .catch(error => console.log(error))
   )

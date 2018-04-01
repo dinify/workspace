@@ -48,20 +48,28 @@ export function ChangeName({ restaurantId, name }) {
   return Post({ path: `restaurant/${restaurantId}`, v3: true }, { name })
 }
 
-export function ChangeContact({ restaurantId, phone, email, website }) {
-  return Post({ path: `restaurant/${restaurantId}`, v3: true }, {
+export function ChangeContact({ phone, email, website }) {
+  return Post({ path: `restaurant/my`, v3: true }, {
     contact: {
       phone, email, website
     }
   })
 }
 
-export function ChangeSocial({ restaurantId, facebookURL, instagramURL }) {
-  return Put({ path: `restaurant/${restaurantId}/social` }, { facebookURL, instagramURL })
+export function ChangeBank({ bank_name, beneficiary_name, iban }) {
+  return Post({ path: `restaurant/my`, v3: true }, {
+    payout: {
+      bank_name, beneficiary_name, iban
+    }
+  })
 }
 
-export function ChangeBank({ restaurantId, name, beneficiaryName, IBAN }) {
-  return Put({ path: `restaurant/${restaurantId}/bank` }, { name, beneficiaryName, IBAN })
+export function ChangeSocial({ facebook, instagram }) {
+  return Post({ path: `restaurant/my`, v3: true }, {
+    social: {
+      facebook, instagram
+    }
+  })
 }
 
 export function ChangeLocation({ restaurantId, name, longitude, latitude }) {

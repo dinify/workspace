@@ -1,30 +1,15 @@
 // @flow
 import React from 'react'
 import R from 'ramda'
-import {
-  connect
-} from 'react-redux'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
-import type {
-  Error
-} from '../../../flow'
-import {
-  Link
-} from 'react-router-dom'
-import {
-  Form,
-  Text,
-  Select
-} from 'react-form'
-import {
-  withGoogleMap,
-  GoogleMap,
-  Marker
-} from "react-google-maps"
+import type { Error } from '../../../flow'
+import { Link } from 'react-router-dom'
+import { Form, Text, Select } from 'react-form'
+import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import SwitchButton from 'react-switch-button'
 import 'react-switch-button/dist/react-switch-button.css'
 import Dropzone from 'react-dropzone'
-
 import {
   FormBox,
   FormBoxHead,
@@ -33,7 +18,6 @@ import {
   FieldWrapper,
   Label
 } from '../styled/FormBox';
-
 import {
   updateInitAction,
   updateCategoryInitAction,
@@ -302,7 +286,7 @@ const Main = ({
       </Form>
     </FormBoxBody>
   </FormBox>
-{/*
+
   <FormBox>
     <FormBoxHead>Social Media</FormBoxHead>
     <FormBoxBody>
@@ -310,11 +294,11 @@ const Main = ({
         onSubmit={(social) => {
           updateSocial(social);
         }}
-        defaultValues={loggedRestaurant.socialMedia}
-        validate={({ facebookURL, instagramURL }) => {
+        defaultValues={loggedRestaurant.social}
+        validate={({ facebook, instagram }) => {
           return {
-            facebookURL: !facebookURL ? 'Facebook URL is required' : undefined,
-            instagramURL: !instagramURL ? 'Instagram URL is required' : undefined,
+            facebook: !facebook ? 'Facebook URL is required' : undefined,
+            instagram: !instagram ? 'Instagram URL is required' : undefined,
           }
         }}
       >
@@ -322,16 +306,16 @@ const Main = ({
           return (
             <form onSubmit={submitForm}>
               <FieldWrapper>
-                <Link to={`https://${loggedRestaurant.socialMedia.facebookURL}`} target="_blank">
+                <Link to={`https://${loggedRestaurant.social.facebook}`} target="_blank">
                   <i className="ion-social-facebook" />
                 </Link>
-                <Text field='facebookURL' placeholder='www.facebook.com/myRestaurant' />
+                <Text field='facebook' placeholder='www.facebook.com/myRestaurant' />
               </FieldWrapper>
               <FieldWrapper>
-                <Link to={`https://${loggedRestaurant.socialMedia.instagramURL}`} target="_blank">
+                <Link to={`https://${loggedRestaurant.social.instagram}`} target="_blank">
                   <i className="ion-social-instagram-outline" />
                 </Link>
-                <Text field='instagramURL' placeholder='www.instagram.com/myRestaurant' />
+                <Text field='instagram' placeholder='www.instagram.com/myRestaurant' />
               </FieldWrapper>
               <FormBoxSubmit>SAVE</FormBoxSubmit>
             </form>
@@ -340,7 +324,6 @@ const Main = ({
       </Form>
     </FormBoxBody>
   </FormBox>
-*/}
 
 
   <FormBox>
@@ -351,24 +334,19 @@ const Main = ({
           console.log('Success!', hours);
           updateHours(hours);
         }}
-        defaultValues={{
-          weekdayFrom: loggedRestaurant.open_hours,
-          weekdayTo: loggedRestaurant.open_hours,
-          weekendFrom: loggedRestaurant.open_hours,
-          weekendTo: loggedRestaurant.open_hours
-        }}
+        defaultValues={loggedRestaurant.open_hours}
       >
         {({submitForm}) => {
           return (
             <form onSubmit={submitForm}>
               <Label>Workday</Label>
-              <Text field='weekdayFrom' placeholder='Weekday from' />
+              <Text field='0' placeholder='Weekday from' />
               <span> - </span>
-              <Text field='weekdayTo' placeholder='Weekday to' />
+              <Text field='1' placeholder='Weekday to' />
               <Label>Weekend</Label>
-              <Text field='weekendFrom' placeholder='Weekend from' />
+              <Text field='2' placeholder='Weekend from' />
               <span> - </span>
-              <Text field='weekendTo' placeholder='Weekend to' />
+              <Text field='3' placeholder='Weekend to' />
               <FormBoxSubmit>SAVE</FormBoxSubmit>
             </form>
           )
@@ -385,21 +363,21 @@ const Main = ({
           console.log('Success!', bank);
           updateBank(bank);
         }}
-        defaultValues={loggedRestaurant.bank}
-        validate={({ name, beneficiaryName, IBAN }) => {
+        defaultValues={loggedRestaurant.payout}
+        validate={({ bank_name, beneficiary_name, iban }) => {
           return {
-            name: !name ? 'Bank name is required' : undefined,
-            beneficiaryName: !beneficiaryName ? 'Beneficiary Name is required' : undefined,
-            IBAN: !IBAN ? 'IBAN is required' : undefined,
+            bank_name: !bank_name ? 'Bank name is required' : undefined,
+            beneficiary_name: !beneficiary_name ? 'Beneficiary Name is required' : undefined,
+            iban: !iban ? 'IBAN is required' : undefined,
           }
         }}
       >
         {({submitForm}) => {
           return (
             <form onSubmit={submitForm}>
-              <Text field='name' placeholder='Bank name' />
-              <Text field='beneficiaryName' placeholder='Beneficiary name' />
-              <Text field='IBAN' placeholder='IBAN number' />
+              <Text field='bank_name' placeholder='Bank name' />
+              <Text field='beneficiary_name' placeholder='Beneficiary name' />
+              <Text field='iban' placeholder='IBAN number' />
               <FormBoxSubmit>SAVE</FormBoxSubmit>
             </form>
           )
