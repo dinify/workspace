@@ -72,8 +72,11 @@ export function ChangeSocial({ facebook, instagram }) {
   })
 }
 
-export function ChangeLocation({ restaurantId, name, longitude, latitude }) {
-  return Put({ path: `api/v2/restaurant/${restaurantId}/location`, v2: true }, { name, longitude, latitude })
+export function ChangeLocation({ longitude, latitude }) {
+  return Post({ path: `restaurant/my`, v3: true }, {
+    longitude: longitude.toFixed(10),
+    latitude: latitude.toFixed(10)
+  })
 }
 
 export function ChangeHours({ restaurantId, weekdayFrom, weekdayTo, weekendFrom, weekendTo }) {
@@ -127,8 +130,8 @@ export function UpdateFood({ foodId, name, description, price, calories }) {
 }
 
 // API V2
-export function UploadMainImage({ file }) {
-  return PostMultipart({ path: `api/v2/restaurant/upload`, v2: true }, { file })
+export function UploadMainImage({ file, restaurantId }) {
+  return PostMultipart({ path: `api/v2/restaurant/upload/${restaurantId}`, v2: true }, { file })
 }
 export function ToggleCategory({ categoryId, enabled }) {
   return Put({ path: `api/v2/restaurant/disable/category/${categoryId}`, v2: true }, { enabled })

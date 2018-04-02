@@ -67,8 +67,9 @@ export default function reducer(state: State = initialState, action: Action) {
       return state
     case BOOTSTRAP:
       return R.assoc('appRun', true)(state)
-    case LOGGED_FETCHED_DONE:
+    case LOGGED_FETCHED_DONE: {
       return R.assoc('loggedRestaurant', action.payload)(state)
+    }
     case UPDATE_INIT:
       return R.assocPath(['loggedRestaurant', 'name'], action.payload.name)(state)
     case UPDATE_CATEGORY_INIT:
@@ -268,9 +269,12 @@ const uploadEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType('UPDATE_MAINIMAGE_INIT')
   .switchMap(({ payload: { file } }) =>
-    Observable.fromPromise(API.UploadMainImage({ file }))
-      .map(updateDoneAction)
-      .catch(error => Observable.of(console.log(error)))
+    Observable.fromPromise(API.UploadMainImage({
+      file,
+      restaurantId: getState().restaurant.loggedRestaurant.id
+    }))
+    .map(updateDoneAction)
+    .catch(error => Observable.of(console.log(error)))
   )
 
 const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
@@ -387,12 +391,11 @@ const updateSocialEpic = (action$: Observable) =>
     .map(updateDoneAction)
     .catch(error => console.log(error))
   )
-const updateLocationEpic = (action$: Observable, { getState }: EpicDependencies) =>
+const updateLocationEpic = (action$: Observable) =>
   action$
   .ofType(UPDATE_LOCATION_INIT)
   .switchMap(({ payload: { name, longitude, latitude } }) =>
     Observable.fromPromise(API.ChangeLocation({
-      restaurantId: getState().restaurant.loggedRestaurant.id,
       name, longitude, latitude
     }))
     .map(updateDoneAction)

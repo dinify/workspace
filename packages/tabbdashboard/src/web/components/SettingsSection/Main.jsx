@@ -10,6 +10,7 @@ import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import SwitchButton from 'react-switch-button'
 import 'react-switch-button/dist/react-switch-button.css'
 import Dropzone from 'react-dropzone'
+import moment from 'moment'
 import {
   FormBox,
   FormBoxHead,
@@ -28,19 +29,6 @@ import {
   updateBankInitAction,
   uploadMainImageInitAction
 } from '../../../ducks/restaurant'
-
-type MainProps = {
-  lastError: Error,
-  loggedRestaurant: ? Object,
-  update: typeof updateInitAction,
-  updateCategory: typeof updateCategoryInitAction,
-  updateSocial: typeof updateSocialInitAction,
-  updateContact: typeof updateContactInitAction,
-  updateLocation: typeof updateLocationInitAction,
-  updateBank: typeof updateBankInitAction,
-  updateHours: typeof updateHoursInitAction,
-  updateDone: Any,
-};
 
 // Wrap all `react-google-maps` components with `withGoogleMap` HOC
 // and name it GettingStartedGoogleMap
@@ -120,7 +108,7 @@ const Main = ({
     updateHours,
     updateDone,
     uploadMainImage
-  }: MainProps) =>
+  }) =>
   (<MainContrainer>
 
     <div style={{marginLeft: '10px'}}>
@@ -334,19 +322,26 @@ const Main = ({
           console.log('Success!', hours);
           updateHours(hours);
         }}
-        defaultValues={loggedRestaurant.open_hours}
+        defaultValues={
+          R.apply(R.merge, R.keys(loggedRestaurant.open_hours).map((dayNum) => {
+            const obj = {}
+            obj[`${dayNum}_from`] = loggedRestaurant.open_hours[dayNum][0][0]
+            obj[`${dayNum}_to`] = loggedRestaurant.open_hours[dayNum][0][1]
+            return obj
+          }))
+        }
       >
         {({submitForm}) => {
           return (
             <form onSubmit={submitForm}>
-              <Label>Workday</Label>
-              <Text field='0' placeholder='Weekday from' />
-              <span> - </span>
-              <Text field='1' placeholder='Weekday to' />
-              <Label>Weekend</Label>
-              <Text field='2' placeholder='Weekend from' />
-              <span> - </span>
-              <Text field='3' placeholder='Weekend to' />
+              {R.keys(loggedRestaurant.open_hours).map((dayNum) =>
+                <div key={dayNum}>
+                  <Label>{moment(dayNum, "e").format("dddd")}</Label>
+                  <Text field={`${dayNum}_from`} placeholder='From' />
+                  <span> - </span>
+                  <Text field={`${dayNum}_to`} placeholder='To' />
+                </div>
+              )}
               <FormBoxSubmit>SAVE</FormBoxSubmit>
             </form>
           )
