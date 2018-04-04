@@ -365,11 +365,11 @@ const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
     .catch(error => console.log(error))
   )
 
-const updateCategoryEpic = (action$: Observable, { getState }: EpicDependencies) =>
+const updateCategoryEpic = (action$: Observable) =>
   action$
   .ofType(UPDATE_CATEGORY_INIT)
   .switchMap(({ payload: { category } }) =>
-    Observable.fromPromise(API.ChangeCategory({ restaurantId: getState().restaurant.loggedRestaurant.id, category }))
+    Observable.fromPromise(API.ChangeCategory({ category }))
     .map(updateDoneAction)
     .catch(error => console.log(error))
   )

@@ -4,16 +4,16 @@ export const FormBox = styled.div`
   background: #fff;
   display: inline-block;
   width: 280px;
-  border: 1px solid #CED0DA;
+  border: none;
   vertical-align: top;
   margin: 10px;
   overflow: hidden;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 `
 export const FormBoxHead = styled.div`
-  background: #F2F4F7;
+  background: rgba(0,0,50,0.03);
   padding: 10px;
   font-size: 12px;
-  border-bottom: 1px solid #CED0DA;
 `
 export const FormBoxBody = styled.div`
   background: #fff;

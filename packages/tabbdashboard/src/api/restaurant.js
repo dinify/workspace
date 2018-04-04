@@ -40,8 +40,10 @@ export function GetLoggedRestaurant() {
   return Get({ path: `restaurant/my/all`, v3: true })
 }
 
-export function ChangeCategory({ restaurantId, category }) {
-  return Put({ path: `restaurant/${restaurantId}/category` }, { category })
+export function ChangeCategory({ category }) {
+  return Post({ path: `restaurant/my`, v3: true }, {
+    type: category
+  })
 }
 
 export function ChangeName({ restaurantId, name }) {

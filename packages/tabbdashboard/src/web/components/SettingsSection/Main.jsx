@@ -143,28 +143,26 @@ const Main = ({
         </Form>
       </FormBoxBody>
     </FormBox>
-{/*
+
   <FormBox>
     <FormBoxHead>Type of Restaurant</FormBoxHead>
     <FormBoxBody center pt={20} pb={20}>
       <SwitchButton
         name="switch-type"
-        label="Restaurant"
-        labelRight="QLESS"
+        label="Classic"
+        labelRight="QLess"
         type="switch"
-        defaultChecked={loggedRestaurant.category === 'QUEUELESS'}
+        defaultChecked={loggedRestaurant.type === 'QLESS'}
         onChange={() => {
-          if(loggedRestaurant.category === 'RESTAURANT') {
-            // by now it's gonna be QLESS
-            updateCategory({ category: 'QUEUELESS'})
-          } else { // it's QLESS, so by now it's gonna be RESTAURANT
-            updateCategory({ category: 'RESTAURANT'})
+          if(loggedRestaurant.type === 'CLASSIC') {
+            updateCategory({ category: 'QLESS'})
+          } else {
+            updateCategory({ category: 'CLASSIC'})
           }
         }}
       />
     </FormBoxBody>
   </FormBox>
-*/}
 
   <FormBox>
     <FormBoxHead>Main Image</FormBoxHead>
