@@ -16,17 +16,17 @@ const Menucontrol = ({ location }) =>
   (<div>
       <Header>
         <HorMenu>
-          <HorMenuLink l={location} title="Menu Control" to="/dashboard/menu/control" />
-          <HorMenuLink l={location} title="" to="/dashboard/menu/options" />
-          <HorMenuLink l={location} title="Addons" to="/dashboard/menu/addons" />
+          <HorMenuLink l={location} title="Menu Control" to="/menu/control" />
+          <HorMenuLink l={location} title="" to="/menu/options" />
+          <HorMenuLink l={location} title="Addons" to="/menu/addons" />
         </HorMenu>
       </Header>
 
       <Switch>
-        <Redirect exact from="/dashboard/menu" to="/dashboard/menu/control" />
-        <Route path="/dashboard/menu/control" component={ControlSection} />
-        <Route path="/dashboard/menu/options" component={OptionsSection} />
-        <Route path="/dashboard/menu/addons" component={AddonsSection} />
+        <Redirect exact from="/menu" to="/menu/control" />
+        <Route path="/menu/control" component={ControlSection} />
+        <Route path="/menu/options" component={OptionsSection} />
+        <Route path="/menu/addons" component={AddonsSection} />
       </Switch>
 
   </div>);

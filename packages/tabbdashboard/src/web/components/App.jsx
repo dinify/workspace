@@ -17,7 +17,6 @@ import media from '../../common/helpers/media'
 import Login from './Login'
 import Signup from './Signup'
 import Dashboard from './Dashboard'
-import Admin from './Admin'
 import Qr from './Qr'
 
 const Content = styled.div `
@@ -48,10 +47,9 @@ const App = ({
       {appLoading && <AppLoader>App is loading...</AppLoader>}
       {!appLoading &&
         <Switch>
-          <Route exact path="/" component={Login} />
+          <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/admin" component={Admin} />
+          <Route path="/" component={Dashboard} />
           <Route path="/qr/:code" component={Qr} />
         </Switch>}
     </Content>

@@ -145,7 +145,7 @@ export const loginInitAction = (payload) => ({ type: LOGIN_INIT, payload })
 export const logoutInitAction = () => ({ type: LOGOUT_INIT })
 export const logoutDoneAction = (res: object) => {
   setCookie('access_token', '', 1)
-  window.location.replace('/')
+  window.location.replace('/login')
   return { type: LOGOUT_DONE, payload: res }
 }
 export const loggedFetchedAction = (payload) => ({ type: LOGGED_FETCHED_DONE, payload })
@@ -283,7 +283,7 @@ const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
     .mergeMap((loggedUser) => Observable.of(loggedFetchedAction(loggedUser), appBootstrap()))
     .catch(error => {
       console.log(error)
-      if (window.location.pathname !== '/' && window.location.pathname !== '/signup') window.location.replace("/")
+      if (window.location.pathname !== '/login' && window.location.pathname !== '/signup') window.location.replace("/login")
       return Observable.of(appBootstrap())
     })
   })
@@ -322,7 +322,7 @@ const registrationEpic = (action$: Observable, { getState }) =>
 export const loginFailAction = (err: Error) => ({ type: LOGIN_FAIL, payload: err })
 
 export const loginDoneAction = (res: object) => {
-  window.location.replace('/dashboard')
+  window.location.replace('/settings')
   return { type: LOGIN_DONE, payload: res }
 }
 

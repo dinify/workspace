@@ -117,9 +117,9 @@ const Dashboard = ({
         </span>
       </Logo>
       <Menu>
-        <MenuLink l={location} iconName="settings" title="Settings" to="/dashboard/settings" />
-        <MenuLink l={location} iconName="restaurant_menu" title="Menu" to="/dashboard/menu" />
-        <MenuLink l={location} iconName="attach_money" title="Billing" to="/dashboard/billing" />
+        <MenuLink l={location} iconName="settings" title="Settings" to="/settings" />
+        <MenuLink l={location} iconName="restaurant_menu" title="Menu" to="/menu" />
+        <MenuLink l={location} iconName="attach_money" title="Billing" to="/billing" />
         {
         //<MenuLink l={location} iconName="group" title="Guests" to="/dashboard/guests" />
         //<MenuLink l={location} iconName="assessment" title="Sales" to="/dashboard/sales" />
@@ -136,13 +136,13 @@ const Dashboard = ({
     </Sidebar>
     <Content>
       <Switch>
-        <Redirect exact from="/dashboard" to="/dashboard/settings" />
-        <Route path="/dashboard/settings" component={SettingsSection} />
-        <Route path="/dashboard/menu" component={MenucontrolSection} />
-        <Route path="/dashboard/billing" component={BillingSection} />
-        <Route path="/dashboard/guests" component={GuestsSection} />
-        <Route path="/dashboard/sales" component={SalesSection} />
-        <Route path="/dashboard/engagement" component={EngagementSection} />
+        <Redirect exact from="/" to="/settings" />
+        <Route path="/settings" component={SettingsSection} />
+        <Route path="/menu" component={MenucontrolSection} />
+        <Route path="/billing" component={BillingSection} />
+        <Route path="/guests" component={GuestsSection} />
+        <Route path="/sales" component={SalesSection} />
+        <Route path="/engagement" component={EngagementSection} />
       </Switch>
     </Content>
   </div>)

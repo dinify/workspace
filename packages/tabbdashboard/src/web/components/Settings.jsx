@@ -10,23 +10,23 @@ import { HorMenu, HorMenuLink } from './Menu'
 
 
 import MainSection from './SettingsSection/Main.jsx';
-import TablesSection from './SettingsSection/Tables.jsx';
+import WaiterboardsSection from './SettingsSection/Waiterboards.jsx';
 import LocalizationSection from './SettingsSection/Localization.jsx';
 
 const Settings = ({ location }) =>
   (<div>
     <Header>
       <HorMenu>
-        <HorMenuLink l={location} title="Main Information" to="/dashboard/settings/main" />
-        <HorMenuLink l={location} title="Tables" to="/dashboard/settings/tables" />
-        <HorMenuLink l={location} title="" to="/dashboard/settings/localization" />
+        <HorMenuLink l={location} title="Main Information" to="/settings/main" />
+        <HorMenuLink l={location} title="Waiterboards" to="/settings/waiterboards" />
+        <HorMenuLink l={location} title="" to="/settings/localization" />
       </HorMenu>
     </Header>
     <Switch>
-      <Redirect exact from="/dashboard/settings" to="/dashboard/settings/main" />
-      <Route path="/dashboard/settings/main" component={MainSection} />
-      <Route path="/dashboard/settings/tables" component={TablesSection} />
-      <Route path="/dashboard/settings/localization" component={LocalizationSection} />
+      <Redirect exact from="/settings" to="/settings/main" />
+      <Route path="/settings/main" component={MainSection} />
+      <Route path="/settings/waiterboards" component={WaiterboardsSection} />
+      <Route path="/settings/localization" component={LocalizationSection} />
     </Switch>
   </div>);
 
