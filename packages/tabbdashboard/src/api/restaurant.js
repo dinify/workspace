@@ -76,8 +76,8 @@ export function ChangeSocial({ facebook, instagram }) {
 
 export function ChangeLocation({ longitude, latitude }) {
   return Post({ path: `restaurant/my`, v3: true }, {
-    longitude: longitude.toFixed(10),
-    latitude: latitude.toFixed(10)
+    longitude: longitude,
+    latitude: latitude
   })
 }
 
@@ -127,19 +127,27 @@ export function UpdateFood({ foodId, name, description, price, calories }) {
       amount: price || 1,
       currency: "KWD"
     },
-    calories: calories || undefined
+    //calories: calories || undefined
   })
 }
+
+export function UpdateNutrition({ foodId, calories, protein, fat, carb }) {
+  return Post({ path: `menu/item/${foodId}`, v3: true }, {
+    calories: calories
+  })
+}
+
+export function ToggleCategory({ categoryId, enabled }) {
+  return Post({ path: `menu/category/${categoryId}`, v3: true }, { published: enabled })
+}
+export function ToggleFood({ foodId, enabled }) {
+  return Post({ path: `menu/item/${foodId}`, v3: true }, { published: enabled })
+}
+
 
 // API V2
 export function UploadMainImage({ file, restaurantId }) {
   return PostMultipart({ path: `api/v2/restaurant/upload/${restaurantId}`, v2: true }, { file })
-}
-export function ToggleCategory({ categoryId, enabled }) {
-  return Put({ path: `api/v2/restaurant/disable/category/${categoryId}`, v2: true }, { enabled })
-}
-export function ToggleFood({ foodId, enabled }) {
-  return Put({ path: `api/v2/restaurant/disable/food/${foodId}`, v2: true }, { enabled })
 }
 
 export function GetFoodoptions({ foodId }) {
@@ -186,10 +194,6 @@ export function RmTable({ id }) {
 
 export function RmWb({ id }) {
   return Delete({ path: `api/v2/restaurant/waiterboard`, v2: true }, { id })
-}
-
-export function UpdateNutrition({ foodId, calories, protein, fat, carb }) {
-  return Post({ path: `api/v2/restaurant/food/${foodId}/nutrition`, v2: true }, { calories, protein, fat, carb })
 }
 
 export function GetAddons() {

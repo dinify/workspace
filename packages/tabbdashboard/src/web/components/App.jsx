@@ -44,7 +44,7 @@ const App = ({
   }: AppProps) =>
   (<Router>
     <Content>
-      {appLoading && <AppLoader>App is loading...</AppLoader>}
+      {appLoading && <AppLoader>Dashboard is loading...</AppLoader>}
       {!appLoading &&
         <Switch>
           <Route path="/login" component={Login} />

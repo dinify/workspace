@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import R from 'ramda';
 import {
   connect
 } from 'react-redux';
@@ -37,12 +38,6 @@ import {
   deleteTableInitAction,
   deleteWBInitAction
 } from '../../../ducks/restaurant'
-
-type MainProps = {
-  lastError: Error,
-  loggedRestaurant: ? Object,
-  addTablet: Any,
-};
 
 const Tablet = styled.div `
   position: relative;
@@ -106,7 +101,7 @@ const TabletCred = styled.div `
   }
 `
 
-const Main = ({
+const Waiterboards = ({
     lastError,
     loggedRestaurant,
     createWaiterboard,
@@ -115,115 +110,19 @@ const Main = ({
     addTableToWB,
     deleteTable,
     deleteWB
-  }: MainProps) =>
+  }) =>
   (<div>
-  <div style={{marginLeft: '10px'}}>
-    {addTabletDone === 'adding' ? 'Adding...' : ''}
-    {addTabletDone === 'done' ? 'Tablet added' : ''}
-  </div>
-  {loggedRestaurant.tablets.map((wb,i) =>
-    <Tablet key={i}>
-      <DeleteWB onClick={() => deleteWB({ id: wb.id })}>
-        <i className="ion-ios-close-outline" />
-      </DeleteWB>
-      <div style={{marginBottom: '10px'}}>{wb.name}</div>
-      <TabletCred>
-        <i className="ion-ios-person" />
-        <span>{wb.login_id}</span>
-      </TabletCred>
-      <TabletCred>
-        <i className="ion-key" />
-        <span>********</span>
-      </TabletCred>
-    </Tablet>
-  )}
-  <FormBox>
-    <FormBoxHead>Register New Tablet</FormBoxHead>
-    <FormBoxBody>
-      <Form
-        onSubmit={(wb) => {
-          console.log('Success!', wb);
-          createWaiterboard(wb)
-        }}
-      >
-        {({submitForm}) => {
-          return (
-            <form onSubmit={submitForm}>
-              <Text field='name' placeholder='Waiterboard Name' />
-              <Text field='login' placeholder='Waiterboard Login' />
-              <Text field='password' placeholder='Waiterboard Password' />
-              <FormBoxSubmit>CREATE</FormBoxSubmit>
-            </form>
-          )
-        }}
-      </Form>
-    </FormBoxBody>
-  </FormBox>
-  {loggedRestaurant.tablets.sort((a,b) => a.id - b.id).map((tablet,i) =>
-    <div>
-      <Label>
-        {tablet.name}
-      </Label>
-      {tablet.tables && tablet.tables.length > 0 ?
-        <span>
-          {tablet.tables.sort((a,b) => a.position - b.position).map((table,j) =>
-            table.position > 0 ?
-              <Desk key={j}>
-                <DeleteDesk onClick={() => deleteTable({ id: table.id })}>
-                  <i className="ion-ios-close-outline" />
-                </DeleteDesk>
-                <Link to={`/qr/${numeral(loggedRestaurant.id).format('0000')}-${table.position < 10 ? '0'+table.position : table.position}`}>
-                  <div style={{marginBottom: '10px'}}>Table {table.position}</div>
-                </Link>
-                <QRCode value={`${numeral(loggedRestaurant.id).format('0000')}-${table.position < 10 ? '0'+table.position : table.position}`} />
-                <div>{`${numeral(loggedRestaurant.id).format('0000')}-${table.position < 10 ? '0'+table.position : table.position}`}</div>
-              </Desk>
-            : ''
-          )}
-          <FormBox style={{margin: '20px', width: '200px'}}>
-            <FormBoxHead>Add table</FormBoxHead>
-            <FormBoxBody>
-              <Form
-                onSubmit={({ position }) => {
-                  addTableToWB({ position, waiterboardId: tablet.id })
-                }}
-              >
-                {({submitForm}) => {
-                  return (
-                    <form onSubmit={submitForm}>
-                      <Text type="number" field='position' placeholder='Position' />
-                      <FormBoxSubmit>ADD</FormBoxSubmit>
-                    </form>
-                  )
-                }}
-              </Form>
-            </FormBoxBody>
-          </FormBox>
-        </span>
-      :
-      <FormBox>
-        <FormBoxHead>Add tables in range</FormBoxHead>
-        <FormBoxBody half>
-          <Form
-            onSubmit={({from, to}) => {
-              addTablesToWB({from, to, waiterboardId: tablet.id})
-            }}
-          >
-            {({submitForm}) => {
-              return (
-                <form onSubmit={submitForm}>
-                  <Text type="number" field='from' placeholder='From' />
-                  <span> - </span>
-                  <Text type="number" field='to' placeholder='To' />
-                  <FormBoxSubmit>ADD</FormBoxSubmit>
-                </form>
-              )
-            }}
-          </Form>
-        </FormBoxBody>
-      </FormBox>
-      }
-      <HorizontalLine dark />
+  Waiterboards
+  {R.toPairs(loggedRestaurant.waiterboards).map((wb) =>
+    <div key={wb[0]}>
+      <h2>{wb[1].name}</h2>
+      {R.toPairs(wb[1].tables).map((tableKV) =>
+        <div key={tableKV[0]}>
+          <div>{tableKV[1].code}</div>
+          {tableKV[0]}
+          <button onClick={() => deleteTable()}>Delete</button>
+        </div>
+      )}
     </div>
   )}
 </div>);
@@ -239,4 +138,4 @@ export default connect(
     deleteTable: deleteTableInitAction,
     deleteWB: deleteWBInitAction,
   },
-)(Main);
+)(Waiterboards);

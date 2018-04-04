@@ -347,7 +347,7 @@ class Menucontrol extends React.Component {
     }
     let selectedFood = null;
     if (selectedCategory) {
-      selectedFood = R.find(R.propEq('id', selectedFoodId))(selectedCategory.items);
+      selectedFood = selectedCategory.items[selectedFoodId];
       if (!foodOptions[selectedFoodId] && selectedFoodId && false) getFoodOptions({
         foodId: selectedFoodId
       })
@@ -418,7 +418,10 @@ class Menucontrol extends React.Component {
           </CategoriesList>
 
           {selectedCategory ? <FoodList>
-            {selectedCategory.items.sort((a,b) => a.id - b.id).map((food, i) =>
+            {R.toPairs(selectedCategory.items)
+              .map((pair) => ({ id: pair[0], ...pair[1] }))
+              .sort((a,b) => a.id - b.id)
+              .map((food, i) =>
               <FoodItem key={food.id} selected={food.id === selectedFoodId} disabled={!food.published} onClick={() => selectFood({foodId: food.id})}>
                 <span>{food.name}</span>
                 <ToggleContainer food>
@@ -467,7 +470,7 @@ class Menucontrol extends React.Component {
                 <FormBoxBody>
                   <Form
                     onSubmit={(fields) => {
-                      fields.foodId = selectedFood.id
+                      fields.foodId = selectedFoodId
                       console.log(fields);
                       updateFood(fields)
                     }}
@@ -511,10 +514,10 @@ class Menucontrol extends React.Component {
                     updateFoodNutrition({ foodId: selectedFoodId, ...nutrition })
                   }}
                   defaultValues={{
-                    calories: R.prop('content', {}),
-                    protein: R.prop('content', {}),
-                    fat: R.prop('content', {}),
-                    carb: R.prop('content', {}),
+                    calories: selectedFood.calories || 0,
+                    protein: 0,
+                    fat: 0,
+                    carb: 0,
                   }}
                 >
                   {({submitForm}) => {
