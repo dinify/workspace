@@ -28,10 +28,6 @@ export function CreateRestaurant({ name, subdomain }) {
   })
 }
 
-export function Logout() {
-  return Delete({ path: 'restaurant/auth/restauration', v3: true })
-}
-
 export function GetRestaurant({ restaurantId }) {
   return Get({ path: `restaurant/${restaurantId}` })
 }
@@ -144,6 +140,21 @@ export function ToggleFood({ foodId, enabled }) {
   return Post({ path: `menu/item/${foodId}`, v3: true }, { published: enabled })
 }
 
+export function RmTable({ id }) {
+  return Post({ path: `table/${id}/delete`, v3: true })
+}
+
+export function GetAddons() {
+  return Get({ path: `restaurant/my/addons`, v3: true })
+}
+
+export function AddAddon({ name, price }) {
+  return Post({ path: `api/v2/restaurant/addon`, v2: true }, { name, price })
+}
+
+export function AddAddonprice({ addonId, price }) {
+  return Post({ path: `api/v2/restaurant/addon/${addonId}`, v2: true }, { price })
+}
 
 // API V2
 export function UploadMainImage({ file, restaurantId }) {
@@ -170,9 +181,6 @@ export function RmFoodingredient({ foodId, ingredientName }) {
   return Delete({ path: `api/v2/restaurant/food/${foodId}/ingredient`, v2: true }, { ingredientName })
 }
 
-export function GetFoodaddons({ foodId }) {
-  return Get({ path: `api/v2/restaurant/food/${foodId}/addons`, v2: true })
-}
 export function AddFoodaddon({ foodId, addonId }) {
   return Post({ path: `api/v2/restaurant/food/${foodId}/addon`, v2: true }, { addonId })
 }
@@ -188,24 +196,8 @@ export function AddTable({ position, waiterboardId }) {
   return Post({ path: `api/v2/restaurant/waiterboard/table`, v2: true }, { position, waiterboardId })
 }
 
-export function RmTable({ id }) {
-  return Delete({ path: `api/v2/restaurant/waiterboard/table`, v2: true }, { id })
-}
-
 export function RmWb({ id }) {
   return Delete({ path: `api/v2/restaurant/waiterboard`, v2: true }, { id })
-}
-
-export function GetAddons() {
-  return Get({ path: `api/v2/restaurant/addons`, v2: true })
-}
-
-export function AddAddon({ name, price }) {
-  return Post({ path: `api/v2/restaurant/addon`, v2: true }, { name, price })
-}
-
-export function AddAddonprice({ addonId, price }) {
-  return Post({ path: `api/v2/restaurant/addon/${addonId}`, v2: true }, { price })
 }
 
 //export function RemoveTablet({ restaurantId, login_id }) {

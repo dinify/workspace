@@ -1,28 +1,16 @@
 // @flow
 import React from 'react';
 import R from 'ramda';
-import {
-  connect
-} from 'react-redux';
+import * as FN from '../../../lib/FN';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
-import type {
-  Error
-} from '../../../flow';
-import {
-  Link
-} from 'react-router-dom';
-import {
-  Form,
-  Text
-} from 'react-form';
+import { Link } from 'react-router-dom';
+import { Form, Text } from 'react-form';
 import QRCode from 'qrcode.react'
 import SwitchButton from 'react-switch-button';
 import 'react-switch-button/dist/react-switch-button.css';
-import {
-  HorizontalLine
-} from '../styled/HorizontalLine'
+import { HorizontalLine } from '../styled/HorizontalLine'
 import numeral from 'numeral'
-
 import {
   FormBox,
   FormBoxHead,
@@ -30,7 +18,6 @@ import {
   FormBoxSubmit,
   Label
 } from '../styled/FormBox';
-
 import {
   createWaiterboardInitAction,
   addTablesToWBInitAction,
@@ -101,31 +88,118 @@ const TabletCred = styled.div `
   }
 `
 
-const Waiterboards = ({
-    lastError,
-    loggedRestaurant,
-    createWaiterboard,
-    addTabletDone,
-    addTablesToWB,
-    addTableToWB,
-    deleteTable,
-    deleteWB
-  }) =>
-  (<div>
-  Waiterboards
-  {R.toPairs(loggedRestaurant.waiterboards).map((wb) =>
-    <div key={wb[0]}>
-      <h2>{wb[1].name}</h2>
-      {R.toPairs(wb[1].tables).map((tableKV) =>
-        <div key={tableKV[0]}>
-          <div>{tableKV[1].code}</div>
-          {tableKV[0]}
-          <button onClick={() => deleteTable()}>Delete</button>
-        </div>
-      )}
-    </div>
-  )}
-</div>);
+const WB = styled.div`
+  background: white;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  padding: 10px;
+  margin-bottom: 10px;
+  a {
+    color: black;
+  }
+  &.button {
+    background: #2C9DF1;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+`
+
+const Table = styled.div`
+  display: inline-block;
+  background: rgb(28,37,49);
+  color: white;
+  font-size: 12px;
+  padding: 10px;
+  width: ${p => p.fixedWidth ? '250px' : '100%'};
+`
+
+const TableTag = styled.table`
+  width: 100%;
+  td {
+    padding: 5px;
+  }
+`
+
+const Identity = (val, fn) => fn(val)
+
+class Waiterboards extends React.Component {
+  render() {
+    let {
+      loggedRestaurant,
+      createWaiterboard,
+      addTabletDone,
+      addTablesToWB,
+      addTableToWB,
+      deleteTable,
+      deleteWB
+    } = this.props
+
+    const waiterboards = FN.MapToList(loggedRestaurant.waiterboards).map((wb) => {
+      const tables = FN.MapToList(wb.tables)
+      const xs = R.pluck('x')(tables) // columns
+      const ys = R.pluck('y')(tables) // rows
+      wb.maxX = R.apply(Math.max, xs)
+      wb.maxY = R.apply(Math.max, ys)
+      wb.tables = tables
+      const tablesMatrix = R.range(0, wb.maxY+1).map(() => R.range(0, wb.maxX+1).map(() => null)) // tablesMatrix[y][x]
+      const tablesExtra = []
+      tables.map((table) => {
+        if (Number.isInteger(table.x) && Number.isInteger(table.y)) tablesMatrix[table.y][table.x] = table
+        else tablesExtra.push(table)
+      })
+      console.log('ext');
+      console.log(tablesExtra);
+      return {...wb, tablesMatrix, tablesExtra}
+    })
+    console.log(waiterboards);
+
+    return (
+      <div>
+        {waiterboards.map((wb) =>
+          <WB key={wb.id}>
+            <Link to={`https://waiterboard.tabb.global/board/${wb.id}`} target="_blank">
+              <h2>{wb.name}</h2>
+            </Link>
+            <TableTag>
+              <tbody>
+                {wb.tablesMatrix.map((row, i) =>
+                  <tr key={i}>
+                    {row.map((table, j) => table ?
+                      <td key={table.id}>
+                        <Table>
+                          <div>Code {table.code}</div>
+                          <div>X {table.x}</div>
+                          <div>Y {table.y}</div>
+                          <div>Capacity {table.capacity}</div>
+                          <button onClick={() => deleteTable({id: table.id})}>Delete</button>
+                        </Table>
+                      </td>
+                    : <td key={j*i}/>)}
+                  </tr>
+                )}
+              </tbody>
+            </TableTag>
+            <div>Unplaced</div>
+            <div>
+              {wb.tablesExtra.map((table) =>
+                <Table fixedWidth>
+                  <div>{table.code}</div>
+                  <div>X{table.x}</div>
+                  <div>Y{table.y}</div>
+                  <button onClick={() => deleteTable({id: table.id})}>Delete</button>
+                </Table>
+              )}
+            </div>
+          </WB>
+        )}
+        <WB className="button">
+          Add waiterboard
+        </WB>
+      </div>
+    )
+  }
+}
 
 export default connect(
   state => ({

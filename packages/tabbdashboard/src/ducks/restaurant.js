@@ -9,8 +9,7 @@ export const BOOTSTRAP = 'universalreact/restaurant/BOOTSTRAP'
 export const LOGIN_INIT = 'universalreact/restaurant/LOGIN_INIT'
 export const LOGIN_DONE = 'universalreact/restaurant/LOGIN_DONE'
 export const LOGIN_FAIL = 'universalreact/restaurant/LOGIN_FAIL'
-export const LOGOUT_INIT = 'universalreact/restaurant/LOGOUT_INIT'
-export const LOGOUT_DONE = 'universalreact/restaurant/LOGOUT_DONE'
+export const LOGOUT = 'universalreact/restaurant/LOGOUT'
 export const SIGNUP_INIT = 'universalreact/restaurant/SIGNUP_INIT'
 export const SIGNUP_DONE = 'universalreact/restaurant/SIGNUP_DONE'
 export const SIGNUP_FAIL = 'universalreact/restaurant/SIGNUP_FAIL'
@@ -116,7 +115,7 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assocPath(['foodAddons', action.payload.foodId], action.payload.response)(state)
     }
     case 'API_GET_ADDONS_DONE': {
-      return R.assoc('addons', action.payload.response)(state)
+      return R.assoc('addons', action.payload.response.data)(state)
     }
     default:
       return state
@@ -142,11 +141,10 @@ export const updateLocationInitAction = (payload) => ({ type: UPDATE_LOCATION_IN
 export const updateBankInitAction = (payload) => ({ type: UPDATE_BANK_INIT, payload })
 export const updateHoursInitAction = (payload) => ({ type: UPDATE_HOURS_INIT, payload })
 export const loginInitAction = (payload) => ({ type: LOGIN_INIT, payload })
-export const logoutInitAction = () => ({ type: LOGOUT_INIT })
-export const logoutDoneAction = (res: object) => {
+export const logoutInitAction = () => {
   setCookie('access_token', '', 1)
   window.location.replace('/login')
-  return { type: LOGOUT_DONE, payload: res }
+  return { type: 'LOGOUT_DONE' }
 }
 export const loggedFetchedAction = (payload) => ({ type: LOGGED_FETCHED_DONE, payload })
 export const signupInitAction = (payload) => ({ type: SIGNUP_INIT, payload })
@@ -287,15 +285,6 @@ const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
       return Observable.of(appBootstrap())
     })
   })
-
-const logoutEpic = (action$: Observable) =>
-  action$
-  .ofType(LOGOUT_INIT)
-  .switchMap(() =>
-    Observable.fromPromise(API.Logout())
-    .map(logoutDoneAction)
-    .catch(error => Observable.of(logoutDoneAction()))
-  )
 
 export const signupDoneAction = (payload: object) => {
   console.log(payload)
@@ -566,7 +555,6 @@ export const epics = [
   loginEpic,
   registrationEpic,
   createRestaurantEpic,
-  logoutEpic,
   updateEpic,
   updateCategoryEpic,
   updateContactEpic,

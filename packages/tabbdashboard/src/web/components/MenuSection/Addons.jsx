@@ -285,7 +285,7 @@ class Menucontrol extends React.Component {
                       updateAddonPrice({ addonId: addon.id, price })
                     }}
                     defaultValues={{
-                      price: addon.price
+                      price: addon.price.amount
                     }}
                   >
                     {({submitForm}) => {
@@ -296,7 +296,7 @@ class Menucontrol extends React.Component {
                             placeholder='Price'
                             type='number'
                           />
-                          <span> KD</span>
+                          <span> KWD</span>
                         </form>
                       )
                     }}
