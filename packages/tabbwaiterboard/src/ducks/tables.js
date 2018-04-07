@@ -18,12 +18,12 @@ const initialState = {
 export default function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
 
-    case 'GET_TABLES_DONE': {
-      const tablesObject = {}
-      action.payload.forEach((table) => {
-        tablesObject[table.id] = table
-      })
-      return R.assoc('all', tablesObject)(state);
+    case 'LOGGED_FETCHED_DONE': {
+      const restaurant = action.payload
+      const waiterboards = restaurant.waiterboards
+      const selectedWBid = R.keys(waiterboards)[0]
+      const wb = waiterboards[selectedWBid]
+      return R.assoc('all', wb.tables)(state);
     }
 
     default:

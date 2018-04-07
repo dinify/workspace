@@ -13,10 +13,6 @@ export function GetLoggedRestaurant() {
   return Get({ path: `restaurant/my/all`, v3: true })
 }
 
-export function GetLoggedWaiterboard() {
-  return Get({ path: `api/v2/waiterboard/logged` })
-}
-
 export function GetTables({waiterboardId}) {
   return Get({ v3: true, path: `waiterboard/${waiterboardId}/tables` })
 }

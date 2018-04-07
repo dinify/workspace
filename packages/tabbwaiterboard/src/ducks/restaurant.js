@@ -107,7 +107,7 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assoc('order_ahead_enabled', action.payload.order_ahead_enabled)(state);
     case 'SET_OHENABLED_DONE':
       return R.assoc('order_ahead_enabled', action.payload.enabled)(state);
-    case LOGGED_FETCHED_DONE:
+    case 'LOGGED_FETCHED_DONE':
       return R.assoc('loggedUser', action.payload)(state);
     case 'GET_BOOKINGS_DONE': {
       return R.assoc('events', makeUpdatedEvents(action, state, 'BOOKING'))(state);
@@ -173,7 +173,7 @@ export function logoutDoneAction(res: object) {
 
 export function loggedFetchedAction(res: object) {
   //console.log(res, "dddd");
-  return { type: LOGGED_FETCHED_DONE, payload: res };
+  return { type: 'LOGGED_FETCHED_DONE', payload: res };
 }
 
 export function loginFailAction(err: Error) {

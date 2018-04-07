@@ -207,9 +207,8 @@ const Board = ({
         </Frame>
         <Frame n={1}>
           <Container>
-            {R.values(tables).map((table, i) => table.position > 0 ?
+            {R.values(tables).map((table, i) =>
               <Table openModal={openModal} tableId={i} table={table} key={i} />
-              : ''
             )}
           </Container>
         </Frame>

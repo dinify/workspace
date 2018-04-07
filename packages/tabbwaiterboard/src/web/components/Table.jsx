@@ -166,7 +166,7 @@ class Table extends React.Component {
     	<TableBox>
         <Thumbnail color={tableStatus === 's1' ? 'black' : 'white'} bg={presentGuests && presentGuests.length > 0 ? colorsByStages[tableStatus] : ''}>
           <Id onClick={() => toggleModal({ open: true, type: 'ListOfBills', tableId: table.id })}>
-            {table.position}
+            {table.code}
           </Id>
           <ExitButton onClick={() => clearTable({ table })}>
             <ExitIcon className="ion-android-exit" />

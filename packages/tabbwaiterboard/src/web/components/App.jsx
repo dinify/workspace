@@ -32,7 +32,7 @@ type AppProps = {
 const App = ({ appLoading }: AppProps) =>
   (<Router>
     <Content>
-      {appLoading && <AppLoader>App is loading...</AppLoader>}
+      {appLoading && <AppLoader>Waiterboard is loading...</AppLoader>}
       {!appLoading &&
         <div>
           <Route exact path="/" component={Login} />
