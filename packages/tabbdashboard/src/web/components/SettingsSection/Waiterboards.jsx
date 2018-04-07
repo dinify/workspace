@@ -121,7 +121,6 @@ const TableTag = styled.table`
   }
 `
 
-const Identity = (val, fn) => fn(val)
 
 class Waiterboards extends React.Component {
   render() {

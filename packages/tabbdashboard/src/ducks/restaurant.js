@@ -275,10 +275,13 @@ const uploadEpic = (action$: Observable, { getState }: EpicDependencies) =>
     .catch(error => Observable.of(console.log(error)))
   )
 
-const bootstrapEpic = (action$: Observable, { getState }: EpicDependencies) =>
+const bootstrapEpic = (action$: Observable) =>
   action$.ofType('persist/REHYDRATE').mergeMap(() => {
     return Observable.fromPromise(API.GetLoggedRestaurant())
-    .mergeMap((loggedUser) => Observable.of(loggedFetchedAction(loggedUser), appBootstrap()))
+    .mergeMap((loggedUser) => {
+      console.log(loggedUser,'x')
+      return Observable.of(loggedFetchedAction(loggedUser), appBootstrap())
+    })
     .catch(error => {
       console.log(error)
       if (window.location.pathname !== '/login' && window.location.pathname !== '/signup') window.location.replace("/login")

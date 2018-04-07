@@ -9,7 +9,7 @@ import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label }
 import { Header } from '../styled/Header'
 import { lighten } from 'polished'
 import SwitchButton from 'react-switch-button'
-
+import * as FN from '../../../lib/FN'
 import { Form, Text, Select, Textarea } from 'react-form'
 
 import {
@@ -18,7 +18,7 @@ import {
   addFoodInitAction, getFoodOptionsInit, rmFoodOptionInit, addFoodOptionInit,
   getFoodIngredientsInit, rmFoodIngredientInit, addFoodIngredientInit,
   getFoodAddonsInit, rmFoodAddonInit, updateFoodNutritionInit,
-  addFoodAddonInit, addAddonInit
+  addFoodAddonInit, addAddonInit, getAddonsInit
 } from '../../../ducks/restaurant'
 
 const Table = styled.table `
@@ -289,7 +289,7 @@ const ListOfCustomizations = ({
 				{list.map((customization, i) =>
           <CustomItem key={i} bgIndex={i}>
             <span style={{whiteSpace: 'nowrap'}}>
-              {customization.name} {customization.price ? `${customization.price}KD` : ''}
+              {customization.name} {customization.price ? `${customization.price.amount}KD` : ''}
             </span>
             <button onClick={() => rmButtonFunction(customization)}>
               <i className="ion-close" />
@@ -310,7 +310,7 @@ class Menucontrol extends React.Component {
       getAddons
     } = this.props;
     getCategories();
-    //getAddons();
+    getAddons();
   }
   render() {
     const {
@@ -341,23 +341,12 @@ class Menucontrol extends React.Component {
       addons
     } = this.props;
 
-    let selectedCategory = null;
+    let selectedCategory = null
     if (selectedCategoryId) {
-      selectedCategory = R.find(R.propEq('id', selectedCategoryId))(categories);
+      selectedCategory = R.find(R.propEq('id', selectedCategoryId))(categories)
     }
-    let selectedFood = null;
-    if (selectedCategory) {
-      selectedFood = selectedCategory.items[selectedFoodId];
-      if (!foodOptions[selectedFoodId] && selectedFoodId && false) getFoodOptions({
-        foodId: selectedFoodId
-      })
-      if (!foodIngredients[selectedFoodId] && selectedFoodId && false) getFoodIngredients({
-        foodId: selectedFoodId
-      })
-      if (!foodAddons[selectedFoodId] && selectedFoodId && false) getFoodAddons({
-        foodId: selectedFoodId
-      })
-    }
+    let selectedFood = null
+    if (selectedCategory) selectedFood = selectedCategory.items[selectedFoodId]
 
     const addonsForSelect = addons.map((addon) => {
       return {
@@ -466,42 +455,44 @@ class Menucontrol extends React.Component {
 
           <MealDetail>
             {selectedFood ? <FormBox style={{width: '230px'}}>
-              <FoodImage imageURL={`https://s3.eu-central-1.amazonaws.com/tabb/tabb-food-image/FOOD_${selectedFood.id}`} />
-                <FormBoxBody>
-                  <Form
-                    onSubmit={(fields) => {
-                      fields.foodId = selectedFoodId
-                      console.log(fields);
-                      updateFood(fields)
-                    }}
-                    defaultValues={{
-                      name: selectedFood.name,
-                      description: selectedFood.description || '',
-                      price: selectedFood.price.amount,
-                    }}
-                    validate={({ name, description, price }) => {
-                      return {
-                        name: !name ? 'Name is required' : undefined,
-                        description: !description ? 'Description is required' : undefined,
-                        price: !price ? 'Price is required' : undefined,
-                      }
-                    }}
-                  >
-                    {({submitForm}) => {
-                      return (
-                        <form onSubmit={submitForm}>
-                          <Label>Name</Label>
-                          <Text field='name' placeholder='Name of food' />
-                          <Label>Description</Label>
-                          <Textarea style={{height: '100px'}} field='description' placeholder='Description' />
-                          <Label>Price</Label>
-                          <Text type="number" field='price' placeholder='Price' />
-                          <FormBoxSubmit primary>SAVE</FormBoxSubmit>
-                        </form>
-                      )
-                    }}
-                  </Form>
-                </FormBoxBody>
+              {selectedFood.images ? FN.Identity(FN.MapToList(selectedFood.images), (images) =>
+                images.length > 0 ? <FoodImage imageURL={images[0].url} /> : ''
+              ): ''}
+              <FormBoxBody>
+                <Form
+                  onSubmit={(fields) => {
+                    fields.foodId = selectedFoodId
+                    console.log(fields);
+                    updateFood(fields)
+                  }}
+                  defaultValues={{
+                    name: selectedFood.name,
+                    description: selectedFood.description || '',
+                    price: selectedFood.price.amount,
+                  }}
+                  validate={({ name, description, price }) => {
+                    return {
+                      name: !name ? 'Name is required' : undefined,
+                      description: !description ? 'Description is required' : undefined,
+                      price: !price ? 'Price is required' : undefined,
+                    }
+                  }}
+                >
+                  {({submitForm}) => {
+                    return (
+                      <form onSubmit={submitForm}>
+                        <Label>Name</Label>
+                        <Text field='name' placeholder='Name of food' />
+                        <Label>Description</Label>
+                        <Textarea style={{height: '100px'}} field='description' placeholder='Description' />
+                        <Label>Price</Label>
+                        <Text type="number" field='price' placeholder='Price' />
+                        <FormBoxSubmit primary>SAVE</FormBoxSubmit>
+                      </form>
+                    )
+                  }}
+                </Form>
+              </FormBoxBody>
             </FormBox> : ''}
           </MealDetail>
 
@@ -550,9 +541,9 @@ class Menucontrol extends React.Component {
                 </Form>
 
                 <Label>Options</Label>
-                {foodOptions[selectedFoodId] ?
+                {selectedFood.options ?
                   <ListOfCustomizations
-                    list={foodOptions[selectedFoodId]}
+                    list={FN.MapToList(selectedFood.options)}
                     rmButtonFunction={(option) => rmFoodOption({foodId: selectedFoodId, optionName: option.name})}
                   />
                 : 'No options'}
@@ -577,9 +568,9 @@ class Menucontrol extends React.Component {
                 </Form>
 
                 <Label>Ingredients</Label>
-                {foodIngredients[selectedFoodId] ?
+                {selectedFood.ingredients ?
                   <ListOfCustomizations
-                    list={foodIngredients[selectedFoodId]}
+                    list={FN.MapToList(selectedFood.ingredients)}
                     rmButtonFunction={(ingredient) => rmFoodIngredient({foodId: selectedFoodId, ingredientName: ingredient.name})}
                   />
                 : 'No ingredients'}
@@ -604,9 +595,9 @@ class Menucontrol extends React.Component {
                 </Form>
 
                 <Label>Addons</Label>
-                {foodAddons[selectedFoodId] ?
+                {selectedFood.addons ?
                   <ListOfCustomizations
-                    list={foodAddons[selectedFoodId].map((o) => ({...o, ...o.AddonObject}))}
+                    list={FN.MapToList(selectedFood.addons)}
                     rmButtonFunction={(addon) => rmFoodAddon({foodId: selectedFoodId, addonId: addon.id})}
                   />
                 : 'No addon'}
@@ -669,6 +660,6 @@ export default connect(
     rmFoodAddon: rmFoodAddonInit,
     addFoodAddon: addFoodAddonInit,
     updateFoodNutrition: updateFoodNutritionInit,
-    getAddons: addAddonInit
+    getAddons: getAddonsInit
   },
 )(Menucontrol);

@@ -28,10 +28,6 @@ export function CreateRestaurant({ name, subdomain }) {
   })
 }
 
-export function GetRestaurant({ restaurantId }) {
-  return Get({ path: `restaurant/${restaurantId}` })
-}
-
 export function GetLoggedRestaurant() {
   return Get({ path: `restaurant/my/all`, v3: true })
 }

@@ -97,19 +97,20 @@ const MainContrainer = styled.div `
 `
 
 const Main = ({
-    lastError,
-    loggedRestaurant,
-    update,
-    updateCategory,
-    updateSocial,
-    updateContact,
-    updateLocation,
-    updateBank,
-    updateHours,
-    updateDone,
-    uploadMainImage
-  }) =>
-  (<MainContrainer>
+  lastError,
+  loggedRestaurant,
+  update,
+  updateCategory,
+  updateSocial,
+  updateContact,
+  updateLocation,
+  updateBank,
+  updateHours,
+  updateDone,
+  uploadMainImage
+}) => {
+  if (!loggedRestaurant) return (<div />)
+  return (<MainContrainer>
 
     <div style={{marginLeft: '10px'}}>
       {updateDone === 'updating' ? 'Updating...' : ''}
@@ -292,15 +293,11 @@ const Main = ({
           return (
             <form onSubmit={submitForm}>
               <FieldWrapper>
-                <Link to={`https://${loggedRestaurant.social.facebook}`} target="_blank">
-                  <i className="ion-social-facebook" />
-                </Link>
+                <i className="ion-social-facebook" />
                 <Text field='facebook' placeholder='www.facebook.com/myRestaurant' />
               </FieldWrapper>
               <FieldWrapper>
-                <Link to={`https://${loggedRestaurant.social.instagram}`} target="_blank">
-                  <i className="ion-social-instagram-outline" />
-                </Link>
+                <i className="ion-social-instagram-outline" />
                 <Text field='instagram' placeholder='www.instagram.com/myRestaurant' />
               </FieldWrapper>
               <FormBoxSubmit>SAVE</FormBoxSubmit>
@@ -381,6 +378,7 @@ const Main = ({
 
 
 </MainContrainer>);
+}
 
 export default connect(
   state => ({

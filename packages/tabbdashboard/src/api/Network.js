@@ -35,13 +35,15 @@ export function Request(url, options = {}, noToken) {
         //console.log(res.status);
         //if (res.status === 401 && window.location.pathname !== '/') window.location.replace('/')
         try {
-          return { status: res.status, json: JSON.parse(res.text) }
+          const txt = res.text.replace('/**/','')
+          return { status: res.status, json: JSON.parse(txt) }
         } catch (err) {
+          console.log(err, 'NetworkERROR');
           return { status: res.status, json: null }
         }
       })
       .then(({ status, json }) => {
-        if (status >= 200 && status < 300) resolve(json)
+        if (status >= 200 && status < 300 && json) resolve(json)
         else {
           if (json) {
             reject(json.error)
