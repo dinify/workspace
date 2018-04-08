@@ -22,6 +22,8 @@ import Event from './Events/Event'
 import { toggleFrames, toggleModal } from '../../ducks/ui'
 import { setOHEnabled, logoutInitAction } from '../../ducks/restaurant'
 
+import * as FN from '../../lib/FN'
+
 const OneBoard = styled.div`
   position: fixed;
   top: 50px;
@@ -122,13 +124,14 @@ const Board = ({
   modalPayload,
   toggleFrames,
   toggleModal,
-  waiterboardName,
   events,
   guestsCount,
   setOHEnabled,
   order_ahead_enabled,
   bookings,
-  logout
+  logout,
+  selectedWBId,
+  loggedUser
 }: BoardProps) => {
 
   const frames = ['actions','tables']
@@ -143,6 +146,12 @@ const Board = ({
 
   const swiped = (i) => {
     toggleFrames(i)
+  }
+
+  let waiterboardName = null
+
+  if (loggedUser.waiterboards && loggedUser.waiterboards[selectedWBId]) {
+    waiterboardName = loggedUser.waiterboards[selectedWBId].name    
   }
 
   return (<div>
@@ -207,8 +216,8 @@ const Board = ({
         </Frame>
         <Frame n={1}>
           <Container>
-            {R.values(tables).map((table, i) =>
-              <Table openModal={openModal} tableId={i} table={table} key={i} />
+            {FN.MapToList(tables).map((table, i) =>
+              <Table openModal={openModal} tableId={i} table={table} key={i} index={i+1} />
             )}
           </Container>
         </Frame>
@@ -236,6 +245,8 @@ export default connect(
     sales: state.restaurant.sales,
     order_ahead_enabled: state.restaurant.order_ahead_enabled,
     bookings: state.restaurant.acceptedBookings,
+    selectedWBId: state.restaurant.selectedWBId,
+    loggedUser: state.restaurant.loggedUser,
     ...state.ui, // frameIndex, modalOpen, modalUserId
   }),
   {

@@ -38,6 +38,7 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 const initialState = {
+  selectedWBId: null,
   searchLoading: false,
   appRun: false,
   lastError: null,
@@ -101,6 +102,8 @@ export default function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
     case LOGIN_DONE:
       return state;
+    case 'SET_WBID':
+      return R.assoc('selectedWBId', action.payload.id)(state);
     case BOOTSTRAP:
       return R.assoc('appRun', true)(state);
     case 'GET_OHENABLED_DONE':
@@ -213,6 +216,16 @@ export const getBillsOfUser = (payload) => ({ type: 'GET_BILLSOFUSER_INIT', payl
 export const getOrdersOfUser = (payload) => ({ type: 'GET_ORDERSOFUSER_INIT', payload })
 
 
+export const setWBidAction = (id) => {
+  const path = window.location.pathname
+  if (path.includes('/board/') && path.length > 20) id = path.replace('/board/','').replace('/','')
+  return {
+    type: 'SET_WBID',
+    payload: { id }
+  }
+}
+
+
 
 // Epics
 const bootstrapEpic = (action$: Observable, { getState, dispatch }: EpicDependencies) =>
@@ -222,7 +235,8 @@ const bootstrapEpic = (action$: Observable, { getState, dispatch }: EpicDependen
         //API.GetOrderAheadEnabled({ restaurantId: loggedUser.id }).then((payload) => {
         //  dispatch({ type: 'GET_OHENABLED_DONE', payload });
         //})
-        return Observable.of(loggedFetchedAction(loggedUser), appBootstrap()) // getTablesInit(), guestsPollingInit()
+
+        return Observable.of(setWBidAction(), loggedFetchedAction(loggedUser), appBootstrap(), guestsPollingInit()) // getTablesInit()
       })
       .catch(error => {
         console.log(error);
@@ -257,43 +271,44 @@ const guestsPollingEpic = (action$: Observable, { dispatch }) =>
     .switchMap(() => {
       const loadInitData = () => {
 
-        API.GetBookings().then((bookings) => {
+        API.GetBookings().then((res) => {
+          const bookings = res.data
+          const accepted = R.filter((o) => o.status === "CONFIRMED", bookings)
+          const pending = R.filter((o) => o.status === "PENDING", bookings)
           isSomethingNew(bookings, 'bookings')
           dispatch({
             type: 'GET_BOOKINGS_DONE',
-            payload: bookings
+            payload: pending
           });
-        })
-        API.GetBookingsAccepted().then((bookings) => {
           dispatch({
             type: 'GET_ACCEPTED_BOOKING_DONE',
-            payload: bookings
+            payload: accepted
           })
         })
-        API.GetServices().then((payload) => {
-          isSomethingNew(payload, 'services')
-          dispatch({ type: 'GET_SERVICES_DONE', payload });
-        })
-        API.GetOrders().then((response) => {
-          isSomethingNew(response.orders, 'orders')
-          isSomethingNew(response.ordersAhead, 'ordersAhead')
-          dispatch({ type: 'GET_ORDERS_DONE', payload: response.orders });
-          dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: response.ordersAhead });
-        })
+        //API.GetServices().then((payload) => {
+        //  isSomethingNew(payload, 'services')
+        //  dispatch({ type: 'GET_SERVICES_DONE', payload });
+        //})
+        //API.GetOrders().then((response) => {
+        //  isSomethingNew(response.orders, 'orders')
+        //  isSomethingNew(response.ordersAhead, 'ordersAhead')
+        //  dispatch({ type: 'GET_ORDERS_DONE', payload: response.orders });
+        //  dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: response.ordersAhead });
+        //})
         //API.GetOrdersAhead({shopId}).then((payload) => {
         //  dispatch({ type: 'GET_ORDERAHEADS_DONE', payload });
         //})
-        API.GetBills().then((payload) => {
-          isSomethingNew(payload, 'bills')
-          dispatch({ type: 'GET_BILLS_DONE', payload });
-        })
+        //API.GetBills().then((payload) => {
+        //  isSomethingNew(payload, 'bills')
+        //  dispatch({ type: 'GET_BILLS_DONE', payload });
+        //})
         API.GetGuests().then((guests) => {
-          dispatch(guestsResults(guests));
+          dispatch(guestsResults(guests.data));
         });
-        API.GetSales().then((payload) => {
-          isSomethingNew(payload, 'sales')
-          dispatch({ type: 'GET_SALES_DONE', payload });
-        })
+        //API.GetSales().then((payload) => {
+        //  isSomethingNew(payload, 'sales')
+        //  dispatch({ type: 'GET_SALES_DONE', payload });
+        //})
         return { type: 'GUESTS_POLLING_DONE', payload: {} };
       }
       loadInitData();

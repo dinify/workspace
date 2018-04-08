@@ -25,16 +25,16 @@ export function CheckOutUser({ userId }) {
   return Post({ v3: true, path: `guest/${userId}/checkout` })
 }
 
-export function GetBookings({restaurantId}) {
-  return Get({ v3: true, path: `restaurant/${restaurantId}/bookings` })
+export function GetBookings() {
+  return Get({ v3: true, path: `restaurant/my/bookings` })
 }
 
 export function GetBookingsAccepted() {
   return Get({ path: `api/v2/waiterboard/bookings_accepted` })
 }
 
-export function GetGuests({waiterboardId}) {
-  return Get({ v3: true, path: `/waiterboard/${waiterboardId}/guests` })
+export function GetGuests() {
+  return Get({ v3: true, path: `restaurant/my/guests?limit=200` })
 }
 
 export function ConfirmBooking({ bookingId }) {

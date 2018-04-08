@@ -21,11 +21,11 @@ const Booking = ({ booking, confirmBooking, removed, noconfirm }) => (
         <i className="ion-ios-calendar" />
       </TableId>
 
-      <User user={booking.UserObject} />
+      <User user={booking.initiator} />
 
       <Text color={color}>
-        {moment(booking.reservation_date).format('DD/MM/YYYY HH:mm')}
-        <span title="Person count" style={{margin: '0 20px'}}>[{booking.person_count}]</span>
+        {moment(booking.appointment).format('DD/MM/YYYY HH:mm')}
+        <span title="Person count" style={{margin: '0 20px'}}>[{booking.party_size}]</span>
         {booking.message ? booking.message : ''}
       </Text>
 

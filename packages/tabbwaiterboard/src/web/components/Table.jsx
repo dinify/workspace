@@ -71,7 +71,7 @@ const Seats = styled.div`
 const Guest = styled.div`
   position: relative;
   display: inline-block;
-  width: 50px;
+  width: 40px;
   height: 80px;
   margin-top: 10px;
   margin-right: 20px;
@@ -83,9 +83,9 @@ const Guest = styled.div`
 const Photo = styled.div`
   background-color: white;
   background-image: url(${props => props.url});
-  width: 50px;
-  height: 50px;
-  background-size: 54px;
+  width: 40px;
+  height: 40px;
+  background-size: 44px;
   border-radius: 50%;
   background-position: center;
 `;
@@ -154,9 +154,11 @@ const Sign = ({ guest, timer }) => {
 class Table extends React.Component {
 
   render(){
-    const { table, clearTable, toggleModal, guests, timer } = this.props;
+    const { table, clearTable, toggleModal, guests, timer, index } = this.props;
 
-    const presentGuests = R.values(guests).filter((g) => g.tables === table.id).sort((a,b) => a.id - b.id);
+    const presentGuests = R.values(guests).filter((g) => {
+      return g.table_id === table.id && g.status === "ACCEPTED"
+    }).sort((a,b) => a.id - b.id);
 
     const guestsStatuses = R.sort((a,b) => b.localeCompare(a), R.pluck('status')(presentGuests))
 
@@ -166,7 +168,7 @@ class Table extends React.Component {
     	<TableBox>
         <Thumbnail color={tableStatus === 's1' ? 'black' : 'white'} bg={presentGuests && presentGuests.length > 0 ? colorsByStages[tableStatus] : ''}>
           <Id onClick={() => toggleModal({ open: true, type: 'ListOfBills', tableId: table.id })}>
-            {table.code}
+            {index}
           </Id>
           <ExitButton onClick={() => clearTable({ table })}>
             <ExitIcon className="ion-android-exit" />
@@ -175,9 +177,9 @@ class Table extends React.Component {
         <Seats>
 
           {presentGuests.map((guest, i) =>
-            <Guest key={i} onClick={() => toggleModal({ open: true, type: 'User', userId: guest.UserObject.id })}>
-              <Photo url={`https://s3.eu-central-1.amazonaws.com/tabb/tabb-user-image/${guest.UserObject.id}_PROFILE`} />
-              <Name title={guest.UserObject.name}>{S(guest.UserObject.name).truncate(11).s}</Name>
+            <Guest key={i} onClick={() => toggleModal({ open: true, type: 'User', userId: guest.id })}>
+              <Photo url={`https://picsum.photos/50/50/?image=${i*3+20}`} />
+              <Name title={guest.name}>{S(guest.name).truncate(16).s}</Name>
               <Sign guest={guest} timer={timer} />
             </Guest>
           )}

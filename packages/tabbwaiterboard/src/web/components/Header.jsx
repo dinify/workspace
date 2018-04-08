@@ -3,6 +3,7 @@ import React from 'react'
 import Container from './Container'
 import styled from 'styled-components'
 import numeral from 'numeral'
+import { Link } from 'react-router-dom'
 
 const HeaderBar = styled.header`
   color: white;
@@ -11,6 +12,9 @@ const HeaderBar = styled.header`
   line-height: 50px;
   text-align: right;
   background: rgba(255,255,255,0.1);
+  a {
+    text-decoration: none;
+  }
 `;
 
 const Label = styled.span`
@@ -59,7 +63,9 @@ class Header extends React.Component {
     	<HeaderBar>
         <Container>
           {children}
-          <Label>User</Label><Value>{waiterboardName}</Value>
+          <Link to="/board/">
+            <Label>Section</Label><Value>{waiterboardName}</Value>
+          </Link>
           <Label>Tables</Label><Value>{tablesCount}</Value>
           <Label>Guests</Label><Value>{guestsCount}</Value>
           <Label>Sales</Label><Value>{numeral(salesVolume).format('0.000')}KD</Value>
