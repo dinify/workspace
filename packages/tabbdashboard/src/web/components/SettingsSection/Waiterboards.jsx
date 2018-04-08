@@ -110,8 +110,16 @@ const Table = styled.div`
   background: rgb(28,37,49);
   color: white;
   font-size: 12px;
-  padding: 10px;
+
   width: ${p => p.fixedWidth ? '250px' : '100%'};
+  background-image: url('/static/wood2.jpg');
+  border-radius: 3px;
+  overflow: hidden;
+`
+
+const Filter = styled.div`
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
 `
 
 const TableTag = styled.table`
@@ -167,11 +175,13 @@ class Waiterboards extends React.Component {
                     {row.map((table, j) => table ?
                       <td key={table.id}>
                         <Table>
-                          <div>Code {table.code}</div>
-                          <div>X {table.x}</div>
-                          <div>Y {table.y}</div>
-                          <div>Capacity {table.capacity}</div>
-                          <button onClick={() => deleteTable({id: table.id})}>Delete</button>
+                          <Filter>
+                            <div>Code {table.code}</div>
+                            <div>X {table.x}</div>
+                            <div>Y {table.y}</div>
+                            <div>Capacity {table.capacity}</div>
+                            <button onClick={() => deleteTable({id: table.id})}>Delete</button>
+                          </Filter>
                         </Table>
                       </td>
                     : <td key={j*i}/>)}
