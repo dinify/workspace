@@ -6,3 +6,4 @@ src
 yarn.lock
 .DS_Store
 .elasticbeanstalk
+.git
