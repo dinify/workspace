@@ -170,7 +170,7 @@ export const FoodItem = styled.div`
   margin: 3px;
   border-radius: 40px;
   color: white;
-  padding: 3px 12px;
-  letter-spacing: 0.3px;
+  padding: 3px 8px;
+  font-size: 12px;
   font-weight: 400;
 `

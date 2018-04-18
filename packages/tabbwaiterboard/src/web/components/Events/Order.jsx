@@ -7,14 +7,14 @@ import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, Fo
 import User from './user'
 import { isItOutdated } from '../../../common/helpers/time'
 import moment from 'moment'
-
+import * as FN from '../../../lib/FN'
 const color = colorsByStages['s2']
 
 const ListOfCustomizations = ({ list }) => {
-	if (list && list.length > 0) {
+	if (list) {
 		return (
 			<div>
-				{list.map((option, i) =>
+				{FN.MapToList(list).map((option, i) =>
 					<FoodItem bgIndex={i} key={i}>
 						<span style={{whiteSpace: 'nowrap'}}>{option.name}</span>
 					</FoodItem>
@@ -30,10 +30,10 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime }) => 
     <Header>
 
       <TableId bg={color}>
-        {order.TableObject ? order.TableObject.position : ''}
+        ?
       </TableId>
 
-      <User user={order.UserObject} />
+      <User user={order.initiator} />
 
 			<Text color={color}>
 				{datetime ? moment(order.processed).format('DD/MM/YYYY HH:mm') : ''}
@@ -52,29 +52,38 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime }) => 
           <tr>
             <Th color={color}>DESCRIPTION</Th>
             <Th color={color}>OPTION</Th>
-            <Th color={color}>DELETE</Th>
+            <Th color={color}>EXCLUDE</Th>
             <Th color={color}>ADD-ON</Th>
-						<Th color={color}>Q'TY</Th>
+						<Th color={color}>PRICE</Th>
           </tr>
         </thead>
         <tbody>
-					{order.CartItems ? order.CartItems.map((item, i) =>
+					{order.items ? FN.MapToList(order.items).map((item, i) =>
 						<Tr key={i}>
-	            <Td>{item.FoodObject.name}</Td>
-	            <Td items>
-								<ListOfCustomizations list={item.Options}></ListOfCustomizations>
+	            <Td>{item.menu_item.name}</Td>
+							<Td items>
+								{item.option ?
+									<FoodItem bgIndex={0}>
+										<span style={{whiteSpace: 'nowrap'}}>{item.option.name}</span>
+									</FoodItem>
+								: ''}
 							</Td>
 							<Td items>
-								<ListOfCustomizations list={item.Excludes}></ListOfCustomizations>
+								<ListOfCustomizations list={item.excludes}></ListOfCustomizations>
 							</Td>
 							<Td items>
-								<ListOfCustomizations list={item.Toppings}></ListOfCustomizations>
+								<ListOfCustomizations list={item.addons}></ListOfCustomizations>
 							</Td>
-							<Td>
-								{item.quantity}
-							</Td>
+							<Td>{item.subtotal.amount}</Td>
 	          </Tr>
 					): ''}
+					<Tr>
+						<Td>TOTAL</Td>
+						<Td></Td>
+						<Td></Td>
+						<Td></Td>
+						<Td>{order.subtotal.amount} {order.subtotal.currency}</Td>
+					</Tr>
         </tbody>
       </TableTag>
 

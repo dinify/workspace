@@ -4,7 +4,7 @@ export const colorsByStages = {
   s2: 'rgb(255,143,0)', // order
   s3: 'rgb(255,143,0)', // dining
   s4: 'rgb(231,76,60)', // service call
-  booking: 'rgb(230,126,34)',
+  booking: 'rgb(144,19,254)',
   s5: 'rgb(33,150,243)', // payment
   s6: 'rgb(33,150,243)' // paid
 }

@@ -33,8 +33,8 @@ export function GetBookingsAccepted() {
   return Get({ path: `api/v2/waiterboard/bookings_accepted` })
 }
 
-export function GetGuests() {
-  return Get({ v3: true, path: `restaurant/my/guests?limit=200` })
+export function GetGuests({ waiterboardId }) {
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/guests` })
 }
 
 export function ConfirmBooking({ bookingId }) {
@@ -50,7 +50,7 @@ export function ConfirmService({ serviceId }) {
 }
 
 export function GetOrders({waiterboardId}) {
-  return Get({ v3: true, path: `/waiterboard/${waiterboardId}/orders` })
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/orders?processed=false` })
 }
 
 export function ConfirmOrder({ orderId }) {

@@ -265,11 +265,14 @@ const isSomethingNew = (payload, type) => {
   counts[type] = payload.length
 }
 
-const guestsPollingEpic = (action$: Observable, { dispatch }) =>
+const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
   action$
     .ofType('GUESTS_POLLING_INIT')
     .switchMap(() => {
       const loadInitData = () => {
+
+        const state = getState()
+        const waiterboardId = state.restaurant.selectedWBId
 
         API.GetBookings().then((res) => {
           const bookings = res.data
@@ -289,20 +292,20 @@ const guestsPollingEpic = (action$: Observable, { dispatch }) =>
         //  isSomethingNew(payload, 'services')
         //  dispatch({ type: 'GET_SERVICES_DONE', payload });
         //})
-        //API.GetOrders().then((response) => {
-        //  isSomethingNew(response.orders, 'orders')
-        //  isSomethingNew(response.ordersAhead, 'ordersAhead')
-        //  dispatch({ type: 'GET_ORDERS_DONE', payload: response.orders });
-        //  dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: response.ordersAhead });
-        //})
-        //API.GetOrdersAhead({shopId}).then((payload) => {
-        //  dispatch({ type: 'GET_ORDERAHEADS_DONE', payload });
-        //})
+
+        API.GetOrders({ waiterboardId }).then((response) => {
+          isSomethingNew(response.data, 'orders')
+          //isSomethingNew(response.ordersAhead, 'ordersAhead')
+          const oh = R.filter((o) => o.type === 'AHEAD')(response.data)
+          const di = R.filter((o) => o.type === 'DINE_IN')(response.data)
+          dispatch({ type: 'GET_ORDERS_DONE', payload: di });
+          dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: oh });
+        })
         //API.GetBills().then((payload) => {
         //  isSomethingNew(payload, 'bills')
         //  dispatch({ type: 'GET_BILLS_DONE', payload });
         //})
-        API.GetGuests().then((guests) => {
+        API.GetGuests({ waiterboardId }).then((guests) => {
           dispatch(guestsResults(guests.data));
         });
         //API.GetSales().then((payload) => {

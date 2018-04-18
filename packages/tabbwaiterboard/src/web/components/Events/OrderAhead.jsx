@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import moment from 'moment';
 
+import * as FN from '../../../lib/FN'
 import { confirmOrderAhead } from '../../../ducks/restaurant'
 
 import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, FoodItem, Color } from '../styled/Events'
@@ -16,10 +17,10 @@ import { isItOutdated } from '../../../common/helpers/time'
 const color = colorsByStages['oh']
 
 const ListOfCustomizations = ({ list }) => {
-	if (list && list.length > 0) {
+	if (list) {
 		return (
 			<div>
-				{list.map((option, i) =>
+				{FN.MapToList(list).map((option, i) =>
 					<FoodItem bgIndex={i} key={i}>
 						<span style={{whiteSpace: 'nowrap'}}>{option.name}</span>
 					</FoodItem>
@@ -38,14 +39,14 @@ const OrderAhead = ({ order, confirmOrderAhead, removed, timer }) => (
         OH
       </TableId>
 
-      <User user={order.UserObject} />
+      <User user={order.initiator} />
 
 			<Text color={'#999'}>
-				<Color color={color}>{order.is_take_away ? 'TAKE AWAY' : 'DINE-IN'}</Color> | {moment().to(moment.unix(order.time_of_arrival/1000))} {order.note ? <span>| {order.note}</span> : ''}
+				<Color color={color}>{order.is_take_away ? 'TAKE AWAY' : 'DINE-IN'}</Color> | {moment(order.status_updated).add(order.meta.eta,'s').format('hh:mm')} {order.note ? <span>| {order.note}</span> : ''}
 			</Text>
 
 
-      <CheckButton bg={color} onClick={() => confirmOrderAhead({orderId: order.id})} flash={isItOutdated(order.requested, timer.oh)}>
+      <CheckButton bg={color} onClick={() => confirmOrderAhead({orderId: order.id})} flash={isItOutdated(order.meta.status_updated, timer.oh)}>
         <i className="ion-checkmark" />
       </CheckButton>
 
@@ -56,29 +57,38 @@ const OrderAhead = ({ order, confirmOrderAhead, removed, timer }) => (
           <tr>
             <Th color={color}>DESCRIPTION</Th>
             <Th color={color}>OPTION</Th>
-            <Th color={color}>DELETE</Th>
+            <Th color={color}>EXCLUDE</Th>
             <Th color={color}>ADD-ON</Th>
-						<Th color={color}>Q'TY</Th>
+						<Th color={color}>PRICE</Th>
           </tr>
         </thead>
 				<tbody>
-					{order.CartItems ? order.CartItems.map((item, i) =>
+					{order.items ? FN.MapToList(order.items).map((item, i) =>
 						<Tr key={i}>
-	            <Td>{item.FoodObject.name}</Td>
+	            <Td>{item.menu_item.name}</Td>
 	            <Td items>
-								<ListOfCustomizations list={item.Options}></ListOfCustomizations>
+								{item.option ?
+									<FoodItem bgIndex={0}>
+										<span style={{whiteSpace: 'nowrap'}}>{item.option.name}</span>
+									</FoodItem>
+								: ''}
 							</Td>
 							<Td items>
-								<ListOfCustomizations list={item.Excludes}></ListOfCustomizations>
+								<ListOfCustomizations list={item.excludes}></ListOfCustomizations>
 							</Td>
 							<Td items>
-								<ListOfCustomizations list={item.Toppings}></ListOfCustomizations>
+								<ListOfCustomizations list={item.addons}></ListOfCustomizations>
 							</Td>
-							<Td>
-								{item.quantity}
-							</Td>
+							<Td>{item.subtotal.amount}</Td>
 	          </Tr>
 					): ''}
+					<Tr>
+						<Td>TOTAL</Td>
+						<Td></Td>
+						<Td></Td>
+						<Td></Td>
+						<Td>{order.subtotal.amount} {order.subtotal.currency}</Td>
+					</Tr>
         </tbody>
       </TableTag>
 
