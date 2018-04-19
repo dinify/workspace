@@ -25,12 +25,11 @@ import {
   updateSocialInitAction,
   updateContactInitAction,
   updateLocationInitAction,
-  updateHoursInitAction,
-  updateBankInitAction,
   uploadMainImageInitAction
 } from '../../../ducks/restaurant'
 
 import BusinessHours from './Forms/BusinessHours'
+import Banking from './Forms/Banking'
 
 // Wrap all `react-google-maps` components with `withGoogleMap` HOC
 // and name it GettingStartedGoogleMap
@@ -106,8 +105,6 @@ const Main = ({
   updateSocial,
   updateContact,
   updateLocation,
-  updateBank,
-  updateHours,
   updateDone,
   uploadMainImage
 }) => {
@@ -313,37 +310,7 @@ const Main = ({
 
   <BusinessHours openHours={loggedRestaurant.open_hours} />
 
-  <FormBox>
-    <FormBoxHead>Banking Information</FormBoxHead>
-    <FormBoxBody>
-      <Form
-        onSubmit={(bank) => {
-          console.log('Success!', bank);
-          updateBank(bank);
-        }}
-        defaultValues={loggedRestaurant.payout}
-        validate={({ bank_name, beneficiary_name, iban }) => {
-          return {
-            bank_name: !bank_name ? 'Bank name is required' : undefined,
-            beneficiary_name: !beneficiary_name ? 'Beneficiary Name is required' : undefined,
-            iban: !iban ? 'IBAN is required' : undefined,
-          }
-        }}
-      >
-        {({submitForm}) => {
-          return (
-            <form onSubmit={submitForm}>
-              <Text field='bank_name' placeholder='Bank name' />
-              <Text field='beneficiary_name' placeholder='Beneficiary name' />
-              <Text field='iban' placeholder='IBAN number' />
-              <FormBoxSubmit>SAVE</FormBoxSubmit>
-            </form>
-          )
-        }}
-      </Form>
-    </FormBoxBody>
-  </FormBox>
-
+  <Banking payout={loggedRestaurant.payout} />
 
 </MainContrainer>);
 }
@@ -358,8 +325,6 @@ export default connect(
     updateSocial: updateSocialInitAction,
     updateContact: updateContactInitAction,
     updateLocation: updateLocationInitAction,
-    updateHours: updateHoursInitAction,
-    updateBank: updateBankInitAction,
     uploadMainImage: uploadMainImageInitAction
   },
 )(Main);

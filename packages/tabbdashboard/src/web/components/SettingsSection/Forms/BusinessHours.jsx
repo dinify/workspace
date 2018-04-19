@@ -14,7 +14,6 @@ import {
 import {
   updateHoursInitAction
 } from '../../../../ducks/restaurant'
-import * as FN from '../../../../lib/FN';
 
 const dayNames = {
   mon: 'Monday',
