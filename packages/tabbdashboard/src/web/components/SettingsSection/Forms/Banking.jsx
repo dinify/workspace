@@ -16,7 +16,6 @@ import {
   updateBankInitAction
 } from '../../../../ducks/restaurant'
 
-
 const Banking = ({
   updateBank,
   payout

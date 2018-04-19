@@ -17,7 +17,6 @@ import {
   updateSocialInitAction
 } from '../../../../ducks/restaurant'
 
-
 const Social = ({
   updateSocial,
   social
