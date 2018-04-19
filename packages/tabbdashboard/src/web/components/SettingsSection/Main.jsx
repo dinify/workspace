@@ -30,6 +30,7 @@ import {
 
 import BusinessHours from './Forms/BusinessHours'
 import Banking from './Forms/Banking'
+import Social from './Forms/Social'
 
 // Wrap all `react-google-maps` components with `withGoogleMap` HOC
 // and name it GettingStartedGoogleMap
@@ -273,40 +274,7 @@ const Main = ({
     </FormBoxBody>
   </FormBox>
 
-  <FormBox>
-    <FormBoxHead>Social Media</FormBoxHead>
-    <FormBoxBody>
-      <Form
-        onSubmit={(social) => {
-          updateSocial(social);
-        }}
-        defaultValues={loggedRestaurant.social}
-        validate={({ facebook, instagram }) => {
-          return {
-            facebook: !facebook ? 'Facebook URL is required' : undefined,
-            instagram: !instagram ? 'Instagram URL is required' : undefined,
-          }
-        }}
-      >
-        {({submitForm}) => {
-          return (
-            <form onSubmit={submitForm}>
-              <FieldWrapper>
-                <i className="ion-social-facebook" />
-                <Text field='facebook' placeholder='www.facebook.com/myRestaurant' />
-              </FieldWrapper>
-              <FieldWrapper>
-                <i className="ion-social-instagram-outline" />
-                <Text field='instagram' placeholder='www.instagram.com/myRestaurant' />
-              </FieldWrapper>
-              <FormBoxSubmit>SAVE</FormBoxSubmit>
-            </form>
-          )
-        }}
-      </Form>
-    </FormBoxBody>
-  </FormBox>
-
+  <Social social={loggedRestaurant.social} />
 
   <BusinessHours openHours={loggedRestaurant.open_hours} />
 
@@ -322,7 +290,6 @@ export default connect(
   }), {
     update: updateInitAction,
     updateCategory: updateCategoryInitAction,
-    updateSocial: updateSocialInitAction,
     updateContact: updateContactInitAction,
     updateLocation: updateLocationInitAction,
     uploadMainImage: uploadMainImageInitAction
