@@ -30,6 +30,8 @@ import {
   uploadMainImageInitAction
 } from '../../../ducks/restaurant'
 
+import BusinessHours from './Forms/BusinessHours'
+
 // Wrap all `react-google-maps` components with `withGoogleMap` HOC
 // and name it GettingStartedGoogleMap
 const GettingStartedGoogleMap = withGoogleMap(props => (
@@ -309,41 +311,7 @@ const Main = ({
   </FormBox>
 
 
-  <FormBox>
-    <FormBoxHead>Business Hours</FormBoxHead>
-    <FormBoxBody half>
-      <Form
-        onSubmit={(hours) => {
-          console.log('Success!', hours);
-          updateHours(hours);
-        }}
-        defaultValues={
-          R.apply(R.merge, R.keys(loggedRestaurant.open_hours).map((dayNum) => {
-            const obj = {}
-            obj[`${dayNum}_from`] = loggedRestaurant.open_hours[dayNum][0][0]
-            obj[`${dayNum}_to`] = loggedRestaurant.open_hours[dayNum][0][1]
-            return obj
-          }))
-        }
-      >
-        {({submitForm}) => {
-          return (
-            <form onSubmit={submitForm}>
-              {R.keys(loggedRestaurant.open_hours).map((dayNum) =>
-                <div key={dayNum}>
-                  <Label>{moment(dayNum, "e").format("dddd")}</Label>
-                  <Text field={`${dayNum}_from`} placeholder='From' />
-                  <span> - </span>
-                  <Text field={`${dayNum}_to`} placeholder='To' />
-                </div>
-              )}
-              <FormBoxSubmit>SAVE</FormBoxSubmit>
-            </form>
-          )
-        }}
-      </Form>
-    </FormBoxBody>
-  </FormBox>
+  <BusinessHours openHours={loggedRestaurant.open_hours} />
 
   <FormBox>
     <FormBoxHead>Banking Information</FormBoxHead>
