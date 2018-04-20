@@ -11,8 +11,10 @@ import {
   Label
 } from '../../styled/FormBox'
 import {
-  updateInitAction
+  updateNameInitAction
 } from '../../../../ducks/restaurant'
+
+import Progress from '../../Progress'
 
 const Name = ({
   updateName,
@@ -21,7 +23,10 @@ const Name = ({
   if (!name) return (<div />)
   return (
     <FormBox>
-      <FormBoxHead>Restaurant Name</FormBoxHead>
+      <FormBoxHead>
+        <span>Restaurant Name</span>
+        <Progress type={'UPDATE_NAME'}/>
+      </FormBoxHead>
       <FormBoxBody>
         <Form
           onSubmit={(output) => {
@@ -52,6 +57,6 @@ const Name = ({
 
 export default connect(
   state => ({}), {
-    updateName: updateInitAction
-  },
+    updateName: updateNameInitAction
+  }
 )(Name);

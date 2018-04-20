@@ -17,6 +17,7 @@ import {
 import {
   updateCategoryInitAction
 } from '../../../../ducks/restaurant'
+import Progress from '../../Progress'
 
 const Type = ({
   updateCategory,
@@ -25,7 +26,10 @@ const Type = ({
   if (!type) return (<div />)
   return (
     <FormBox>
-      <FormBoxHead>Type of Restaurant</FormBoxHead>
+      <FormBoxHead>
+        <span>Type of Restaurant</span>
+        <Progress type={'UPDATE_CATEGORY'}/>
+      </FormBoxHead>
       <FormBoxBody center pt={20} pb={20}>
         <SwitchButton
           name="switch-type"

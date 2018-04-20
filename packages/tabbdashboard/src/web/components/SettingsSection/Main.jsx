@@ -40,21 +40,11 @@ const MainContrainer = styled.div `
 `
 
 const Main = ({
-  loggedRestaurant,
-  update,
-  updateCategory,
-  updateContact,
-  updateDone,
-  uploadMainImage
+  loggedRestaurant
 }) => {
   if (!loggedRestaurant) return (<div />)
   return (
     <MainContrainer>
-
-      <div style={{marginLeft: '10px'}}>
-        {updateDone === 'updating' ? 'Updating...' : ''}
-        {updateDone === 'done' ? 'Everything is up to date.' : ''}
-      </div>
 
       <Name name={loggedRestaurant.name} />
 
@@ -78,7 +68,6 @@ const Main = ({
 
 export default connect(
   state => ({
-    loggedRestaurant: state.restaurant.loggedRestaurant,
-    updateDone: state.restaurant.updateDone
+    loggedRestaurant: state.restaurant.loggedRestaurant
   })
 )(Main);

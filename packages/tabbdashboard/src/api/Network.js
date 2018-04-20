@@ -35,16 +35,19 @@ export function Request(url, options = {}, noToken) {
         //console.log(res.status);
         //if (res.status === 401 && window.location.pathname !== '/') window.location.replace('/')
         try {
-          const txt = res.text.replace('/**/','')
+          const txt = res.text//.replace('/**/','')
+          if (txt.length < 5) return { status: res.status, json: null }
           return { status: res.status, json: JSON.parse(txt) }
         } catch (err) {
-          console.log(err, 'NetworkERROR');
+          console.log(err, 'HTTP Error');
           return { status: res.status, json: null }
         }
       })
       .then(({ status, json }) => {
-        if (status >= 200 && status < 300 && json) resolve(json)
-        else {
+        if (status >= 200 && status < 300) { // success
+          if (json) resolve(json)
+          else resolve('no json')
+        } else { // error
           if (json) {
             reject(json.error)
           } else {

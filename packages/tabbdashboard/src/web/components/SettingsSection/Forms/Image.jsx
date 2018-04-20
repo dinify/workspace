@@ -22,6 +22,10 @@ const Image = ({
   loggedRestaurant
 }) => {
   if (!loggedRestaurant) return (<div />)
+  let imageUrl = ''
+  const imagesIds = R.keys(loggedRestaurant.images)
+  const imageKey = imagesIds[0]
+  if (imagesIds.length > 0) imageUrl = loggedRestaurant.images[imageKey].url
   return (
     <FormBox>
       <FormBoxHead>Main Image</FormBoxHead>
@@ -44,7 +48,7 @@ const Image = ({
         </Dropzone>
 
         <img
-          src={`https://s3.eu-central-1.amazonaws.com/tabb/tabb-restaurant-image/RESTAURANT_${loggedRestaurant.id}?datetime=${Date.now()}`}
+          src={imageUrl}
           width="250"
         />
       </FormBoxBody>

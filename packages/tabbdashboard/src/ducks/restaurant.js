@@ -5,29 +5,26 @@ import R from 'ramda'
 import * as API from '../api/restaurant'
 import type { EpicDependencies, Error, Action } from '../flow'
 
-export const BOOTSTRAP = 'universalreact/restaurant/BOOTSTRAP'
-export const LOGIN_INIT = 'universalreact/restaurant/LOGIN_INIT'
-export const LOGIN_DONE = 'universalreact/restaurant/LOGIN_DONE'
-export const LOGIN_FAIL = 'universalreact/restaurant/LOGIN_FAIL'
-export const LOGOUT = 'universalreact/restaurant/LOGOUT'
-export const SIGNUP_INIT = 'universalreact/restaurant/SIGNUP_INIT'
-export const SIGNUP_DONE = 'universalreact/restaurant/SIGNUP_DONE'
-export const SIGNUP_FAIL = 'universalreact/restaurant/SIGNUP_FAIL'
+export const BOOTSTRAP = 'BOOTSTRAP'
+export const LOGIN_INIT = 'LOGIN_INIT'
+export const LOGIN_DONE = 'LOGIN_DONE'
+export const LOGIN_FAIL = 'LOGIN_FAIL'
+export const LOGOUT = 'LOGOUT'
+export const SIGNUP_INIT = 'SIGNUP_INIT'
+export const SIGNUP_DONE = 'SIGNUP_DONE'
+export const SIGNUP_FAIL = 'SIGNUP_FAIL'
 export const LOGGED_FETCHED_DONE = 'LOGGED_FETCHED_DONE'
-export const UPDATE_INIT = 'universalreact/restaurant/UPDATE_INIT'
-export const UPDATE_CATEGORY_INIT = 'universalreact/restaurant/UPDATE_CATEGORY_INIT'
-export const UPDATE_CONTACT_INIT = 'universalreact/restaurant/UPDATE_CONTACT_INIT'
-export const UPDATE_SOCIAL_INIT = 'universalreact/restaurant/UPDATE_SOCIAL_INIT'
-export const UPDATE_LOCATION_INIT = 'universalreact/restaurant/UPDATE_LOCATION_INIT'
-export const UPDATE_BANK_INIT = 'universalreact/restaurant/UPDATE_BANK_INIT'
-export const UPDATE_HOURS_INIT = 'universalreact/restaurant/UPDATE_HOURS_INIT'
-export const UPDATE_DONE = 'universalreact/restaurant/UPDATE_DONE'
-export const ADD_WB_INIT = 'universalreact/restaurant/ADD_WB_INIT'
-export const ADD_WB_DONE = 'universalreact/restaurant/ADD_WB_DONE'
-export const GET_BILLS_INIT = 'universalreact/restaurant/GET_BILLS_INIT'
-export const GET_BILLS_DONE = 'universalreact/restaurant/GET_BILLS_DONE'
-export const GET_CATEGORIES_INIT = 'universalreact/restaurant/GET_CATEGORIES_INIT'
-export const GET_CATEGORIES_DONE = 'universalreact/restaurant/GET_CATEGORIES_DONE'
+export const UPDATE_CONTACT_INIT = 'UPDATE_CONTACT_INIT'
+export const UPDATE_SOCIAL_INIT = 'UPDATE_SOCIAL_INIT'
+export const UPDATE_LOCATION_INIT = 'UPDATE_LOCATION_INIT'
+export const UPDATE_BANK_INIT = 'UPDATE_BANK_INIT'
+export const UPDATE_HOURS_INIT = 'UPDATE_HOURS_INIT'
+export const ADD_WB_INIT = 'ADD_WB_INIT'
+export const ADD_WB_DONE = 'ADD_WB_DONE'
+export const GET_BILLS_INIT = 'GET_BILLS_INIT'
+export const GET_BILLS_DONE = 'GET_BILLS_DONE'
+export const GET_CATEGORIES_INIT = 'GET_CATEGORIES_INIT'
+export const GET_CATEGORIES_DONE = 'GET_CATEGORIES_DONE'
 
 type State = {
   searchLoading: boolean,
@@ -56,11 +53,6 @@ const initialState = {
 
 // Reducer
 export default function reducer(state: State = initialState, action: Action) {
-  console.log(action)
-  if(action.type.indexOf('UPDATE') > -1 && action.type.indexOf('INIT') > -1) {
-    // update init
-    state = R.assoc('updateDone', 'updating')(state)
-  }
   switch (action.type) {
     case LOGIN_DONE:
       return state
@@ -69,9 +61,9 @@ export default function reducer(state: State = initialState, action: Action) {
     case LOGGED_FETCHED_DONE: {
       return R.assoc('loggedRestaurant', action.payload)(state)
     }
-    case UPDATE_INIT:
+    case 'UPDATE_NAME_INIT':
       return R.assocPath(['loggedRestaurant', 'name'], action.payload.name)(state)
-    case UPDATE_CATEGORY_INIT:
+    case 'UPDATE_CATEGORY_INIT':
       return R.assocPath(['loggedRestaurant', 'category'], action.payload.category)(state)
     case UPDATE_LOCATION_INIT: {
       state = R.assocPath(['loggedRestaurant', 'location', 'longitude'], Number(action.payload.longitude))(state)
@@ -87,7 +79,7 @@ export default function reducer(state: State = initialState, action: Action) {
     case UPDATE_BANK_INIT: {
       return R.assocPath(['loggedRestaurant', 'bank'], action.payload)(state)
     }
-    case UPDATE_DONE:
+    case 'UPDATE_DONE':
       return R.assoc('updateDone', 'done')(state)
     case ADD_WB_INIT: {
       const { login, name } = action.payload
@@ -132,9 +124,9 @@ function setCookie(cname, cvalue, exdays) {
 // Action Creators
 export const selectCategoryAction = (payload) => ({ type: 'SELECT_CATEGORY', payload })
 export const selectFoodAction = (payload) => ({ type: 'SELECT_FOOD', payload })
-export const updateInitAction = (payload) => ({ type: UPDATE_INIT, payload })
-export const updateDoneAction = () => ({ type: UPDATE_DONE })
-export const updateCategoryInitAction = (payload) => ({ type: UPDATE_CATEGORY_INIT, payload })
+export const updateNameInitAction = (payload) => ({ type: 'UPDATE_NAME_INIT', payload })
+export const updateDoneAction = () => ({ type: 'UPDATE_DONE' })
+export const updateCategoryInitAction = (payload) => ({ type: 'UPDATE_CATEGORY_INIT', payload })
 export const updateContactInitAction = (payload) => ({ type: UPDATE_CONTACT_INIT, payload })
 export const updateSocialInitAction = (payload) => ({ type: UPDATE_SOCIAL_INIT, payload })
 export const updateLocationInitAction = (payload) => ({ type: UPDATE_LOCATION_INIT, payload })
@@ -313,6 +305,9 @@ const registrationEpic = (action$: Observable, { getState }) =>
 
 export const loginFailAction = (err: Error) => ({ type: LOGIN_FAIL, payload: err })
 
+export const FailAction = (err: Error) => ({ type: 'FAIL', payload: err })
+
+
 export const loginDoneAction = (res: object) => {
   window.location.replace('/settings')
   return { type: LOGIN_DONE, payload: res }
@@ -350,29 +345,29 @@ const createRestaurantEpic = (action$: Observable, { getState }) =>
 
 const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
-  .ofType(UPDATE_INIT)
+  .ofType('UPDATE_NAME_INIT')
   .switchMap(({ payload: { name } }) =>
     Observable.fromPromise(API.ChangeName({ restaurantId: getState().restaurant.loggedRestaurant.id, name }))
-    .map(updateDoneAction)
-    .catch(error => console.log(error))
+    .map(() => ({ type: 'UPDATE_NAME_DONE'}))
+    .catch(error => Observable.of({ type: 'UPDATE_NAME_FAIL', payload: error }))
   )
 
 const updateCategoryEpic = (action$: Observable) =>
   action$
-  .ofType(UPDATE_CATEGORY_INIT)
+  .ofType('UPDATE_CATEGORY_INIT')
   .switchMap(({ payload: { category } }) =>
     Observable.fromPromise(API.ChangeCategory({ category }))
-    .map(updateDoneAction)
-    .catch(error => console.log(error))
+    .map(() => ({ type: 'UPDATE_CATEGORY_DONE'}))
+    .catch(error => Observable.of({ type: 'UPDATE_CATEGORY_FAIL', payload: error }))
   )
 
 const updateContactEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
-  .ofType(UPDATE_CONTACT_INIT)
+  .ofType('UPDATE_CONTACT_INIT')
   .switchMap(({ payload }) =>
     Observable.fromPromise(API.ChangeContact({ ...payload }))
-    .map(updateDoneAction)
-    .catch(error => console.log(error))
+    .map(() => ({ type: 'UPDATE_CONTACT_DONE'}))
+    .catch(error => Observable.of({ type: 'UPDATE_CONTACT_FAIL', payload: error }))
   )
 
 const updateSocialEpic = (action$: Observable) =>
