@@ -47,10 +47,6 @@ const TD = styled.td `
   padding: 10px;
 `;
 
-type LoginProps = {
-  lastError: Error,
-};
-
 const CategoriesList = styled.ul `
   display: inline-block;
   list-style: none;

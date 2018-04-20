@@ -4,7 +4,8 @@ import R from 'ramda'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Form, Text, Select } from 'react-form'
-import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import { compose, withProps } from 'recompose'
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 import moment from 'moment'
 import {
   FormBox,
@@ -40,33 +41,27 @@ const areaNames = R.sort((a, b) => {
   value: a.toUpperCase()
 }));
 
-// Wrap all `react-google-maps` components with `withGoogleMap` HOC
-// and name it GettingStartedGoogleMap
-const GettingStartedGoogleMap = withGoogleMap(props => (
+
+const MapComponent = compose(
+  withProps({
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.31&libraries=geometry,drawing,places&key=AIzaSyCdMtav7DF_cnPOKLuy4DJiJOqwdmbuMKM",
+    loadingElement: <div style={{ height: `100%`, overflow:'hidden' }} />,
+    containerElement: <div style={{ height: `220px`, borderRadius: "6px", overflow: "hidden" }} />,
+    mapElement: <div style={{ height: `100%`, overflow:'hidden' }} />,
+  }),
+  withScriptjs,
+  withGoogleMap
+)((props) =>
   <GoogleMap
-    ref={props.onMapLoad}
-    defaultZoom={10}
-    defaultCenter={{ lat: props.lat, lng: props.lng }}
-    onClick={props.onMapClick}
+    defaultZoom={8}
+    defaultCenter={{ lat: -34.397, lng: 150.644 }}
+    defaultOptions={{
+      scrollwheel: false
+    }}
   >
-    <Marker
-      draggable={true}
-      onDragEnd={(o) => {
-        console.log(o.latLng.lat(), o.latLng.lng())
-        props.updateLocation({
-          name: "name must be here",
-          longitude: o.latLng.lng(),
-          latitude: o.latLng.lat()
-        })
-      }}
-      position={{
-        lat: props.lat,
-        lng: props.lng
-      }}
-      onRightClick={() => props.onMarkerRightClick(1)}
-    />
+    {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
   </GoogleMap>
-));
+)
 
 const Location = ({
   updateLocation,
@@ -77,6 +72,9 @@ const Location = ({
     <FormBox>
       <FormBoxHead>Location</FormBoxHead>
       <FormBoxBody>
+        <MapComponent
+          isMarkerShown
+        />
         <Form
           onSubmit={({ name, longitude, latitude }) => {
             updateLocation({ name, longitude, latitude })
@@ -99,18 +97,6 @@ const Location = ({
                 <Select
                   field='name'
                   options={areaNames}
-                />
-                <GettingStartedGoogleMap
-                  updateLocation={updateLocation}
-                  loggedRestaurant={loggedRestaurant}
-                  containerElement={
-                    <div style={{ height: `200px`, margin: '10px 0' }} />
-                  }
-                  mapElement={
-                    <div style={{ height: `200px` }} />
-                  }
-                  lng={loggedRestaurant.longitude}
-                  lat={loggedRestaurant.latitude}
                 />
                 <Text field='longitude' placeholder='Longitude' />
                 <Text field='latitude' placeholder='Latitude' />

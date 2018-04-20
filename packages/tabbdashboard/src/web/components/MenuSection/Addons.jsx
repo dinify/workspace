@@ -45,10 +45,6 @@ const TD = styled.td `
   padding: 10px;
 `;
 
-type LoginProps = {
-  lastError: Error,
-};
-
 const AddonsList = styled.ul `
   display: inline-block;
   list-style: none;

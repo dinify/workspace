@@ -1,6 +1,5 @@
 import { createEpicMiddleware } from 'redux-observable';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { composeWithDevTools } from 'remote-redux-devtools';
+import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import configureEpics from './configureEpics';
@@ -25,7 +24,7 @@ const configureStore = (options, storage) => {
     middlewares.push(createLogger({ diff: true, collapsed: true }));
   }
 
-  const enhancers = composeWithDevTools(applyMiddleware(...middlewares), autoRehydrate()); // , autoRehydrate()
+  const enhancers = compose(applyMiddleware(...middlewares), autoRehydrate()); // , autoRehydrate()
 
   const store = createStore(reducers, initialState, enhancers);
 

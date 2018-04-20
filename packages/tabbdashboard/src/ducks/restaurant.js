@@ -266,7 +266,7 @@ export const updateAddonPriceInit = (payload) => ({
 const uploadEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType('UPDATE_MAINIMAGE_INIT')
-  .switchMap(({ payload: { file } }) =>
+  .mergeMap(({ payload: { file } }) =>
     Observable.fromPromise(API.UploadMainImage({
       file,
       restaurantId: getState().restaurant.loggedRestaurant.id
