@@ -254,6 +254,9 @@ export const updateAddonPriceInit = (payload) => ({
   }
 })
 
+const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
+const camel = (str) => capitalize(str.toLowerCase())
+
 // Epic
 const uploadEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
@@ -345,68 +348,15 @@ const createRestaurantEpic = (action$: Observable, { getState }) =>
 
 const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
-  .ofType('UPDATE_NAME_INIT')
-  .switchMap(({ payload: { name } }) =>
-    Observable.fromPromise(API.ChangeName({ restaurantId: getState().restaurant.loggedRestaurant.id, name }))
-    .map(() => ({ type: 'UPDATE_NAME_DONE'}))
-    .catch(error => Observable.of({ type: 'UPDATE_NAME_FAIL', payload: error }))
-  )
+  .filter(action => action.type.includes('UPDATE_') && action.type.includes('_INIT'))
+  .switchMap(({ payload, type }) => {
+    const subject = type.replace('UPDATE_','').replace('_INIT','')
+    return Observable
+    .fromPromise(API[`Change${camel(subject)}`]({ restaurantId: getState().restaurant.loggedRestaurant.id, ...payload }))
+    .map(() => ({ type: `UPDATE_${subject}_DONE`}))
+    .catch(error => Observable.of({ type: `UPDATE_${subject}_FAIL`, payload: error }))
+  })
 
-const updateCategoryEpic = (action$: Observable) =>
-  action$
-  .ofType('UPDATE_CATEGORY_INIT')
-  .switchMap(({ payload: { category } }) =>
-    Observable.fromPromise(API.ChangeCategory({ category }))
-    .map(() => ({ type: 'UPDATE_CATEGORY_DONE'}))
-    .catch(error => Observable.of({ type: 'UPDATE_CATEGORY_FAIL', payload: error }))
-  )
-
-const updateContactEpic = (action$: Observable, { getState }: EpicDependencies) =>
-  action$
-  .ofType('UPDATE_CONTACT_INIT')
-  .switchMap(({ payload }) =>
-    Observable.fromPromise(API.ChangeContact({ ...payload }))
-    .map(() => ({ type: 'UPDATE_CONTACT_DONE'}))
-    .catch(error => Observable.of({ type: 'UPDATE_CONTACT_FAIL', payload: error }))
-  )
-
-const updateSocialEpic = (action$: Observable) =>
-  action$
-  .ofType(UPDATE_SOCIAL_INIT)
-  .switchMap(({ payload }) =>
-    Observable.fromPromise(API.ChangeSocial({ ...payload }))
-    .map(updateDoneAction)
-    .catch(error => console.log(error))
-  )
-const updateLocationEpic = (action$: Observable) =>
-  action$
-  .ofType(UPDATE_LOCATION_INIT)
-  .switchMap(({ payload: { name, longitude, latitude } }) =>
-    Observable.fromPromise(API.ChangeLocation({
-      name, longitude, latitude
-    }))
-    .map(updateDoneAction)
-    .catch(error => console.log(error))
-  )
-const updateBankEpic = (action$: Observable, { getState }: EpicDependencies) =>
-  action$
-  .ofType(UPDATE_BANK_INIT)
-  .switchMap(({ payload }) =>
-    Observable.fromPromise(API.ChangeBank({ ...payload }))
-    .map(updateDoneAction)
-    .catch(error => console.log(error))
-  )
-const updateHoursEpic = (action$: Observable, { getState }: EpicDependencies) =>
-  action$
-  .ofType(UPDATE_HOURS_INIT)
-  .switchMap(({ payload: { weekdayFrom, weekdayTo, weekendFrom, weekendTo } }) =>
-    Observable.fromPromise(API.ChangeHours({
-      restaurantId: getState().restaurant.loggedRestaurant.id,
-      weekdayFrom, weekdayTo, weekendFrom, weekendTo
-    }))
-      .map(updateDoneAction)
-      .catch(error => console.log(error))
-  )
 const createWaiterboardEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType(ADD_WB_INIT)
@@ -487,8 +437,7 @@ const addFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
       .catch(error => console.log(error))
   )
 
-const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
-const camel = (str) => capitalize(str.toLowerCase())
+
 const ActionEssence = (str) => camel(str.split('_')[2])
 
 
@@ -554,12 +503,6 @@ export const epics = [
   registrationEpic,
   createRestaurantEpic,
   updateEpic,
-  updateCategoryEpic,
-  updateContactEpic,
-  updateSocialEpic,
-  updateLocationEpic,
-  updateHoursEpic,
-  updateBankEpic,
   createWaiterboardEpic,
   getBillsEpic,
   getCategoriesEpic,
