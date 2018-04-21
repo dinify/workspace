@@ -13,7 +13,6 @@ import {
 import {
   updateNameInitAction
 } from '../../../../ducks/restaurant'
-
 import Progress from '../../Progress'
 
 const Name = ({

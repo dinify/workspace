@@ -14,6 +14,7 @@ import {
 import {
   updateHoursInitAction
 } from '../../../../ducks/restaurant'
+import Progress from '../../Progress'
 
 const dayNames = {
   mon: 'Monday',
@@ -49,7 +50,10 @@ const BusinessHours = ({
   if (!openHours) return (<div />)
   return (
   <FormBox>
-    <FormBoxHead>Business Hours</FormBoxHead>
+    <FormBoxHead>
+      <span>BusinessHours</span>
+      <Progress type={'UPDATE_HOURS'}/>
+    </FormBoxHead>
     <FormBoxBody half>
       <form>
         {R.keys(openHours).map((day) =>

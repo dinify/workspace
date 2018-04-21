@@ -16,6 +16,7 @@ import {
 import {
   updateSocialInitAction
 } from '../../../../ducks/restaurant'
+import Progress from '../../Progress'
 
 const Social = ({
   updateSocial,
@@ -24,7 +25,10 @@ const Social = ({
   if (!social) return (<div />)
   return (
     <FormBox>
-      <FormBoxHead>Social Media</FormBoxHead>
+      <FormBoxHead>
+        <span>Social Media</span>
+        <Progress type={'UPDATE_SOCIAL'}/>
+      </FormBoxHead>
       <FormBoxBody>
         <Form
           onSubmit={(output) => {

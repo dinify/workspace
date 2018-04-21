@@ -29,14 +29,13 @@ import Type from './Forms/Type'
 import Name from './Forms/Name'
 
 const MainContrainer = styled.div `
-  column-count: 3;
-  column-gap: 0;
-  @media (max-width: 1150px) {
-    column-count: 2;
-  }
-  @media (max-width: 860px) {
-    column-count: 1;
-  }
+
+`
+
+const Column = styled.div`
+  width: 290px;
+  display: inline-block;
+  vertical-align: top;
 `
 
 const Main = ({
@@ -45,22 +44,25 @@ const Main = ({
   if (!loggedRestaurant) return (<div />)
   return (
     <MainContrainer>
+      <Column>
+        <Name name={loggedRestaurant.name} />
+        <Type type={loggedRestaurant.type} />
+        <Image loggedRestaurant={loggedRestaurant} />
+      </Column>
 
-      <Name name={loggedRestaurant.name} />
+      <Column>
+        <Location loggedRestaurant={loggedRestaurant} />
+        <Social social={loggedRestaurant.social} />
+      </Column>
 
-      <Type type={loggedRestaurant.type} />
+      <Column>
+        <Contact contact={loggedRestaurant.contact} />
+        <Banking payout={loggedRestaurant.payout} />
+      </Column>
 
-      <Image loggedRestaurant={loggedRestaurant} />
-
-      <Contact contact={loggedRestaurant.contact} />
-
-      <Location loggedRestaurant={loggedRestaurant} />
-
-      <Social social={loggedRestaurant.social} />
-
-      <BusinessHours openHours={loggedRestaurant.open_hours} />
-
-      <Banking payout={loggedRestaurant.payout} />
+      <Column>
+        <BusinessHours openHours={loggedRestaurant.open_hours} />
+      </Column>
 
     </MainContrainer>
   );

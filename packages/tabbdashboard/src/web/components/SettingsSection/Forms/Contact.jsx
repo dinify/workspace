@@ -15,6 +15,7 @@ import {
 import {
   updateContactInitAction
 } from '../../../../ducks/restaurant'
+import Progress from '../../Progress'
 
 const Contact = ({
   updateContact,
@@ -23,7 +24,10 @@ const Contact = ({
   if (!contact) return (<div />)
   return (
     <FormBox>
-      <FormBoxHead>Contact Information</FormBoxHead>
+      <FormBoxHead>
+        <span>Contact Information</span>
+        <Progress type={'UPDATE_CONTACT'}/>
+      </FormBoxHead>
       <FormBoxBody>
         <Form
           onSubmit={(output) => {

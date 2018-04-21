@@ -16,6 +16,7 @@ import {
 import {
   uploadMainImageInitAction
 } from '../../../../ducks/restaurant'
+import Progress from '../../Progress'
 
 const Image = ({
   uploadMainImage,
@@ -28,7 +29,10 @@ const Image = ({
   if (imagesIds.length > 0) imageUrl = loggedRestaurant.images[imageKey].url
   return (
     <FormBox>
-      <FormBoxHead>Main Image</FormBoxHead>
+      <FormBoxHead>
+        <span>Main Image</span>
+        <Progress type={'UPDATE_IMAGE'}/>
+      </FormBoxHead>
       <FormBoxBody>
         <Dropzone
           accept="image/jpg, image/jpeg, image/png"

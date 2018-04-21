@@ -153,7 +153,7 @@ export const addCategoryInitAction = (payload) => ({ type: 'ADD_CATEGORY_INIT', 
 export const rmFoodInitAction = (payload) => ({ type: 'RM_FOOD_INIT', payload })
 export const addFoodInitAction = (payload) => ({ type: 'ADD_FOOD_INIT', payload })
 export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', payload })
-export const uploadMainImageInitAction = (payload) => ({ type: 'UPDATE_MAINIMAGE_INIT', payload })
+export const uploadMainImageInitAction = (payload) => ({ type: 'UPDATE_IMAGE_INIT', payload })
 
 export const updateFoodNutritionInit = (payload) => ({ type: 'UPDATE_NUTRITION_INIT', payload })
 
@@ -258,18 +258,6 @@ const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 const camel = (str) => capitalize(str.toLowerCase())
 
 // Epic
-const uploadEpic = (action$: Observable, { getState }: EpicDependencies) =>
-  action$
-  .ofType('UPDATE_MAINIMAGE_INIT')
-  .mergeMap(({ payload: { file } }) =>
-    Observable.fromPromise(API.UploadMainImage({
-      file,
-      restaurantId: getState().restaurant.loggedRestaurant.id
-    }))
-    .map(updateDoneAction)
-    .catch(error => Observable.of(console.log(error)))
-  )
-
 const bootstrapEpic = (action$: Observable) =>
   action$.ofType('persist/REHYDRATE').mergeMap(() => {
     return Observable.fromPromise(API.GetLoggedRestaurant())
@@ -497,7 +485,6 @@ const updateNutritionEpic = (action$: Observable, { getState }: EpicDependencies
   )
 
 export const epics = [
-  uploadEpic,
   bootstrapEpic,
   loginEpic,
   registrationEpic,

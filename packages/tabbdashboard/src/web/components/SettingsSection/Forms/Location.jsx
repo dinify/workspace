@@ -18,7 +18,7 @@ import {
 import {
   updateLocationInitAction
 } from '../../../../ducks/restaurant'
-
+import Progress from '../../Progress'
 
 const areaNames = R.sort((a, b) => {
   return a.localeCompare(b);
@@ -44,9 +44,9 @@ const areaNames = R.sort((a, b) => {
 
 const MapComponent = compose(
   withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.31&libraries=geometry,drawing,places&key=AIzaSyCdMtav7DF_cnPOKLuy4DJiJOqwdmbuMKM",
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.32&libraries=geometry,drawing,places&key=AIzaSyCdMtav7DF_cnPOKLuy4DJiJOqwdmbuMKM",
     loadingElement: <div style={{ height: `100%`, overflow:'hidden' }} />,
-    containerElement: <div style={{ height: `220px`, borderRadius: "6px", overflow: "hidden" }} />,
+    containerElement: <div style={{ height: `220px`, borderRadius: "6px", overflow: "hidden", marginTop: "10px" }} />,
     mapElement: <div style={{ height: `100%`, overflow:'hidden' }} />,
   }),
   withScriptjs,
@@ -70,7 +70,10 @@ const Location = ({
   if (!loggedRestaurant) return (<div />)
   return (
     <FormBox>
-      <FormBoxHead>Location</FormBoxHead>
+      <FormBoxHead>
+        <span>Location</span>
+        <Progress type={'UPDATE_LOCATION'}/>
+      </FormBoxHead>
       <FormBoxBody>
         <MapComponent
           isMarkerShown

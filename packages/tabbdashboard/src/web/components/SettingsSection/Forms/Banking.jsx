@@ -15,6 +15,7 @@ import {
 import {
   updateBankInitAction
 } from '../../../../ducks/restaurant'
+import Progress from '../../Progress'
 
 const Banking = ({
   updateBank,
@@ -23,12 +24,14 @@ const Banking = ({
   if (!payout) return (<div />)
   return (
     <FormBox>
-      <FormBoxHead>Banking Information</FormBoxHead>
+      <FormBoxHead>
+        <span>Banking Information</span>
+        <Progress type={'UPDATE_BANK'}/>
+      </FormBoxHead>
       <FormBoxBody>
         <Form
-          onSubmit={(bank) => {
-            console.log('Success!', bank);
-            updateBank(bank);
+          onSubmit={(output) => {
+            updateBank(output);
           }}
           defaultValues={payout}
           validate={({ bank_name, beneficiary_name, iban }) => {
