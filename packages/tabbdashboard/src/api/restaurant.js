@@ -123,9 +123,11 @@ export function UpdateFood({ foodId, name, description, price, calories }) {
   })
 }
 
-export function UpdateNutrition({ foodId, calories, protein, fat, carb }) {
+export function ChangeNutrition({ foodId, total, proteins, fats, carbs}) {
   return Post({ path: `menu/item/${foodId}`, v3: true }, {
-    calories: calories
+    calories: {
+      total, proteins, fats, carbs
+    }
   })
 }
 

@@ -61,6 +61,9 @@ export default function reducer(state: State = initialState, action: Action) {
     case LOGGED_FETCHED_DONE: {
       return R.assoc('loggedRestaurant', action.payload)(state)
     }
+    case 'UPDATE_LOCATION_INIT':
+      state = R.assocPath(['loggedRestaurant', 'longitude'], action.payload.longitude)(state)
+      return R.assocPath(['loggedRestaurant', 'latitude'], action.payload.latitude)(state)
     case 'UPDATE_NAME_INIT':
       return R.assocPath(['loggedRestaurant', 'name'], action.payload.name)(state)
     case 'UPDATE_IMAGE_DONE':
@@ -70,13 +73,6 @@ export default function reducer(state: State = initialState, action: Action) {
     case UPDATE_LOCATION_INIT: {
       state = R.assocPath(['loggedRestaurant', 'location', 'longitude'], Number(action.payload.longitude))(state)
       return R.assocPath(['loggedRestaurant', 'location', 'latitude'], Number(action.payload.latitude))(state)
-    }
-    case UPDATE_HOURS_INIT: {
-      const { weekdayFrom, weekdayTo, weekendFrom, weekendTo } = action.payload
-      return R.assocPath(['loggedRestaurant', 'businessHours'], {
-        weekday: {from: weekdayFrom, to: weekdayTo},
-        weekend: {from: weekendFrom, to: weekendTo}
-      })(state)
     }
     case UPDATE_BANK_INIT: {
       return R.assocPath(['loggedRestaurant', 'bank'], action.payload)(state)
@@ -488,15 +484,6 @@ const apiAddEpic = (action$: Observable, { getState }: EpicDependencies) =>
       .catch(error => Observable.of(console.log(error)))
   })
 
-const updateNutritionEpic = (action$: Observable, { getState }: EpicDependencies) =>
-  action$
-  .ofType('UPDATE_NUTRITION_INIT')
-  .switchMap(({ payload }) =>
-    Observable.fromPromise(API.UpdateNutrition(payload))
-      .map(() => ({ type: 'UPDATE_NUTRITION_DONE' }))
-      .catch(error => console.log(error))
-  )
-
 export const epics = [
   bootstrapEpic,
   loginEpic,
@@ -514,6 +501,5 @@ export const epics = [
   addFoodEpic,
   apiGetEpic,
   apiRmEpic,
-  apiAddEpic,
-  updateNutritionEpic
+  apiAddEpic
 ]

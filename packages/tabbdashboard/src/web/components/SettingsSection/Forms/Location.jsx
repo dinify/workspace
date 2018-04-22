@@ -53,13 +53,28 @@ const MapComponent = compose(
   withGoogleMap
 )((props) =>
   <GoogleMap
-    defaultZoom={8}
-    defaultCenter={{ lat: -34.397, lng: 150.644 }}
+    defaultZoom={10}
+    defaultCenter={{ lat: props.latitude, lng: props.longitude }}
     defaultOptions={{
       scrollwheel: false
     }}
   >
-    {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
+    <Marker
+      draggable={true}
+      onDragEnd={(o) => {
+        console.log(o.latLng.lat(), o.latLng.lng())
+        props.updateLocation({
+          name: "name must be here",
+          longitude: o.latLng.lng(),
+          latitude: o.latLng.lat()
+        })
+      }}
+      position={{
+        lat: props.latitude,
+        lng: props.longitude
+      }}
+      onRightClick={() => props.onMarkerRightClick(1)}
+    />
   </GoogleMap>
 )
 
@@ -76,7 +91,10 @@ const Location = ({
       </FormBoxHead>
       <FormBoxBody>
         <MapComponent
-          isMarkerShown
+          updateLocation={updateLocation}
+          loggedRestaurant={loggedRestaurant}
+          latitude={loggedRestaurant.latitude}
+          longitude={loggedRestaurant.longitude}
         />
         <Form
           onSubmit={({ name, longitude, latitude }) => {
@@ -86,9 +104,8 @@ const Location = ({
             longitude: loggedRestaurant.longitude,
             latitude: loggedRestaurant.latitude
           }}
-          validate={({ name, longitude, latitude }) => {
+          validate={({ longitude, latitude }) => {
             return {
-              name: !name ? 'Area name is required' : undefined,
               longitude: !longitude ? 'Longitude is required' : undefined,
               latitude: !latitude ? 'Latitude URL is required' : undefined,
             }

@@ -11,6 +11,7 @@ import { lighten } from 'polished'
 import SwitchButton from 'react-switch-button'
 import * as FN from '../../../lib/FN'
 import { Form, Text, Select, Textarea } from 'react-form'
+import Progress from '../Progress'
 
 import {
   getCategoriesInitAction, rmCategoryInitAction, addCategoryInitAction,
@@ -496,16 +497,12 @@ class Menucontrol extends React.Component {
             {selectedFood ? <FormBox style={{width: '230px'}}>
               <FormBoxBody>
                 <Label>Nutrition</Label>
+                <Progress type={'UPDATE_NUTRITION'}/>
                 <Form
                   onSubmit={(nutrition) => {
                     updateFoodNutrition({ foodId: selectedFoodId, ...nutrition })
                   }}
-                  defaultValues={{
-                    calories: selectedFood.calories || 0,
-                    protein: 0,
-                    fat: 0,
-                    carb: 0,
-                  }}
+                  defaultValues={selectedFood.calories}
                 >
                   {({submitForm}) => {
                     return (
@@ -514,19 +511,19 @@ class Menucontrol extends React.Component {
                           <tbody>
                             <tr>
                               <Td>Total Calories</Td>
-                              <Td><Text field='calories' placeholder='' /></Td>
+                              <Td><Text field='total' placeholder='' /></Td>
                             </tr>
                             <tr>
                               <Td>Protein</Td>
-                              <Td><Text field='protein' placeholder='' /></Td>
+                              <Td><Text field='proteins' placeholder='' /></Td>
                             </tr>
                             <tr>
                               <Td>Total Fat</Td>
-                              <Td><Text field='fat' placeholder='' /></Td>
+                              <Td><Text field='fats' placeholder='' /></Td>
                             </tr>
                             <tr>
                               <Td>Total Carb</Td>
-                              <Td><Text field='carb' placeholder='' /></Td>
+                              <Td><Text field='carbs' placeholder='' /></Td>
                             </tr>
                           </tbody>
                         </TableTag>

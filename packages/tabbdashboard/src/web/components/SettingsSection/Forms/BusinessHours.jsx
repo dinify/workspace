@@ -3,6 +3,7 @@ import React from 'react'
 import R from 'ramda'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Form, Text, Select } from 'react-form'
 import moment from 'moment'
 import {
   FormBox,
@@ -28,7 +29,8 @@ const dayNames = {
 
 const Day = ({
   ranges,
-  day
+  day,
+  updateHours
 }) => {
   if (!day) return (<div />)
   return (
@@ -36,7 +38,26 @@ const Day = ({
       <Label>{dayNames[day]}</Label>
       {ranges.map((range, i) =>
         <div key={i}>
-          {range[0]} - {range[1]}
+          <Form
+            onSubmit={(hours) => {
+              console.log('Success!', hours);
+              updateHours(hours);
+            }}
+            defaultValues={{
+              from: range[0],
+              to: range[1]
+            }}
+          >
+            {({submitForm}) => {
+              return (
+                <form onSubmit={submitForm}>
+                  <Text field={`from`} placeholder='From' />
+                  <span> - </span>
+                  <Text field={`to`} placeholder='To' />
+                </form>
+              )
+            }}
+          </Form>
         </div>
       )}
     </div>
@@ -51,16 +72,14 @@ const BusinessHours = ({
   return (
   <FormBox>
     <FormBoxHead>
-      <span>BusinessHours</span>
+      <span>Business Hours</span>
       <Progress type={'UPDATE_HOURS'}/>
     </FormBoxHead>
     <FormBoxBody half>
-      <form>
-        {R.keys(openHours).map((day) =>
-          <Day ranges={openHours[day]} day={day} key={day} />
-        )}
-        <FormBoxSubmit>SAVE</FormBoxSubmit>
-      </form>
+      {R.keys(openHours).map((day) =>
+        <Day updateHours={updateHours} ranges={openHours[day]} day={day} key={day} />
+      )}
+      <FormBoxSubmit onClick={() => updateHours()}>SAVE</FormBoxSubmit>
     </FormBoxBody>
   </FormBox>
   );
