@@ -63,6 +63,8 @@ export default function reducer(state: State = initialState, action: Action) {
     }
     case 'UPDATE_NAME_INIT':
       return R.assocPath(['loggedRestaurant', 'name'], action.payload.name)(state)
+    case 'UPDATE_IMAGE_DONE':
+      return R.assocPath(['loggedRestaurant', 'uploadedImage'], action.payload.url)(state)
     case 'UPDATE_CATEGORY_INIT':
       return R.assocPath(['loggedRestaurant', 'category'], action.payload.category)(state)
     case UPDATE_LOCATION_INIT: {
@@ -341,8 +343,19 @@ const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
     const subject = type.replace('UPDATE_','').replace('_INIT','')
     return Observable
     .fromPromise(API[`Change${camel(subject)}`]({ restaurantId: getState().restaurant.loggedRestaurant.id, ...payload }))
-    .map(() => ({ type: `UPDATE_${subject}_DONE`}))
+    .map((res) => ({ type: `UPDATE_${subject}_DONE`, payload: res }))
     .catch(error => Observable.of({ type: `UPDATE_${subject}_FAIL`, payload: error }))
+  })
+
+const editImageEpic = (action$: Observable, { getState }) =>
+  action$
+  .ofType('UPDATE_IMAGE_DONE')
+  .switchMap(({ payload: { id } }) => {
+    const images = getState().restaurant.loggedRestaurant.images
+    const maxPrecedence = R.sort((a,b) => b.precedence - a.precedence)(R.values(images))[0].precedence
+    return Observable.fromPromise(API.EditImage({ id, precedence: maxPrecedence + 1 }))
+    .map((res) => ({ type: `EDIT_IMAGE_DONE`, payload: res }))
+    .catch(error => Observable.of({ type: `EDIT_IMAGE_FAIL`, payload: error }))
   })
 
 const createWaiterboardEpic = (action$: Observable, { getState }: EpicDependencies) =>
@@ -490,6 +503,7 @@ export const epics = [
   registrationEpic,
   createRestaurantEpic,
   updateEpic,
+  editImageEpic,
   createWaiterboardEpic,
   getBillsEpic,
   getCategoriesEpic,

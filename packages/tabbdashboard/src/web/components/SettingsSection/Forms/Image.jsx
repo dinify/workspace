@@ -24,9 +24,12 @@ const Image = ({
 }) => {
   if (!loggedRestaurant) return (<div />)
   let imageUrl = ''
-  const imagesIds = R.keys(loggedRestaurant.images)
-  const imageKey = imagesIds[0]
-  if (imagesIds.length > 0) imageUrl = loggedRestaurant.images[imageKey].url
+  const images = R.values(loggedRestaurant.images)
+  if (images.length > 0) {
+    const sortedImages = R.sort((a,b) => b.precedence - a.precedence)(images)
+    imageUrl = sortedImages[0].url
+  }
+  if (loggedRestaurant.uploadedImage) imageUrl = loggedRestaurant.uploadedImage
   return (
     <FormBox>
       <FormBoxHead>
