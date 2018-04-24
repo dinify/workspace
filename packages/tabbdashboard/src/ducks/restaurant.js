@@ -90,7 +90,7 @@ export default function reducer(state: State = initialState, action: Action) {
     case GET_BILLS_DONE:
       return R.assoc('bills', action.payload)(state)
     case GET_CATEGORIES_DONE:
-      return R.assoc('categories', action.payload.data)(state)
+      return R.assoc('categories', action.payload)(state)
     case 'SELECT_CATEGORY':
       return R.assoc('selectedCategoryId', action.payload.categoryId)(state)
     case 'SELECT_FOOD':
@@ -105,7 +105,7 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assocPath(['foodAddons', action.payload.foodId], action.payload.response)(state)
     }
     case 'API_GET_ADDONS_DONE': {
-      return R.assoc('addons', action.payload.response.data)(state)
+      return R.assoc('addons', action.payload.response)(state)
     }
     default:
       return state

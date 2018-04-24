@@ -45,11 +45,11 @@ export function Request(url, options = {}, noToken) {
       })
       .then(({ status, json }) => {
         if (status >= 200 && status < 300) { // success
-          if (json) resolve(json)
+          if (json) resolve(json.data || json)
           else resolve('no json')
         } else { // error
           if (json) {
-            reject(json.error)
+            reject(json.errors)
           } else {
             reject('no json in response')
           }
