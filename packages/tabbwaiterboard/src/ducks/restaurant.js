@@ -275,7 +275,7 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         const waiterboardId = state.restaurant.selectedWBId
 
         API.GetBookings().then((res) => {
-          const bookings = res.data
+          const bookings = res
           const accepted = R.filter((o) => o.status === "CONFIRMED", bookings)
           const pending = R.filter((o) => o.status === "PENDING", bookings)
           isSomethingNew(bookings, 'bookings')
@@ -294,10 +294,10 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         //})
 
         API.GetOrders({ waiterboardId }).then((response) => {
-          isSomethingNew(response.data, 'orders')
+          isSomethingNew(response, 'orders')
           //isSomethingNew(response.ordersAhead, 'ordersAhead')
-          const oh = R.filter((o) => o.type === 'AHEAD')(response.data)
-          const di = R.filter((o) => o.type === 'DINE_IN')(response.data)
+          const oh = R.filter((o) => o.type === 'AHEAD')(response)
+          const di = R.filter((o) => o.type === 'DINE_IN')(response)
           dispatch({ type: 'GET_ORDERS_DONE', payload: di });
           dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: oh });
         })
@@ -306,7 +306,7 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         //  dispatch({ type: 'GET_BILLS_DONE', payload });
         //})
         API.GetGuests({ waiterboardId }).then((guests) => {
-          dispatch(guestsResults(guests.data));
+          dispatch(guestsResults(guests));
         });
         //API.GetSales().then((payload) => {
         //  isSomethingNew(payload, 'sales')

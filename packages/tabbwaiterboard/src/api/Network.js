@@ -35,16 +35,21 @@ export function Request(url, options = {}, noToken) {
         //console.log(res.status);
         //if (res.status === 401 && window.location.pathname !== '/') window.location.replace('/')
         try {
-          return { status: res.status, json: JSON.parse(res.text) }
+          const txt = res.text//.replace('/**/','')
+          if (txt.length < 5) return { status: res.status, json: null }
+          return { status: res.status, json: JSON.parse(txt) }
         } catch (err) {
+          console.log(err, 'HTTP Error');
           return { status: res.status, json: null }
         }
       })
       .then(({ status, json }) => {
-        if (status >= 200 && status < 300) resolve(json)
-        else {
+        if (status >= 200 && status < 300) { // success
+          if (json) resolve(json.data || json)
+          else resolve('no json')
+        } else { // error
           if (json) {
-            reject(json.error)
+            reject(json.errors)
           } else {
             reject('no json in response')
           }
