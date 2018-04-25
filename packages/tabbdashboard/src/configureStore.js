@@ -7,6 +7,8 @@ import configureEpics from './configureEpics';
 import restaurant from './ducks/restaurant';
 import progress from './ducks/progress';
 
+import { reducer as formReducer } from 'redux-form'
+
 
 const commonReducers = { restaurant, progress };
 
@@ -16,6 +18,7 @@ const configureStore = (options, storage) => {
   const rootEpic = configureEpics({ ...platformDeps }, platformEpics);
 
   const reducers = combineReducers({
+    form: formReducer,
     ...commonReducers,
     ...platformReducers,
   });

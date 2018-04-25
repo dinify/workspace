@@ -73,10 +73,10 @@ export function ChangeLocation({ longitude, latitude }) {
   })
 }
 
-export function ChangeHours({ restaurantId, weekdayFrom, weekdayTo, weekendFrom, weekendTo }) {
-  return Put({ path: `api/v2/restaurant/${restaurantId}/businesshours`, v2: true }, {
-    weekdayFrom, weekdayTo, weekendFrom, weekendTo
-  })
+export function ChangeHours(payload) {
+  delete payload['restaurantId']
+  const openHours = payload
+  return Post({ path: `restaurant/my`, v3: true }, {openHours})
 }
 
 //export function AddTablet({ restaurantId, login_id, pass_enc, name }) {
@@ -84,7 +84,6 @@ export function ChangeHours({ restaurantId, weekdayFrom, weekdayTo, weekendFrom,
 //}
 
 export function CreateWaiterboard({ login, password, name }) {
-  console.log(login, password, name);
   return Post({ path: `api/v2/restaurant/waiterboard/register`, v2: true }, { login, password, name })
 }
 

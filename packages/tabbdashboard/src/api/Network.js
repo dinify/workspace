@@ -49,7 +49,7 @@ export function Request(url, options = {}, noToken) {
           else resolve('no json')
         } else { // error
           if (json) {
-            reject(json.errors)
+            reject(json.errors || json)
           } else {
             reject('no json in response')
           }

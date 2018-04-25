@@ -107,6 +107,21 @@ export default function reducer(state: State = initialState, action: Action) {
     case 'API_GET_ADDONS_DONE': {
       return R.assoc('addons', action.payload.response)(state)
     }
+    case 'API_GET_ADDONS_DONE': {
+      return R.assoc('addons', action.payload.response)(state)
+    }
+    case 'ADD_DAY_TO_BUSINESSHOURS': {
+      return R.assocPath(['loggedRestaurant', 'open_hours'],
+        R.assoc(action.payload.dayName,
+          [['10:00', '22:00']]
+        )(state.loggedRestaurant.open_hours)
+      )(state)
+    }
+    case 'ADD_RANGE_TO_BUSINESSHOURS': {
+      return R.assocPath(['loggedRestaurant', 'open_hours', action.payload.dayName],
+        [...state.loggedRestaurant.open_hours[action.payload.dayName], [action.payload.from, '23:59']]
+      )(state)
+    }
     default:
       return state
   }
@@ -154,6 +169,9 @@ export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', pa
 export const uploadMainImageInitAction = (payload) => ({ type: 'UPDATE_IMAGE_INIT', payload })
 
 export const updateFoodNutritionInit = (payload) => ({ type: 'UPDATE_NUTRITION_INIT', payload })
+
+export const addDayToBusinessHours = (payload) => ({ type: 'ADD_DAY_TO_BUSINESSHOURS', payload })
+export const addRangeToBusinessHours = (payload) => ({ type: 'ADD_RANGE_TO_BUSINESSHOURS', payload })
 
 export const deleteTableInitAction = (payload) => ({
   type: 'API_RM_TABLE_INIT',

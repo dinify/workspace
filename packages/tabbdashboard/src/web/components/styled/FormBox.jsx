@@ -29,9 +29,23 @@ export const FormBoxBody = styled.div`
     border-radius: 5px;
     background: rgba(239,243,246,0.7);
   }
+  .sep {
+    display: inline-block;
+    padding: 14px 5px;
+    vertical-align: top;
+  }
   .FormInput {
     display: ${p => p.half ? 'inline-block' : 'block'};
     width: ${p => p.half ? '46.7%' : '100%'};
+  }
+  .TimeInput {
+    display: ${p => p.half ? 'inline-block' : 'block'};
+    width: ${p => p.half ? '46.7%' : '100%'};
+    overflow: hidden;
+    input {
+      margin-top: 0;
+      padding-left: 39px !important;
+    }
   }
   select {
     height: 34px;
@@ -54,6 +68,17 @@ export const FormBoxSubmit = styled.button`
     background-color: ${p => p.primary ? 'rgb(18,126,214)' : 'rgb(200,204,210)'};
     border-color: transparent;
   }
+`
+
+export const ThinButton = styled.button`
+  background-color: rgb(220,224,230);
+  margin: 0 auto;
+  outline: none;
+  padding: 5px 15px;
+  border: 1px solid rgba(0,0,0,0.05);
+  cursor: pointer;
+  border-radius: 50px;
+  color: ${p => p.primary ? 'white' : '#666'};
 `
 
 export const FieldWrapper = styled.div`
