@@ -3,7 +3,7 @@ import React from 'react'
 import R from 'ramda'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Form, Text, Select } from 'react-form'
+import { Field, reduxForm } from 'redux-form'
 import moment from 'moment'
 import {
   FormBox,
@@ -16,6 +16,26 @@ import {
   updateContactInitAction
 } from '../../../../ducks/restaurant'
 import Progress from '../../Progress'
+import Text from '../../MaterialInputs/Text'
+import FlatButton from 'material-ui/FlatButton';
+
+
+let ContactForm = ({
+  handleSubmit
+}) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <Field name="website" component={Text} placeholder="Website" />
+      <Field name="email" component={Text} placeholder="Email" />
+      <Field name="phone" component={Text} placeholder="Phone" />
+      <FlatButton type="submit" label="Update" fullWidth={true} />
+    </form>
+  )
+}
+ContactForm = reduxForm({
+  form: 'settings/contact',
+  enableReinitialize: true
+})(ContactForm)
 
 const Contact = ({
   updateContact,
@@ -28,32 +48,8 @@ const Contact = ({
         <span>Contact Information</span>
         <Progress type={'UPDATE_CONTACT'}/>
       </FormBoxHead>
-      <FormBoxBody>
-        <Form
-          onSubmit={(output) => {
-            updateContact(output);
-          }}
-          defaultValues={contact}
-          validate={({ website, email, phone }) => {
-            return {
-              website: !website ? 'Website is required' : undefined,
-              email: !email ? 'Email is required' : undefined,
-              phone: !phone ? 'Phone is required' : undefined,
-            }
-          }}
-        >
-          {({submitForm}) => {
-            return (
-              <form onSubmit={submitForm}>
-                <Text field='website' placeholder='Website' />
-                <Text field='email' placeholder='Email address' />
-                <Text field='phone' placeholder='Phone number' />
-
-                <FormBoxSubmit>SAVE</FormBoxSubmit>
-              </form>
-            )
-          }}
-        </Form>
+      <FormBoxBody material>
+        <ContactForm onSubmit={updateContact} initialValues={contact}/>
       </FormBoxBody>
     </FormBox>
   );

@@ -3,7 +3,7 @@ import React from 'react'
 import R from 'ramda'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Form, Text, Select } from 'react-form'
+import { Field, reduxForm } from 'redux-form'
 import moment from 'moment'
 import {
   FormBox,
@@ -16,6 +16,25 @@ import {
   updateBankInitAction
 } from '../../../../ducks/restaurant'
 import Progress from '../../Progress'
+import Text from '../../MaterialInputs/Text'
+import FlatButton from 'material-ui/FlatButton';
+
+let BankingForm = ({
+  handleSubmit
+}) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <Field name="bank_name" component={Text} placeholder="Bank name" />
+      <Field name="beneficiary_name" component={Text} placeholder="Beneficiary name" />
+      <Field name="iban" component={Text} placeholder="IBAN number" />
+      <FlatButton type="submit" label="Update" fullWidth={true} />
+    </form>
+  )
+}
+BankingForm = reduxForm({
+  form: 'settings/banking',
+  enableReinitialize: true
+})(BankingForm)
 
 const Banking = ({
   updateBank,
@@ -28,31 +47,8 @@ const Banking = ({
         <span>Banking Information</span>
         <Progress type={'UPDATE_BANK'}/>
       </FormBoxHead>
-      <FormBoxBody>
-        <Form
-          onSubmit={(output) => {
-            updateBank(output);
-          }}
-          defaultValues={payout}
-          validate={({ bank_name, beneficiary_name, iban }) => {
-            return {
-              bank_name: !bank_name ? 'Bank name is required' : undefined,
-              beneficiary_name: !beneficiary_name ? 'Beneficiary Name is required' : undefined,
-              iban: !iban ? 'IBAN is required' : undefined,
-            }
-          }}
-        >
-          {({submitForm}) => {
-            return (
-              <form onSubmit={submitForm}>
-                <Text field='bank_name' placeholder='Bank name' />
-                <Text field='beneficiary_name' placeholder='Beneficiary name' />
-                <Text field='iban' placeholder='IBAN number' />
-                <FormBoxSubmit>SAVE</FormBoxSubmit>
-              </form>
-            )
-          }}
-        </Form>
+      <FormBoxBody material>
+        <BankingForm onSubmit={updateBank} initialValues={payout}/>
       </FormBoxBody>
     </FormBox>
   );

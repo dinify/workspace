@@ -54,7 +54,7 @@ let AddDayForm = ({
   )
 }
 AddDayForm = reduxForm({
-  form: 'businessHoursAddDay'
+  form: 'settings/businessHoursAddDay'
 })(AddDayForm)
 
 const TimeField = (props) => {
@@ -113,10 +113,8 @@ let BusinessHoursForm = props => {
   )
 }
 BusinessHoursForm = reduxForm({
-  form: 'businessHours',
-  enableReinitialize: true,
-  pure: false
-//  keepDirtyOnReinitialize: true
+  form: 'settings/businessHours',
+  enableReinitialize: true
 })(BusinessHoursForm)
 
 const BusinessHours = ({

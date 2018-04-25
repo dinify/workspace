@@ -23,11 +23,14 @@ export const FormBoxBody = styled.div`
   text-align: ${p => p.center ? 'center' : 'left'};
   input, select, textarea {
     border: 1px solid #CED0DA;
-    margin-top: 10px;
     width: 100%;
     padding: 10px;
     border-radius: 5px;
     background: rgba(239,243,246,0.7);
+    margin-top: ${p => p.material ? '0' : '10px'};
+  }
+  button span {
+    font-weight: 400 !important;
   }
   .sep {
     display: inline-block;
