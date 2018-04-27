@@ -3,106 +3,18 @@ import React from 'react'
 import R from 'ramda'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import type { Error } from '../../../flow'
-import { Link } from 'react-router-dom'
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label } from '../styled/FormBox'
-import { Header } from '../styled/Header'
-import { lighten } from 'polished'
-import SwitchButton from 'react-switch-button'
-import * as FN from '../../../lib/FN'
-import { Form, Text, Select, Textarea } from 'react-form'
-import Progress from '../Progress'
+import { FormBox, FormBoxBody } from '../styled/FormBox'
 import ListOfCategories from './ListOfCategories'
+import ListOfDishes from './ListOfDishes'
+import ItemIngredients from './ItemIngredients'
+import ItemAddons from './ItemAddons'
+import ItemOptions from './ItemOptions'
+import ItemNutrition from './ItemNutrition'
+import ItemDetail from './ItemDetail'
 
 import {
-  getCategoriesInitAction, selectFoodAction, rmFoodInitAction, updateFoodInitAction,
-  addFoodInitAction, getFoodOptionsInit, rmFoodOptionInit, addFoodOptionInit,
-  getFoodIngredientsInit, rmFoodIngredientInit, addFoodIngredientInit,
-  getFoodAddonsInit, rmFoodAddonInit, updateFoodNutritionInit,
-  addFoodAddonInit, addAddonInit, getAddonsInit
+  getCategoriesInitAction, getAddonsInit
 } from '../../../ducks/restaurant'
-
-const Table = styled.table `
-  width: 100%;
-  border-spacing: 0;
-  margin: 20px 0;
-`;
-const TableHead = styled.thead `
-  background: #F2F4F7;
-  border-radius: 5px 5px 0 0;
-  padding: 10px;
-  font-size: 14px;
-  text-align: left;
-`;
-const TableRow = styled.tr `
-  &:nth-child(even) {
-    background-color: rgba(0,0,0,0.07);
-  }
-`;
-const TH = styled.th `
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-  padding: 10px;
-`;
-const TD = styled.td `
-  font-size: 12px;
-  padding: 10px;
-`;
-
-
-
-
-
-const FoodList = styled.ul `
-  display: inline-block;
-  list-style: none;
-  margin: 10px;
-  width: 250px;
-  vertical-align: top;
-`
-
-const FoodItem = styled.li `
-  position: relative;
-  background: black;
-  color: white;
-  cursor: pointer;
-  padding: 10px 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  font-weight: 300;
-  background-color: ${(p) => {
-    if (p.disabled) return p.selected ? 'rgb(60, 50, 50)' : lighten(0.3, 'rgb(169, 77, 72)');
-    return p.selected ? 'rgb(70, 0, 0)' : 'rgb(169, 77, 72)';
-  }};
-  font-size: 12px;
-  &:hover {
-    i {
-      color: white;
-    }
-  }
-`
-const ToggleContainer = styled.div `
-  position: absolute;
-  right: 7px;
-  top: 5px;
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label:before {
-    background: rgba(255,255,255,0.8);
-  }
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label {
-    background: transparent;
-  }
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"]:checked + label {
-    background: transparent;
-  }
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"]:checked + label:after {
-    background-color: ${p => p.food ? 'rgb(169, 77, 72);' : 'rgb(53, 75, 92)'};
-  }
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label:after {
-    background-color: ${p => {
-      if (p.food) return lighten(0.3, 'rgb(169, 77, 72)')
-      else return lighten(0.3, 'rgb(53, 75, 92)')
-    }}
-  }
-`
 
 const HeadLine = styled.div `
   height: 50px;
@@ -125,142 +37,14 @@ const MealDetail = styled.div `
   vertical-align: top;
 `
 
-const TableTag = styled.table `
-  width: 100%;
-  border-spacing: 0;
-`;
-const Td = styled.td `
-  color: ${props => props.color};
-  font-weight: 300;
-  padding: 5px 0;
-  font-size: 14px;
-  border-bottom: 1px dashed #999;
-  color: #666;
-  &:first-child {
-    text-align: left;
-  }
-`;
-
-
-
-const NewFood = styled.li `
-  position: relative;
-  background: black;
-  color: white;
-  cursor: pointer;
-  padding: 10px 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  font-weight: 300;
-  background-color: ${(p) => p.selected ? 'rgb(70, 0, 0)' : 'rgb(169, 77, 72)'};
-  font-size: 12px;
-  &:hover {
-    i {
-      color: white;
-    }
-  }
-`
-
-const NewFoodInput = styled(Text)`
-  background: transparent;
-  width: 230px;
-  padding: 5px;
-  color: white;
-  border: none;
-  outline: none;
-`
-const NewFoodButton = styled.button `
-  position: absolute;
-  top: 0px;
-  right: 5px;
-  background: rgba(0, 0, 0, 0);
-  border: none;
-  color: white;
-  font-size: 20px;
-  padding: 10px;
-  cursor: pointer;
-`
 const SolidContainer = styled.div `
   width: 1100px;
 `
 
-const FoodImage = styled.div `
-  width: 100%;
-  height: 200px;
-  background-image: url(${(p) => p.imageURL});
-  background-size: cover;
-  background-position: center;
-`
-
-const customItemColors = [
-  '#ef5350',
-  '#7E57C2',
-  '#29B6F6',
-  '#9CCC65',
-  '#FFCA28',
-  '#8D6E63',
-  '#ef5350',
-  '#7E57C2',
-  '#29B6F6',
-  '#9CCC65',
-  '#FFCA28',
-  '#8D6E63'
-]
-
-export const Customizations = styled.div `
-  margin-top: 10px;
-`
-
-export const CustomItem = styled.div `
-  display: inline-block;
-  background: ${p => customItemColors[p.bgIndex] ? customItemColors[p.bgIndex] : 'black'};
-  margin: 3px;
-  border-radius: 40px;
-  color: white;
-  padding: 3px 12px;
-  letter-spacing: 0.3px;
-  font-weight: 400;
-  font-size: 12px;
-  button {
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: rgba(255,255,255,0.6);
-    margin-left: 5px;
-    &:hover {
-      color: white;
-    }
-  }
-`
-
-const ListOfCustomizations = ({
-  list,
-  rmButtonFunction
-}) => {
-  if (list && list.length > 0) {
-    return (
-      <Customizations>
-				{list.map((customization, i) =>
-          <CustomItem key={i} bgIndex={i}>
-            <span style={{whiteSpace: 'nowrap'}}>
-              {customization.name} {customization.price ? `${customization.price.amount}KD` : ''}
-            </span>
-            <button onClick={() => rmButtonFunction(customization)}>
-              <i className="ion-close" />
-            </button>
-          </CustomItem>
-				)}
-			</Customizations>
-    )
-  }
-  return null
-}
 
 class Menucontrol extends React.Component {
   componentDidMount() {
     const {
-      loggedRestaurant,
       getCategories,
       getAddons
     } = this.props;
@@ -269,30 +53,9 @@ class Menucontrol extends React.Component {
   }
   render() {
     const {
-      loggedRestaurant,
       categories,
-      rmCategory,
-      addCategory,
       selectedCategoryId,
-      selectCategory,
       selectedFoodId,
-      selectFood,
-      rmFood,
-      updateFood,
-      addFood,
-      getFoodOptions,
-      foodOptions,
-      rmFoodOption,
-      addFoodOption,
-      getFoodIngredients,
-      foodIngredients,
-      rmFoodIngredient,
-      addFoodIngredient,
-      getFoodAddons,
-      foodAddons,
-      rmFoodAddon,
-      addFoodAddon,
-      updateFoodNutrition,
       addons
     } = this.props;
 
@@ -303,12 +66,6 @@ class Menucontrol extends React.Component {
     let selectedFood = null
     if (selectedCategory) selectedFood = selectedCategory.items[selectedFoodId]
 
-    const addonsForSelect = addons.map((addon) => {
-      return {
-        label: addon.name,
-        value: addon.id
-      }
-    })
     return (
       <div>
         <HeadLine>
@@ -323,219 +80,42 @@ class Menucontrol extends React.Component {
             selectedCategoryId={selectedCategoryId}
           />
 
-          {selectedCategory ? <FoodList>
-            {R.toPairs(selectedCategory.items)
-              .map((pair) => ({ id: pair[0], ...pair[1] }))
-              .sort((a,b) => a.id - b.id)
-              .map((food, i) =>
-              <FoodItem key={food.id} selected={food.id === selectedFoodId} disabled={!food.published} onClick={() => selectFood({foodId: food.id})}>
-                <span>{food.name}</span>
-                <ToggleContainer food>
-                  <SwitchButton
-                    name={`switch-food-${food.id}`}
-                    type="switch"
-                    defaultChecked={food.published}
-                    onChange={() => {
-                      if(food.published) {
-                        rmFood({ foodId: food.id, enabled: false })
-                      } else rmFood({ foodId: food.id, enabled: true })
-                    }}
-                  />
-                </ToggleContainer>
-              </FoodItem>
-            )}
-            <NewFood>
-              <Form
-                onSubmit={({name}) => {
-                  console.log(name);
-                  addFood({ categoryId: selectedCategoryId, foodName: name });
-                }}
-                validate={({ name }) => {
-                  return {
-                    name: !name ? 'Name is required' : undefined,
-                  }
-                }}
-              >
-                {({submitForm}) => {
-                  return (
-                    <form onSubmit={submitForm}>
-                      <NewFoodInput field='name' placeholder='Add a new dish' />
-                      <NewFoodButton>
-                        <i className="material-icons">add</i>
-                      </NewFoodButton>
-                    </form>
-                  )
-                }}
-              </Form>
-            </NewFood>
-          </FoodList> : ''}
+          <ListOfDishes
+            selectedCategory={selectedCategory}
+            selectedFoodId={selectedFoodId}
+            selectedCategoryId={selectedCategoryId}
+          />
 
           <MealDetail>
-            {selectedFood ? <FormBox style={{width: '230px'}}>
-              {selectedFood.images ? FN.Identity(FN.MapToList(selectedFood.images), (images) =>
-                images.length > 0 ? <FoodImage imageURL={images[0].url} /> : ''
-              ): ''}
-              <FormBoxBody>
-                <Form
-                  onSubmit={(fields) => {
-                    fields.foodId = selectedFoodId
-                    console.log(fields);
-                    updateFood(fields)
-                  }}
-                  defaultValues={{
-                    name: selectedFood.name,
-                    description: selectedFood.description || '',
-                    price: selectedFood.price.amount,
-                  }}
-                  validate={({ name, description, price }) => {
-                    return {
-                      name: !name ? 'Name is required' : undefined,
-                      description: !description ? 'Description is required' : undefined,
-                      price: !price ? 'Price is required' : undefined,
-                    }
-                  }}
-                >
-                  {({submitForm}) => {
-                    return (
-                      <form onSubmit={submitForm}>
-                        <Label>Name</Label>
-                        <Text field='name' placeholder='Name of food' />
-                        <Label>Description</Label>
-                        <Textarea style={{height: '100px'}} field='description' placeholder='Description' />
-                        <Label>Price</Label>
-                        <Text type="number" field='price' placeholder='Price' />
-                        <FormBoxSubmit primary>SAVE</FormBoxSubmit>
-                      </form>
-                    )
-                  }}
-                </Form>
-              </FormBoxBody>
-            </FormBox> : ''}
+            <ItemDetail
+              selectedFood={selectedFood}
+              selectedFoodId={selectedFoodId}
+            />
           </MealDetail>
 
           <MealDetail>
             {selectedFood ? <FormBox style={{width: '230px'}}>
               <FormBoxBody>
-                <Label>Nutrition</Label>
-                <Progress type={'UPDATE_NUTRITION'}/>
-                <Form
-                  onSubmit={(nutrition) => {
-                    updateFoodNutrition({ foodId: selectedFoodId, ...nutrition })
-                  }}
-                  defaultValues={selectedFood.calories}
-                >
-                  {({submitForm}) => {
-                    return (
-                      <form onSubmit={submitForm}>
-                        <TableTag>
-                          <tbody>
-                            <tr>
-                              <Td>Total Calories</Td>
-                              <Td><Text field='total' placeholder='' /></Td>
-                            </tr>
-                            <tr>
-                              <Td>Protein</Td>
-                              <Td><Text field='proteins' placeholder='' /></Td>
-                            </tr>
-                            <tr>
-                              <Td>Total Fat</Td>
-                              <Td><Text field='fats' placeholder='' /></Td>
-                            </tr>
-                            <tr>
-                              <Td>Total Carb</Td>
-                              <Td><Text field='carbs' placeholder='' /></Td>
-                            </tr>
-                          </tbody>
-                        </TableTag>
-                        <FormBoxSubmit primary>UPDATE NUTRITION</FormBoxSubmit>
-                      </form>
-                    )
-                  }}
-                </Form>
+                <ItemNutrition
+                  selectedFood={selectedFood}
+                  selectedFoodId={selectedFoodId}
+                />
 
-                <Label>Options</Label>
-                {selectedFood.options ?
-                  <ListOfCustomizations
-                    list={FN.MapToList(selectedFood.options)}
-                    rmButtonFunction={(option) => rmFoodOption({foodId: selectedFoodId, optionName: option.name})}
-                  />
-                : 'No options'}
-                <Form
-                  onSubmit={({ optionName }) => {
-                    addFoodOption({ foodId: selectedFoodId, optionName })
-                  }}
-                  validate={({ optionName }) => {
-                    return {
-                      optionName: !optionName ? 'Name is required' : undefined
-                    }
-                  }}
-                >
-                  {({submitForm}) => {
-                    return (
-                      <form onSubmit={submitForm}>
-                        <Text field='optionName' placeholder='Name of new option' />
-                        <FormBoxSubmit primary>ADD OPTION</FormBoxSubmit>
-                      </form>
-                    )
-                  }}
-                </Form>
+                <ItemOptions
+                  selectedFood={selectedFood}
+                  selectedFoodId={selectedFoodId}
+                />
 
-                <Label>Ingredients</Label>
-                {selectedFood.ingredients ?
-                  <ListOfCustomizations
-                    list={FN.MapToList(selectedFood.ingredients)}
-                    rmButtonFunction={(ingredient) => rmFoodIngredient({foodId: selectedFoodId, ingredientName: ingredient.name})}
-                  />
-                : 'No ingredients'}
-                <Form
-                  onSubmit={({ ingredientName }) => {
-                    addFoodIngredient({ foodId: selectedFoodId, ingredientName })
-                  }}
-                  validate={({ ingredientName }) => {
-                    return {
-                      ingredientName: !ingredientName ? 'Name is required' : undefined
-                    }
-                  }}
-                >
-                  {({submitForm}) => {
-                    return (
-                      <form onSubmit={submitForm}>
-                        <Text field='ingredientName' placeholder='Name of new ingredient' />
-                        <FormBoxSubmit primary>ADD INGREDIENT</FormBoxSubmit>
-                      </form>
-                    )
-                  }}
-                </Form>
+                <ItemIngredients
+                  selectedFood={selectedFood}
+                  selectedFoodId={selectedFoodId}
+                />
 
-                <Label>Addons</Label>
-                {selectedFood.addons ?
-                  <ListOfCustomizations
-                    list={FN.MapToList(selectedFood.addons)}
-                    rmButtonFunction={(addon) => rmFoodAddon({foodId: selectedFoodId, addonId: addon.id})}
-                  />
-                : 'No addon'}
-                <Form
-                  onSubmit={({ addonId }) => {
-                    addFoodAddon({ foodId: selectedFoodId, addonId })
-                  }}
-                  validate={({ addonId }) => {
-                    return {
-                      addonId: !addonId ? 'Please select addon' : undefined
-                    }
-                  }}
-                >
-                  {({submitForm}) => {
-                    return (
-                      <form onSubmit={submitForm}>
-                        <Select
-                          field='addonId'
-                          options={addonsForSelect}
-                        />
-                        <FormBoxSubmit primary>ADD</FormBoxSubmit>
-                      </form>
-                    )
-                  }}
-                </Form>
+                <ItemAddons
+                  addons={addons}
+                  selectedFood={selectedFood}
+                  selectedFoodId={selectedFoodId}
+                />
               </FormBoxBody>
             </FormBox> : ''}
           </MealDetail>
@@ -556,20 +136,6 @@ export default connect(
     addons: state.restaurant.addons
   }), {
     getCategories: getCategoriesInitAction,
-    selectFood: selectFoodAction,
-    rmFood: rmFoodInitAction,
-    updateFood: updateFoodInitAction,
-    addFood: addFoodInitAction,
-    getFoodOptions: getFoodOptionsInit,
-    rmFoodOption: rmFoodOptionInit,
-    addFoodOption: addFoodOptionInit,
-    getFoodIngredients: getFoodIngredientsInit,
-    rmFoodIngredient: rmFoodIngredientInit,
-    addFoodIngredient: addFoodIngredientInit,
-    getFoodAddons: getFoodAddonsInit,
-    rmFoodAddon: rmFoodAddonInit,
-    addFoodAddon: addFoodAddonInit,
-    updateFoodNutrition: updateFoodNutritionInit,
     getAddons: getAddonsInit
   },
 )(Menucontrol);

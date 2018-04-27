@@ -1,18 +1,12 @@
 // @flow
 import React from 'react'
-import R from 'ramda'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { Form, Text, Select } from 'react-form'
 import SwitchButton from 'react-switch-button'
 import 'react-switch-button/dist/react-switch-button.css'
-import moment from 'moment'
 import {
   FormBox,
   FormBoxHead,
   FormBoxBody,
-  FormBoxSubmit,
-  Label
 } from '../../styled/FormBox'
 import {
   updateCategoryInitAction

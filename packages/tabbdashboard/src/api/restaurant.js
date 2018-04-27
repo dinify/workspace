@@ -74,7 +74,7 @@ export function ChangeLocation({ longitude, latitude }) {
 export function ChangeHours(payload) {
   delete payload['restaurantId']
   const openHours = payload
-  return Post({ path: `restaurant/my`, v3: true }, {openHours})
+  return Post({ path: `restaurant/my`, v3: true }, {open_hours: openHours})
 }
 
 //export function AddTablet({ restaurantId, login_id, pass_enc, name }) {

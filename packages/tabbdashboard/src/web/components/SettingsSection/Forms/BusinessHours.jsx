@@ -137,11 +137,14 @@ const BusinessHours = ({
   })
 
   const withNewData = (updObj) => {
-    let newObj = openHours
-    definedDays.map((day) => {
-      openHours[day].map((range, i) => {
-        newObj[day][i][0] = updObj[`${day}_${i}_from`]
-        newObj[day][i][1] = updObj[`${day}_${i}_to`]
+    let newObj = []
+    definedDays.map((day, j) => {
+      openHours[day].forEach((range, i) => {
+        newObj.push({
+          weekday: j,
+          from: updObj[`${day}_${i}_from`],
+          to: updObj[`${day}_${i}_to`]
+        })
       })
     })
     return newObj

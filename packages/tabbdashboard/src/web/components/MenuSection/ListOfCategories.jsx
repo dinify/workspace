@@ -1,27 +1,16 @@
 // @flow
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 import styled from 'styled-components'
 import SwitchButton from 'react-switch-button'
 import { lighten } from 'polished'
 
 import {
-  FormBox,
-  FormBoxHead,
-  FormBoxBody,
-  FormBoxSubmit,
-  Label
-} from '../styled/FormBox'
-import {
   rmCategoryInitAction,
   addCategoryInitAction,
   selectCategoryAction
 } from '../../../ducks/restaurant'
-import Progress from '../Progress'
-import FlatButton from 'material-ui/FlatButton';
-import Text from '../MaterialInputs/Text'
 
 const CategoriesList = styled.ul `
   display: inline-block;
@@ -42,15 +31,6 @@ const NewFoodButton = styled.button `
   cursor: pointer;
 `
 
-const NewFoodInput = styled.input`
-  background: transparent;
-  width: 230px;
-  padding: 5px;
-  color: white;
-  border: none;
-  outline: none;
-`
-
 const NewCategory = styled.li `
   position: relative;
   background: black;
@@ -62,6 +42,14 @@ const NewCategory = styled.li `
   font-weight: 300;
   background-color: ${(p) => p.selected ? 'rgb(0, 20, 50)' : 'rgb(53, 75, 92)'};
   font-size: 12px;
+  .CategoryInput {
+    background: transparent;
+    width: 230px;
+    padding: 5px;
+    color: white;
+    border: none;
+    outline: none;
+  }
   &:hover {
     i {
       color: white;
@@ -118,7 +106,13 @@ let CreateCategoryForm = ({
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Field name="categoryName" component={(props) => <NewFoodInput {...props.input} />} type="text" placeholder="Add a new category" />
+      <Field
+        name="categoryName"
+        className="CategoryInput"
+        component="input"
+        type="text"
+        placeholder="Add a new category"
+      />
       <NewFoodButton>
         <i className="material-icons">add</i>
       </NewFoodButton>
@@ -136,6 +130,7 @@ const ListOfCategories = ({
   rmCategory,
   selectCategory
 }) => {
+  if (!categories) return (<div />)
   return (
     <CategoriesList>
       {categories.sort((a,b) => a.id - b.id).map((c, i) =>

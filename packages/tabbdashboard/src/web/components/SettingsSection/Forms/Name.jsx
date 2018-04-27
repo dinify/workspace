@@ -1,14 +1,11 @@
 // @flow
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 import {
   FormBox,
   FormBoxHead,
-  FormBoxBody,
-  FormBoxSubmit,
-  Label
+  FormBoxBody
 } from '../../styled/FormBox'
 import {
   updateNameInitAction
