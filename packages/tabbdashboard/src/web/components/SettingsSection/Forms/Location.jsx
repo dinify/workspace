@@ -19,6 +19,7 @@ import {
   updateLocationInitAction
 } from '../../../../ducks/restaurant'
 import Progress from '../../Progress'
+import FlatButton from 'material-ui/FlatButton';
 
 const areaNames = R.sort((a, b) => {
   return a.localeCompare(b);
@@ -120,7 +121,7 @@ const Location = ({
                 />
                 <Text field='longitude' placeholder='Longitude' />
                 <Text field='latitude' placeholder='Latitude' />
-                <FormBoxSubmit>SAVE</FormBoxSubmit>
+                <FlatButton type="submit" label="Update" fullWidth={true} />
               </form>
             )
           }}

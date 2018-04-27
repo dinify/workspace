@@ -27,6 +27,7 @@ let BankingForm = ({
       <Field name="bank_name" component={Text} placeholder="Bank name" />
       <Field name="beneficiary_name" component={Text} placeholder="Beneficiary name" />
       <Field name="iban" component={Text} placeholder="IBAN number" />
+      <Field name="bic" component={Text} placeholder="BIC" />
       <FlatButton type="submit" label="Update" fullWidth={true} />
     </form>
   )

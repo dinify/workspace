@@ -50,11 +50,9 @@ export function ChangeContact({ phone, email, website }) {
   })
 }
 
-export function ChangeBank({ bank_name, beneficiary_name, iban }) {
-  return Post({ path: `restaurant/my`, v3: true }, {
-    payout: {
-      bank_name, beneficiary_name, iban
-    }
+export function ChangeBank({ bank_name, beneficiary_name, iban, bic }) {
+  return Post({ path: `restaurant/my/payout`, v3: true }, {
+    bank_name, beneficiary_name, iban, bic
   })
 }
 

@@ -12,10 +12,10 @@ import SwitchButton from 'react-switch-button'
 import * as FN from '../../../lib/FN'
 import { Form, Text, Select, Textarea } from 'react-form'
 import Progress from '../Progress'
+import ListOfCategories from './ListOfCategories'
 
 import {
-  getCategoriesInitAction, rmCategoryInitAction, addCategoryInitAction,
-  selectCategoryAction, selectFoodAction, rmFoodInitAction, updateFoodInitAction,
+  getCategoriesInitAction, selectFoodAction, rmFoodInitAction, updateFoodInitAction,
   addFoodInitAction, getFoodOptionsInit, rmFoodOptionInit, addFoodOptionInit,
   getFoodIngredientsInit, rmFoodIngredientInit, addFoodIngredientInit,
   getFoodAddonsInit, rmFoodAddonInit, updateFoodNutritionInit,
@@ -48,34 +48,9 @@ const TD = styled.td `
   padding: 10px;
 `;
 
-const CategoriesList = styled.ul `
-  display: inline-block;
-  list-style: none;
-  margin: 10px;
-  width: 250px;
-  vertical-align: top;
-`
 
-const CategoryItem = styled.li `
-  position: relative;
-  background: black;
-  color: white;
-  padding: 10px 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  font-weight: 300;
-  background-color: ${(p) => {
-    if (p.disabled) return p.selected ? 'rgb(30, 30, 50)' : lighten(0.3, 'rgb(53, 75, 92)');
-    return p.selected ? 'rgb(0, 20, 50)' : 'rgb(53, 75, 92)';
-  }};
-  font-size: 12px;
-  cursor: pointer;
-  &:hover {
-    i {
-      color: white;
-    }
-  }
-`
+
+
 
 const FoodList = styled.ul `
   display: inline-block;
@@ -105,7 +80,6 @@ const FoodItem = styled.li `
     }
   }
 `
-
 const ToggleContainer = styled.div `
   position: absolute;
   right: 7px;
@@ -167,23 +141,7 @@ const Td = styled.td `
   }
 `;
 
-const NewCategory = styled.li `
-  position: relative;
-  background: black;
-  color: white;
-  cursor: pointer;
-  padding: 10px 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  font-weight: 300;
-  background-color: ${(p) => p.selected ? 'rgb(0, 20, 50)' : 'rgb(53, 75, 92)'};
-  font-size: 12px;
-  &:hover {
-    i {
-      color: white;
-    }
-  }
-`
+
 
 const NewFood = styled.li `
   position: relative;
@@ -359,49 +317,11 @@ class Menucontrol extends React.Component {
           <H>Dish Detail</H>
         </HeadLine>
         <SolidContainer>
-          <CategoriesList>
-            {categories.sort((a,b) => a.id - b.id).map((c, i) =>
-              <CategoryItem key={c.id} selected={c.id === selectedCategoryId} disabled={!c.published} onClick={() => selectCategory({categoryId: c.id})}>
-                <span>{c.name}</span>
-                <ToggleContainer category>
-                  <SwitchButton
-                    name={`switch-category-${c.id}`}
-                    type="switch"
-                    defaultChecked={c.published}
-                    onChange={() => {
-                      if(c.published) {
-                        rmCategory({ categoryId: c.id, enabled: false })
-                      } else rmCategory({ categoryId: c.id, enabled: true })
-                    }}
-                  />
-                </ToggleContainer>
-              </CategoryItem>
-            )}
-            <NewCategory>
-              <Form
-                onSubmit={({ categoryName }) => {
-                  console.log('Success!', { categoryName });
-                  addCategory({ categoryName });
-                }}
-                validate={({ categoryName }) => {
-                  return {
-                    categoryName: !categoryName ? 'Category Name is required' : undefined,
-                  }
-                }}
-              >
-                {({submitForm}) => {
-                  return (
-                    <form onSubmit={submitForm}>
-                      <NewFoodInput field='categoryName' placeholder='Add a new category' />
-                      <NewFoodButton>
-                        <i className="material-icons">add</i>
-                      </NewFoodButton>
-                    </form>
-                  )
-                }}
-              </Form>
-            </NewCategory>
-          </CategoriesList>
+
+          <ListOfCategories
+            categories={categories}
+            selectedCategoryId={selectedCategoryId}
+          />
 
           {selectedCategory ? <FoodList>
             {R.toPairs(selectedCategory.items)
@@ -636,9 +556,6 @@ export default connect(
     addons: state.restaurant.addons
   }), {
     getCategories: getCategoriesInitAction,
-    rmCategory: rmCategoryInitAction,
-    addCategory: addCategoryInitAction,
-    selectCategory: selectCategoryAction,
     selectFood: selectFoodAction,
     rmFood: rmFoodInitAction,
     updateFood: updateFoodInitAction,
