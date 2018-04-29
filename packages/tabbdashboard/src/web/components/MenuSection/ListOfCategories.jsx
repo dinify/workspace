@@ -5,6 +5,8 @@ import { Field, reduxForm } from 'redux-form'
 import styled from 'styled-components'
 import SwitchButton from 'react-switch-button'
 import { lighten } from 'polished'
+import { SortableContainer, SortableElement } from 'react-sortable-hoc'
+
 
 import {
   rmCategoryInitAction,
@@ -123,6 +125,44 @@ CreateCategoryForm = reduxForm({
   form: 'menu/createCategory'
 })(CreateCategoryForm)
 
+const SortableItem = SortableElement(({ category, selectedCategoryId, selectCategory, rmCategory }) =>
+  <CategoryItem
+    key={category.id}
+    selected={category.id === selectedCategoryId}
+    disabled={!category.published}
+    onClick={() => selectCategory({categoryId: category.id})}
+  >
+    <span>{category.name}</span>
+    <ToggleContainer category>
+      <SwitchButton
+        name={`switch-category-${category.id}`}
+        type="switch"
+        defaultChecked={category.published}
+        onChange={() => {
+          if(category.published) {
+            rmCategory({ categoryId: category.id, enabled: false })
+          } else rmCategory({ categoryId: category.id, enabled: true })
+        }}
+      />
+    </ToggleContainer>
+  </CategoryItem>
+);
+
+const SortableList = SortableContainer(({ categories, deps }) => {
+  return (
+    <div>
+      {categories.map((category, index) => (
+        <SortableItem
+          key={`item-${index}`}
+          index={index}
+          category={category}
+          {...deps}
+        />
+      ))}
+    </div>
+  );
+});
+
 const ListOfCategories = ({
   categories,
   selectedCategoryId,
@@ -133,23 +173,15 @@ const ListOfCategories = ({
   if (!categories) return (<div />)
   return (
     <CategoriesList>
-      {categories.sort((a,b) => a.id - b.id).map((c, i) =>
-        <CategoryItem key={c.id} selected={c.id === selectedCategoryId} disabled={!c.published} onClick={() => selectCategory({categoryId: c.id})}>
-          <span>{c.name}</span>
-          <ToggleContainer category>
-            <SwitchButton
-              name={`switch-category-${c.id}`}
-              type="switch"
-              defaultChecked={c.published}
-              onChange={() => {
-                if(c.published) {
-                  rmCategory({ categoryId: c.id, enabled: false })
-                } else rmCategory({ categoryId: c.id, enabled: true })
-              }}
-            />
-          </ToggleContainer>
-        </CategoryItem>
-      )}
+
+      <SortableList
+        distance={1}
+        categories={categories.sort((a,b) => a.id - b.id)}
+        deps={{
+          selectedCategoryId, selectCategory, rmCategory
+        }}
+      />
+
       <NewCategory>
         <CreateCategoryForm onSubmit={addCategory} />
       </NewCategory>

@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import * as FN from '../../../lib/FN'
+import Dropzone from 'react-dropzone'
 import {
   FormBox,
   FormBoxBody,
@@ -10,7 +11,8 @@ import {
   Label
 } from '../styled/FormBox'
 import {
-  updateFoodInitAction
+  updateFoodInitAction,
+  uploadItemImageInitAction
 } from '../../../ducks/restaurant'
 import { Form, Text, Textarea } from 'react-form'
 import Progress from '../Progress'
@@ -26,7 +28,8 @@ const FoodImage = styled.div `
 const ItemDetail = ({
   selectedFood,
   selectedFoodId,
-  updateFood
+  updateFood,
+  uploadItemImage
 }) => {
   return (
     <div>
@@ -34,6 +37,22 @@ const ItemDetail = ({
         {selectedFood.images ? FN.Identity(FN.MapToList(selectedFood.images), (images) =>
           images.length > 0 ? <FoodImage imageURL={images[0].url} /> : ''
         ): ''}
+        <Dropzone
+          accept="image/jpg, image/jpeg, image/png"
+          onDrop={(accepted, rejected) => {
+            if (accepted && accepted.length > 0) uploadItemImage({ file: accepted[0], id: selectedFoodId })
+          }}
+          style={{
+            width: '250px',
+            padding: '10px',
+            fontSize: '11px',
+            border: '1px dashed #ccc',
+            margin: '10px 0'
+          }}
+        >
+          <p>Try dropping your photo here, or click to select file to upload.</p>
+          <p>Only *.jpg and *.png image will be accepted</p>
+        </Dropzone>
         <FormBoxBody>
           <Form
             onSubmit={(fields) => {
@@ -79,6 +98,7 @@ const ItemDetail = ({
 
 export default connect(
   state => ({}), {
-    updateFood: updateFoodInitAction
+    updateFood: updateFoodInitAction,
+    uploadItemImage: uploadItemImageInitAction,
   }
 )(ItemDetail);

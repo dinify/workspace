@@ -195,6 +195,7 @@ export const rmFoodInitAction = (payload) => ({ type: 'RM_FOOD_INIT', payload })
 export const addFoodInitAction = (payload) => ({ type: 'ADD_FOOD_INIT', payload })
 export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', payload })
 export const uploadMainImageInitAction = (payload) => ({ type: 'UPDATE_IMAGE_INIT', payload })
+export const uploadItemImageInitAction = (payload) => ({ type: 'UPDATE_ITEMIMAGE_INIT', payload })
 
 export const updateFoodNutritionInit = (payload) => ({ type: 'UPDATE_NUTRITION_INIT', payload })
 

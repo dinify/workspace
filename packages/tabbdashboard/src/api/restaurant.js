@@ -160,6 +160,10 @@ export function AddAddonprice({ addonId, price }) {
 }
 
 // API V2
+export function ChangeItemimage({ file, id }) {
+  return PostMultipart({ path: `menu/item/${id}/image/upload`, v3: true }, { image: file })
+}
+
 export function ChangeImage({ file }) {
   return PostMultipart({ path: `restaurant/my/image/upload`, v3: true }, { image: file })
 }
