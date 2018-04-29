@@ -1,16 +1,22 @@
 // @flow
 import React from 'react';
+import { compose } from 'redux';
 import R from 'ramda';
 import * as FN from '../../../lib/FN';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { Form, Text } from 'react-form';
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import QRCode from 'qrcode.react'
-import SwitchButton from 'react-switch-button';
-import 'react-switch-button/dist/react-switch-button.css';
+import SwitchButton from 'react-switch-button'
+import 'react-switch-button/dist/react-switch-button.css'
 import { HorizontalLine } from '../styled/HorizontalLine'
 import numeral from 'numeral'
+
+import FlatButton from 'material-ui/FlatButton'
+import Text from '../MaterialInputs/Text'
+import { Field, reduxForm } from 'redux-form'
+import Progress from '../Progress'
+
 import {
   FormBox,
   FormBoxHead,
@@ -20,10 +26,9 @@ import {
 } from '../styled/FormBox';
 import {
   createWaiterboardInitAction,
-  addTablesToWBInitAction,
-  addTableToWBInitAction,
-  deleteTableInitAction,
-  deleteWBInitAction
+  deleteWaiterboardInitAction,
+  createTableInitAction,
+  deleteTableInitAction
 } from '../../../ducks/restaurant'
 
 const Tablet = styled.div `
@@ -129,17 +134,57 @@ const TableTag = styled.table`
   }
 `
 
+let CreateWaiterboardForm = ({
+  handleSubmit
+}) => {
+  return (
+    <form onSubmit={handleSubmit} className="center">
+      <Field name="name" component={Text} componentProps={{
+        placeholder: "Waiterboard Name",
+        fullWidth: true
+      }} />
+      <FlatButton type="submit" label="Create" fullWidth={true} />
+    </form>
+  )
+}
+CreateWaiterboardForm = reduxForm({
+  form: 'waiterboards/createWaiterboard',
+  enableReinitialize: true
+})(CreateWaiterboardForm)
+
+
+let CreateTableForm = ({
+  handleSubmit
+}) => {
+  return (
+    <form onSubmit={handleSubmit} className="center">
+      <Field name="capacity" component={Text} componentProps={{
+        placeholder: "Capacity of Table",
+        type: 'number'
+      }} />
+      <Field name="number" component={Text} componentProps={{
+        placeholder: "Number of Table",
+        type: 'number'
+      }} />
+      <FlatButton type="submit" label="Add Table" />
+    </form>
+  )
+}
+CreateTableForm = compose(
+  connect((state, props) => ({
+    form: `waiterboards/${props.waiterboardId}/createTable`
+  })),
+  reduxForm()
+)(CreateTableForm);
 
 class Waiterboards extends React.Component {
   render() {
     let {
       loggedRestaurant,
       createWaiterboard,
-      addTabletDone,
-      addTablesToWB,
-      addTableToWB,
+      deleteWaiterboard,
+      createTable,
       deleteTable,
-      deleteWB
     } = this.props
 
     const waiterboards = FN.MapToList(loggedRestaurant.waiterboards).map((wb) => {
@@ -176,11 +221,9 @@ class Waiterboards extends React.Component {
                       <td key={table.id}>
                         <Table>
                           <Filter>
-                            <div>Code {table.code}</div>
-                            <div>X {table.x}</div>
-                            <div>Y {table.y}</div>
+                            <div># {table.number}</div>
                             <div>Capacity {table.capacity}</div>
-                            <button onClick={() => deleteTable({id: table.id})}>Delete</button>
+                            <button onClick={() => deleteTable({id: table.id, waiterboardId: wb.id})}>Delete</button>
                           </Filter>
                         </Table>
                       </td>
@@ -189,22 +232,35 @@ class Waiterboards extends React.Component {
                 )}
               </tbody>
             </TableTag>
-            <div>Unplaced</div>
             <div>
               {wb.tablesExtra.map((table) =>
-                <Table fixedWidth>
-                  <div>{table.code}</div>
-                  <div>X{table.x}</div>
-                  <div>Y{table.y}</div>
-                  <button onClick={() => deleteTable({id: table.id})}>Delete</button>
+                <Table fixedWidth key={table.id}>
+                  <Filter>
+                    <div># {table.number}</div>
+                    <div>Capacity {table.capacity}</div>
+                    <button onClick={() => deleteTable({id: table.id, waiterboardId: wb.id})}>Delete</button>
+                  </Filter>
                 </Table>
               )}
             </div>
+            <CreateTableForm
+              waiterboardId={wb.id}
+              onSubmit={({ capacity, number }) => createTable({
+                capacity, number, waiterboardId: wb.id
+              })}
+            />
+            <FlatButton onClick={() => deleteWaiterboard({id: wb.id})} label="Delete Waiterboard"/>
           </WB>
         )}
-        <WB className="button">
-          Add waiterboard
-        </WB>
+        <FormBox fullWidth>
+          <FormBoxHead>
+            <span>Create Waiterboard</span>
+            <Progress type={'CREATE_WAITERBOARD'}/>
+          </FormBoxHead>
+          <FormBoxBody material>
+            <CreateWaiterboardForm onSubmit={createWaiterboard} />
+          </FormBoxBody>
+        </FormBox>
       </div>
     )
   }
@@ -213,12 +269,10 @@ class Waiterboards extends React.Component {
 export default connect(
   state => ({
     loggedRestaurant: state.restaurant.loggedRestaurant,
-    addTabletDone: state.restaurant.addTabletDone
   }), {
     createWaiterboard: createWaiterboardInitAction,
-    addTablesToWB: addTablesToWBInitAction,
-    addTableToWB: addTableToWBInitAction,
+    deleteWaiterboard: deleteWaiterboardInitAction,
+    createTable: createTableInitAction,
     deleteTable: deleteTableInitAction,
-    deleteWB: deleteWBInitAction,
   },
 )(Waiterboards);

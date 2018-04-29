@@ -11,6 +11,7 @@ const Text = (props) => {
       onChange={(e, newValue) => {
         onChange(newValue)
       }}
+      {...props.componentProps}
     />
   )
 }

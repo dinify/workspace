@@ -110,6 +110,29 @@ export default function reducer(state: State = initialState, action: Action) {
     case 'API_GET_ADDONS_DONE': {
       return R.assoc('addons', action.payload.response)(state)
     }
+    case 'CREATE_WAITERBOARD_DONE': {
+      const newWaiterboard = action.payload
+      return R.assocPath(['loggedRestaurant', 'waiterboards', newWaiterboard.id], newWaiterboard)(state)
+    }
+    case 'REMOVE_WAITERBOARD_DONE': {
+      return R.dissocPath(['loggedRestaurant', 'waiterboards', action.payload.id])(state)
+    }
+    case 'CREATE_TABLE_DONE': {
+      const newTable = action.payload
+      return R.assocPath(
+        ['loggedRestaurant', 'waiterboards', newTable.waiterboard_id, 'tables', newTable.id],
+        {
+          ...newTable,
+          x: null,
+          y: null
+        }
+      )(state)
+    }
+    case 'REMOVE_TABLE_DONE': {
+      return R.dissocPath(
+        ['loggedRestaurant', 'waiterboards', action.payload.waiterboardId, 'tables', action.payload.id]
+      )(state)
+    }
     case 'ADD_DAY_TO_BUSINESSHOURS': {
       return R.assocPath(['loggedRestaurant', 'open_hours'],
         R.assoc(action.payload.dayName,
@@ -155,8 +178,13 @@ export const loggedFetchedAction = (payload) => ({ type: LOGGED_FETCHED_DONE, pa
 export const signupInitAction = (payload) => ({ type: SIGNUP_INIT, payload })
 
 export const appBootstrap = () => ({ type: BOOTSTRAP })
-export const createWaiterboardInitAction = (payload) => ({ type: ADD_WB_INIT, payload })
-export const createWaiterboardDoneAction = () => ({ type: ADD_WB_DONE })
+
+export const createWaiterboardInitAction = (payload) => ({ type: 'CREATE_WAITERBOARD_INIT', payload })
+export const deleteWaiterboardInitAction = (payload) => ({type: 'REMOVE_WAITERBOARD_INIT', payload})
+
+export const createTableInitAction = (payload) => ({ type: 'CREATE_TABLE_INIT', payload })
+export const deleteTableInitAction = (payload) => ({ type: 'REMOVE_TABLE_INIT', payload })
+
 export const getBillsInitAction = (payload) => ({ type: GET_BILLS_INIT, payload })
 export const getBillsDoneAction = (payload) => ({ type: GET_BILLS_DONE, payload })
 export const getCategoriesInitAction = () => ({ type: 'GET_CATEGORIES_INIT' })
@@ -173,36 +201,6 @@ export const updateFoodNutritionInit = (payload) => ({ type: 'UPDATE_NUTRITION_I
 export const addDayToBusinessHours = (payload) => ({ type: 'ADD_DAY_TO_BUSINESSHOURS', payload })
 export const addRangeToBusinessHours = (payload) => ({ type: 'ADD_RANGE_TO_BUSINESSHOURS', payload })
 
-export const deleteTableInitAction = (payload) => ({
-  type: 'API_RM_TABLE_INIT',
-  payload: {
-    ...payload,
-    successActionType: 'persist/REHYDRATE'
-  }
-})
-
-export const deleteWBInitAction = (payload) => ({
-  type: 'API_RM_WB_INIT',
-  payload: {
-    ...payload,
-    successActionType: 'persist/REHYDRATE'
-  }
-})
-
-export const addTablesToWBInitAction = (payload) => ({
-  type: 'API_ADD_TABLES_INIT',
-  payload: {
-    ...payload,
-    successActionType: 'persist/REHYDRATE'
-  }
-})
-export const addTableToWBInitAction = (payload) => ({
-  type: 'API_ADD_TABLE_INIT',
-  payload: {
-    ...payload,
-    successActionType: 'persist/REHYDRATE'
-  }
-})
 
 export const getFoodOptionsInit = (payload) => ({ type: 'API_GET_FOODOPTIONS_INIT', payload })
 export const rmFoodOptionInit = (payload) => ({
@@ -328,7 +326,7 @@ const loginEpic = (action$: Observable, { getState }) =>
     .map((res) => {
       setCookie('access_token', res.token, 30)
       if (crRest) {
-        return { type: 'CREATE_RESTAURANT_INIT', payload: { name, subdomain, email, password } }
+        return { type: 'REGISTER_RESTAURANT_INIT', payload: { name, subdomain, email, password } }
       } else {
         loginDoneAction(res)
       }
@@ -341,13 +339,28 @@ export const createRestaurantDoneAction = ({ email, password }) => {
   //return { type: 'CREATE_RESTAURANT_DONE', payload: res }
 }
 
-const createRestaurantEpic = (action$: Observable, { getState }) =>
+const registerRestaurantEpic = (action$: Observable, { getState }) =>
   action$
-  .ofType('CREATE_RESTAURANT_INIT')
+  .ofType('REGISTER_RESTAURANT_INIT')
   .switchMap(({ payload: { name, subdomain, email, password } }) => {
     return Observable.fromPromise(API.CreateRestaurant({ name, subdomain }))
     .map(() => createRestaurantDoneAction({ email, password }))
     .catch(error => Observable.of(loginFailAction(error)))
+  })
+
+const createEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+  .filter(action => action.type.includes('CREATE_') && action.type.includes('_INIT'))
+  .switchMap(({ payload, type }) => {
+    const subject = type.replace('CREATE_','').replace('_INIT','')
+    const apiFnName = `Create${camel(subject)}`
+    return Observable
+    .fromPromise(API[apiFnName]({
+      restaurantId: getState().restaurant.loggedRestaurant.id,
+      ...payload
+    }))
+    .map((res) => ({ type: `CREATE_${subject}_DONE`, payload: res }))
+    .catch(error => Observable.of({ type: `CREATE_${subject}_FAIL`, payload: error }))
   })
 
 const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
@@ -355,10 +368,29 @@ const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
   .filter(action => action.type.includes('UPDATE_') && action.type.includes('_INIT'))
   .switchMap(({ payload, type }) => {
     const subject = type.replace('UPDATE_','').replace('_INIT','')
+    const apiFnName = `Change${camel(subject)}`
     return Observable
-    .fromPromise(API[`Change${camel(subject)}`]({ restaurantId: getState().restaurant.loggedRestaurant.id, ...payload }))
+    .fromPromise(API[apiFnName]({
+      restaurantId: getState().restaurant.loggedRestaurant.id,
+      ...payload
+    }))
     .map((res) => ({ type: `UPDATE_${subject}_DONE`, payload: res }))
     .catch(error => Observable.of({ type: `UPDATE_${subject}_FAIL`, payload: error }))
+  })
+
+const removeEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+  .filter(action => action.type.includes('REMOVE_') && action.type.includes('_INIT'))
+  .switchMap(({ payload, type }) => {
+    const subject = type.replace('REMOVE_','').replace('_INIT','')
+    const apiFnName = `Delete${camel(subject)}`
+    return Observable
+    .fromPromise(API[apiFnName]({
+      restaurantId: getState().restaurant.loggedRestaurant.id,
+      ...payload
+    }))
+    .map(() => ({ type: `REMOVE_${subject}_DONE`, payload }))
+    .catch(error => Observable.of({ type: `REMOVE_${subject}_FAIL`, payload: error }))
   })
 
 const editImageEpic = (action$: Observable, { getState }) =>
@@ -372,16 +404,7 @@ const editImageEpic = (action$: Observable, { getState }) =>
     .catch(error => Observable.of({ type: `EDIT_IMAGE_FAIL`, payload: error }))
   })
 
-const createWaiterboardEpic = (action$: Observable, { getState }: EpicDependencies) =>
-  action$
-  .ofType(ADD_WB_INIT)
-  .switchMap(({ payload: { name, login, password } }) =>
-    Observable.fromPromise(API.CreateWaiterboard({
-      name, login, password
-    }))
-    .map(createWaiterboardDoneAction)
-    .catch(error => console.log(error))
-  )
+
 const getBillsEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .ofType(GET_BILLS_INIT)
@@ -429,15 +452,6 @@ const rmFoodEpic = (action$: Observable) =>
     Observable.fromPromise(API.ToggleFood({ foodId, enabled }))
       .map(getCategoriesInitAction)
       .catch(error => console.log(error))
-  )
-
-const updateFoodEpic = (action$: Observable) =>
-  action$
-  .ofType('UPDATE_FOOD_INIT')
-  .switchMap(({ payload: { foodId, name, description, price } }) =>
-    Observable.fromPromise(API.UpdateFood({ foodId, name, description, price }))
-    .map(getCategoriesInitAction)
-    .catch(error => Observable.of(console.log(error)))
   )
 
 const addFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
@@ -506,16 +520,16 @@ export const epics = [
   bootstrapEpic,
   loginEpic,
   registrationEpic,
-  createRestaurantEpic,
+  registerRestaurantEpic,
+  createEpic,
   updateEpic,
+  removeEpic,
   editImageEpic,
-  createWaiterboardEpic,
   getBillsEpic,
   getCategoriesEpic,
   rmCategoryEpic,
   addCategoryEpic,
   rmFoodEpic,
-  updateFoodEpic,
   addFoodEpic,
   apiGetEpic,
   apiRmEpic,

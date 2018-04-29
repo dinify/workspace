@@ -13,6 +13,7 @@ import {
   updateFoodInitAction
 } from '../../../ducks/restaurant'
 import { Form, Text, Textarea } from 'react-form'
+import Progress from '../Progress'
 
 const FoodImage = styled.div `
   width: 100%;
@@ -56,7 +57,10 @@ const ItemDetail = ({
             {({submitForm}) => {
               return (
                 <form onSubmit={submitForm}>
-                  <Label>Name</Label>
+                  <Label>
+                    <span>Name</span>
+                    <Progress type={'UPDATE_FOOD'}/>
+                  </Label>
                   <Text field='name' placeholder='Name of food' />
                   <Label>Description</Label>
                   <Textarea style={{height: '100px'}} field='description' placeholder='Description' />

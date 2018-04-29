@@ -115,10 +115,7 @@ const Location = ({
           {({submitForm}) => {
             return (
               <form onSubmit={submitForm}>
-                <Select
-                  field='name'
-                  options={areaNames}
-                />
+
                 <Text field='longitude' placeholder='Longitude' />
                 <Text field='latitude' placeholder='Latitude' />
                 <FlatButton type="submit" label="Update" fullWidth={true} />

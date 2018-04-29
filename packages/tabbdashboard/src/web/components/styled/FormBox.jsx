@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const FormBox = styled.div`
   background: #fff;
   display: inline-block;
-  width: 280px;
+  width: ${p => p.fullWidth ? '100%' : '280px'};
   border: none;
   vertical-align: top;
-  margin: 10px;
+  margin: ${p => p.fullWidth ? '10px 0' : '10px'};
   overflow: hidden;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 `

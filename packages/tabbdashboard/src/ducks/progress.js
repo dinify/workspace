@@ -6,7 +6,7 @@ const initialState = {
 }
 
 export default function reducer(state: State = initialState, action: Action) {
-  if(action.type.includes('UPDATE')) {
+  if(action.type.includes('UPDATE') || action.type.includes('CREATE') || action.type.includes('REMOVE')) {
     let stage = ''
     let key = action.type
     if (action.type.includes('_INIT')) {

@@ -81,8 +81,20 @@ export function ChangeHours(payload) {
 //  return Post({ path: `restaurant/${restaurantId}/shop` }, { login_id, pass_enc, name })
 //}
 
-export function CreateWaiterboard({ login, password, name }) {
-  return Post({ path: `api/v2/restaurant/waiterboard/register`, v2: true }, { login, password, name })
+export function CreateWaiterboard({ name }) {
+  return Post({ path: `waiterboard/create`, v3: true }, { name })
+}
+
+export function DeleteWaiterboard({ id }) {
+  return Post({ path: `waiterboard/${id}/delete`, v3: true }, { id })
+}
+
+export function CreateTable({ number, capacity, waiterboardId }) {
+  return Post({ path: `table/create`, v3: true }, { number, capacity, waiterboard_id: waiterboardId })
+}
+
+export function DeleteTable({ id }) {
+  return Post({ path: `table/${id}/delete`, v3: true })
 }
 
 export function GetBills({ from, to }) {
@@ -108,7 +120,7 @@ export function AddFood({ categoryId, foodName }) {
     })
 }
 
-export function UpdateFood({ foodId, name, description, price, calories }) {
+export function ChangeFood({ foodId, name, description, price, calories }) {
   return Post({ path: `menu/item/${foodId}`, v3: true }, {
     name: name || undefined,
     description: description || undefined,
@@ -133,10 +145,6 @@ export function ToggleCategory({ categoryId, enabled }) {
 }
 export function ToggleFood({ foodId, enabled }) {
   return Post({ path: `menu/item/${foodId}`, v3: true }, { published: enabled })
-}
-
-export function RmTable({ id }) {
-  return Post({ path: `table/${id}/delete`, v3: true })
 }
 
 export function GetAddons() {
@@ -185,18 +193,6 @@ export function AddFoodaddon({ foodId, addonId }) {
 }
 export function RmFoodaddon({ foodId, addonId }) {
   return Delete({ path: `api/v2/restaurant/food/${foodId}/addon`, v2: true }, { addonId })
-}
-
-export function AddTables({ from, to, waiterboardId }) {
-  return Post({ path: `api/v2/restaurant/waiterboard/tables`, v2: true }, { from, to, waiterboardId })
-}
-
-export function AddTable({ position, waiterboardId }) {
-  return Post({ path: `api/v2/restaurant/waiterboard/table`, v2: true }, { position, waiterboardId })
-}
-
-export function RmWb({ id }) {
-  return Delete({ path: `api/v2/restaurant/waiterboard`, v2: true }, { id })
 }
 
 //export function RemoveTablet({ restaurantId, login_id }) {
