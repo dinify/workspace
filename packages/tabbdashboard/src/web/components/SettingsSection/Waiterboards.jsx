@@ -158,13 +158,17 @@ let CreateTableForm = ({
 }) => {
   return (
     <form onSubmit={handleSubmit} className="center">
-      <Field name="capacity" component={Text} componentProps={{
-        placeholder: "Capacity of Table",
-        type: 'number'
-      }} />
       <Field name="number" component={Text} componentProps={{
         placeholder: "Number of Table",
-        type: 'number'
+        type: 'number',
+        min: 1,
+        max: 1000
+      }} />
+      <Field name="capacity" component={Text} componentProps={{
+        placeholder: "Capacity of Table",
+        type: 'number',
+        min: 1,
+        max: 50
       }} />
       <FlatButton type="submit" label="Add Table" />
     </form>
@@ -174,7 +178,9 @@ CreateTableForm = compose(
   connect((state, props) => ({
     form: `waiterboards/${props.waiterboardId}/createTable`
   })),
-  reduxForm()
+  reduxForm({
+    enableReinitialize: true
+  })
 )(CreateTableForm);
 
 class Waiterboards extends React.Component {
@@ -188,11 +194,16 @@ class Waiterboards extends React.Component {
     } = this.props
 
     const waiterboards = FN.MapToList(loggedRestaurant.waiterboards).map((wb) => {
-      const tables = FN.MapToList(wb.tables)
+      const tables = FN.MapToList(wb.tables).sort((a,b) => a.number - b.number)
       const xs = R.pluck('x')(tables) // columns
       const ys = R.pluck('y')(tables) // rows
+      const tableNumbers = R.pluck('number')(tables) // numbers
+      const capacities = R.pluck('capacity')(tables) // numbers
       wb.maxX = R.apply(Math.max, xs)
       wb.maxY = R.apply(Math.max, ys)
+      wb.lastTableCapacity = R.last(capacities) || 4
+      if (tableNumbers.length < 1) wb.maxTableNumber = 0
+      else wb.maxTableNumber = R.apply(Math.max, tableNumbers)
       wb.tables = tables
       const tablesMatrix = R.range(0, wb.maxY+1).map(() => R.range(0, wb.maxX+1).map(() => null)) // tablesMatrix[y][x]
       const tablesExtra = []
@@ -200,11 +211,8 @@ class Waiterboards extends React.Component {
         if (Number.isInteger(table.x) && Number.isInteger(table.y)) tablesMatrix[table.y][table.x] = table
         else tablesExtra.push(table)
       })
-      console.log('ext');
-      console.log(tablesExtra);
       return {...wb, tablesMatrix, tablesExtra}
     })
-    console.log(waiterboards);
 
     return (
       <div>
@@ -245,6 +253,10 @@ class Waiterboards extends React.Component {
             </div>
             <CreateTableForm
               waiterboardId={wb.id}
+              initialValues={{
+                number: wb.maxTableNumber + 1,
+                capacity: wb.lastTableCapacity
+              }}
               onSubmit={({ capacity, number }) => createTable({
                 capacity, number, waiterboardId: wb.id
               })}

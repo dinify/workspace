@@ -49,8 +49,8 @@ const App = ({
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route path="/" component={Dashboard} />
           <Route path="/qr/:code" component={Qr} />
+          <Route path="/" component={Dashboard} />
         </Switch>}
     </Content>
   </Router>);
