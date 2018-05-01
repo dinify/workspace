@@ -31,68 +31,6 @@ import {
   deleteTableInitAction
 } from '../../../ducks/restaurant'
 
-const Tablet = styled.div `
-  position: relative;
-  margin: 10px;
-  background: black;
-  width: 200px;
-  height: 140px;
-  line-height: 30px;
-  text-align: center;
-  color: white;
-  border-radius: 5px;
-  display: inline-block;
-`
-
-const Desk = styled.div `
-  position: relative;
-  margin: 20px;
-  background: white;
-  width: 200px;
-  height: 220px;
-  line-height: 30px;
-  text-align: center;
-  color: black;
-  border-radius: 5px;
-  display: inline-block;
-`
-
-const DeleteDesk = styled.button `
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 18px;
-  padding: 5px;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-`
-
-const DeleteWB = styled.button `
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 18px;
-  padding: 5px;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  color: white;
-`
-
-const TabletCred = styled.div `
-  font-weight: 200;
-  i {
-    font-weight: 500;
-    font-size: 20px;
-    vertical-align: middle;
-    margin-right: 6px;
-  }
-  span {
-    vertical-align: middle;
-  }
-`
-
 const WB = styled.div`
   background: white;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
@@ -100,6 +38,9 @@ const WB = styled.div`
   margin-bottom: 10px;
   a {
     color: black;
+  }
+  h2 {
+    margin-left: 7px;
   }
   &.button {
     background: #2C9DF1;
@@ -113,18 +54,12 @@ const WB = styled.div`
 const Table = styled.div`
   display: inline-block;
   background: rgb(28,37,49);
+  text-align: center;
   color: white;
   font-size: 12px;
-
   width: ${p => p.fixedWidth ? '250px' : '100%'};
-  background-image: url('/static/wood2.jpg');
   border-radius: 3px;
   overflow: hidden;
-`
-
-const Filter = styled.div`
-  background: rgba(0,0,0,0.5);
-  padding: 10px;
 `
 
 const TableTag = styled.table`
@@ -175,10 +110,8 @@ class QRs extends React.Component {
                       <td key={table.id}>
                         <Link to={`/qr/${table.qr}`}>
                           <Table>
-                            <Filter>
                               <div># {table.number}</div>
                               <QRCode value={table.qr} />
-                            </Filter>
                           </Table>
                         </Link>
                       </td>
@@ -191,10 +124,8 @@ class QRs extends React.Component {
               {wb.tablesExtra.map((table) =>
                 <Link to={`/qr/${table.qr}`} target="_blank">
                   <Table fixedWidth key={table.id}>
-                    <Filter>
                       <div># {table.number}</div>
                       <QRCode value={table.qr} />
-                    </Filter>
                   </Table>
                 </Link>
               )}

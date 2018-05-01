@@ -111,14 +111,14 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assoc('addons', action.payload.response)(state)
     }
     case 'CREATE_WAITERBOARD_DONE': {
-      const newWaiterboard = action.payload
+      const newWaiterboard = action.payload.res
       return R.assocPath(['loggedRestaurant', 'waiterboards', newWaiterboard.id], newWaiterboard)(state)
     }
     case 'REMOVE_WAITERBOARD_DONE': {
       return R.dissocPath(['loggedRestaurant', 'waiterboards', action.payload.id])(state)
     }
     case 'CREATE_TABLE_DONE': {
-      const newTable = action.payload
+      const newTable = action.payload.res
       return R.assocPath(
         ['loggedRestaurant', 'waiterboards', newTable.waiterboard_id, 'tables', newTable.id],
         {
@@ -183,6 +183,7 @@ export const createWaiterboardInitAction = (payload) => ({ type: 'CREATE_WAITERB
 export const deleteWaiterboardInitAction = (payload) => ({type: 'REMOVE_WAITERBOARD_INIT', payload})
 
 export const createTableInitAction = (payload) => ({ type: 'CREATE_TABLE_INIT', payload })
+export const updateTableInitAction = (payload) => ({ type: 'UPDATE_TABLE_INIT', payload })
 export const deleteTableInitAction = (payload) => ({ type: 'REMOVE_TABLE_INIT', payload })
 
 export const getBillsInitAction = (payload) => ({ type: GET_BILLS_INIT, payload })
@@ -360,7 +361,7 @@ const createEpic = (action$: Observable, { getState }: EpicDependencies) =>
       restaurantId: getState().restaurant.loggedRestaurant.id,
       ...payload
     }))
-    .map((res) => ({ type: `CREATE_${subject}_DONE`, payload: res }))
+    .map((res) => ({ type: `CREATE_${subject}_DONE`, payload: { res, prePayload: payload } }))
     .catch(error => Observable.of({ type: `CREATE_${subject}_FAIL`, payload: error }))
   })
 
@@ -405,6 +406,12 @@ const editImageEpic = (action$: Observable, { getState }) =>
     .catch(error => Observable.of({ type: `EDIT_IMAGE_FAIL`, payload: error }))
   })
 
+const afterCreateTableEpic = (action$: Observable, { getState }) =>
+  action$
+  .ofType('CREATE_TABLE_DONE')
+  .switchMap(({ payload: {res, prePayload} }) => {
+    return Observable.of(updateTableInitAction({ id: res.id, x: prePayload.x, y: prePayload.y }))
+  })
 
 const getBillsEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
@@ -526,6 +533,7 @@ export const epics = [
   updateEpic,
   removeEpic,
   editImageEpic,
+  afterCreateTableEpic,
   getBillsEpic,
   getCategoriesEpic,
   rmCategoryEpic,

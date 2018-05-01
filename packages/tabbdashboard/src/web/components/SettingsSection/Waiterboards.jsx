@@ -31,75 +31,14 @@ import {
   deleteTableInitAction
 } from '../../../ducks/restaurant'
 
-const Tablet = styled.div `
-  position: relative;
-  margin: 10px;
-  background: black;
-  width: 200px;
-  height: 140px;
-  line-height: 30px;
-  text-align: center;
-  color: white;
-  border-radius: 5px;
-  display: inline-block;
-`
-
-const Desk = styled.div `
-  position: relative;
-  margin: 20px;
-  background: white;
-  width: 200px;
-  height: 220px;
-  line-height: 30px;
-  text-align: center;
-  color: black;
-  border-radius: 5px;
-  display: inline-block;
-`
-
-const DeleteDesk = styled.button `
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 18px;
-  padding: 5px;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-`
-
-const DeleteWB = styled.button `
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 18px;
-  padding: 5px;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  color: white;
-`
-
-const TabletCred = styled.div `
-  font-weight: 200;
-  i {
-    font-weight: 500;
-    font-size: 20px;
-    vertical-align: middle;
-    margin-right: 6px;
-  }
-  span {
-    vertical-align: middle;
-  }
-`
 
 const WB = styled.div`
-  background: white;
+  background: rgb(60,60,65);
+  color: white;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
-  padding: 10px;
   margin-bottom: 10px;
   a {
-    color: black;
+    color: white;
   }
   &.button {
     background: #2C9DF1;
@@ -108,24 +47,140 @@ const WB = styled.div`
     text-transform: uppercase;
     cursor: pointer;
   }
+  input {
+    color: white !important;
+  }
 `
 
-const Table = styled.div`
-  display: inline-block;
-  background: rgb(28,37,49);
-  color: white;
-  font-size: 12px;
-
-  width: ${p => p.fixedWidth ? '250px' : '100%'};
-  background-image: url('/static/wood2.jpg');
-  border-radius: 3px;
-  overflow: hidden;
+const WBheader = styled.div`
+  background: rgba(255,255,255,0.1);
+  padding: 0 10px;
+  position: relative;
+  height: 50px;
 `
 
-const Filter = styled.div`
-  background: rgba(0,0,0,0.5);
+const DeleteWaiterboard = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  font-size: 24px;
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  border: none;
+  outline: none;
+  &:hover {
+    color: #e74c3c;
+  }
+`
+
+const WBtitle = styled.div`
+  padding: 7px;
+  color: rgba(255,255,255,0.8);
+  font-size: 18px;
+  .linkIcon {
+    margin-left: 5px;
+    color: rgba(255,255,255,0.25);
+  }
+  .label {
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.25);
+  }
+  &:hover {
+    color: white;
+    .linkIcon {
+      color: rgba(255,255,255,1);
+    }
+  }
+`
+
+const WBbody = styled.div`
   padding: 10px;
 `
+
+const TableBox = styled.div`
+  display: inline-block;
+  background: rgba(0,0,0,0.3);
+  color: white;
+  font-size: 12px;
+  width: ${p => p.fixedWidth ? '250px' : '100%'};
+  margin: ${p => p.fixedWidth ? '5px' : '0'};
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  min-height: 50px;
+`
+const TablePlaceholder = styled.div`
+  background: rgba(0,0,0,0.1);
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  min-height: 50px;
+  width: 100%;
+`
+const Thumbnail = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.2);
+  width: 20%;
+  height: 100%;
+  padding: 2px 0;
+  text-align: center;
+  transition: all 150ms ease-in-out;
+  i {
+    color: ${props => props.color};
+  }
+`;
+const Id = styled.div`
+  font-size: 13px;
+  font-weight: 700;
+  width: 100%;
+`;
+const Seats = styled.div`
+  position: absolute;
+  top: 0;
+  left: 20%;
+  width: 80%;
+  padding: 2px 0 2px 5px;
+  height: 100%;
+  text-align: left;
+  .capacity {
+    font-size: 18px;
+    position: absolute;
+    top: 12px;
+    left: 33%;
+    line-height: 22px;
+    i {
+      font-size: 22px;
+      margin-left: 5px;
+      margin-top: 2px;
+      vertical-align: text-bottom;
+    }
+  }
+  .deleteButton {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 5px;
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    border: none;
+    outline: none;
+    &:hover {
+      color: #e74c3c;
+    }
+  }
+`;
+
 
 const TableTag = styled.table`
   width: 100%;
@@ -170,7 +225,7 @@ let CreateTableForm = ({
         min: 1,
         max: 50
       }} />
-      <FlatButton type="submit" label="Add Table" />
+      <FlatButton type="submit" label="Add Table" style={{color: 'white'}}/>
     </form>
   )
 }
@@ -182,6 +237,28 @@ CreateTableForm = compose(
     enableReinitialize: true
   })
 )(CreateTableForm);
+
+const TableComponent = ({ table, wb, deleteTable, fixedWidth }) => {
+  return (
+    <TableBox fixedWidth={fixedWidth}>
+      <Thumbnail>
+        <Id>{table.number}</Id>
+      </Thumbnail>
+      <Seats>
+        <div className="capacity" title="Capacity">
+          <span>{table.capacity}</span>
+          <i className="ion-ios-people" />
+        </div>
+        <button
+          className="deleteButton"
+          onClick={() => deleteTable({id: table.id, waiterboardId: wb.id})}
+        >
+          <i className="ion-ios-trash-outline" />
+        </button>
+      </Seats>
+    </TableBox>
+  )
+}
 
 class Waiterboards extends React.Component {
   render() {
@@ -211,6 +288,8 @@ class Waiterboards extends React.Component {
         if (Number.isInteger(table.x) && Number.isInteger(table.y)) tablesMatrix[table.y][table.x] = table
         else tablesExtra.push(table)
       })
+      wb.suitableX = wb.maxX + 1
+      wb.suitableY = wb.maxY + 1
       return {...wb, tablesMatrix, tablesExtra}
     })
 
@@ -218,50 +297,55 @@ class Waiterboards extends React.Component {
       <div>
         {waiterboards.map((wb) =>
           <WB key={wb.id}>
-            <Link to={`https://waiterboard.tabb.global/board/${wb.id}`} target="_blank">
-              <h2>{wb.name}</h2>
-            </Link>
-            <TableTag>
-              <tbody>
-                {wb.tablesMatrix.map((row, i) =>
-                  <tr key={i}>
-                    {row.map((table, j) => table ?
-                      <td key={table.id}>
-                        <Table>
-                          <Filter>
-                            <div># {table.number}</div>
-                            <div>Capacity {table.capacity}</div>
-                            <button onClick={() => deleteTable({id: table.id, waiterboardId: wb.id})}>Delete</button>
-                          </Filter>
-                        </Table>
-                      </td>
-                    : <td key={j*i}/>)}
-                  </tr>
+            <WBheader>
+              <Link to={`https://waiterboard.tabb.global/board/${wb.id}`} target="_blank">
+                <WBtitle>
+                  <div className="label">
+                    WAITERBOARD
+                  </div>
+                  <div>
+                    <span>{wb.name}</span>
+                    <i className="linkIcon ion-android-open" />
+                  </div>
+                </WBtitle>
+              </Link>
+              <DeleteWaiterboard onClick={() => deleteWaiterboard({id: wb.id})}>
+                <i className="ion-ios-trash-outline" />
+              </DeleteWaiterboard>
+            </WBheader>
+            <WBbody>
+              <TableTag>
+                <tbody>
+                  {wb.tablesMatrix.map((row, i) =>
+                    <tr key={i}>
+                      {row.map((table, j) => table ?
+                        <td key={table.id}>
+                          <TableComponent table={table} wb={wb} deleteTable={deleteTable} />
+                        </td>
+                      :
+                      <td key={j*i}>
+                        <TablePlaceholder />
+                      </td>)}
+                    </tr>
+                  )}
+                </tbody>
+              </TableTag>
+              <div>
+                {wb.tablesExtra.map((table) =>
+                  <TableComponent fixedWidth table={table} wb={wb} key={table.id} deleteTable={deleteTable} />
                 )}
-              </tbody>
-            </TableTag>
-            <div>
-              {wb.tablesExtra.map((table) =>
-                <Table fixedWidth key={table.id}>
-                  <Filter>
-                    <div># {table.number}</div>
-                    <div>Capacity {table.capacity}</div>
-                    <button onClick={() => deleteTable({id: table.id, waiterboardId: wb.id})}>Delete</button>
-                  </Filter>
-                </Table>
-              )}
-            </div>
-            <CreateTableForm
-              waiterboardId={wb.id}
-              initialValues={{
-                number: wb.maxTableNumber + 1,
-                capacity: wb.lastTableCapacity
-              }}
-              onSubmit={({ capacity, number }) => createTable({
-                capacity, number, waiterboardId: wb.id
-              })}
-            />
-            <FlatButton onClick={() => deleteWaiterboard({id: wb.id})} label="Delete Waiterboard"/>
+              </div>
+              <CreateTableForm
+                waiterboardId={wb.id}
+                initialValues={{
+                  number: wb.maxTableNumber + 1,
+                  capacity: wb.lastTableCapacity
+                }}
+                onSubmit={({ capacity, number }) => createTable({
+                  capacity, number, waiterboardId: wb.id, x: wb.suitableX, y: wb.suitableY
+                })}
+              />
+            </WBbody>
           </WB>
         )}
         <FormBox fullWidth>

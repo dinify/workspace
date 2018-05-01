@@ -89,8 +89,11 @@ export function DeleteWaiterboard({ id }) {
   return Post({ path: `waiterboard/${id}/delete`, v3: true }, { id })
 }
 
-export function CreateTable({ number, capacity, waiterboardId }) {
-  return Post({ path: `table/create`, v3: true }, { number, capacity, waiterboard_id: waiterboardId })
+export function CreateTable({ number, capacity, waiterboardId, x, y }) {
+  return Post({ path: `table/create`, v3: true }, { number, capacity, waiterboard_id: waiterboardId, x, y })
+}
+export function ChangeTable({ id, x, y }) {
+  return Post({ path: `table/${id}`, v3: true }, { x, y })
 }
 
 export function DeleteTable({ id }) {
