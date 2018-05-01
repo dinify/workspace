@@ -8,7 +8,8 @@ import AppComponent from './web/components/App';
 import configureStore from './configureStore';
 import './index.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DragDropContextProvider } from 'react-dnd'
 
 const store = configureStore({
   initialState: {},
@@ -17,11 +18,14 @@ const store = configureStore({
   platformReducers: {},
 });
 
-const App = () => (
+let App = () => (
   <MuiThemeProvider>
-    <AppComponent />
+    <DragDropContextProvider backend={HTML5Backend}>
+      <AppComponent />
+    </DragDropContextProvider>
   </MuiThemeProvider>
 );
+
 
 ReactDOM.render(
   <Provider store={store}>

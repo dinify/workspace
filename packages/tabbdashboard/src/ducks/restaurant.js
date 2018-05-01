@@ -67,7 +67,7 @@ export default function reducer(state: State = initialState, action: Action) {
     case 'UPDATE_NAME_INIT':
       return R.assocPath(['loggedRestaurant', 'name'], action.payload.name)(state)
     case 'UPDATE_IMAGE_DONE':
-      return R.assocPath(['loggedRestaurant', 'uploadedImage'], action.payload.url)(state)
+      return R.assocPath(['loggedRestaurant', 'uploadedImage'], action.payload.res.url)(state)
     case 'UPDATE_CATEGORY_INIT':
       return R.assocPath(['loggedRestaurant', 'category'], action.payload.category)(state)
     case UPDATE_LOCATION_INIT: {
@@ -76,14 +76,6 @@ export default function reducer(state: State = initialState, action: Action) {
     }
     case UPDATE_BANK_INIT: {
       return R.assocPath(['loggedRestaurant', 'bank'], action.payload)(state)
-    }
-    case 'UPDATE_DONE':
-      return R.assoc('updateDone', 'done')(state)
-    case ADD_WB_INIT: {
-      const { login, name } = action.payload
-      const newTablet = { login, name }
-      state = R.assoc('addTabletDone', 'adding')(state)
-      return R.assocPath(['loggedRestaurant', 'tablets'], [...state.loggedRestaurant.tablets, newTablet])(state)
     }
     case ADD_WB_DONE:
       return R.assoc('addTabletDone', 'done')(state)
@@ -122,15 +114,24 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assocPath(
         ['loggedRestaurant', 'waiterboards', newTable.waiterboard_id, 'tables', newTable.id],
         {
-          ...newTable,
-          x: null,
-          y: null
+          ...newTable
         }
       )(state)
     }
-    case 'REMOVE_TABLE_DONE': {
+    case 'REMOVE_TABLE_INIT': {
       return R.dissocPath(
         ['loggedRestaurant', 'waiterboards', action.payload.waiterboardId, 'tables', action.payload.id]
+      )(state)
+    }
+    case 'UPDATE_TABLE_INIT': {
+      const prePayload = action.payload
+      state = R.assocPath(
+        ['loggedRestaurant', 'waiterboards', prePayload.waiterboardId, 'tables', prePayload.id, 'x'],
+        prePayload.x
+      )(state)
+      return R.assocPath(
+        ['loggedRestaurant', 'waiterboards', prePayload.waiterboardId, 'tables', prePayload.id, 'y'],
+        prePayload.y
       )(state)
     }
     case 'ADD_DAY_TO_BUSINESSHOURS': {
@@ -376,7 +377,7 @@ const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
       restaurantId: getState().restaurant.loggedRestaurant.id,
       ...payload
     }))
-    .map((res) => ({ type: `UPDATE_${subject}_DONE`, payload: res }))
+    .map((res) => ({ type: `UPDATE_${subject}_DONE`, payload: { res, prePayload: payload } }))
     .catch(error => Observable.of({ type: `UPDATE_${subject}_FAIL`, payload: error }))
   })
 
@@ -404,13 +405,6 @@ const editImageEpic = (action$: Observable, { getState }) =>
     return Observable.fromPromise(API.EditImage({ id, precedence: maxPrecedence + 1 }))
     .map((res) => ({ type: `EDIT_IMAGE_DONE`, payload: res }))
     .catch(error => Observable.of({ type: `EDIT_IMAGE_FAIL`, payload: error }))
-  })
-
-const afterCreateTableEpic = (action$: Observable, { getState }) =>
-  action$
-  .ofType('CREATE_TABLE_DONE')
-  .switchMap(({ payload: {res, prePayload} }) => {
-    return Observable.of(updateTableInitAction({ id: res.id, x: prePayload.x, y: prePayload.y }))
   })
 
 const getBillsEpic = (action$: Observable, { getState }: EpicDependencies) =>
@@ -533,7 +527,6 @@ export const epics = [
   updateEpic,
   removeEpic,
   editImageEpic,
-  afterCreateTableEpic,
   getBillsEpic,
   getCategoriesEpic,
   rmCategoryEpic,

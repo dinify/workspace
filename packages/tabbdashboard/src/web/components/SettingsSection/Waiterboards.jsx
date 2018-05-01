@@ -16,6 +16,8 @@ import FlatButton from 'material-ui/FlatButton'
 import Text from '../MaterialInputs/Text'
 import { Field, reduxForm } from 'redux-form'
 import Progress from '../Progress'
+import { DragSource, DropTarget } from 'react-dnd'
+import PropTypes from 'prop-types';
 
 import {
   FormBox,
@@ -28,7 +30,8 @@ import {
   createWaiterboardInitAction,
   deleteWaiterboardInitAction,
   createTableInitAction,
-  deleteTableInitAction
+  deleteTableInitAction,
+  updateTableInitAction
 } from '../../../ducks/restaurant'
 
 
@@ -75,6 +78,19 @@ const DeleteWaiterboard = styled.button`
     color: #e74c3c;
   }
 `
+const WBinfo = styled.div`
+  position: absolute;
+  top: 0;
+  right: 70px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 24px;
+  color: rgba(255,255,255,0.5);
+  i {
+    margin-left: 7px;
+  }
+`
+
 
 const WBtitle = styled.div`
   padding: 7px;
@@ -116,7 +132,7 @@ const TableBox = styled.div`
   min-height: 50px;
 `
 const TablePlaceholder = styled.div`
-  background: rgba(0,0,0,0.1);
+  background: ${p => p.isOver ? 'black' : 'rgba(0,0,0,0.1)'};
   display: inline-block;
   overflow: hidden;
   position: relative;
@@ -134,8 +150,13 @@ const Thumbnail = styled.div`
   padding: 2px 0;
   text-align: center;
   transition: all 150ms ease-in-out;
+  cursor: move;
   i {
-    color: ${props => props.color};
+    color: rgba(255,255,255,0.3);
+    font-size: 15px;
+    position: absolute;
+    bottom: 5px;
+    left: 12px;
   }
 `;
 const Id = styled.div`
@@ -238,27 +259,73 @@ CreateTableForm = compose(
   })
 )(CreateTableForm);
 
-const TableComponent = ({ table, wb, deleteTable, fixedWidth }) => {
-  return (
-    <TableBox fixedWidth={fixedWidth}>
-      <Thumbnail>
-        <Id>{table.number}</Id>
-      </Thumbnail>
-      <Seats>
-        <div className="capacity" title="Capacity">
-          <span>{table.capacity}</span>
-          <i className="ion-ios-people" />
-        </div>
-        <button
-          className="deleteButton"
-          onClick={() => deleteTable({id: table.id, waiterboardId: wb.id})}
-        >
-          <i className="ion-ios-trash-outline" />
-        </button>
-      </Seats>
-    </TableBox>
+const cardSource = {
+  beginDrag(props) {
+    return {
+      table: props.table
+    };
+  }
+}
+function collect(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragPreview(),
+    isDragging: monitor.isDragging()
+  };
+}
+let TableComponent = ({ table, wb, deleteTable, fixedWidth, isDragging, connectDragSource, connectDragPreview }) => {
+  return connectDragPreview(
+    <div>
+      <TableBox fixedWidth={fixedWidth}>
+        {connectDragSource(
+          <div style={{height: '50px'}}>
+            <Thumbnail>
+              <Id>{table.number}</Id>
+              <i className="ion-arrow-move" />
+            </Thumbnail>
+          </div>
+        )}
+        <Seats>
+          <div className="capacity" title="Capacity">
+            <span>{table.capacity}</span>
+            <i className="ion-ios-people" />
+          </div>
+          <button
+            className="deleteButton"
+            onClick={() => deleteTable({id: table.id, waiterboardId: wb.id})}
+          >
+            <i className="ion-ios-trash-outline" />
+          </button>
+        </Seats>
+      </TableBox>
+    </div>
   )
 }
+TableComponent.propTypes = {
+  isDragging: PropTypes.bool.isRequired,
+  connectDragSource: PropTypes.func.isRequired,
+  connectDragPreview: PropTypes.func.isRequired,
+}
+TableComponent = DragSource('table', cardSource, collect)(TableComponent);
+
+const boxTarget = {
+  drop(targetProps, monitor) {
+    const { updateTable, x, y} = targetProps
+    const { id, waiterboard_id } = monitor.getItem().table
+    updateTable({ id, x, y, waiterboardId: waiterboard_id })
+  },
+}
+let TargetComponent = ({ isOver, connectDropTarget }) => {
+  return connectDropTarget(
+    <div>
+      <TablePlaceholder isOver={isOver}/>
+    </div>
+  )
+}
+TargetComponent = DropTarget('table', boxTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver()
+}))(TargetComponent);
 
 class Waiterboards extends React.Component {
   render() {
@@ -268,6 +335,7 @@ class Waiterboards extends React.Component {
       deleteWaiterboard,
       createTable,
       deleteTable,
+      updateTable
     } = this.props
 
     const waiterboards = FN.MapToList(loggedRestaurant.waiterboards).map((wb) => {
@@ -276,21 +344,40 @@ class Waiterboards extends React.Component {
       const ys = R.pluck('y')(tables) // rows
       const tableNumbers = R.pluck('number')(tables) // numbers
       const capacities = R.pluck('capacity')(tables) // numbers
+      wb.capacity = R.sum(capacities)
       wb.maxX = R.apply(Math.max, xs)
       wb.maxY = R.apply(Math.max, ys)
+      if (tables.length > 0 && tables.length < 5) {
+        wb.maxX = 4
+      }
       wb.lastTableCapacity = R.last(capacities) || 4
       if (tableNumbers.length < 1) wb.maxTableNumber = 0
       else wb.maxTableNumber = R.apply(Math.max, tableNumbers)
       wb.tables = tables
       const tablesMatrix = R.range(0, wb.maxY+1).map(() => R.range(0, wb.maxX+1).map(() => null)) // tablesMatrix[y][x]
-      const tablesExtra = []
       tables.map((table) => {
         if (Number.isInteger(table.x) && Number.isInteger(table.y)) tablesMatrix[table.y][table.x] = table
-        else tablesExtra.push(table)
       })
-      wb.suitableX = wb.maxX + 1
-      wb.suitableY = wb.maxY + 1
-      return {...wb, tablesMatrix, tablesExtra}
+
+      wb.suitableY = wb.maxY
+      const lastRow = R.last(tablesMatrix)
+      if (!lastRow) {
+        wb.suitableX = 0
+        wb.suitableY = 0
+      } else if (R.last(lastRow)) { // if last column of last row is full
+        wb.suitableY += 1
+        wb.maxY += 1
+        //tablesMatrix[wb.maxY] = R.range(0, wb.maxX+1).map(() => null) // add row
+        wb.suitableX = 0 // new table will be the first of new row
+      } else {
+        for (let i = lastRow.length-1; i >= 0; i--) {
+          if (lastRow[i]) {
+            wb.suitableX = i + 1
+            break
+          }
+        }
+      }
+      return {...wb, tablesMatrix}
     })
 
     return (
@@ -309,6 +396,9 @@ class Waiterboards extends React.Component {
                   </div>
                 </WBtitle>
               </Link>
+              <WBinfo>
+                {wb.capacity}<i className="ion-ios-people" />
+              </WBinfo>
               <DeleteWaiterboard onClick={() => deleteWaiterboard({id: wb.id})}>
                 <i className="ion-ios-trash-outline" />
               </DeleteWaiterboard>
@@ -323,18 +413,13 @@ class Waiterboards extends React.Component {
                           <TableComponent table={table} wb={wb} deleteTable={deleteTable} />
                         </td>
                       :
-                      <td key={j*i}>
-                        <TablePlaceholder />
+                      <td key={(i+1)*(j+1)}>
+                        <TargetComponent x={j} y={i} updateTable={updateTable} />
                       </td>)}
                     </tr>
                   )}
                 </tbody>
               </TableTag>
-              <div>
-                {wb.tablesExtra.map((table) =>
-                  <TableComponent fixedWidth table={table} wb={wb} key={table.id} deleteTable={deleteTable} />
-                )}
-              </div>
               <CreateTableForm
                 waiterboardId={wb.id}
                 initialValues={{
@@ -370,5 +455,6 @@ export default connect(
     deleteWaiterboard: deleteWaiterboardInitAction,
     createTable: createTableInitAction,
     deleteTable: deleteTableInitAction,
+    updateTable: updateTableInitAction,
   },
 )(Waiterboards);
