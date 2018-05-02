@@ -4,8 +4,8 @@ import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import configureEpics from './configureEpics';
 
-import restaurant from './ducks/restaurant';
-import progress from './ducks/progress';
+import restaurant from './reducers/restaurant';
+import progress from './reducers/progress';
 
 import { reducer as formReducer } from 'redux-form'
 
