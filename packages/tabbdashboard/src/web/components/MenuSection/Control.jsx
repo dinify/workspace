@@ -55,8 +55,9 @@ class Menucontrol extends React.Component {
       menuItemsMap,
       selectedCategoryId,
       selectedFoodId,
-      addons,
-      ingredientsMap
+      addonsMap,
+      ingredientsMap,
+      optionsMap
     } = this.props;
 
     let selectedCategory = null
@@ -104,6 +105,7 @@ class Menucontrol extends React.Component {
                 <ItemOptions
                   selectedFood={selectedFood}
                   selectedFoodId={selectedFoodId}
+                  optionsMap={optionsMap}
                 />
 
                 <ItemIngredients
@@ -113,7 +115,7 @@ class Menucontrol extends React.Component {
                 />
 
                 <ItemAddons
-                  addons={addons}
+                  addonsMap={addonsMap}
                   selectedFood={selectedFood}
                   selectedFoodId={selectedFoodId}
                 />
@@ -130,12 +132,9 @@ export default connect(
     categories: state.restaurant.categories,
     menuItemsMap: state.restaurant.menuItems,
     ingredientsMap: state.restaurant.loggedRestaurant.ingredients,
+    optionsMap: state.restaurant.loggedRestaurant.options,
     selectedCategoryId: state.restaurant.selectedCategoryId,
-    selectedFoodId: state.restaurant.selectedFoodId,
-    foodOptions: state.restaurant.foodOptions,
-    foodIngredients: state.restaurant.foodIngredients,
-    foodAddons: state.restaurant.foodAddons,
-    addons: state.restaurant.addons
+    selectedFoodId: state.restaurant.selectedFoodId
   }), {
     getAddons: getAddonsInit
   },

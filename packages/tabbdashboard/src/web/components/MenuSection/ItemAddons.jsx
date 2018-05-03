@@ -1,59 +1,58 @@
 // @flow
 import React from 'react'
 import { connect } from 'react-redux'
+import R from 'ramda'
 import * as FN from '../../../lib/FN'
-import { FormBoxSubmit, Label } from '../styled/FormBox'
+import { Label } from '../styled/FormBox'
+import {
+  assignAddonInit,
+  unassignAddonInit
+} from '../../../ducks/restaurant'
 import ListOfCustomizations from './ListOfCustomizations'
-import { Form, Select } from 'react-form'
+import AutoComplete from 'material-ui/AutoComplete'
 
 const ItemAddons = ({
-  addons,
+  addonsMap,
   selectedFood,
   selectedFoodId,
-  rmFoodAddon,
-  addFoodAddon
+  assignAddon,
+  unassignAddon
 }) => {
-  const addonsForSelect = addons.map((addon) => {
-    return {
-      label: addon.name,
-      value: addon.id
-    }
-  })
+  const addonsList = FN.MapToList(addonsMap)
+  const dataSource = addonsList.map((o) => ({value: o.id, text: o.name}))
   return (
     <div>
       <Label>Addons</Label>
       {selectedFood.addons ?
         <ListOfCustomizations
           list={FN.MapToList(selectedFood.addons)}
-          rmButtonFunction={(addon) => rmFoodAddon({foodId: selectedFoodId, addonId: addon.id})}
+          rmButtonFunction={(addon) => unassignAddon({
+            foodId: selectedFoodId,
+            addonId: addon.id,
+            originalObject: {addons: selectedFood.addons}
+          })}
         />
       : 'No addon'}
-      <Form
-        onSubmit={({ addonId }) => {
-          addFoodAddon({ foodId: selectedFoodId, addonId })
-        }}
-        validate={({ addonId }) => {
-          return {
-            addonId: !addonId ? 'Please select addon' : undefined
-          }
-        }}
-      >
-        {({submitForm}) => {
-          return (
-            <form onSubmit={submitForm}>
-              <Select
-                field='addonId'
-                options={addonsForSelect}
-              />
-              <FormBoxSubmit primary>ADD</FormBoxSubmit>
-            </form>
-          )
-        }}
-      </Form>
+      <AutoComplete
+        hintText="e.g. Extra Cheese"
+        dataSource={dataSource}
+        onUpdateInput={() => {}}
+        floatingLabelText="Assign addon"
+        fullWidth={true}
+        onNewRequest={(selected) => assignAddon({
+          foodId: selectedFoodId,
+          addonId: selected.value,
+          addon: R.find(R.propEq('id', selected.value))(addonsList),
+          originalObject: {addons: selectedFood.addons}
+        })}
+      />
     </div>
   );
 }
 
 export default connect(
-  state => ({})
+  state => ({}), {
+    assignAddon: assignAddonInit,
+    unassignAddon: unassignAddonInit,
+  }
 )(ItemAddons);

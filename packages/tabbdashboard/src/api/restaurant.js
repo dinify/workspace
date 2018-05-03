@@ -111,27 +111,22 @@ export function CreateCategory({ categoryName }) {
   return Post({ path: `menu/category/create`, v3: true }, { name: categoryName })
 }
 // Create Item
-export function AddFood({ categoryId, foodName }) {
+export function CreateFood({ categoryId, foodName }) {
   return Post({ path: `menu/item/create`, v3: true }, {
     name: foodName,
   	menu_category_id: categoryId,
-      "price": {
-          "amount": 2,
-          "currency": "KWD"
-      }
-    })
+    "price": {
+        "amount": 2,
+        "currency": "KWD"
+    }})
 }
 
-export function ChangeFood({ foodId, name, description, price, calories }) {
-  return Post({ path: `menu/item/${foodId}`, v3: true }, {
-    name: name || undefined,
-    description: description || undefined,
-    price: {
-      amount: price || 1,
-      currency: "KWD"
-    },
-    //calories: calories || undefined
-  })
+export function ChangeFood(payload) {
+  const foodId = payload.foodId
+  let updObj = payload
+  delete updObj.foodId
+  updObj = R.filter(R.identity)(updObj)
+  return Post({ path: `menu/item/${foodId}`, v3: true }, updObj)
 }
 
 export function ChangeNutrition({ foodId, total, proteins, fats, carbs}) {

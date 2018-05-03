@@ -1,6 +1,7 @@
 // @flow
 import { Observable } from 'rxjs'
 import R from 'ramda'
+import * as FN from '../lib/FN'
 
 import * as API from '../api/restaurant'
 import type { EpicDependencies, Error, Action } from '../flow'
@@ -69,7 +70,9 @@ export const getCategoriesDoneAction = (payload) => ({ type: GET_CATEGORIES_DONE
 export const rmCategoryInitAction = (payload) => ({ type: 'RM_CATEGORY_INIT', payload })
 export const addCategoryInitAction = (payload) => ({ type: 'CREATE_CATEGORY_INIT', payload })
 export const rmFoodInitAction = (payload) => ({ type: 'RM_FOOD_INIT', payload })
-export const addFoodInitAction = (payload) => ({ type: 'ADD_FOOD_INIT', payload })
+
+export const addFoodInitAction = (payload) => ({ type: 'CREATE_FOOD_INIT', payload })
+
 export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', payload })
 export const uploadMainImageInitAction = (payload) => ({ type: 'UPDATE_IMAGE_INIT', payload })
 export const uploadItemImageInitAction = (payload) => ({ type: 'UPDATE_ITEMIMAGE_INIT', payload })
@@ -97,8 +100,14 @@ export const addAddonInit = (payload) => ({
   payload: {...payload,successActionType: 'API_GET_ADDONS_INIT'}
 })
 
-export const assignIngredientInit = (payload) => ({ type: 'ASSIGN_FOOD-INGREDIENT_INIT', payload })
-export const unassignIngredientInit = (payload) => ({ type: 'UNASSIGN_FOOD-INGREDIENT_INIT', payload })
+export const assignIngredientInit = (payload) => ({ type: 'ASSIGN_INGREDIENT-FOOD_INIT', payload })
+export const unassignIngredientInit = (payload) => ({ type: 'UNASSIGN_INGREDIENT-FOOD_INIT', payload })
+
+export const assignAddonInit = (payload) => ({ type: 'ASSIGN_ADDON-FOOD_INIT', payload })
+export const unassignAddonInit = (payload) => ({ type: 'UNASSIGN_ADDON-FOOD_INIT', payload })
+
+export const assignOptionInit = (payload) => ({ type: 'ASSIGN_OPTION-FOOD_INIT', payload })
+export const unassignOptionInit = (payload) => ({ type: 'UNASSIGN_OPTION-FOOD_INIT', payload })
 
 export const getFoodAddonsInit = (payload) => ({ type: 'API_GET_FOODADDONS_INIT', payload })
 export const rmFoodAddonInit = (payload) => ({
@@ -206,9 +215,21 @@ const registerRestaurantEpic = (action$: Observable, { getState }) =>
     .catch(error => Observable.of(loginFailAction(error)))
   })
 
+
+
+
+
+
+
+
+
+
+
+
+// CRUD Epics
 const fetchEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
-  .filter(action => action.type.includes('FETCH_') && action.type.includes('_INIT'))
+  .filter(action => action.type.startsWith('FETCH_') && action.type.endsWith('_INIT'))
   .switchMap(({ payload, type }) => {
     const subject = type.replace('FETCH_','').replace('_INIT','')
     const apiFnName = `Get${camel(subject)}`
@@ -223,7 +244,7 @@ const fetchEpic = (action$: Observable, { getState }: EpicDependencies) =>
 
 const createEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
-  .filter(action => action.type.includes('CREATE_') && action.type.includes('_INIT'))
+  .filter(action => action.type.startsWith('CREATE_') && action.type.endsWith('_INIT'))
   .switchMap(({ payload, type }) => {
     const subject = type.replace('CREATE_','').replace('_INIT','')
     const apiFnName = `Create${camel(subject)}`
@@ -238,7 +259,7 @@ const createEpic = (action$: Observable, { getState }: EpicDependencies) =>
 
 const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
-  .filter(action => action.type.includes('UPDATE_') && action.type.includes('_INIT'))
+  .filter(action => action.type.startsWith('UPDATE_') && action.type.endsWith('_INIT'))
   .switchMap(({ payload, type }) => {
     const subject = type.replace('UPDATE_','').replace('_INIT','')
     const apiFnName = `Change${camel(subject)}`
@@ -253,7 +274,7 @@ const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
 
 const removeEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
-  .filter(action => action.type.includes('REMOVE_') && action.type.includes('_INIT'))
+  .filter(action => action.type.startsWith('REMOVE_') && action.type.endsWith('_INIT'))
   .switchMap(({ payload, type }) => {
     const subject = type.replace('REMOVE_','').replace('_INIT','')
     const apiFnName = `Delete${camel(subject)}`
@@ -265,6 +286,83 @@ const removeEpic = (action$: Observable, { getState }: EpicDependencies) =>
     .map(() => ({ type: `REMOVE_${subject}_DONE`, payload }))
     .catch(error => Observable.of({ type: `REMOVE_${subject}_FAIL`, payload: error }))
   })
+
+
+
+
+const assignEpic = (action$: Observable) =>
+  action$
+  .filter(action => action.type.startsWith('ASSIGN_') && action.type.endsWith('_INIT'))
+  .switchMap(({ payload, type }) => {
+
+    const middle = type.split('_')[1] // INGREDIENT-FOOD
+    const assignTo = middle.split('-')[1] // FOOD
+
+    const originalObjectKey = R.keys(payload.originalObject)[0] // 'ingredients'
+    const originalObject = payload.originalObject[originalObjectKey] // map of ingredients
+
+    const singular = originalObjectKey.slice(0, -1) // 'ingredient'
+    const assignedEntity = payload[singular] // object of ingredient
+
+    const newObject = R.assoc(assignedEntity.id, assignedEntity)(originalObject) // original with new entity
+
+    let updatePayload = {}
+    updatePayload[originalObjectKey] = FN.MapToList(newObject)
+    updatePayload[`${assignTo.toLowerCase()}Id`] = payload[`${assignTo.toLowerCase()}Id`] // foodId
+
+    return Observable.of({
+      type: `UPDATE_${assignTo}_INIT`,
+      payload: updatePayload
+    })
+  })
+
+
+const unassignEpic = (action$: Observable) =>
+  action$
+  .filter(action => action.type.startsWith('UNASSIGN_') && action.type.endsWith('_INIT'))
+  .switchMap(({ payload, type }) => {
+
+    const middle = type.split('_')[1] // INGREDIENT-FOOD
+    const assignTo = middle.split('-')[1] // FOOD
+
+    const originalObjectKey = R.keys(payload.originalObject)[0] // 'ingredients'
+    const originalObject = payload.originalObject[originalObjectKey] // map of ingredients
+
+    const singular = originalObjectKey.slice(0, -1) // 'ingredient'
+    console.log(originalObject);
+    console.log(payload[`${singular}Id`]);
+    const newObject = R.dissoc(payload[`${singular}Id`])(originalObject) // original without entity with entityId
+
+    let updatePayload = {}
+    updatePayload[originalObjectKey] = FN.MapToList(newObject)
+    updatePayload[`${assignTo.toLowerCase()}Id`] = payload[`${assignTo.toLowerCase()}Id`] // foodId
+
+    return Observable.of({
+      type: `UPDATE_${assignTo}_INIT`,
+      payload: updatePayload
+    })
+  })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const editImageEpic = (action$: Observable, { getState }) =>
   action$
@@ -312,22 +410,9 @@ const rmFoodEpic = (action$: Observable) =>
   .ofType('RM_FOOD_INIT')
   .switchMap(({ payload: { foodId, enabled } }) =>
     Observable.fromPromise(API.ToggleFood({ foodId, enabled }))
-      .map(getCategoriesInitAction)
+      .map(() => ({type: 'GET_LOGGED_INIT'}))
       .catch(error => console.log(error))
   )
-
-const addFoodEpic = (action$: Observable, { getState }: EpicDependencies) =>
-  action$
-  .ofType('ADD_FOOD_INIT')
-  .switchMap(({ payload: { categoryId, foodName } }) =>
-    Observable.fromPromise(API.AddFood({
-      categoryId,
-      foodName
-    }))
-      .map(getCategoriesInitAction)
-      .catch(error => console.log(error))
-  )
-
 
 const ActionEssence = (str) => camel(str.split('_')[2])
 
@@ -387,12 +472,13 @@ export const epics = [
   createEpic,
   updateEpic,
   removeEpic,
+  assignEpic,
+  unassignEpic,
   editImageEpic,
   getBillsEpic,
   getCategoriesEpic,
   rmCategoryEpic,
   rmFoodEpic,
-  addFoodEpic,
   apiGetEpic,
   apiRmEpic,
   apiAddEpic

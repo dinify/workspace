@@ -58,7 +58,10 @@ const ItemDetail = ({
             onSubmit={(fields) => {
               fields.foodId = selectedFoodId
               console.log(fields);
-              updateFood(fields)
+              updateFood({...fields, price: {
+                  amount: fields.price,
+                  currency: "KWD"
+              }})
             }}
             defaultValues={{
               name: selectedFood.name,

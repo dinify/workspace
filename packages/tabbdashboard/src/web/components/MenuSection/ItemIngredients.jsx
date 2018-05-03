@@ -4,30 +4,14 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import R from 'ramda'
 import * as FN from '../../../lib/FN'
-import {
-  FormBoxSubmit,
-  Label
-} from '../styled/FormBox'
+import { Label} from '../styled/FormBox'
 import {
   assignIngredientInit,
   unassignIngredientInit
 } from '../../../ducks/restaurant'
 import ListOfCustomizations from './ListOfCustomizations'
-import FlatButton from 'material-ui/FlatButton'
 import AutoComplete from 'material-ui/AutoComplete'
 
-let IngredientsForm = ({
-  handleSubmit
-}) => {
-  return (
-    <form onSubmit={handleSubmit}>
-      <FlatButton type="submit" label="Save" fullWidth={true} />
-    </form>
-  )
-}
-IngredientsForm = reduxForm({
-  form: 'menuitem/ingredients'
-})(IngredientsForm)
 
 const ItemIngredients = ({
   selectedFood,
@@ -44,7 +28,11 @@ const ItemIngredients = ({
       {selectedFood.ingredients ?
         <ListOfCustomizations
           list={FN.MapToList(selectedFood.ingredients)}
-          rmButtonFunction={(ingredient) => unassignIngredient({foodId: selectedFoodId, ingredientId: ingredient.id})}
+          rmButtonFunction={(ingredient) => unassignIngredient({
+            foodId: selectedFoodId,
+            ingredientId: ingredient.id,
+            originalObject: {ingredients: selectedFood.ingredients}
+          })}
         />
       : 'No ingredients'}
       <AutoComplete
@@ -56,7 +44,8 @@ const ItemIngredients = ({
         onNewRequest={(selected) => assignIngredient({
           foodId: selectedFoodId,
           ingredientId: selected.value,
-          ingredient: R.find(R.propEq('id', selected.value))(ingredientsList)
+          ingredient: R.find(R.propEq('id', selected.value))(ingredientsList),
+          originalObject: {ingredients: selectedFood.ingredients}
         })}
       />
     </div>

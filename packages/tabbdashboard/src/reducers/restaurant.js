@@ -149,14 +149,41 @@ export default function reducer(state: State = initialState, action: Action) {
         [...state.loggedRestaurant.open_hours[action.payload.dayName], [action.payload.from, '23:59']]
       )(state)
     }
-    case 'ASSIGN_FOOD-INGREDIENT_INIT': {
+
+    case 'ASSIGN_INGREDIENT-FOOD_INIT': {
       const { foodId, ingredientId, ingredient } = action.payload
       if (!ingredient) return state
       return R.assocPath(['menuItems', foodId, 'ingredients', ingredientId], ingredient)(state)
     }
-    case 'UNASSIGN_FOOD-INGREDIENT_INIT': {
+    case 'UNASSIGN_INGREDIENT-FOOD_INIT': {
       const { foodId, ingredientId } = action.payload
       return R.dissocPath(['menuItems', foodId, 'ingredients', ingredientId])(state)
+    }
+
+    case 'ASSIGN_ADDON-FOOD_INIT': {
+      const { foodId, addonId, addon } = action.payload
+      if (!addon) return state
+      return R.assocPath(['menuItems', foodId, 'addons', addonId], addon)(state)
+    }
+    case 'UNASSIGN_ADDON-FOOD_INIT': {
+      const { foodId, addonId } = action.payload
+      return R.dissocPath(['menuItems', foodId, 'addons', addonId])(state)
+    }
+
+    case 'ASSIGN_OPTION-FOOD_INIT': {
+      const { foodId, optionId, option } = action.payload
+      if (!option) return state
+      return R.assocPath(['menuItems', foodId, 'options', optionId], option)(state)
+    }
+    case 'UNASSIGN_OPTION-FOOD_INIT': {
+      const { foodId, optionId } = action.payload
+      return R.dissocPath(['menuItems', foodId, 'options', optionId])(state)
+    }
+
+    case 'CREATE_FOOD_DONE': {
+      const response = action.payload.res
+      if (!response) return state
+      return R.assocPath(['menuItems', response.id], response)(state)
     }
     default:
       return state

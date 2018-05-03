@@ -17,27 +17,36 @@ import Text from '../MaterialInputs/Text'
 let NutritionForm = ({
   handleSubmit
 }) => {
+  const style = {height: '60px'}
   return (
     <form onSubmit={handleSubmit}>
       <Field name="total" component={Text} componentProps={{
         type: 'number',
         min: 1,
-        floatingLabelText: 'Total Calories (kJ)'
+        floatingLabelText: 'Total Calories (kJ)',
+        fullWidth: true,
+        style
       }} />
       <Field name="proteins" component={Text} componentProps={{
         type: 'number',
         min: 1,
-        floatingLabelText: 'Proteins (g)'
+        floatingLabelText: 'Proteins (g)',
+        fullWidth: true,
+        style
       }} />
       <Field name="fats" component={Text} componentProps={{
         type: 'number',
         min: 1,
-        floatingLabelText: 'Fats (g)'
+        floatingLabelText: 'Fats (g)',
+        fullWidth: true,
+        style
       }} />
       <Field name="carbs" component={Text} componentProps={{
         type: 'number',
         min: 1,
-        floatingLabelText: 'Carbohydrates (g)'
+        floatingLabelText: 'Carbohydrates (g)',
+        fullWidth: true,
+        style
       }} />
       <FlatButton type="submit" label="Save" fullWidth={true} />
     </form>
@@ -55,7 +64,6 @@ const ItemNutrition = ({
 }) => {
   return (
     <div>
-      <Label>Nutrition</Label>
       <Progress type={'UPDATE_NUTRITION'}/>
       <NutritionForm
         onSubmit={(nutritions) => updateFoodNutrition({ foodId: selectedFoodId, ...nutritions })}
