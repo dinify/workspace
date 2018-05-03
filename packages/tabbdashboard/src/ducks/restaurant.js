@@ -226,6 +226,21 @@ const registerRestaurantEpic = (action$: Observable, { getState }) =>
     .catch(error => Observable.of(loginFailAction(error)))
   })
 
+const fetchEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+  .filter(action => action.type.includes('FETCH_') && action.type.includes('_INIT'))
+  .switchMap(({ payload, type }) => {
+    const subject = type.replace('FETCH_','').replace('_INIT','')
+    const apiFnName = `Get${camel(subject)}`
+    return Observable
+    .fromPromise(API[apiFnName]({
+      restaurantId: getState().restaurant.loggedRestaurant.id,
+      ...payload
+    }))
+    .map((res) => ({ type: `FETCH_${subject}_DONE`, payload: { res, prePayload: payload } }))
+    .catch(error => Observable.of({ type: `FETCH_${subject}_FAIL`, payload: error }))
+  })
+
 const createEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
   .filter(action => action.type.includes('CREATE_') && action.type.includes('_INIT'))

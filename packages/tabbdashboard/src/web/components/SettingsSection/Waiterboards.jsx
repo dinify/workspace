@@ -288,7 +288,7 @@ let TableComponent = ({ table, wb, deleteTable, fixedWidth, isDragging, connectD
         <Seats>
           <div className="capacity" title="Capacity">
             <span>{table.capacity}</span>
-            <i className="ion-ios-people" />
+            <i className="material-icons">group</i>
           </div>
           <button
             className="deleteButton"
@@ -397,7 +397,7 @@ class Waiterboards extends React.Component {
                 </WBtitle>
               </Link>
               <WBinfo>
-                {wb.capacity}<i className="ion-ios-people" />
+                {wb.capacity}<i className="material-icons">group</i>
               </WBinfo>
               <DeleteWaiterboard onClick={() => deleteWaiterboard({id: wb.id})}>
                 <i className="ion-ios-trash-outline" />

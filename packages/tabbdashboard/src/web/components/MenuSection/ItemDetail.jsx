@@ -34,7 +34,7 @@ const ItemDetail = ({
   return (
     <div>
       {selectedFood ? <FormBox style={{width: '230px'}}>
-        {selectedFood.images ? FN.Identity(FN.MapToList(selectedFood.images), (images) =>
+        {selectedFood.images ? FN.Identity(FN.MapToList(selectedFood.images).sort((a,b) => a.precedence - b.precedence), (images) =>
           images.length > 0 ? <FoodImage imageURL={images[0].url} /> : ''
         ): ''}
         <Dropzone

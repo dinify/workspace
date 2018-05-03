@@ -97,32 +97,6 @@ const Location = ({
           latitude={loggedRestaurant.latitude}
           longitude={loggedRestaurant.longitude}
         />
-        <Form
-          onSubmit={({ name, longitude, latitude }) => {
-            updateLocation({ name, longitude, latitude })
-          }}
-          defaultValues={{
-            longitude: loggedRestaurant.longitude,
-            latitude: loggedRestaurant.latitude
-          }}
-          validate={({ longitude, latitude }) => {
-            return {
-              longitude: !longitude ? 'Longitude is required' : undefined,
-              latitude: !latitude ? 'Latitude URL is required' : undefined,
-            }
-          }}
-        >
-          {({submitForm}) => {
-            return (
-              <form onSubmit={submitForm}>
-
-                <Text field='longitude' placeholder='Longitude' />
-                <Text field='latitude' placeholder='Latitude' />
-                <FlatButton type="submit" label="Update" fullWidth={true} />
-              </form>
-            )
-          }}
-        </Form>
       </FormBoxBody>
     </FormBox>
   );

@@ -3,20 +3,36 @@ import React from 'react'
 import R from 'ramda'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Form, Text, Select } from 'react-form'
+import { Field, reduxForm } from 'redux-form'
 import moment from 'moment'
 import {
   FormBox,
   FormBoxHead,
   FormBoxBody,
-  FormBoxSubmit,
-  FieldWrapper,
-  Label
+  FormBoxSubmit
 } from '../../styled/FormBox'
 import {
   updateSocialInitAction
 } from '../../../../ducks/restaurant'
 import Progress from '../../Progress'
+import FlatButton from 'material-ui/FlatButton';
+import Text from '../../MaterialInputs/Text'
+
+let SocialForm = ({
+  handleSubmit
+}) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <Field name="facebook" component={Text} componentProps={{floatingLabelText: "Facebook"}} />
+      <Field name="instagram" component={Text} componentProps={{floatingLabelText: "Instagram"}} />
+      <FlatButton type="submit" label="Save" fullWidth={true} />
+    </form>
+  )
+}
+SocialForm = reduxForm({
+  form: 'settings/social',
+  enableReinitialize: true
+})(SocialForm)
 
 const Social = ({
   updateSocial,
@@ -29,35 +45,8 @@ const Social = ({
         <span>Social Media</span>
         <Progress type={'UPDATE_SOCIAL'}/>
       </FormBoxHead>
-      <FormBoxBody>
-        <Form
-          onSubmit={(output) => {
-            updateSocial(output);
-          }}
-          defaultValues={social}
-          validate={({ facebook, instagram }) => {
-            return {
-              facebook: !facebook ? 'Facebook URL is required' : undefined,
-              instagram: !instagram ? 'Instagram URL is required' : undefined,
-            }
-          }}
-        >
-          {({submitForm}) => {
-            return (
-              <form onSubmit={submitForm}>
-                <FieldWrapper>
-                  <i className="ion-social-facebook" />
-                  <Text field='facebook' placeholder='www.facebook.com/myRestaurant' />
-                </FieldWrapper>
-                <FieldWrapper>
-                  <i className="ion-social-instagram-outline" />
-                  <Text field='instagram' placeholder='www.instagram.com/myRestaurant' />
-                </FieldWrapper>
-                <FormBoxSubmit>SAVE</FormBoxSubmit>
-              </form>
-            )
-          }}
-        </Form>
+      <FormBoxBody material>
+        <SocialForm onSubmit={updateSocial} initialValues={social}/>
       </FormBoxBody>
     </FormBox>
   );

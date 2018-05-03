@@ -21,7 +21,7 @@ const Image = ({
   let imageUrl = ''
   const images = R.values(loggedRestaurant.images)
   if (images.length > 0) {
-    const sortedImages = R.sort((a,b) => b.precedence - a.precedence)(images)
+    const sortedImages = R.sort((a,b) => a.precedence - b.precedence)(images)
     imageUrl = sortedImages[0].url
   }
   if (loggedRestaurant.uploadedImage) imageUrl = loggedRestaurant.uploadedImage

@@ -20,7 +20,7 @@ let NameForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <Field name="name" component={Text} placeholder="Restaurant Name" />
-      <FlatButton type="submit" label="Update" fullWidth={true} />
+      <FlatButton type="submit" label="Save" fullWidth={true} />
     </form>
   )
 }

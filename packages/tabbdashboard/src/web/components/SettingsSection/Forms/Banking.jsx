@@ -24,11 +24,11 @@ let BankingForm = ({
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Field name="bank_name" component={Text} placeholder="Bank name" />
-      <Field name="beneficiary_name" component={Text} placeholder="Beneficiary name" />
-      <Field name="iban" component={Text} placeholder="IBAN number" />
-      <Field name="bic" component={Text} placeholder="BIC" />
-      <FlatButton type="submit" label="Update" fullWidth={true} />
+      <Field name="bank_name" component={Text} componentProps={{floatingLabelText: "Bank Name"}} />
+      <Field name="beneficiary_name" component={Text} componentProps={{floatingLabelText: "Beneficiary Name"}} />
+      <Field name="iban" component={Text} componentProps={{floatingLabelText: "IBAN Number"}} />
+      <Field name="bic" component={Text} componentProps={{floatingLabelText: "BIC Number"}} />
+      <FlatButton type="submit" label="Save" fullWidth={true} />
     </form>
   )
 }

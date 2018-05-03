@@ -25,10 +25,10 @@ let ContactForm = ({
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Field name="website" component={Text} placeholder="Website" />
-      <Field name="email" component={Text} placeholder="Email" />
-      <Field name="phone" component={Text} placeholder="Phone" />
-      <FlatButton type="submit" label="Update" fullWidth={true} />
+      <Field name="website" component={Text} componentProps={{floatingLabelText: "Website"}} />
+      <Field name="email" component={Text} componentProps={{floatingLabelText: "Email"}} />
+      <Field name="phone" component={Text} componentProps={{floatingLabelText: "Phone"}} />
+      <FlatButton type="submit" label="Save" fullWidth={true} />
     </form>
   )
 }
