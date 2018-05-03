@@ -45,27 +45,26 @@ const SolidContainer = styled.div `
 class Menucontrol extends React.Component {
   componentDidMount() {
     const {
-      getCategories,
       getAddons
     } = this.props;
-    getCategories();
     getAddons();
   }
   render() {
     const {
       categories,
+      menuItemsMap,
       selectedCategoryId,
       selectedFoodId,
       addons,
-      loggedRestaurant
+      ingredientsMap
     } = this.props;
 
     let selectedCategory = null
     if (selectedCategoryId) {
-      selectedCategory = R.find(R.propEq('id', selectedCategoryId))(categories)
+      selectedCategory = categories[selectedCategoryId]
     }
     let selectedFood = null
-    if (selectedCategory) selectedFood = selectedCategory.items[selectedFoodId]
+    if (selectedCategory) selectedFood = menuItemsMap[selectedFoodId]
 
     return (
       <div>
@@ -110,7 +109,7 @@ class Menucontrol extends React.Component {
                 <ItemIngredients
                   selectedFood={selectedFood}
                   selectedFoodId={selectedFoodId}
-                  ingredients={loggedRestaurant.ingredients}
+                  ingredientsMap={ingredientsMap}
                 />
 
                 <ItemAddons
@@ -128,8 +127,9 @@ class Menucontrol extends React.Component {
 
 export default connect(
   state => ({
-    loggedRestaurant: state.restaurant.loggedRestaurant,
     categories: state.restaurant.categories,
+    menuItemsMap: state.restaurant.menuItems,
+    ingredientsMap: state.restaurant.loggedRestaurant.ingredients,
     selectedCategoryId: state.restaurant.selectedCategoryId,
     selectedFoodId: state.restaurant.selectedFoodId,
     foodOptions: state.restaurant.foodOptions,
@@ -137,7 +137,6 @@ export default connect(
     foodAddons: state.restaurant.foodAddons,
     addons: state.restaurant.addons
   }), {
-    getCategories: getCategoriesInitAction,
     getAddons: getAddonsInit
   },
 )(Menucontrol);

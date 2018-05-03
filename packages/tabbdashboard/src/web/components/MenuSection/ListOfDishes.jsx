@@ -11,6 +11,7 @@ import {
   selectFoodAction
 } from '../../../ducks/restaurant'
 import { Form, Text } from 'react-form'
+import * as FN from '../../../lib/FN'
 
 const FoodList = styled.ul `
   display: inline-block;
@@ -104,15 +105,14 @@ const ListOfDishes = ({
   selectedCategoryId,
   rmFood,
   addFood,
-  selectFood
+  selectFood,
+  menuItemsMap
 }) => {
   if (!selectedCategory) return (<div />)
+  const menuItemsList = R.filter((item) => item.menu_category_id === selectedCategoryId, FN.MapToList(menuItemsMap))
   return (
     <FoodList>
-      {R.toPairs(selectedCategory.items)
-        .map((pair) => ({ id: pair[0], ...pair[1] }))
-        .sort((a,b) => a.id - b.id)
-        .map((food, i) =>
+      {menuItemsList.map((food, i) =>
         <FoodItem key={food.id} selected={food.id === selectedFoodId} disabled={!food.published} onClick={() => selectFood({foodId: food.id})}>
           <span>{food.name}</span>
           <ToggleContainer food>
@@ -158,7 +158,9 @@ const ListOfDishes = ({
 }
 
 export default connect(
-  state => ({}), {
+  state => ({
+    menuItemsMap: state.restaurant.menuItems
+  }), {
     addFood: addFoodInitAction,
     rmFood: rmFoodInitAction,
     selectFood: selectFoodAction

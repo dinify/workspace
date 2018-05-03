@@ -1,5 +1,6 @@
 // @flow
 import R from 'ramda'
+import * as FN from '../lib/FN'
 
 export const BOOTSTRAP = 'BOOTSTRAP'
 export const LOGIN_INIT = 'LOGIN_INIT'
@@ -31,7 +32,8 @@ const initialState = {
   appRun: false,
   loggedRestaurant: null,
   bills: [],
-  categories: [],
+  categories: {},
+  menuItems: {},
   selectedCategoryId: null,
   selectedFoodId: null,
   foodOptions: {},
@@ -48,6 +50,14 @@ export default function reducer(state: State = initialState, action: Action) {
     case BOOTSTRAP:
       return R.assoc('appRun', true)(state)
     case LOGGED_FETCHED_DONE: {
+      const categories = action.payload.categories
+      state = R.assoc('categories', categories)(state)
+      FN.MapToList(categories).map((category) => {
+        if (!category.items) return
+        FN.MapToList(category.items).map((item) => {
+          state = R.assocPath(['menuItems', item.id], item)(state)
+        })
+      })
       return R.assoc('loggedRestaurant', action.payload)(state)
     }
     case 'UPDATE_LOCATION_INIT':
@@ -59,6 +69,10 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assocPath(['loggedRestaurant', 'uploadedImage'], action.payload.res.url)(state)
     case 'UPDATE_CATEGORY_INIT':
       return R.assocPath(['loggedRestaurant', 'category'], action.payload.category)(state)
+    case 'CREATE_CATEGORY_DONE': {
+      const newCategory = action.payload.res
+      return R.assocPath(['categories', newCategory.id], newCategory)(state)
+    }
     case UPDATE_LOCATION_INIT: {
       state = R.assocPath(['loggedRestaurant', 'location', 'longitude'], Number(action.payload.longitude))(state)
       return R.assocPath(['loggedRestaurant', 'location', 'latitude'], Number(action.payload.latitude))(state)
@@ -134,6 +148,9 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assocPath(['loggedRestaurant', 'open_hours', action.payload.dayName],
         [...state.loggedRestaurant.open_hours[action.payload.dayName], [action.payload.from, '23:59']]
       )(state)
+    }
+    case 'ASSIGN_FOODINGREDIENT_INIT': {
+      return R.assocPath(['menuItems', action.payload.foodId, 'ingredients', action.ingredientId], action.payload.ingredient)(state)
     }
     default:
       return state

@@ -67,7 +67,7 @@ export const getBillsDoneAction = (payload) => ({ type: GET_BILLS_DONE, payload 
 export const getCategoriesInitAction = () => ({ type: 'GET_CATEGORIES_INIT' })
 export const getCategoriesDoneAction = (payload) => ({ type: GET_CATEGORIES_DONE, payload })
 export const rmCategoryInitAction = (payload) => ({ type: 'RM_CATEGORY_INIT', payload })
-export const addCategoryInitAction = (payload) => ({ type: 'ADD_CATEGORY_INIT', payload })
+export const addCategoryInitAction = (payload) => ({ type: 'CREATE_CATEGORY_INIT', payload })
 export const rmFoodInitAction = (payload) => ({ type: 'RM_FOOD_INIT', payload })
 export const addFoodInitAction = (payload) => ({ type: 'ADD_FOOD_INIT', payload })
 export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', payload })
@@ -83,57 +83,36 @@ export const addRangeToBusinessHours = (payload) => ({ type: 'ADD_RANGE_TO_BUSIN
 export const getFoodOptionsInit = (payload) => ({ type: 'API_GET_FOODOPTIONS_INIT', payload })
 export const rmFoodOptionInit = (payload) => ({
   type: 'API_RM_FOODOPTION_INIT',
-  payload: {
-    ...payload,
-    successActionType: 'API_GET_FOODOPTIONS_INIT'
-  }
+  payload: {...payload,successActionType: 'API_GET_FOODOPTIONS_INIT'}
 })
 export const addFoodOptionInit = (payload) => ({
   type: 'API_ADD_FOODOPTION_INIT',
-  payload: {
-    ...payload,
-    successActionType: 'API_GET_FOODOPTIONS_INIT'
-  }
+  payload: {...payload,successActionType: 'API_GET_FOODOPTIONS_INIT'}
 })
 
 export const getAddonsInit = () => ({ type: 'API_GET_ADDONS_INIT' })
 
 export const addAddonInit = (payload) => ({
   type: 'API_ADD_ADDON_INIT',
-  payload: {
-    ...payload,
-    successActionType: 'API_GET_ADDONS_INIT'
-  }
+  payload: {...payload,successActionType: 'API_GET_ADDONS_INIT'}
 })
 
-
-export const assignIngredientInit = (payload) => ({ type: 'UPDATE_FOODINGREDIENT_INIT', ...payload })
-
-export const rmFoodIngredientInit = (payload) => ({ type: 'API_RM_FOODINGREDIENT_INIT', ...payload })
-
+export const assignIngredientInit = (payload) => ({ type: 'ASSIGN_FOODINGREDIENT_INIT', payload })
+export const unassignIngredientInit = (payload) => ({ type: 'UNASSIGN_FOODINGREDIENT_INIT', payload })
 
 export const getFoodAddonsInit = (payload) => ({ type: 'API_GET_FOODADDONS_INIT', payload })
 export const rmFoodAddonInit = (payload) => ({
   type: 'API_RM_FOODADDON_INIT',
-  payload: {
-    ...payload,
-    successActionType: 'API_GET_FOODADDONS_INIT'
-  }
+  payload: {...payload,successActionType: 'API_GET_FOODADDONS_INIT'}
 })
 export const addFoodAddonInit = (payload) => ({
   type: 'API_ADD_FOODADDON_INIT',
-  payload: {
-    ...payload,
-    successActionType: 'API_GET_FOODADDONS_INIT'
-  }
+  payload: {...payload,successActionType: 'API_GET_FOODADDONS_INIT'}
 })
 
 export const updateAddonPriceInit = (payload) => ({
   type: 'API_ADD_ADDONPRICE_INIT',
-  payload: {
-    ...payload,
-    successActionType: 'API_GET_ADDONS_INIT'
-  }
+  payload: {...payload,successActionType: 'API_GET_ADDONS_INIT'}
 })
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
@@ -144,7 +123,6 @@ const bootstrapEpic = (action$: Observable) =>
   action$.ofType('persist/REHYDRATE').mergeMap(() => {
     return Observable.fromPromise(API.GetLoggedRestaurant())
     .mergeMap((loggedUser) => {
-      console.log(loggedUser,'x')
       return Observable.of(loggedFetchedAction(loggedUser), appBootstrap())
     })
     .catch(error => {
@@ -153,6 +131,18 @@ const bootstrapEpic = (action$: Observable) =>
       return Observable.of(appBootstrap())
     })
   })
+
+const getLoggedEpic = (action$: Observable) =>
+  action$.ofType('GET_LOGGED_INIT')
+  .switchMap(() =>
+    Observable.fromPromise(API.GetLoggedRestaurant())
+      .map((loggedUser) => loggedFetchedAction(loggedUser))
+      .catch(error => {
+        console.log(error)
+        if (window.location.pathname !== '/login' && window.location.pathname !== '/signup') window.location.replace("/login")
+        return Observable.of(appBootstrap())
+      })
+  )
 
 export const signupDoneAction = (payload: object) => {
   console.log(payload)
@@ -313,20 +303,10 @@ const rmCategoryEpic = (action$: Observable, { getState }: EpicDependencies) =>
   .ofType('RM_CATEGORY_INIT')
   .switchMap(({ payload: { categoryId, enabled } }) =>
     Observable.fromPromise(API.ToggleCategory({ categoryId, enabled }))
-      .map(getCategoriesInitAction)
+      .map(() => ({type: 'GET_LOGGED_INIT'}))
       .catch(error => console.log(error))
   )
-const addCategoryEpic = (action$: Observable, { getState }: EpicDependencies) =>
-  action$
-  .ofType('ADD_CATEGORY_INIT')
-  .switchMap(({ payload: { categoryName } }) =>
-    Observable.fromPromise(API.AddCategory({
-      restaurantId: getState().restaurant.loggedRestaurant.id,
-      categoryName
-    }))
-      .map(getCategoriesInitAction)
-      .catch(error => console.log(error))
-  )
+
 const rmFoodEpic = (action$: Observable) =>
   action$
   .ofType('RM_FOOD_INIT')
@@ -400,6 +380,7 @@ const apiAddEpic = (action$: Observable, { getState }: EpicDependencies) =>
 
 export const epics = [
   bootstrapEpic,
+  getLoggedEpic,
   loginEpic,
   registrationEpic,
   registerRestaurantEpic,
@@ -410,7 +391,6 @@ export const epics = [
   getBillsEpic,
   getCategoriesEpic,
   rmCategoryEpic,
-  addCategoryEpic,
   rmFoodEpic,
   addFoodEpic,
   apiGetEpic,

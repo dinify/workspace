@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import SwitchButton from 'react-switch-button'
 import { lighten } from 'polished'
 import { SortableContainer, SortableElement } from 'react-sortable-hoc'
+import * as FN from '../../../lib/FN'
 
 
 import {
@@ -171,12 +172,13 @@ const ListOfCategories = ({
   selectCategory
 }) => {
   if (!categories) return (<div />)
+  const categoriesList = FN.MapToList(categories).sort((a,b) => a.id.localeCompare(b.id))
   return (
     <CategoriesList>
 
       <SortableList
         distance={1}
-        categories={categories.sort((a,b) => a.id - b.id)}
+        categories={categoriesList}
         deps={{
           selectedCategoryId, selectCategory, rmCategory
         }}

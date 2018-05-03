@@ -2,6 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
+import R from 'ramda'
 import * as FN from '../../../lib/FN'
 import {
   FormBoxSubmit,
@@ -9,7 +10,7 @@ import {
 } from '../styled/FormBox'
 import {
   assignIngredientInit,
-  rmFoodIngredientInit
+  unassignIngredientInit
 } from '../../../ducks/restaurant'
 import ListOfCustomizations from './ListOfCustomizations'
 import FlatButton from 'material-ui/FlatButton'
@@ -33,16 +34,17 @@ const ItemIngredients = ({
   selectedFoodId,
   assignIngredient,
   unassignIngredient,
-  ingredients
+  ingredientsMap
 }) => {
-  const dataSource = FN.MapToList(ingredients).map((o) => ({value: o.id, text: o.name}))
+  const ingredientsList = FN.MapToList(ingredientsMap)
+  const dataSource = ingredientsList.map((o) => ({value: o.id, text: o.name}))
   return (
     <div>
       <Label>Ingredients</Label>
       {selectedFood.ingredients ?
         <ListOfCustomizations
           list={FN.MapToList(selectedFood.ingredients)}
-          rmButtonFunction={(ingredient) => unassignIngredient({foodId: selectedFoodId, ingredientName: ingredient.name})}
+          rmButtonFunction={(ingredient) => unassignIngredient({foodId: selectedFoodId, ingredientId: ingredient.id})}
         />
       : 'No ingredients'}
       <AutoComplete
@@ -51,7 +53,11 @@ const ItemIngredients = ({
         onUpdateInput={() => {}}
         floatingLabelText="Assign ingredient"
         fullWidth={true}
-        onNewRequest={(selected) => console.log(selected)}
+        onNewRequest={(selected) => assignIngredient({
+          foodId: selectedFoodId,
+          ingredientId: selected.value,
+          ingredient: R.find(R.propEq('id', selected.value))(ingredientsList)
+        })}
       />
     </div>
   );
@@ -60,6 +66,6 @@ const ItemIngredients = ({
 export default connect(
   state => ({}), {
     assignIngredient: assignIngredientInit,
-    unassignIngredient: rmFoodIngredientInit,
+    unassignIngredient: unassignIngredientInit,
   }
 )(ItemIngredients);

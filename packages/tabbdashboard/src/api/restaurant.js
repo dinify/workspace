@@ -107,8 +107,7 @@ export function GetBills({ from, to }) {
 export function GetCategories() {
   return Get({ path: `restaurant/my/categories`, v3: true })
 }
-// Create Category
-export function AddCategory({ categoryName }) {
+export function CreateCategory({ categoryName }) {
   return Post({ path: `menu/category/create`, v3: true }, { name: categoryName })
 }
 // Create Item
@@ -188,9 +187,7 @@ export function RmFoodoption({ foodId, optionName }) {
 export function GetFoodingredients({ foodId }) {
   return Get({ path: `api/v2/restaurant/food/${foodId}/ingredients`, v2: true })
 }
-export function AddFoodingredient({ foodId, ingredientName }) {
-  return Post({ path: `api/v2/restaurant/food/${foodId}/ingredient`, v2: true }, { ingredientName })
-}
+
 export function RmFoodingredient({ foodId, ingredientName }) {
   return Delete({ path: `api/v2/restaurant/food/${foodId}/ingredient`, v2: true }, { ingredientName })
 }
@@ -200,6 +197,10 @@ export function AddFoodaddon({ foodId, addonId }) {
 }
 export function RmFoodaddon({ foodId, addonId }) {
   return Delete({ path: `api/v2/restaurant/food/${foodId}/addon`, v2: true }, { addonId })
+}
+
+export function ChangeFoodingredient({ foodId, ingredients }) {
+  return Post({ path: `menu/item/${foodId}`, v3: true }, { ingredients })
 }
 
 //export function RemoveTablet({ restaurantId, login_id }) {
