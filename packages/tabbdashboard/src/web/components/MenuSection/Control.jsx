@@ -56,7 +56,8 @@ class Menucontrol extends React.Component {
       categories,
       selectedCategoryId,
       selectedFoodId,
-      addons
+      addons,
+      loggedRestaurant
     } = this.props;
 
     let selectedCategory = null
@@ -109,6 +110,7 @@ class Menucontrol extends React.Component {
                 <ItemIngredients
                   selectedFood={selectedFood}
                   selectedFoodId={selectedFoodId}
+                  ingredients={loggedRestaurant.ingredients}
                 />
 
                 <ItemAddons

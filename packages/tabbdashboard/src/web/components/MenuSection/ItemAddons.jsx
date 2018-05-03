@@ -2,14 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as FN from '../../../lib/FN'
-import {
-  FormBoxSubmit,
-  Label
-} from '../styled/FormBox'
-import {
-  rmFoodIngredientInit,
-  addFoodIngredientInit
-} from '../../../ducks/restaurant'
+import { FormBoxSubmit, Label } from '../styled/FormBox'
 import ListOfCustomizations from './ListOfCustomizations'
 import { Form, Select } from 'react-form'
 
@@ -62,8 +55,5 @@ const ItemAddons = ({
 }
 
 export default connect(
-  state => ({}), {
-    rmFoodIngredient: rmFoodIngredientInit,
-    addFoodIngredient: addFoodIngredientInit
-  }
+  state => ({})
 )(ItemAddons);

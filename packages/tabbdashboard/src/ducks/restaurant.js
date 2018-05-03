@@ -106,21 +106,11 @@ export const addAddonInit = (payload) => ({
   }
 })
 
-export const getFoodIngredientsInit = (payload) => ({ type: 'API_GET_FOODINGREDIENTS_INIT', payload })
-export const rmFoodIngredientInit = (payload) => ({
-  type: 'API_RM_FOODINGREDIENT_INIT',
-  payload: {
-    ...payload,
-    successActionType: 'API_GET_FOODINGREDIENTS_INIT'
-  }
-})
-export const addFoodIngredientInit = (payload) => ({
-  type: 'API_ADD_FOODINGREDIENT_INIT',
-  payload: {
-    ...payload,
-    successActionType: 'API_GET_FOODINGREDIENTS_INIT'
-  }
-})
+
+export const assignIngredientInit = (payload) => ({ type: 'UPDATE_FOODINGREDIENT_INIT', ...payload })
+
+export const rmFoodIngredientInit = (payload) => ({ type: 'API_RM_FOODINGREDIENT_INIT', ...payload })
+
 
 export const getFoodAddonsInit = (payload) => ({ type: 'API_GET_FOODADDONS_INIT', payload })
 export const rmFoodAddonInit = (payload) => ({

@@ -9,7 +9,7 @@ import { Header } from './styled/Header'
 import { HorMenu, HorMenuLink } from './Menu'
 
 import ControlSection from './MenuSection/Control.jsx';
-import OptionsSection from './MenuSection/Options.jsx';
+//import OptionsSection from './MenuSection/Options.jsx';
 import AddonsSection from './MenuSection/Addons.jsx';
 
 const Menucontrol = ({ location }) =>
@@ -17,7 +17,6 @@ const Menucontrol = ({ location }) =>
       <Header>
         <HorMenu>
           <HorMenuLink l={location} title="Menu Control" to="/menu/control" />
-          <HorMenuLink l={location} title="" to="/menu/options" />
           <HorMenuLink l={location} title="Addons" to="/menu/addons" />
         </HorMenu>
       </Header>
@@ -25,7 +24,6 @@ const Menucontrol = ({ location }) =>
       <Switch>
         <Redirect exact from="/menu" to="/menu/control" />
         <Route path="/menu/control" component={ControlSection} />
-        <Route path="/menu/options" component={OptionsSection} />
         <Route path="/menu/addons" component={AddonsSection} />
       </Switch>
 

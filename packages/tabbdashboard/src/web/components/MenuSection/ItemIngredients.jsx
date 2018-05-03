@@ -1,59 +1,65 @@
 // @flow
 import React from 'react'
 import { connect } from 'react-redux'
+import { Field, reduxForm } from 'redux-form'
 import * as FN from '../../../lib/FN'
 import {
   FormBoxSubmit,
   Label
 } from '../styled/FormBox'
 import {
-  rmFoodIngredientInit,
-  addFoodIngredientInit
+  assignIngredientInit,
+  rmFoodIngredientInit
 } from '../../../ducks/restaurant'
 import ListOfCustomizations from './ListOfCustomizations'
-import { Form, Text } from 'react-form'
+import FlatButton from 'material-ui/FlatButton'
+import AutoComplete from 'material-ui/AutoComplete'
+
+let IngredientsForm = ({
+  handleSubmit
+}) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <FlatButton type="submit" label="Save" fullWidth={true} />
+    </form>
+  )
+}
+IngredientsForm = reduxForm({
+  form: 'menuitem/ingredients'
+})(IngredientsForm)
 
 const ItemIngredients = ({
   selectedFood,
   selectedFoodId,
-  rmFoodIngredient,
-  addFoodIngredient
+  assignIngredient,
+  unassignIngredient,
+  ingredients
 }) => {
+  const dataSource = FN.MapToList(ingredients).map((o) => ({value: o.id, text: o.name}))
   return (
     <div>
       <Label>Ingredients</Label>
       {selectedFood.ingredients ?
         <ListOfCustomizations
           list={FN.MapToList(selectedFood.ingredients)}
-          rmButtonFunction={(ingredient) => rmFoodIngredient({foodId: selectedFoodId, ingredientName: ingredient.name})}
+          rmButtonFunction={(ingredient) => unassignIngredient({foodId: selectedFoodId, ingredientName: ingredient.name})}
         />
       : 'No ingredients'}
-      <Form
-        onSubmit={({ ingredientName }) => {
-          addFoodIngredient({ foodId: selectedFoodId, ingredientName })
-        }}
-        validate={({ ingredientName }) => {
-          return {
-            ingredientName: !ingredientName ? 'Name is required' : undefined
-          }
-        }}
-      >
-        {({submitForm}) => {
-          return (
-            <form onSubmit={submitForm}>
-              <Text field='ingredientName' placeholder='Name of new ingredient' />
-              <FormBoxSubmit primary>ADD INGREDIENT</FormBoxSubmit>
-            </form>
-          )
-        }}
-      </Form>
+      <AutoComplete
+        hintText="e.g. Tomato"
+        dataSource={dataSource}
+        onUpdateInput={() => {}}
+        floatingLabelText="Assign ingredient"
+        fullWidth={true}
+        onNewRequest={(selected) => console.log(selected)}
+      />
     </div>
   );
 }
 
 export default connect(
   state => ({}), {
-    rmFoodIngredient: rmFoodIngredientInit,
-    addFoodIngredient: addFoodIngredientInit
+    assignIngredient: assignIngredientInit,
+    unassignIngredient: rmFoodIngredientInit,
   }
 )(ItemIngredients);
