@@ -149,8 +149,14 @@ export default function reducer(state: State = initialState, action: Action) {
         [...state.loggedRestaurant.open_hours[action.payload.dayName], [action.payload.from, '23:59']]
       )(state)
     }
-    case 'ASSIGN_FOODINGREDIENT_INIT': {
-      return R.assocPath(['menuItems', action.payload.foodId, 'ingredients', action.ingredientId], action.payload.ingredient)(state)
+    case 'ASSIGN_FOOD-INGREDIENT_INIT': {
+      const { foodId, ingredientId, ingredient } = action.payload
+      if (!ingredient) return state
+      return R.assocPath(['menuItems', foodId, 'ingredients', ingredientId], ingredient)(state)
+    }
+    case 'UNASSIGN_FOOD-INGREDIENT_INIT': {
+      const { foodId, ingredientId } = action.payload
+      return R.dissocPath(['menuItems', foodId, 'ingredients', ingredientId])(state)
     }
     default:
       return state

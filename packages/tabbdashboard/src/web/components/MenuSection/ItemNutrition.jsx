@@ -10,23 +10,43 @@ import {
   updateFoodNutritionInit
 } from '../../../ducks/restaurant'
 import Progress from '../Progress'
-import { Form, Text } from 'react-form'
+import { Field, reduxForm } from 'redux-form'
+import FlatButton from 'material-ui/FlatButton'
+import Text from '../MaterialInputs/Text'
 
-const TableTag = styled.table `
-  width: 100%;
-  border-spacing: 0;
-`;
-const Td = styled.td `
-  color: ${props => props.color};
-  font-weight: 300;
-  padding: 5px 0;
-  font-size: 14px;
-  border-bottom: 1px dashed #999;
-  color: #666;
-  &:first-child {
-    text-align: left;
-  }
-`;
+let NutritionForm = ({
+  handleSubmit
+}) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <Field name="total" component={Text} componentProps={{
+        type: 'number',
+        min: 1,
+        floatingLabelText: 'Total Calories (kJ)'
+      }} />
+      <Field name="proteins" component={Text} componentProps={{
+        type: 'number',
+        min: 1,
+        floatingLabelText: 'Proteins (g)'
+      }} />
+      <Field name="fats" component={Text} componentProps={{
+        type: 'number',
+        min: 1,
+        floatingLabelText: 'Fats (g)'
+      }} />
+      <Field name="carbs" component={Text} componentProps={{
+        type: 'number',
+        min: 1,
+        floatingLabelText: 'Carbohydrates (g)'
+      }} />
+      <FlatButton type="submit" label="Save" fullWidth={true} />
+    </form>
+  )
+}
+NutritionForm = reduxForm({
+  form: 'settings/name',
+  enableReinitialize: true
+})(NutritionForm)
 
 const ItemNutrition = ({
   selectedFood,
@@ -37,40 +57,10 @@ const ItemNutrition = ({
     <div>
       <Label>Nutrition</Label>
       <Progress type={'UPDATE_NUTRITION'}/>
-      <Form
-        onSubmit={(nutrition) => {
-          updateFoodNutrition({ foodId: selectedFoodId, ...nutrition })
-        }}
-        defaultValues={selectedFood.calories}
-      >
-        {({submitForm}) => {
-          return (
-            <form onSubmit={submitForm}>
-              <TableTag>
-                <tbody>
-                  <tr>
-                    <Td>Total Calories</Td>
-                    <Td><Text field='total' placeholder='' /></Td>
-                  </tr>
-                  <tr>
-                    <Td>Protein</Td>
-                    <Td><Text field='proteins' placeholder='' /></Td>
-                  </tr>
-                  <tr>
-                    <Td>Total Fat</Td>
-                    <Td><Text field='fats' placeholder='' /></Td>
-                  </tr>
-                  <tr>
-                    <Td>Total Carb</Td>
-                    <Td><Text field='carbs' placeholder='' /></Td>
-                  </tr>
-                </tbody>
-              </TableTag>
-              <FormBoxSubmit primary>UPDATE NUTRITION</FormBoxSubmit>
-            </form>
-          )
-        }}
-      </Form>
+      <NutritionForm
+        onSubmit={(nutritions) => updateFoodNutrition({ foodId: selectedFoodId, ...nutritions })}
+        initialValues={selectedFood.calories}
+      />
     </div>
   );
 }

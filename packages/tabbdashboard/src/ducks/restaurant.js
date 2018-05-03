@@ -97,8 +97,8 @@ export const addAddonInit = (payload) => ({
   payload: {...payload,successActionType: 'API_GET_ADDONS_INIT'}
 })
 
-export const assignIngredientInit = (payload) => ({ type: 'ASSIGN_FOODINGREDIENT_INIT', payload })
-export const unassignIngredientInit = (payload) => ({ type: 'UNASSIGN_FOODINGREDIENT_INIT', payload })
+export const assignIngredientInit = (payload) => ({ type: 'ASSIGN_FOOD-INGREDIENT_INIT', payload })
+export const unassignIngredientInit = (payload) => ({ type: 'UNASSIGN_FOOD-INGREDIENT_INIT', payload })
 
 export const getFoodAddonsInit = (payload) => ({ type: 'API_GET_FOODADDONS_INIT', payload })
 export const rmFoodAddonInit = (payload) => ({
