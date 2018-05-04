@@ -180,10 +180,22 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.dissocPath(['menuItems', foodId, 'options', optionId])(state)
     }
 
+    case 'UPDATE_ITEMIMAGE_DONE': {
+      const foodId = action.payload.prePayload.id
+      const image = action.payload.res
+      return R.assocPath(['menuItems', foodId, 'images', image.id], image)(state)
+    }
+
     case 'CREATE_FOOD_DONE': {
       const response = action.payload.res
       if (!response) return state
       return R.assocPath(['menuItems', response.id], response)(state)
+    }
+    case 'UPDATE_FOOD_DONE': {
+      const prePayload = action.payload.prePayload
+      if (!prePayload) return state
+      const newFood = R.merge(state.menuItems[prePayload.foodId], prePayload)
+      return R.assocPath(['menuItems', prePayload.foodId], newFood)(state)
     }
     default:
       return state

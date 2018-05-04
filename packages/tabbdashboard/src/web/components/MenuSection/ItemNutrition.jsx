@@ -17,7 +17,7 @@ import Text from '../MaterialInputs/Text'
 let NutritionForm = ({
   handleSubmit
 }) => {
-  const style = {height: '60px'}
+  const style = {height: '64px'}
   return (
     <form onSubmit={handleSubmit}>
       <Field name="total" component={Text} componentProps={{
@@ -53,7 +53,7 @@ let NutritionForm = ({
   )
 }
 NutritionForm = reduxForm({
-  form: 'settings/name',
+  form: 'menu/nutritions',
   enableReinitialize: true
 })(NutritionForm)
 

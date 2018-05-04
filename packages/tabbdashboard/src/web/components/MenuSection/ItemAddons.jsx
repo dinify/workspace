@@ -20,6 +20,7 @@ const ItemAddons = ({
 }) => {
   const addonsList = FN.MapToList(addonsMap)
   const dataSource = addonsList.map((o) => ({value: o.id, text: o.name}))
+  console.log(dataSource);
   return (
     <div>
       <Label>Addons</Label>

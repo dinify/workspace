@@ -133,6 +133,7 @@ export default connect(
     menuItemsMap: state.restaurant.menuItems,
     ingredientsMap: state.restaurant.loggedRestaurant.ingredients,
     optionsMap: state.restaurant.loggedRestaurant.options,
+    addonsMap: state.restaurant.loggedRestaurant.addons,
     selectedCategoryId: state.restaurant.selectedCategoryId,
     selectedFoodId: state.restaurant.selectedFoodId
   }), {

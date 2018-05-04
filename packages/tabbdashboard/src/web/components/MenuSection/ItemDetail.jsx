@@ -14,8 +14,10 @@ import {
   updateFoodInitAction,
   uploadItemImageInitAction
 } from '../../../ducks/restaurant'
-import { Form, Text, Textarea } from 'react-form'
 import Progress from '../Progress'
+import { Field, reduxForm } from 'redux-form'
+import FlatButton from 'material-ui/FlatButton'
+import Text from '../MaterialInputs/Text'
 
 const FoodImage = styled.div `
   width: 100%;
@@ -24,6 +26,39 @@ const FoodImage = styled.div `
   background-size: cover;
   background-position: center;
 `
+
+let DetailForm = ({
+  handleSubmit
+}) => {
+  const style = {height: '64px'}
+  return (
+    <form onSubmit={handleSubmit}>
+      <Field name="name" component={Text} componentProps={{
+        floatingLabelText: "Name",
+        fullWidth: true,
+      }} />
+      <Field name="description" component={Text} componentProps={{
+        floatingLabelText: "Description",
+        multiLine: true,
+        fullWidth: true,
+        rows: 2
+      }} />
+      <Field name="price" component={Text} componentProps={{
+        type: 'number',
+        min: 0.000,
+        floatingLabelText: 'Price (KD)',
+        fullWidth: true,
+        step: 0.1,
+        style
+      }} />
+      <FlatButton type="submit" label="Save" fullWidth={true} />
+    </form>
+  )
+}
+DetailForm = reduxForm({
+  form: 'menu/detail',
+  enableReinitialize: true
+})(DetailForm)
 
 const ItemDetail = ({
   selectedFood,
@@ -37,64 +72,45 @@ const ItemDetail = ({
         {selectedFood.images ? FN.Identity(FN.MapToList(selectedFood.images).sort((a,b) => a.precedence - b.precedence), (images) =>
           images.length > 0 ? <FoodImage imageURL={images[0].url} /> : ''
         ): ''}
-        <Dropzone
-          accept="image/jpg, image/jpeg, image/png"
-          onDrop={(accepted, rejected) => {
-            if (accepted && accepted.length > 0) uploadItemImage({ file: accepted[0], id: selectedFoodId })
-          }}
-          style={{
-            width: '250px',
-            padding: '10px',
-            fontSize: '11px',
-            border: '1px dashed #ccc',
-            margin: '10px 0'
-          }}
-        >
-          <p>Try dropping your photo here, or click to select file to upload.</p>
-          <p>Only *.jpg and *.png image will be accepted</p>
-        </Dropzone>
         <FormBoxBody>
-          <Form
+          <Dropzone
+            accept="image/jpg, image/jpeg, image/png"
+            onDrop={(accepted, rejected) => {
+              if (accepted && accepted.length > 0) uploadItemImage({ file: accepted[0], id: selectedFoodId })
+            }}
+            style={{
+              width: '100%',
+              padding: '10px',
+              fontSize: '11px',
+              border: '1px dashed #ccc',
+              margin: '10px 0'
+            }}
+          >
+            <p>Try dropping your photo here, or click to select file to upload.</p>
+            <p>Only *.jpg and *.png image will be accepted</p>
+          </Dropzone>
+
+
+
+          <Progress type={'UPDATE_FOOD'}/>
+          <DetailForm
             onSubmit={(fields) => {
               fields.foodId = selectedFoodId
               console.log(fields);
               updateFood({...fields, price: {
-                  amount: fields.price,
+                  amount: Number.parseFloat(fields.price).toFixed(3),
                   currency: "KWD"
               }})
             }}
-            defaultValues={{
+            initialValues={{
               name: selectedFood.name,
               description: selectedFood.description || '',
-              price: selectedFood.price.amount,
+              price: Number.parseFloat(selectedFood.price.amount).toFixed(3)
             }}
-            validate={({ name, description, price }) => {
-              return {
-                name: !name ? 'Name is required' : undefined,
-                description: !description ? 'Description is required' : undefined,
-                price: !price ? 'Price is required' : undefined,
-              }
-            }}
-          >
-            {({submitForm}) => {
-              return (
-                <form onSubmit={submitForm}>
-                  <Label>
-                    <span>Name</span>
-                    <Progress type={'UPDATE_FOOD'}/>
-                  </Label>
-                  <Text field='name' placeholder='Name of food' />
-                  <Label>Description</Label>
-                  <Textarea style={{height: '100px'}} field='description' placeholder='Description' />
-                  <Label>Price</Label>
-                  <Text type="number" field='price' placeholder='Price' />
-                  <FormBoxSubmit primary>SAVE</FormBoxSubmit>
-                </form>
-              )
-            }}
-          </Form>
+          />
         </FormBoxBody>
-      </FormBox> : ''}
+    </FormBox> : ''}
+
     </div>
   );
 }

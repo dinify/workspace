@@ -50,7 +50,7 @@ const WB = styled.div`
     text-transform: uppercase;
     cursor: pointer;
   }
-  input {
+  input, label {
     color: white !important;
   }
 `
@@ -229,24 +229,43 @@ CreateWaiterboardForm = reduxForm({
 })(CreateWaiterboardForm)
 
 
+const FieldsContainer = styled.div`
+  width: 60px;
+  display: inline-block;
+`
+const ButtonContainer = styled.div`
+  display: inline-block;
+`
+
 let CreateTableForm = ({
   handleSubmit
 }) => {
+  const style = {height: '64px'}
   return (
     <form onSubmit={handleSubmit} className="center">
+      <FieldsContainer>
       <Field name="number" component={Text} componentProps={{
-        placeholder: "Number of Table",
+        floatingLabelText: 'Number',
         type: 'number',
         min: 1,
-        max: 1000
+        max: 1000,
+        fullWidth: true,
+        style
       }} />
+      </FieldsContainer>
+      <FieldsContainer>
       <Field name="capacity" component={Text} componentProps={{
-        placeholder: "Capacity of Table",
+        floatingLabelText: "Capacity",
         type: 'number',
         min: 1,
-        max: 50
+        max: 50,
+        fullWidth: true,
+        style
       }} />
+    </FieldsContainer>
+    <ButtonContainer>
       <FlatButton type="submit" label="Add Table" style={{color: 'white'}}/>
+    </ButtonContainer>
     </form>
   )
 }
