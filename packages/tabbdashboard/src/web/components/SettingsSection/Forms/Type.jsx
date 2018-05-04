@@ -27,8 +27,8 @@ const Type = ({
       <FormBoxBody center pt={20} pb={20}>
         <SwitchButton
           name="switch-type"
-          label="Classic"
-          labelRight="QLess"
+          label="Full-service"
+          labelRight="Self-service"
           type="switch"
           defaultChecked={type === 'QLESS'}
           onChange={() => {
