@@ -40,6 +40,9 @@ const ItemAddons = ({
         onUpdateInput={() => {}}
         floatingLabelText="Assign addon"
         fullWidth={true}
+        filter={(searchText, key) => {
+           return key.toLowerCase().startsWith(searchText.toLowerCase())
+        }}
         onNewRequest={(selected) => assignAddon({
           foodId: selectedFoodId,
           addonId: selected.value,

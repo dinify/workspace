@@ -42,6 +42,9 @@ const ItemOptions = ({
         onUpdateInput={() => {}}
         floatingLabelText="Assign option"
         fullWidth={true}
+        filter={(searchText, key) => {
+           return key.toLowerCase().startsWith(searchText.toLowerCase())
+        }}
         onNewRequest={(selected) => assignOption({
           foodId: selectedFoodId,
           optionId: selected.value,

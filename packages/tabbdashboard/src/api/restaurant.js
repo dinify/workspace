@@ -115,9 +115,9 @@ export function CreateFood({ categoryId, foodName }) {
   return Post({ path: `menu/item/create`, v3: true }, {
     name: foodName,
   	menu_category_id: categoryId,
-    "price": {
-        "amount": 2,
-        "currency": "KWD"
+    price: {
+        amount: 2,
+        currency: "KWD"
     }})
 }
 
@@ -149,12 +149,27 @@ export function GetAddons() {
 }
 
 export function AddAddon({ name, price }) {
-  return Post({ path: `api/v2/restaurant/addon`, v2: true }, { name, price })
+  return Post({ path: `menu/addon/create`, v3: true }, { name, price: {
+      amount: price,
+      currency: "KWD"
+  } })
 }
 
 export function AddAddonprice({ addonId, price }) {
-  return Post({ path: `api/v2/restaurant/addon/${addonId}`, v2: true }, { price })
+  return Post({ path: `menu/addon/${addonId}`, v3: true }, { price: {
+      amount: price,
+      currency: "KWD"
+  } })
 }
+
+export function AddIngredient({ name }) {
+  return Post({ path: `menu/ingredient/create`, v3: true }, { name })
+}
+
+export function AddOption({ name }) {
+  return Post({ path: `menu/option/create`, v3: true }, { name })
+}
+
 
 // API V2
 export function ChangeItemimage({ file, id }) {

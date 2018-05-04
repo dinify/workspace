@@ -41,6 +41,9 @@ const ItemIngredients = ({
         onUpdateInput={() => {}}
         floatingLabelText="Assign ingredient"
         fullWidth={true}
+        filter={(searchText, key) => {
+           return key.toLowerCase().startsWith(searchText.toLowerCase())
+        }}
         onNewRequest={(selected) => assignIngredient({
           foodId: selectedFoodId,
           ingredientId: selected.value,

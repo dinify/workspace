@@ -9,6 +9,7 @@ import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label }
 import { Header } from '../styled/Header'
 import { lighten } from 'polished'
 import SwitchButton from 'react-switch-button'
+import * as FN from '../../../lib/FN'
 
 import { Form, Text, Select, Textarea } from 'react-form'
 
@@ -16,7 +17,9 @@ import {
   getCategoriesInitAction,
   getAddonsInit,
   addAddonInit,
-  updateAddonPriceInit
+  updateAddonPriceInit,
+  addIngredientInit,
+  addOptionInit,
 } from '../../../ducks/restaurant'
 
 const AddonsList = styled.ul `
@@ -34,9 +37,7 @@ const AddonItem = styled.li `
   border-radius: 5px;
   margin-bottom: 10px;
   font-weight: 300;
-  background-color: ${(p) => {
-    return 'rgb(204, 161, 41)';
-  }};
+  background-color: ${(p) => p.bg ? p.bg : 'rgb(204, 161, 41)'};
   font-size: 12px;
   cursor: pointer;
   &:hover {
@@ -57,7 +58,7 @@ const NewAddon = styled.li `
   border-radius: 5px;
   margin-bottom: 10px;
   font-weight: 300;
-  background-color: rgb(204, 161, 41);
+  background-color: ${(p) => p.bg ? p.bg : 'rgb(204, 161, 41)'};
   font-size: 12px;
   &:hover {
     i {
@@ -100,27 +101,45 @@ const NewAddonButton = styled.button `
 const SolidContainer = styled.div `
   width: 1100px;
 `
+
+const HeadLine = styled.div `
+  height: 50px;
+  line-height: 50px;
+  padding-left: 15px;
+`
+
+const H = styled.div `
+  display: inline-block;
+  width: 250px;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-right: 20px;
+`
+
 class Menucontrol extends React.Component {
-  componentDidMount() {
-    const {
-      loggedRestaurant,
-      getAddons
-    } = this.props;
-    getAddons();
-  }
   render() {
     const {
       loggedRestaurant,
       addons,
       addAddon,
-      updateAddonPrice
+      addIngredient,
+      addOption,
+      updateAddonPrice,
+      ingredients,
+      options
     } = this.props;
 
     return (
       <div>
         <SolidContainer>
+          <HeadLine>
+            <H>Addons</H>
+            <H>Ingredients</H>
+            <H>Options</H>
+          </HeadLine>
           <AddonsList>
-            {addons.sort((a,b) => a.id - b.id).map((addon, i) =>
+            {FN.MapToList(addons).sort((a,b) => a.name.localeCompare(b.name)).map((addon, i) =>
               <AddonItem key={addon.id} >
                 <div style={{verticalAlign: 'middle'}}>
                 <span>{addon.name}</span>
@@ -142,7 +161,7 @@ class Menucontrol extends React.Component {
                             placeholder='Price'
                             type='number'
                           />
-                          <span> KWD</span>
+                          <span> KD</span>
                         </form>
                       )
                     }}
@@ -180,6 +199,77 @@ class Menucontrol extends React.Component {
               </Form>
             </NewAddon>
           </AddonsList>
+          <AddonsList>
+            {FN.MapToList(ingredients).sort((a,b) => a.name.localeCompare(b.name)).map((ingredient, i) =>
+              <AddonItem key={ingredient.id} bg={'rgb(169, 77, 72)'}>
+                <div style={{verticalAlign: 'middle'}}>
+                <span>{ingredient.name}</span>
+                </div>
+              </AddonItem>
+            )}
+            <NewAddon bg={'rgb(169, 77, 72)'}>
+              <Form
+                onSubmit={({ name }) => {
+                  addIngredient({ name })
+                }}
+                validate={({ name }) => {
+                  return {
+                    name: !name ? 'Addon Name is required' : undefined                  }
+                }}
+              >
+                {({submitForm}) => {
+                  return (
+                    <form onSubmit={submitForm}>
+                      <NewAddonInput
+                        field='name'
+                        placeholder='Name of new ingredient'
+                        style={{borderBottom: '1px solid white', width: '200px'}}
+                      />
+                      <NewAddonButton>
+                        <i className="material-icons">add</i>
+                      </NewAddonButton>
+                    </form>
+                  )
+                }}
+              </Form>
+            </NewAddon>
+          </AddonsList>
+          <AddonsList>
+            {FN.MapToList(options).sort((a,b) => a.name.localeCompare(b.name)).map((option, i) =>
+              <AddonItem key={option.id} bg={'rgb(53, 75, 92)'}>
+                <div style={{verticalAlign: 'middle'}}>
+                  <span>{option.name}</span>
+                </div>
+              </AddonItem>
+            )}
+            <NewAddon bg={'rgb(53, 75, 92)'}>
+              <Form
+                onSubmit={({ name }) => {
+                  addOption({ name })
+                }}
+                validate={({ name}) => {
+                  return {
+                    name: !name ? 'Addon Name is required' : undefined,
+                  }
+                }}
+              >
+                {({submitForm}) => {
+                  return (
+                    <form onSubmit={submitForm}>
+                      <NewAddonInput
+                        field='name'
+                        placeholder='Name of new option'
+                        style={{borderBottom: '1px solid white', width: '200px'}}
+                      />
+                      <NewAddonButton>
+                        <i className="material-icons">add</i>
+                      </NewAddonButton>
+                    </form>
+                  )
+                }}
+              </Form>
+            </NewAddon>
+          </AddonsList>
         </SolidContainer>
       </div>);
   }
@@ -188,10 +278,13 @@ class Menucontrol extends React.Component {
 export default connect(
   state => ({
     loggedRestaurant: state.restaurant.loggedRestaurant,
-    addons: state.restaurant.addons
+    addons: state.restaurant.loggedRestaurant.addons,
+    ingredients: state.restaurant.loggedRestaurant.ingredients,
+    options: state.restaurant.loggedRestaurant.options
   }), {
-    getAddons: getAddonsInit,
     addAddon: addAddonInit,
+    addIngredient: addIngredientInit,
+    addOption: addOptionInit,
     updateAddonPrice: updateAddonPriceInit
   },
 )(Menucontrol);

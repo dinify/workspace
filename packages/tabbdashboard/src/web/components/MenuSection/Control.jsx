@@ -12,10 +12,6 @@ import ItemOptions from './ItemOptions'
 import ItemNutrition from './ItemNutrition'
 import ItemDetail from './ItemDetail'
 
-import {
-  getCategoriesInitAction, getAddonsInit
-} from '../../../ducks/restaurant'
-
 const HeadLine = styled.div `
   height: 50px;
   line-height: 50px;
@@ -43,12 +39,6 @@ const SolidContainer = styled.div `
 
 
 class Menucontrol extends React.Component {
-  componentDidMount() {
-    const {
-      getAddons
-    } = this.props;
-    getAddons();
-  }
   render() {
     const {
       categories,
@@ -136,7 +126,5 @@ export default connect(
     addonsMap: state.restaurant.loggedRestaurant.addons,
     selectedCategoryId: state.restaurant.selectedCategoryId,
     selectedFoodId: state.restaurant.selectedFoodId
-  }), {
-    getAddons: getAddonsInit
-  },
+  })
 )(Menucontrol);

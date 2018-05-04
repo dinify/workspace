@@ -88,16 +88,18 @@ export const rmFoodOptionInit = (payload) => ({
   type: 'API_RM_FOODOPTION_INIT',
   payload: {...payload,successActionType: 'API_GET_FOODOPTIONS_INIT'}
 })
-export const addFoodOptionInit = (payload) => ({
-  type: 'API_ADD_FOODOPTION_INIT',
-  payload: {...payload,successActionType: 'API_GET_FOODOPTIONS_INIT'}
+export const addOptionInit = (payload) => ({
+  type: 'API_ADD_OPTION_INIT',
+  payload: {...payload,successActionType: 'GET_LOGGED_INIT'}
 })
-
-export const getAddonsInit = () => ({ type: 'API_GET_ADDONS_INIT' })
+export const addIngredientInit = (payload) => ({
+  type: 'API_ADD_INGREDIENT_INIT',
+  payload: {...payload,successActionType: 'GET_LOGGED_INIT'}
+})
 
 export const addAddonInit = (payload) => ({
   type: 'API_ADD_ADDON_INIT',
-  payload: {...payload,successActionType: 'API_GET_ADDONS_INIT'}
+  payload: {...payload,successActionType: 'GET_LOGGED_INIT'}
 })
 
 export const assignIngredientInit = (payload) => ({ type: 'ASSIGN_INGREDIENT-FOOD_INIT', payload })
@@ -110,6 +112,7 @@ export const assignOptionInit = (payload) => ({ type: 'ASSIGN_OPTION-FOOD_INIT',
 export const unassignOptionInit = (payload) => ({ type: 'UNASSIGN_OPTION-FOOD_INIT', payload })
 
 export const getFoodAddonsInit = (payload) => ({ type: 'API_GET_FOODADDONS_INIT', payload })
+
 export const rmFoodAddonInit = (payload) => ({
   type: 'API_RM_FOODADDON_INIT',
   payload: {...payload,successActionType: 'API_GET_FOODADDONS_INIT'}
@@ -121,7 +124,7 @@ export const addFoodAddonInit = (payload) => ({
 
 export const updateAddonPriceInit = (payload) => ({
   type: 'API_ADD_ADDONPRICE_INIT',
-  payload: {...payload,successActionType: 'API_GET_ADDONS_INIT'}
+  payload: {...payload,successActionType: 'GET_LOGGED_INIT'}
 })
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
