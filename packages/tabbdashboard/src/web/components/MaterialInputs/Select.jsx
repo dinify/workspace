@@ -14,8 +14,8 @@ const Select = (props) => {
       }}
       {...props.componentProps}
     >
-      {props.options.map((option) =>
-        <MenuItem value={option.value}>{option.label}</MenuItem>
+      {props.options.map((option, i) =>
+        <MenuItem key={i} value={option.value}>{option.label}</MenuItem>
       )}
     </SelectField>
   )

@@ -36,12 +36,14 @@ let DetailForm = ({
       <Field name="name" component={Text} componentProps={{
         label: "Name",
         fullWidth: true,
+        margin: 'normal'
       }} />
       <Field name="description" component={Text} componentProps={{
         label: "Description",
-        multiLine: true,
+        multiline: true,
         fullWidth: true,
-        rows: 2
+        rows: 2,
+        margin: 'normal'
       }} />
       <Field name="price" component={Text} componentProps={{
         type: 'number',
@@ -49,9 +51,10 @@ let DetailForm = ({
         label: 'Price (KD)',
         fullWidth: true,
         step: 0.1,
+        margin: 'normal',
         style
       }} />
-      <Button type="submit" label="Save" fullWidth={true} />
+      <Button type="submit" fullWidth={true}>Save</Button>
     </form>
   )
 }

@@ -13,7 +13,7 @@ import Checkbox from 'material-ui/Checkbox';
 import Tooltip from 'material-ui/Tooltip';
 
 import {
-  rmCategoryInitAction,
+  updateMenuCategoryInitAction,
   addCategoryInitAction,
   selectCategoryAction,
   reorderCategoriesAction
@@ -67,6 +67,10 @@ const ToggleContainer = styled.div `
   position: absolute;
   right: 0;
   top: -5px;
+  * {
+    fill: white !important;
+  }
+
 `
 
 const CategoryItem = styled.div `
@@ -112,21 +116,21 @@ CreateCategoryForm = reduxForm({
   form: 'menu/createCategory'
 })(CreateCategoryForm)
 
-const SortableItem = SortableElement(({ category, selectedCategoryId, selectCategory, rmCategory }) =>
+const SortableItem = SortableElement(({ category, selectedCategoryId, selectCategory, updateCategory }) =>
   <CategoryItem
     selected={category.id === selectedCategoryId}
     disabled={!category.published}
     onClick={() => selectCategory({categoryId: category.id})}
   >
-    <span>{category.name} {category.published ? 'P' : 'n'}</span>
+    <span>{category.name}</span>
     <ToggleContainer category>
       <Tooltip placement="left" title={category.published ? 'Published' : 'Unpublished'}>
         <Checkbox
           checkedIcon={<Visibility />}
           icon={<VisibilityOff />}
-          color="white"
+          color="primary"
           defaultChecked={category.published}
-          onChange={(o, checked) => rmCategory({ categoryId: category.id, enabled: checked })}
+          onChange={(o, checked) => updateCategory({ id: category.id, published: checked })}
         />
       </Tooltip>
     </ToggleContainer>
@@ -138,7 +142,7 @@ const SortableList = SortableContainer(({ categories, deps }) => {
     <div>
       {categories.map((category, index) => (
         <SortableItem
-          key={`menucategory-${index}`}
+          key={`menucategory-${index}-${category.id}`}
           index={index}
           category={category}
           {...deps}
@@ -152,7 +156,7 @@ const ListOfCategories = ({
   categories,
   selectedCategoryId,
   addCategory,
-  rmCategory,
+  updateCategory,
   selectCategory,
   reorderCategories
 }) => {
@@ -170,7 +174,7 @@ const ListOfCategories = ({
           reorderCategories(arrayMove(categoriesList, oldIndex, newIndex))
         }}
         deps={{
-          selectedCategoryId, selectCategory, rmCategory
+          selectedCategoryId, selectCategory, updateCategory
         }}
       />
 
@@ -183,7 +187,7 @@ const ListOfCategories = ({
 
 export default connect(
   state => ({}), {
-    rmCategory: rmCategoryInitAction,
+    updateCategory: updateMenuCategoryInitAction,
     addCategory: addCategoryInitAction,
     selectCategory: selectCategoryAction,
     reorderCategories: reorderCategoriesAction

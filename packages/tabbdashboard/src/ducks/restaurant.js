@@ -39,7 +39,10 @@ export const selectCategoryAction = (payload) => ({ type: 'SELECT_CATEGORY', pay
 export const selectFoodAction = (payload) => ({ type: 'SELECT_FOOD', payload })
 export const updateNameInitAction = (payload) => ({ type: 'UPDATE_NAME_INIT', payload })
 export const updateDoneAction = () => ({ type: 'UPDATE_DONE' })
+
 export const updateCategoryInitAction = (payload) => ({ type: 'UPDATE_CATEGORY_INIT', payload })
+export const updateMenuCategoryInitAction = (payload) => ({ type: 'UPDATE_MENUCATEGORY_INIT', payload })
+
 export const updateContactInitAction = (payload) => ({ type: UPDATE_CONTACT_INIT, payload })
 export const updateSocialInitAction = (payload) => ({ type: UPDATE_SOCIAL_INIT, payload })
 export const updateLocationInitAction = (payload) => ({ type: UPDATE_LOCATION_INIT, payload })

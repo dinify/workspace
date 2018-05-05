@@ -15,7 +15,7 @@ let NameForm = ({
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Field name="name" component={Text} componentProps={{fullWidth: true, margin: "normal"}}/>
+      <Field name="name" component={Text} componentProps={{fullWidth: true, margin: 'normal'}}/>
       <Button type="submit" fullWidth={true}>SAVE</Button>
     </form>
   )

@@ -199,7 +199,8 @@ export default function reducer(state: State = initialState, action: Action) {
     }
     case 'UPDATE_MENUCATEGORY_INIT': {
       const payload = action.payload
-      return R.assocPath(['categories', payload.id, 'precedence'], payload.precedence)(state)
+      const original = state.categories[payload.id]
+      return R.assocPath(['categories', payload.id], {...original, ...payload})(state)
     }
     default:
       return state

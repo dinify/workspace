@@ -48,7 +48,7 @@ let NutritionForm = ({
         fullWidth: true,
         style
       }} />
-      <Button type="submit" label="Save" fullWidth={true} />
+      <Button type="submit" fullWidth={true}>Save</Button>
     </form>
   )
 }
