@@ -11,8 +11,8 @@ import SwitchButton from 'react-switch-button'
 import 'react-switch-button/dist/react-switch-button.css'
 import { HorizontalLine } from '../styled/HorizontalLine'
 import numeral from 'numeral'
-
-import FlatButton from 'material-ui/FlatButton'
+import Tooltip from 'material-ui/Tooltip';
+import Button from 'material-ui/Button'
 import Text from '../MaterialInputs/Text'
 import { Field, reduxForm } from 'redux-form'
 import Progress from '../Progress'
@@ -219,7 +219,7 @@ let CreateWaiterboardForm = ({
         placeholder: "Waiterboard Name",
         fullWidth: true
       }} />
-      <FlatButton type="submit" label="Create" fullWidth={true} />
+      <Button type="submit" fullWidth={true}>Create</Button>
     </form>
   )
 }
@@ -245,7 +245,7 @@ let CreateTableForm = ({
     <form onSubmit={handleSubmit} className="center">
       <FieldsContainer>
       <Field name="number" component={Text} componentProps={{
-        floatingLabelText: 'Number',
+        label: 'Number',
         type: 'number',
         min: 1,
         max: 1000,
@@ -255,7 +255,7 @@ let CreateTableForm = ({
       </FieldsContainer>
       <FieldsContainer>
       <Field name="capacity" component={Text} componentProps={{
-        floatingLabelText: "Capacity",
+        label: "Capacity",
         type: 'number',
         min: 1,
         max: 50,
@@ -264,7 +264,7 @@ let CreateTableForm = ({
       }} />
     </FieldsContainer>
     <ButtonContainer>
-      <FlatButton type="submit" label="Add Table" style={{color: 'white'}}/>
+      <Button type="submit" style={{color: 'white'}}>Add Table</Button>
     </ButtonContainer>
     </form>
   )
@@ -305,16 +305,20 @@ let TableComponent = ({ table, wb, deleteTable, fixedWidth, isDragging, connectD
           </div>
         )}
         <Seats>
-          <div className="capacity" title="Capacity">
-            <span>{table.capacity}</span>
-            <i className="material-icons">group</i>
-          </div>
-          <button
-            className="deleteButton"
-            onClick={() => deleteTable({id: table.id, waiterboardId: wb.id})}
-          >
-            <i className="ion-ios-trash-outline" />
-          </button>
+          <Tooltip placement="top" title="Capacity">
+            <div className="capacity">
+              <span>{table.capacity}</span>
+              <i className="material-icons">group</i>
+            </div>
+          </Tooltip>
+          <Tooltip placement="left" title="Delete Table">
+            <button
+              className="deleteButton"
+              onClick={() => deleteTable({id: table.id, waiterboardId: wb.id})}
+            >
+              <i className="ion-ios-trash-outline" />
+            </button>
+          </Tooltip>
         </Seats>
       </TableBox>
     </div>
@@ -415,12 +419,16 @@ class Waiterboards extends React.Component {
                   </div>
                 </WBtitle>
               </Link>
-              <WBinfo>
-                {wb.capacity}<i className="material-icons">group</i>
-              </WBinfo>
-              <DeleteWaiterboard onClick={() => deleteWaiterboard({id: wb.id})}>
-                <i className="ion-ios-trash-outline" />
-              </DeleteWaiterboard>
+              <Tooltip placement="top" title="Total Capacity">
+                <WBinfo>
+                  {wb.capacity}<i className="material-icons">group</i>
+                </WBinfo>
+              </Tooltip>
+              <Tooltip placement="top" title="Delete Waiterboard">
+                <DeleteWaiterboard onClick={() => deleteWaiterboard({id: wb.id})}>
+                  <i className="ion-ios-trash-outline" />
+                </DeleteWaiterboard>
+              </Tooltip>
             </WBheader>
             <WBbody>
               <TableTag>

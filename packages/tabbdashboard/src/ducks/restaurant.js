@@ -82,6 +82,7 @@ export const updateFoodNutritionInit = (payload) => ({ type: 'UPDATE_NUTRITION_I
 export const addDayToBusinessHours = (payload) => ({ type: 'ADD_DAY_TO_BUSINESSHOURS', payload })
 export const addRangeToBusinessHours = (payload) => ({ type: 'ADD_RANGE_TO_BUSINESSHOURS', payload })
 
+export const reorderCategoriesAction = (payload) => ({ type: 'REORDER_MENUCATEGORY_INIT', payload })
 
 export const getFoodOptionsInit = (payload) => ({ type: 'API_GET_FOODOPTIONS_INIT', payload })
 export const rmFoodOptionInit = (payload) => ({
@@ -219,16 +220,6 @@ const registerRestaurantEpic = (action$: Observable, { getState }) =>
   })
 
 
-
-
-
-
-
-
-
-
-
-
 // CRUD Epics
 const fetchEpic = (action$: Observable, { getState }: EpicDependencies) =>
   action$
@@ -347,7 +338,24 @@ const unassignEpic = (action$: Observable) =>
   })
 
 
+const reorderEpic = (action$: Observable) =>
+  action$
+  .filter(action => action.type.startsWith('REORDER_') && action.type.endsWith('_INIT'))
+  .mergeMap(({ payload, type }) => {
 
+    const middle = type.split('_')[1] // 'CATEGORY'
+
+    return payload.map((o, i) => ({
+      type: `UPDATE_${middle}_INIT`,
+      payload: {
+        id: o.id,
+        precedence: i
+      }
+    })).concat({
+      type: `REORDER_${middle}_DONE`
+    })
+
+  })
 
 
 
@@ -477,6 +485,7 @@ export const epics = [
   removeEpic,
   assignEpic,
   unassignEpic,
+  reorderEpic,
   editImageEpic,
   getBillsEpic,
   getCategoriesEpic,

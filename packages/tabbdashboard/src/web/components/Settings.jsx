@@ -22,7 +22,7 @@ const Settings = ({ location }) =>
         <HorMenuLink l={location} title="Main Information" to="/settings/main" />
         <HorMenuLink l={location} title="Waiterboards" to="/settings/waiterboards" />
         <HorMenuLink l={location} title="QR Codes" to="/settings/qrcodes" />
-        <HorMenuLink l={location} title="Staff Roles" to="/settings/roles" />
+        <HorMenuLink l={location} title="" to="/settings/roles" />
         <HorMenuLink l={location} title="" to="/settings/localization" />
       </HorMenu>
     </Header>

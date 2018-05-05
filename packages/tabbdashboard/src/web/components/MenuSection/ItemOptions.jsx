@@ -9,7 +9,7 @@ import {
   unassignOptionInit
 } from '../../../ducks/restaurant'
 import ListOfCustomizations from './ListOfCustomizations'
-import AutoComplete from 'material-ui/AutoComplete'
+import AutoComplete from '../MaterialInputs/AutoComplete'
 
 const ItemOptions = ({
   optionsMap,
@@ -19,7 +19,7 @@ const ItemOptions = ({
   unassignOption
 }) => {
   const optionsList = FN.MapToList(optionsMap)
-  const dataSource = optionsList.map((o) => ({value: o.id, text: o.name}))
+  const dataSource = optionsList.map((o) => ({value: o.id, label: o.name}))
   return (
     <div>
       <Label>Options</Label>
@@ -37,26 +37,7 @@ const ItemOptions = ({
         />
       : 'No options'}
       <AutoComplete
-        hintText="e.g. Type of bread"
         dataSource={dataSource}
-        onUpdateInput={() => {}}
-        floatingLabelText="Assign option"
-        fullWidth={true}
-        filter={(searchText, key) => {
-           return key.toLowerCase().startsWith(searchText.toLowerCase())
-        }}
-        onNewRequest={(selected) => assignOption({
-          foodId: selectedFoodId,
-          optionId: selected.value,
-          option: {
-            ...R.find(R.propEq('id', selected.value))(optionsList),
-            difference: {amount: "-1.88", currency: "KWD"}
-          },
-          originalObject: {options: R.mapObjIndexed((o) => {
-            if(!o.difference) o.difference= o.pivot.difference
-            return o
-          }, selectedFood.options)}
-        })}
       />
     </div>
   );

@@ -12,7 +12,7 @@ import 'react-switch-button/dist/react-switch-button.css'
 import { HorizontalLine } from '../styled/HorizontalLine'
 import numeral from 'numeral'
 
-import FlatButton from 'material-ui/FlatButton'
+import Button from 'material-ui/Button'
 import Text from '../MaterialInputs/Text'
 import { Field, reduxForm } from 'redux-form'
 import Progress from '../Progress'

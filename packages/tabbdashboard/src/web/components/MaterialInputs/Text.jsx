@@ -8,7 +8,7 @@ const Text = (props) => {
     <TextField
       name={name}
       value={value}
-      onChange={(e, newValue) => {
+      onChange={(newValue) => {
         onChange(newValue)
       }}
       {...props.componentProps}

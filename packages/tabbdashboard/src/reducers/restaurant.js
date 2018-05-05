@@ -197,6 +197,10 @@ export default function reducer(state: State = initialState, action: Action) {
       const newFood = R.merge(state.menuItems[prePayload.foodId], prePayload)
       return R.assocPath(['menuItems', prePayload.foodId], newFood)(state)
     }
+    case 'UPDATE_MENUCATEGORY_INIT': {
+      const payload = action.payload
+      return R.assocPath(['categories', payload.id, 'precedence'], payload.precedence)(state)
+    }
     default:
       return state
   }

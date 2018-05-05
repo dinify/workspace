@@ -22,14 +22,8 @@ export const FormBoxBody = styled.div`
   padding-bottom: ${p => p.pb || 10}px;
   text-align: ${p => p.center ? 'center' : 'left'};
   input, select, textarea {
-    border: 1px solid #CED0DA;
     font-weight: 300 !important;
     font-size: 13px !important;
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    background: rgba(239,243,246,0.7);
-    margin-top: ${p => p.material ? '0' : '10px'};
   }
   button span {
     font-weight: 400 !important;
@@ -42,15 +36,6 @@ export const FormBoxBody = styled.div`
   .FormInput {
     display: ${p => p.half ? 'inline-block' : 'block'};
     width: ${p => p.half ? '46.7%' : '100%'};
-  }
-  .TimeInput {
-    display: ${p => p.half ? 'inline-block' : 'block'};
-    width: ${p => p.half ? '46.7%' : '100%'};
-    overflow: hidden;
-    input {
-      margin-top: 0;
-      padding-left: 39px !important;
-    }
   }
   select {
     height: 34px;

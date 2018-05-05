@@ -110,6 +110,12 @@ export function GetCategories() {
 export function CreateCategory({ categoryName }) {
   return Post({ path: `menu/category/create`, v3: true }, { name: categoryName })
 }
+export function ChangeMenucategory(payload) {
+  const { id } = payload
+  delete payload.restaurantId
+  delete payload.id
+  return Post({ path: `menu/category/${id}`, v3: true }, payload)
+}
 // Create Item
 export function CreateFood({ categoryId, foodName }) {
   return Post({ path: `menu/item/create`, v3: true }, {

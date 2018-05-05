@@ -7,7 +7,7 @@ import {
   updateNameInitAction
 } from '../../../../ducks/restaurant'
 import Progress from '../../Progress'
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button';
 import Text from '../../MaterialInputs/Text'
 
 let NameForm = ({
@@ -15,8 +15,8 @@ let NameForm = ({
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Field name="name" component={Text} placeholder="Restaurant Name" />
-      <FlatButton type="submit" label="Save" fullWidth={true} />
+      <Field name="name" component={Text} componentProps={{fullWidth: true, margin: "normal"}}/>
+      <Button type="submit" fullWidth={true}>SAVE</Button>
     </form>
   )
 }

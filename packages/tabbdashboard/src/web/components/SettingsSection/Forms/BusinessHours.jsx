@@ -6,14 +6,16 @@ import { Link } from 'react-router-dom'
 
 import moment from 'moment'
 import Datetime from 'react-datetime'
-import TimePicker from 'material-ui/TimePicker'
+import TextField from 'material-ui/TextField';
 import { Field, reduxForm } from 'redux-form'
+import Grid from 'material-ui/Grid'
+import Button from 'material-ui/Button';
+import Select from '../../MaterialInputs/Select';
 
 import {
   FormBox,
   FormBoxHead,
   FormBoxBody,
-  FormBoxSubmit,
   Label,
   ThinButton
 } from '../../styled/FormBox'
@@ -44,12 +46,16 @@ let AddDayForm = ({
   }))
   return (
     <form onSubmit={handleSubmit}>
-      <Field name="dayName" component="select" className="FormInput">
-        {selectFrom.map((o) =>
-          <option value={o.value} key={o.value}>{o.label}</option>
-        )}
-      </Field>
-      <FormBoxSubmit className="FormInput" style={{float: 'right'}}>Add Day</FormBoxSubmit>
+      <Grid container spacing={8} alignItems="flex-end">
+        <Grid item xs={6} className="center">
+          <Field name="dayName" component={Select} className="FormInput" options={selectFrom} componentProps={{
+            fullWidth: true
+          }} />
+        </Grid>
+        <Grid item xs={6} className="center">
+          <Button type="submit" className="FormInput" fullWidth={true} style={{float: 'right'}}>Add Day</Button>
+        </Grid>
+      </Grid>
     </form>
   )
 }
@@ -60,14 +66,19 @@ AddDayForm = reduxForm({
 const TimeField = (props) => {
   const { value, onChange } = props.input
   return (
-    <TimePicker
-      container="inline"
-      format="24hr"
-      hintText={props.placeholder}
-      autoOk={true}
-      value={moment(value, "HH:mm").toDate()}
-      onChange={(e, newTime) => {
-        onChange(moment(newTime).format("HH:mm"))
+    <TextField
+      id="time"
+      type="time"
+      value={value}
+      label={props.label}
+      onChange={(newTime) => {
+        onChange(newTime)
+      }}
+      InputLabelProps={{
+        shrink: true,
+      }}
+      inputProps={{
+        step: 300, // 5 min
       }}
     />
   )
@@ -85,13 +96,16 @@ const Day = ({
       <Label className="center">{dayNames[day]}</Label>
       {ranges.map((range, i) =>
         <div key={i}>
-          <div className="TimeInput">
-            <Field name={`${day}_${i}_from`} component={TimeField} placeholder='From'/>
-          </div>
-          <div className="sep"> - </div>
-          <div className="TimeInput">
-            <Field name={`${day}_${i}_to`} component={TimeField} placeholder='To'/>
-          </div>
+
+          <Grid container spacing={8} alignItems="flex-end">
+            <Grid item xs={6} className="center">
+              <Field name={`${day}_${i}_from`} component={TimeField} label='From'/>
+            </Grid>
+            <Grid item xs={6} className="center">
+              <Field name={`${day}_${i}_to`} component={TimeField} label='To'/>
+            </Grid>
+          </Grid>
+
         </div>
       )}
       <div className="center">
@@ -108,7 +122,7 @@ let BusinessHoursForm = props => {
       {R.keys(openHours).map((day) =>
         <Day addRange={addRange} ranges={openHours[day]} day={day} key={day} />
       )}
-      <FormBoxSubmit>SAVE</FormBoxSubmit>
+      <Button type="submit" fullWidth={true}>SAVE</Button>
     </form>
   )
 }

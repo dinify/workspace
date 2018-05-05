@@ -17,7 +17,7 @@ import {
 } from '../../../../ducks/restaurant'
 import Progress from '../../Progress'
 import Text from '../../MaterialInputs/Text'
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button';
 
 
 let ContactForm = ({
@@ -25,10 +25,10 @@ let ContactForm = ({
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Field name="website" component={Text} componentProps={{floatingLabelText: "Website"}} />
-      <Field name="email" component={Text} componentProps={{floatingLabelText: "Email"}} />
-      <Field name="phone" component={Text} componentProps={{floatingLabelText: "Phone"}} />
-      <FlatButton type="submit" label="Save" fullWidth={true} />
+      <Field name="website" component={Text} componentProps={{label: "Website", fullWidth: true, margin: 'normal'}} />
+      <Field name="email" component={Text} componentProps={{label: "Email", fullWidth: true, margin: 'normal'}} />
+      <Field name="phone" component={Text} componentProps={{label: "Phone", fullWidth: true, margin: 'normal'}} />
+      <Button type="submit" fullWidth={true}>SAVE</Button>
     </form>
   )
 }

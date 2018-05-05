@@ -17,18 +17,18 @@ import {
 } from '../../../../ducks/restaurant'
 import Progress from '../../Progress'
 import Text from '../../MaterialInputs/Text'
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button';
 
 let BankingForm = ({
   handleSubmit
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Field name="bank_name" component={Text} componentProps={{floatingLabelText: "Bank Name"}} />
-      <Field name="beneficiary_name" component={Text} componentProps={{floatingLabelText: "Beneficiary Name"}} />
-      <Field name="iban" component={Text} componentProps={{floatingLabelText: "IBAN Number"}} />
-      <Field name="bic" component={Text} componentProps={{floatingLabelText: "BIC Number"}} />
-      <FlatButton type="submit" label="Save" fullWidth={true} />
+      <Field name="bank_name" component={Text} componentProps={{label: "Bank Name", fullWidth: true, margin: 'normal'}} />
+      <Field name="beneficiary_name" component={Text} componentProps={{label: "Beneficiary Name", fullWidth: true, margin: 'normal'}} />
+      <Field name="iban" component={Text} componentProps={{label: "IBAN Number", fullWidth: true, margin: 'normal'}} />
+      <Field name="bic" component={Text} componentProps={{label: "BIC Number", fullWidth: true, margin: 'normal'}} />
+      <Button type="submit" fullWidth={true}>SAVE</Button>
     </form>
   )
 }

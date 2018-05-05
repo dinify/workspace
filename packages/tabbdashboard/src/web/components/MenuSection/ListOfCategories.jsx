@@ -5,14 +5,18 @@ import { Field, reduxForm } from 'redux-form'
 import styled from 'styled-components'
 import SwitchButton from 'react-switch-button'
 import { lighten } from 'polished'
-import { SortableContainer, SortableElement } from 'react-sortable-hoc'
+import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
 import * as FN from '../../../lib/FN'
-
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Checkbox from 'material-ui/Checkbox';
+import Tooltip from 'material-ui/Tooltip';
 
 import {
   rmCategoryInitAction,
   addCategoryInitAction,
-  selectCategoryAction
+  selectCategoryAction,
+  reorderCategoriesAction
 } from '../../../ducks/restaurant'
 
 const CategoriesList = styled.ul `
@@ -61,29 +65,11 @@ const NewCategory = styled.li `
 `
 const ToggleContainer = styled.div `
   position: absolute;
-  right: 7px;
-  top: 5px;
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label:before {
-    background: rgba(255,255,255,0.8);
-  }
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label {
-    background: transparent;
-  }
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"]:checked + label {
-    background: transparent;
-  }
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"]:checked + label:after {
-    background-color: ${p => p.food ? 'rgb(169, 77, 72);' : 'rgb(53, 75, 92)'};
-  }
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label:after {
-    background-color: ${p => {
-      if (p.food) return lighten(0.3, 'rgb(169, 77, 72)')
-      else return lighten(0.3, 'rgb(53, 75, 92)')
-    }}
-  }
+  right: 0;
+  top: -5px;
 `
 
-const CategoryItem = styled.li `
+const CategoryItem = styled.div `
   position: relative;
   background: black;
   color: white;
@@ -128,23 +114,21 @@ CreateCategoryForm = reduxForm({
 
 const SortableItem = SortableElement(({ category, selectedCategoryId, selectCategory, rmCategory }) =>
   <CategoryItem
-    key={category.id}
     selected={category.id === selectedCategoryId}
     disabled={!category.published}
     onClick={() => selectCategory({categoryId: category.id})}
   >
-    <span>{category.name}</span>
+    <span>{category.name} {category.published ? 'P' : 'n'}</span>
     <ToggleContainer category>
-      <SwitchButton
-        name={`switch-category-${category.id}`}
-        type="switch"
-        defaultChecked={category.published}
-        onChange={() => {
-          if(category.published) {
-            rmCategory({ categoryId: category.id, enabled: false })
-          } else rmCategory({ categoryId: category.id, enabled: true })
-        }}
-      />
+      <Tooltip placement="left" title={category.published ? 'Published' : 'Unpublished'}>
+        <Checkbox
+          checkedIcon={<Visibility />}
+          icon={<VisibilityOff />}
+          color="white"
+          defaultChecked={category.published}
+          onChange={(o, checked) => rmCategory({ categoryId: category.id, enabled: checked })}
+        />
+      </Tooltip>
     </ToggleContainer>
   </CategoryItem>
 );
@@ -154,7 +138,7 @@ const SortableList = SortableContainer(({ categories, deps }) => {
     <div>
       {categories.map((category, index) => (
         <SortableItem
-          key={`item-${index}`}
+          key={`menucategory-${index}`}
           index={index}
           category={category}
           {...deps}
@@ -169,16 +153,22 @@ const ListOfCategories = ({
   selectedCategoryId,
   addCategory,
   rmCategory,
-  selectCategory
+  selectCategory,
+  reorderCategories
 }) => {
   if (!categories) return (<div />)
-  const categoriesList = FN.MapToList(categories).sort((a,b) => a.id.localeCompare(b.id))
+  const categoriesList = FN.MapToList(categories).sort((a,b) => a.precedence - b.precedence)
   return (
     <CategoriesList>
 
       <SortableList
         distance={1}
+        axis={'y'}
+        lockAxis={'y'}
         categories={categoriesList}
+        onSortEnd={({oldIndex, newIndex}) => {
+          reorderCategories(arrayMove(categoriesList, oldIndex, newIndex))
+        }}
         deps={{
           selectedCategoryId, selectCategory, rmCategory
         }}
@@ -196,5 +186,6 @@ export default connect(
     rmCategory: rmCategoryInitAction,
     addCategory: addCategoryInitAction,
     selectCategory: selectCategoryAction,
+    reorderCategories: reorderCategoriesAction
   }
 )(ListOfCategories);

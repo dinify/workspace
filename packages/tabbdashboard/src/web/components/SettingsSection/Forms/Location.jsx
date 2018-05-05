@@ -19,7 +19,7 @@ import {
   updateLocationInitAction
 } from '../../../../ducks/restaurant'
 import Progress from '../../Progress'
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button';
 
 const areaNames = R.sort((a, b) => {
   return a.localeCompare(b);

@@ -20,7 +20,6 @@ import Dashboard from './Dashboard'
 import Qr from './Qr'
 
 const Content = styled.div `
-  font-family: 'Montserrat', sans-serif;
   background-color: rgb(27,36,49);
   color: white;
   ${media.tablet`max-width: 100%;`}

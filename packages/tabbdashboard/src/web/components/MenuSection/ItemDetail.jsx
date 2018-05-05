@@ -16,7 +16,7 @@ import {
 } from '../../../ducks/restaurant'
 import Progress from '../Progress'
 import { Field, reduxForm } from 'redux-form'
-import FlatButton from 'material-ui/FlatButton'
+import Button from 'material-ui/Button'
 import Text from '../MaterialInputs/Text'
 
 const FoodImage = styled.div `
@@ -34,11 +34,11 @@ let DetailForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <Field name="name" component={Text} componentProps={{
-        floatingLabelText: "Name",
+        label: "Name",
         fullWidth: true,
       }} />
       <Field name="description" component={Text} componentProps={{
-        floatingLabelText: "Description",
+        label: "Description",
         multiLine: true,
         fullWidth: true,
         rows: 2
@@ -46,12 +46,12 @@ let DetailForm = ({
       <Field name="price" component={Text} componentProps={{
         type: 'number',
         min: 0.000,
-        floatingLabelText: 'Price (KD)',
+        label: 'Price (KD)',
         fullWidth: true,
         step: 0.1,
         style
       }} />
-      <FlatButton type="submit" label="Save" fullWidth={true} />
+      <Button type="submit" label="Save" fullWidth={true} />
     </form>
   )
 }

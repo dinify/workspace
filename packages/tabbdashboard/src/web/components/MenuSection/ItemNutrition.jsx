@@ -11,7 +11,7 @@ import {
 } from '../../../ducks/restaurant'
 import Progress from '../Progress'
 import { Field, reduxForm } from 'redux-form'
-import FlatButton from 'material-ui/FlatButton'
+import Button from 'material-ui/Button'
 import Text from '../MaterialInputs/Text'
 
 let NutritionForm = ({
@@ -23,32 +23,32 @@ let NutritionForm = ({
       <Field name="total" component={Text} componentProps={{
         type: 'number',
         min: 1,
-        floatingLabelText: 'Total Calories (kJ)',
+        label: 'Total Calories (kJ)',
         fullWidth: true,
         style
       }} />
       <Field name="proteins" component={Text} componentProps={{
         type: 'number',
         min: 1,
-        floatingLabelText: 'Proteins (g)',
+        label: 'Proteins (g)',
         fullWidth: true,
         style
       }} />
       <Field name="fats" component={Text} componentProps={{
         type: 'number',
         min: 1,
-        floatingLabelText: 'Fats (g)',
+        label: 'Fats (g)',
         fullWidth: true,
         style
       }} />
       <Field name="carbs" component={Text} componentProps={{
         type: 'number',
         min: 1,
-        floatingLabelText: 'Carbohydrates (g)',
+        label: 'Carbohydrates (g)',
         fullWidth: true,
         style
       }} />
-      <FlatButton type="submit" label="Save" fullWidth={true} />
+      <Button type="submit" label="Save" fullWidth={true} />
     </form>
   )
 }

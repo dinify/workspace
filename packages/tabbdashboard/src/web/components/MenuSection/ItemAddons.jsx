@@ -9,7 +9,7 @@ import {
   unassignAddonInit
 } from '../../../ducks/restaurant'
 import ListOfCustomizations from './ListOfCustomizations'
-import AutoComplete from 'material-ui/AutoComplete'
+import AutoComplete from '../MaterialInputs/AutoComplete'
 
 const ItemAddons = ({
   addonsMap,
@@ -19,7 +19,7 @@ const ItemAddons = ({
   unassignAddon
 }) => {
   const addonsList = FN.MapToList(addonsMap)
-  const dataSource = addonsList.map((o) => ({value: o.id, text: o.name}))
+  const dataSource = addonsList.map((o) => ({value: o.id, label: o.name}))
   console.log(dataSource);
   return (
     <div>
@@ -35,20 +35,7 @@ const ItemAddons = ({
         />
       : 'No addon'}
       <AutoComplete
-        hintText="e.g. Extra Cheese"
         dataSource={dataSource}
-        onUpdateInput={() => {}}
-        floatingLabelText="Assign addon"
-        fullWidth={true}
-        filter={(searchText, key) => {
-           return key.toLowerCase().startsWith(searchText.toLowerCase())
-        }}
-        onNewRequest={(selected) => assignAddon({
-          foodId: selectedFoodId,
-          addonId: selected.value,
-          addon: R.find(R.propEq('id', selected.value))(addonsList),
-          originalObject: {addons: selectedFood.addons}
-        })}
       />
     </div>
   );

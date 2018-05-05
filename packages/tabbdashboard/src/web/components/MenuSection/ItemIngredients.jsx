@@ -10,7 +10,7 @@ import {
   unassignIngredientInit
 } from '../../../ducks/restaurant'
 import ListOfCustomizations from './ListOfCustomizations'
-import AutoComplete from 'material-ui/AutoComplete'
+import AutoComplete from '../MaterialInputs/AutoComplete'
 
 
 const ItemIngredients = ({
@@ -21,7 +21,7 @@ const ItemIngredients = ({
   ingredientsMap
 }) => {
   const ingredientsList = FN.MapToList(ingredientsMap)
-  const dataSource = ingredientsList.map((o) => ({value: o.id, text: o.name}))
+  const dataSource = ingredientsList.map((o) => ({value: o.id, label: o.name}))
   return (
     <div>
       <Label>Ingredients</Label>
@@ -36,20 +36,7 @@ const ItemIngredients = ({
         />
       : 'No ingredients'}
       <AutoComplete
-        hintText="e.g. Tomato"
         dataSource={dataSource}
-        onUpdateInput={() => {}}
-        floatingLabelText="Assign ingredient"
-        fullWidth={true}
-        filter={(searchText, key) => {
-           return key.toLowerCase().startsWith(searchText.toLowerCase())
-        }}
-        onNewRequest={(selected) => assignIngredient({
-          foodId: selectedFoodId,
-          ingredientId: selected.value,
-          ingredient: R.find(R.propEq('id', selected.value))(ingredientsList),
-          originalObject: {ingredients: selectedFood.ingredients}
-        })}
       />
     </div>
   );
