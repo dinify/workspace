@@ -1,16 +1,12 @@
 // @flow
 import React from 'react'
-import R from 'ramda'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 import Grid from 'material-ui/Grid'
-import moment from 'moment'
 import {
   FormBox,
   FormBoxHead,
-  FormBoxBody,
-  FormBoxSubmit
+  FormBoxBody
 } from '../../styled/FormBox'
 import {
   updateSocialInitAction

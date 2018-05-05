@@ -6,9 +6,7 @@ import * as FN from '../../../lib/FN'
 import Dropzone from 'react-dropzone'
 import {
   FormBox,
-  FormBoxBody,
-  FormBoxSubmit,
-  Label
+  FormBoxBody
 } from '../styled/FormBox'
 import {
   updateFoodInitAction,

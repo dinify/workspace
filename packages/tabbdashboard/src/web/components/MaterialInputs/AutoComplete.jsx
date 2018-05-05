@@ -4,7 +4,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
-import Input from 'material-ui/Input';
 import TextField from 'material-ui/TextField';
 import { MenuItem } from 'material-ui/Menu';
 

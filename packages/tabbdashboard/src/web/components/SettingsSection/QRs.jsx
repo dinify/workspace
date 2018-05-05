@@ -1,35 +1,11 @@
 // @flow
 import React from 'react';
-import { compose } from 'redux';
 import R from 'ramda';
 import * as FN from '../../../lib/FN';
 import { connect } from 'react-redux';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import QRCode from 'qrcode.react'
-import SwitchButton from 'react-switch-button'
-import 'react-switch-button/dist/react-switch-button.css'
-import { HorizontalLine } from '../styled/HorizontalLine'
-import numeral from 'numeral'
-
-import Button from 'material-ui/Button'
-import Text from '../MaterialInputs/Text'
-import { Field, reduxForm } from 'redux-form'
-import Progress from '../Progress'
-
-import {
-  FormBox,
-  FormBoxHead,
-  FormBoxBody,
-  FormBoxSubmit,
-  Label
-} from '../styled/FormBox';
-import {
-  createWaiterboardInitAction,
-  deleteWaiterboardInitAction,
-  createTableInitAction,
-  deleteTableInitAction
-} from '../../../ducks/restaurant'
 
 const WB = styled.div`
   background: white;
@@ -72,11 +48,7 @@ const TableTag = styled.table`
 class QRs extends React.Component {
   render() {
     let {
-      loggedRestaurant,
-      createWaiterboard,
-      deleteWaiterboard,
-      createTable,
-      deleteTable,
+      loggedRestaurant
     } = this.props
 
     const waiterboards = FN.MapToList(loggedRestaurant.waiterboards).map((wb) => {
@@ -88,7 +60,7 @@ class QRs extends React.Component {
       wb.tables = tables
       const tablesMatrix = R.range(0, wb.maxY+1).map(() => R.range(0, wb.maxX+1).map(() => null)) // tablesMatrix[y][x]
       const tablesExtra = []
-      tables.map((table) => {
+      tables.forEach((table) => {
         if (Number.isInteger(table.x) && Number.isInteger(table.y)) tablesMatrix[table.y][table.x] = table
         else tablesExtra.push(table)
       })

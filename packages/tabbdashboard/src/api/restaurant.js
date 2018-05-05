@@ -107,8 +107,8 @@ export function GetBills({ from, to }) {
 export function GetCategories() {
   return Get({ path: `restaurant/my/categories`, v3: true })
 }
-export function CreateCategory({ categoryName }) {
-  return Post({ path: `menu/category/create`, v3: true }, { name: categoryName })
+export function CreateMenucategory({ name, precedence }) {
+  return Post({ path: `menu/category/create`, v3: true }, { name, precedence })
 }
 export function ChangeMenucategory(payload) {
   const { id } = payload

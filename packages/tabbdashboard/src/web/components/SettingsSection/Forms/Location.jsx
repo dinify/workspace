@@ -1,46 +1,17 @@
 // @flow
 import React from 'react'
-import R from 'ramda'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { Form, Text, Select } from 'react-form'
 import { compose, withProps } from 'recompose'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
-import moment from 'moment'
 import {
   FormBox,
   FormBoxHead,
-  FormBoxBody,
-  FormBoxSubmit,
-  FieldWrapper,
-  Label
+  FormBoxBody
 } from '../../styled/FormBox'
 import {
   updateLocationInitAction
 } from '../../../../ducks/restaurant'
 import Progress from '../../Progress'
-import Button from 'material-ui/Button';
-
-const areaNames = R.sort((a, b) => {
-  return a.localeCompare(b);
-}, [
-  'Qibla',
-  'Sharq',
-  'Mirqab',
-  'Salmiya',
-  'Hawally',
-  'Farwaniya',
-  'Mubarak Al Kabeer',
-  'Ahmadi',
-  'Shuwaikh',
-  'The Avenues Rai',
-  'Jahra',
-  'Jabriya',
-  'Gulf Road seaside',
-]).map((a) => ({
-  label: a,
-  value: a.toUpperCase()
-}));
 
 
 const MapComponent = compose(

@@ -1,11 +1,6 @@
 // @flow
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
-import {
-  FormBoxSubmit,
-  Label
-} from '../styled/FormBox'
 import {
   updateFoodNutritionInit
 } from '../../../ducks/restaurant'

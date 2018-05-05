@@ -3,7 +3,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import styled from 'styled-components'
-import SwitchButton from 'react-switch-button'
 import { lighten } from 'polished'
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
 import * as FN from '../../../lib/FN'
@@ -13,8 +12,8 @@ import Checkbox from 'material-ui/Checkbox';
 import Tooltip from 'material-ui/Tooltip';
 
 import {
-  updateMenuCategoryInitAction,
-  addCategoryInitAction,
+  updateMenucategoryInitAction,
+  createMenucategoryInitAction,
   selectCategoryAction,
   reorderCategoriesAction
 } from '../../../ducks/restaurant'
@@ -100,7 +99,7 @@ let CreateCategoryForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <Field
-        name="categoryName"
+        name="name"
         className="CategoryInput"
         component="input"
         type="text"
@@ -155,7 +154,7 @@ const SortableList = SortableContainer(({ categories, deps }) => {
 const ListOfCategories = ({
   categories,
   selectedCategoryId,
-  addCategory,
+  createCategory,
   updateCategory,
   selectCategory,
   reorderCategories
@@ -179,7 +178,9 @@ const ListOfCategories = ({
       />
 
       <NewCategory>
-        <CreateCategoryForm onSubmit={addCategory} />
+        <CreateCategoryForm onSubmit={({name}) => {
+          createCategory({name, precedence: categoriesList.length})
+        }} />
       </NewCategory>
     </CategoriesList>
   );
@@ -187,8 +188,8 @@ const ListOfCategories = ({
 
 export default connect(
   state => ({}), {
-    updateCategory: updateMenuCategoryInitAction,
-    addCategory: addCategoryInitAction,
+    updateCategory: updateMenucategoryInitAction,
+    createCategory: createMenucategoryInitAction,
     selectCategory: selectCategoryAction,
     reorderCategories: reorderCategoriesAction
   }

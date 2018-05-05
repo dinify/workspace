@@ -2,10 +2,6 @@
 import React from 'react'
 import R from 'ramda'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-
-import moment from 'moment'
-import Datetime from 'react-datetime'
 import TextField from 'material-ui/TextField';
 import { Field, reduxForm } from 'redux-form'
 import Grid from 'material-ui/Grid'
@@ -80,6 +76,7 @@ const TimeField = (props) => {
       inputProps={{
         step: 300, // 5 min
       }}
+      margin="normal"
     />
   )
 }

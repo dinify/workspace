@@ -41,7 +41,7 @@ export const updateNameInitAction = (payload) => ({ type: 'UPDATE_NAME_INIT', pa
 export const updateDoneAction = () => ({ type: 'UPDATE_DONE' })
 
 export const updateCategoryInitAction = (payload) => ({ type: 'UPDATE_CATEGORY_INIT', payload })
-export const updateMenuCategoryInitAction = (payload) => ({ type: 'UPDATE_MENUCATEGORY_INIT', payload })
+export const updateMenucategoryInitAction = (payload) => ({ type: 'UPDATE_MENUCATEGORY_INIT', payload })
 
 export const updateContactInitAction = (payload) => ({ type: UPDATE_CONTACT_INIT, payload })
 export const updateSocialInitAction = (payload) => ({ type: UPDATE_SOCIAL_INIT, payload })
@@ -71,7 +71,9 @@ export const getBillsDoneAction = (payload) => ({ type: GET_BILLS_DONE, payload 
 export const getCategoriesInitAction = () => ({ type: 'GET_CATEGORIES_INIT' })
 export const getCategoriesDoneAction = (payload) => ({ type: GET_CATEGORIES_DONE, payload })
 export const rmCategoryInitAction = (payload) => ({ type: 'RM_CATEGORY_INIT', payload })
-export const addCategoryInitAction = (payload) => ({ type: 'CREATE_CATEGORY_INIT', payload })
+
+export const createMenucategoryInitAction = (payload) => ({ type: 'CREATE_MENUCATEGORY_INIT', payload })
+
 export const rmFoodInitAction = (payload) => ({ type: 'RM_FOOD_INIT', payload })
 
 export const addFoodInitAction = (payload) => ({ type: 'CREATE_FOOD_INIT', payload })
@@ -348,16 +350,20 @@ const reorderEpic = (action$: Observable) =>
 
     const middle = type.split('_')[1] // 'CATEGORY'
 
-    return payload.map((o, i) => ({
+    const changed = []
+    payload.map((o, i) => {
+      if (o.precedence !== i) changed.push({...o, newPrecedence: i})
+    })
+
+    return changed.map((o) => ({
       type: `UPDATE_${middle}_INIT`,
       payload: {
         id: o.id,
-        precedence: i
+        precedence: o.newPrecedence
       }
     })).concat({
       type: `REORDER_${middle}_DONE`
     })
-
   })
 
 
