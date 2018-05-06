@@ -29,7 +29,6 @@ const Name = ({
   updateName,
   name
 }) => {
-  if (!name) return (<div />)
   return (
     <FormBox>
       <FormBoxHead>

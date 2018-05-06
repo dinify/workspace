@@ -7,13 +7,16 @@ import { lighten } from 'polished'
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
 import * as FN from '../../../lib/FN'
 import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Checkbox from 'material-ui/Checkbox';
-import Tooltip from 'material-ui/Tooltip';
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import Checkbox from 'material-ui/Checkbox'
+import Tooltip from 'material-ui/Tooltip'
+import DeleteIcon from '@material-ui/icons/Delete'
+import IconButton from 'material-ui/IconButton';
 
 import {
   updateMenucategoryInitAction,
   createMenucategoryInitAction,
+  deleteMenucategoryInitAction,
   selectCategoryAction,
   reorderCategoriesAction
 } from '../../../ducks/restaurant'
@@ -21,7 +24,7 @@ import {
 const CategoriesList = styled.ul `
   display: inline-block;
   list-style: none;
-  margin: 10px;
+  margin: 0 10px;
   width: 250px;
   vertical-align: top;
 `
@@ -65,11 +68,18 @@ const NewCategory = styled.li `
 const ToggleContainer = styled.div `
   position: absolute;
   right: 0;
-  top: -5px;
+  top: -7px;
   * {
     fill: white !important;
   }
-
+`
+const BinContainer = styled.div `
+  position: absolute;
+  right: 30px;
+  top: -7px;
+  * {
+    fill: white !important;
+  }
 `
 
 const CategoryItem = styled.div `
@@ -115,13 +125,25 @@ CreateCategoryForm = reduxForm({
   form: 'menu/createCategory'
 })(CreateCategoryForm)
 
-const SortableItem = SortableElement(({ category, selectedCategoryId, selectCategory, updateCategory }) =>
+const SortableItem = SortableElement(({ category, selectedCategoryId, selectCategory, updateCategory, deleteCategory }) =>
   <CategoryItem
     selected={category.id === selectedCategoryId}
     disabled={!category.published}
     onClick={() => selectCategory({categoryId: category.id})}
   >
     <span>{category.name}</span>
+    <BinContainer>
+      {!category.published ?
+        <Tooltip placement="left" title="Delete">
+          <IconButton
+            aria-label="Delete"
+            onClick={() => deleteCategory({ id: category.id })}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      : ''}
+    </BinContainer>
     <ToggleContainer category>
       <Tooltip placement="left" title={category.published ? 'Published' : 'Unpublished'}>
         <Checkbox
@@ -152,15 +174,15 @@ const SortableList = SortableContainer(({ categories, deps }) => {
 });
 
 const ListOfCategories = ({
-  categories,
+  categoriesMap,
   selectedCategoryId,
   createCategory,
   updateCategory,
+  deleteCategory,
   selectCategory,
   reorderCategories
 }) => {
-  if (!categories) return (<div />)
-  const categoriesList = FN.MapToList(categories).sort((a,b) => a.precedence - b.precedence)
+  const categoriesList = FN.MapToList(categoriesMap).sort((a,b) => a.precedence - b.precedence)
   return (
     <CategoriesList>
 
@@ -173,7 +195,7 @@ const ListOfCategories = ({
           reorderCategories(arrayMove(categoriesList, oldIndex, newIndex))
         }}
         deps={{
-          selectedCategoryId, selectCategory, updateCategory
+          selectedCategoryId, selectCategory, updateCategory, deleteCategory
         }}
       />
 
@@ -187,10 +209,13 @@ const ListOfCategories = ({
 }
 
 export default connect(
-  state => ({}), {
+  state => ({
+    categoriesMap: state.menuCategory.all
+  }), {
     updateCategory: updateMenucategoryInitAction,
     createCategory: createMenucategoryInitAction,
+    deleteCategory: deleteMenucategoryInitAction,
+    reorderCategories: reorderCategoriesAction,
     selectCategory: selectCategoryAction,
-    reorderCategories: reorderCategoriesAction
   }
 )(ListOfCategories);

@@ -8,13 +8,15 @@ import createRavenMiddleware from 'raven-for-redux'
 
 import restaurant from './reducers/restaurant';
 import progress from './reducers/progress';
+import menuCategory from './reducers/menuCategory';
+import menuItem from './reducers/menuItem';
 
 import { reducer as formReducer } from 'redux-form'
 Raven.config('https://e8c54e0fdec04337b8f4ee65a1164dee@sentry.io/1199917', {
   // options
 }).install()
 
-const commonReducers = { restaurant, progress };
+const commonReducers = { restaurant, progress, menuCategory, menuItem };
 
 const configureStore = (options, storage) => {
   const { initialState, platformDeps = {}, platformEpics = [], platformReducers = {} } = options;
@@ -43,7 +45,7 @@ const configureStore = (options, storage) => {
   const store = createStore(reducers, initialState, enhancers);
 
   // let the magic happen :–)
-  persistStore(store, { blacklist: ['ui', 'progress'], storage }); // .purge() // in case you want to purge the store
+  persistStore(store, { blacklist: ['progress'], storage }); // .purge() // in case you want to purge the store
 
   return store;
 };

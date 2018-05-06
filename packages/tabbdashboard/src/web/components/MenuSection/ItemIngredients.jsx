@@ -12,14 +12,15 @@ import AutoComplete from '../MaterialInputs/AutoComplete'
 
 
 const ItemIngredients = ({
-  selectedFood,
   selectedFoodId,
   assignIngredient,
   unassignIngredient,
-  ingredientsMap
+  ingredientsMap,
+  menuItems
 }) => {
   const ingredientsList = FN.MapToList(ingredientsMap)
   const dataSource = ingredientsList.map((o) => ({value: o.id, label: o.name}))
+  const selectedFood = menuItems[selectedFoodId]
   return (
     <div>
       <Label>Ingredients</Label>
@@ -41,7 +42,10 @@ const ItemIngredients = ({
 }
 
 export default connect(
-  state => ({}), {
+  state => ({
+    ingredientsMap: state.restaurant.loggedRestaurant.ingredients,
+    menuItems: state.menuItem.all
+  }), {
     assignIngredient: assignIngredientInit,
     unassignIngredient: unassignIngredientInit,
   }

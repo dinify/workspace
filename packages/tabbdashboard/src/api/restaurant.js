@@ -116,24 +116,32 @@ export function ChangeMenucategory(payload) {
   delete payload.id
   return Post({ path: `menu/category/${id}`, v3: true }, payload)
 }
-// Create Item
-export function CreateFood({ categoryId, foodName }) {
+export function DeleteMenucategory({ id }) {
+  return Post({ path: `menu/category/${id}/delete`, v3: true })
+}
+
+export function CreateMenuitem({name, precedence, categoryId}) {
   return Post({ path: `menu/item/create`, v3: true }, {
-    name: foodName,
+    name,
+    precedence,
   	menu_category_id: categoryId,
     price: {
         amount: 2,
         currency: "KWD"
     }})
 }
-
-export function ChangeFood(payload) {
-  const foodId = payload.foodId
+export function ChangeMenuitem(payload) {
+  const id = payload.id
   let updObj = payload
-  delete updObj.foodId
+  delete updObj.id
   updObj = R.filter(R.identity)(updObj)
-  return Post({ path: `menu/item/${foodId}`, v3: true }, updObj)
+  return Post({ path: `menu/item/${id}`, v3: true }, updObj)
 }
+export function DeleteMenuitem({ id }) {
+  return Post({ path: `menu/item/${id}/delete`, v3: true })
+}
+
+
 
 export function ChangeNutrition({ foodId, total, proteins, fats, carbs}) {
   return Post({ path: `menu/item/${foodId}`, v3: true }, {

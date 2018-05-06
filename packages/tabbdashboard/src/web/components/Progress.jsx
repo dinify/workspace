@@ -9,6 +9,7 @@ const Icon = styled.i`
   float: right;
   position: relative;
   top: -2px;
+  margin: 5px;
   &.pending {
     color: rgb(52, 152, 219);
     -webkit-animation: spin .5s linear infinite;

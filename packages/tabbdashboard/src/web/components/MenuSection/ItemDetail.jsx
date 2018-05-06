@@ -9,13 +9,25 @@ import {
   FormBoxBody
 } from '../styled/FormBox'
 import {
-  updateFoodInitAction,
+  updateMenuitemInitAction,
   uploadItemImageInitAction
 } from '../../../ducks/restaurant'
 import Progress from '../Progress'
 import { Field, reduxForm } from 'redux-form'
 import Button from 'material-ui/Button'
 import Text from '../MaterialInputs/Text'
+
+import ItemIngredients from './ItemIngredients'
+import ItemAddons from './ItemAddons'
+import ItemOptions from './ItemOptions'
+import ItemNutrition from './ItemNutrition'
+
+import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import blue from 'material-ui/colors/blue';
+
+import { withStyles } from 'material-ui/styles';
+
 
 const FoodImage = styled.div `
   width: 100%;
@@ -61,64 +73,113 @@ DetailForm = reduxForm({
   enableReinitialize: true
 })(DetailForm)
 
-const ItemDetail = ({
-  selectedFood,
+const styles = {
+  card: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 270,
+    position: 'relative',
+    backgroundColor: 'black'
+  },
+}
+
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: blue,
+  }
+})
+
+let ItemDetail = ({
   selectedFoodId,
   updateFood,
-  uploadItemImage
+  uploadItemImage,
+  menuItems,
+  classes
 }) => {
+  const selectedFood = menuItems[selectedFoodId]
+  if (!selectedFood) return (<div />)
+  let foodImageUrl = ''
+  if (selectedFood.images) {
+    const images = FN.MapToList(selectedFood.images).sort((a, b) => a.precedence - b.precedence)
+    if (images.length > 0) foodImageUrl = images[0].url
+  }
+  console.log(foodImageUrl);
   return (
-    <div>
-      {selectedFood ? <FormBox style={{width: '230px'}}>
-        {selectedFood.images ? FN.Identity(FN.MapToList(selectedFood.images).sort((a,b) => a.precedence - b.precedence), (images) =>
-          images.length > 0 ? <FoodImage imageURL={images[0].url} /> : ''
-        ): ''}
-        <FormBoxBody>
-          <Dropzone
-            accept="image/jpg, image/jpeg, image/png"
-            onDrop={(accepted, rejected) => {
-              if (accepted && accepted.length > 0) uploadItemImage({ file: accepted[0], id: selectedFoodId })
-            }}
-            style={{
-              width: '100%',
-              padding: '10px',
-              fontSize: '11px',
-              border: '1px dashed #ccc',
-              margin: '10px 0'
-            }}
-          >
-            <p>Try dropping your photo here, or click to select file to upload.</p>
-            <p>Only *.jpg and *.png image will be accepted</p>
-          </Dropzone>
-
-
-
-          <Progress type={'UPDATE_FOOD'}/>
-          <DetailForm
-            onSubmit={(fields) => {
-              fields.foodId = selectedFoodId
-              console.log(fields);
-              updateFood({...fields, price: {
-                  amount: Number.parseFloat(fields.price).toFixed(3),
-                  currency: "KWD"
-              }})
-            }}
-            initialValues={{
-              name: selectedFood.name,
-              description: selectedFood.description || '',
-              price: Number.parseFloat(selectedFood.price.amount).toFixed(3)
-            }}
+    <Card>
+      <CardMedia
+        className={classes.media}
+        image={foodImageUrl}
+        title={selectedFood.name}
+      >
+        <MuiThemeProvider theme={theme}>
+          <ItemNutrition
+            selectedFoodId={selectedFoodId}
           />
-        </FormBoxBody>
-    </FormBox> : ''}
+        </MuiThemeProvider>
+      </CardMedia>
+      <CardContent>
+        <Dropzone
+          accept="image/jpg, image/jpeg, image/png"
+          onDrop={(accepted, rejected) => {
+            if (accepted && accepted.length > 0) uploadItemImage({ file: accepted[0], id: selectedFoodId })
+          }}
+          style={{
+            width: '100%',
+            padding: '10px',
+            fontSize: '11px',
+            border: '1px dashed #ccc',
+            margin: '10px 0'
+          }}
+        >
+          <p>Try dropping your photo here, or click to select file to upload.</p>
+          <p>Only *.jpg and *.png image will be accepted</p>
+        </Dropzone>
 
-    </div>
+
+
+        <Progress type={'UPDATE_MENUITEM'}/>
+        <DetailForm
+          onSubmit={(fields) => {
+            fields.id = selectedFoodId
+            console.log(fields);
+            updateFood({...fields, price: {
+                amount: Number.parseFloat(fields.price).toFixed(3),
+                currency: "KWD"
+            }})
+          }}
+          initialValues={{
+            name: selectedFood.name,
+            description: selectedFood.description || '',
+            price: Number.parseFloat(selectedFood.price.amount).toFixed(3)
+          }}
+        />
+
+        <ItemOptions
+          selectedFoodId={selectedFoodId}
+        />
+
+        <ItemIngredients
+          selectedFoodId={selectedFoodId}
+        />
+
+        <ItemAddons
+          selectedFoodId={selectedFoodId}
+        />
+
+      </CardContent>
+    </Card>
   );
 }
 
+ItemDetail = withStyles(styles)(ItemDetail)
+
 export default connect(
-  state => ({}), {
-    updateFood: updateFoodInitAction,
+  state => ({
+    menuItems: state.menuItem.all
+  }), {
+    updateFood: updateMenuitemInitAction,
     uploadItemImage: uploadItemImageInitAction,
   }
 )(ItemDetail);

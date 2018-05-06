@@ -13,16 +13,16 @@ import AutoComplete from '../MaterialInputs/AutoComplete'
 
 const ItemOptions = ({
   optionsMap,
-  selectedFood,
   selectedFoodId,
   assignOption,
-  unassignOption
+  unassignOption,
+  menuItems
 }) => {
   const optionsList = FN.MapToList(optionsMap)
   const dataSource = optionsList.map((o) => ({value: o.id, label: o.name}))
+  const selectedFood = menuItems[selectedFoodId]
   return (
     <div>
-      <Label>Options</Label>
       {selectedFood.options ?
         <ListOfCustomizations
           list={FN.MapToList(selectedFood.options)}
@@ -37,6 +37,8 @@ const ItemOptions = ({
         />
       : 'No options'}
       <AutoComplete
+        label="Options"
+        placeholder="Select options here"
         dataSource={dataSource}
       />
     </div>
@@ -44,7 +46,10 @@ const ItemOptions = ({
 }
 
 export default connect(
-  state => ({}), {
+  state => ({
+    optionsMap: state.restaurant.loggedRestaurant.options,
+    menuItems: state.menuItem.all
+  }), {
     assignOption: assignOptionInit,
     unassignOption: unassignOptionInit,
   }

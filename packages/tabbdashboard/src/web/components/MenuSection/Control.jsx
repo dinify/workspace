@@ -6,10 +6,6 @@ import styled from 'styled-components'
 import { FormBox, FormBoxBody } from '../styled/FormBox'
 import ListOfCategories from './ListOfCategories'
 import ListOfDishes from './ListOfDishes'
-import ItemIngredients from './ItemIngredients'
-import ItemAddons from './ItemAddons'
-import ItemOptions from './ItemOptions'
-import ItemNutrition from './ItemNutrition'
 import ItemDetail from './ItemDetail'
 
 const HeadLine = styled.div `
@@ -27,9 +23,9 @@ const H = styled.div `
   margin-right: 20px;
 `
 
-const MealDetail = styled.div `
+const DishDetail = styled.div `
   display: inline-block;
-  width: 250px;
+  width: 500px;
   vertical-align: top;
 `
 
@@ -41,21 +37,10 @@ const SolidContainer = styled.div `
 class Menucontrol extends React.Component {
   render() {
     const {
-      categories,
-      menuItemsMap,
       selectedCategoryId,
       selectedFoodId,
-      addonsMap,
-      ingredientsMap,
-      optionsMap
+      menuItems
     } = this.props;
-
-    let selectedCategory = null
-    if (selectedCategoryId) {
-      selectedCategory = categories[selectedCategoryId]
-    }
-    let selectedFood = null
-    if (selectedCategory) selectedFood = menuItemsMap[selectedFoodId]
 
     return (
       <div>
@@ -67,51 +52,20 @@ class Menucontrol extends React.Component {
         <SolidContainer>
 
           <ListOfCategories
-            categories={categories}
             selectedCategoryId={selectedCategoryId}
           />
 
           <ListOfDishes
-            selectedCategory={selectedCategory}
             selectedFoodId={selectedFoodId}
             selectedCategoryId={selectedCategoryId}
           />
 
-          <MealDetail>
+          <DishDetail>
             <ItemDetail
-              selectedFood={selectedFood}
               selectedFoodId={selectedFoodId}
             />
-          </MealDetail>
+          </DishDetail>
 
-          <MealDetail>
-            {selectedFood ? <FormBox style={{width: '230px'}}>
-              <FormBoxBody>
-                <ItemNutrition
-                  selectedFood={selectedFood}
-                  selectedFoodId={selectedFoodId}
-                />
-
-                <ItemOptions
-                  selectedFood={selectedFood}
-                  selectedFoodId={selectedFoodId}
-                  optionsMap={optionsMap}
-                />
-
-                <ItemIngredients
-                  selectedFood={selectedFood}
-                  selectedFoodId={selectedFoodId}
-                  ingredientsMap={ingredientsMap}
-                />
-
-                <ItemAddons
-                  addonsMap={addonsMap}
-                  selectedFood={selectedFood}
-                  selectedFoodId={selectedFoodId}
-                />
-              </FormBoxBody>
-            </FormBox> : ''}
-          </MealDetail>
         </SolidContainer>
       </div>);
   }
@@ -119,12 +73,8 @@ class Menucontrol extends React.Component {
 
 export default connect(
   state => ({
-    categories: state.restaurant.categories,
-    menuItemsMap: state.restaurant.menuItems,
-    ingredientsMap: state.restaurant.loggedRestaurant.ingredients,
-    optionsMap: state.restaurant.loggedRestaurant.options,
-    addonsMap: state.restaurant.loggedRestaurant.addons,
     selectedCategoryId: state.restaurant.selectedCategoryId,
-    selectedFoodId: state.restaurant.selectedFoodId
+    selectedFoodId: state.restaurant.selectedFoodId,
+    menuItems: state.menuItem.all,
   })
 )(Menucontrol);

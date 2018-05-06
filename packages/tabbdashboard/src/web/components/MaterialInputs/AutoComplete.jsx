@@ -80,7 +80,6 @@ const ITEM_HEIGHT = 48;
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 250,
   },
   chip: {
     margin: theme.spacing.unit / 4,
@@ -196,13 +195,14 @@ class IntegrationReactSelect extends React.Component {
   }
 
   handleChange(value) {
+    console.log(value);
     this.setState({
       multiLabel: value,
     })
   }
 
   render() {
-    const { classes, dataSource } = this.props;
+    const { classes, dataSource, placeholder, label } = this.props;
 
     return (
       <div className={classes.root}>
@@ -210,9 +210,9 @@ class IntegrationReactSelect extends React.Component {
           fullWidth
           value={this.state.multiLabel}
           onChange={(value) => this.handleChange(value)}
-          placeholder="Select multiple countries"
+          placeholder={placeholder}
           name="react-select-chip-label"
-          label="With label"
+          label={label}
           InputLabelProps={{
             shrink: true,
           }}

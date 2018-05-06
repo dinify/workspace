@@ -2,25 +2,33 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import SwitchButton from 'react-switch-button'
 import { lighten } from 'polished'
+import { Field, reduxForm } from 'redux-form'
+import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
+import * as FN from '../../../lib/FN'
 import R from 'ramda'
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import Checkbox from 'material-ui/Checkbox'
+import Tooltip from 'material-ui/Tooltip'
+import DeleteIcon from '@material-ui/icons/Delete'
+import IconButton from 'material-ui/IconButton';
+
 import {
-  addFoodInitAction,
-  rmFoodInitAction,
+  updateMenuitemInitAction,
+  createMenuitemInitAction,
+  deleteMenuitemInitAction,
+  reorderItemsAction,
   selectFoodAction
 } from '../../../ducks/restaurant'
-import { Form, Text } from 'react-form'
-import * as FN from '../../../lib/FN'
 
-const FoodList = styled.ul `
+const FoodList = styled.div`
   display: inline-block;
-  list-style: none;
-  margin: 10px;
+  margin: 0 10px;
   width: 250px;
   vertical-align: top;
 `
-const FoodItem = styled.li `
+const FoodItem = styled.div`
   position: relative;
   background: black;
   color: white;
@@ -40,7 +48,7 @@ const FoodItem = styled.li `
     }
   }
 `
-const NewFood = styled.li `
+const NewFood = styled.div`
   position: relative;
   background: black;
   color: white;
@@ -51,6 +59,14 @@ const NewFood = styled.li `
   font-weight: 300;
   background-color: ${(p) => p.selected ? 'rgb(70, 0, 0)' : 'rgb(169, 77, 72)'};
   font-size: 12px;
+  .ItemInput {
+    background: transparent;
+    width: 230px;
+    padding: 5px;
+    color: white;
+    border: none;
+    outline: none;
+  }
   &:hover {
     i {
       color: white;
@@ -59,35 +75,21 @@ const NewFood = styled.li `
 `
 const ToggleContainer = styled.div `
   position: absolute;
-  right: 7px;
-  top: 5px;
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label:before {
-    background: rgba(255,255,255,0.8);
-  }
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label {
-    background: transparent;
-  }
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"]:checked + label {
-    background: transparent;
-  }
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"]:checked + label:after {
-    background-color: ${p => p.food ? 'rgb(169, 77, 72);' : 'rgb(53, 75, 92)'};
-  }
-  .rsbc-switch-button.rsbc-switch-button-flat-round input[type="checkbox"] + label:after {
-    background-color: ${p => {
-      if (p.food) return lighten(0.3, 'rgb(169, 77, 72)')
-      else return lighten(0.3, 'rgb(53, 75, 92)')
-    }}
+  right: 0;
+  top: -7px;
+  * {
+    fill: white !important;
   }
 `
-const NewFoodInput = styled(Text)`
-  background: transparent;
-  width: 230px;
-  padding: 5px;
-  color: white;
-  border: none;
-  outline: none;
+const BinContainer = styled.div `
+  position: absolute;
+  right: 30px;
+  top: -7px;
+  * {
+    fill: white !important;
+  }
 `
+
 const NewFoodButton = styled.button `
   position: absolute;
   top: 0px;
@@ -99,59 +101,114 @@ const NewFoodButton = styled.button `
   padding: 10px;
   cursor: pointer;
 `
+
+let CreateItemForm = ({
+  handleSubmit
+}) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <Field
+        name="name"
+        component="input"
+        type="text"
+        placeholder="Add a new dish"
+        className="ItemInput"
+      />
+      <NewFoodButton>
+        <i className="material-icons">add</i>
+      </NewFoodButton>
+    </form>
+  )
+}
+CreateItemForm = reduxForm({
+  form: 'menu/createItem'
+})(CreateItemForm)
+
+const SortableItem = SortableElement(({ item, selectedFoodId, selectFood, updateItem, deleteItem }) =>
+  <FoodItem
+    selected={item.id === selectedFoodId}
+    disabled={!item.published}
+    onClick={() => selectFood({foodId: item.id})}
+  >
+    <span>{item.name}</span>
+    <BinContainer>
+      {!item.published ?
+        <Tooltip placement="left" title="Delete">
+          <IconButton
+            aria-label="Delete"
+            onClick={() => deleteItem({ id: item.id })}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      : ''}
+    </BinContainer>
+    <ToggleContainer item>
+      <Tooltip placement="left" title={item.published ? 'Published' : 'Unpublished'}>
+        <Checkbox
+          checkedIcon={<Visibility />}
+          icon={<VisibilityOff />}
+          color="primary"
+          defaultChecked={item.published}
+          onChange={(o, checked) => updateItem({ id: item.id, published: checked })}
+        />
+      </Tooltip>
+    </ToggleContainer>
+  </FoodItem>
+);
+
+const SortableList = SortableContainer(({ items, deps }) => {
+  return (
+    <div>
+      {items.map((item, index) => (
+        <SortableItem
+          key={`menuitem-${index}-${item.id}`}
+          index={index}
+          item={item}
+          {...deps}
+        />
+      ))}
+    </div>
+  );
+});
+
 const ListOfDishes = ({
-  selectedCategory,
   selectedFoodId,
   selectedCategoryId,
-  rmFood,
-  addFood,
   selectFood,
-  menuItemsMap
+  menuItemsMap,
+  updateItem,
+  createItem,
+  deleteItem,
+  reorderItems
 }) => {
-  if (!selectedCategory) return (<div />)
-  const menuItemsList = R.filter((item) => item.menu_category_id === selectedCategoryId, FN.MapToList(menuItemsMap))
+  if (!selectedCategoryId) return (<div />)
+  const menuItemsList = R
+    .filter((item) => item.menu_category_id === selectedCategoryId, FN.MapToList(menuItemsMap))
+    .sort((a,b) => a.precedence - b.precedence)
   return (
     <FoodList>
-      {menuItemsList.map((food, i) =>
-        <FoodItem key={food.id} selected={food.id === selectedFoodId} disabled={!food.published} onClick={() => selectFood({foodId: food.id})}>
-          <span>{food.name}</span>
-          <ToggleContainer food>
-            <SwitchButton
-              name={`switch-food-${food.id}`}
-              type="switch"
-              defaultChecked={food.published}
-              onChange={() => {
-                if(food.published) {
-                  rmFood({ foodId: food.id, enabled: false })
-                } else rmFood({ foodId: food.id, enabled: true })
-              }}
-            />
-          </ToggleContainer>
-        </FoodItem>
-      )}
+
+      <SortableList
+        distance={1}
+        axis={'y'}
+        lockAxis={'y'}
+        items={menuItemsList}
+        onSortEnd={({oldIndex, newIndex}) => {
+          reorderItems(arrayMove(menuItemsList, oldIndex, newIndex))
+        }}
+        deps={{
+          selectedFoodId, selectFood, updateItem, deleteItem
+        }}
+      />
       <NewFood>
-        <Form
-          onSubmit={({name}) => {
-            console.log(name);
-            addFood({ categoryId: selectedCategoryId, foodName: name });
-          }}
-          validate={({ name }) => {
-            return {
-              name: !name ? 'Name is required' : undefined,
-            }
-          }}
-        >
-          {({submitForm}) => {
-            return (
-              <form onSubmit={submitForm}>
-                <NewFoodInput field='name' placeholder='Add a new dish' />
-                <NewFoodButton>
-                  <i className="material-icons">add</i>
-                </NewFoodButton>
-              </form>
-            )
-          }}
-        </Form>
+        <CreateItemForm onSubmit={({name}) => {
+          createItem({
+            name,
+            precedence: menuItemsList.length,
+            categoryId: selectedCategoryId
+          })
+        }} />
       </NewFood>
     </FoodList>
   );
@@ -159,10 +216,12 @@ const ListOfDishes = ({
 
 export default connect(
   state => ({
-    menuItemsMap: state.restaurant.menuItems
+    menuItemsMap: state.menuItem.all
   }), {
-    addFood: addFoodInitAction,
-    rmFood: rmFoodInitAction,
-    selectFood: selectFoodAction
+    updateItem: updateMenuitemInitAction,
+    createItem: createMenuitemInitAction,
+    deleteItem: deleteMenuitemInitAction,
+    reorderItems: reorderItemsAction,
+    selectFood: selectFoodAction,
   }
 )(ListOfDishes);
