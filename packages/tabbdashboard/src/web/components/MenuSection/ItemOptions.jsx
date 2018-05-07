@@ -27,7 +27,7 @@ const ItemOptions = ({
         <ListOfCustomizations
           list={FN.MapToList(selectedFood.options)}
           rmButtonFunction={(option) => unassignOption({
-            foodId: selectedFoodId,
+            id: selectedFoodId,
             optionId: option.id,
             originalObject: {options: R.mapObjIndexed((o) => {
               if(!o.difference) o.difference = o.pivot.difference
@@ -40,6 +40,18 @@ const ItemOptions = ({
         label="Options"
         placeholder="Select options here"
         dataSource={dataSource}
+        onChange={(optionId) => assignOption({
+          id: selectedFoodId,
+          optionId,
+          option: {
+            ...R.find(R.propEq('id', optionId))(optionsList),
+            difference: {amount: "-1.88", currency: "KWD"}
+          },
+          originalObject: {options: R.mapObjIndexed((o) => {
+            if(!o.difference) o.difference= o.pivot.difference
+            return o
+          }, selectedFood.options)}
+        })}
       />
     </div>
   );

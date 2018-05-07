@@ -281,7 +281,8 @@ CreateTableForm = compose(
 const cardSource = {
   beginDrag(props) {
     return {
-      table: props.table
+      table: props.table,
+      wb: props.wb
     };
   }
 }
@@ -334,9 +335,10 @@ TableComponent = DragSource('table', cardSource, collect)(TableComponent);
 const boxTarget = {
   drop(targetProps, monitor) {
     const { updateTable, x, y} = targetProps
-    const { id, waiterboard_id } = monitor.getItem().table
-    updateTable({ id, x, y, waiterboardId: waiterboard_id })
-  },
+    const { id } = monitor.getItem().table
+    const waiterboardId = monitor.getItem().wb.id
+    updateTable({ id, x, y, waiterboardId })
+  }
 }
 let TargetComponent = ({ isOver, connectDropTarget }) => {
   return connectDropTarget(

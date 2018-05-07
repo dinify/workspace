@@ -85,7 +85,7 @@ export const rmFoodInitAction = (payload) => ({ type: 'RM_FOOD_INIT', payload })
 
 export const addFoodInitAction = (payload) => ({ type: 'CREATE_FOOD_INIT', payload })
 
-export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_FOOD_INIT', payload })
+export const updateFoodInitAction = (payload) => ({ type: 'UPDATE_MENUITEM_INIT', payload })
 export const uploadMainImageInitAction = (payload) => ({ type: 'UPDATE_IMAGE_INIT', payload })
 export const uploadItemImageInitAction = (payload) => ({ type: 'UPDATE_ITEMIMAGE_INIT', payload })
 
@@ -113,14 +113,14 @@ export const addAddonInit = (payload) => ({
   payload: {...payload,successActionType: 'GET_LOGGED_INIT'}
 })
 
-export const assignIngredientInit = (payload) => ({ type: 'ASSIGN_INGREDIENT-FOOD_INIT', payload })
-export const unassignIngredientInit = (payload) => ({ type: 'UNASSIGN_INGREDIENT-FOOD_INIT', payload })
+export const assignIngredientInit = (payload) => ({ type: 'ASSIGN_INGREDIENT-MENUITEM_INIT', payload })
+export const unassignIngredientInit = (payload) => ({ type: 'UNASSIGN_INGREDIENT-MENUITEM_INIT', payload })
 
-export const assignAddonInit = (payload) => ({ type: 'ASSIGN_ADDON-FOOD_INIT', payload })
-export const unassignAddonInit = (payload) => ({ type: 'UNASSIGN_ADDON-FOOD_INIT', payload })
+export const assignAddonInit = (payload) => ({ type: 'ASSIGN_ADDON-MENUITEM_INIT', payload })
+export const unassignAddonInit = (payload) => ({ type: 'UNASSIGN_ADDON-MENUITEM_INIT', payload })
 
-export const assignOptionInit = (payload) => ({ type: 'ASSIGN_OPTION-FOOD_INIT', payload })
-export const unassignOptionInit = (payload) => ({ type: 'UNASSIGN_OPTION-FOOD_INIT', payload })
+export const assignOptionInit = (payload) => ({ type: 'ASSIGN_OPTION-MENUITEM_INIT', payload })
+export const unassignOptionInit = (payload) => ({ type: 'UNASSIGN_OPTION-MENUITEM_INIT', payload })
 
 export const getFoodAddonsInit = (payload) => ({ type: 'API_GET_FOODADDONS_INIT', payload })
 
@@ -249,7 +249,7 @@ const assignEpic = (action$: Observable) =>
 
     let updatePayload = {}
     updatePayload[originalObjectKey] = FN.MapToList(newObject)
-    updatePayload[`${assignTo.toLowerCase()}Id`] = payload[`${assignTo.toLowerCase()}Id`] // foodId
+    updatePayload.id = payload.id // foodId
 
     return Observable.of({
       type: `UPDATE_${assignTo}_INIT`,
@@ -270,13 +270,13 @@ const unassignEpic = (action$: Observable) =>
     const originalObject = payload.originalObject[originalObjectKey] // map of ingredients
 
     const singular = originalObjectKey.slice(0, -1) // 'ingredient'
-    console.log(originalObject);
-    console.log(payload[`${singular}Id`]);
-    const newObject = R.dissoc(payload[`${singular}Id`])(originalObject) // original without entity with entityId
+
+    // original without dissociated entity
+    const newObject = R.dissoc(payload[`${singular}Id`])(originalObject)
 
     let updatePayload = {}
     updatePayload[originalObjectKey] = FN.MapToList(newObject)
-    updatePayload[`${assignTo.toLowerCase()}Id`] = payload[`${assignTo.toLowerCase()}Id`] // foodId
+    updatePayload.id = payload.id // id of main entity
 
     return Observable.of({
       type: `UPDATE_${assignTo}_INIT`,

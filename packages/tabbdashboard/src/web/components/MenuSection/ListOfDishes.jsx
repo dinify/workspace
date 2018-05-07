@@ -23,14 +23,12 @@ import {
 } from '../../../ducks/restaurant'
 
 const FoodList = styled.div`
-  display: inline-block;
   margin: 0 10px;
-  width: 250px;
-  vertical-align: top;
 `
 const FoodItem = styled.div`
   position: relative;
   background: black;
+  width: 100%;
   color: white;
   cursor: pointer;
   padding: 10px 10px;
@@ -61,7 +59,7 @@ const NewFood = styled.div`
   font-size: 12px;
   .ItemInput {
     background: transparent;
-    width: 230px;
+    width: 100%;
     padding: 5px;
     color: white;
     border: none;

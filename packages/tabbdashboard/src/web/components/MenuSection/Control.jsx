@@ -7,6 +7,7 @@ import { FormBox, FormBoxBody } from '../styled/FormBox'
 import ListOfCategories from './ListOfCategories'
 import ListOfDishes from './ListOfDishes'
 import ItemDetail from './ItemDetail'
+import Grid from 'material-ui/Grid'
 
 const HeadLine = styled.div `
   height: 50px;
@@ -15,22 +16,14 @@ const HeadLine = styled.div `
 `
 
 const H = styled.div `
-  display: inline-block;
-  width: 250px;
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing: 1px;
-  margin-right: 20px;
-`
-
-const DishDetail = styled.div `
-  display: inline-block;
-  width: 500px;
-  vertical-align: top;
 `
 
 const SolidContainer = styled.div `
-  width: 1100px;
+  width: 100%;
+  margin-bottom: 20px;
 `
 
 
@@ -45,26 +38,38 @@ class Menucontrol extends React.Component {
     return (
       <div>
         <HeadLine>
-          <H>Categories</H>
-          <H>Dishes</H>
-          <H>Dish Detail</H>
+          <Grid container spacing={8} alignItems="flex-start" justify="center">
+            <Grid item xs={3}>
+              <H>Categories</H>
+            </Grid>
+            <Grid item xs={3}>
+              <H>Dishes</H>
+            </Grid>
+            <Grid item xs={6}>
+              <H>Dish Detail</H>
+            </Grid>
+          </Grid>
         </HeadLine>
         <SolidContainer>
 
-          <ListOfCategories
-            selectedCategoryId={selectedCategoryId}
-          />
-
-          <ListOfDishes
-            selectedFoodId={selectedFoodId}
-            selectedCategoryId={selectedCategoryId}
-          />
-
-          <DishDetail>
-            <ItemDetail
-              selectedFoodId={selectedFoodId}
-            />
-          </DishDetail>
+          <Grid container spacing={8} alignItems="flex-start" justify="center">
+            <Grid item xs={3}>
+              <ListOfCategories
+                selectedCategoryId={selectedCategoryId}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <ListOfDishes
+                selectedFoodId={selectedFoodId}
+                selectedCategoryId={selectedCategoryId}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <ItemDetail
+                selectedFoodId={selectedFoodId}
+              />
+            </Grid>
+          </Grid>
 
         </SolidContainer>
       </div>);

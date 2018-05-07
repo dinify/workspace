@@ -27,7 +27,7 @@ const ItemAddons = ({
         <ListOfCustomizations
           list={FN.MapToList(selectedFood.addons)}
           rmButtonFunction={(addon) => unassignAddon({
-            foodId: selectedFoodId,
+            id: selectedFoodId,
             addonId: addon.id,
             originalObject: {addons: selectedFood.addons}
           })}
@@ -35,6 +35,13 @@ const ItemAddons = ({
       : 'No addon'}
       <AutoComplete
         dataSource={dataSource}
+        placeholder="Select addons here"
+        onChange={(addonId) => assignAddon({
+          id: selectedFoodId,
+          addonId,
+          addon: addonsMap[addonId],
+          originalObject: {addons: selectedFood.addons}
+        })}
       />
     </div>
   );

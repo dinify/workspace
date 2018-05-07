@@ -28,7 +28,7 @@ const ItemIngredients = ({
         <ListOfCustomizations
           list={FN.MapToList(selectedFood.ingredients)}
           rmButtonFunction={(ingredient) => unassignIngredient({
-            foodId: selectedFoodId,
+            id: selectedFoodId,
             ingredientId: ingredient.id,
             originalObject: {ingredients: selectedFood.ingredients}
           })}
@@ -36,6 +36,13 @@ const ItemIngredients = ({
       : 'No ingredients'}
       <AutoComplete
         dataSource={dataSource}
+        placeholder="Select ingredients here"
+        onChange={(ingredientId) => assignIngredient({
+          id: selectedFoodId,
+          ingredientId,
+          ingredient: ingredientsMap[ingredientId],
+          originalObject: {ingredients: selectedFood.ingredients}
+        })}
       />
     </div>
   );

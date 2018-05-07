@@ -6,6 +6,7 @@ import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import { MenuItem } from 'material-ui/Menu';
+import Input from 'material-ui/Input';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -152,7 +153,7 @@ const styles = theme => ({
       left: 0,
       top: `calc(100% + ${theme.spacing.unit}px)`,
       width: '100%',
-      zIndex: 2,
+      zIndex: 2000000,
       maxHeight: ITEM_HEIGHT * 4.5,
     },
     '.Select.is-focused:not(.is-open) > .Select-control': {
@@ -195,39 +196,64 @@ class IntegrationReactSelect extends React.Component {
   }
 
   handleChange(value) {
-    console.log(value);
     this.setState({
       multiLabel: value,
     })
   }
 
+  handleSingleChange(value) {
+    this.setState({
+      single: value,
+    })
+  }
   render() {
-    const { classes, dataSource, placeholder, label } = this.props;
+    const { classes, dataSource, placeholder, label, multi, onChange } = this.props;
 
     return (
       <div className={classes.root}>
-        <TextField
-          fullWidth
-          value={this.state.multiLabel}
-          onChange={(value) => this.handleChange(value)}
-          placeholder={placeholder}
-          name="react-select-chip-label"
-          label={label}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            inputComponent: SelectWrapped,
-            inputProps: {
+        {!multi ?
+          <Input
+            fullWidth
+            inputComponent={SelectWrapped}
+            value={this.state.single}
+            onChange={(value) => {
+              this.handleSingleChange(value)
+              onChange(value)
+            }}
+            placeholder={placeholder}
+            id="react-select-single"
+            inputProps={{
               classes,
-              multi: true,
-              instanceId: 'react-select-chip-label',
-              id: 'react-select-chip-label',
+              name: 'react-select-single',
+              instanceId: 'react-select-single',
               simpleValue: true,
               options: dataSource,
-            },
-          }}
-        />
+            }}
+          />
+          :
+          <TextField
+            fullWidth
+            value={this.state.multiLabel}
+            onChange={(value) => this.handleChange(value)}
+            placeholder={placeholder}
+            name="react-select-chip-label"
+            label={label}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                classes,
+                multi: true,
+                instanceId: 'react-select-chip-label',
+                id: 'react-select-chip-label',
+                simpleValue: true,
+                options: dataSource,
+              },
+            }}
+          />
+        }
       </div>
     );
   }

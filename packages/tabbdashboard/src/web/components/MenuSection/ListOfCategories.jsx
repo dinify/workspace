@@ -22,11 +22,8 @@ import {
 } from '../../../ducks/restaurant'
 
 const CategoriesList = styled.ul `
-  display: inline-block;
   list-style: none;
   margin: 0 10px;
-  width: 250px;
-  vertical-align: top;
 `
 const NewFoodButton = styled.button `
   position: absolute;
@@ -53,7 +50,7 @@ const NewCategory = styled.li `
   font-size: 12px;
   .CategoryInput {
     background: transparent;
-    width: 230px;
+    width: 100%;
     padding: 5px;
     color: white;
     border: none;

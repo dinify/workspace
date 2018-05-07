@@ -65,8 +65,9 @@ export default function reducer(state: State = initialState, action: Action) {
     }
     case 'CREATE_TABLE_DONE': {
       const newTable = action.payload.res
+      const waiterboardId = action.payload.prePayload.waiterboardId
       return R.assocPath(
-        ['loggedRestaurant', 'waiterboards', newTable.waiterboard_id, 'tables', newTable.id],
+        ['loggedRestaurant', 'waiterboards', waiterboardId, 'tables', newTable.id],
         {
           ...newTable
         }
