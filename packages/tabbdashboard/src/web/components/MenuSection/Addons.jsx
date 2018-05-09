@@ -15,11 +15,10 @@ import { Form, Text, Select, Textarea } from 'react-form'
 
 import {
   getCategoriesInitAction,
-  getAddonsInit,
-  addAddonInit,
-  updateAddonPriceInit,
-  addIngredientInit,
-  addOptionInit,
+  createAddonInit,
+  updateAddonInit,
+  createIngredientInit,
+  createOptionInit,
 } from '../../../ducks/restaurantLegacy'
 
 const AddonsList = styled.ul `
@@ -282,9 +281,9 @@ export default connect(
     ingredients: state.restaurant.loggedRestaurant.ingredients,
     options: state.restaurant.loggedRestaurant.options
   }), {
-    addAddon: addAddonInit,
-    addIngredient: addIngredientInit,
-    addOption: addOptionInit,
-    updateAddonPrice: updateAddonPriceInit
+    addAddon: createAddonInit,
+    addIngredient: createIngredientInit,
+    addOption: createOptionInit,
+    updateAddonPrice: updateAddonInit
   },
 )(Menucontrol);

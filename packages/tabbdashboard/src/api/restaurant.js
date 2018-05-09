@@ -162,7 +162,7 @@ export function GetAddons() {
   return Get({ path: `restaurant/my/addons`, v3: true })
 }
 
-export function AddAddon({ name, price }) {
+export function CreateAddon({ name, price }) {
   return Post({ path: `menu/addon/create`, v3: true }, { name, price: {
       amount: price,
       currency: "KWD"
@@ -176,11 +176,11 @@ export function AddAddonprice({ addonId, price }) {
   } })
 }
 
-export function AddIngredient({ name }) {
+export function CreateIngredient({ name }) {
   return Post({ path: `menu/ingredient/create`, v3: true }, { name })
 }
 
-export function AddOption({ name }) {
+export function CreateOption({ name }) {
   return Post({ path: `menu/option/create`, v3: true }, { name })
 }
 

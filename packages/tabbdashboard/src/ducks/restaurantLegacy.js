@@ -73,24 +73,12 @@ export const updateFoodNutritionInit = (payload) => ({ type: 'UPDATE_NUTRITION_I
 export const addDayToBusinessHours = (payload) => ({ type: 'ADD_DAY_TO_BUSINESSHOURS', payload })
 export const addRangeToBusinessHours = (payload) => ({ type: 'ADD_RANGE_TO_BUSINESSHOURS', payload })
 
-export const getFoodOptionsInit = (payload) => ({ type: 'API_GET_FOODOPTIONS_INIT', payload })
-export const rmFoodOptionInit = (payload) => ({
-  type: 'API_RM_FOODOPTION_INIT',
-  payload: {...payload,successActionType: 'API_GET_FOODOPTIONS_INIT'}
-})
-export const addOptionInit = (payload) => ({
-  type: 'API_ADD_OPTION_INIT',
-  payload: {...payload,successActionType: 'GET_LOGGED_INIT'}
-})
-export const addIngredientInit = (payload) => ({
-  type: 'API_ADD_INGREDIENT_INIT',
-  payload: {...payload,successActionType: 'GET_LOGGED_INIT'}
-})
 
-export const addAddonInit = (payload) => ({
-  type: 'API_ADD_ADDON_INIT',
-  payload: {...payload,successActionType: 'GET_LOGGED_INIT'}
-})
+export const createAddonInit = (payload) => ({ type: 'CREATE_ADDON_INIT', payload })
+export const createIngredientInit = (payload) => ({ type: 'CREATE_INGREDIENT_INIT', payload })
+export const createOptionInit = (payload) => ({ type: 'CREATE_OPTION_INIT', payload })
+
+export const updateAddonInit = (payload) => ({ type: 'UPDATE_ADDON_INIT', payload })
 
 export const assignIngredientInit = (payload) => ({ type: 'ASSIGN_INGREDIENT-MENUITEM_INIT', payload })
 export const unassignIngredientInit = (payload) => ({ type: 'UNASSIGN_INGREDIENT-MENUITEM_INIT', payload })
@@ -100,19 +88,3 @@ export const unassignAddonInit = (payload) => ({ type: 'UNASSIGN_ADDON-MENUITEM_
 
 export const assignOptionInit = (payload) => ({ type: 'ASSIGN_OPTION-MENUITEM_INIT', payload })
 export const unassignOptionInit = (payload) => ({ type: 'UNASSIGN_OPTION-MENUITEM_INIT', payload })
-
-export const getFoodAddonsInit = (payload) => ({ type: 'API_GET_FOODADDONS_INIT', payload })
-
-export const rmFoodAddonInit = (payload) => ({
-  type: 'API_RM_FOODADDON_INIT',
-  payload: {...payload,successActionType: 'API_GET_FOODADDONS_INIT'}
-})
-export const addFoodAddonInit = (payload) => ({
-  type: 'API_ADD_FOODADDON_INIT',
-  payload: {...payload,successActionType: 'API_GET_FOODADDONS_INIT'}
-})
-
-export const updateAddonPriceInit = (payload) => ({
-  type: 'API_ADD_ADDONPRICE_INIT',
-  payload: {...payload,successActionType: 'GET_LOGGED_INIT'}
-})
