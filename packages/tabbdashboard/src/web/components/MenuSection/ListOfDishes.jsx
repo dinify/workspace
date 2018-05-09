@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { lighten } from 'polished'
 import { Field, reduxForm } from 'redux-form'
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
-import * as FN from '../../../lib/FN'
+import * as FN from 'lib/FN'
 import R from 'ramda'
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
@@ -20,7 +20,7 @@ import {
   deleteMenuitemInitAction,
   reorderItemsAction,
   selectFoodAction
-} from '../../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 
 const FoodList = styled.div`
   margin: 0 10px;

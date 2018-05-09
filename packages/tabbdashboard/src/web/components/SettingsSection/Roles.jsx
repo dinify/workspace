@@ -12,7 +12,7 @@ import {
 
 import {
   createWaiterboardInitAction,
-} from '../../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 
 
 const Roles = () =>

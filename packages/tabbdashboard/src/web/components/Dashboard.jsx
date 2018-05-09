@@ -21,7 +21,7 @@ import {
 import Input from 'react-enhanced-form'
 import {
   logoutInitAction
-} from '../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 import SettingsSection from './Settings'
 import MenucontrolSection from './Menucontrol'
 import BillingSection from './Billing'

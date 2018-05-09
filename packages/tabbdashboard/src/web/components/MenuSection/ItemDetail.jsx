@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import * as FN from '../../../lib/FN'
+import * as FN from 'lib/FN'
 import Dropzone from 'react-dropzone'
 import {
   FormBox,
@@ -11,7 +11,7 @@ import {
 import {
   updateMenuitemInitAction,
   uploadItemImageInitAction
-} from '../../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 import Progress from '../Progress'
 import { Field, reduxForm } from 'redux-form'
 import Button from 'material-ui/Button'

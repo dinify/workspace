@@ -15,7 +15,7 @@ import 'react-dates/lib/css/_datepicker.css';
 
 import {
   getBillsInitAction,
-} from '../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 
 const Header = styled.div`
   position: fixed;

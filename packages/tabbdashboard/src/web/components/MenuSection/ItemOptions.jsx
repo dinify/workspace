@@ -2,12 +2,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import R from 'ramda'
-import * as FN from '../../../lib/FN'
+import * as FN from 'lib/FN'
 import { Label } from '../styled/FormBox'
 import {
   assignOptionInit,
   unassignOptionInit
-} from '../../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 import ListOfCustomizations from './ListOfCustomizations'
 import AutoComplete from '../MaterialInputs/AutoComplete'
 

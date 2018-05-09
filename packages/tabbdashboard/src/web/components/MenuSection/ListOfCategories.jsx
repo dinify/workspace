@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form'
 import styled from 'styled-components'
 import { lighten } from 'polished'
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
-import * as FN from '../../../lib/FN'
+import * as FN from 'lib/FN'
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Checkbox from 'material-ui/Checkbox'
@@ -19,7 +19,7 @@ import {
   deleteMenucategoryInitAction,
   selectCategoryAction,
   reorderCategoriesAction
-} from '../../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 
 const CategoriesList = styled.ul `
   list-style: none;

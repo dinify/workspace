@@ -1,21 +1,13 @@
 // @flow
 import React from 'react'
-import {
-  connect
-} from 'react-redux'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
-import type {
-  Error
-} from '../../flow'
 
-import {
-  Form,
-  Text
-} from 'react-form'
+import { Form, Text } from 'react-form'
 
 import {
   signupInitAction
-} from '../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 import {
   HorizontalLine
 } from './styled/HorizontalLine'

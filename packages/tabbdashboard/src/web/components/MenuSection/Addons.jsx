@@ -19,7 +19,7 @@ import {
   updateAddonInit,
   createIngredientInit,
   createOptionInit,
-} from '../../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 
 const AddonsList = styled.ul `
   display: inline-block;

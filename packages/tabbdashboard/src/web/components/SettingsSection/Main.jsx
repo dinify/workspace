@@ -17,7 +17,7 @@ import {
 } from '../styled/FormBox';
 import {
   updateInitAction,
-} from '../../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 
 import BusinessHours from './Forms/BusinessHours'
 import Banking from './Forms/Banking'

@@ -10,7 +10,7 @@ import {
 } from '../../styled/FormBox'
 import {
   updateSocialInitAction
-} from '../../../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 import Progress from '../../Progress'
 import Button from 'material-ui/Button';
 import Text from '../../MaterialInputs/Text'

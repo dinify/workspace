@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import {
   updateFoodNutritionInit
-} from '../../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 import Progress from '../Progress'
 import { Field, reduxForm } from 'redux-form'
 import Button from 'material-ui/Button'

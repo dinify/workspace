@@ -2,7 +2,7 @@
 import React from 'react';
 import { compose } from 'redux';
 import R from 'ramda';
-import * as FN from '../../../lib/FN';
+import * as FN from 'lib/FN';
 import { connect } from 'react-redux';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -32,7 +32,7 @@ import {
   createTableInitAction,
   deleteTableInitAction,
   updateTableInitAction
-} from '../../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 
 
 const WB = styled.div`

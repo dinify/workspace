@@ -1,12 +1,12 @@
 // @flow
 import React from 'react'
 import { connect } from 'react-redux'
-import * as FN from '../../../lib/FN'
+import * as FN from 'lib/FN'
 import { Label } from '../styled/FormBox'
 import {
   assignAddonInit,
   unassignAddonInit
-} from '../../../ducks/restaurantLegacy'
+} from 'ducks/restaurantLegacy'
 import ListOfCustomizations from './ListOfCustomizations'
 import AutoComplete from '../MaterialInputs/AutoComplete'
 
