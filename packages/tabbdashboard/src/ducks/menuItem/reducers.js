@@ -1,17 +1,13 @@
 // @flow
 import R from 'ramda'
-import * as FN from '../lib/FN'
-
-type State = {
-  all: Object,
-}
+import * as FN from 'lib/FN'
 
 const initialState = {
   all: {},
   backup: {}
 }
 
-export default function reducer(state: State = initialState, action: Action) {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
 
     case 'LOGGED_FETCHED_DONE': {

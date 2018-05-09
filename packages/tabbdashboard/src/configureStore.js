@@ -6,17 +6,18 @@ import configureEpics from './configureEpics';
 import Raven from 'raven-js'
 import createRavenMiddleware from 'raven-for-redux'
 
-import restaurant from './reducers/restaurant';
-import progress from './reducers/progress';
-import menuCategory from './reducers/menuCategory';
-import menuItem from './reducers/menuItem';
+import restaurant from 'ducks/restaurant';
+import ui from 'ducks/ui';
+import menuCategory from 'ducks/menuCategory';
+import menuItem from 'ducks/menuItem';
+
 
 import { reducer as formReducer } from 'redux-form'
 Raven.config('https://e8c54e0fdec04337b8f4ee65a1164dee@sentry.io/1199917', {
   // options
 }).install()
 
-const commonReducers = { restaurant, progress, menuCategory, menuItem };
+const commonReducers = { restaurant, ui, menuCategory, menuItem };
 
 const configureStore = (options, storage) => {
   const { initialState, platformDeps = {}, platformEpics = [], platformReducers = {} } = options;

@@ -11,7 +11,7 @@ import {
 import {
   updateMenuitemInitAction,
   uploadItemImageInitAction
-} from '../../../ducks/restaurant'
+} from '../../../ducks/restaurantLegacy'
 import Progress from '../Progress'
 import { Field, reduxForm } from 'redux-form'
 import Button from 'material-ui/Button'

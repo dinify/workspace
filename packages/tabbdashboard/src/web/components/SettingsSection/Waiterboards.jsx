@@ -32,7 +32,7 @@ import {
   createTableInitAction,
   deleteTableInitAction,
   updateTableInitAction
-} from '../../../ducks/restaurant'
+} from '../../../ducks/restaurantLegacy'
 
 
 const WB = styled.div`

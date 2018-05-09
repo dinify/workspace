@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const Icon = styled.i`
   font-size: 18px;
@@ -38,6 +38,6 @@ const Progress = ({
 
 export default connect(
   state => ({
-    stages: state.progress.all
+    stages: state.ui.progressMap
   })
 )(Progress);

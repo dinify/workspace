@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form'
 import { FormBox, FormBoxHead, FormBoxBody } from '../../styled/FormBox'
 import {
   updateNameInitAction
-} from '../../../../ducks/restaurant'
+} from '../../../../ducks/restaurantLegacy'
 import Progress from '../../Progress'
 import Button from 'material-ui/Button';
 import Text from '../../MaterialInputs/Text'

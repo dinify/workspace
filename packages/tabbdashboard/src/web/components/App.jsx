@@ -12,7 +12,6 @@ import styled from 'styled-components'
 import {
   appIsRunning
 } from '../../selectors/restaurant'
-import media from '../../common/helpers/media'
 
 import Login from './Login'
 import Signup from './Signup'
@@ -22,7 +21,6 @@ import Qr from './Qr'
 const Content = styled.div `
   background-color: rgb(27,36,49);
   color: white;
-  ${media.tablet`max-width: 100%;`}
 `;
 
 const AppLoader = styled.div `

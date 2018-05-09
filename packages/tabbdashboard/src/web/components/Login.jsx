@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 import { Form, Text } from 'react-form'
 
-import { loginInitAction } from '../../ducks/restaurant'
+import { loginInitAction } from '../../ducks/restaurantLegacy'
 
 import { HorizontalLine } from './styled/HorizontalLine'
 

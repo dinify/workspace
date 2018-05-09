@@ -9,7 +9,7 @@ import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit, FieldWrapper, Label }
 import { Header } from '../styled/Header'
 import { lighten } from 'polished'
 import SwitchButton from 'react-switch-button'
-import * as FN from '../../../lib/FN'
+import * as FN from 'lib/FN'
 
 import { Form, Text, Select, Textarea } from 'react-form'
 
@@ -20,7 +20,7 @@ import {
   updateAddonPriceInit,
   addIngredientInit,
   addOptionInit,
-} from '../../../ducks/restaurant'
+} from '../../../ducks/restaurantLegacy'
 
 const AddonsList = styled.ul `
   display: inline-block;

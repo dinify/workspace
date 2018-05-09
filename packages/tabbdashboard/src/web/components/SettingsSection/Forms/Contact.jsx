@@ -9,7 +9,7 @@ import {
 } from '../../styled/FormBox'
 import {
   updateContactInitAction
-} from '../../../../ducks/restaurant'
+} from '../../../../ducks/restaurantLegacy'
 import Progress from '../../Progress'
 import Text from '../../MaterialInputs/Text'
 import Button from 'material-ui/Button';

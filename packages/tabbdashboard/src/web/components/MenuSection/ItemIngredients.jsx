@@ -6,7 +6,7 @@ import { Label} from '../styled/FormBox'
 import {
   assignIngredientInit,
   unassignIngredientInit
-} from '../../../ducks/restaurant'
+} from '../../../ducks/restaurantLegacy'
 import ListOfCustomizations from './ListOfCustomizations'
 import AutoComplete from '../MaterialInputs/AutoComplete'
 

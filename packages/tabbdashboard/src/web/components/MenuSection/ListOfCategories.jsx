@@ -19,7 +19,7 @@ import {
   deleteMenucategoryInitAction,
   selectCategoryAction,
   reorderCategoriesAction
-} from '../../../ducks/restaurant'
+} from '../../../ducks/restaurantLegacy'
 
 const CategoriesList = styled.ul `
   list-style: none;

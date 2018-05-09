@@ -1,11 +1,10 @@
 import R from 'ramda'
-import type { EpicDependencies, Error, Action } from '../flow'
 
 const initialState = {
-  all: {}
+  progressMap: {}
 }
 
-export default function reducer(state: State = initialState, action: Action) {
+export default function reducer(state = initialState, action) {
   if(action.type.includes('CREATE')
   || action.type.includes('FETCH')
   || action.type.includes('UPDATE')
@@ -24,7 +23,7 @@ export default function reducer(state: State = initialState, action: Action) {
       stage = 'ERROR'
       key = key.replace('_FAIL', '')
     }
-    state = R.assocPath(['all', key], stage)(state)
+    state = R.assocPath(['progressMap', key], stage)(state)
   }
   return state
 }

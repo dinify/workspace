@@ -15,7 +15,7 @@ import {
 
 import {
   signupInitAction
-} from '../../ducks/restaurant'
+} from '../../ducks/restaurantLegacy'
 import {
   HorizontalLine
 } from './styled/HorizontalLine'

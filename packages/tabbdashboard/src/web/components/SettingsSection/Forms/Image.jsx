@@ -10,7 +10,7 @@ import {
 } from '../../styled/FormBox'
 import {
   uploadMainImageInitAction
-} from '../../../../ducks/restaurant'
+} from '../../../../ducks/restaurantLegacy'
 import Progress from '../../Progress'
 
 const Image = ({

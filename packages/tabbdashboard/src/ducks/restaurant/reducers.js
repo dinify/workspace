@@ -1,16 +1,6 @@
 // @flow
 import R from 'ramda'
-import * as FN from '../lib/FN'
-
-export const BOOTSTRAP = 'BOOTSTRAP'
-export const LOGGED_FETCHED_DONE = 'LOGGED_FETCHED_DONE'
-export const UPDATE_CONTACT_INIT = 'UPDATE_CONTACT_INIT'
-export const UPDATE_SOCIAL_INIT = 'UPDATE_SOCIAL_INIT'
-export const UPDATE_LOCATION_INIT = 'UPDATE_LOCATION_INIT'
-export const UPDATE_BANK_INIT = 'UPDATE_BANK_INIT'
-export const UPDATE_HOURS_INIT = 'UPDATE_HOURS_INIT'
-export const GET_BILLS_INIT = 'GET_BILLS_INIT'
-export const GET_BILLS_DONE = 'GET_BILLS_DONE'
+import * as FN from 'lib/FN'
 
 type State = {
   appRun: boolean,
@@ -27,11 +17,11 @@ const initialState = {
   selectedFoodId: null
 }
 
-export default function reducer(state: State = initialState, action: Action) {
+export default function reducer(state: State = initialState, action) {
   switch (action.type) {
-    case BOOTSTRAP:
+    case 'BOOTSTRAP':
       return R.assoc('appRun', true)(state)
-    case LOGGED_FETCHED_DONE: {
+    case 'LOGGED_FETCHED_DONE': {
       return R.assoc('loggedRestaurant', action.payload)(state)
     }
     case 'UPDATE_LOCATION_INIT':
@@ -43,14 +33,14 @@ export default function reducer(state: State = initialState, action: Action) {
       return R.assocPath(['loggedRestaurant', 'uploadedImage'], action.payload.res.url)(state)
     case 'UPDATE_CATEGORY_INIT':
       return R.assocPath(['loggedRestaurant', 'category'], action.payload.category)(state)
-    case UPDATE_LOCATION_INIT: {
+    case 'UPDATE_LOCATION_INIT': {
       state = R.assocPath(['loggedRestaurant', 'location', 'longitude'], Number(action.payload.longitude))(state)
       return R.assocPath(['loggedRestaurant', 'location', 'latitude'], Number(action.payload.latitude))(state)
     }
-    case UPDATE_BANK_INIT: {
+    case 'UPDATE_BANK_INIT': {
       return R.assocPath(['loggedRestaurant', 'bank'], action.payload)(state)
     }
-    case GET_BILLS_DONE:
+    case 'GET_BILLS_DONE':
       return R.assoc('bills', action.payload)(state)
     case 'SELECT_CATEGORY':
       return R.assoc('selectedCategoryId', action.payload.categoryId)(state)

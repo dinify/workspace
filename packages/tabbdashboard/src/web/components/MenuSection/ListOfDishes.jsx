@@ -20,7 +20,7 @@ import {
   deleteMenuitemInitAction,
   reorderItemsAction,
   selectFoodAction
-} from '../../../ducks/restaurant'
+} from '../../../ducks/restaurantLegacy'
 
 const FoodList = styled.div`
   margin: 0 10px;

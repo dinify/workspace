@@ -1,6 +1,6 @@
 // @flow
 import { Observable } from 'rxjs'
-import * as API from '../api/restaurant'
+import * as API from 'api/restaurant'
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 const camel = (str) => capitalize(str.toLowerCase())
