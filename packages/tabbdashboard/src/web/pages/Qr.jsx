@@ -14,7 +14,7 @@ const QRpage = styled.div`
 
 const Qr = (location) => {
   return (<QRpage>
-    <QRCode value={location.match.params.code} size={256} />
+    <QRCode value={`https://tabb.global/qr?${location.match.params.code}`} size={256} />
   </QRpage>)
 }
 
