@@ -40,4 +40,4 @@ export default connect(
   state => ({
     stages: state.ui.progressMap
   })
-)(Progress);
+)(Progress)

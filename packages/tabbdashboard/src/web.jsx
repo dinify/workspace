@@ -1,13 +1,12 @@
 // @flow
-
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import registerServiceWorker from './registerServiceWorker';
-import AppComponent from './web/components/App';
-import configureStore from './configureStore';
-import './index.css';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import registerServiceWorker from './registerServiceWorker'
+import AppComponent from 'web/App'
+import configureStore from './configureStore'
+import './index.css'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DragDropContextProvider } from 'react-dnd'
 
@@ -16,7 +15,7 @@ const store = configureStore({
   platformDeps: {},
   platformEpics: [],
   platformReducers: {},
-});
+})
 
 let App = () => (
   <MuiThemeProvider>
@@ -24,7 +23,7 @@ let App = () => (
       <AppComponent />
     </DragDropContextProvider>
   </MuiThemeProvider>
-);
+)
 
 
 ReactDOM.render(
@@ -32,5 +31,5 @@ ReactDOM.render(
     <App />
   </Provider>,
   document.getElementById('root'),
-);
-registerServiceWorker();
+)
+registerServiceWorker()
