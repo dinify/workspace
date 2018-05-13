@@ -154,11 +154,17 @@ const Sign = ({ guest, timer }) => {
 class Table extends React.Component {
 
   render(){
-    const { table, clearTable, toggleModal, guests, timer, index } = this.props;
+    const { table, clearTable, toggleModal, guests, users, timer, index } = this.props;
 
-    const presentGuests = R.values(guests).filter((g) => {
-      return g.table_id === table.id && g.status === "ACCEPTED"
-    }).sort((a,b) => a.id - b.id);
+    const presentGuests = R.values(guests)
+    .filter((g) => {
+      return g.table_id === table.id
+    })
+    .sort((a,b) => b.id.localeCompare(a.id))
+    .map((g) => {
+      g.user = users[g.user_id]
+      return g
+    })
 
     const guestsStatuses = R.sort((a,b) => b.localeCompare(a), R.pluck('status')(presentGuests))
 
@@ -179,7 +185,9 @@ class Table extends React.Component {
           {presentGuests.map((guest, i) =>
             <Guest key={i} onClick={() => toggleModal({ open: true, type: 'User', userId: guest.id })}>
               <Photo url={`https://picsum.photos/50/50/?image=${i*3+20}`} />
-              <Name title={guest.name}>{S(guest.name).truncate(16).s}</Name>
+              {guest.user ?
+                <Name title={guest.user.name}>{S(guest.user.name).truncate(16).s}</Name>
+              : ''}
               <Sign guest={guest} timer={timer} />
             </Guest>
           )}
@@ -194,6 +202,7 @@ class Table extends React.Component {
 export default connect(
   state => ({
     guests: state.guests.all,
+    users: state.user.all,
     loggedRestaurant: state.restaurant.loggedRestaurant,
     timer: state.restaurant.timer
   }),

@@ -6,12 +6,13 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 import configureEpics from './configureEpics';
 //import { firebaseStateReducer, reactReduxFirebase } from 'react-redux-firebase';
 
-import tables from './ducks/tables';
-import guests from './ducks/guests';
-import ui from './ducks/ui';
-import restaurant from './ducks/restaurant';
+import tables from './ducks/tables'
+import guests from './ducks/guests'
+import ui from './ducks/ui'
+import restaurant from './ducks/restaurant'
+import user from './ducks/user'
 
-const commonReducers = { tables, guests, ui, restaurant };
+const commonReducers = { tables, guests, ui, restaurant, user }
 
 const configureStore = (options, storage) => {
   const { initialState, platformDeps = {}, platformEpics = [], platformReducers = {} } = options;

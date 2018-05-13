@@ -305,8 +305,12 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         //  isSomethingNew(payload, 'bills')
         //  dispatch({ type: 'GET_BILLS_DONE', payload });
         //})
-        API.GetGuests({ waiterboardId }).then((guests) => {
-          dispatch(guestsResults(guests));
+        API.GetSeats({ waiterboardId }).then((seats) => {
+          const occupiedSeats = seats.filter((seat) => seat.occupied)
+          console.log(occupiedSeats,'seats');
+          const userIds = R.pluck('user_id', occupiedSeats).filter((id) => id.length === 24)
+          dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
+          dispatch(guestsResults(occupiedSeats));
         });
         //API.GetSales().then((payload) => {
         //  isSomethingNew(payload, 'sales')
@@ -315,7 +319,7 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         return { type: 'GUESTS_POLLING_DONE', payload: {} };
       }
       loadInitData();
-      return Observable.interval(3000).map(loadInitData);
+      return Observable.interval(10000).map(loadInitData);
     });
 
 const loginEpic = (action$: Observable) =>

@@ -17,6 +17,10 @@ export function GetTables({waiterboardId}) {
   return Get({ v3: true, path: `waiterboard/${waiterboardId}/tables` })
 }
 
+export function GetSeats({waiterboardId}) {
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/seats/all` })
+}
+
 export function CheckOut({ tableId }) {
   return Post({ v3: true, path: `table/${tableId}/checkout` })
 }
@@ -50,7 +54,7 @@ export function ConfirmService({ serviceId }) {
 }
 
 export function GetOrders({waiterboardId}) {
-  return Get({ v3: true, path: `waiterboard/${waiterboardId}/orders?processed=false` })
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/orders` })
 }
 
 export function ConfirmOrder({ orderId }) {

@@ -20,12 +20,6 @@ export default function reducer(state: State = initialState, action: Action) {
       const guestsObject = {}
       action.payload.forEach((guest) => {
         guestsObject[guest.id] = guest
-        if(state.all[guest.id] && state.all[guest.id].bills) {
-          guestsObject[guest.id].bills = state.all[guest.id].bills
-        }
-        if(state.all[guest.id] && state.all[guest.id].orders) {
-          guestsObject[guest.id].orders = state.all[guest.id].orders
-        }
       })
       return R.assoc('all', guestsObject)(state);
     }
