@@ -319,7 +319,7 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         return { type: 'GUESTS_POLLING_DONE', payload: {} };
       }
       loadInitData();
-      return Observable.interval(10000).map(loadInitData);
+      return Observable.interval(3000).map(loadInitData);
     });
 
 const loginEpic = (action$: Observable) =>
