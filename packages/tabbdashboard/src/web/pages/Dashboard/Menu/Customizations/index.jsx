@@ -8,7 +8,7 @@ import Ingredients from './Ingredients'
 import Options from './Options'
 
 const SolidContainer = styled.div `
-  min-width: 1000px;
+  min-width: 800px;
 `
 const HeadLine = styled.div `
   height: 50px;
@@ -21,6 +21,14 @@ const H = styled.div `
   letter-spacing: 1px;
   margin-right: 20px;
 `
+
+const styles = {
+  ListItem: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    borderBottom: '1px solid rgba(0,0,0,.05)'
+  }
+}
 
 const Menucontrol = () => {
   return (
@@ -44,16 +52,16 @@ const Menucontrol = () => {
 
         <Grid container spacing={8} alignItems="flex-start" justify="center">
           <Grid item xs={4}>
-            <Addons />
+            <Addons styles={styles} />
           </Grid>
           <Grid item xs={4}>
-            <Ingredients />
+            <Ingredients styles={styles} />
           </Grid>
           <Grid item xs={4}>
-            <Options />
+            <Options styles={styles} />
           </Grid>
         </Grid>
-        
+
       </SolidContainer>
     </div>
   );

@@ -68,7 +68,8 @@ const Options = ({
   optionsMap,
   collapseOption,
   removeChoice,
-  removeOption
+  removeOption,
+  styles
 }) => {
   const optionsList = FN.MapToList(optionsMap).sort((a,b) => a.name.localeCompare(b.name))
   return (
@@ -78,7 +79,12 @@ const Options = ({
       >
         {optionsList.map((option, i) =>
           <div key={option.id}>
-            <ListItem button onClick={() => collapseOption({id: option.id})} dense={!option.collapsed}>
+            <ListItem
+              button
+              onClick={() => collapseOption({id: option.id})}
+              dense={!option.collapsed}
+              style={styles.ListItem}
+            >
               <ListItemText primary={option.name} />
               <Tooltip placement="left" title="Delete">
                 <IconButton
@@ -94,7 +100,7 @@ const Options = ({
             <Collapse in={option.collapsed} timeout="auto" unmountOnExit>
               <List component="div">
                 {FN.MapToList(option.choices).map((choice) =>
-                  <ListItem key={choice.id}>
+                  <ListItem key={choice.id} style={styles.ListItem}>
                     <ListItemIcon>
                       <ChevronRight />
                     </ListItemIcon>

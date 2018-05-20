@@ -14,13 +14,15 @@ import AddCircle from '@material-ui/icons/AddCircle'
 import DeleteIcon from '@material-ui/icons/Delete'
 import IconButton from 'material-ui/IconButton'
 import Tooltip from 'material-ui/Tooltip'
+import Switch from 'material-ui/Switch';
 
 import InputAndButton from 'web/components/MaterialInputs/InputAndButton'
 
 
 import {
   createIngredientInit,
-  removeIngredientInit
+  removeIngredientInit,
+  updateIngredientInit
 } from 'ducks/ingredient/actions'
 
 let AddIngredientForm = ({
@@ -43,7 +45,9 @@ AddIngredientForm = reduxForm({
 const Ingredients = ({
   createIngredient,
   ingredients,
-  removeIngredient
+  removeIngredient,
+  updateIngredient,
+  styles
 }) => {
   const ingredientsList = FN.MapToList(ingredients).sort((a,b) => a.name.localeCompare(b.name))
   return (
@@ -53,8 +57,15 @@ const Ingredients = ({
       >
         {ingredientsList.map((ingredient, i) =>
           <div key={ingredient.id}>
-            <ListItem dense>
+            <ListItem dense style={styles.ListItem}>
               <ListItemText primary={ingredient.name} />
+              <Tooltip placement="left" title={ingredient.excludable ? 'Excludable' : 'Mandatory'}>
+                <Switch
+                  checked={ingredient.excludable}
+                  onChange={(ev) => updateIngredient({id: ingredient.id, excludable: ev.target.checked})}
+                  color="primary"
+                />
+              </Tooltip>
               <Tooltip placement="left" title="Delete">
                 <IconButton
                   aria-label="Delete ingredient"
@@ -81,6 +92,7 @@ export default connect(
     ingredients: state.ingredient.all,
   }), {
     createIngredient: createIngredientInit,
-    removeIngredient: removeIngredientInit
+    removeIngredient: removeIngredientInit,
+    updateIngredient: updateIngredientInit
   },
 )(Ingredients);

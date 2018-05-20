@@ -43,7 +43,8 @@ AddAddonForm = reduxForm({
 const Addons = ({
   createAddon,
   addons,
-  removeAddon
+  removeAddon,
+  styles
 }) => {
   const addonsList = FN.MapToList(addons).sort((a,b) => a.name.localeCompare(b.name))
   return (
@@ -53,8 +54,11 @@ const Addons = ({
       >
         {addonsList.map((addon, i) =>
           <div key={addon.id}>
-            <ListItem dense>
-              <ListItemText primary={addon.name} />
+            <ListItem dense style={styles.ListItem}>
+              <ListItemText primary={
+                <span>{addon.name}</span>
+              } />
+              {addon.price.amount}KD
               <Tooltip placement="left" title="Delete">
                 <IconButton
                   aria-label="Delete addon"

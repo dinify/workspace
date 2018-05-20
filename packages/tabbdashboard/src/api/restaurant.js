@@ -176,6 +176,12 @@ export function CreateIngredient({ name }) {
   return Post({ path: `menu/ingredient/create`, v3: true }, { name })
 }
 
+export function ChangeIngredient(payload) {
+  const id = payload.id
+  delete payload.id
+  return Post({ path: `menu/ingredient/${id}`, v3: true }, payload)
+}
+
 export function DeleteIngredient({ id }) {
   return Post({ path: `menu/ingredient/${id}/delete`, v3: true })
 }
