@@ -60,7 +60,7 @@ const ItemOptions = ({
 
 export default connect(
   state => ({
-    optionsMap: state.restaurant.loggedRestaurant.options,
+    optionsMap: state.option.all,
     menuItems: state.menuItem.all
   }), {
     assignOption: assignOptionInit,

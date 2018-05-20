@@ -49,7 +49,7 @@ const ItemAddons = ({
 
 export default connect(
   state => ({
-    addonsMap: state.restaurant.loggedRestaurant.addons,
+    addonsMap: state.addon.all,
     menuItems: state.menuItem.all
   }), {
     assignAddon: assignAddonInit,

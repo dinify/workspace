@@ -11,7 +11,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Checkbox from 'material-ui/Checkbox'
 import Tooltip from 'material-ui/Tooltip'
 import DeleteIcon from '@material-ui/icons/Delete'
-import IconButton from 'material-ui/IconButton';
+import IconButton from 'material-ui/IconButton'
 
 import {
   updateMenucategoryInitAction,

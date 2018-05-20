@@ -90,7 +90,10 @@ export function DeleteWaiterboard({ id }) {
 }
 
 export function CreateTable({ number, capacity, waiterboardId, x, y }) {
-  return Post({ path: `table/create`, v3: true }, { number, capacity, waiterboard_id: waiterboardId, x, y })
+  return Post(
+    { path: `waiterboard/${waiterboardId}/table/add`, v3: true },
+    { number, capacity, x, y }
+  )
 }
 export function ChangeTable({ id, x, y }) {
   return Post({ path: `table/${id}`, v3: true }, { x, y })
@@ -121,10 +124,9 @@ export function DeleteMenucategory({ id }) {
 }
 
 export function CreateMenuitem({name, precedence, categoryId}) {
-  return Post({ path: `menu/item/create`, v3: true }, {
+  return Post({ path: `/menu/category/${categoryId}/item/add`, v3: true }, {
     name,
     precedence,
-  	menu_category_id: categoryId,
     price: {
         amount: 2,
         currency: "KWD"
@@ -163,27 +165,36 @@ export function GetAddons() {
 }
 
 export function CreateAddon({ name, price }) {
-  return Post({ path: `menu/addon/create`, v3: true }, { name, price: {
-      amount: price,
-      currency: "KWD"
-  } })
+  return Post({ path: `menu/addon/create`, v3: true }, { name, price})
 }
 
-export function AddAddonprice({ addonId, price }) {
-  return Post({ path: `menu/addon/${addonId}`, v3: true }, { price: {
-      amount: price,
-      currency: "KWD"
-  } })
+export function DeleteAddon({ id }) {
+  return Post({ path: `menu/addon/${id}/delete`, v3: true })
 }
 
 export function CreateIngredient({ name }) {
   return Post({ path: `menu/ingredient/create`, v3: true }, { name })
 }
 
+export function DeleteIngredient({ id }) {
+  return Post({ path: `menu/ingredient/${id}/delete`, v3: true })
+}
+
 export function CreateOption({ name }) {
   return Post({ path: `menu/option/create`, v3: true }, { name })
 }
 
+export function DeleteOption({ id }) {
+  return Post({ path: `menu/option/${id}/delete`, v3: true })
+}
+
+export function CreateChoice({ name, optionId }) {
+  return Post({ path: `menu/option/${optionId}/choice/add`, v3: true }, { name })
+}
+
+export function DeleteChoice({ id }) {
+  return Post({ path: `menu/choice/${id}/delete`, v3: true })
+}
 
 // API V2
 export function ChangeItemimage({ file, id }) {

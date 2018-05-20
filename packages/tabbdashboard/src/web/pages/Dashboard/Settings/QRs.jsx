@@ -44,7 +44,7 @@ class QRs extends React.Component {
     } = this.props
 
     const waiterboards = FN.MapToList(loggedRestaurant.waiterboards).map((wb) => {
-      const tables = FN.MapToList(wb.tables)
+      const tables = FN.MapToList(wb.tables).sort((a,b) => a.number - b.number)
       return { ...wb, tables }
     })
 

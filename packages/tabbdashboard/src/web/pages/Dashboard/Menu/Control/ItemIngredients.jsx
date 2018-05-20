@@ -50,7 +50,7 @@ const ItemIngredients = ({
 
 export default connect(
   state => ({
-    ingredientsMap: state.restaurant.loggedRestaurant.ingredients,
+    ingredientsMap: state.ingredient.all,
     menuItems: state.menuItem.all
   }), {
     assignIngredient: assignIngredientInit,
