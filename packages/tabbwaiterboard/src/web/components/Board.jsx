@@ -5,9 +5,8 @@ import styled from 'styled-components'
 import R from 'ramda'
 import Swipeable from 'react-swipeable'
 import Masonry from 'react-masonry-component'
-import SwitchButton from 'react-switch-button'
-import 'react-switch-button/dist/react-switch-button.css'
 import { colorsByStages } from '../colors'
+import { MapToList } from 'lib/FN'
 
 import Table from './Table'
 import Header from './Header'
@@ -16,8 +15,9 @@ import Modal from './/Modal'
 import ModalUser from './ModalUser'
 import ModalListOfBills from './ModalListOfBills'
 import ModalListOfBookings from './ModalListOfBookings'
-import ModalTimerSetting from './ModalTimerSetting'
-import Event from './Events/Event'
+import Event from './Events'
+import Booking from './Events/Booking'
+import Call from './Events/Call'
 
 import { toggleFrames, toggleModal } from '../../ducks/ui'
 import { setOHEnabled, logoutInitAction } from '../../ducks/restaurant'
@@ -87,7 +87,7 @@ const MenuItem = styled.li`
     border-color: white;
   }
 `
-const MenuItemSign = styled.li`
+const MenuItemSign = styled.div`
   position: absolute;
   top: -4px;
   right: -4px;
@@ -129,6 +129,7 @@ const Board = ({
   setOHEnabled,
   order_ahead_enabled,
   bookings,
+  calls,
   logout,
   selectedWBId,
   loggedUser
@@ -151,8 +152,14 @@ const Board = ({
   let waiterboardName = null
 
   if (loggedUser.waiterboards && loggedUser.waiterboards[selectedWBId]) {
-    waiterboardName = loggedUser.waiterboards[selectedWBId].name    
+    waiterboardName = loggedUser.waiterboards[selectedWBId].name
   }
+
+  const bookingsList = MapToList(bookings)
+  const acceptedBookings = bookingsList.filter((b) => b.status === 'CONFIRMED')
+  const pendingBookings = bookingsList.filter((b) => b.status === 'PENDING')
+
+  const callsList = MapToList(calls)
 
   return (<div>
 
@@ -167,23 +174,10 @@ const Board = ({
       <Menu>
         <MenuItem onClick={() => toggleModal({ open: true, type: 'ListOfBookings' })}>
           <i className="ion-ios-calendar" />
-          <MenuItemSign bg={colorsByStages['booking']}>{bookings.length}</MenuItemSign>
+          <MenuItemSign bg={colorsByStages['booking']}>{acceptedBookings.length}</MenuItemSign>
         </MenuItem>
-        <MenuItem onClick={() => toggleModal({ open: true, type: 'TimerSetting' })}>
-          <i className="ion-ios-timer" />
-        </MenuItem>
-        {order_ahead_enabled !== null ?
-          <SwitchButton
-            name="switch-type"
-            labelRight={`OH ${order_ahead_enabled ? 'Enabled' : 'Disabled'}`}
-            type="switch"
-            defaultChecked={order_ahead_enabled}
-            onChange={() => {
-              setOHEnabled()
-            }}
-          />
-          : ''
-        }
+
+
       </Menu>
 
     </Header>
@@ -196,7 +190,7 @@ const Board = ({
         <Frame n={0}>
           <Container>
             <Container>
-              {events && R.values(events).length > 0 ?
+              {events && R.values(events).length > 0 || pendingBookings.length > 0 ?
                 <Masonry
                     className={'my-gallery-class'} // default ''
                     elementType={'ul'} // default 'div'
@@ -204,6 +198,12 @@ const Board = ({
                     disableImagesLoaded={false} // default false
                     updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
                 >
+                  {pendingBookings.map((booking) =>
+                    <Booking key={booking.id} booking={booking} />
+                  )}
+                  {callsList.map((call) =>
+                    <Call key={call.id} call={call} />
+                  )}
                   {R.values(events).sort((a,b) => a.content.id - b.content.id).map((event, i) =>
                     <Event key={i} event={event} />
                   )}
@@ -229,7 +229,6 @@ const Board = ({
       {modalType === 'User' ? <ModalUser payload={modalPayload} /> : '' }
       {modalType === 'ListOfBills' ? <ModalListOfBills payload={modalPayload} /> : '' }
       {modalType === 'ListOfBookings' ? <ModalListOfBookings payload={modalPayload} /> : '' }
-      {modalType === 'TimerSetting' ? <ModalTimerSetting payload={modalPayload} /> : '' }
     </Modal>
 
   </div>)
@@ -238,13 +237,14 @@ const Board = ({
 
 export default connect(
   state => ({
-    tables: state.tables.all,
+    bookings: state.booking.all,
+    calls: state.call.all,
+    tables: state.table.all,
     guests: state.guests.all,
     events: state.restaurant.events,
-    guestsCount: state.tables.guestsCount,
+    guestsCount: state.table.guestsCount,
     sales: state.restaurant.sales,
     order_ahead_enabled: state.restaurant.order_ahead_enabled,
-    bookings: state.restaurant.acceptedBookings,
     selectedWBId: state.restaurant.selectedWBId,
     loggedUser: state.restaurant.loggedUser,
     ...state.ui, // frameIndex, modalOpen, modalUserId

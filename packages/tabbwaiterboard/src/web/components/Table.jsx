@@ -1,12 +1,15 @@
 // @flow
 import React from 'react'
-import styled from 'styled-components';
-import { connect } from 'react-redux';
+import styled from 'styled-components'
+import { connect } from 'react-redux'
 import { colorsByStages } from '../colors'
-import { clearTable } from '../../ducks/tables';
+import { clearTable, updateTableInit } from 'ducks/table/actions'
 import R from 'ramda'
 import S from 'string'
-import { toggleModal } from '../../ducks/ui';
+import { toggleModal } from 'ducks/ui'
+
+import { Block, ExitToApp } from '@material-ui/icons'
+import { IconButton, Grid, Tooltip, Chip } from '@material-ui/core'
 
 const TableBox = styled.div`
   display: inline-block;
@@ -31,9 +34,6 @@ const Thumbnail = styled.div`
   height: 180px;
   text-align: center;
   transition: all 150ms ease-in-out;
-  i {
-    color: ${props => props.color};
-  }
 `;
 const Id = styled.div`
   font-size: 22px;
@@ -43,21 +43,7 @@ const Id = styled.div`
   width: 50px;
   cursor: pointer;
 `;
-const ExitIcon = styled.i`
-  font-size: 26px;
-`;
-const ExitButton = styled.button`
-  position: absolute;
-  bottom: 10px;
-  left: 16px;
-  font-size: 26px;
-  padding: 0;
-  outline: none;
-  border: none;
-  background: transparent;
-  color: white;
-  cursor: pointer;
-`;
+
 const Seats = styled.div`
   position: absolute;
   top: 0;
@@ -151,52 +137,79 @@ const Sign = ({ guest, timer }) => {
 }
 
 
-class Table extends React.Component {
+const Table = ({
+  table, clearTable, toggleModal, guests, users, timer, index, updateTable
+}) => {
+  const presentGuests = R.values(guests)
+  .filter((g) => {
+    return g.table_id === table.id
+  })
+  .sort((a,b) => b.id.localeCompare(a.id))
+  .map((g) => {
+    g.user = users[g.user_id]
+    return g
+  })
 
-  render(){
-    const { table, clearTable, toggleModal, guests, users, timer, index } = this.props;
+  const guestsStatuses = R.sort((a,b) => b.localeCompare(a), R.pluck('status')(presentGuests))
 
-    const presentGuests = R.values(guests)
-    .filter((g) => {
-      return g.table_id === table.id
-    })
-    .sort((a,b) => b.id.localeCompare(a.id))
-    .map((g) => {
-      g.user = users[g.user_id]
-      return g
-    })
+  const tableStatus = guestsStatuses[0]
 
-    const guestsStatuses = R.sort((a,b) => b.localeCompare(a), R.pluck('status')(presentGuests))
+  return (
+  	<TableBox>
+      <Thumbnail color={tableStatus === 's1' ? 'black' : 'white'} bg={presentGuests && presentGuests.length > 0 ? colorsByStages[tableStatus] : ''}>
+        <Grid container direction="column" justify="center" alignItems="center" spacing={16}>
+          <Grid item>
+            <Id onClick={() => toggleModal({ open: true, type: 'ListOfBills', tableId: table.id })}>
+              {index}
+            </Id>
+          </Grid>
+          <Grid item>
+            <Tooltip placement="right" title="Mark as occupied">
+              <IconButton
+                aria-label="Mark as occupied"
+                disabled={presentGuests.length > 0 || table.offline}
+                onClick={() => updateTable({id: table.id, offline: true})}
+              >
+                <Block />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+          <Grid item>
+            <Tooltip placement="right" title="Clear table">
+              <IconButton onClick={() => clearTable({ table })}>
+                <ExitToApp />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </Grid>
+      </Thumbnail>
+      <Seats>
 
-    const tableStatus = guestsStatuses[0]
+        {table.offline ?
+          <Grid container direction="column" justify="center" alignItems="center" style={{height: 180}}>
+            <Grid item>
+              <Chip
+                label="OCCUPIED"
+                onDelete={() => updateTable({id: table.id, offline: false})}
+              />
+            </Grid>
+          </Grid>
+        : ''}
 
-    return (
-    	<TableBox>
-        <Thumbnail color={tableStatus === 's1' ? 'black' : 'white'} bg={presentGuests && presentGuests.length > 0 ? colorsByStages[tableStatus] : ''}>
-          <Id onClick={() => toggleModal({ open: true, type: 'ListOfBills', tableId: table.id })}>
-            {index}
-          </Id>
-          <ExitButton onClick={() => clearTable({ table })}>
-            <ExitIcon className="ion-android-exit" />
-          </ExitButton>
-        </Thumbnail>
-        <Seats>
-
-          {presentGuests.map((guest, i) =>
-            <Guest key={i} onClick={() => toggleModal({ open: true, type: 'User', userId: guest.id })}>
-              <Photo url={`https://picsum.photos/50/50/?image=${i*3+20}`} />
-              {guest.user ?
-                <Name title={guest.user.name}>{S(guest.user.name).truncate(16).s}</Name>
-              : ''}
-              <Sign guest={guest} timer={timer} />
-            </Guest>
-          )}
+        {presentGuests.map((guest, i) =>
+          <Guest key={i} onClick={() => guest.user ? toggleModal({ open: true, type: 'User', userId: guest.user.id }) : ''}>
+            <Photo url={`https://picsum.photos/50/50/?image=${i*3+20}`} />
+            {guest.user ?
+              <Name title={guest.user.name}>{S(guest.user.name).truncate(16).s}</Name>
+            : ''}
+            <Sign guest={guest} timer={timer} />
+          </Guest>
+        )}
 
 
-        </Seats>
-    	</TableBox>
-    )
-  }
+      </Seats>
+  	</TableBox>
+  )
 }
 
 export default connect(
@@ -208,6 +221,7 @@ export default connect(
   }),
   {
     clearTable,
-    toggleModal
+    toggleModal,
+    updateTable: updateTableInit
   },
 )(Table)

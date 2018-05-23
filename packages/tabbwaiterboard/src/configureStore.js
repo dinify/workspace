@@ -6,13 +6,23 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 import configureEpics from './configureEpics';
 //import { firebaseStateReducer, reactReduxFirebase } from 'react-redux-firebase';
 
-import tables from './ducks/tables'
+import table from './ducks/table'
 import guests from './ducks/guests'
 import ui from './ducks/ui'
 import restaurant from './ducks/restaurant'
 import user from './ducks/user'
+import booking from './ducks/booking'
+import call from './ducks/call'
 
-const commonReducers = { tables, guests, ui, restaurant, user }
+const commonReducers = {
+  table,
+  guests,
+  ui,
+  restaurant,
+  user,
+  booking,
+  call
+}
 
 const configureStore = (options, storage) => {
   const { initialState, platformDeps = {}, platformEpics = [], platformReducers = {} } = options;
@@ -35,29 +45,14 @@ const configureStore = (options, storage) => {
     }));
   }
 
-  // Firebase config
-  //const firebaseConfig = {
-  //  apiKey: 'AIzaSyABS31YC1SUtzjyFlM97xD1be0R5XnwZZ4',
-  //  authDomain: '<your-auth-domain>',
-  //  databaseURL: 'https://tabb-4f53c.firebaseio.com',
-  //  storageBucket: '<your-storage-bucket>'
-  //}
-  // react-redux-firebase options
-  //const config = {
-  //  userProfile: 'users', // firebase root where user profiles are stored
-  //  enableLogging: false, // enable/disable Firebase's database logging
-  //}
-
 
   const enhancers = compose(applyMiddleware(...middlewares), autoRehydrate());
 
   const store = createStore(reducers, initialState, enhancers);
 
 
-
-
   // let the magic happen :–)
-  persistStore(store, { blacklist: ['guests', 'tables', 'ui', 'restaurant'], storage }); // .purge() // in case you want to purge the store
+  persistStore(store, { blacklist: ['guests', 'tables', 'restaurant'], storage }); // .purge() // in case you want to purge the store
 
   return store;
 };

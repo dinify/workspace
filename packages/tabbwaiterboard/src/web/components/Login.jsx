@@ -26,7 +26,7 @@ const Login = ({ lastError, doLogin }: LoginProps) =>
   (<Content>
       <img
         alt='TABB'
-        src={require('./logo.svg')}
+        src="http://images.tabb.global/brand/logo.svg"
         style={{
           marginTop: '-50px',
           marginBottom: '40px',

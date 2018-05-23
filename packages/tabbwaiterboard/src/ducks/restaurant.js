@@ -90,7 +90,6 @@ export default function reducer(state: State = initialState, action: Action) {
   if(action.type.includes('UPDATE') && action.type.includes('INIT')) {
     // update init
     state = R.assoc('updateDone', 'updating')(state);
-    console.log('UPDATE INIT');
   }
   if(action.type.includes('CONFIRMATION') && action.type.includes('INIT')) {
     const type = action.type.split('_')[0]
@@ -175,7 +174,6 @@ export function logoutDoneAction(res: object) {
 }
 
 export function loggedFetchedAction(res: object) {
-  //console.log(res, "dddd");
   return { type: 'LOGGED_FETCHED_DONE', payload: res };
 }
 
@@ -195,7 +193,6 @@ export function guestsResults(payload) {
   return { type: 'GUESTS_POLLING_RESULTS', payload };
 }
 
-export const confirmBooking = (payload) => ({ type: 'BOOKING_CONFIRMATION_INIT', payload })
 export const confirmService = (payload) => ({ type: 'SERVICE_CONFIRMATION_INIT', payload })
 export const confirmOrder = (payload) => ({ type: 'ORDER_CONFIRMATION_INIT', payload })
 export const confirmOrderAhead = (payload) => ({ type: 'ORDERAHEAD_CONFIRMATION_INIT', payload })
@@ -239,7 +236,6 @@ const bootstrapEpic = (action$: Observable, { getState, dispatch }: EpicDependen
         return Observable.of(setWBidAction(), loggedFetchedAction(loggedUser), appBootstrap(), guestsPollingInit()) // getTablesInit()
       })
       .catch(error => {
-        console.log(error);
         if (window.location.pathname !== '/' && window.location.pathname !== '/signup') window.location.replace("/");
         return Observable.of(appBootstrap());
       });
@@ -274,24 +270,8 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         const state = getState()
         const waiterboardId = state.restaurant.selectedWBId
 
-        API.GetBookings().then((res) => {
-          const bookings = res
-          const accepted = R.filter((o) => o.status === "CONFIRMED", bookings)
-          const pending = R.filter((o) => o.status === "PENDING", bookings)
-          isSomethingNew(bookings, 'bookings')
-          dispatch({
-            type: 'GET_BOOKINGS_DONE',
-            payload: pending
-          });
-          dispatch({
-            type: 'GET_ACCEPTED_BOOKING_DONE',
-            payload: accepted
-          })
-        })
-        //API.GetServices().then((payload) => {
-        //  isSomethingNew(payload, 'services')
-        //  dispatch({ type: 'GET_SERVICES_DONE', payload });
-        //})
+        dispatch({type: 'LOAD_BOOKING_INIT'})
+        dispatch({type: 'LOAD_CALL_INIT'})
 
         API.GetOrders({ waiterboardId }).then((response) => {
           isSomethingNew(response, 'orders')
@@ -307,7 +287,6 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         //})
         API.GetSeats({ waiterboardId }).then((seats) => {
           const occupiedSeats = seats.filter((seat) => seat.occupied)
-          console.log(occupiedSeats,'seats');
           const userIds = R.pluck('user_id', occupiedSeats).filter((id) => id.length === 24)
           dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
           dispatch(guestsResults(occupiedSeats));
@@ -326,9 +305,6 @@ const loginEpic = (action$: Observable) =>
   action$
   .ofType(LOGIN_INIT)
   .switchMap(({ payload: { email, password } }) => {
-    console.log("login epic");
-    if (email) console.log("em");
-    if (password) console.log("pass");
     return Observable.fromPromise(API.Login({ email, password }))
       .map(loginDoneAction)
       .catch(error => Observable.of(loginFailAction(error)))
@@ -390,8 +366,7 @@ const setOHEnabledEpic = (action$: Observable, { getState, dispatch }) =>
       const state = getState()
       const restaurantId = state.restaurant.loggedUser.restaurant
       const enabled = !state.restaurant.order_ahead_enabled
-      console.log(restaurantId);
-      console.log(enabled);
+
       return Observable.fromPromise(API.SetOrderAheadEnabled({ restaurantId, enabled }))
         .map(() => ({ type: 'SET_OHENABLED_DONE', payload: { enabled } }))
         .catch(error => Observable.of(({ type: 'SET_OHENABLED_FAIL' })))

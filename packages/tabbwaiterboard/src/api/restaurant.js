@@ -17,6 +17,12 @@ export function GetTables({waiterboardId}) {
   return Get({ v3: true, path: `waiterboard/${waiterboardId}/tables` })
 }
 
+export function ChangeTable(payload) {
+  const { id } = payload
+  delete payload.id
+  return Post({ v3: true, path: `table/${id}` }, payload)
+}
+
 export function GetSeats({waiterboardId}) {
   return Get({ v3: true, path: `waiterboard/${waiterboardId}/seats/all` })
 }
@@ -26,27 +32,27 @@ export function CheckOut({ tableId }) {
 }
 
 export function CheckOutUser({ userId }) {
-  return Post({ v3: true, path: `guest/${userId}/checkout` })
+  return Post({ v3: true, path: `checkout/user/${userId}` })
 }
 
 export function GetBookings() {
   return Get({ v3: true, path: `restaurant/my/bookings` })
 }
 
-export function GetBookingsAccepted() {
-  return Get({ path: `api/v2/waiterboard/bookings_accepted` })
+export function ConfirmBooking({ id }) {
+  return Post({ v3: true, path: `booking/${id}/confirm` })
+}
+
+export function CancelBooking({ id }) {
+  return Post({ v3: true, path: `booking/${id}/cancel` }, { reason: 'No seats at given time' })
 }
 
 export function GetGuests({ waiterboardId }) {
   return Get({ v3: true, path: `waiterboard/${waiterboardId}/guests` })
 }
 
-export function ConfirmBooking({ bookingId }) {
-  return Post({ path: `api/v2/waiterboard/booking/${bookingId}/confirm` })
-}
-
-export function GetServices() {
-  return Get({ path: `api/v2/waiterboard/service_calls` })
+export function GetCalls({ waiterboardId }) {
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/calls` })
 }
 
 export function ConfirmService({ serviceId }) {

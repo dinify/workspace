@@ -1,1 +1,1 @@
-import './web';
+import './web'

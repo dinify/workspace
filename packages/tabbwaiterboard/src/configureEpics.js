@@ -1,9 +1,18 @@
-import { combineEpics } from 'redux-observable';
-import { epics as restaurant } from './ducks/restaurant';
-import { epics as tables } from './ducks/tables';
-import { epics as crud } from './ducks/crudEpics';
+import { combineEpics } from 'redux-observable'
+import { epics as restaurant } from 'ducks/restaurant'
+import { tableEpics } from 'ducks/table'
+import { epics as wild } from 'ducks/wildEpics'
 
-const epics = [...restaurant, ...tables, ...crud];
+import { bookingEpics } from 'ducks/booking'
+import { callEpics } from 'ducks/call'
+
+const epics = [
+  ...restaurant,
+  ...wild,
+  ...bookingEpics,
+  ...callEpics,
+  ...tableEpics
+]
 
 export default (deps = {}, platformEpics = []) => (action$, { getState, dispatch }) =>
-  combineEpics(...epics, ...platformEpics)(action$, { ...deps, getState, dispatch });
+  combineEpics(...epics, ...platformEpics)(action$, { ...deps, getState, dispatch })

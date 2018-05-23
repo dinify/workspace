@@ -3,32 +3,32 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Booking from './Events/Booking'
 import { colorsByStages } from '../colors'
+import { MapToList } from 'lib/FN'
 
 import { Head, Body, BodyPlaceholder } from './styled/Modal'
 
-class ModalListOfBookings extends React.Component {
-  render(){
-    const { bookings } = this.props;
-    console.log(bookings)
+const ModalListOfBookings = ({ bookings }) => {
 
-    return (
-    	<div>
-        <Head bg={colorsByStages['booking']}>
-          Reservations
-        </Head>
-        <Body>
-          {bookings.length < 1 ? <BodyPlaceholder>No upcoming reservations</BodyPlaceholder> : ''}
-          {bookings.map((booking, i) =>
-            <Booking key={i} booking={booking} noconfirm />
-          )}
-        </Body>
-      </div>
-    )
-  }
+  const accepted = MapToList(bookings).filter((b) => b.status === 'CONFIRMED')
+
+  return (
+  	<div>
+      <Head bg={colorsByStages['booking']}>
+        Accepted Reservations
+      </Head>
+      <Body>
+        {accepted.length < 1 ? <BodyPlaceholder>No upcoming reservations</BodyPlaceholder> : ''}
+        {accepted.map((booking, i) =>
+          <Booking key={i} booking={booking} noconfirm />
+        )}
+      </Body>
+    </div>
+  )
+
 }
 
 export default connect(
   state => ({
-    bookings: state.restaurant.acceptedBookings
+    bookings: state.booking.all
   })
 )(ModalListOfBookings);

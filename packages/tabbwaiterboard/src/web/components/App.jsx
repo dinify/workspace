@@ -1,5 +1,4 @@
 // @flow
-
 import React from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
@@ -13,7 +12,7 @@ import Login from './Login'
 const Content = styled.div`
   font-family: 'Montserrat', sans-serif;
   ${media.tablet`max-width: 100%;`}
-`;
+`
 
 const AppLoader = styled.div`
   position: relative;
@@ -23,11 +22,11 @@ const AppLoader = styled.div`
   justify-content: center;
   flex-direction: column;
   color: white;
-`;
+`
 
 type AppProps = {
-  appLoading: boolean,
-};
+  appLoading: boolean
+}
 
 const App = ({ appLoading }: AppProps) =>
   (<Router>
@@ -43,5 +42,5 @@ const App = ({ appLoading }: AppProps) =>
   </Router>);
 
 export default connect(state => ({
-  appLoading: !appIsRunning(state),
-}))(App);
+  appLoading: !appIsRunning(state)
+}))(App)

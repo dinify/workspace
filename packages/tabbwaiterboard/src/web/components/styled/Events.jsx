@@ -21,6 +21,7 @@ export const Header = styled.div`
 export const CheckButton = styled.button`
   height: 50px;
   width: 50px;
+  margin: 10px 10px 10px 0;
   border-radius: 50%;
   float: right;
   border: none;
@@ -28,9 +29,6 @@ export const CheckButton = styled.button`
   color: white;
   outline: none;
   cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
   ${p => p.invisible ? 'opacity: 0;' : ''}
   ${p => p.flash ? 'animation: vhs-flash 0.7s infinite;' : ''}
   i {
@@ -152,7 +150,7 @@ export const Text = styled.span`
   text-align: center;
   position: absolute;
   top: 25px;
-  right: 70px;
+  right: 90px;
 `;
 
 const foodItemColors = [

@@ -2,7 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { clearUser } from '../../ducks/tables'
+import { clearUser } from 'ducks/table/actions'
 import { getBillsOfUser, getOrdersOfUser } from '../../ducks/restaurant'
 import R from 'ramda'
 import numeral from 'numeral'
@@ -100,9 +100,9 @@ class ModalUser extends React.Component {
 
   render(){
 
-    const { payload: { userId }, guests, clearUser, getBillsOfUser, getOrdersOfUser } = this.props;
+    const { payload: { userId }, users, clearUser, getBillsOfUser, getOrdersOfUser } = this.props;
 
-    const user = guests[userId]
+    const user = users[userId]
 
     if (!user) return (<div />)
 
@@ -142,7 +142,7 @@ class ModalUser extends React.Component {
           <SmallTable>
             <tr>
               <TdLabel>Name</TdLabel>
-              <TdValue>{user && user.UserObject ? user.UserObject.name : ''}</TdValue>
+              <TdValue>{user  ? user.name : ''}</TdValue>
             </tr>
             <tr>
               <TdLabel>No. of visits</TdLabel>
@@ -202,7 +202,8 @@ class ModalUser extends React.Component {
 
 export default connect(
   state => ({
-    guests: state.guests.all
+    guests: state.guests.all,
+    users: state.user.all,
   }),
   {
     clearUser,
