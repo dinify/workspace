@@ -1,21 +1,25 @@
 // @flow
 import React from 'react'
-import Container from './Container'
 import styled from 'styled-components'
 import numeral from 'numeral'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { MapToList } from 'lib/FN'
 
-const HeaderBar = styled.header`
-  color: white;
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  text-align: right;
-  background: rgba(255,255,255,0.1);
-  a {
-    text-decoration: none;
-  }
-`;
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+  Typography,
+  Button,
+  Badge,
+  Grid
+} from '@material-ui/core'
+
+import { ExitToApp } from '@material-ui/icons'
+
+import { logoutInitAction } from 'ducks/restaurant'
+import { toggleFrames, toggleModal } from 'ducks/ui'
 
 const Label = styled.span`
   color: rgb(180, 185, 190);
@@ -24,6 +28,11 @@ const Label = styled.span`
   margin-left: 10px;
   margin-right: 5px;
   font-size: 14px;
+  @media (max-width: 960px) {
+    margin-left: 7px;
+    margin-right: 3px;
+    font-size: 12px;
+  }
 `;
 
 const Value = styled.span`
@@ -33,49 +42,115 @@ const Value = styled.span`
   font-size: 22px;
   font-weight: 300;
   margin-right: 10px;
+  @media (max-width: 960px) {
+    font-size: 16px;
+    margin-right: 7px;
+  }
 `;
 
-const Button = styled.button`
+
+const Container = styled.div`
+  margin: 0 auto;
+  width: 1200px;
+  min-width: 630px;
+  @media (max-width: 1200px) {
+    width: 100%;
+  }
+  a {
+    text-decoration: none;
+  }
+`;
+
+const SwipeButton = styled.button`
+  height: 50px;
+  min-width: 130px;
+  width: 100%;
+  border: none;
+  background: rgba(255,255,255,0.2);
+  font-size: 12px;
+  font-family: 'Montserrat';
   color: white;
-  i {
-    font-size: 19px;
-    margin-top: 3px;
-  }
-  background: transparent;
-  vertical-align: middle;
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(255,255,255,0.4);
-  border-radius: 50%;
-  text-align: center;
+  font-weight: 300;
   cursor: pointer;
-  margin-right: 10px;
-  margin-bottom: 5px;
-  &:hover {
-    border-color: white;
-  }
-`;
+  outline: none;
+`
 
-class Header extends React.Component {
-  render(){
-    const { tablesCount = 0, guestsCount = 0, salesVolume = 0, children, waiterboardName, logout } = this.props;
-    return (
-    	<HeaderBar>
-        <Container>
-          {children}
-          <Link to="/board/">
-            <Label>Section</Label><Value>{waiterboardName}</Value>
-          </Link>
-          <Label>Tables</Label><Value>{tablesCount}</Value>
-          <Label>Guests</Label><Value>{guestsCount}</Value>
-          <Label>Sales</Label><Value>{numeral(salesVolume).format('0.000')}KD</Value>
-          <Button onClick={logout} title="Logout">
-            <i className="material-icons">exit_to_app</i>
-          </Button>
-        </Container>
-    	</HeaderBar>
-    )
+const styles = {
+  appbar: {
+    background: 'rgba(255,255,255,0.1)'
+  },
+  toolbar: {
+    height: 50,
+    minHeight: 50,
+    padding: 0
   }
 }
 
-export default Header;
+const Header = ({
+  tablesCount = 0,
+  guestsCount = 0,
+  salesVolume = 0,
+  loggedUser,
+  selectedWBId,
+  logout,
+  toggleFrames,
+  toggleModal,
+  frameIndex,
+  bookings
+}) => {
+  const frames = ['actions','tables']
+  let waiterboardName = ''
+  if (loggedUser.waiterboards && loggedUser.waiterboards[selectedWBId]) {
+    waiterboardName = loggedUser.waiterboards[selectedWBId].name
+  }
+  const bookingsList = MapToList(bookings)
+  const acceptedBookings = bookingsList.filter((b) => b.status === 'CONFIRMED')
+  return (
+    <AppBar position="static" style={styles.appbar}>
+      <Container>
+        <Toolbar style={styles.toolbar}>
+
+          <Grid container spacing={8} alignItems="center">
+            <Grid item xs={2}>
+              <SwipeButton onClick={() => toggleFrames(frameIndex ? 0 : 1)}>Slide to {frames[frameIndex]}</SwipeButton>
+            </Grid>
+            <Grid item xs={1}>
+              <IconButton onClick={() => toggleModal({ open: true, type: 'ListOfBookings' })}>
+                <Badge badgeContent={acceptedBookings.length} color="primary">
+                  <i className="ion-ios-calendar" />
+                </Badge>
+              </IconButton>
+            </Grid>
+            <Grid item xs={9} style={{textAlign: 'right'}}>
+              <Link to="/board/">
+                <Label>Section</Label><Value>{waiterboardName}</Value>
+              </Link>
+              <Label>Tables</Label><Value>{tablesCount}</Value>
+              <Label>Guests</Label><Value>{guestsCount}</Value>
+              <Label>Sales</Label><Value>{numeral(salesVolume).format('0.000')}KD</Value>
+
+              <IconButton onClick={logout}>
+                <ExitToApp />
+              </IconButton>
+            </Grid>
+          </Grid>
+
+        </Toolbar>
+    </Container>
+    </AppBar>
+  )
+}
+
+export default connect(
+  state => ({
+    loggedUser: state.restaurant.loggedUser,
+    selectedWBId: state.restaurant.selectedWBId,
+    frameIndex: state.ui.frameIndex,
+    bookings: state.booking.all
+  }),
+  {
+    logout: logoutInitAction,
+    toggleFrames,
+    toggleModal
+  }
+)(Header)

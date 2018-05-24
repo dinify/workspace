@@ -19,10 +19,17 @@ import Event from './Events'
 import Booking from './Events/Booking'
 import Call from './Events/Call'
 
-import { toggleFrames, toggleModal } from '../../ducks/ui'
-import { setOHEnabled, logoutInitAction } from '../../ducks/restaurant'
+import { toggleFrames, toggleModal } from 'ducks/ui'
+import { setOHEnabled, logoutInitAction } from 'ducks/restaurant'
 
-import * as FN from '../../lib/FN'
+import { PermContactCalendar } from '@material-ui/icons'
+import { IconButton, Badge } from '@material-ui/core'
+
+import * as FN from 'lib/FN'
+
+import { Typography, Button, Grid } from '@material-ui/core';
+
+import MenuIcon from '@material-ui/icons/Menu';
 
 const OneBoard = styled.div`
   position: fixed;
@@ -41,19 +48,6 @@ const Frame = styled.div`
   padding-top: 10px;
 `
 
-const SwipeButton = styled.button`
-  height: 50px;
-  width: 150px;
-  border: none;
-  background: rgba(255,255,255,0.2);
-  font-size: 12px;
-  font-family: 'Montserrat';
-  color: white;
-  font-weight: 300;
-  cursor: pointer;
-  outline: none;
-  float: left;
-`
 
 const EventsPlaceholder = styled.div`
   font-size: 32px;
@@ -160,27 +154,14 @@ const Board = ({
   const pendingBookings = bookingsList.filter((b) => b.status === 'PENDING')
 
   const callsList = MapToList(calls)
-
+//
   return (<div>
 
     <Header
       tablesCount={R.values(tables).length}
       guestsCount={R.values(guests).length}
       salesVolume={sales}
-      waiterboardName={waiterboardName}
-      logout={logout}
-    >
-      <SwipeButton onClick={() => toggleFrames(frameIndex ? 0 : 1)}>Slide to {frames[frameIndex]}</SwipeButton>
-      <Menu>
-        <MenuItem onClick={() => toggleModal({ open: true, type: 'ListOfBookings' })}>
-          <i className="ion-ios-calendar" />
-          <MenuItemSign bg={colorsByStages['booking']}>{acceptedBookings.length}</MenuItemSign>
-        </MenuItem>
-
-
-      </Menu>
-
-    </Header>
+    />
 
     <Swipeable
       onSwipedRight={() => swiped(1)}
@@ -216,9 +197,13 @@ const Board = ({
         </Frame>
         <Frame n={1}>
           <Container>
-            {FN.MapToList(tables).map((table, i) =>
-              <Table openModal={openModal} tableId={i} table={table} key={i} index={i+1} />
-            )}
+            <Grid container spacing={8} justify="center" alignItems="flex-start">
+              {FN.MapToList(tables).map((table, i) =>
+                <Grid item>
+                  <Table openModal={openModal} tableId={i} table={table} key={i} index={i+1} />
+                </Grid>
+              )}
+            </Grid>
           </Container>
         </Frame>
       </OneBoard>
@@ -252,7 +237,6 @@ export default connect(
   {
     toggleFrames,
     toggleModal,
-    setOHEnabled,
-    logout: logoutInitAction
+    setOHEnabled
   },
 )(Board)

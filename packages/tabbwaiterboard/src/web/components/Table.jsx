@@ -17,9 +17,6 @@ const TableBox = styled.div`
   background: rgba(0,0,0,0.3);
   width: 290px;
   height: 180px;
-  margin-right: 10px;
-  margin-bottom: 6px;
-  margin-top: 0;
   font-family: sans-serif;
   color: white;
 `;

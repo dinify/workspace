@@ -47,12 +47,6 @@ const initialState = {
   events: {},
   acceptedBookings: [],
   sales: 0,
-  timer: {
-    oh: Number(getCookie('timer-oh')) || 60,
-    o: Number(getCookie('timer-o')) || 40,
-    sc: Number(getCookie('timer-sc')) || 20,
-    p: Number(getCookie('timer-p')) || 10
-  },
   order_ahead_enabled: null,
 };
 
@@ -250,17 +244,6 @@ const getTablesEpic = (action$: Observable) =>
         .catch(error => Observable.of({ type: 'GET_TABLES_FAIL' }))
     );
 
-const audio = new Audio('/static/GLASS.wav')
-
-let counts = {}
-const isSomethingNew = (payload, type) => {
-  if (counts[type] !== undefined && payload.length > counts[type]) {
-    audio.volume = 1
-    audio.play()
-  }
-  counts[type] = payload.length
-}
-
 const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
   action$
     .ofType('GUESTS_POLLING_INIT')
@@ -274,31 +257,23 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         dispatch({type: 'LOAD_CALL_INIT'})
 
         API.GetOrders({ waiterboardId }).then((response) => {
-          isSomethingNew(response, 'orders')
-          //isSomethingNew(response.ordersAhead, 'ordersAhead')
           const oh = R.filter((o) => o.type === 'AHEAD')(response)
           const di = R.filter((o) => o.type === 'DINE_IN')(response)
           dispatch({ type: 'GET_ORDERS_DONE', payload: di });
           dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: oh });
         })
-        //API.GetBills().then((payload) => {
-        //  isSomethingNew(payload, 'bills')
-        //  dispatch({ type: 'GET_BILLS_DONE', payload });
-        //})
+
         API.GetSeats({ waiterboardId }).then((seats) => {
           const occupiedSeats = seats.filter((seat) => seat.occupied)
           const userIds = R.pluck('user_id', occupiedSeats).filter((id) => id.length === 24)
           dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
           dispatch(guestsResults(occupiedSeats));
         });
-        //API.GetSales().then((payload) => {
-        //  isSomethingNew(payload, 'sales')
-        //  dispatch({ type: 'GET_SALES_DONE', payload });
-        //})
+
         return { type: 'GUESTS_POLLING_DONE', payload: {} };
       }
       loadInitData();
-      return Observable.interval(3000).map(loadInitData);
+      return Observable.interval(8000).map(loadInitData);
     });
 
 const loginEpic = (action$: Observable) =>

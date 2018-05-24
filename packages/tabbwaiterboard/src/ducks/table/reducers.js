@@ -14,7 +14,7 @@ export default function reducer(state: State = initialState, action: Action) {
       const waiterboards = restaurant.waiterboards
       const selectedWBid = R.keys(waiterboards)[0]
       const wb = waiterboards[selectedWBid]
-      return R.assoc('all', wb.tables)(state)
+      return R.assoc('all', UpdateOriginal(state.all, wb.tables))(state)
     }
 
     case 'UPDATE_TABLE_INIT': {
