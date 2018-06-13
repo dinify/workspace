@@ -8,7 +8,6 @@ import {
   assignOptionInit,
   unassignOptionInit
 } from 'ducks/restaurantLegacy'
-import ListOfCustomizations from './ListOfCustomizations'
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete'
 
 const ItemOptions = ({
@@ -21,22 +20,35 @@ const ItemOptions = ({
   const optionsList = FN.MapToList(optionsMap)
   const dataSource = optionsList.map((o) => ({value: o.id, label: o.name}))
   const selectedFood = menuItems[selectedFoodId]
+  console.log(selectedFood.options,'optionsList');
   return (
     <div>
       <Label>Options</Label>
+
       {selectedFood.options ?
-        <ListOfCustomizations
-          list={FN.MapToList(selectedFood.options)}
-          rmButtonFunction={(option) => unassignOption({
-            id: selectedFoodId,
-            optionId: option.id,
-            originalObject: {options: R.mapObjIndexed((o) => {
-              if(!o.difference) o.difference = o.pivot.difference
-              return o
-            }, selectedFood.options)}
-          })}
-        />
+        <div>
+          {FN.MapToList(selectedFood.options).map((option,i) =>
+            <div key={i}>
+              {option.name}
+            </div>
+          )}
+        </div>
       : 'No options'}
+
+      {
+      //  <ListOfCustomizations
+      //    list={FN.MapToList(selectedFood.options)}
+      //    rmButtonFunction={(option) => unassignOption({
+      //      id: selectedFoodId,
+      //      optionId: option.id,
+      //      originalObject: {options: R.mapObjIndexed((o) => {
+      //        if(!o.difference) o.difference = o.pivot.difference
+      //        return o
+      //      }, selectedFood.options)}
+      //    })}
+      //  />
+      }
+
       <AutoComplete
         label="Options"
         placeholder="Select options here"

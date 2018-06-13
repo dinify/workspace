@@ -1,13 +1,8 @@
 // @flow
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 import * as FN from 'lib/FN'
 import Dropzone from 'react-dropzone'
-import {
-  FormBox,
-  FormBoxBody
-} from 'web/components/styled/FormBox'
 import {
   updateMenuitemInitAction,
   uploadItemImageInitAction
@@ -22,20 +17,11 @@ import ItemAddons from './ItemAddons'
 import ItemOptions from './ItemOptions'
 import ItemNutrition from './ItemNutrition'
 
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import Card, { CardContent, CardMedia } from 'material-ui/Card';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import blue from 'material-ui/colors/blue';
 
 import { withStyles } from 'material-ui/styles';
-
-
-const FoodImage = styled.div `
-  width: 100%;
-  height: 200px;
-  background-image: url(${(p) => p.imageURL});
-  background-size: cover;
-  background-position: center;
-`
 
 let DetailForm = ({
   handleSubmit

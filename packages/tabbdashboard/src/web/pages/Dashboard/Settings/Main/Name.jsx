@@ -29,6 +29,7 @@ const Name = ({
   updateName,
   name
 }) => {
+  console.log(name)
   return (
     <FormBox>
       <FormBoxHead>

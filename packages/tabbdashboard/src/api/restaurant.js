@@ -1,4 +1,4 @@
-import { Get, Post, Put, Delete, PostMultipart } from './Network'
+import { Get, Post, Delete, PostMultipart } from './Network'
 import R from 'ramda'
 
 export function RegisterUser({ name, phone, email, password}) {
@@ -53,6 +53,15 @@ export function ChangeContact({ phone, email, website }) {
 export function ChangeBank({ bank_name, beneficiary_name, iban, bic }) {
   return Post({ path: `restaurant/my/payout`, v3: true }, {
     bank_name, beneficiary_name, iban, bic
+  })
+}
+
+export function ChangeAddress(payload) {
+  delete payload.restaurantId
+  return Post({ path: `restaurant/my`, v3: true }, {
+    address: {
+      business: {...payload}
+    }
   })
 }
 
@@ -124,7 +133,7 @@ export function DeleteMenucategory({ id }) {
 }
 
 export function CreateMenuitem({name, precedence, categoryId}) {
-  return Post({ path: `/menu/category/${categoryId}/item/add`, v3: true }, {
+  return Post({ path: `menu/category/${categoryId}/item/add`, v3: true }, {
     name,
     precedence,
     price: {

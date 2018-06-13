@@ -12,9 +12,9 @@ export default function reducer(state = initialState, action) {
 
     case 'LOGGED_FETCHED_DONE': {
       const categories = action.payload.categories
-      FN.MapToList(categories).map((category) => {
+      FN.MapToList(categories).forEach((category) => {
         if (!category.items) return
-        FN.MapToList(category.items).map((item) => {
+        FN.MapToList(category.items).forEach((item) => {
           state = R.assocPath(['all', item.id], item)(state)
         })
       })

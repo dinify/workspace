@@ -17,6 +17,7 @@
     "precommit": "jest --env=jsdom && flow && lint-staged"
   },
   "dependencies": {
+    "@material-ui/core": "^1.0.0",
     "@material-ui/icons": "^1.0.0-beta.43",
     "grid-styled": "4.0.0",
     "material-ui": "^1.0.0-beta.43",

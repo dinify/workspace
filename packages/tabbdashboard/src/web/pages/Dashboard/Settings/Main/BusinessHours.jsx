@@ -141,8 +141,8 @@ const BusinessHours = ({
   const undefinedDays = R.without(definedDays, R.keys(dayNames))
 
   let defaultValues = {}
-  definedDays.map((day) => {
-    openHours[day].map((range, i) => {
+  definedDays.forEach((day) => {
+    openHours[day].forEach((range, i) => {
       defaultValues[`${day}_${i}_from`] = range[0]
       defaultValues[`${day}_${i}_to`] =  range[1]
     })
@@ -150,7 +150,7 @@ const BusinessHours = ({
 
   const withNewData = (updObj) => {
     let newObj = []
-    definedDays.map((day, j) => {
+    definedDays.forEach((day, j) => {
       openHours[day].forEach((range, i) => {
         newObj.push({
           weekday: j,

@@ -11,10 +11,9 @@ import Contact from './Contact'
 import Image from './Image'
 import Type from './Type'
 import Name from './Name'
+import ServiceCalls from './ServiceCalls'
+import Address from './Address'
 
-const MainContrainer = styled.div `
-
-`
 
 const Column = styled.div`
   width: 290px;
@@ -27,7 +26,7 @@ const Main = ({
 }) => {
   if (!loggedRestaurant) return (<div />)
   return (
-    <MainContrainer>
+    <div>
       <Column>
         <Name name={loggedRestaurant.name} />
         <Type type={loggedRestaurant.type} />
@@ -42,13 +41,15 @@ const Main = ({
       <Column>
         <Contact contact={loggedRestaurant.contact} />
         <Banking payout={loggedRestaurant.payout} />
+        <Address address={loggedRestaurant.address.business} />
       </Column>
 
       <Column>
         <BusinessHours openHours={loggedRestaurant.open_hours} />
+        <ServiceCalls calls={loggedRestaurant.services}/>
       </Column>
 
-    </MainContrainer>
+    </div>
   );
 }
 

@@ -17,8 +17,6 @@ function setCookie(cname, cvalue, exdays) {
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' })
 
 
-const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
-const camel = (str) => capitalize(str.toLowerCase())
 
 // Epic
 const bootstrapEpic = (action$: Observable) =>
@@ -88,7 +86,7 @@ const loginEpic = (action$: Observable, { getState }) =>
       if (crRest) {
         return { type: 'REGISTER_RESTAURANT_INIT', payload: { name, subdomain, email, password } }
       } else {
-        loginDoneAction(res)
+        return loginDoneAction(res)
       }
     })
     .catch(error => Observable.of(loginFailAction(error)))
@@ -172,7 +170,7 @@ const reorderEpic = (action$: Observable) =>
     const middle = type.split('_')[1] // 'CATEGORY'
 
     const changed = []
-    payload.map((o, i) => {
+    payload.forEach((o, i) => {
       if (o.precedence !== i) changed.push({...o, newPrecedence: i})
     })
 

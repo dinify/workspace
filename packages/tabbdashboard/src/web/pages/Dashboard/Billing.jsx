@@ -8,7 +8,7 @@ import numeral from 'numeral'
 import R from 'ramda'
 
 import ReactTable from "react-table";
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import { DateRangePicker } from 'react-dates';
 
 import "react-table/react-table.css";
 import 'react-dates/lib/css/_datepicker.css';

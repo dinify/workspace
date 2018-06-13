@@ -94,6 +94,7 @@ const Dashboard = ({
       <Logo>
         <img
           src={require('assets/img/logo.svg')}
+          alt=""
         />
         <span>
           Dashboard

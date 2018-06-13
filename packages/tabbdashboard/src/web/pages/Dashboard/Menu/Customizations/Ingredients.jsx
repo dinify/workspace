@@ -1,14 +1,9 @@
 // @flow
 import React from 'react'
-import R from 'ramda'
 import { connect } from 'react-redux'
 import * as FN from 'lib/FN'
-import Grid from 'material-ui/Grid'
 import { Field, reduxForm } from 'redux-form'
-
-import ListSubheader from 'material-ui/List/ListSubheader'
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
-import Collapse from 'material-ui/transitions/Collapse'
+import List, { ListItem, ListItemText } from 'material-ui/List'
 
 import AddCircle from '@material-ui/icons/AddCircle'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -17,7 +12,8 @@ import Tooltip from 'material-ui/Tooltip'
 import Switch from 'material-ui/Switch';
 
 import InputAndButton from 'web/components/MaterialInputs/InputAndButton'
-
+import FormHelperText from '@material-ui/core/FormHelperText'
+import FormControl from '@material-ui/core/FormControl'
 
 import {
   createIngredientInit,
@@ -26,14 +22,22 @@ import {
 } from 'ducks/ingredient/actions'
 
 let AddIngredientForm = ({
-  handleSubmit
+  handleSubmit,
+  progress,
+  errorMessage
 }) => {
+  console.log(errorMessage);
   return (
     <form onSubmit={handleSubmit} style={{width: '100%'}}>
-      <Field name="name" component={InputAndButton} buttonIcon={<AddCircle />} componentProps={{
-        placeholder: "Enter ingredient",
-        fullWidth: true
-      }} />
+      <FormControl error={progress === 'ERROR'} aria-describedby="name-error-text">
+        <Field name="name" component={InputAndButton} buttonIcon={<AddCircle />} componentProps={{
+          placeholder: "Enter ingredient",
+          fullWidth: true
+        }} />
+        {progress === 'ERROR' ?
+          <FormHelperText>{errorMessage}</FormHelperText>
+        : ''}
+      </FormControl>
     </form>
   )
 }
@@ -47,7 +51,9 @@ const Ingredients = ({
   ingredients,
   removeIngredient,
   updateIngredient,
-  styles
+  styles,
+  progressMap,
+  errorsMap
 }) => {
   const ingredientsList = FN.MapToList(ingredients).sort((a,b) => a.name.localeCompare(b.name))
   return (
@@ -78,7 +84,11 @@ const Ingredients = ({
           </div>
         )}
         <ListItem>
-          <AddIngredientForm onSubmit={createIngredient} />
+          <AddIngredientForm
+            onSubmit={createIngredient}
+            progress={progressMap['CREATE_INGREDIENT']}
+            errorMessage={errorsMap['CREATE_INGREDIENT']}
+          />
         </ListItem>
       </List>
 
@@ -90,6 +100,8 @@ const Ingredients = ({
 export default connect(
   state => ({
     ingredients: state.ingredient.all,
+    progressMap: state.ui.progressMap,
+    errorsMap: state.ui.errorsMap
   }), {
     createIngredient: createIngredientInit,
     removeIngredient: removeIngredientInit,

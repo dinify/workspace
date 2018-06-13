@@ -52,6 +52,7 @@ const Image = ({
         <img
           src={imageUrl}
           width="250"
+          alt=""
         />
       </FormBoxBody>
     </FormBox>

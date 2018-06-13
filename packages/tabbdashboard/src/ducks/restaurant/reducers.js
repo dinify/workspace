@@ -1,6 +1,5 @@
 // @flow
 import R from 'ramda'
-import * as FN from 'lib/FN'
 
 type State = {
   appRun: boolean,
@@ -24,9 +23,6 @@ export default function reducer(state: State = initialState, action) {
     case 'LOGGED_FETCHED_DONE': {
       return R.assoc('loggedRestaurant', action.payload)(state)
     }
-    case 'UPDATE_LOCATION_INIT':
-      state = R.assocPath(['loggedRestaurant', 'longitude'], action.payload.longitude)(state)
-      return R.assocPath(['loggedRestaurant', 'latitude'], action.payload.latitude)(state)
     case 'UPDATE_NAME_INIT':
       return R.assocPath(['loggedRestaurant', 'name'], action.payload.name)(state)
     case 'UPDATE_IMAGE_DONE':

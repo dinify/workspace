@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { Form, Text } from 'react-form'
 import { signupInitAction } from 'ducks/restaurantLegacy'
-import { HorizontalLine } from 'web/components/styled/HorizontalLine'
 
 const Content = styled.div `
   position: relative;
@@ -49,8 +48,7 @@ const FormBoxBody = styled.div `
   }
 `;
 
-const TextInput = styled(Text)
-`
+const TextInput = styled(Text)`
   background-color: rgba(255,255,255,0.2);
   margin: 10px 0 0 0;
   outline: none;

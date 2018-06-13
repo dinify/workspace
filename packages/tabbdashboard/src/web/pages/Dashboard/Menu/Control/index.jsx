@@ -1,10 +1,7 @@
 // @flow
 import React from 'react'
-import R from 'ramda'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { FormBox, FormBoxBody } from 'web/components/styled/FormBox'
-
 import ListOfCategories from './ListOfCategories'
 import ListOfDishes from './ListOfDishes'
 import ItemDetail from './ItemDetail'
@@ -32,8 +29,7 @@ class Menucontrol extends React.Component {
   render() {
     const {
       selectedCategoryId,
-      selectedFoodId,
-      menuItems
+      selectedFoodId
     } = this.props;
 
     return (

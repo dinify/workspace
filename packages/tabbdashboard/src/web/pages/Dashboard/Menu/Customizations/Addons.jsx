@@ -1,14 +1,10 @@
 // @flow
 import React from 'react'
-import R from 'ramda'
 import { connect } from 'react-redux'
 import * as FN from 'lib/FN'
-import Grid from 'material-ui/Grid'
 import { Field, reduxForm } from 'redux-form'
 
-import ListSubheader from 'material-ui/List/ListSubheader'
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
-import Collapse from 'material-ui/transitions/Collapse'
+import List, { ListItem, ListItemText } from 'material-ui/List'
 
 import AddCircle from '@material-ui/icons/AddCircle'
 import DeleteIcon from '@material-ui/icons/Delete'

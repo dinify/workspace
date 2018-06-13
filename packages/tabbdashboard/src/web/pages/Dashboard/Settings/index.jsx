@@ -1,8 +1,6 @@
 // @flow
 import React from 'react'
-import styled from 'styled-components'
-import { Link, Route, Redirect, Switch } from 'react-router-dom'
-import { Form, Text } from 'react-form'
+import { Route, Redirect, Switch } from 'react-router-dom'
 import { Header } from 'web/components/styled/Header'
 import { HorMenu, HorMenuLink } from 'web/components/styled/Menu'
 

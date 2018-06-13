@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
 import QRCode from 'qrcode.react'
 

@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 
-const Localization = ({}) =>
+const Localization = () =>
   (<div>
   Work in progress
 </div>)

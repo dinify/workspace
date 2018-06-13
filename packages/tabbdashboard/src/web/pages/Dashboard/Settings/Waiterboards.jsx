@@ -6,11 +6,7 @@ import * as FN from 'lib/FN'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import QRCode from 'qrcode.react'
-import SwitchButton from 'react-switch-button'
 import 'react-switch-button/dist/react-switch-button.css'
-
-import { HorizontalLine } from 'web/components/styled/HorizontalLine'
 import Tooltip from 'material-ui/Tooltip'
 import Button from 'material-ui/Button'
 import Text from 'web/components/MaterialInputs/Text'
@@ -23,8 +19,6 @@ import {
   FormBox,
   FormBoxHead,
   FormBoxBody,
-  FormBoxSubmit,
-  Label
 } from 'web/components/styled/FormBox'
 import {
   createWaiterboardInitAction,
@@ -380,7 +374,7 @@ class Waiterboards extends React.Component {
       else wb.maxTableNumber = R.apply(Math.max, tableNumbers)
       wb.tables = tables
       const tablesMatrix = R.range(0, wb.maxY+1).map(() => R.range(0, wb.maxX+1).map(() => null)) // tablesMatrix[y][x]
-      tables.map((table) => {
+      tables.forEach((table) => {
         if (Number.isInteger(table.x) && Number.isInteger(table.y)) tablesMatrix[table.y][table.x] = table
       })
 

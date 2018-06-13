@@ -1,10 +1,4 @@
 // @flow
-import { Observable } from 'rxjs'
-import R from 'ramda'
-import * as FN from 'lib/FN'
-
-import * as API from 'api/restaurant'
-import type { EpicDependencies, Error, Action } from '../flow'
 
 function setCookie(cname, cvalue, exdays) {
   let d = new Date()
@@ -25,6 +19,8 @@ export const updateContactInitAction = (payload) => ({ type: 'UPDATE_CONTACT_INI
 export const updateSocialInitAction = (payload) => ({ type: 'UPDATE_SOCIAL_INIT', payload })
 export const updateLocationInitAction = (payload) => ({ type: 'UPDATE_LOCATION_INIT', payload })
 export const updateBankInitAction = (payload) => ({ type: 'UPDATE_BANK_INIT', payload })
+export const updateAddressInitAction = (payload) => ({ type: 'UPDATE_ADDRESS_INIT', payload })
+
 export const updateHoursInitAction = (payload) => ({ type: 'UPDATE_HOURS_INIT', payload })
 export const loginInitAction = (payload) => ({ type: 'LOGIN_INIT', payload })
 export const logoutInitAction = () => {
