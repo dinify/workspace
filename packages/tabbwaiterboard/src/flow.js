@@ -10,6 +10,11 @@ export type Action = {
   payload: Object,
 };
 
+export type CrudAction = {
+  type: string,
+  payload: Object,
+};
+
 export type EpicDependencies = {
   getState: () => void,
 };

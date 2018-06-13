@@ -1,11 +1,8 @@
 import { createEpicMiddleware } from 'redux-observable';
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
-//import { composeWithDevTools } from 'remote-redux-devtools';
 import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import configureEpics from './configureEpics';
-//import { firebaseStateReducer, reactReduxFirebase } from 'react-redux-firebase';
-
 import table from './ducks/table'
 import guests from './ducks/guests'
 import ui from './ducks/ui'
@@ -31,8 +28,7 @@ const configureStore = (options, storage) => {
 
   const reducers = combineReducers({
     ...commonReducers,
-    ...platformReducers,
-    //firebase: firebaseStateReducer,
+    ...platformReducers
   });
 
   const middlewares = [createEpicMiddleware(rootEpic)];
@@ -45,11 +41,9 @@ const configureStore = (options, storage) => {
     }));
   }
 
-
   const enhancers = compose(applyMiddleware(...middlewares), autoRehydrate());
 
   const store = createStore(reducers, initialState, enhancers);
-
 
   // let the magic happen :–)
   persistStore(store, { blacklist: ['guests', 'tables', 'restaurant'], storage }); // .purge() // in case you want to purge the store

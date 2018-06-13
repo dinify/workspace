@@ -12,7 +12,7 @@ const store = configureStore(
     platformEpics: [],
     platformReducers: {},
   },
-  AsyncStorage,
+  AsyncStorage
 );
 
 const Native = () =>

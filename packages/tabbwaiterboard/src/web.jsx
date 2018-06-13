@@ -1,5 +1,4 @@
 // @flow
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
@@ -8,7 +7,6 @@ import configureStore from './configureStore'
 import './index.css'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-
 
 const store = configureStore({
   initialState: {},
