@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { Form, Text } from 'react-form'
 import { signupInitAction } from 'ducks/restaurantLegacy'
+import ErrorMessage from 'web/components/ErrorMessage'
 
 const Content = styled.div `
   position: relative;
@@ -87,7 +88,9 @@ type LoginProps = {
 
 const Signup = ({
     lastError,
-    doSignup
+    doSignup,
+    progressMap,
+    errorsMap
   }: LoginProps) =>
   (<Content>
       <img
@@ -109,6 +112,14 @@ const Signup = ({
           <Form
             onSubmit={(form) => {
               doSignup(form);
+            }}
+            defaultValues={{
+              name: 'John Doe',
+              phone: '9338293832',
+              email: 'test@testing.com',
+              password: 'Testtest1',
+              restaurantName: 'Test23',
+              subdomain: 'test23',
             }}
             validate={({ name, phone, email, password, restaurantName, subdomain }) => {
               return {
@@ -134,6 +145,13 @@ const Signup = ({
                   <TextInput field='subdomain' placeholder='Subdomain' />
 
                   <FormBoxSubmit>SIGN UP</FormBoxSubmit>
+
+                  <ErrorMessage>
+                    {progressMap.LOGIN === 'ERROR' ? <div>Login failed</div> : ''}
+                    {progressMap.SIGNUP === 'ERROR' ? <div>Registration failed</div> : ''}
+                    {errorsMap.SIGNUP ? <div>{errorsMap.SIGNUP}</div> : ''}                    
+                  </ErrorMessage>
+
                 </form>
               )
             }}
@@ -144,7 +162,10 @@ const Signup = ({
   </Content>);
 
 export default connect(
-  state => ({}), {
+  state => ({
+    progressMap: state.ui.progressMap,
+    errorsMap: state.ui.errorsMap
+  }), {
     doSignup: signupInitAction,
   },
 )(Signup);

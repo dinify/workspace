@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { Form, Text } from 'react-form'
 import { loginInitAction } from 'ducks/restaurantLegacy'
 import { HorizontalLine } from 'web/components/styled/HorizontalLine'
+import ErrorMessage from 'web/components/ErrorMessage'
 
 const Content = styled.div`
   position: relative;
@@ -82,7 +83,11 @@ const FormBoxSubmit = styled.button`
 `
 
 
-const Login = ({ doLogin }) =>
+const Login = ({
+  doLogin,
+  progressMap,
+  errorsMap
+}) =>
   (<Content>
       <img
         alt='TABB'
@@ -118,6 +123,9 @@ const Login = ({ doLogin }) =>
                   <TextInput field="email" placeholder="Email" />
                   <TextInput field="password" type="password" placeholder="Password" />
                   <FormBoxSubmit>ENTER</FormBoxSubmit>
+                  <ErrorMessage>
+                    {progressMap.LOGIN === 'ERROR' ? <div>Wrong e-mail or password</div> : ''}
+                  </ErrorMessage>
                   <HorizontalLine mt={20} mb={20} />
                   <Link to="/signup">Not using TABB yet? Sign Up here!</Link>
                 </form>
@@ -130,7 +138,10 @@ const Login = ({ doLogin }) =>
   </Content>)
 
 export default connect(
-  state => ({}),
+  state => ({
+    progressMap: state.ui.progressMap,
+    errorsMap: state.ui.errorsMap
+  }),
   {
     doLogin: loginInitAction,
   },

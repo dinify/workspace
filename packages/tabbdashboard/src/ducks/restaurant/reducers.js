@@ -23,6 +23,9 @@ export default function reducer(state: State = initialState, action) {
     case 'LOGGED_FETCHED_DONE': {
       return R.assoc('loggedRestaurant', action.payload)(state)
     }
+    case 'LOGGED_FETCHED_EMPTY': {
+      return R.dissoc('loggedRestaurant')(state)
+    }
     case 'UPDATE_NAME_INIT':
       return R.assocPath(['loggedRestaurant', 'name'], action.payload.name)(state)
     case 'UPDATE_IMAGE_DONE':

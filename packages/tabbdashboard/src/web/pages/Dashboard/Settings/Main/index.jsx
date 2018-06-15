@@ -31,22 +31,22 @@ const Main = ({
         <Name name={loggedRestaurant.name} />
         <Type type={loggedRestaurant.type} />
         <Image loggedRestaurant={loggedRestaurant} />
+        <Contact contact={loggedRestaurant.contact} />
       </Column>
 
       <Column>
         <Location loggedRestaurant={loggedRestaurant} />
         <Social social={loggedRestaurant.social} />
-      </Column>
-
-      <Column>
-        <Contact contact={loggedRestaurant.contact} />
         <Banking payout={loggedRestaurant.payout} />
-        <Address address={loggedRestaurant.address.business} />
       </Column>
 
       <Column>
+        <Address address={loggedRestaurant.address.business} />
         <BusinessHours openHours={loggedRestaurant.open_hours} />
-        <ServiceCalls calls={loggedRestaurant.services}/>
+      </Column>
+
+      <Column>
+        <ServiceCalls />
       </Column>
 
     </div>

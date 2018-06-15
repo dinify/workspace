@@ -5,7 +5,12 @@ import * as FN from 'lib/FN'
 
 import * as API from 'api/restaurant'
 
-export const loggedFetchedAction = (payload) => ({ type: 'LOGGED_FETCHED_DONE', payload })
+export const loggedFetchedAction = (payload) => {
+  if (payload === null) {
+    return { type: 'LOGGED_FETCHED_EMPTY' }
+  }
+  return { type: 'LOGGED_FETCHED_DONE', payload }
+}
 
 function setCookie(cname, cvalue, exdays) {
   let d = new Date()
@@ -23,12 +28,16 @@ const bootstrapEpic = (action$: Observable) =>
   action$.ofType('persist/REHYDRATE').mergeMap(() => {
     return Observable.fromPromise(API.GetLoggedRestaurant())
     .mergeMap((loggedUser) => {
-      return Observable.of(loggedFetchedAction(loggedUser), appBootstrap())
+      return Observable.of(
+        loggedFetchedAction(loggedUser),
+        appBootstrap(),
+        { type: 'FETCH_SERVICEIMAGES_INIT' }
+      )
     })
     .catch(error => {
       console.log(error)
       if (window.location.pathname !== '/login' && window.location.pathname !== '/signup') window.location.replace("/login")
-      return Observable.of(appBootstrap())
+      return Observable.of(loggedFetchedAction(null), appBootstrap())
     })
   })
 
@@ -62,7 +71,7 @@ const registrationEpic = (action$: Observable, { getState }) =>
       .map(() => signupDoneAction({ email, password, name, subdomain }))
       .catch(error => Observable.of(signupFailAction(error)))
     } else { // create restaurant
-
+      console.log('logggggggged')
     }
   })
 

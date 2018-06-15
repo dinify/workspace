@@ -13,6 +13,7 @@ import menuItem from 'ducks/menuItem'
 import option from 'ducks/option'
 import ingredient from 'ducks/ingredient'
 import addon from 'ducks/addon'
+import service from 'ducks/service'
 
 import { reducer as formReducer } from 'redux-form'
 Raven.config('https://e8c54e0fdec04337b8f4ee65a1164dee@sentry.io/1199917', {
@@ -26,7 +27,8 @@ const commonReducers = {
   menuItem,
   option,
   ingredient,
-  addon
+  addon,
+  service
 }
 
 const configureStore = (options, storage) => {

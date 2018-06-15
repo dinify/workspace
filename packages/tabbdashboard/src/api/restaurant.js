@@ -9,8 +9,9 @@ export function RegisterUser({ name, phone, email, password}) {
     password,
     name,
     phone,
-    gender: "OTHER",
-    birth_date: "1/1/1990"
+    gender: 'OTHER',
+    birth_date: '1990-01-01',
+    registration_type: 'LOCAL'
   })
 }
 export function LoginUser({ email, password }) {
@@ -152,7 +153,17 @@ export function DeleteMenuitem({ id }) {
   return Post({ path: `menu/item/${id}/delete`, v3: true })
 }
 
+export function GetServiceimages() {
+  return Get({ path: `service/images`, v3: true })
+}
 
+export function CreateService({ name, imageId }) {
+  return Post({ path: `service/create`, v3: true }, { name, image_id: imageId })
+}
+
+export function DeleteService({ id }) {
+  return Post({ path: `service/${id}/delete`, v3: true })
+}
 
 export function ChangeNutrition({ foodId, total, proteins, fats, carbs}) {
   return Post({ path: `menu/item/${foodId}`, v3: true }, {
