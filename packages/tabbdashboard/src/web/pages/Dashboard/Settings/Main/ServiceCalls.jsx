@@ -48,7 +48,7 @@ const ServiceCalls = ({
       <FormBoxBody material>
         {servicesList.map((service) =>
           <Chip
-            avatar={<Avatar src={service.image.url.replace('https','http')} />}
+            avatar={<Avatar src={service.image ? service.image.url.replace('https','http') : ''} />}
             key={service.id}
             label={service.name}
             style={{margin: '5px'}}

@@ -30,6 +30,11 @@ export default function reducer(state = initialState, action) {
       return R.assoc('images', action.payload.res)(state)
     }
 
+    case 'CREATE_SERVICE_DONE': {
+      const newService = action.payload.res
+      return R.assocPath(['all', newService.id], newService)(state)
+    }
+
     default:
       return state
   }
