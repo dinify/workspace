@@ -1,0 +1,21 @@
+{
+  "short_name": "TABB",
+  "name": "TABB - Dining made seamless",
+  "icons": [
+    {
+      "src": "/images/icons-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/icons-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/app?source=pwa",
+  "background_color": "#C13939",
+  "display": "standalone",
+  "scope": "/app",
+  "theme_color": "#C13939"
+}
