@@ -20,6 +20,9 @@ To build static site for production:
 npm run build
 ```
 
+## Benchmarking / audit
+https://developers.google.com/web/tools/lighthouse/#devtools
+
 ## Bootstrapped with
 
 [Create React App](https://github.com/facebookincubator/create-react-app) with no build configuration.
