@@ -1,21 +1,25 @@
-# Create React App example
+# TABB progressive web app
 
-## How to use
-
-Download the example [or clone the repo](https://github.com/mui-org/material-ui):
+## How to get started
 
 ```bash
-curl https://codeload.github.com/mui-org/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/create-react-app
-cd create-react-app
+git clone git@gitlab.com:tabb/frontend-web/app.git
+cd app
+npm install
 ```
 
-Install it and run:
+To run it locally:
 
 ```bash
-npm install
 npm run start
 ```
 
-## The idea behind the example
+To build static site for production:
+
+```bash
+npm run build
+```
+
+## Bootstrapped with
 
 [Create React App](https://github.com/facebookincubator/create-react-app) with no build configuration.
