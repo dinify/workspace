@@ -4,9 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import ToggleButton from './ToggleButton';
-import VerticalSplit from '../icons/VerticalSplit';
-import Public from '../icons/Public';
-import ViewList from '../icons/ViewList';
+import VerticalSplit from 'icons/VerticalSplit';
+import Public from 'icons/Public';
+import ViewList from 'icons/ViewList';
 
 const styles = theme => ({
   left: {

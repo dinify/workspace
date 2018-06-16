@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { BaseControl } from 'react-map-gl';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import InvertColors from '../icons/InvertColors';
+import InvertColors from 'icons/InvertColors';
 
 const styles = theme => ({
   mapButton: {

@@ -17,8 +17,8 @@ import FormControl from '@material-ui/core/FormControl';
 import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import GoogleLogo from '../icons/GoogleLogo';
-import FacebookLogo from '../icons/FacebookLogo';
+import GoogleLogo from 'icons/GoogleLogo';
+import FacebookLogo from 'icons/FacebookLogo';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 

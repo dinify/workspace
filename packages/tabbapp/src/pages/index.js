@@ -12,12 +12,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../withRoot';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
-import ViewModeSelector from '../components/ViewModeSelector';
-import RestaurantListItem from '../components/RestaurantListItem';
-import OnboardingDialog from '../components/OnboardingDialog';
-import Map from '../components/Map';
-import PageIndicator from '../components/PageIndicator';
-import ChevronRight from '../icons/ChevronRight';
+import ViewModeSelector from 'components/ViewModeSelector';
+import RestaurantListItem from 'components/RestaurantListItem';
+import OnboardingDialog from 'components/OnboardingDialog';
+import Map from 'components/Map';
+import PageIndicator from 'components/PageIndicator';
+import ChevronRight from 'icons/ChevronRight';
 import classNames from 'classnames';
 import SVG from 'react-inlinesvg';
 
