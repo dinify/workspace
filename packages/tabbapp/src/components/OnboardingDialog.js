@@ -1,26 +1,23 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import FormControl from '@material-ui/core/FormControl';
-import SwipeableViews from 'react-swipeable-views';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  Typography,
+  Divider,
+  InputLabel,
+  InputAdornment,
+  IconButton,
+  Input,
+  FormControl,
+  Tabs,
+  Tab
+} from '@material-ui/core';
 import GoogleLogo from 'icons/GoogleLogo';
 import FacebookLogo from 'icons/FacebookLogo';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { Visibility, VisibilityOff } from '@material-ui/icons/Visibility';
 
 const styles = theme => ({
   grow: {
@@ -100,7 +97,7 @@ class OnboardingDialog extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     let title = this.state.selectedTab ?  'Next' : 'Log in';
 
     let emailPasswordInput = (

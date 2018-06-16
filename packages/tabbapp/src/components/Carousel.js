@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import { ButtonBase } from '@material-ui/core';
 import PageIndicator from './PageIndicator';
 import ChevronRight from 'icons/ChevronRight';
 import ChevronLeft from 'icons/ChevronLeft';
 import SwipeableViews from 'react-swipeable-views';
 import { isTouchMobile, getPlatform } from '../utils';
-import classNames from 'classnames';
 import { Motion, spring } from 'react-motion';
 
 const styles = theme => ({
@@ -73,7 +71,7 @@ class Carousel extends React.Component {
 
   render() {
     const { classes, images } = this.props;
-    const { selectedPage, palettes } = this.state;
+    const { selectedPage } = this.state;
     const swipeable = isTouchMobile();
     const platform = getPlatform();
 

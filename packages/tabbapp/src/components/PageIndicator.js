@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import times from 'lodash.times';
 import uniqueId from 'lodash.uniqueid';
-import { Motion, StaggeredMotion, spring, presets } from 'react-motion';
+import { StaggeredMotion, spring, presets } from 'react-motion';
 
 class PageIndicator extends React.Component {
   state = {
@@ -37,7 +37,7 @@ class PageIndicator extends React.Component {
         ctx.clearRect(0, 0, 1, 1);
         ctx.fillStyle = color;
         ctx.fillRect(0, 0, 1, 1);
-        return [ ... ctx.getImageData(0, 0, 1, 1).data ];
+        return [ ...ctx.getImageData(0, 0, 1, 1).data ];
       });
     })();
 
@@ -62,17 +62,17 @@ class PageIndicator extends React.Component {
     //clip selected page between 0 and count - 1
     let to = Math.min(count - 1, Math.max(0, nextProps.selectedPage));
     let from = Math.min(count - 1, Math.max(0, this.props.selectedPage));
-    if (to != from) {
+    if (to !== from) {
       this.setState({ from, to });
     }
-    else if (this.props.count != count && nextProps.selectedPage >= count) {
+    else if (this.props.count !== count && nextProps.selectedPage >= count) {
       this.setState({ from: Math.min(this.props.count - 1, nextProps.selectedPage), to: count - 1 });
     }
-    else if (this.props.count != count) {
+    else if (this.props.count !== count) {
       this.setState({ from: this.state.to, to: nextProps.selectedPage });
     }
 
-    if (nextProps.dotColor != this.props.dotColor) {
+    if (nextProps.dotColor !== this.props.dotColor) {
       this.updateDotColor(nextProps.dotColor);
     }
   }
@@ -87,7 +87,7 @@ class PageIndicator extends React.Component {
 
   render() {
     let { gap, size, selectedDotColor, count } = this.props;
-    let { crossedDots, from, to, baseColor, baseOpacity, selectorContainer } = this.state;
+    let { from, to, baseColor, baseOpacity, selectorContainer } = this.state;
 
     //clip count to be bigger than 1
     count = Math.max(count, 1);
@@ -99,7 +99,7 @@ class PageIndicator extends React.Component {
       <div style={{position: 'relative', height: size, width: gap * (count - 1) + size * count}}>
         <StaggeredMotion
           defaultStyles={times(3, () => {return {x: 0}})}
-          styles={styles => styles.map((_, i) => {
+          styles={styles => styles.forEach((_, i) => {
             switch (i) {
               case 0:
                 return {x: spring(moveTo, {stiffness: 440, damping: 48})};
@@ -153,7 +153,7 @@ class PageIndicator extends React.Component {
                   backgroundColor: baseColor
                 }}/>
                 {stylesParent.map((style, i) => {
-                  let selector = i == 1;
+                  let selector = i === 1;
                   let currentDiv = (<div style={{
                     display: 'inline-block', //inline-block
                     position: 'absolute',
@@ -167,7 +167,7 @@ class PageIndicator extends React.Component {
                     backgroundColor: selector ? selectedDotColor : baseColor
                   }}/>);
 
-                  return (selector && selectorContainer != null) ?
+                  return (selector && selectorContainer !== null) ?
                     ReactDOM.createPortal(currentDiv, selectorContainer) :
                     currentDiv;
                   })

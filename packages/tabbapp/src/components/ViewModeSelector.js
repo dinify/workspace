@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import ToggleButton from './ToggleButton';
 import VerticalSplit from 'icons/VerticalSplit';
 import Public from 'icons/Public';
@@ -64,27 +62,27 @@ class ViewModeSelector extends React.Component {
 
     let splitButton = this.props.splitAvailable ? (
       <ToggleButton
-        className={this.props.selected == 2 ? classes.rightSelected : classes.right}
+        className={this.props.selected === 2 ? classes.rightSelected : classes.right}
         onClick={this.handleClick2}
-        checked={this.props.selected == 2}>
+        checked={this.props.selected === 2}>
           <VerticalSplit className={classes.smaller}/>
       </ToggleButton>
     ) : null;
 
     return (
-      <div className={this.props.selected == 1 ? classes.containerPaper : classes.container}>
+      <div className={this.props.selected === 1 ? classes.containerPaper : classes.container}>
         <ToggleButton
-          className={this.props.selected == 0 ? classes.leftSelected : classes.left}
+          className={this.props.selected === 0 ? classes.leftSelected : classes.left}
           onClick={this.handleClick0}
-          checked={this.props.selected == 0}>
+          checked={this.props.selected === 0}>
             <ViewList className={classes.smaller}/>
         </ToggleButton>
         <ToggleButton
-          className={this.props.selected == 1 ?
+          className={this.props.selected === 1 ?
             (this.props.splitAvailable ? classes.betweenSelected : classes.rightSelected) :
             (this.props.splitAvailable ? classes.between : classes.right)}
           onClick={this.handleClick1}
-          checked={this.props.selected == 1}>
+          checked={this.props.selected === 1}>
             <Public className={classes.smaller}/>
         </ToggleButton>
         {splitButton}

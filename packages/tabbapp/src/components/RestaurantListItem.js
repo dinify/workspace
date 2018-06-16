@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { Typography, ButtonBase } from '@material-ui/core';
 import Carousel from './Carousel';
-import ButtonBase from '@material-ui/core/ButtonBase';
 
 const styles = theme => ({
   image: {

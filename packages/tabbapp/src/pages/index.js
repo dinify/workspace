@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import ModalManager from '@material-ui/core/Modal';
-import MenuIcon from '@material-ui/icons/Menu';
+import {
+  Button,
+  Grid,
+  Divider,
+  AppBar,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../withRoot';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
@@ -16,9 +15,7 @@ import ViewModeSelector from 'components/ViewModeSelector';
 import RestaurantListItem from 'components/RestaurantListItem';
 import OnboardingDialog from 'components/OnboardingDialog';
 import Map from 'components/Map';
-import PageIndicator from 'components/PageIndicator';
 import ChevronRight from 'icons/ChevronRight';
-import classNames from 'classnames';
 import SVG from 'react-inlinesvg';
 
 const styles = theme => ({
@@ -119,7 +116,7 @@ class Index extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.props.width !== prevProps.width) {
       // the component has been resized
-      if (this.state.viewMode == 2) {
+      if (this.state.viewMode === 2) {
         this.setState({
           viewMode: 0
         })
@@ -157,7 +154,7 @@ class Index extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { open, viewMode, extraSmallScreen } = this.state;
+    const { viewMode, extraSmallScreen } = this.state;
 
     let largeScreen = isWidthUp('lg', this.props.width);
     let smallScreen = isWidthDown('xs', this.props.width);
@@ -177,17 +174,17 @@ class Index extends React.Component {
       </a>
     );
 
-    let map = viewMode == 0 ? null : (
+    let map = viewMode === 0 ? null : (
       <div style={{position: 'fixed', right: '0', bottom: '0'}}>
         <Map
-          width={viewMode == 1 ? this.state.window.width : 440}
+          width={viewMode === 1 ? this.state.window.width : 440}
           height={this.state.window.height - (smallScreen ? 56 : 64)}/>
       </div>
     );
 
     let grid = (
       <Grid container spacing={smallScreen ? 16 : 24}>
-          <Grid item xs={extraSmallScreen ? 12 : 6} sm={6} lg={viewMode == 0 ? 3 : 4}>
+          <Grid item xs={extraSmallScreen ? 12 : 6} sm={6} lg={viewMode === 0 ? 3 : 4}>
             <RestaurantListItem
               name="Korea Grill Restaurant"
               tags={["Korean", "International"]}
@@ -197,21 +194,21 @@ class Index extends React.Component {
                 "https://images.unsplash.com/photo-1458644267420-66bc8a5f21e4?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=720&h=480&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=407ebb58ce075c27c754535537e24d69"]}
               shortDescription="Warm and cozy place for those who seek a bite of the asian peninsula"/>
           </Grid>
-          <Grid item xs={extraSmallScreen ? 12 : 6} sm={6} lg={viewMode == 0 ? 3 : 4}>
+          <Grid item xs={extraSmallScreen ? 12 : 6} sm={6} lg={viewMode === 0 ? 3 : 4}>
             <RestaurantListItem
               name="Augustine"
               tags={["Classic French"]}
               images={["https://images.unsplash.com/photo-1484659619207-9165d119dafe?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=720&h=480&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=4ef799257af2fad558ff5e522337298b"]}
               shortDescription="Hearty dishes in a warm, comfortable bistro"/>
           </Grid>
-          <Grid item xs={extraSmallScreen ? 12 : 6} sm={6} lg={viewMode == 0 ? 3 : 4}>
+          <Grid item xs={extraSmallScreen ? 12 : 6} sm={6} lg={viewMode === 0 ? 3 : 4}>
             <RestaurantListItem
               name="The Wooly Public"
               tags={["Fine American"]}
               images={["https://images.unsplash.com/photo-1498956483307-8b7e3ba3027f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=720&h=480&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=20673d55992eee595251127a318a9c49"]}
               shortDescription="Pub fare at an eclectic spot with new and classic cocktails"/>
           </Grid>
-          <Grid item xs={extraSmallScreen ? 12 : 6} sm={6} lg={viewMode == 0 ? 3 : 4}>
+          <Grid item xs={extraSmallScreen ? 12 : 6} sm={6} lg={viewMode === 0 ? 3 : 4}>
             <RestaurantListItem
               name="Little Choc Apothecary"
               tags={["Vegan Creperie"]}
@@ -221,8 +218,8 @@ class Index extends React.Component {
         </Grid>
     );
 
-    let restaurantListView = viewMode == 1 ? null : (
-      <div className={viewMode == 2 ? classes.paddedMap : classes.padded}>
+    let restaurantListView = viewMode === 1 ? null : (
+      <div className={viewMode === 2 ? classes.paddedMap : classes.padded}>
         <Typography style={{paddingTop: '32px'}} variant="headline" gutterBottom>
           Explore local places
         </Typography>

@@ -12,7 +12,6 @@ const styles = theme => ({
     borderRadius: '12px',
     width: '24px',
     height: '24px',
-    marginRight: '8px',
     color: 'rgb(51, 51, 51)',
     position: 'absolute',
     right: '0',
@@ -24,7 +23,6 @@ const styles = theme => ({
 
 class MapStyleControl extends BaseControl {
   render() {
-    const { viewport } = this.context;
     const { classes } = this.props;
     // draw something
     // _onContainerLoad registers event listeners for map interactions

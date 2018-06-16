@@ -1,6 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import ReactMapGL, { Marker as MarkerWrapper, Popup } from 'react-map-gl';
+import ReactMapGL, { Marker as MarkerWrapper } from 'react-map-gl';
 import MapStyleControl from './MapStyleControl';
 import Marker from './Marker';
 
