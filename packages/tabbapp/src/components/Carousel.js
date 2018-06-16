@@ -47,9 +47,7 @@ const styles = theme => ({
   pageIndicatorContainer: {
     paddingBottom: 8,
     display: 'flex',
-    justifyContent: 'center',
-    backgroundColor: theme.palette.common.black,
-    transition: theme.transitions.create('backgroundColor'),
+    justifyContent: 'center'
   },
 });
 
