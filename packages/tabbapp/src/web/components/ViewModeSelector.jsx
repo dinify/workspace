@@ -92,7 +92,7 @@ class ViewModeSelector extends React.Component {
 }
 
 ViewModeSelector.propTypes = {
-  onViewModeChange: PropTypes.function,
+  onViewModeChange: PropTypes.any,
   selected: PropTypes.number,
   splitAvailable: PropTypes.bool
 };

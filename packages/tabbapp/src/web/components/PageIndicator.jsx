@@ -128,7 +128,7 @@ class PageIndicator extends React.Component {
                   {interpolatingStyles =>
                     <div style={{height: size, width: '100%'}}>
                       {interpolatingStyles.map((style, i) =>
-                        <div style={{
+                        <div key={i} style={{
                           display: 'inline-block',
                           position: 'absolute',
                           width: size,
@@ -154,7 +154,9 @@ class PageIndicator extends React.Component {
                 }}/>
                 {stylesParent.map((style, i) => {
                   let selector = i === 1;
-                  let currentDiv = (<div style={{
+                  let currentDiv = (<div
+                    key={i}
+                    style={{
                     display: 'inline-block', //inline-block
                     position: 'absolute',
                     key: 'selector' + i,

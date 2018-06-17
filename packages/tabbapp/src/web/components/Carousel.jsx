@@ -6,7 +6,7 @@ import PageIndicator from './PageIndicator';
 import ChevronRight from 'icons/ChevronRight';
 import ChevronLeft from 'icons/ChevronLeft';
 import SwipeableViews from 'react-swipeable-views';
-import { isTouchMobile, getPlatform } from '../utils';
+import { isTouchMobile, getPlatform } from 'utils';
 import { Motion, spring } from 'react-motion';
 
 const styles = theme => ({
@@ -104,6 +104,7 @@ class Carousel extends React.Component {
 
     let imagesAnimated = images.map((image, i) =>
       <Motion
+        key={i}
         defaultStyle={{x: selectedPage - i}}
         style={{x: spring(selectedPage - i)}}>
         {style => {
