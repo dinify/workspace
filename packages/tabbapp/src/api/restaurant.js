@@ -1,5 +1,4 @@
-import { Get, Post, Delete, PostMultipart } from './Network'
-import R from 'ramda'
+import { Get, Post } from './Network'
 
 export function RegisterUser({ name, phone, email, password}) {
   return Post({

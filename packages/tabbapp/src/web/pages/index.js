@@ -9,12 +9,14 @@ import {
   Typography,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import withRoot from 'withRoot';
+import withRoot from 'withRoot.js';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
+
 import ViewModeSelector from 'web/components/ViewModeSelector';
 import RestaurantListItem from 'web/components/RestaurantListItem';
 import OnboardingDialog from 'web/components/OnboardingDialog';
 import Map from 'web/components/Map';
+
 import ChevronRight from 'icons/ChevronRight';
 import SVG from 'react-inlinesvg';
 

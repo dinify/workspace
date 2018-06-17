@@ -17,7 +17,7 @@ import {
 } from '@material-ui/core';
 import GoogleLogo from 'icons/GoogleLogo';
 import FacebookLogo from 'icons/FacebookLogo';
-import { Visibility, VisibilityOff } from '@material-ui/icons/Visibility';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 const styles = theme => ({
   grow: {
