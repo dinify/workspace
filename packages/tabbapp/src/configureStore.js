@@ -7,6 +7,7 @@ import Raven from 'raven-js'
 import createRavenMiddleware from 'raven-for-redux'
 
 import ui from 'ducks/ui'
+import user from 'ducks/user'
 
 import { reducer as formReducer } from 'redux-form'
 Raven.config('https://b34f069a5b2d40f2ac5b07a96353591e@sentry.io/1227775', {
@@ -15,6 +16,7 @@ Raven.config('https://b34f069a5b2d40f2ac5b07a96353591e@sentry.io/1227775', {
 
 const commonReducers = {
   ui,
+  user
 }
 
 const configureStore = (options, storage) => {

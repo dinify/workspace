@@ -21,3 +21,7 @@ export function Login({ email, password }) {
     email, password
   })
 }
+
+export function GetMe() {
+  return Get({ path: 'user/my' })
+}

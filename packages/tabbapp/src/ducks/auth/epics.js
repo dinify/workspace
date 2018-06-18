@@ -2,6 +2,7 @@ import { Observable } from 'rxjs'
 import * as API from 'api/user'
 import types from './types'
 import { loginFail, loginDone } from './actions'
+import { fetchMeInit } from 'ducks/user/actions'
 import { setCookie } from 'utils.js'
 
 const loginEpic = (action$: Observable) =>
@@ -10,9 +11,12 @@ const loginEpic = (action$: Observable) =>
   .switchMap(({ payload: { email, password } }) =>
     Observable
       .fromPromise(API.Login({ email, password }))
-      .map((res) => {
+      .mergeMap((res) => {
         setCookie('access_token', res.token, 30)
-        return loginDone(res)
+        return Observable.of(
+          loginDone(res),
+          fetchMeInit()
+        )
       })
       .catch(error => Observable.of(loginFail(error)))
   )
