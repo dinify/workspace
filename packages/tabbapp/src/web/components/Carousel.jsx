@@ -101,16 +101,16 @@ class Carousel extends React.Component {
       let proximity = relWidth / 20;
       let last = count - 1;
       if (ratio >= 0 && ratio < 2 * proximity) {
-        if (this.state.selectedPage != 0) this.setState({selectedPage: 0});
+        if (this.state.selectedPage !== 0) this.setState({selectedPage: 0});
       }
       else if (ratio > (last * relWidth) - (proximity * 2) && ratio <= last * relWidth) {
-        if (this.state.selectedPage != last) this.setState({selectedPage: last});
+        if (this.state.selectedPage !== last) this.setState({selectedPage: last});
       }
       else {
         for (let i = 1; i < last; i++) {
           let current = relWidth * i;
           if (ratio > (i * relWidth) - proximity && ratio < (i * relWidth) + proximity) {
-            if (this.state.selectedPage != i) this.setState({selectedPage: i});
+            if (this.state.selectedPage !== i) this.setState({selectedPage: i});
           }
         }
       }

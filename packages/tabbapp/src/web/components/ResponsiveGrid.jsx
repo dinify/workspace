@@ -32,8 +32,8 @@ class ResponsiveGrid extends React.Component {
 
     return (
       <Grid container spacing={smallScreen ? 16 : 24}>
-        {children && children.map(child => (
-          <Grid item xs={extraSmallScreen ? 12 : 6} sm={6} lg={lg}>
+        {children && children.map((child, i) => (
+          <Grid item xs={extraSmallScreen ? 12 : 6} key={i} sm={6} lg={lg}>
             {child}
           </Grid>
         ))}
