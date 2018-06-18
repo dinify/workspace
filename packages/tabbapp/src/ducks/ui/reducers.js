@@ -29,7 +29,7 @@ export default function reducer(state = initialState, action) {
     if (action.type.includes('_FAIL')) {
       stage = 'ERROR'
       key = key.replace('_FAIL', '')
-      if (action.payload.message) {
+      if (action.payload && action.payload.message) {
         state = R.assocPath(['errorsMap', key], action.payload.message)(state)
       }
       if (action.payload instanceof Array && action.payload[0].message) {

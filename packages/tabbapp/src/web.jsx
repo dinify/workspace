@@ -3,11 +3,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 //import registerServiceWorker from './registerServiceWorker'
-import AppComponent from 'web/pages'
+import AppComponent from 'web/App'
 import configureStore from './configureStore'
 //import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 //import HTML5Backend from 'react-dnd-html5-backend'
 //import { DragDropContextProvider } from 'react-dnd'
+import { browserHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
 
 const store = configureStore({
   initialState: {},
@@ -16,10 +18,12 @@ const store = configureStore({
   platformReducers: {},
 })
 
+const history = syncHistoryWithStore(browserHistory, store)
+
 let App = () => (
 //  <MuiThemeProvider>
 //    <DragDropContextProvider backend={HTML5Backend}>
-      <AppComponent />
+      <AppComponent history={history}/>
 //    </DragDropContextProvider>
 //  </MuiThemeProvider>
 )

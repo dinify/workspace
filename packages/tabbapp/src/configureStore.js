@@ -5,6 +5,7 @@ import { persistStore, autoRehydrate } from 'redux-persist'
 import configureEpics from './configureEpics'
 import Raven from 'raven-js'
 import createRavenMiddleware from 'raven-for-redux'
+import { routerReducer } from 'react-router-redux'
 
 import ui from 'ducks/ui'
 import user from 'ducks/user'
@@ -26,6 +27,7 @@ const configureStore = (options, storage) => {
 
   const reducers = combineReducers({
     form: formReducer,
+    routing: routerReducer,
     ...commonReducers,
     ...platformReducers,
   })

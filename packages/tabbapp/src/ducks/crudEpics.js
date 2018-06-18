@@ -77,9 +77,9 @@ const removeEpic = (action$: Observable) =>
     }}))
   })
 
-  export const epics = [
-    createEpic,
-    fetchEpic,
-    updateEpic,
-    removeEpic
-  ]
+export const epics = [
+  createEpic,
+  fetchEpic,
+  updateEpic,
+  removeEpic
+]
