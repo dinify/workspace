@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { ButtonBase } from '@material-ui/core';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import PageIndicator from './PageIndicator';
 import ChevronRight from 'icons/ChevronRight';
 import ChevronLeft from 'icons/ChevronLeft';
