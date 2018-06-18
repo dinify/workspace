@@ -99,7 +99,7 @@ class PageIndicator extends React.Component {
       <div style={{position: 'relative', height: size, width: gap * (count - 1) + size * count}}>
         <StaggeredMotion
           defaultStyles={times(3, () => {return {x: 0}})}
-          styles={styles => styles.forEach((_, i) => {
+          styles={styles => styles.map((_, i) => {
             switch (i) {
               case 0:
                 return {x: spring(moveTo, {stiffness: 440, damping: 48})};

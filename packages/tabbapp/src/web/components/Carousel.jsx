@@ -6,7 +6,12 @@ import PageIndicator from './PageIndicator';
 import ChevronRight from 'icons/ChevronRight';
 import ChevronLeft from 'icons/ChevronLeft';
 import SwipeableViews from 'react-swipeable-views';
-import { isTouchMobile, getPlatform } from 'utils';
+import {
+  isTouchMobile,
+  isMobile,
+  getPlatform,
+  supportsScrollSnap
+} from 'utils';
 import { Motion, spring } from 'react-motion';
 
 const styles = theme => ({
@@ -23,7 +28,6 @@ const styles = theme => ({
   focusVisible: {},
   imageSrc: {
     position: 'absolute',
-    borderRadius: '4px',
     left: 0,
     right: 0,
     top: 0,
@@ -36,6 +40,8 @@ const styles = theme => ({
     display: 'flex',
     width: '100%',
     height: '100%',
+    overflowX: 'hidden',
+    overflowY: 'hidden',
     top: 0,
     '& $div': {
       width: '100%',
@@ -47,6 +53,24 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center'
   },
+  scrollSnapContainer: {
+    position: 'absolute',
+    top: 0,
+    WebkitScrollSnapType: 'mandatory',
+    scrollSnapType: 'x mandatory',
+    WebkitScrollSnapPointsX: 'repeat(100%)',
+    scrollSnapPointsX: 'repeat(100%)',
+    WebkitOverflowScrolling: 'touch',
+    overflowX: 'auto',
+    overflowY: 'hidden',
+    whiteSpace: 'nowrap',
+  },
+  scrollSnapChild: {
+    position: 'relative',
+    display: 'inline-block',
+    WebkitOverflowScrolling: 'touch',
+    scrollSnapAlign: 'start',
+  }
 });
 
 class Carousel extends React.Component {
@@ -67,7 +91,31 @@ class Carousel extends React.Component {
 
   handleChangeIndex = index => {
     this.setState({ selectedPage: index });
-  };
+  }
+
+  handleScroll = e => {
+    let ratio = e.target.scrollLeft / e.target.scrollWidth;
+    let count = this.props.images.length;
+    if (count > 1) {
+      let relWidth = 1 / count;
+      let proximity = relWidth / 20;
+      let last = count - 1;
+      if (ratio >= 0 && ratio < 2 * proximity) {
+        if (this.state.selectedPage != 0) this.setState({selectedPage: 0});
+      }
+      else if (ratio > (last * relWidth) - (proximity * 2) && ratio <= last * relWidth) {
+        if (this.state.selectedPage != last) this.setState({selectedPage: last});
+      }
+      else {
+        for (let i = 1; i < last; i++) {
+          let current = relWidth * i;
+          if (ratio > (i * relWidth) - proximity && ratio < (i * relWidth) + proximity) {
+            if (this.state.selectedPage != i) this.setState({selectedPage: i});
+          }
+        }
+      }
+    }
+  }
 
   render() {
     const { classes, images } = this.props;
@@ -75,38 +123,22 @@ class Carousel extends React.Component {
     const swipeable = isTouchMobile();
     const platform = getPlatform();
 
-    let controls = images.length <= 1 ? null : (
-      <div>
-        {!swipeable && <ButtonBase
-          className={classes.carouselButton}
-          onClick={() => this.handlePageChange(-1)}
-          style={{left: 0}} aria-label="Previous">
-          <ChevronLeft />
-        </ButtonBase>}
+    const TYPE_FIX = 0;
+    const TYPE_BUTTONS = 1;
+    const TYPE_SCROLL_SNAP = 2;
+    const TYPE_SWIPE = 3;
 
-        {!swipeable && <ButtonBase
-          className={classes.carouselButton}
-          onClick={() => this.handlePageChange(1)}
-          style={{right: 0}} aria-label="Next">
-          <ChevronRight />
-        </ButtonBase>}
-
-        <div className={classes.pageIndicatorContainer}>
-          <PageIndicator
-            size={8} gap={8}
-            count={images.length}
-            dotColor="rgba(255, 255, 255, 0.54)"
-            selectedDotColor="rgba(255, 255, 255, 1)"
-            selectedPage={selectedPage}/>
-        </div>
-      </div>
+    let type = images.length <= 1 ? TYPE_FIX : (
+      supportsScrollSnap() ? TYPE_SCROLL_SNAP : (
+        isTouchMobile() ? TYPE_SWIPE : TYPE_BUTTONS
+      )
     );
 
     let imagesAnimated = images.map((image, i) =>
       <Motion
         key={i}
-        defaultStyle={{x: selectedPage - i}}
-        style={{x: spring(selectedPage - i)}}>
+        defaultStyle={{x: i - selectedPage}}
+        style={{x: spring(i - selectedPage)}}>
         {style => {
           let opacity = Math.max(0, 1 - Math.abs(style.x));
           return <span
@@ -125,10 +157,16 @@ class Carousel extends React.Component {
       <div
         style={{
           width: '100%',
-          paddingTop: images.length <= 1 ? '66.6667%' : 'calc(66.6667% - 16px)',
+          paddingTop: type === TYPE_FIX ? '66.6667%' : 'calc(66.6667% - 16px)',
         }}>
 
-        {swipeable && (
+        {type === TYPE_FIX && images.length > 0 && (
+          <div className={classes.imageSrc}>
+            <img style={{width: '100%', height: '100%'}} src={images[0]}/>
+          </div>
+        )}
+
+        {type === TYPE_SWIPE && (
           <div className={classes.slideContainer}>
             <SwipeableViews
               resistance={platform === "ios"}
@@ -139,10 +177,50 @@ class Carousel extends React.Component {
           </div>
         )}
 
-        {!swipeable && imagesAnimated}
+        {type === TYPE_SCROLL_SNAP && (
+          <div className={classes.scrollSnapContainer} onScroll={this.handleScroll}>
+            {images.map((image, i) => (
+              <div className={classes.scrollSnapChild}>
+                <img style={{width: '100%', height: '100%'}} src={image}/>
+              </div>
+            ))}
+          </div>
+        )}
 
-        {!swipeable && this.props.backdrop}
-        {controls}
+        {type === TYPE_BUTTONS && imagesAnimated}
+        {!isMobile() && (
+          <div style={{pointerEvents: 'none'}}>
+            {this.props.backdrop}
+          </div>)
+        }
+        {type === TYPE_BUTTONS && (
+          <div>
+            <ButtonBase
+              className={classes.carouselButton}
+              onClick={() => this.handlePageChange(-1)}
+              style={{left: 0}} aria-label="Previous">
+              <ChevronLeft />
+            </ButtonBase>
+            <ButtonBase
+              className={classes.carouselButton}
+              onClick={() => this.handlePageChange(1)}
+              style={{right: 0}} aria-label="Next">
+              <ChevronRight />
+            </ButtonBase>
+          </div>
+        )}
+
+        {type !== TYPE_FIX && (
+          <div className={classes.pageIndicatorContainer}>
+            <PageIndicator
+              size={8} gap={8}
+              count={images.length}
+              dotColor="rgba(255, 255, 255, 0.54)"
+              selectedDotColor="rgba(255, 255, 255, 1)"
+              selectedPage={selectedPage}/>
+          </div>
+        )}
+
       </div>
     );
   }

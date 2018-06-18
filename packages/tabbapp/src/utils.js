@@ -12,6 +12,11 @@ export function isTouchMobile(ua) {
   return isMobile(ua) && 'ontouchstart' in global;
 }
 
+export function supportsScrollSnap() {
+  return 'scrollSnapType' in document.documentElement.style ||
+        'webkitScrollSnapType' in document.documentElement.style;
+}
+
 /**
  * Determine the mobile operating system.
  * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'other'.
