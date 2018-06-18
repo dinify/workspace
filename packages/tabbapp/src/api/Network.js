@@ -1,15 +1,5 @@
 // @flow
-function getCookie(cname) {
-  let name = cname + "="
-  let decodedCookie = decodeURIComponent(document.cookie)
-  let ca = decodedCookie.split(';')
-  for(let i = 0; i < ca.length; i++) {
-    let c = ca[i]
-    while (c.charAt(0) === ' ') c = c.substring(1)
-    if (c.indexOf(name) === 0) return c.substring(name.length, c.length)
-  }
-  return ""
-}
+import { getCookie } from 'utils.js'
 
 export function Request(url, options = {}, noToken) {
   return new Promise((resolve, reject) => {
@@ -63,19 +53,10 @@ export function Request(url, options = {}, noToken) {
 }
 
 const buildURL = ({
-  subdom = 'tabb-api',
-  endpoint = 'eu-central-1.elasticbeanstalk.com',
-  prefix = 'api/v1',
-  path,
-  v2,
-  v3
+  path
 }) => {
-  if (v2) return `http://tabb-apiv2.eu-central-1.elasticbeanstalk.com/${path}`//`http://localhost:3005/${path}`//
-  if (v3) return `https://api.dev.tabb.global/${path}`
-  return `http://${subdom}.${endpoint}/${prefix}/${path}`
+  return `https://api.dev.tabb.global/${path}`
 }
-//`http://localhost:3005/${path}`;//
-// urlParts = { token, ?subdom, ?endpoint, ?prefix, path }
 
 export function Get(urlParts, cookie) {
   let opts = { method: 'GET' }

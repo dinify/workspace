@@ -8,14 +8,13 @@ import createRavenMiddleware from 'raven-for-redux'
 
 import ui from 'ducks/ui'
 
-
 import { reducer as formReducer } from 'redux-form'
 Raven.config('https://b34f069a5b2d40f2ac5b07a96353591e@sentry.io/1227775', {
   // options
 }).install()
 
 const commonReducers = {
-  ui
+  ui,
 }
 
 const configureStore = (options, storage) => {

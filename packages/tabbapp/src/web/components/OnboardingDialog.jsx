@@ -22,6 +22,8 @@ import FacebookLogo from 'icons/FacebookLogo';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
+import Login from 'web/components/Login'
+
 const styles = theme => ({
   grow: {
     flex: 1
@@ -61,6 +63,8 @@ const styles = theme => ({
     textTransform: 'none'
   }
 });
+
+
 
 class OnboardingDialog extends React.Component {
   state = {
@@ -186,33 +190,12 @@ class OnboardingDialog extends React.Component {
               </Typography>
               <Divider className={classes.grow}/>
             </div>
+            <Login submitComponent={
+              <DialogActions>
+                <Button type="submit" color="primary">Log in</Button>
+              </DialogActions>
+            }/>
           </div>
-          {this.state.selectedTab === 0 && (
-            <div style={{ padding: 8 * 3, paddingTop: 16 }}>
-              {emailPasswordInput}
-            </div>
-          )}
-          {this.state.selectedTab === 1 && (
-            <div style={{ padding: 8 * 3, paddingTop: 16 }}>
-              {emailPasswordInput}
-              <div>
-                <TextField
-                  autoFocus={this.state.email && this.state.password && !this.state.name}
-                  required
-                  fullWidth
-                  type="name"
-                  id="name"
-                  label="Full name"
-                  value={this.state.name}
-                  onChange={this.handleChangeTextField('name')}/>
-              </div>
-            </div>
-          )}
-          <DialogActions>
-            <Button onClick={this.handleClick} color="primary">
-              {title}
-            </Button>
-          </DialogActions>
         </Dialog>
     );
   }
