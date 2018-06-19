@@ -1,5 +1,9 @@
 import { Get, Post } from './Network'
 
+export function GetRestaurants() {
+  return Get({ path: `restaurant/list` })
+}
+
 export function CreateRestaurant({ name, subdomain }) {
   return Post(
     {

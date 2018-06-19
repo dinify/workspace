@@ -10,6 +10,7 @@ import { reducer as formReducer } from 'redux-form'
 
 import ui from 'ducks/ui'
 import user from 'ducks/user'
+import restaurant from 'ducks/restaurant'
 
 Raven.config('https://b34f069a5b2d40f2ac5b07a96353591e@sentry.io/1227775', {
   // options
@@ -18,6 +19,7 @@ Raven.config('https://b34f069a5b2d40f2ac5b07a96353591e@sentry.io/1227775', {
 const commonReducers = {
   ui,
   user,
+  restaurant
 }
 
 const configureStore = (options, storage) => {
