@@ -3,7 +3,7 @@ import types from './types'
 
 const initialState = {
   all: {},
-  loggedUserId: null
+  loggedUserId: null,
 }
 
 export default function reducer(state = initialState, action) {

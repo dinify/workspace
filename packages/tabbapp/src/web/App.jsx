@@ -18,7 +18,7 @@ import Main from 'web/pages/Main'
 
 
 const App = ({
-  history
+  history,
 }) => (
   <Router history={history}>
     <Route path="/login" component={Login} />

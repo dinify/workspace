@@ -2,14 +2,15 @@ import R from 'ramda'
 
 const initialState = {
   progressMap: {},
-  errorsMap: {}
+  errorsMap: {},
 }
 
 export default function reducer(state = initialState, action) {
-  if(action.type === 'persist/REHYDRATE') {
+  let newState = state
+  if (action.type === 'persist/REHYDRATE') {
     return R.assoc('errorsMap', {})(R.assoc('progressMap', {})(state))
   }
-  if(action.type.includes('CREATE')
+  if (action.type.includes('CREATE')
   || action.type.includes('FETCH')
   || action.type.includes('UPDATE')
   || action.type.includes('REMOVE')
@@ -30,13 +31,13 @@ export default function reducer(state = initialState, action) {
       stage = 'ERROR'
       key = key.replace('_FAIL', '')
       if (action.payload && action.payload.message) {
-        state = R.assocPath(['errorsMap', key], action.payload.message)(state)
+        newState = R.assocPath(['errorsMap', key], action.payload.message)(newState)
       }
       if (action.payload instanceof Array && action.payload[0].message) {
-        state = R.assocPath(['errorsMap', key], action.payload[0].message)(state)
+        newState = R.assocPath(['errorsMap', key], action.payload[0].message)(newState)
       }
     }
-    state = R.assocPath(['progressMap', key], stage)(state)
+    newState = R.assocPath(['progressMap', key], stage)(newState)
   }
-  return state
+  return newState
 }

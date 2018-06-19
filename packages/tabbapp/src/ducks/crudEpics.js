@@ -12,14 +12,14 @@ const getSubjectAndPath = (type, kind, stage) => {
     path: type.replace(typeWithoutPath, '')
   }
 }
-const filterAction = (action, kind, stage) => {
-  const type = withoutPath(action.type)
-  return type.startsWith(`${kind}_`) && type.endsWith(`_${stage}`)
+const filterAction = (type, kind, stage) => {
+  const typeOnly = withoutPath(type)
+  return typeOnly.startsWith(`${kind}_`) && typeOnly.endsWith(`_${stage}`)
 }
 
 const createEpic = (action$: Observable) =>
   action$
-  .filter(action => filterAction(action, 'CREATE', 'INIT'))
+  .filter(action => filterAction(action.type, 'CREATE', 'INIT'))
   .switchMap(({ payload, type }) => {
     const { subject, path } = getSubjectAndPath(type, 'CREATE', 'INIT')
     const apiFnName = `Create${camel(subject)}`
@@ -33,7 +33,7 @@ const createEpic = (action$: Observable) =>
 
 const fetchEpic = (action$: Observable) =>
   action$
-  .filter(action => filterAction(action, 'FETCH', 'INIT'))
+  .filter(action => filterAction(action.type, 'FETCH', 'INIT'))
   .switchMap(({ payload, type }) => {
     const { subject, path } = getSubjectAndPath(type, 'FETCH', 'INIT')
     const apiFnName = `Get${camel(subject)}`
@@ -47,7 +47,7 @@ const fetchEpic = (action$: Observable) =>
 
 const updateEpic = (action$: Observable) =>
   action$
-  .filter(action => filterAction(action, 'UPDATE', 'INIT'))
+  .filter(action => filterAction(action.type, 'UPDATE', 'INIT'))
   .switchMap(({ payload, type }) => {
     const { subject, path } = getSubjectAndPath(type, 'UPDATE', 'INIT')
     const apiFnName = `Change${camel(subject)}`
@@ -61,7 +61,7 @@ const updateEpic = (action$: Observable) =>
 
 const removeEpic = (action$: Observable) =>
   action$
-  .filter(action => filterAction(action, 'REMOVE', 'INIT'))
+  .filter(action => filterAction(action.type, 'REMOVE', 'INIT'))
   .switchMap(({ payload, type }) => {
     const { subject, path } = getSubjectAndPath(type, 'REMOVE', 'INIT')
     const apiFnName = `Delete${camel(subject)}`
