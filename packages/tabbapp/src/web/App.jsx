@@ -1,20 +1,17 @@
 // @flow
 import React from 'react'
-
 import { Router, Route } from 'react-router'
 
 import Login from 'web/pages/Login'
 import Checkin from 'web/pages/Checkin'
-
 import RestaurantProfile from 'web/pages/RestaurantProfile'
 import CategoryContent from 'web/pages/CategoryContent'
 import FoodDetail from 'web/pages/FoodDetail'
-
 import Cart from 'web/pages/Cart'
 import Bill from 'web/pages/Bill'
 import Receipt from 'web/pages/Receipt'
-
 import Main from 'web/pages/Main'
+
 import AppBar from 'web/components/AppBar';
 
 import { withStyles } from '@material-ui/core/styles';

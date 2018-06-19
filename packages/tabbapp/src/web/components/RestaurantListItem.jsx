@@ -32,41 +32,40 @@ const styles = theme => ({
   },
 });
 
-class RestaurantListItem extends React.Component {
-  state = {
-
-  };
-
-  render() {
-    let { classes, tags, images, name, shortDescription } = this.props;
-
-    return (
-      <div>
-        <ButtonBase
-          disableRipple
-          className={classes.image}
-          focusVisibleClassName={classes.focusVisible}
-          style={{
-            width: '100%'
-          }}>
-
-          <Carousel
-            images={images}
-            backdrop={(<span className={classes.imageBackdrop} />)}/>
-        </ButtonBase>
-
+const RestaurantListItem = ({
+  classes,
+  tags,
+  images,
+  name,
+  shortDescription
+}) => {
+  return (
+    <div>
+      <ButtonBase
+        disableRipple
+        className={classes.image}
+        focusVisibleClassName={classes.focusVisible}
+        style={{
+          width: '100%'
+        }}>
+        <Carousel
+          images={images}
+          backdrop={(<span className={classes.imageBackdrop} />)}
+        />
+      </ButtonBase>
+      {tags &&
         <Typography gutterBottom className={classes.category} variant="button" color="primary">
           {tags.join(' · ')}
         </Typography>
-        <Typography variant="title">
-          {name}
-        </Typography>
-        <Typography variant="body1">
-          {shortDescription}
-        </Typography>
-      </div>
-    )
-  }
+      }
+      <Typography variant="title">
+        {name}
+      </Typography>
+      <Typography variant="body1">
+        {shortDescription}
+      </Typography>
+    </div>
+  )
 }
 
 RestaurantListItem.propTypes = {
