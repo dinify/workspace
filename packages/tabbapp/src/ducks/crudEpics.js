@@ -7,9 +7,8 @@ const camel = (str) => capitalize(str.toLowerCase())
 const withoutPath = (type) => type.match(/\w+(?:\.\w+)*$/g)[0]
 const getSubjectAndPath = (type, kind, stage) => {
   const typeWithoutPath = withoutPath(type)
-  const subject = typeWithoutPath.replace(`${kind}_`, '').replace(`_${stage}`, '')
   return {
-    subject,
+    subject: typeWithoutPath.replace(`${kind}_`, '').replace(`_${stage}`, ''),
     path: type.replace(typeWithoutPath, '')
   }
 }
