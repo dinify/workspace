@@ -48,14 +48,17 @@ const configureStore = (options, storage) => {
     middlewares.push(createLogger({ diff: true, collapsed: true }))
   }
 
-  const enhancers = compose(applyMiddleware(...middlewares), autoRehydrate()) // , autoRehydrate()
+  const enhancers = compose(
+    applyMiddleware(...middlewares),
+    autoRehydrate(),
+  ) // , autoRehydrate()
 
   const store = createStore(reducers, initialState, enhancers)
 
   // let the magic happen :–)
   persistStore(store, { blacklist: ['progress'], storage }) // .purge() // in case you want to purge the store
 
-  return store;
+  return store
 }
 
 export default configureStore

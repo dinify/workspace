@@ -1,5 +1,5 @@
 import types from './types'
 
 export const fetchMeInit = () => ({
-  type: types.FETCH_ME_INIT
+  type: types.FETCH_ME_INIT,
 })

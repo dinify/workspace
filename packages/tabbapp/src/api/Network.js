@@ -11,7 +11,8 @@ export function Request(url, options = {}, noToken) {
     } else {
       defaultOptions.headers = options.headers
     }
-    if (token.length > 0 && !noToken) defaultOptions.headers.Authorization = `Bearer ${token}`
+    if (token.length > 0 && !noToken)
+      defaultOptions.headers.Authorization = `Bearer ${token}`
     options = Object.assign(options, defaultOptions)
     //console.log(options);
     fetch(url, options)
@@ -19,25 +20,27 @@ export function Request(url, options = {}, noToken) {
         res.text().then(text => ({
           status: res.status,
           text,
-        })
-      ))
+        })),
+      )
       .then(res => {
         //console.log(res.status);
         //if (res.status === 401 && window.location.pathname !== '/') window.location.replace('/')
         try {
-          const txt = res.text//.replace('/**/','')
+          const txt = res.text //.replace('/**/','')
           if (txt.length < 5) return { status: res.status, json: null }
           return { status: res.status, json: JSON.parse(txt) }
         } catch (err) {
-          console.log(err, 'HTTP Error');
+          console.log(err, 'HTTP Error')
           return { status: res.status, json: null }
         }
       })
       .then(({ status, json }) => {
-        if (status >= 200 && status < 300) { // success
+        if (status >= 200 && status < 300) {
+          // success
           if (json) resolve(json.data || json)
           else resolve('no json')
-        } else { // error
+        } else {
+          // error
           if (json) {
             reject(json.errors || json)
           } else {
@@ -45,16 +48,14 @@ export function Request(url, options = {}, noToken) {
           }
         }
       })
-      .catch((e) => {
+      .catch(e => {
         //console.log('Request failed', e)
         reject(e)
       })
   })
 }
 
-const buildURL = ({
-  path
-}) => {
+const buildURL = ({ path }) => {
   return `https://api.dev.tabb.global/${path}`
 }
 
@@ -64,21 +65,29 @@ export function Get(urlParts, cookie) {
   return Request(buildURL(urlParts), opts)
 }
 export function Post(urlParts, body = {}) {
-  return Request(buildURL(urlParts), {
-    method: 'POST',
-    body: JSON.stringify(body),
-  }, urlParts.noToken)
+  return Request(
+    buildURL(urlParts),
+    {
+      method: 'POST',
+      body: JSON.stringify(body),
+    },
+    urlParts.noToken,
+  )
 }
 export function PostMultipart(urlParts, body = {}) {
   const formData = new FormData()
-  for(let key in body) {
-    formData.append(key, body[key]);
+  for (let key in body) {
+    formData.append(key, body[key])
   }
-  return Request(buildURL(urlParts), {
-    method: 'POST',
-    headers: {},
-    body: formData,
-  }, urlParts.noToken)
+  return Request(
+    buildURL(urlParts),
+    {
+      method: 'POST',
+      headers: {},
+      body: formData,
+    },
+    urlParts.noToken,
+  )
 }
 export function Put(urlParts, body = {}) {
   return Request(buildURL(urlParts), {

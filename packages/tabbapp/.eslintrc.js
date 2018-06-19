@@ -1,29 +1,29 @@
 module.exports = {
-  'extends': [
+  extends: [
     'airbnb',
+    'prettier',
+    'prettier/flowtype',
+    'prettier/react',
     'plugin:flowtype/recommended',
     'plugin:import/errors',
-    'plugin:import/warnings'
+    'plugin:import/warnings',
   ],
-  'plugins': [
-    'flowtype',
-    'import'
-  ],
-  'settings': {
+  plugins: ['flowtype', 'import'],
+  settings: {
     'import/resolver': {
-      'node': {
-        'moduleDirectory': ['src', 'node_modules']
-      }
-    }
+      node: {
+        moduleDirectory: ['src', 'node_modules'],
+      },
+    },
   },
-  'rules': {
+  rules: {
     'react/jsx-filename-extension': [
       1,
       {
-        'extensions': ['.js','.jsx']
-      }
+        extensions: ['.js', '.jsx'],
+      },
     ],
-    'semi': 0,
+    semi: 0,
     'import/first': 0, // Too strict.
     'no-shadow': 0, // // Shadow is nice language feature.
     'react/prop-types': 0, // It's handled by Flow.
@@ -34,12 +34,12 @@ module.exports = {
     'import/extensions': 0, // Flow checks it.
     'no-alert': 0, // Too strict.
     'react/require-default-props': 0, // Not needed with Flow.
-    'import/no-absolute-path': 0
+    'import/no-absolute-path': 0,
   },
-  'env': {
-    'es6': true,
-    'node': true,
-    'browser': true,
-    'jest': true
-  }
+  env: {
+    es6: true,
+    node: true,
+    browser: true,
+    jest: true,
+  },
 }

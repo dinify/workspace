@@ -10,12 +10,13 @@ export default function reducer(state = initialState, action) {
   if (action.type === 'persist/REHYDRATE') {
     return R.assoc('errorsMap', {})(R.assoc('progressMap', {})(state))
   }
-  if (action.type.includes('CREATE')
-  || action.type.includes('FETCH')
-  || action.type.includes('UPDATE')
-  || action.type.includes('REMOVE')
-  || action.type.includes('LOGIN')
-  || action.type.includes('SIGNUP')
+  if (
+    action.type.includes('CREATE') ||
+    action.type.includes('FETCH') ||
+    action.type.includes('UPDATE') ||
+    action.type.includes('REMOVE') ||
+    action.type.includes('LOGIN') ||
+    action.type.includes('SIGNUP')
   ) {
     let stage = ''
     let key = action.type
@@ -31,10 +32,14 @@ export default function reducer(state = initialState, action) {
       stage = 'ERROR'
       key = key.replace('_FAIL', '')
       if (action.payload && action.payload.message) {
-        newState = R.assocPath(['errorsMap', key], action.payload.message)(newState)
+        newState = R.assocPath(['errorsMap', key], action.payload.message)(
+          newState,
+        )
       }
       if (action.payload instanceof Array && action.payload[0].message) {
-        newState = R.assocPath(['errorsMap', key], action.payload[0].message)(newState)
+        newState = R.assocPath(['errorsMap', key], action.payload[0].message)(
+          newState,
+        )
       }
     }
     newState = R.assocPath(['progressMap', key], stage)(newState)

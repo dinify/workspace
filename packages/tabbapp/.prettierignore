@@ -1,0 +1,14 @@
+*.log
+.DS_STORE
+/.eslintcache
+/.next
+/.nyc_output
+/coverage
+/docs/export
+/packages/material-ui-codemod/lib
+/test/regressions/screenshots
+/test/selenium-output
+/tmp
+build
+node_modules
+package-lock.json

@@ -3,5 +3,5 @@ import * as restaurant from './restaurant'
 
 export default {
   ...user,
-  ...restaurant
+  ...restaurant,
 }
