@@ -1,6 +1,10 @@
 import React from 'react';
 
-const Main = () => {
+
+
+const Main = ({
+  classes
+}) => {
   return (
     <div>
 
@@ -8,4 +12,4 @@ const Main = () => {
   )
 }
 
-export default Main;
+export default Main
