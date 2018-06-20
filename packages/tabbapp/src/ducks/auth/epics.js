@@ -1,3 +1,4 @@
+// @flow
 import { Observable } from 'rxjs';
 import * as API from 'api/user';
 import types from './types';

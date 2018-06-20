@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { checkinInit } from 'ducks/restaurant/actions';
 
 const Checkin = ({
-  query
+  query,
+  checkin,
 }) => {
   if (query && query.qr) {
     // perform checkin action
-    console.log(query.qr);
+    checkin({ qr: query.qr });
   }
   return <div />;
 };
@@ -14,6 +16,9 @@ const Checkin = ({
 
 export default connect(
   state => ({
-    query: state.routing.locationBeforeTransitions.query
-  })
+    query: state.routing.locationBeforeTransitions.query,
+  }),
+  {
+    checkin: checkinInit,
+  }
 )(Checkin);

@@ -1,9 +1,15 @@
 import { combineEpics } from 'redux-observable';
 import { epics as crud } from 'ducks/crudEpics';
 import { authEpics as auth } from 'ducks/auth';
+import { restaurantEpics as restaurant } from 'ducks/restaurant';
 import appEpics from 'ducks/appEpics';
 
-const epics = [...crud, ...auth, ...appEpics];
+const epics = [
+  ...crud,
+  ...appEpics,
+  ...auth,
+  ...restaurant,
+];
 
 export default (deps = {}, platformEpics = []) => (
   action$,
