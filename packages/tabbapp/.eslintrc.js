@@ -8,6 +8,7 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
   ],
+  parser: 'babel-eslint',
   plugins: ['flowtype', 'import'],
   settings: {
     'import/resolver': {

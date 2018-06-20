@@ -58,7 +58,7 @@ const configureStore = (options, storage) => {
   const store = createStore(reducers, initialState, enhancers)
 
   // let the magic happen :–)
-  persistStore(store, { blacklist: ['progress'], storage }) // .purge() // in case you want to purge the store
+  persistStore(store, { blacklist: ['progress', 'routing'], storage }) // .purge() // in case you want to purge the store
 
   return store
 }

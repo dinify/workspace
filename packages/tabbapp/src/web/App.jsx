@@ -56,6 +56,7 @@ const App = ({
 
     </AppBar>
     <Router history={history}>
+      <Route exact path="/" component={Main} />
       <Route path="/login" component={Login} />
       <Route path="/checkin" component={Checkin} />
 
@@ -67,7 +68,7 @@ const App = ({
       <Route path="/bill" component={Bill} />
       <Route path="/receipt" component={Receipt} />
 
-      <Route path="/" component={Main} />
+
     </Router>
   </div>
 )

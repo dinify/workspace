@@ -13,7 +13,7 @@ const Main = ({
   classes,
   restaurantsMap
 }) => {
-  const viewMode = 2
+  const viewMode = 1
   const restaurantsList = FN.MapToList(restaurantsMap)
   return (
     <div>

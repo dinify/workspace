@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import MuiAppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import { withStyles } from '@material-ui/core/styles';
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
-import OnboardingDialog from 'web/components/OnboardingDialog';
-import SVG from 'react-inlinesvg';
+// @flow
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import Divider from '@material-ui/core/Divider'
+import MuiAppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import { withStyles } from '@material-ui/core/styles'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
+import OnboardingDialog from 'web/components/OnboardingDialog'
+import SVG from 'react-inlinesvg'
 
 const styles = theme => ({
   appBar: {
@@ -29,82 +29,59 @@ const styles = theme => ({
     opacity: '0.87',
     display: 'inline-block'
   }
-});
+})
 
-class AppBar extends React.Component {
-  state = {
-    onboardingDialog: {
-      open: false,
-      isSignup: false
-    },
-  }
-
-  handleSignupClick = () => {
-    this.setState({
-      onboardingDialog: {
-        open: true,
-        isSignup: true
-      }
-    });
-  }
-
-  handleLoginClick = () => {
-    this.setState({
-      onboardingDialog: {
-        open: true,
-        isSignup: false
-      }
-    });
-  }
-
-  handleOnboardingClose = () => {
-    let onboardingDialog = this.state.onboardingDialog;
-    onboardingDialog.open = false;
-    this.setState({onboardingDialog});
-  }
-
-  render() {
-    const { classes, position } = this.props;
-
-    let logoWithText = isWidthUp('md', this.props.width);
-    //console.log(logoWithText);
-
-    let logo = (
-      <a href="#" className={logoWithText ? classes.logoText : classes.logo}>
-        <SVG
-          className={logoWithText ? classes.logoText : classes.logo}
-          src={"http://images.tabb.global/brand/" + (this.props.dark ?
-            (logoWithText ? "logo-text.svg" : "logo.svg") :
-            (logoWithText ? "logo-text-dark.svg" : "logo-dark.svg"))}>
-          <img src={"http://images.tabb.global/brand/" + (this.props.dark ?
-            (logoWithText ? "logo-text.png" : "logo.png") :
-            (logoWithText ? "logo-text-dark.png" : "logo-dark.png"))}/>
-        </SVG>
-      </a>
-    );
-
-    return (
-      <MuiAppBar position={position} color="default" className={classes.appBar}>
-        <Toolbar>
-          {logo}
-          <div className={classes.flex}></div>
-          {this.props.children}
-          <Button onClick={this.handleLoginClick} variant="outlined" color="primary" style={{marginRight: '24px', marginLeft: '24px'}}>Log in</Button>
-          <Button onClick={this.handleSignupClick} variant="contained" color="primary">Sign up</Button>
-        </Toolbar>
-        <Divider/>
-        <OnboardingDialog isSignup={this.state.onboardingDialog.isSignup} open={this.state.onboardingDialog.open} onClose={this.handleOnboardingClose}/>
-      </MuiAppBar>
-    )
-  }
+type AppBarProps = {
+  classes: Object,
+  position: string,
+  width: number,
+  dark: boolean,
+  children: Object
 }
 
-AppBar.propTypes = {
-  position: PropTypes.string
-};
+const AppBar = ({
+  classes,
+  position,
+  width = 1000,
+  dark = false,
+  children
+}: AppBarProps) => {
+  const logoFiles = {
+    shape: {
+      dark: 'logo-dark.svg',
+      light: 'logo.svg',
+    },
+    text: {
+      dark: 'logo-text-dark.svg',
+      light: 'logo-text.svg',
+    },
+  }
+  const logoWithText = isWidthUp('md', width)
+  const logoFile = logoFiles[logoWithText ? 'text' : 'shape'][dark ? 'light' : 'dark']
+  const logoURL = `http://images.tabb.global/brand/${logoFile}`
+  const logo = (
+    <a href='/' className={logoWithText ? classes.logoText : classes.logo}>
+      <SVG
+        className={logoWithText ? classes.logoText : classes.logo}
+        src={logoURL}
+      >
+        <img src={logoURL} alt="TABB" />
+      </SVG>
+    </a>
+  )
+  return (
+    <MuiAppBar position={position} color="default" className={classes.appBar}>
+      <Toolbar>
+        {logo}
+        <div className={classes.flex}></div>
+        {children}
+        <Button onClick={() => ({})} variant="outlined" color="primary" style={{marginRight: '24px', marginLeft: '24px'}}>Log in</Button>
+        <Button onClick={() => ({})} variant="contained" color="primary">Sign up</Button>
+      </Toolbar>
+      <Divider/>
+      <OnboardingDialog isSignup={true} open={false} onClose={() => ({})}/>
+    </MuiAppBar>
+  )
+}
 
-AppBar.defaultProps = {
-  position: "sticky"
-};
-
-export default withStyles(styles)(withWidth()(AppBar));
+export default withStyles(styles)(withWidth()(AppBar))
