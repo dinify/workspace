@@ -31,6 +31,17 @@ const styles = theme => ({
   }
 })
 
+const logoFiles = {
+  shape: {
+    dark: 'logo-dark.svg',
+    light: 'logo.svg',
+  },
+  text: {
+    dark: 'logo-text-dark.svg',
+    light: 'logo-text.svg',
+  },
+}
+
 type AppBarProps = {
   classes: Object,
   position: string,
@@ -46,16 +57,6 @@ const AppBar = ({
   dark = false,
   children
 }: AppBarProps) => {
-  const logoFiles = {
-    shape: {
-      dark: 'logo-dark.svg',
-      light: 'logo.svg',
-    },
-    text: {
-      dark: 'logo-text-dark.svg',
-      light: 'logo-text.svg',
-    },
-  }
   const logoWithText = isWidthUp('md', width)
   const logoFile = logoFiles[logoWithText ? 'text' : 'shape'][dark ? 'light' : 'dark']
   const logoURL = `http://images.tabb.global/brand/${logoFile}`
