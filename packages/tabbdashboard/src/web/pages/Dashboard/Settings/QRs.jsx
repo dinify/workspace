@@ -61,7 +61,7 @@ class QRs extends React.Component {
                 <Link to={`/qr/${table.qr}`} target="_blank">
                   <Table fixedWidth key={table.id}>
                     <div># {table.number}</div>
-                    <QRCode value={`https://tabb.global/qr?${table.qr}`} />
+                    <QRCode value={`https://app.tabb.global/checkin?qr=${table.qr}`} />
                     <div>CODE: {table.code}</div>
                   </Table>
                 </Link>

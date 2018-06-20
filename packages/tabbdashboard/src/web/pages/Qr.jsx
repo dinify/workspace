@@ -15,7 +15,7 @@ const Qr = location => {
   return (
     <QRpage>
       <QRCode
-        value={`https://tabb.global/qr?${location.match.params.code}`}
+        value={`https://app.tabb.global/checkin?qr=${location.match.params.code}`}
         size={256}
       />
     </QRpage>
