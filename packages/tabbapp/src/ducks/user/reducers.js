@@ -17,7 +17,12 @@ export default function reducer(state = initialState, action) {
       );
     }
     case authTypes.LOGOUT_DONE: {
-      return R.assoc('loggedUserId', null)(state);
+      if (state.loggedUserId) {
+        let newState = state;
+        newState = R.dissocPath(['all', state.loggedUserId])(newState);
+        return R.assoc('loggedUserId', null)(newState);
+      }
+      return state;
     }
     default:
       return state;

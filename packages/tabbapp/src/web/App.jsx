@@ -21,6 +21,7 @@ import withRoot from 'withRoot.js';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 
 import { logoutInit } from 'ducks/auth/actions';
+import { getLoggedUser } from 'ducks/user/selectors';
 
 const styles = theme => ({
   root: {},
@@ -60,15 +61,12 @@ type CommonWrapperProps = {
 let CommonWrapper = ({
   children,
   classes,
-  usersMap,
-  loggedUserId,
-  logout
+  loggedUser,
+  logout,
 }: CommonWrapperProps) => {
-  let user = null
-  if (loggedUserId) user = usersMap[loggedUserId]
   return (
     <div className={classes.root}>
-      <AppBar user={user} logout={logout} />
+      <AppBar user={loggedUser} logout={logout} />
       <ResponsiveContainer narrow={false}>
         {children}
       </ResponsiveContainer>
@@ -77,8 +75,7 @@ let CommonWrapper = ({
 }
 CommonWrapper = connect(
   state => ({
-    usersMap: state.user.all,
-    loggedUserId: state.user.loggedUserId
+    loggedUser: getLoggedUser(state)
   }), {
     logout: logoutInit
   }
