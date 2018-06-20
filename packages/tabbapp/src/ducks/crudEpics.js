@@ -20,7 +20,7 @@ const filterAction = (type, kind, stage) => {
 const createEpic = (action$: Observable) =>
   action$
     .filter(action => filterAction(action.type, 'CREATE', 'INIT'))
-    .switchMap(({ payload, type }) => {
+    .mergeMap(({ payload, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'CREATE', 'INIT');
       const apiFnName = `Create${camel(subject)}`;
       return Observable.fromPromise(
@@ -43,7 +43,7 @@ const createEpic = (action$: Observable) =>
 const fetchEpic = (action$: Observable) =>
   action$
     .filter(action => filterAction(action.type, 'FETCH', 'INIT'))
-    .switchMap(({ payload, type }) => {
+    .mergeMap(({ payload, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'FETCH', 'INIT');
       const apiFnName = `Get${camel(subject)}`;
       return Observable.fromPromise(
@@ -66,7 +66,7 @@ const fetchEpic = (action$: Observable) =>
 const updateEpic = (action$: Observable) =>
   action$
     .filter(action => filterAction(action.type, 'UPDATE', 'INIT'))
-    .switchMap(({ payload, type }) => {
+    .mergeMap(({ payload, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'UPDATE', 'INIT');
       const apiFnName = `Change${camel(subject)}`;
       return Observable.fromPromise(
@@ -89,7 +89,7 @@ const updateEpic = (action$: Observable) =>
 const removeEpic = (action$: Observable) =>
   action$
     .filter(action => filterAction(action.type, 'REMOVE', 'INIT'))
-    .switchMap(({ payload, type }) => {
+    .mergeMap(({ payload, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'REMOVE', 'INIT');
       const apiFnName = `Delete${camel(subject)}`;
       return Observable.fromPromise(

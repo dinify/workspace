@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { Router, Route, IndexRoute } from 'react-router';
+import { connect } from 'react-redux';
 
 import Login from 'web/pages/Login';
 import Checkin from 'web/pages/Checkin';
@@ -13,10 +14,13 @@ import Receipt from 'web/pages/Receipt';
 import Main from 'web/pages/Main';
 
 import AppBar from 'web/components/AppBar';
+import ResponsiveContainer from 'web/components/ResponsiveContainer';
 
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from 'withRoot.js';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
+
+import { logoutInit } from 'ducks/auth/actions';
 
 const styles = theme => ({
   root: {},
@@ -50,18 +54,36 @@ const styles = theme => ({
 
 type CommonWrapperProps = {
   children?: React.Node,
+  classes: object,
 }
 
-const CommonWrapper = ({
-  children
+let CommonWrapper = ({
+  children,
+  classes,
+  usersMap,
+  loggedUserId,
+  logout
 }: CommonWrapperProps) => {
+  let user = null
+  if (loggedUserId) user = usersMap[loggedUserId]
   return (
-    <div>
-      <AppBar />
-      {children}
+    <div className={classes.root}>
+      <AppBar user={user} logout={logout} />
+      <ResponsiveContainer narrow={false}>
+        {children}
+      </ResponsiveContainer>
     </div>
   )
 }
+CommonWrapper = connect(
+  state => ({
+    usersMap: state.user.all,
+    loggedUserId: state.user.loggedUserId
+  }), {
+    logout: logoutInit
+  }
+)(CommonWrapper)
+CommonWrapper = withRoot(withStyles(styles)(withWidth()(CommonWrapper)))
 
 const App = ({ history }) => (
   <div>
@@ -86,4 +108,4 @@ const App = ({ history }) => (
   </div>
 );
 
-export default withRoot(withStyles(styles)(withWidth()(App)));
+export default App;

@@ -21,6 +21,14 @@ export default function reducer(state = initialState, action) {
       const id = action.payload.table.restaurant.id;
       return R.assoc('checkedInRestaurant', id)(state);
     }
+    case types.FETCH_STATUS_DONE: {
+      const res = action.payload.res;
+      if (!res || !(res instanceof Object)) {
+        return R.assoc('checkedInRestaurant', null)(state);
+      }
+      const id = res.table.restaurant.id;
+      return R.assoc('checkedInRestaurant', id)(state);
+    }
     default:
       return state;
   }

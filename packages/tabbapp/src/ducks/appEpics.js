@@ -1,9 +1,15 @@
+// @flow
 import { Observable } from 'rxjs';
-import { fetchRestaurantsInit } from 'ducks/restaurant/actions';
+import { fetchRestaurantsInit, fetchStatusInit } from 'ducks/restaurant/actions';
+import { fetchMeInit } from 'ducks/user/actions';
 
 const bootstrapEpic = (action$: Observable) =>
   action$
     .ofType('persist/REHYDRATE')
-    .switchMap(() => Observable.of(fetchRestaurantsInit()));
+    .mergeMap(() => Observable.of(
+      fetchRestaurantsInit(),
+      fetchMeInit(),
+      fetchStatusInit()
+    ));
 
 export default [bootstrapEpic];

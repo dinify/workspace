@@ -12,3 +12,11 @@ export const loginDone = () => ({
 export const loginFail = () => ({
   type: types.LOGIN_FAIL,
 });
+
+export const logoutInit = () => ({
+  type: types.LOGOUT_INIT,
+});
+
+export const logoutDone = () => ({
+  type: types.LOGOUT_DONE,
+});

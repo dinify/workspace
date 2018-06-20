@@ -14,3 +14,7 @@ export function Checkin({ qr, code }: CheckinWithQr | CheckinWithCode) {
   if (code) payload.code = code
   return Post({ path: `checkin` }, payload);
 }
+
+export function GetStatus() {
+  return Get({ path: `status` });
+}

@@ -44,23 +44,26 @@ const logoFiles = {
 };
 
 type AppBarProps = {
-  classes: Object,
+  classes: object,
   position: string,
   width: number,
   dark: boolean,
   children?: React.Node,
+  user?: object,
+  logout: func,
 };
 
 const AppBar = ({
   classes,
-  position,
+  position = 'sticky',
   width = 1000,
   dark = false,
   children,
+  user,
+  logout,
 }: AppBarProps) => {
   const logoWithText = isWidthUp('md', width);
-  const logoFile =
-    logoFiles[logoWithText ? 'text' : 'shape'][dark ? 'light' : 'dark'];
+  const logoFile = logoFiles[logoWithText ? 'text' : 'shape'][dark ? 'light' : 'dark'];
   const logoURL = `http://images.tabb.global/brand/${logoFile}`;
   const logo = (
     <Link to="/" className={logoWithText ? classes.logoText : classes.logo}>
@@ -78,17 +81,25 @@ const AppBar = ({
         {logo}
         <div className={classes.flex} />
         {children}
-        <Button
-          onClick={() => ({})}
-          variant="outlined"
-          color="primary"
-          style={{ marginRight: '24px', marginLeft: '24px' }}
-        >
-          Log in
-        </Button>
-        <Button onClick={() => ({})} variant="contained" color="primary">
-          Sign up
-        </Button>
+        {user ?
+          <div>
+            {user.name}
+            <Button onClick={logout}>Logout</Button>
+          </div>
+        :
+          <Link to="/login">
+            <Button
+              variant="outlined"
+              color="primary"
+              style={{ marginRight: '24px', marginLeft: '24px' }}
+            >
+              Log in
+            </Button>
+            <Button variant="contained" color="primary">
+              Sign up
+            </Button>
+          </Link>
+        }
       </Toolbar>
       <Divider />
       <OnboardingDialog isSignup={true} open={false} onClose={() => ({})} />

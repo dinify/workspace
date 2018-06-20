@@ -4,6 +4,10 @@ export const fetchRestaurantsInit = () => ({
   type: types.FETCH_RESTAURANTS_INIT,
 });
 
+export const fetchStatusInit = () => ({
+  type: types.FETCH_STATUS_INIT,
+});
+
 export const checkinInit = (payload) => ({
   type: types.CHECKIN_INIT,
   payload

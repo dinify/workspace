@@ -1,6 +1,7 @@
 // @flow
 import R from 'ramda';
 import types from './types';
+import authTypes from 'ducks/auth/types'
 
 const initialState = {
   all: {},
@@ -14,6 +15,9 @@ export default function reducer(state = initialState, action) {
       return R.assoc('loggedUserId', user.id)(
         R.assocPath(['all', user.id], user)(state),
       );
+    }
+    case authTypes.LOGOUT_DONE: {
+      return R.assoc('loggedUserId', null)(state);
     }
     default:
       return state;
