@@ -14,7 +14,8 @@
     "coverage": "jest --coverage --env=jsdom",
     "lint": "eslint --ext=jsx --ext=js src/",
     "flow": "flow",
-    "precommit": "jest --env=jsdom && flow && lint-staged"
+    "precommit": "jest --env=jsdom && flow && lint-staged",
+    "format": "prettier --write '**/*.{js,jsx}'"
   },
   "dependencies": {
     "@material-ui/core": "^1.0.0",
@@ -68,17 +69,19 @@
     "validator": "8.2.0"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "eslint": "4.18.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-flowtype": "^2.46.3",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.9.1",
+    "prettier": "^1.5.1",
     "babel-cli": "6.24.1",
-    "babel-eslint": "7.2.3",
     "babel-jest": "20.0.1",
     "babel-preset-flow": "6.23.0",
     "babel-preset-react-native": "1.9.2",
-    "eslint": "3.19.0",
-    "eslint-config-airbnb": "15.0.1",
-    "eslint-plugin-flowtype": "2.33.0",
-    "eslint-plugin-import": "2.2.0",
-    "eslint-plugin-jsx-a11y": "5.0.3",
-    "eslint-plugin-react": "7.0.1",
     "fetch-mock": "5.11.0",
     "flow-bin": "0.46.0",
     "husky": "0.13.3",

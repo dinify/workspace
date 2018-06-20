@@ -1,23 +1,30 @@
 // @flow
-import React from 'react'
-import { Route, Redirect, Switch } from 'react-router-dom'
-import { Header } from 'web/components/styled/Header'
-import { HorMenu, HorMenuLink } from 'web/components/styled/Menu'
+import React from 'react';
+import { Route, Redirect, Switch } from 'react-router-dom';
+import { Header } from 'web/components/styled/Header';
+import { HorMenu, HorMenuLink } from 'web/components/styled/Menu';
 
+import MainSection from './Main';
+import WaiterboardsSection from './Waiterboards';
+import QRsSection from './QRs';
 
-import MainSection from './Main'
-import WaiterboardsSection from './Waiterboards'
-import QRsSection from './QRs'
+import LocalizationSection from './Localization';
+import RolesSection from './Roles';
 
-import LocalizationSection from './Localization'
-import RolesSection from './Roles'
-
-const Settings = ({ location }) =>
-  (<div>
+const Settings = ({ location }) => (
+  <div>
     <Header>
       <HorMenu>
-        <HorMenuLink l={location} title="Main Information" to="/settings/main" />
-        <HorMenuLink l={location} title="Waiterboards" to="/settings/waiterboards" />
+        <HorMenuLink
+          l={location}
+          title="Main Information"
+          to="/settings/main"
+        />
+        <HorMenuLink
+          l={location}
+          title="Waiterboards"
+          to="/settings/waiterboards"
+        />
         <HorMenuLink l={location} title="QR Codes" to="/settings/qrcodes" />
         <HorMenuLink l={location} title="" to="/settings/roles" />
         <HorMenuLink l={location} title="" to="/settings/localization" />
@@ -31,6 +38,7 @@ const Settings = ({ location }) =>
       <Route path="/settings/roles" component={RolesSection} />
       <Route path="/settings/localization" component={LocalizationSection} />
     </Switch>
-  </div>);
+  </div>
+);
 
-export default Settings
+export default Settings;

@@ -27,21 +27,25 @@ type ViewerProps = {
   lastError: Error,
 };
 
-const Viewer = ({ joke, isLoading, fetchNext, lastError }: ViewerProps) =>
-  (<Content>
+const Viewer = ({ joke, isLoading, fetchNext, lastError }: ViewerProps) => (
+  <Content>
     <Wrapper>
       {joke && <Joke text={joke} />}
       {lastError && <InfoBox danger text={lastError.error_description} />}
     </Wrapper>
     <Wrapper>
-      {(joke || lastError) &&
+      {(joke || lastError) && (
         <Button onPress={fetchNext}>
-          {isLoading
-            ? <Spinner style={{ alignSelf: 'center' }} color="blue" />
-            : <Text>Next one!</Text>}
-        </Button>}
+          {isLoading ? (
+            <Spinner style={{ alignSelf: 'center' }} color="blue" />
+          ) : (
+            <Text>Next one!</Text>
+          )}
+        </Button>
+      )}
     </Wrapper>
-  </Content>);
+  </Content>
+);
 
 export default connect(
   state => ({

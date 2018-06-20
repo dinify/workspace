@@ -1,28 +1,28 @@
 // @flow
-import React from 'react'
-import { connect } from 'react-redux'
-import styled from 'styled-components'
-import { Form, Text } from 'react-form'
-import { signupInitAction } from 'ducks/restaurantLegacy'
-import ErrorMessage from 'web/components/ErrorMessage'
+import React from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { Form, Text } from 'react-form';
+import { signupInitAction } from 'ducks/restaurantLegacy';
+import ErrorMessage from 'web/components/ErrorMessage';
 
-const Content = styled.div `
+const Content = styled.div`
   position: relative;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-`
+`;
 
-const FormBox = styled.div `
+const FormBox = styled.div`
   color: white;
-  background-color: rgb(34,44,60);
+  background-color: rgb(34, 44, 60);
   width: 280px;
 `;
 
-const FormBoxHeader = styled.div `
-  background: rgba(0,0,0,0.1);
+const FormBoxHeader = styled.div`
+  background: rgba(0, 0, 0, 0.1);
   padding: 20px;
   font-size: 16px;
   color: white;
@@ -32,7 +32,7 @@ const FormBoxHeader = styled.div `
   font-weight: 200;
 `;
 
-const FormBoxBody = styled.div `
+const FormBoxBody = styled.div`
   color: white;
   display: flex;
   align-items: center;
@@ -41,7 +41,7 @@ const FormBoxBody = styled.div `
   padding-bottom: 20px;
   text-align: center;
   a {
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
     font-size: 12px;
     &:hover {
       color: white;
@@ -50,7 +50,7 @@ const FormBoxBody = styled.div `
 `;
 
 const TextInput = styled(Text)`
-  background-color: rgba(255,255,255,0.2);
+  background-color: rgba(255, 255, 255, 0.2);
   margin: 10px 0 0 0;
   outline: none;
   padding: 10px 15px;
@@ -58,12 +58,12 @@ const TextInput = styled(Text)`
   color: white;
   width: 250px;
   &:focus {
-    border-color: rgba(255,255,255,0.4);
+    border-color: rgba(255, 255, 255, 0.4);
   }
 `;
 
-const FormBoxSubmit = styled.button `
-  background-color: rgb(38,156,244);
+const FormBoxSubmit = styled.button`
+  background-color: rgb(38, 156, 244);
   margin: 20px 0 0 0;
   outline: none;
   padding: 10px 15px;
@@ -72,10 +72,10 @@ const FormBoxSubmit = styled.button `
   color: white;
   width: 250px;
   &:hover {
-    background-color: rgb(28,146,234);
+    background-color: rgb(28, 146, 234);
   }
   &:active {
-    background-color: rgb(18,126,214);
+    background-color: rgb(18, 126, 214);
     border-color: transparent;
   }
 `;
@@ -83,89 +83,102 @@ const FormBoxSubmit = styled.button `
 type LoginProps = {
   lastError: Error,
   doSignup: typeof signupInitAction,
-}
-
+};
 
 const Signup = ({
-    lastError,
-    doSignup,
-    progressMap,
-    errorsMap
-  }: LoginProps) =>
-  (<Content>
-      <img
-        src={require('assets/img/logo.svg')}
-        alt="TABB"
-        style={{
-          marginTop: '-50px',
-          marginBottom: '40px',
-          width: '70px'
-        }}
-        className="vhs-blur"
-      />
-      <FormBox className="vhs-blur">
-        <FormBoxHeader>
-          Registration
-        </FormBoxHeader>
-        <FormBoxBody>
+  lastError,
+  doSignup,
+  progressMap,
+  errorsMap,
+}: LoginProps) => (
+  <Content>
+    <img
+      src={require('assets/img/logo.svg')}
+      alt="TABB"
+      style={{
+        marginTop: '-50px',
+        marginBottom: '40px',
+        width: '70px',
+      }}
+      className="vhs-blur"
+    />
+    <FormBox className="vhs-blur">
+      <FormBoxHeader>Registration</FormBoxHeader>
+      <FormBoxBody>
+        <Form
+          onSubmit={form => {
+            doSignup(form);
+          }}
+          defaultValues={{
+            name: 'John Doe',
+            phone: '9338293832',
+            email: 'test@testing.com',
+            password: 'Testtest1',
+            restaurantName: 'Test23',
+            subdomain: 'test23',
+          }}
+          validate={({
+            name,
+            phone,
+            email,
+            password,
+            restaurantName,
+            subdomain,
+          }) => {
+            return {
+              name: !name ? 'Your name is required' : undefined,
+              phone: !phone ? 'Your phone is required' : undefined,
+              email: !email ? 'Email is required' : undefined,
+              password: !password ? 'Password is required' : undefined,
+              restaurantName: !name ? 'Restaurant Name is required' : undefined,
+              subdomain: !subdomain ? 'Subdomain is required' : undefined,
+            };
+          }}
+        >
+          {({ submitForm }) => {
+            return (
+              <form onSubmit={submitForm}>
+                <TextInput field="name" placeholder="Your Name" />
+                <TextInput field="phone" placeholder="Phone Number" />
+                <TextInput field="email" placeholder="Your Email" />
+                <TextInput
+                  field="password"
+                  type="password"
+                  placeholder="Password"
+                />
 
-          <Form
-            onSubmit={(form) => {
-              doSignup(form);
-            }}
-            defaultValues={{
-              name: 'John Doe',
-              phone: '9338293832',
-              email: 'test@testing.com',
-              password: 'Testtest1',
-              restaurantName: 'Test23',
-              subdomain: 'test23',
-            }}
-            validate={({ name, phone, email, password, restaurantName, subdomain }) => {
-              return {
-                name: !name ? 'Your name is required' : undefined,
-                phone: !phone ? 'Your phone is required' : undefined,
-                email: !email ? 'Email is required' : undefined,
-                password: !password ? 'Password is required' : undefined,
-                restaurantName: !name ? 'Restaurant Name is required' : undefined,
-                subdomain: !subdomain ? 'Subdomain is required' : undefined,
-              }
-            }}
-          >
-            {({submitForm}) =>  {
-              return (
-                <form onSubmit={submitForm}>
+                <TextInput
+                  field="restaurantName"
+                  placeholder="Restaurant Name"
+                />
+                <TextInput field="subdomain" placeholder="Subdomain" />
 
-                  <TextInput field='name' placeholder='Your Name' />
-                  <TextInput field='phone' placeholder='Phone Number' />
-                  <TextInput field='email' placeholder='Your Email' />
-                  <TextInput field='password' type="password" placeholder='Password' />
+                <FormBoxSubmit>SIGN UP</FormBoxSubmit>
 
-                  <TextInput field='restaurantName' placeholder='Restaurant Name' />
-                  <TextInput field='subdomain' placeholder='Subdomain' />
-
-                  <FormBoxSubmit>SIGN UP</FormBoxSubmit>
-
-                  <ErrorMessage>
-                    {progressMap.LOGIN === 'ERROR' ? <div>Login failed</div> : ''}
-                    {progressMap.SIGNUP === 'ERROR' ? <div>Registration failed</div> : ''}
-                    {errorsMap.SIGNUP ? <div>{errorsMap.SIGNUP}</div> : ''}                    
-                  </ErrorMessage>
-
-                </form>
-              )
-            }}
-          </Form>
-
-        </FormBoxBody>
-      </FormBox>
-  </Content>);
+                <ErrorMessage>
+                  {progressMap.LOGIN === 'ERROR' ? <div>Login failed</div> : ''}
+                  {progressMap.SIGNUP === 'ERROR' ? (
+                    <div>Registration failed</div>
+                  ) : (
+                    ''
+                  )}
+                  {errorsMap.SIGNUP ? <div>{errorsMap.SIGNUP}</div> : ''}
+                </ErrorMessage>
+              </form>
+            );
+          }}
+        </Form>
+      </FormBoxBody>
+    </FormBox>
+  </Content>
+);
 
 export default connect(
   state => ({
     progressMap: state.ui.progressMap,
-    errorsMap: state.ui.errorsMap
-  }), {
+    errorsMap: state.ui.errorsMap,
+  }),
+  {
     doSignup: signupInitAction,
   },
 )(Signup);

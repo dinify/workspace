@@ -15,9 +15,10 @@ const store = configureStore(
   AsyncStorage,
 );
 
-const Native = () =>
-  (<Provider store={store}>
+const Native = () => (
+  <Provider store={store}>
     <App />
-  </Provider>);
+  </Provider>
+);
 
 export default Native;

@@ -3,25 +3,27 @@ import styled from 'styled-components';
 export const FormBox = styled.div`
   background: #fff;
   display: inline-block;
-  width: ${p => p.fullWidth ? '100%' : '280px'};
+  width: ${p => (p.fullWidth ? '100%' : '280px')};
   border: none;
   vertical-align: top;
-  margin: ${p => p.fullWidth ? '10px 0' : '10px'};
+  margin: ${p => (p.fullWidth ? '10px 0' : '10px')};
   overflow: hidden;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
-`
+`;
 export const FormBoxHead = styled.div`
-  background: rgba(0,0,50,0.03);
+  background: rgba(0, 0, 50, 0.03);
   padding: 10px;
   font-size: 14px;
-`
+`;
 export const FormBoxBody = styled.div`
   background: #fff;
   padding: 0 10px 10px 10px;
   padding-top: ${p => p.pt || 0}px;
   padding-bottom: ${p => p.pb || 10}px;
-  text-align: ${p => p.center ? 'center' : 'left'};
-  input, select, textarea {
+  text-align: ${p => (p.center ? 'center' : 'left')};
+  input,
+  select,
+  textarea {
     font-weight: 300 !important;
     font-size: 13px !important;
   }
@@ -34,42 +36,46 @@ export const FormBoxBody = styled.div`
     vertical-align: top;
   }
   .FormInput {
-    display: ${p => p.half ? 'inline-block' : 'block'};
-    width: ${p => p.half ? '46.7%' : '100%'};
+    display: ${p => (p.half ? 'inline-block' : 'block')};
+    width: ${p => (p.half ? '46.7%' : '100%')};
   }
   select {
     height: 34px;
   }
-`
+`;
 export const FormBoxSubmit = styled.button`
-  background-color: ${p => p.primary ? 'rgb(38,156,244)' : 'rgb(220,224,230)'};
+  background-color: ${p =>
+    p.primary ? 'rgb(38,156,244)' : 'rgb(220,224,230)'};
   margin: 10px 0 0 0;
   outline: none;
   padding: 10px 15px;
-  border: 1px solid ${p => p.primary ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'};
+  border: 1px solid
+    ${p => (p.primary ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)')};
   cursor: pointer;
   border-radius: 5px;
-  color: ${p => p.primary ? 'white' : '#666'};
+  color: ${p => (p.primary ? 'white' : '#666')};
   width: 100%;
   &:hover {
-    background-color: ${p => p.primary ? 'rgb(28,146,234)' : 'rgb(210,214,220)'};
+    background-color: ${p =>
+      p.primary ? 'rgb(28,146,234)' : 'rgb(210,214,220)'};
   }
   &:active {
-    background-color: ${p => p.primary ? 'rgb(18,126,214)' : 'rgb(200,204,210)'};
+    background-color: ${p =>
+      p.primary ? 'rgb(18,126,214)' : 'rgb(200,204,210)'};
     border-color: transparent;
   }
-`
+`;
 
 export const ThinButton = styled.button`
-  background-color: rgb(220,224,230);
+  background-color: rgb(220, 224, 230);
   margin: 0 auto;
   outline: none;
   padding: 5px 15px;
-  border: 1px solid rgba(0,0,0,0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   cursor: pointer;
   border-radius: 50px;
-  color: ${p => p.primary ? 'white' : '#666'};
-`
+  color: ${p => (p.primary ? 'white' : '#666')};
+`;
 
 export const FieldWrapper = styled.div`
   position: relative;
@@ -88,10 +94,10 @@ export const FieldWrapper = styled.div`
   a i {
     color: grey;
   }
-`
+`;
 
 export const Label = styled.div`
   font-size: 14px;
   margin-top: 18px;
   margin-bottom: -4px;
-`
+`;

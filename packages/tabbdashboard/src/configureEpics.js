@@ -6,5 +6,12 @@ console.log(restaurantEpics);
 
 const epics = [...restaurantEpics, ...crud];
 
-export default (deps = {}, platformEpics = []) => (action$, { getState, dispatch }) =>
-  combineEpics(...epics, ...platformEpics)(action$, { ...deps, getState, dispatch });
+export default (deps = {}, platformEpics = []) => (
+  action$,
+  { getState, dispatch },
+) =>
+  combineEpics(...epics, ...platformEpics)(action$, {
+    ...deps,
+    getState,
+    dispatch,
+  });

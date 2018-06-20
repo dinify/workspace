@@ -22,18 +22,17 @@ const InfoBoxWrapper = styled.View`
 `;
 
 const InfoBoxText = styled.Text`
-  color: ${({ danger }) => (danger ? '#d73a49' : '#0366d6')}
+  color: ${({ danger }) => (danger ? '#d73a49' : '#0366d6')};
 `;
 
-const InfoBox = ({ danger = false, text }: InfoBoxProps) =>
-  (<InfoBoxWrapper danger={danger}>
+const InfoBox = ({ danger = false, text }: InfoBoxProps) => (
+  <InfoBoxWrapper danger={danger}>
     <Icon
       style={{ marginRight: 5, color: danger ? '#d73a49' : '#0366d6' }}
       name={danger ? 'hand' : 'information-circle'}
     />
-    <InfoBoxText danger={danger}>
-      {text}
-    </InfoBoxText>
-  </InfoBoxWrapper>);
+    <InfoBoxText danger={danger}>{text}</InfoBoxText>
+  </InfoBoxWrapper>
+);
 
 export default InfoBox;

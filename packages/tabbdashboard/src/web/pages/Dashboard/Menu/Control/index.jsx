@@ -1,36 +1,32 @@
 // @flow
-import React from 'react'
-import { connect } from 'react-redux'
-import styled from 'styled-components'
-import ListOfCategories from './ListOfCategories'
-import ListOfDishes from './ListOfDishes'
-import ItemDetail from './ItemDetail'
-import Grid from 'material-ui/Grid'
+import React from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import ListOfCategories from './ListOfCategories';
+import ListOfDishes from './ListOfDishes';
+import ItemDetail from './ItemDetail';
+import Grid from 'material-ui/Grid';
 
-const HeadLine = styled.div `
+const HeadLine = styled.div`
   height: 50px;
   line-height: 50px;
   padding-left: 15px;
-`
+`;
 
-const H = styled.div `
+const H = styled.div`
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing: 1px;
-`
+`;
 
-const SolidContainer = styled.div `
+const SolidContainer = styled.div`
   width: 100%;
   margin-bottom: 20px;
-`
-
+`;
 
 class Menucontrol extends React.Component {
   render() {
-    const {
-      selectedCategoryId,
-      selectedFoodId
-    } = this.props;
+    const { selectedCategoryId, selectedFoodId } = this.props;
 
     return (
       <div>
@@ -48,12 +44,9 @@ class Menucontrol extends React.Component {
           </Grid>
         </HeadLine>
         <SolidContainer>
-
           <Grid container spacing={8} alignItems="flex-start" justify="center">
             <Grid item xs={3}>
-              <ListOfCategories
-                selectedCategoryId={selectedCategoryId}
-              />
+              <ListOfCategories selectedCategoryId={selectedCategoryId} />
             </Grid>
             <Grid item xs={3}>
               <ListOfDishes
@@ -62,21 +55,17 @@ class Menucontrol extends React.Component {
               />
             </Grid>
             <Grid item xs={6}>
-              <ItemDetail
-                selectedFoodId={selectedFoodId}
-              />
+              <ItemDetail selectedFoodId={selectedFoodId} />
             </Grid>
           </Grid>
-
         </SolidContainer>
-      </div>);
+      </div>
+    );
   }
 }
 
-export default connect(
-  state => ({
-    selectedCategoryId: state.restaurant.selectedCategoryId,
-    selectedFoodId: state.restaurant.selectedFoodId,
-    menuItems: state.menuItem.all,
-  })
-)(Menucontrol);
+export default connect(state => ({
+  selectedCategoryId: state.restaurant.selectedCategoryId,
+  selectedFoodId: state.restaurant.selectedFoodId,
+  menuItems: state.menuItem.all,
+}))(Menucontrol);

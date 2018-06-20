@@ -1,13 +1,13 @@
 // @flow
-import React from 'react'
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Menu = styled.ul`
   width: 160px;
   margin-left: 53px;
   margin-top: 80px;
-`
+`;
 
 export const MenuItem = styled.li`
   list-style: none;
@@ -19,7 +19,7 @@ export const MenuItem = styled.li`
   vertical-align: middle;
   a {
     text-decoration: none;
-    color: ${({active}) => active ? 'white': 'rgba(255,255,255,0.6)'};
+    color: ${({ active }) => (active ? 'white' : 'rgba(255,255,255,0.6)')};
     transition: 140ms color ease-in-out;
     cursor: pointer;
     vertical-align: middle;
@@ -34,7 +34,7 @@ export const MenuItem = styled.li`
     width: 26px;
     display: inline-block;
   }
-`
+`;
 
 export const MenuLink = ({ title, to, l, iconName = 'ion-gear-b' }) => (
   <MenuItem active={l.pathname.indexOf(to) > -1}>
@@ -43,7 +43,7 @@ export const MenuLink = ({ title, to, l, iconName = 'ion-gear-b' }) => (
       {title}
     </Link>
   </MenuItem>
-)
+);
 
 export const HorMenu = styled.ul`
   list-style-type: none;
@@ -59,18 +59,16 @@ export const HorMenuItem = styled.li`
   letter-spacing: 1px;
   a {
     text-decoration: none;
-    color: ${({active}) => active ? 'black': 'rgba(0,0,0,0.45)'};
+    color: ${({ active }) => (active ? 'black' : 'rgba(0,0,0,0.45)')};
     cursor: pointer;
     &:hover {
       color: black;
     }
   }
-`
+`;
 
 export const HorMenuLink = ({ title, to, l }) => (
   <HorMenuItem active={l.pathname === to}>
-    <Link to={to}>
-      {title}
-    </Link>
+    <Link to={to}>{title}</Link>
   </HorMenuItem>
-)
+);

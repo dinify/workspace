@@ -1,50 +1,55 @@
 // @flow
-import React from 'react'
-import { connect } from 'react-redux'
-import * as FN from 'lib/FN'
-import { Field, reduxForm } from 'redux-form'
-import List, { ListItem, ListItemText } from 'material-ui/List'
+import React from 'react';
+import { connect } from 'react-redux';
+import * as FN from 'lib/FN';
+import { Field, reduxForm } from 'redux-form';
+import List, { ListItem, ListItemText } from 'material-ui/List';
 
-import AddCircle from '@material-ui/icons/AddCircle'
-import DeleteIcon from '@material-ui/icons/Delete'
-import IconButton from 'material-ui/IconButton'
-import Tooltip from 'material-ui/Tooltip'
+import AddCircle from '@material-ui/icons/AddCircle';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from 'material-ui/IconButton';
+import Tooltip from 'material-ui/Tooltip';
 import Switch from 'material-ui/Switch';
 
-import InputAndButton from 'web/components/MaterialInputs/InputAndButton'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import FormControl from '@material-ui/core/FormControl'
+import InputAndButton from 'web/components/MaterialInputs/InputAndButton';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
 
 import {
   createIngredientInit,
   removeIngredientInit,
-  updateIngredientInit
-} from 'ducks/ingredient/actions'
+  updateIngredientInit,
+} from 'ducks/ingredient/actions';
 
-let AddIngredientForm = ({
-  handleSubmit,
-  progress,
-  errorMessage
-}) => {
+let AddIngredientForm = ({ handleSubmit, progress, errorMessage }) => {
   console.log(errorMessage);
   return (
-    <form onSubmit={handleSubmit} style={{width: '100%'}}>
-      <FormControl error={progress === 'ERROR'} aria-describedby="name-error-text">
-        <Field name="name" component={InputAndButton} buttonIcon={<AddCircle />} componentProps={{
-          placeholder: "Enter ingredient",
-          fullWidth: true
-        }} />
-        {progress === 'ERROR' ?
+    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+      <FormControl
+        error={progress === 'ERROR'}
+        aria-describedby="name-error-text"
+      >
+        <Field
+          name="name"
+          component={InputAndButton}
+          buttonIcon={<AddCircle />}
+          componentProps={{
+            placeholder: 'Enter ingredient',
+            fullWidth: true,
+          }}
+        />
+        {progress === 'ERROR' ? (
           <FormHelperText>{errorMessage}</FormHelperText>
-        : ''}
+        ) : (
+          ''
+        )}
       </FormControl>
     </form>
-  )
-}
+  );
+};
 AddIngredientForm = reduxForm({
-  form: 'customizations/ingredient'
-})(AddIngredientForm)
-
+  form: 'customizations/ingredient',
+})(AddIngredientForm);
 
 const Ingredients = ({
   createIngredient,
@@ -53,22 +58,30 @@ const Ingredients = ({
   updateIngredient,
   styles,
   progressMap,
-  errorsMap
+  errorsMap,
 }) => {
-  const ingredientsList = FN.MapToList(ingredients).sort((a,b) => a.name.localeCompare(b.name))
+  const ingredientsList = FN.MapToList(ingredients).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
   return (
     <div>
-      <List
-        component="nav"
-      >
-        {ingredientsList.map((ingredient, i) =>
+      <List component="nav">
+        {ingredientsList.map((ingredient, i) => (
           <div key={ingredient.id}>
             <ListItem dense style={styles.ListItem}>
               <ListItemText primary={ingredient.name} />
-              <Tooltip placement="left" title={ingredient.excludable ? 'Excludable' : 'Mandatory'}>
+              <Tooltip
+                placement="left"
+                title={ingredient.excludable ? 'Excludable' : 'Mandatory'}
+              >
                 <Switch
                   checked={ingredient.excludable}
-                  onChange={(ev) => updateIngredient({id: ingredient.id, excludable: ev.target.checked})}
+                  onChange={ev =>
+                    updateIngredient({
+                      id: ingredient.id,
+                      excludable: ev.target.checked,
+                    })
+                  }
                   color="primary"
                 />
               </Tooltip>
@@ -82,7 +95,7 @@ const Ingredients = ({
               </Tooltip>
             </ListItem>
           </div>
-        )}
+        ))}
         <ListItem>
           <AddIngredientForm
             onSubmit={createIngredient}
@@ -91,20 +104,19 @@ const Ingredients = ({
           />
         </ListItem>
       </List>
-
-
     </div>
   );
-}
+};
 
 export default connect(
   state => ({
     ingredients: state.ingredient.all,
     progressMap: state.ui.progressMap,
-    errorsMap: state.ui.errorsMap
-  }), {
+    errorsMap: state.ui.errorsMap,
+  }),
+  {
     createIngredient: createIngredientInit,
     removeIngredient: removeIngredientInit,
-    updateIngredient: updateIngredientInit
+    updateIngredient: updateIngredientInit,
   },
 )(Ingredients);

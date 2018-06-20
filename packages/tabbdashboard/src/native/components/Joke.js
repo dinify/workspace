@@ -11,6 +11,10 @@ type JokeProps = {
   text: string,
 };
 
-const Joke = ({ text }: JokeProps) => <JokeWrapper><Text>{text}</Text></JokeWrapper>;
+const Joke = ({ text }: JokeProps) => (
+  <JokeWrapper>
+    <Text>{text}</Text>
+  </JokeWrapper>
+);
 
 export default Joke;

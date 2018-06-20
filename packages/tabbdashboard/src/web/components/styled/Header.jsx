@@ -1,5 +1,5 @@
 // @flow
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Header = styled.div`
   position: fixed;
@@ -8,7 +8,7 @@ export const Header = styled.div`
   top: 0;
   height: 60px;
   width: calc(100% - 240px);
-  background: #FFF;
+  background: #fff;
   line-height: 60px;
   padding-left: 30px;
   @media print {

@@ -25,7 +25,7 @@ class Option extends React.Component {
       <MenuItem
         onFocus={onFocus}
         selected={isFocused}
-        onClick={(event) => onSelect(this.props.option, event)}
+        onClick={event => onSelect(this.props.option, event)}
         component="div"
         style={{
           fontWeight: isSelected ? 500 : 400,
@@ -187,38 +187,45 @@ const styles = theme => ({
 
 class IntegrationReactSelect extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       single: null,
       multi: null,
       multiLabel: null,
-    }
+    };
   }
 
   handleChange(value) {
     this.setState({
       multiLabel: value,
-    })
+    });
   }
 
   handleSingleChange(value) {
     this.setState({
       single: value,
-    })
+    });
   }
   render() {
-    const { classes, dataSource, placeholder, label, multi, onChange } = this.props;
+    const {
+      classes,
+      dataSource,
+      placeholder,
+      label,
+      multi,
+      onChange,
+    } = this.props;
 
     return (
       <div className={classes.root}>
-        {!multi ?
+        {!multi ? (
           <Input
             fullWidth
             inputComponent={SelectWrapped}
             value={this.state.single}
-            onChange={(value) => {
-              this.handleSingleChange(value)
-              onChange(value)
+            onChange={value => {
+              this.handleSingleChange(value);
+              onChange(value);
             }}
             placeholder={placeholder}
             id="react-select-single"
@@ -230,11 +237,11 @@ class IntegrationReactSelect extends React.Component {
               options: dataSource,
             }}
           />
-          :
+        ) : (
           <TextField
             fullWidth
             value={this.state.multiLabel}
-            onChange={(value) => this.handleChange(value)}
+            onChange={value => this.handleChange(value)}
             placeholder={placeholder}
             name="react-select-chip-label"
             label={label}
@@ -253,7 +260,7 @@ class IntegrationReactSelect extends React.Component {
               },
             }}
           />
-        }
+        )}
       </div>
     );
   }

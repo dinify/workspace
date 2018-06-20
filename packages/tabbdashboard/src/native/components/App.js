@@ -14,8 +14,10 @@ type AppProps = {
 
 const App = ({ appLoading }: AppProps) => (
   <Container>
-    {appLoading && <Spinner style={{ flex: 1, alignSelf: 'center' }} color="blue" />}
-    {!appLoading &&
+    {appLoading && (
+      <Spinner style={{ flex: 1, alignSelf: 'center' }} color="blue" />
+    )}
+    {!appLoading && (
       <View style={{ flex: 1 }}>
         <Header>
           <Body>
@@ -23,7 +25,8 @@ const App = ({ appLoading }: AppProps) => (
           </Body>
         </Header>
         <Viewer />
-      </View>}
+      </View>
+    )}
   </Container>
 );
 

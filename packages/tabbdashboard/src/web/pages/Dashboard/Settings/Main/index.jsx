@@ -1,30 +1,27 @@
 // @flow
-import React from 'react'
-import { connect } from 'react-redux'
-import styled from 'styled-components'
+import React from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
 
-import BusinessHours from './BusinessHours'
-import Banking from './Banking'
-import Social from './Social'
-import Location from './Location'
-import Contact from './Contact'
-import Image from './Image'
-import Type from './Type'
-import Name from './Name'
-import ServiceCalls from './ServiceCalls'
-import Address from './Address'
-
+import BusinessHours from './BusinessHours';
+import Banking from './Banking';
+import Social from './Social';
+import Location from './Location';
+import Contact from './Contact';
+import Image from './Image';
+import Type from './Type';
+import Name from './Name';
+import ServiceCalls from './ServiceCalls';
+import Address from './Address';
 
 const Column = styled.div`
   width: 290px;
   display: inline-block;
   vertical-align: top;
-`
+`;
 
-const Main = ({
-  loggedRestaurant
-}) => {
-  if (!loggedRestaurant) return (<div />)
+const Main = ({ loggedRestaurant }) => {
+  if (!loggedRestaurant) return <div />;
   return (
     <div>
       <Column>
@@ -48,13 +45,10 @@ const Main = ({
       <Column>
         <ServiceCalls />
       </Column>
-
     </div>
   );
-}
+};
 
-export default connect(
-  state => ({
-    loggedRestaurant: state.restaurant.loggedRestaurant
-  })
-)(Main);
+export default connect(state => ({
+  loggedRestaurant: state.restaurant.loggedRestaurant,
+}))(Main);
