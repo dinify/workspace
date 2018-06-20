@@ -40,7 +40,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "format": "prettier --write '**/*.js'"
+    "format": "prettier --write '**/*.{js,jsx}'"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",

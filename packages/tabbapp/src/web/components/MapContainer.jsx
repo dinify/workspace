@@ -6,7 +6,7 @@ import Map from './Map';
 class MapContainer extends React.Component {
   state = {
     windowWidth: 0,
-    windowHeight: 0
+    windowHeight: 0,
   };
 
   componentDidMount() {
@@ -21,7 +21,7 @@ class MapContainer extends React.Component {
   _resize = () => {
     this.setState({
       windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight
+      windowHeight: window.innerHeight,
     });
   };
 
@@ -29,12 +29,14 @@ class MapContainer extends React.Component {
     let smallScreen = isWidthDown('xs', this.props.width);
 
     return (
-      <div style={{height: '100%'}}>
+      <div style={{ height: '100%' }}>
         <Map
-          width={this.props.fullWidth ? this.state.windowWidth : this.props.mapWidth}
-          height={this.state.windowHeight - (smallScreen ? 56 : 64)}/>
+          width={
+            this.props.fullWidth ? this.state.windowWidth : this.props.mapWidth
+          }
+          height={this.state.windowHeight - (smallScreen ? 56 : 64)}
+        />
       </div>
-
     );
   }
 }

@@ -24,7 +24,6 @@ module.exports = {
         extensions: ['.js', '.jsx'],
       },
     ],
-    semi: 0,
     'import/first': 0, // Too strict.
     'no-shadow': 0, // // Shadow is nice language feature.
     'react/prop-types': 0, // It's handled by Flow.
@@ -43,4 +42,4 @@ module.exports = {
     browser: true,
     jest: true,
   },
-}
+};

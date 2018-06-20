@@ -5,7 +5,7 @@ import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 
 class ResponsiveGrid extends React.Component {
   state = {
-    extraSmallScreen: false
+    extraSmallScreen: false,
   };
 
   componentDidMount() {
@@ -19,10 +19,10 @@ class ResponsiveGrid extends React.Component {
 
   _resize = () => {
     if (window.innerWidth <= 400) {
-      this.setState({extraSmallScreen: true});
-    }
-    else if (this.state.extraSmallScreen) this.setState({extraSmallScreen: false});
-  }
+      this.setState({ extraSmallScreen: true });
+    } else if (this.state.extraSmallScreen)
+      this.setState({ extraSmallScreen: false });
+  };
 
   render() {
     const { classes, children, lg } = this.props;
@@ -32,22 +32,23 @@ class ResponsiveGrid extends React.Component {
 
     return (
       <Grid container spacing={smallScreen ? 16 : 24}>
-        {children && children.map((child, i) => (
-          <Grid item xs={extraSmallScreen ? 12 : 6} key={i} sm={6} lg={lg}>
-            {child}
-          </Grid>
-        ))}
+        {children &&
+          children.map((child, i) => (
+            <Grid item xs={extraSmallScreen ? 12 : 6} key={i} sm={6} lg={lg}>
+              {child}
+            </Grid>
+          ))}
       </Grid>
     );
   }
 }
 
 ResponsiveGrid.propTypes = {
-  lg: PropTypes.number
+  lg: PropTypes.number,
 };
 
 ResponsiveGrid.defaultProps = {
-  lg: 4
+  lg: 4,
 };
 
 export default withWidth()(ResponsiveGrid);

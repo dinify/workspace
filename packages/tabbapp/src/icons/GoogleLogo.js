@@ -1,5 +1,5 @@
-import React from 'react'
-import createSvgIcon from '@material-ui/icons/utils/createSvgIcon'
+import React from 'react';
+import createSvgIcon from '@material-ui/icons/utils/createSvgIcon';
 
 export default createSvgIcon(
   <g>
@@ -24,4 +24,4 @@ export default createSvgIcon(
     />
   </g>,
   'GoogleLogo',
-)
+);

@@ -1,6 +1,6 @@
-import reducer from './reducers'
+import reducer from './reducers';
 
-export { default as uiEpics } from './epics'
-export { default as uiTypes } from './types'
+export { default as uiEpics } from './epics';
+export { default as uiTypes } from './types';
 
-export default reducer
+export default reducer;

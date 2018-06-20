@@ -1,16 +1,16 @@
 // @flow
-import React from 'react'
-import { Router, Route } from 'react-router'
+import React from 'react';
+import { Router, Route } from 'react-router';
 
-import Login from 'web/pages/Login'
-import Checkin from 'web/pages/Checkin'
-import RestaurantProfile from 'web/pages/RestaurantProfile'
-import CategoryContent from 'web/pages/CategoryContent'
-import FoodDetail from 'web/pages/FoodDetail'
-import Cart from 'web/pages/Cart'
-import Bill from 'web/pages/Bill'
-import Receipt from 'web/pages/Receipt'
-import Main from 'web/pages/Main'
+import Login from 'web/pages/Login';
+import Checkin from 'web/pages/Checkin';
+import RestaurantProfile from 'web/pages/RestaurantProfile';
+import CategoryContent from 'web/pages/CategoryContent';
+import FoodDetail from 'web/pages/FoodDetail';
+import Cart from 'web/pages/Cart';
+import Bill from 'web/pages/Bill';
+import Receipt from 'web/pages/Receipt';
+import Main from 'web/pages/Main';
 
 import AppBar from 'web/components/AppBar';
 
@@ -26,35 +26,31 @@ const styles = theme => ({
     paddingRight: theme.spacing.unit * 15,
     [theme.breakpoints.down('sm')]: {
       paddingLeft: theme.spacing.unit * 8,
-      paddingRight: theme.spacing.unit * 8
+      paddingRight: theme.spacing.unit * 8,
     },
     [theme.breakpoints.down('xs')]: {
       paddingTop: '56px',
       paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2
-    }
+      paddingRight: theme.spacing.unit * 2,
+    },
   },
   paddedMap: {
     paddingTop: theme.spacing.unit * 9,
     paddingLeft: theme.spacing.unit * 3,
     paddingRight: '464px',
     [theme.breakpoints.down('md')]: {
-      paddingRight: theme.spacing.unit * 3
+      paddingRight: theme.spacing.unit * 3,
     },
     [theme.breakpoints.down('xs')]: {
       paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2
-    }
+      paddingRight: theme.spacing.unit * 2,
+    },
   },
-})
+});
 
-const App = ({
-  history,
-}) => (
+const App = ({ history }) => (
   <div>
-    <AppBar>
-
-    </AppBar>
+    <AppBar />
     <Router history={history}>
       <Route exact path="/" component={Main} />
       <Route path="/login" component={Login} />
@@ -67,12 +63,8 @@ const App = ({
       <Route path="/cart" component={Cart} />
       <Route path="/bill" component={Bill} />
       <Route path="/receipt" component={Receipt} />
-
-
     </Router>
   </div>
-)
+);
 
-export default withRoot(
-  withStyles(styles)(withWidth()(App))
-)
+export default withRoot(withStyles(styles)(withWidth()(App)));

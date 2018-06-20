@@ -9,14 +9,14 @@ const styles = theme => ({
     padding: theme.spacing.unit * 1,
     transition: theme.transitions.create('background-color', {
       duration: theme.transitions.duration.shortest,
-    })
+    }),
   },
   overlay: {
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   overlayChecked: {
-    backgroundColor: theme.palette.divider
-  }
+    backgroundColor: theme.palette.divider,
+  },
 });
 
 class ToggleButton extends React.Component {
@@ -26,15 +26,20 @@ class ToggleButton extends React.Component {
     return (
       <ButtonBase
         {...this.props}
-        className={classNames(this.props.className, classes.base, this.props.checked ? classes.overlayChecked : classes.overlay)}>
+        className={classNames(
+          this.props.className,
+          classes.base,
+          this.props.checked ? classes.overlayChecked : classes.overlay,
+        )}
+      >
         {this.props.children}
       </ButtonBase>
-    )
+    );
   }
 }
 
 ToggleButton.propTypes = {
-  checked: PropTypes.bool.isRequired
+  checked: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(ToggleButton);

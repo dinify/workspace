@@ -17,7 +17,7 @@ const styles = theme => ({
       zIndex: 1,
       '& $imageBackdrop': {
         opacity: 0.12,
-      }
+      },
     },
   },
   imageBackdrop: {
@@ -37,7 +37,7 @@ const RestaurantListItem = ({
   tags,
   images,
   name,
-  shortDescription
+  shortDescription,
 }) => {
   return (
     <div>
@@ -46,27 +46,29 @@ const RestaurantListItem = ({
         className={classes.image}
         focusVisibleClassName={classes.focusVisible}
         style={{
-          width: '100%'
-        }}>
+          width: '100%',
+        }}
+      >
         <Carousel
           images={images}
-          backdrop={(<span className={classes.imageBackdrop} />)}
+          backdrop={<span className={classes.imageBackdrop} />}
         />
       </ButtonBase>
-      {tags &&
-        <Typography gutterBottom className={classes.category} variant="button" color="primary">
+      {tags && (
+        <Typography
+          gutterBottom
+          className={classes.category}
+          variant="button"
+          color="primary"
+        >
           {tags.join(' · ')}
         </Typography>
-      }
-      <Typography variant="title">
-        {name}
-      </Typography>
-      <Typography variant="body1">
-        {shortDescription}
-      </Typography>
+      )}
+      <Typography variant="title">{name}</Typography>
+      <Typography variant="body1">{shortDescription}</Typography>
     </div>
-  )
-}
+  );
+};
 
 RestaurantListItem.propTypes = {
   name: PropTypes.string.isRequired,

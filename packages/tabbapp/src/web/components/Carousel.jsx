@@ -10,7 +10,7 @@ import {
   isTouchMobile,
   isMobile,
   getPlatform,
-  supportsScrollSnap
+  supportsScrollSnap,
 } from 'utils';
 import { Motion, spring } from 'react-motion';
 
@@ -22,8 +22,8 @@ const styles = theme => ({
     top: 0,
     color: '#fff',
     '&:hover': {
-      backgroundColor: 'rgba(255, 255, 255, 0.12)'
-    }
+      backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    },
   },
   focusVisible: {},
   imageSrc: {
@@ -45,13 +45,13 @@ const styles = theme => ({
     top: 0,
     '& $div': {
       width: '100%',
-      height: '100%'
-    }
+      height: '100%',
+    },
   },
   pageIndicatorContainer: {
     paddingBottom: 8,
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   scrollSnapContainer: {
     position: 'absolute',
@@ -70,28 +70,26 @@ const styles = theme => ({
     display: 'inline-block',
     WebkitOverflowScrolling: 'touch',
     scrollSnapAlign: 'start',
-  }
+  },
 });
 
 class Carousel extends React.Component {
   state = {
-    selectedPage: 0
+    selectedPage: 0,
   };
 
-  handlePageChange = (delta) => {
+  handlePageChange = delta => {
     let pageCount = this.props.images.length;
     if (delta < 0 && this.state.selectedPage <= 0) {
-      this.setState({selectedPage: pageCount - 1});
-    }
-    else if (delta > 0 && this.state.selectedPage >= pageCount - 1) {
-      this.setState({selectedPage: 0});
-    }
-    else this.setState({selectedPage: this.state.selectedPage + delta});
-  }
+      this.setState({ selectedPage: pageCount - 1 });
+    } else if (delta > 0 && this.state.selectedPage >= pageCount - 1) {
+      this.setState({ selectedPage: 0 });
+    } else this.setState({ selectedPage: this.state.selectedPage + delta });
+  };
 
   handleChangeIndex = index => {
     this.setState({ selectedPage: index });
-  }
+  };
 
   handleScroll = e => {
     let ratio = e.target.scrollLeft / e.target.scrollWidth;
@@ -101,21 +99,27 @@ class Carousel extends React.Component {
       let proximity = relWidth / 20;
       let last = count - 1;
       if (ratio >= 0 && ratio < 2 * proximity) {
-        if (this.state.selectedPage !== 0) this.setState({selectedPage: 0});
-      }
-      else if (ratio > (last * relWidth) - (proximity * 2) && ratio <= last * relWidth) {
-        if (this.state.selectedPage !== last) this.setState({selectedPage: last});
-      }
-      else {
+        if (this.state.selectedPage !== 0) this.setState({ selectedPage: 0 });
+      } else if (
+        ratio > last * relWidth - proximity * 2 &&
+        ratio <= last * relWidth
+      ) {
+        if (this.state.selectedPage !== last)
+          this.setState({ selectedPage: last });
+      } else {
         for (let i = 1; i < last; i++) {
           let current = relWidth * i;
-          if (ratio > (i * relWidth) - proximity && ratio < (i * relWidth) + proximity) {
-            if (this.state.selectedPage !== i) this.setState({selectedPage: i});
+          if (
+            ratio > i * relWidth - proximity &&
+            ratio < i * relWidth + proximity
+          ) {
+            if (this.state.selectedPage !== i)
+              this.setState({ selectedPage: i });
           }
         }
       }
     }
-  }
+  };
 
   render() {
     const { classes, images } = this.props;
@@ -128,60 +132,74 @@ class Carousel extends React.Component {
     const TYPE_SCROLL_SNAP = 2;
     const TYPE_SWIPE = 3;
 
-    let type = images.length <= 1 ? TYPE_FIX : (
-      supportsScrollSnap() ? TYPE_SCROLL_SNAP : (
-        isTouchMobile() ? TYPE_SWIPE : TYPE_BUTTONS
-      )
-    );
+    let type =
+      images.length <= 1
+        ? TYPE_FIX
+        : supportsScrollSnap()
+          ? TYPE_SCROLL_SNAP
+          : isTouchMobile()
+            ? TYPE_SWIPE
+            : TYPE_BUTTONS;
 
-    let imagesAnimated = images.map((image, i) =>
+    let imagesAnimated = images.map((image, i) => (
       <Motion
         key={i}
-        defaultStyle={{x: i - selectedPage}}
-        style={{x: spring(i - selectedPage)}}>
+        defaultStyle={{ x: i - selectedPage }}
+        style={{ x: spring(i - selectedPage) }}
+      >
         {style => {
           let opacity = Math.max(0, 1 - Math.abs(style.x));
-          return <span
-            className={classes.imageSrc}
-            style={{
-              backgroundImage: `url(${image})`,
-              opacity: opacity,
-              WebkitTransform: `translateX(${style.x * 100}%)`,
-              transform: `translateX(${style.x * 100}%)`
-            }}/>;
+          return (
+            <span
+              className={classes.imageSrc}
+              style={{
+                backgroundImage: `url(${image})`,
+                opacity: opacity,
+                WebkitTransform: `translateX(${style.x * 100}%)`,
+                transform: `translateX(${style.x * 100}%)`,
+              }}
+            />
+          );
         }}
       </Motion>
-    );
+    ));
 
     return (
       <div
         style={{
           width: '100%',
           paddingTop: type === TYPE_FIX ? '66.6667%' : 'calc(66.6667% - 16px)',
-        }}>
-
-        {type === TYPE_FIX && images.length > 0 && (
-          <div className={classes.imageSrc}>
-            <img style={{width: '100%', height: '100%'}} src={images[0]}/>
-          </div>
-        )}
+        }}
+      >
+        {type === TYPE_FIX &&
+          images.length > 0 && (
+            <div className={classes.imageSrc}>
+              <img style={{ width: '100%', height: '100%' }} src={images[0]} />
+            </div>
+          )}
 
         {type === TYPE_SWIPE && (
           <div className={classes.slideContainer}>
             <SwipeableViews
-              resistance={platform === "ios"}
+              resistance={platform === 'ios'}
               index={selectedPage}
-              onChangeIndex={this.handleChangeIndex}>
-              {images.map((image, i) => <img style={{width: '100%', height: '100%'}} src={image}/>)}
+              onChangeIndex={this.handleChangeIndex}
+            >
+              {images.map((image, i) => (
+                <img style={{ width: '100%', height: '100%' }} src={image} />
+              ))}
             </SwipeableViews>
           </div>
         )}
 
         {type === TYPE_SCROLL_SNAP && (
-          <div className={classes.scrollSnapContainer} onScroll={this.handleScroll}>
+          <div
+            className={classes.scrollSnapContainer}
+            onScroll={this.handleScroll}
+          >
             {images.map((image, i) => (
               <div className={classes.scrollSnapChild}>
-                <img style={{width: '100%', height: '100%'}} src={image}/>
+                <img style={{ width: '100%', height: '100%' }} src={image} />
               </div>
             ))}
           </div>
@@ -189,22 +207,24 @@ class Carousel extends React.Component {
 
         {type === TYPE_BUTTONS && imagesAnimated}
         {!isMobile() && (
-          <div style={{pointerEvents: 'none'}}>
-            {this.props.backdrop}
-          </div>)
-        }
+          <div style={{ pointerEvents: 'none' }}>{this.props.backdrop}</div>
+        )}
         {type === TYPE_BUTTONS && (
           <div>
             <ButtonBase
               className={classes.carouselButton}
               onClick={() => this.handlePageChange(-1)}
-              style={{left: 0}} aria-label="Previous">
+              style={{ left: 0 }}
+              aria-label="Previous"
+            >
               <ChevronLeft />
             </ButtonBase>
             <ButtonBase
               className={classes.carouselButton}
               onClick={() => this.handlePageChange(1)}
-              style={{right: 0}} aria-label="Next">
+              style={{ right: 0 }}
+              aria-label="Next"
+            >
               <ChevronRight />
             </ButtonBase>
           </div>
@@ -213,14 +233,15 @@ class Carousel extends React.Component {
         {type !== TYPE_FIX && (
           <div className={classes.pageIndicatorContainer}>
             <PageIndicator
-              size={8} gap={8}
+              size={8}
+              gap={8}
               count={images.length}
               dotColor="rgba(255, 255, 255, 0.54)"
               selectedDotColor="rgba(255, 255, 255, 1)"
-              selectedPage={selectedPage}/>
+              selectedPage={selectedPage}
+            />
           </div>
         )}
-
       </div>
     );
   }
@@ -228,7 +249,7 @@ class Carousel extends React.Component {
 
 Carousel.propTypes = {
   images: PropTypes.array.isRequired,
-  backdrop: PropTypes.any
+  backdrop: PropTypes.any,
 };
 
 export default withStyles(styles)(Carousel);

@@ -1,11 +1,7 @@
 import React from 'react';
 
 const Receipt = () => {
-  return (
-    <div>
-
-    </div>
-  )
-}
+  return <div />;
+};
 
 export default Receipt;

@@ -1,11 +1,7 @@
 import React from 'react';
 
 const RestaurantProfile = () => {
-  return (
-    <div>
-
-    </div>
-  )
-}
+  return <div />;
+};
 
 export default RestaurantProfile;

@@ -1,4 +1,4 @@
-import { Get, Post } from './Network'
+import { Get, Post } from './Network';
 
 export function Register({ name, phone, email, password }) {
   return Post(
@@ -15,7 +15,7 @@ export function Register({ name, phone, email, password }) {
       birth_date: '1990-01-01',
       registration_type: 'LOCAL',
     },
-  )
+  );
 }
 
 export function Login({ email, password }) {
@@ -28,9 +28,9 @@ export function Login({ email, password }) {
       email,
       password,
     },
-  )
+  );
 }
 
 export function GetMe() {
-  return Get({ path: 'user/my' })
+  return Get({ path: 'user/my' });
 }

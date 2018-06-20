@@ -17,8 +17,8 @@ const styles = theme => ({
     right: '0',
     bottom: '0',
     marginBottom: '44px',
-    marginRight: '10px'
-  }
+    marginRight: '10px',
+  },
 });
 
 class MapStyleControl extends BaseControl {
@@ -28,7 +28,7 @@ class MapStyleControl extends BaseControl {
     // _onContainerLoad registers event listeners for map interactions
     return (
       <ButtonBase onClick={this.props.onClick} className={classes.mapButton}>
-        <InvertColors style={{width: '18px', height: '18px'}}/>
+        <InvertColors style={{ width: '18px', height: '18px' }} />
       </ButtonBase>
     );
   }
