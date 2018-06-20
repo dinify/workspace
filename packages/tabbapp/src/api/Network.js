@@ -5,7 +5,7 @@ export function Request(url, options = {}, noToken) {
   return new Promise((resolve, reject) => {
     if (!url) reject(new Error('URL parameter required'));
     const token = getCookie('access_token');
-    let defaultOptions = {};
+    const defaultOptions = {};
     if (!options.headers) {
       defaultOptions.headers = { 'Content-Type': 'application/json' };
     } else {
@@ -13,9 +13,9 @@ export function Request(url, options = {}, noToken) {
     }
     if (token.length > 0 && !noToken)
       defaultOptions.headers.Authorization = `Bearer ${token}`;
-    options = Object.assign(options, defaultOptions);
-    //console.log(options);
-    fetch(url, options)
+    const allOptions = Object.assign(options, defaultOptions);
+    //  console.log(options);
+    fetch(url, allOptions)
       .then(res =>
         res.text().then(text => ({
           status: res.status,
@@ -23,10 +23,10 @@ export function Request(url, options = {}, noToken) {
         })),
       )
       .then(res => {
-        //console.log(res.status);
-        //if (res.status === 401 && window.location.pathname !== '/') window.location.replace('/')
+        //  console.log(res.status);
+        //  if (res.status === 401 && window.location.pathname !== '/') window.location.replace('/')
         try {
-          const txt = res.text; //.replace('/**/','')
+          const txt = res.text; //  .replace('/**/','')
           if (txt.length < 5) return { status: res.status, json: null };
           return { status: res.status, json: JSON.parse(txt) };
         } catch (err) {
@@ -43,13 +43,13 @@ export function Request(url, options = {}, noToken) {
           // error
           if (json) {
             reject(json.errors || json);
-          } else {
-            reject('no json in response');
+            return;
           }
+          reject(new Error('No json in response'));
         }
       })
       .catch(e => {
-        //console.log('Request failed', e)
+        //  console.log('Request failed', e)
         reject(e);
       });
   });
@@ -60,7 +60,7 @@ const buildURL = ({ path }) => {
 };
 
 export function Get(urlParts, cookie) {
-  let opts = { method: 'GET' };
+  const opts = { method: 'GET' };
   if (cookie) opts.headers = { cookie };
   return Request(buildURL(urlParts), opts);
 }
@@ -70,21 +70,6 @@ export function Post(urlParts, body = {}) {
     {
       method: 'POST',
       body: JSON.stringify(body),
-    },
-    urlParts.noToken,
-  );
-}
-export function PostMultipart(urlParts, body = {}) {
-  const formData = new FormData();
-  for (let key in body) {
-    formData.append(key, body[key]);
-  }
-  return Request(
-    buildURL(urlParts),
-    {
-      method: 'POST',
-      headers: {},
-      body: formData,
     },
     urlParts.noToken,
   );

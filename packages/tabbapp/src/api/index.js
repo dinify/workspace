@@ -1,3 +1,4 @@
+// @flow
 import * as user from './user';
 import * as restaurant from './restaurant';
 

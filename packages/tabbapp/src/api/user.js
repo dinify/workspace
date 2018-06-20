@@ -1,6 +1,13 @@
+// @flow
 import { Get, Post } from './Network';
 
-export function Register({ name, phone, email, password }) {
+type RegisterProps = {
+  name: string,
+  phone: string,
+  email: string,
+  password: string,
+}
+export function Register({ name, phone, email, password }: RegisterProps) {
   return Post(
     {
       path: 'user/register',
@@ -18,7 +25,11 @@ export function Register({ name, phone, email, password }) {
   );
 }
 
-export function Login({ email, password }) {
+type LoginProps = {
+  email: string,
+  password: string,
+}
+export function Login({ email, password }: LoginProps) {
   return Post(
     {
       path: 'user/login',

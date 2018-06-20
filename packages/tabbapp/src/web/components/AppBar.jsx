@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { Link } from 'react-router';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import MuiAppBar from '@material-ui/core/AppBar';
@@ -47,7 +48,7 @@ type AppBarProps = {
   position: string,
   width: number,
   dark: boolean,
-  children: Object,
+  children?: React.Node,
 };
 
 const AppBar = ({
@@ -62,14 +63,14 @@ const AppBar = ({
     logoFiles[logoWithText ? 'text' : 'shape'][dark ? 'light' : 'dark'];
   const logoURL = `http://images.tabb.global/brand/${logoFile}`;
   const logo = (
-    <a href="/" className={logoWithText ? classes.logoText : classes.logo}>
+    <Link to="/" className={logoWithText ? classes.logoText : classes.logo}>
       <SVG
         className={logoWithText ? classes.logoText : classes.logo}
         src={logoURL}
       >
         <img src={logoURL} alt="TABB" />
       </SVG>
-    </a>
+    </Link>
   );
   return (
     <MuiAppBar position={position} color="default" className={classes.appBar}>

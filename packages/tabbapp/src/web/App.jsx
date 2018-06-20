@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Router, Route } from 'react-router';
+import { Router, Route, IndexRoute } from 'react-router';
 
 import Login from 'web/pages/Login';
 import Checkin from 'web/pages/Checkin';
@@ -48,21 +48,40 @@ const styles = theme => ({
   },
 });
 
+type CommonWrapperProps = {
+  children?: React.Node,
+}
+
+const CommonWrapper = ({
+  children
+}: CommonWrapperProps) => {
+  return (
+    <div>
+      <AppBar />
+      {children}
+    </div>
+  )
+}
+
 const App = ({ history }) => (
   <div>
-    <AppBar />
+
     <Router history={history}>
-      <Route exact path="/" component={Main} />
-      <Route path="/login" component={Login} />
-      <Route path="/checkin" component={Checkin} />
+      <Route path="/" component={CommonWrapper}>
+        <IndexRoute component={Main} />
+        <Route path="/login" component={Login} />
+        <Route path="/checkin" component={Checkin} />
 
-      <Route path="/restaurant/:subdomain" component={RestaurantProfile} />
-      <Route path="/category/:id" component={CategoryContent} />
-      <Route path="/food/:id" component={FoodDetail} />
+        <Route path="/restaurant/:subdomain" component={RestaurantProfile} />
+        <Route path="/category/:id" component={CategoryContent} />
+        <Route path="/food/:id" component={FoodDetail} />
 
-      <Route path="/cart" component={Cart} />
-      <Route path="/bill" component={Bill} />
-      <Route path="/receipt" component={Receipt} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/bill" component={Bill} />
+        <Route path="/receipt" component={Receipt} />
+      </Route>
+
+
     </Router>
   </div>
 );
