@@ -1,6 +1,7 @@
 // @flow
 import R from 'ramda';
 import types from './types';
+import authTypes from 'ducks/auth/types';
 
 const initialState = {
   all: {},
@@ -28,6 +29,16 @@ export default function reducer(state = initialState, action) {
       }
       const id = res.table.restaurant.id;
       return R.assoc('checkedInRestaurant', id)(state);
+    }
+    case types.FETCH_STATUS_FAIL: {
+      const payload = action.payload;
+      if (payload instanceof Array && payload[0].status === 401) {
+        return R.assoc('checkedInRestaurant', null)(state);
+      }
+      return state;
+    }
+    case authTypes.LOGOUT_DONE: {
+      return R.assoc('checkedInRestaurant', null)(state);
     }
     default:
       return state;

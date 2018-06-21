@@ -7,8 +7,10 @@ const unloggedEpic = (action$: Observable) =>
   action$
     .ofType(types.FETCH_ME_FAIL)
     .map(({ payload }) => {
-      if (payload[0].status === 401) return logoutInit();
-      return { type: '' };
+      if (payload instanceof Array && payload[0].status === 401) {
+        return logoutInit();
+      }
+      return Observable.of();
     });
 
 export default [

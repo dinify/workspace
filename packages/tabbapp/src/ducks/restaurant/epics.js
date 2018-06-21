@@ -11,15 +11,19 @@ type CheckinProps = {
   }
 }
 
-const checkinEpic = (action$: Observable) =>
+const checkinEpic = (action$: Observable, { getState }) =>
   action$
     .ofType(types.CHECKIN_INIT)
-    .switchMap(({ payload }: CheckinProps) =>
-      Observable.fromPromise(API.Checkin(payload))
+    .switchMap(({ payload }: CheckinProps) => {
+      if (!getState().user.loggedUserId) {
+        return Observable.of(checkinFail([{ status: 401 }]));
+      }
+      return Observable.fromPromise(API.Checkin(payload))
         .mergeMap(res => {
           return Observable.of(checkinDone(res));
         })
-        .catch(error => Observable.of(checkinFail(error))),
-    );
+        .catch(error => Observable.of(checkinFail(error)))
+    });
+
 
 export default [checkinEpic];

@@ -8,6 +8,11 @@ export const fetchStatusInit = () => ({
   type: types.FETCH_STATUS_INIT,
 });
 
+export const fetchStatusFail = (e) => ({
+  type: types.FETCH_STATUS_FAIL,
+  payload: e
+});
+
 export const checkinInit = (payload) => ({
   type: types.CHECKIN_INIT,
   payload
