@@ -1,5 +1,5 @@
 // @flow
-import { getCookie } from 'utils.js';
+import { getCookie } from 'lib/FN';
 
 export function Request(url, options = {}, noToken) {
   return new Promise((resolve, reject) => {

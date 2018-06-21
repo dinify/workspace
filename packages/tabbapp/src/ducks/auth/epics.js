@@ -5,7 +5,7 @@ import types from './types';
 import { loginFail, loginDone, logoutDone } from './actions';
 import { fetchMeInit } from 'ducks/user/actions';
 import { fetchStatusInit } from 'ducks/restaurant/actions';
-import { setCookie } from 'utils.js';
+import { setCookie } from 'lib/FN';
 
 const loginInitEpic = (action$: Observable) =>
   action$

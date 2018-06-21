@@ -11,7 +11,7 @@ import {
   isMobile,
   getPlatform,
   supportsScrollSnap,
-} from 'utils';
+} from 'lib/FN';
 import { Motion, spring } from 'react-motion';
 
 const styles = theme => ({
