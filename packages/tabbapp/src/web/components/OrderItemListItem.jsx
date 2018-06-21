@@ -1,9 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from 'web/components/Typography';
+import Grid from '@material-ui/core/Grid';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Carousel from './Carousel';
+import Carousel from 'web/components/Carousel';
+import * as FN from 'lib/FN';
 
 const styles = theme => ({
   image: {
@@ -11,7 +12,6 @@ const styles = theme => ({
     borderRadius: '4px',
     marginBottom: theme.spacing.unit,
     backgroundColor: theme.palette.divider,
-    boxShadow: theme.shadows[2],
     overflow: 'hidden !important',
     '&:hover, &$focusVisible': {
       zIndex: 1,
@@ -30,15 +30,16 @@ const styles = theme => ({
     opacity: 0,
     transition: theme.transitions.create('opacity'),
   },
+  price: {
+    color: theme.palette.text.secondary
+  },
 });
 
-const RestaurantListItem = ({
+const OrderItemListItem = ({
   classes,
-  tags,
-  images,
-  name,
-  shortDescription,
+  orderItem
 }) => {
+  const images = FN.MapToList(orderItem.menu_item.images).map(image => image.url)
   return (
     <div>
       <ButtonBase
@@ -47,34 +48,27 @@ const RestaurantListItem = ({
         focusVisibleClassName={classes.focusVisible}
         style={{
           width: '100%',
-        }}
-      >
+        }}>
         <Carousel
           images={images}
           backdrop={<span className={classes.imageBackdrop} />}
         />
       </ButtonBase>
-      {tags && (
-        <Typography
-          gutterBottom
-          className={classes.category}
-          variant="overline"
-          color="primary"
-        >
-          {tags.join(' · ')}
-        </Typography>
-      )}
-      <Typography variant="title">{name}</Typography>
-      <Typography variant="body1">{shortDescription}</Typography>
+      <Grid container spacing={8}>
+        <Grid item>
+          <Typography
+            className={classes.price}
+            variant="overline">
+            {`${orderItem.subtotal.amount} ${orderItem.subtotal.currency}`}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="title">{orderItem.menu_item.name}</Typography>
+        </Grid>
+      </Grid>
+      <Typography noWrap variant="body1">{orderItem.menu_item.description}</Typography>
     </div>
   );
 };
 
-RestaurantListItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  images: PropTypes.array.isRequired,
-  shortDescription: PropTypes.string.isRequired,
-  tags: PropTypes.array.isRequired,
-};
-
-export default withStyles(styles)(RestaurantListItem);
+export default withStyles(styles)(OrderItemListItem);

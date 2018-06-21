@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 
 import Login from 'web/pages/Login';
 import Checkin from 'web/pages/Checkin';
-import RestaurantProfile from 'web/pages/RestaurantProfile';
-import CategoryContent from 'web/pages/CategoryContent';
-import FoodDetail from 'web/pages/FoodDetail';
+import RestaurantView from 'web/pages/RestaurantView';
+import CategoryView from 'web/pages/CategoryView';
+import FoodView from 'web/pages/FoodView';
 import Cart from 'web/pages/Cart';
 import Bill from 'web/pages/Bill';
 import Receipt from 'web/pages/Receipt';
@@ -91,9 +91,9 @@ const App = ({ history }) => (
         <Route path="/login" component={Login} />
         <Route path="/checkin" component={Checkin} />
 
-        <Route path="/restaurant/:subdomain" component={RestaurantProfile} />
-        <Route path="/category/:id" component={CategoryContent} />
-        <Route path="/food/:id" component={FoodDetail} />
+      <Route path="/restaurant/:subdomain" component={RestaurantView} />
+      <Route path="/category/:id" component={FoodView} />
+      <Route path="/food/:id" component={FoodView} />
 
         <Route path="/cart" component={Cart} />
         <Route path="/bill" component={Bill} />

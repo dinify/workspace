@@ -1,4 +1,6 @@
 import React from 'react';
+import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
+import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,6 +19,8 @@ primary_700    #CE3F40
 primary_800    #C13939
 primary_900    #B1312F
 */
+const t = createMuiTheme().typography;
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -31,7 +35,23 @@ const theme = createMuiTheme({
     },
     text: {
       primary: 'rgba(0, 0, 0, 0.72)',
+      secondary: 'rgba(0, 0, 0, 0.38)',
     },
+  },
+  typography: {
+    // System font stack
+    /* fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','), */
   },
 });
 
@@ -41,9 +61,11 @@ function withRoot(Component) {
     // thanks to React context.
     return (
       <MuiThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Component {...props} />
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <Component {...props} />
+        </MuiPickersUtilsProvider>
       </MuiThemeProvider>
     );
   }

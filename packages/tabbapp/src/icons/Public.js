@@ -9,5 +9,5 @@ export default createSvgIcon(
   		c0.55,0,1-0.45,1-1V7h2c1.1,0,2-0.9,2-2V4.59c2.93,1.19,5,4.06,5,7.41C20,14.08,19.2,15.97,17.9,17.39z"
     />
   </g>,
-  'Accessibility',
+  'Public',
 );

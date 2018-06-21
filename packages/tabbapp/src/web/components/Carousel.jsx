@@ -93,7 +93,7 @@ class Carousel extends React.Component {
 
   handleScroll = e => {
     let ratio = e.target.scrollLeft / e.target.scrollWidth;
-    let count = this.props.images.length;
+    let count = this.props.images ? this.props.images.length : 0;
     if (count > 1) {
       let relWidth = 1 / count;
       let proximity = relWidth / 20;
@@ -122,7 +122,7 @@ class Carousel extends React.Component {
   };
 
   render() {
-    const { classes, images } = this.props;
+    const { classes, images, aspectRatio } = this.props;
     const { selectedPage } = this.state;
     const swipeable = isTouchMobile();
     const platform = getPlatform();
@@ -164,11 +164,14 @@ class Carousel extends React.Component {
       </Motion>
     ));
 
+    let ratio = Math.round((1 / aspectRatio) * 100 * 10000) / 10000;
     return (
       <div
         style={{
+          position: 'relative',
+          overflow: 'hidden',
           width: '100%',
-          paddingTop: type === TYPE_FIX ? '66.6667%' : 'calc(66.6667% - 16px)',
+          paddingTop: type === TYPE_FIX ? `${ratio}%` : `calc(${ratio}% - 16px)`,
         }}
       >
         {type === TYPE_FIX &&
@@ -250,6 +253,13 @@ class Carousel extends React.Component {
 Carousel.propTypes = {
   images: PropTypes.array.isRequired,
   backdrop: PropTypes.any,
+  aspectRatio: PropTypes.number,
+};
+
+Carousel.defaultProps = {
+  images: [],
+  aspectRatio: 3/2,
+  backdrop: PropTypes.any
 };
 
 export default withStyles(styles)(Carousel);

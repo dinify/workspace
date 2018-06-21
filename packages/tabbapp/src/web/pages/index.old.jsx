@@ -14,33 +14,9 @@ import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import ResponsiveGrid from 'web/components/ResponsiveGrid';
 
 const styles = theme => ({
-  root: {},
-  padded: {
-    paddingTop: '64px',
-    paddingLeft: theme.spacing.unit * 15,
-    paddingRight: theme.spacing.unit * 15,
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing.unit * 8,
-      paddingRight: theme.spacing.unit * 8,
-    },
-    [theme.breakpoints.down('xs')]: {
-      paddingTop: '56px',
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2,
-    },
-  },
-  paddedMap: {
-    paddingTop: theme.spacing.unit * 9,
-    paddingLeft: theme.spacing.unit * 3,
-    paddingRight: '464px',
-    [theme.breakpoints.down('md')]: {
-      paddingRight: theme.spacing.unit * 3,
-    },
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2,
-    },
-  },
+  root: {
+
+  }
 });
 
 class Index extends React.Component {
