@@ -73,6 +73,7 @@ const styles = theme => ({
   },
   scrollSnapChild: {
     position: 'relative',
+    borderRadius: props => props.borderRadius,
     height: '100%',
     width: '100%',
     display: 'inline-block',
@@ -221,10 +222,8 @@ class Carousel extends React.Component {
               <div
                 className={classes.scrollSnapChild}
                 style={{
-                    borderRadius: i === 0 ?
-                      `0 0 ${borderRadius}px ${borderRadius}px` : (i === images.length - 1 ?
-                      `${borderRadius}px ${borderRadius}px 0 0` : 0),
-                    backgroundImage: `url(${image})`
+                  borderRadius: borderRadius,
+                  backgroundImage: `url(${image})`
                 }}/>
             ))}
           </div>
