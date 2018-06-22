@@ -25,10 +25,8 @@ const Main = ({ classes, restaurantsMap }) => {
         <ResponsiveGrid lg={viewMode === 2 ? 4 : 3}>
           {restaurantsList.map(restaurant => (
             <RestaurantListItem
+              restaurant={restaurant}
               key={restaurant.id}
-              name={restaurant.name}
-              images={R.pluck('url')(FN.MapToList(restaurant.images))}
-              shortDescription="Sweet and savory crepes in a space like a country cafe"
             />
           ))}
         </ResponsiveGrid>

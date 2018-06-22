@@ -91,7 +91,7 @@ const App = ({ history }) => (
         <Route path="/login" component={Login} />
         <Route path="/checkin" component={Checkin} />
 
-      <Route path="/restaurant/:subdomain" component={RestaurantView} />
+      <Route path="/restaurant/:id" component={RestaurantView} />
       <Route path="/category/:id" component={FoodView} />
       <Route path="/food/:id" component={FoodView} />
 

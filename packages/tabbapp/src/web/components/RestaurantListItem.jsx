@@ -1,9 +1,12 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
+import R from 'ramda';
+import * as FN from 'lib/FN';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from 'web/components/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Carousel from './Carousel';
+import { Link } from 'react-router';
 
 const styles = theme => ({
   image: {
@@ -34,11 +37,12 @@ const styles = theme => ({
 
 const RestaurantListItem = ({
   classes,
-  tags,
-  images,
-  name,
-  shortDescription,
+  restaurant,
+
 }) => {
+  const images = R.pluck('url')(FN.MapToList(restaurant.images));
+  const shortDescription = 'Sweet and savory crepes in a space like a country cafe';
+  const tags = null;
   return (
     <div>
       <ButtonBase
@@ -64,17 +68,12 @@ const RestaurantListItem = ({
           {tags.join(' · ')}
         </Typography>
       )}
-      <Typography variant="title">{name}</Typography>
+      <Link to={`/restaurant/${restaurant.id}`}>
+        <Typography variant="title">{restaurant.name}</Typography>
+      </Link>
       <Typography variant="body1">{shortDescription}</Typography>
     </div>
   );
-};
-
-RestaurantListItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  images: PropTypes.array.isRequired,
-  shortDescription: PropTypes.string.isRequired,
-  tags: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(RestaurantListItem);
