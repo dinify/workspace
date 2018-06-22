@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -69,14 +70,16 @@ class OnboardingDialog extends React.Component {
     email: '',
     name: '',
     password: '',
-    selectedTab: this.props.isSignup ? 1 : 0,
+    selectedTab: this.props.isSignup ? 1 : 0
   };
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      selectedTab: nextProps.isSignup ? 1 : 0,
-      title: nextProps.isSignup ? 'Sign up' : 'Log in',
-    });
+    if (nextProps.open && !this.props.open) {
+      this.setState({
+        selectedTab: nextProps.isSignup ? 1 : 0,
+        title: nextProps.isSignup ? 'Sign up' : 'Log in',
+      });
+    }
   }
 
   handleTabChange = (event, value) => {
@@ -102,31 +105,32 @@ class OnboardingDialog extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    let title = this.state.selectedTab ? 'Next' : 'Log in';
+    const { classes, open, onClose } = this.props;
+    const { selectedTab, email, password, showPassword } = this.state;
+    let title = selectedTab ? 'Next' : 'Log in';
 
     let emailPasswordInput = (
       <div>
         <div style={{ paddingBottom: 8 }}>
           <TextField
-            autoFocus={!this.state.email}
-            required={this.state.selectedTab === 1}
+            autoFocus={!email}
+            required={selectedTab === 1}
             fullWidth
             type="email"
             id="email"
             label="Email"
-            value={this.state.email}
+            value={email}
             onChange={this.handleChangeTextField('email')}
           />
         </div>
-        <div style={this.state.selectedTab === 1 ? { paddingBottom: 8 } : {}}>
-          <FormControl fullWidth required={this.state.selectedTab === 1}>
+        <div style={selectedTab === 1 ? { paddingBottom: 8 } : {}}>
+          <FormControl fullWidth required={selectedTab === 1}>
             <InputLabel htmlFor="adornment-password">Password</InputLabel>
             <Input
               id="adornment-password"
-              autoFocus={this.state.email && !this.state.password}
-              type={this.state.showPassword ? 'text' : 'password'}
-              value={this.state.password}
+              autoFocus={email && !password}
+              type={showPassword ? 'text' : 'password'}
+              value={password}
               onChange={this.handleChangeTextField('password')}
               endAdornment={
                 <InputAdornment position="end">
@@ -149,15 +153,24 @@ class OnboardingDialog extends React.Component {
       </div>
     );
 
+    const LoginLink = props => <Link to={{
+            pathname: `/login`,
+            state: { modal: true }
+          }} {...props} />
+    const SignupLink = props => <Link to={{
+            pathname: `/signup`,
+            state: { modal: true }
+          }} {...props} />
+
     return (
       <Dialog
-        open={this.props.open}
-        onClose={this.props.onClose}
+        open={open}
+        onClose={onClose}
         aria-labelledby={title}
       >
         <Tabs
           fullWidth
-          value={this.state.selectedTab}
+          value={selectedTab}
           indicatorColor="primary"
           textColor="primary"
           onChange={this.handleTabChange}
@@ -201,15 +214,22 @@ class OnboardingDialog extends React.Component {
             </Typography>
             <Divider className={classes.grow} />
           </div>
-          <Login
-            submitComponent={
-              <DialogActions>
-                <Button type="submit" color="primary">
-                  Log in
-                </Button>
-              </DialogActions>
-            }
-          />
+          {selectedTab === 0 &&
+            <Login
+              submitComponent={
+                <DialogActions>
+                  <Button type="submit" color="primary">
+                    Log in
+                  </Button>
+                </DialogActions>
+              }
+            />
+          }
+          {selectedTab === 1 &&
+            <Typography align="center" variant="caption" style={{padding: 32}}>
+              [ Registration form placeholder ]
+            </Typography>
+          }
         </div>
       </Dialog>
     );

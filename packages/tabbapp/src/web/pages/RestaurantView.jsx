@@ -62,7 +62,7 @@ let RestaurantView = ({
   width,
   classes,
   restaurantsMap,
-  params,
+  match: { params },
   fetchMenucategories,
   menuCategoriesList
 }) => {

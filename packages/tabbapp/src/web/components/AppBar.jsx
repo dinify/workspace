@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import MuiAppBar from '@material-ui/core/AppBar';
@@ -47,8 +47,6 @@ const logoFiles = {
   },
 };
 
-const LoginLink = props => <Link to="/login" {...props} />
-
 type AppBarProps = {
   classes: object,
   position: string,
@@ -81,6 +79,15 @@ const AppBar = ({
       </SVG>
     </Link>
   );
+  const LoginLink = props => <Link to={{
+          pathname: `/login`,
+          state: { modal: true }
+        }} {...props} />
+  const SignupLink = props => <Link to={{
+          pathname: `/signup`,
+          state: { modal: true }
+        }} {...props} />
+
   return (
     <MuiAppBar position={position} color="default" className={classes.appBar}>
       <Toolbar>
@@ -101,7 +108,11 @@ const AppBar = ({
             >
               Log in
             </Button>
-            <Button variant="contained" color="primary">
+            <Button
+              component={SignupLink}
+              variant="contained"
+              color="primary"
+            >
               Sign up
             </Button>
           </div>

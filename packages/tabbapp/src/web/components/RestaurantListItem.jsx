@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from 'web/components/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Carousel from './Carousel';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   image: {

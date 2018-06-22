@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
-import { Router, Route, IndexRoute } from 'react-router';
+import { BrowserRouter as Router, Route, IndexRoute, Switch } from 'react-router-dom';
+import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 
 import Login from 'web/pages/Login';
@@ -13,55 +14,81 @@ import Bill from 'web/pages/Bill';
 import Receipt from 'web/pages/Receipt';
 import Main from 'web/pages/Main';
 
-import AppBar from 'web/components/AppBar';
-import ResponsiveContainer from 'web/components/ResponsiveContainer';
+import OnboardingDialog from 'web/components/OnboardingDialog';
 
-import { withStyles } from '@material-ui/core/styles';
 import withRoot from 'withRoot.js';
-import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 
 import { logoutInit } from 'ducks/auth/actions';
 import { getLoggedUser } from 'ducks/user/selectors';
 
-const styles = theme => ({
-  root: {},
-});
+class ModalSwitch extends React.Component {
+  previousLocation = this.props.location;
 
-type CommonWrapperProps = {
-  children?: React.Node,
-  classes: object,
+  componentWillUpdate(nextProps) {
+    const { location } = this.props;
+    // set previousLocation if props.location is not modal
+    if (
+      nextProps.history.action !== "POP" &&
+      (!location.state || !location.state.modal)
+    ) {
+      this.previousLocation = this.props.location;
+    }
+  }
+
+  match = (...paths) => {
+    let matched = false;
+    paths.forEach(path => {
+      matched = matched || matchPath(this.props.location.pathname, { path }) != null;
+    });
+    return matched;
+  }
+
+  back = e => {
+    e.stopPropagation();
+    this.props.history.goBack();
+  }
+
+  render() {
+    const { history, location } = this.props;
+    const isModal = !!(
+      location.state &&
+      location.state.modal &&
+      this.previousLocation !== location
+    ); // not initial render
+    return (
+      <div>
+        <Switch location={isModal ? this.previousLocation : location}>
+          <Route exact path="/" component={Main} />
+
+          { /* Renders if user opens a link in a new tab */ }
+          <Route path="/login" component={Main} />
+          <Route path="/signup" component={Main} />
+
+          <Route path="/checkin" component={Checkin} />
+          <Route path="/restaurant/:id" component={RestaurantView} />
+          <Route path="/category/:id" component={FoodView} />
+          <Route path="/food/:id" component={FoodView} />
+
+          <Route path="/cart" component={Cart} />
+          <Route path="/bill" component={Bill} />
+          <Route path="/receipt" component={Receipt} />
+        </Switch>
+        <OnboardingDialog
+          open={this.match('/login', '/signup')}
+          isSignup={this.match('/signup')}
+          onClose={this.back}
+        />
+      </div>
+    );
+  }
 }
 
-let CommonWrapper = ({
-  children,
-  classes,
-}: CommonWrapperProps) => {
-  return (
-    <div className={classes.root}>
-      {children}
-    </div>
-  )
-}
-CommonWrapper = withRoot(withStyles(styles)(CommonWrapper))
-
-const App = ({ history }) => (
+const App = () => (
   <div>
-    <Router history={history}>
-      <Route path="/" component={CommonWrapper}>
-        <IndexRoute component={Main} />
-        <Route path="/login" component={Login} />
-        <Route path="/checkin" component={Checkin} />
-
-        <Route path="/restaurant/:id" component={RestaurantView} />
-        <Route path="/category/:id" component={FoodView} />
-        <Route path="/food/:id" component={FoodView} />
-
-        <Route path="/cart" component={Cart} />
-        <Route path="/bill" component={Bill} />
-        <Route path="/receipt" component={Receipt} />
-      </Route>
+    <Router>
+      <Route component={ModalSwitch} />
     </Router>
   </div>
 );
 
-export default App;
+export default withRoot(App);
