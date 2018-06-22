@@ -25,32 +25,6 @@ import { getLoggedUser } from 'ducks/user/selectors';
 
 const styles = theme => ({
   root: {},
-  padded: {
-    paddingTop: '64px',
-    paddingLeft: theme.spacing.unit * 15,
-    paddingRight: theme.spacing.unit * 15,
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing.unit * 8,
-      paddingRight: theme.spacing.unit * 8,
-    },
-    [theme.breakpoints.down('xs')]: {
-      paddingTop: '56px',
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2,
-    },
-  },
-  paddedMap: {
-    paddingTop: theme.spacing.unit * 9,
-    paddingLeft: theme.spacing.unit * 3,
-    paddingRight: '464px',
-    [theme.breakpoints.down('md')]: {
-      paddingRight: theme.spacing.unit * 3,
-    },
-    [theme.breakpoints.down('xs')]: {
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2,
-    },
-  },
 });
 
 type CommonWrapperProps = {
@@ -61,46 +35,31 @@ type CommonWrapperProps = {
 let CommonWrapper = ({
   children,
   classes,
-  loggedUser,
-  logout,
 }: CommonWrapperProps) => {
   return (
     <div className={classes.root}>
-      <AppBar user={loggedUser} logout={logout} />
-      <ResponsiveContainer narrow={false}>
-        {children}
-      </ResponsiveContainer>
+      {children}
     </div>
   )
 }
-CommonWrapper = connect(
-  state => ({
-    loggedUser: getLoggedUser(state)
-  }), {
-    logout: logoutInit
-  }
-)(CommonWrapper)
-CommonWrapper = withRoot(withStyles(styles)(withWidth()(CommonWrapper)))
+CommonWrapper = withRoot(withStyles(styles)(CommonWrapper))
 
 const App = ({ history }) => (
   <div>
-
     <Router history={history}>
       <Route path="/" component={CommonWrapper}>
         <IndexRoute component={Main} />
         <Route path="/login" component={Login} />
         <Route path="/checkin" component={Checkin} />
 
-      <Route path="/restaurant/:id" component={RestaurantView} />
-      <Route path="/category/:id" component={FoodView} />
-      <Route path="/food/:id" component={FoodView} />
+        <Route path="/restaurant/:id" component={RestaurantView} />
+        <Route path="/category/:id" component={FoodView} />
+        <Route path="/food/:id" component={FoodView} />
 
         <Route path="/cart" component={Cart} />
         <Route path="/bill" component={Bill} />
         <Route path="/receipt" component={Receipt} />
       </Route>
-
-
     </Router>
   </div>
 );

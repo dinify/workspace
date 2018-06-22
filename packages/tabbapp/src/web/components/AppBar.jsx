@@ -10,6 +10,10 @@ import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import OnboardingDialog from 'web/components/OnboardingDialog';
 import SVG from 'react-inlinesvg';
 
+import { connect } from 'react-redux';
+import { logoutInit } from 'ducks/auth/actions';
+import { getLoggedUser } from 'ducks/user/selectors';
+
 const styles = theme => ({
   appBar: {
     boxShadow: 'none',
@@ -42,6 +46,8 @@ const logoFiles = {
     light: 'logo-text.svg',
   },
 };
+
+const LoginLink = props => <Link to="/login" {...props} />
 
 type AppBarProps = {
   classes: object,
@@ -86,9 +92,9 @@ const AppBar = ({
             {user.name}
             <Button onClick={logout}>Logout</Button>
           </div>
-        :
-          <Link to="/login">
+        : <div>
             <Button
+              component={LoginLink}
               variant="outlined"
               color="primary"
               style={{ marginRight: '24px', marginLeft: '24px' }}
@@ -98,7 +104,7 @@ const AppBar = ({
             <Button variant="contained" color="primary">
               Sign up
             </Button>
-          </Link>
+          </div>
         }
       </Toolbar>
       <Divider />
@@ -107,4 +113,10 @@ const AppBar = ({
   );
 };
 
-export default withStyles(styles)(withWidth()(AppBar));
+export default connect(
+  state => ({
+    user: getLoggedUser(state)
+  }), {
+    logout: logoutInit
+  }
+)(withStyles(styles)(withWidth()(AppBar)));

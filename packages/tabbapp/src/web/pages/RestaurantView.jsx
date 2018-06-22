@@ -16,6 +16,7 @@ import ChevronLeft from 'icons/ChevronLeft';
 import Today from 'icons/Today';
 import Favorite from 'icons/Favorite';
 import RestaurantMenu from 'icons/RestaurantMenu';
+import AppBar from 'web/components/AppBar';
 import FavoriteToggle from 'web/components/FavoriteToggle';
 import Typography from 'web/components/Typography';
 import Rating from 'web/components/Rating';
@@ -136,6 +137,7 @@ let RestaurantView = ({
 
   return (
     <div>
+      <AppBar position="static"/>
       <HorizontalScroller className={classes.imageContainer} padding={mediumScreen ? 24 : 16}>
         {FN.MapToList(restaurant.images).map(image =>
           <img className={classes.image} alt={restaurant.name} src={image.url}/>

@@ -3,6 +3,7 @@ import R from 'ramda';
 import { connect } from 'react-redux';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import ResponsiveGrid from 'web/components/ResponsiveGrid';
+import AppBar from 'web/components/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ChevronRight from 'icons/ChevronRight';
@@ -14,6 +15,7 @@ const Main = ({ classes, restaurantsMap }) => {
   const restaurantsList = FN.MapToList(restaurantsMap);
   return (
     <div>
+      <AppBar />
       <ResponsiveContainer narrow={viewMode === 2}>
         <Typography
           style={{ paddingTop: '32px' }}

@@ -11,7 +11,7 @@ import { Link } from 'react-router';
 const styles = theme => ({
   image: {
     position: 'relative',
-    borderRadius: '4px',
+    borderRadius: 4,
     marginBottom: theme.spacing.unit,
     backgroundColor: theme.palette.divider,
     boxShadow: theme.shadows[2],
@@ -38,41 +38,43 @@ const styles = theme => ({
 const RestaurantListItem = ({
   classes,
   restaurant,
-
 }) => {
   const images = R.pluck('url')(FN.MapToList(restaurant.images));
   const shortDescription = 'Sweet and savory crepes in a space like a country cafe';
   const tags = null;
+  const RestaurantLink = props => <Link to={`/restaurant/${restaurant.id}`} {...props}/>
   return (
-    <div>
-      <ButtonBase
-        disableRipple
-        className={classes.image}
-        focusVisibleClassName={classes.focusVisible}
-        style={{
-          width: '100%',
-        }}
-      >
-        <Carousel
-          images={images}
-          backdrop={<span className={classes.imageBackdrop} />}
-        />
-      </ButtonBase>
-      {tags && (
-        <Typography
-          gutterBottom
-          className={classes.category}
-          variant="overline"
-          color="primary"
-        >
-          {tags.join(' · ')}
-        </Typography>
-      )}
-      <Link to={`/restaurant/${restaurant.id}`}>
+    <ButtonBase
+      component={RestaurantLink}
+      disableRipple
+      style={{
+        width: '100%',
+      }}
+    >
+      <div>
+        <div className={classes.image}>
+          <Carousel
+            borderRadius={4}
+            aspectRatio={3/2}
+            images={images}
+            backdrop={<span className={classes.imageBackdrop} />}
+          />
+        </div>
+        {tags && (
+          <Typography
+            gutterBottom
+            className={classes.category}
+            variant="overline"
+            color="primary"
+          >
+            {tags.join(' · ')}
+          </Typography>
+        )}
+
         <Typography variant="title">{restaurant.name}</Typography>
-      </Link>
-      <Typography variant="body1">{shortDescription}</Typography>
-    </div>
+        <Typography variant="body1">{shortDescription}</Typography>
+      </div>
+    </ButtonBase>
   );
 };
 

@@ -55,7 +55,10 @@ const styles = theme => ({
   },
   scrollSnapContainer: {
     position: 'absolute',
+    left: 0,
+    right: 0,
     top: 0,
+    bottom: 0,
     WebkitScrollSnapType: 'mandatory',
     scrollSnapType: 'x mandatory',
     WebkitScrollSnapPointsX: 'repeat(100%)',
@@ -64,12 +67,19 @@ const styles = theme => ({
     overflowX: 'auto',
     overflowY: 'hidden',
     whiteSpace: 'nowrap',
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    },
   },
   scrollSnapChild: {
     position: 'relative',
+    height: '100%',
+    width: '100%',
     display: 'inline-block',
     WebkitOverflowScrolling: 'touch',
     scrollSnapAlign: 'start',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
 });
 
@@ -78,7 +88,8 @@ class Carousel extends React.Component {
     selectedPage: 0,
   };
 
-  handlePageChange = delta => {
+  handlePageChange = (delta, e) => {
+    e.preventDefault();
     let pageCount = this.props.images.length;
     if (delta < 0 && this.state.selectedPage <= 0) {
       this.setState({ selectedPage: pageCount - 1 });
@@ -122,7 +133,7 @@ class Carousel extends React.Component {
   };
 
   render() {
-    const { classes, images, aspectRatio } = this.props;
+    const { classes, images, aspectRatio, borderRadius } = this.props;
     const { selectedPage } = this.state;
     const swipeable = isTouchMobile();
     const platform = getPlatform();
@@ -148,13 +159,11 @@ class Carousel extends React.Component {
         style={{ x: spring(i - selectedPage) }}
       >
         {style => {
-          let opacity = Math.max(0, 1 - Math.abs(style.x));
           return (
             <span
               className={classes.imageSrc}
               style={{
                 backgroundImage: `url(${image})`,
-                opacity: opacity,
                 WebkitTransform: `translateX(${style.x * 100}%)`,
                 transform: `translateX(${style.x * 100}%)`,
               }}
@@ -176,9 +185,12 @@ class Carousel extends React.Component {
       >
         {type === TYPE_FIX &&
           images.length > 0 && (
-            <div className={classes.imageSrc}>
-              <img style={{ width: '100%', height: '100%' }} src={images[0]} />
-            </div>
+            <span
+              className={classes.imageSrc}
+              style={{
+                backgroundImage: `url(${images[0]})`
+              }}
+            />
           )}
 
         {type === TYPE_SWIPE && (
@@ -189,7 +201,12 @@ class Carousel extends React.Component {
               onChangeIndex={this.handleChangeIndex}
             >
               {images.map((image, i) => (
-                <img style={{ width: '100%', height: '100%' }} src={image} />
+                <span
+                  className={classes.imageSrc}
+                  style={{
+                    backgroundImage: `url(${image})`
+                  }}
+                />
               ))}
             </SwipeableViews>
           </div>
@@ -201,9 +218,14 @@ class Carousel extends React.Component {
             onScroll={this.handleScroll}
           >
             {images.map((image, i) => (
-              <div className={classes.scrollSnapChild}>
-                <img style={{ width: '100%', height: '100%' }} src={image} />
-              </div>
+              <div
+                className={classes.scrollSnapChild}
+                style={{
+                    borderRadius: i === 0 ?
+                      `0 0 ${borderRadius}px ${borderRadius}px` : (i === images.length - 1 ?
+                      `${borderRadius}px ${borderRadius}px 0 0` : 0),
+                    backgroundImage: `url(${image})`
+                }}/>
             ))}
           </div>
         )}
@@ -216,7 +238,7 @@ class Carousel extends React.Component {
           <div>
             <ButtonBase
               className={classes.carouselButton}
-              onClick={() => this.handlePageChange(-1)}
+              onClick={(e) => this.handlePageChange(-1, e)}
               style={{ left: 0 }}
               aria-label="Previous"
             >
@@ -224,7 +246,7 @@ class Carousel extends React.Component {
             </ButtonBase>
             <ButtonBase
               className={classes.carouselButton}
-              onClick={() => this.handlePageChange(1)}
+              onClick={(e) => this.handlePageChange(1, e)}
               style={{ right: 0 }}
               aria-label="Next"
             >
