@@ -31,8 +31,10 @@ import addDays from 'date-fns/addDays'
 import * as FN from 'lib/FN';
 import orderItemSample from './orderItem';
 import styled from 'styled-components';
+import { fetchRestaurantInit } from 'ducks/restaurant/actions';
 import { fetchMenucategoriesInit } from 'ducks/menuCategory/actions';
-import { getCategoriesOfRestaurant } from 'ducks/menuCategory/selectors';
+import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';
+import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
 
 const styles = theme => ({
   category: {
@@ -58,235 +60,244 @@ const CategoryImage = styled.div`
   width: 128px;
 `
 
-let RestaurantView = ({
-  width,
-  classes,
-  restaurant,
-  match: { params },
-  fetchMenucategories,
-  menuCategoriesList
-}) => {
-  if (!restaurant) return <div />;
-  if (params.id && menuCategoriesList.length < 1) {
-    fetchMenucategories({ restaurantId: params.id });
+class RestaurantView extends React.PureComponent {
+  componentWillMount() {
+    const {
+      fetchRestaurant,
+      fetchMenucategories,
+      match: { params }
+    } = this.props;
+    fetchRestaurant({ subdomain: params.subdomain });
+    fetchMenucategories({ subdomain: params.subdomain });
   }
-
-  let allTags = FN.MapToList(restaurant.tags);
-  let tags = [];
-  allTags.forEach(tag => {
-    if (tags.join().length + tag.name.length <= 50) {
-      tags.push(tag.name.split('_').join(' '))
+  render() {
+    const {
+      width,
+      classes,
+      restaurant,
+      menuCategoriesList
+    } = this.props;
+    if (!restaurant) {
+      return <div />
     }
-  });
 
-  // Temporary variables
-  const selectedDate = new Date()
-  const handleDateChange = () => {}
+      let allTags = FN.MapToList(restaurant.tags);
+      let tags = [];
+      allTags.forEach(tag => {
+        if (tags.join().length + tag.name.length <= 50) {
+          tags.push(tag.name.split('_').join(' '))
+        }
+      });
 
-  const smallScreen = isWidthDown('sm', width);
-  const mediumScreen = isWidthUp('md', width);
+      // Temporary variables
+      const selectedDate = new Date()
+      const handleDateChange = () => {}
 
-  const bookingForm = (
-    <div>
-      <Typography variant="caption">Date</Typography>
-      <BasePicker value={selectedDate} onChange={handleDateChange}>
-      {
-        ({
-          date,
-          handleAccept,
-          handleChange,
-          handleClear,
-          handleDismiss,
-          handleSetTodayDate,
-          handleTextFieldChange,
-          pick12hOr24hFormat,
-        }) => (
-          <div className="picker">
-            <Calendar
-              disablePast
-              maxDate={addDays(selectedDate, 60)}
-              leftArrowIcon={<ChevronLeft/>}
-              rightArrowIcon={<ChevronRight/>}
-              date={date}
-              onChange={handleChange} />
-          </div>
-        )
-      }
-      </BasePicker>
-      <Typography variant="caption">Guests</Typography>
-      <ValuePicker selected={1} options={['1', '2', '3', '4', '5', '6', '7+']}/>
-      <FormControl style={{marginTop: 16}} fullWidth className={classes.formControl}>
-        <InputLabel htmlFor="time-input-booking">Time</InputLabel>
-        <Select
-          native
-          value={3}
-          onChange={() => {}}
-          inputProps={{
-            name: 'time',
-            id: 'time-input-booking',
-          }}
-        >
-          <option value="" />
-          <option value={0}>6:30 PM</option>
-          <option value={1}>6:45 PM</option>
-          <option value={2}>7:00 PM</option>
-          <option value={3}>7:15 PM</option>
-          <option value={4}>7:30 PM</option>
-          <option value={5}>7:45 PM</option>
-          <option value={6}>8:00 PM</option>
-          <option value={7}>8:15 PM</option>
-          <option value={8}>8:30 PM</option>
-        </Select>
-      </FormControl>
-    </div>
-  )
+      const smallScreen = isWidthDown('sm', width);
+      const mediumScreen = isWidthUp('md', width);
 
-  return (
-    <div>
-      <AppBar position="static"/>
-      <HorizontalScroller className={classes.imageContainer} padding={mediumScreen ? 24 : 16}>
-        {FN.MapToList(restaurant.images).map(image =>
-          <img className={classes.image} alt={restaurant.name} src={image.url}/>
-        )}
-      </HorizontalScroller>
+      const bookingForm = (
+        <div>
+          <Typography variant="caption">Date</Typography>
+          <BasePicker value={selectedDate} onChange={handleDateChange}>
+          {
+            ({
+              date,
+              handleAccept,
+              handleChange,
+              handleClear,
+              handleDismiss,
+              handleSetTodayDate,
+              handleTextFieldChange,
+              pick12hOr24hFormat,
+            }) => (
+              <div className="picker">
+                <Calendar
+                  disablePast
+                  maxDate={addDays(selectedDate, 60)}
+                  leftArrowIcon={<ChevronLeft/>}
+                  rightArrowIcon={<ChevronRight/>}
+                  date={date}
+                  onChange={handleChange} />
+              </div>
+            )
+          }
+          </BasePicker>
+          <Typography variant="caption">Guests</Typography>
+          <ValuePicker selected={1} options={['1', '2', '3', '4', '5', '6', '7+']}/>
+          <FormControl style={{marginTop: 16}} fullWidth className={classes.formControl}>
+            <InputLabel htmlFor="time-input-booking">Time</InputLabel>
+            <Select
+              native
+              value={3}
+              onChange={() => {}}
+              inputProps={{
+                name: 'time',
+                id: 'time-input-booking',
+              }}
+            >
+              <option value="" />
+              <option value={0}>6:30 PM</option>
+              <option value={1}>6:45 PM</option>
+              <option value={2}>7:00 PM</option>
+              <option value={3}>7:15 PM</option>
+              <option value={4}>7:30 PM</option>
+              <option value={5}>7:45 PM</option>
+              <option value={6}>8:00 PM</option>
+              <option value={7}>8:15 PM</option>
+              <option value={8}>8:30 PM</option>
+            </Select>
+          </FormControl>
+        </div>
+      )
+      return (
+        <div>
+          <AppBar position="static"/>
+          <HorizontalScroller className={classes.imageContainer} padding={mediumScreen ? 24 : 16}>
+            {FN.MapToList(restaurant.images).map(image =>
+              <img className={classes.image} alt={restaurant.name} src={image.url}/>
+            )}
+          </HorizontalScroller>
 
-      <ResponsiveContainer>
-        <Grid container spacing={mediumScreen ? 24 : 16}>
-          <Grid item xs={12} md={6}>
+          <ResponsiveContainer>
             <Grid container spacing={mediumScreen ? 24 : 16}>
-              <Grid item style={{flex: 1}}>
-                {tags && (
-                  <Typography
-                    gutterBottom
-                    variant="overline"
-                    color="primary">
-                    {tags.join(' · ')}
-                  </Typography>
-                )}
-                <Typography gutterBottom variant="title">{restaurant.name}</Typography>
-                <Grid container spacing={8} alignItems="center">
-                  <Grid item>
-                    <Rating size={16} stars={5} rating={restaurant.rating}/>
+              <Grid item xs={12} md={6}>
+                <Grid container spacing={mediumScreen ? 24 : 16}>
+                  <Grid item style={{flex: 1}}>
+                    {tags && (
+                      <Typography
+                        gutterBottom
+                        variant="overline"
+                        color="primary">
+                        {tags.join(' · ')}
+                      </Typography>
+                    )}
+                    <Typography gutterBottom variant="title">{restaurant.name}</Typography>
+                    <Grid container spacing={8} alignItems="center">
+                      <Grid item>
+                        <Rating size={16} stars={5} rating={restaurant.rating}/>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="caption">
+                          {`${restaurant.rating} (${restaurant.rating_count})`}
+                        </Typography>
+                      </Grid>
+                    </Grid>
                   </Grid>
                   <Grid item>
-                    <Typography variant="caption">
-                      {`${restaurant.rating} (${restaurant.rating_count})`}
-                    </Typography>
+                    <FavoriteToggle />
+                  </Grid>
+                </Grid>
+
+                <Typography style={{marginTop: 8}} gutterBottom variant="subheading">{restaurant.description}</Typography>
+                <Typography
+                  className={classes.secondary}
+                  style={{ paddingTop: mediumScreen ? 24 : 16 }}
+                  gutterBottom
+                  variant="overline">
+                  About
+                </Typography>
+                <Typography gutterBottom variant="body1">{restaurant.about}</Typography>
+                <Divider style={{marginTop: 16, marginBottom: 16}} />
+                <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
+                  <Grid item>
+                    <Today className={classes.secondary} />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="subheading">Recent orders</Typography>
+                    <Typography variant="caption">See what people are eating in {restaurant.name} at the moment</Typography>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={mediumScreen ? 24 : 16}>
+                  <Grid item xs={6} sm={4} md={6}>
+                    <OrderItemListItem orderItem={orderItemSample[0]}/>
+                  </Grid>
+                </Grid>
+
+                <Divider style={{marginTop: 16, marginBottom: 16}} />
+                <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
+                  <Grid item>
+                    <Favorite className={classes.secondary} />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="subheading">Favorited</Typography>
+                    <Typography variant="caption">Your top picks in {restaurant.name}</Typography>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={mediumScreen ? 24 : 16}>
+                  <Grid item xs={6} sm={4} md={6}>
+                    <OrderItemListItem orderItem={orderItemSample[1]}/>
+                  </Grid>
+                </Grid>
+
+                <Divider style={{marginTop: 16, marginBottom: 16}} />
+                <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
+                  <Grid item>
+                    <RestaurantMenu className={classes.secondary} />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="subheading">Menu Categories</Typography>
+                    <Typography variant="caption">Everything you can get in {restaurant.name}</Typography>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={mediumScreen ? 24 : 16}>
+                  <Grid item xs={12} sm={12} md={12}>
+
+                    <HorizontalScroller>
+
+                      {menuCategoriesList.map((category) =>
+                        <CategoryImage
+                          src="https://images.unsplash.com/24/SAM_0551.JPG?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=cb5ed1a3fb606612dc325ecee33d4950"
+                        />
+                      )}
+
+                    </HorizontalScroller>
+
+                  </Grid>
+                </Grid>
+
+              </Grid>
+              <Grid item xs={12} md={6}>
+                {smallScreen && <Divider/>}
+                <Typography
+                  style={{ paddingTop: mediumScreen ? 24 : 16 }}
+                  variant="subheading"
+                  align="center"
+                  gutterBottom>
+                  Snatch a table
+                </Typography>
+                <Grid container justify="center">
+                  <Grid item>
+                    {smallScreen && <div>
+                      {bookingForm}
+                    </div>}
+                    {!smallScreen && <Card>
+                      <CardContent>
+                        {bookingForm}
+                      </CardContent>
+                      <CardActions>
+                        <Button size="small" color="primary">Book</Button>
+                      </CardActions>
+                    </Card>}
+                    <div style={{flex: 1}}/>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item>
-                <FavoriteToggle />
-              </Grid>
             </Grid>
-
-            <Typography style={{marginTop: 8}} gutterBottom variant="subheading">{restaurant.description}</Typography>
-            <Typography
-              className={classes.secondary}
-              style={{ paddingTop: mediumScreen ? 24 : 16 }}
-              gutterBottom
-              variant="overline">
-              About
-            </Typography>
-            <Typography gutterBottom variant="body1">{restaurant.about}</Typography>
-            <Divider style={{marginTop: 16, marginBottom: 16}} />
-            <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
-              <Grid item>
-                <Today className={classes.secondary} />
-              </Grid>
-              <Grid item>
-                <Typography variant="subheading">Recent orders</Typography>
-                <Typography variant="caption">See what people are eating in {restaurant.name} at the moment</Typography>
-              </Grid>
-            </Grid>
-            <Grid container spacing={mediumScreen ? 24 : 16}>
-              <Grid item xs={6} sm={4} md={6}>
-                <OrderItemListItem orderItem={orderItemSample[0]}/>
-              </Grid>
-            </Grid>
-
-            <Divider style={{marginTop: 16, marginBottom: 16}} />
-            <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
-              <Grid item>
-                <Favorite className={classes.secondary} />
-              </Grid>
-              <Grid item>
-                <Typography variant="subheading">Favorited</Typography>
-                <Typography variant="caption">Your top picks in {restaurant.name}</Typography>
-              </Grid>
-            </Grid>
-            <Grid container spacing={mediumScreen ? 24 : 16}>
-              <Grid item xs={6} sm={4} md={6}>
-                <OrderItemListItem orderItem={orderItemSample[1]}/>
-              </Grid>
-            </Grid>
-
-            <Divider style={{marginTop: 16, marginBottom: 16}} />
-            <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
-              <Grid item>
-                <RestaurantMenu className={classes.secondary} />
-              </Grid>
-              <Grid item>
-                <Typography variant="subheading">Menu Categories</Typography>
-                <Typography variant="caption">Everything you can get in {restaurant.name}</Typography>
-              </Grid>
-            </Grid>
-            <Grid container spacing={mediumScreen ? 24 : 16}>
-              <Grid item xs={12} sm={12} md={12}>
-
-                <HorizontalScroller>
-
-                  {menuCategoriesList.map((category) =>
-                    <CategoryImage
-                      src="https://images.unsplash.com/24/SAM_0551.JPG?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=cb5ed1a3fb606612dc325ecee33d4950"
-                    />
-                  )}
-
-                </HorizontalScroller>
-
-              </Grid>
-            </Grid>
-
-          </Grid>
-          <Grid item xs={12} md={6}>
-            {smallScreen && <Divider/>}
-            <Typography
-              style={{ paddingTop: mediumScreen ? 24 : 16 }}
-              variant="subheading"
-              align="center"
-              gutterBottom>
-              Snatch a table
-            </Typography>
-            <Grid container justify="center">
-              <Grid item>
-                {smallScreen && <div>
-                  {bookingForm}
-                </div>}
-                {!smallScreen && <Card>
-                  <CardContent>
-                    {bookingForm}
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">Book</Button>
-                  </CardActions>
-                </Card>}
-                <div style={{flex: 1}}/>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </ResponsiveContainer>
-    </div>
-  );
-};
+          </ResponsiveContainer>
+        </div>
+      );
+  }
+}
 
 RestaurantView = connect(
-  (state, ownProps) => ({
-    restaurant: state.restaurant.all[ownProps.match.params.id],
-    menuCategoriesList: getCategoriesOfRestaurant(state, ownProps.match.params.id)
+  (state, { match }) => ({
+    restaurant: getRestaurantBySubdomain(state, match.params.subdomain),
+    menuCategoriesList: getCategoriesBySubdomain(state, match.params.subdomain)
   }),
   {
-    fetchMenucategories: fetchMenucategoriesInit
+    fetchMenucategories: fetchMenucategoriesInit,
+    fetchRestaurant: fetchRestaurantInit,
   }
 )(RestaurantView)
 

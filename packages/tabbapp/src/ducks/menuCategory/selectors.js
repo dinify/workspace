@@ -2,10 +2,17 @@ import { createSelector } from 'reselect'
 import R from 'ramda'
 import * as FN from 'lib/FN';
 
-export const getCategoriesOfRestaurant = createSelector(
+export const getCategoriesBySubdomain = createSelector(
   [
-    (state, id) => id,
-    (state) => state.menuCategory.all
+    (state, subdomain) => subdomain,
+    (state) => state.menuCategory.all,
+    (state) => state.restaurant.all
   ],
-  (id, categoriesList) => R.filter(R.propEq('restaurant_id', id), FN.MapToList(categoriesList))
+  (subdomain, categoriesList, restaurantsMap) => {
+    const restaurant = R.find(R.propEq('subdomain', subdomain))(FN.MapToList(restaurantsMap));
+    if (restaurant) {
+      return R.filter(R.propEq('restaurant_id', restaurant.id), FN.MapToList(categoriesList));
+    }
+    return [];
+  }
 )

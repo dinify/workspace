@@ -48,7 +48,7 @@ const RestaurantListItem = ({
     }
   });
 
-  const RestaurantLink = props => <Link to={`/restaurant/${restaurant.id}`} {...props}/>
+  const RestaurantLink = props => <Link to={`/restaurant/${restaurant.subdomain}`} {...props}/>
   return (
     <ButtonBase
       component={RestaurantLink}

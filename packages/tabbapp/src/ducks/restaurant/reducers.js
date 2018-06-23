@@ -18,6 +18,10 @@ export default function reducer(state = initialState, action) {
       });
       return newState;
     }
+    case types.FETCH_RESTAURANT_DONE: {
+      const restaurant = action.payload.res;
+      return R.assocPath(['all', restaurant.id], restaurant)(state);
+    }
     case types.CHECKIN_DONE: {
       const id = action.payload.table.restaurant.id;
       return R.assoc('checkedInRestaurant', id)(state);

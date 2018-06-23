@@ -5,10 +5,17 @@ export function GetRestaurants() {
   return Get({ path: `restaurant/list?with=images,tags` });
 }
 
-type GetCategoriesArgs = { restaurantId: string };
+type GetRestaurantById = { id: string, subdomain?: null };
+type GetRestaurantBySubdomain = { id?: null, subdomain: string };
 
-export function GetMenucategories({ restaurantId }: GetCategoriesArgs) {
-  return Get({ path: `restaurant/${restaurantId}/categories` });
+export function GetRestaurant({ subdomain }: GetRestaurantById | GetRestaurantBySubdomain) {
+  return Get({ path: `restaurant/${subdomain}?with=images,tags` });
+}
+
+type GetCategoriesArgs = { subdomain: string };
+
+export function GetMenucategories({ subdomain }: GetCategoriesArgs) {
+  return Get({ path: `restaurant/${subdomain}/categories` });
 }
 
 type CheckinWithQr = { qr: string, code?: null };
