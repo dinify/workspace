@@ -154,8 +154,8 @@ class RestaurantView extends React.PureComponent {
         <div>
           <AppBar position="static"/>
           <HorizontalScroller className={classes.imageContainer} padding={mediumScreen ? 24 : 16}>
-            {FN.MapToList(restaurant.images).map(image =>
-              <img className={classes.image} alt={restaurant.name} src={image.url}/>
+            {FN.MapToList(restaurant.images).map((image, i) =>
+              <img className={classes.image} alt={restaurant.name} src={image.url} key={i} />
             )}
           </HorizontalScroller>
 
@@ -245,8 +245,9 @@ class RestaurantView extends React.PureComponent {
 
                     <HorizontalScroller>
 
-                      {menuCategoriesList.map((category) =>
+                      {menuCategoriesList.map((category, i) =>
                         <CategoryImage
+                          key={i}
                           src="https://images.unsplash.com/24/SAM_0551.JPG?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=cb5ed1a3fb606612dc325ecee33d4950"
                         />
                       )}

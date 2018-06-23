@@ -58,7 +58,7 @@ const Rating = ({
           </div>
         );
         const star = (
-          <div style={{
+          <div key={i} style={{
             position: 'relative',
             display: 'inline-block',
             marginRight: 0,

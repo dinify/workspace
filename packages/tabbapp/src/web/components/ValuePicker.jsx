@@ -4,7 +4,7 @@ import Day from 'material-ui-pickers/DatePicker/Day';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-  
+
 })
 
 const ValuePicker = ({
@@ -15,7 +15,7 @@ const ValuePicker = ({
   return (
     <Grid container wrap="nowrap" justify="flex-start" alignItems="center">
       {options.map((option, i) => (
-        <Grid item>
+        <Grid item key={i}>
           <Day selected={i === selected}>
             {option}
           </Day>

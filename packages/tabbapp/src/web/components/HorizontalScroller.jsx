@@ -39,7 +39,7 @@ const HorizontalScroller = ({
         }}>
 
         {children && children.map((child, i) =>
-          <div className={classes.item} style={{
+          <div className={classes.item} key={i} style={{
             marginLeft: i === 0 ? 0 : (4 || spacing),
             marginRight: i === children.length - 1 ? 0 : (4 || spacing),
           }}>
