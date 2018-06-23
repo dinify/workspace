@@ -79,7 +79,7 @@ const AppBar = ({
               component={LoginLink}
               variant="outlined"
               color="primary"
-              style={{ marginRight: '24px', marginLeft: '24px' }}
+              style={{ marginRight: 24, marginLeft: 24 }}
             >
               Log in
             </Button>

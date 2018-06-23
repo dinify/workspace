@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import withWidth from '@material-ui/core/withWidth';
+import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 
 class ResponsiveGrid extends React.Component {
   state = {
@@ -24,11 +24,11 @@ class ResponsiveGrid extends React.Component {
   };
 
   render() {
-    const { children } = this.props;
+    const { children, width } = this.props;
     const { breakpoint } = this.state;
 
     return (
-      <Grid container spacing={false ? 16 : 24}>
+      <Grid container spacing={isWidthDown('sm', width) ? 16 : 24}>
         {children &&
           children.map((child, i) => (
             <Grid item key={i} xs={breakpoint === 0 ? 12 : 6} sm={breakpoint === 1 ? 6 : 4} md={3} lg={3}>

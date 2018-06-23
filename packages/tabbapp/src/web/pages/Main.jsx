@@ -17,7 +17,7 @@ const Main = ({ classes, restaurantsMap }) => {
       <AppBar />
       <ResponsiveContainer>
         <Typography
-          style={{ paddingTop: '32px' }}
+          style={{ paddingTop: 32 }}
           variant="headline"
           gutterBottom
         >
@@ -32,7 +32,7 @@ const Main = ({ classes, restaurantsMap }) => {
           ))}
         </ResponsiveGrid>
         <Typography
-          style={{ marginBottom: '8px', marginTop: 32 }}
+          style={{ marginBottom: 8, marginTop: 32 }}
           variant="caption"
         >
           455 more
