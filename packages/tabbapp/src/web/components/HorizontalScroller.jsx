@@ -22,14 +22,14 @@ const styles = theme => ({
 
 const HorizontalScroller = ({
   classes,
-  height,
+  height = 240,
   padding,
   spacing,
   children,
 }) => {
   return (
     <div className={classes.container} style={{
-      height: 240 || height,
+      height
     }}>
       <div style={{flex: 1, minWidth: padding || 0}}/>
         <div style={{

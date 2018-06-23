@@ -11,12 +11,13 @@ const ValuePicker = ({
   classes,
   selected,
   options,
+  handleChange = () => {}
 }) => {
   return (
     <Grid container wrap="nowrap" justify="flex-start" alignItems="center">
       {options.map((option, i) => (
         <Grid item key={i}>
-          <Day selected={i === selected}>
+          <Day selected={i === selected} onClick={() => handleChange(i)}>
             {option}
           </Day>
         </Grid>

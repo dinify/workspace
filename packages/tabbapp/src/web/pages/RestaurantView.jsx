@@ -30,11 +30,12 @@ import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import addDays from 'date-fns/addDays'
 import * as FN from 'lib/FN';
 import orderItemSample from './orderItem';
-import styled from 'styled-components';
 import { fetchRestaurantInit } from 'ducks/restaurant/actions';
 import { fetchMenucategoriesInit } from 'ducks/menuCategory/actions';
+import { setGuestsInit, setTimeInit, setDateInit } from 'ducks/booking/actions';
 import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   category: {
@@ -62,12 +63,86 @@ const styles = theme => ({
   }
 });
 
-const CategoryImage = styled.div`
-  background-image: url(${props => props.src});
-  border-radius: 4px;
-  background-size: cover;
-  width: 128px;
-`
+let BookingForm = ({
+  classes,
+  time,
+  guests,
+  selectedDate,
+  setTime,
+  setGuests,
+  setDate
+}) => {
+  // Temporary variables
+  const handleDateChange = () => {}
+  return (
+    <div>
+      <Typography variant="caption">Date</Typography>
+      <BasePicker value={selectedDate} onChange={handleDateChange}>
+      {
+        ({
+          date,
+          handleAccept,
+          handleChange,
+          handleClear,
+          handleDismiss,
+          handleSetTodayDate,
+          handleTextFieldChange,
+          pick12hOr24hFormat,
+        }) => (
+          <div className="picker">
+            <Calendar
+              disablePast
+              maxDate={addDays(selectedDate, 60)}
+              leftArrowIcon={<ChevronLeft/>}
+              rightArrowIcon={<ChevronRight/>}
+              date={date}
+              onChange={(val) => setDate(val)} />
+          </div>
+        )
+      }
+      </BasePicker>
+      <Typography variant="caption">Guests</Typography>
+      <ValuePicker handleChange={setGuests} selected={guests} options={['1', '2', '3', '4', '5', '6', '7+']}/>
+      <FormControl style={{marginTop: 16}} fullWidth className={classes.formControl}>
+        <InputLabel htmlFor="time-input-booking">Time</InputLabel>
+        <Select
+          native
+          value={time || ''}
+          onChange={(event) => setTime(event.target.value)}
+          inputProps={{
+            name: 'time',
+            id: 'time-input-booking',
+          }}
+        >
+          <option value="" />
+          <option value={0}>6:30 PM</option>
+          <option value={1}>6:45 PM</option>
+          <option value={2}>7:00 PM</option>
+          <option value={3}>7:15 PM</option>
+          <option value={4}>7:30 PM</option>
+          <option value={5}>7:45 PM</option>
+          <option value={6}>8:00 PM</option>
+          <option value={7}>8:15 PM</option>
+          <option value={8}>8:30 PM</option>
+        </Select>
+      </FormControl>
+    </div>
+  )
+}
+
+BookingForm = connect(
+  (state) => ({
+    time: state.booking.time,
+    guests: state.booking.guests,
+    selectedDate: state.booking.date
+  }),
+  {
+    setGuests: setGuestsInit,
+    setTime: setTimeInit,
+    setDate: setDateInit,
+  }
+)(BookingForm)
+
 
 class RestaurantView extends React.PureComponent {
   componentWillMount() {
@@ -101,69 +176,12 @@ class RestaurantView extends React.PureComponent {
     const extraSmallScreen = isWidthDown('xs', width);
     const smallScreen = isWidthDown('sm', width);
     const mediumScreen = isWidthUp('md', width);
-    // Temporary variables
-    const selectedDate = new Date()
-    const handleDateChange = () => {}
 
     const sm = isWidthDown('sm', width);
     const md = !sm && isWidthDown('md', width);
     const lg = !md && isWidthDown('lg', width);
     const xl = !lg && isWidthDown('xl', width);
 
-    const bookingForm = (
-        <div>
-          <Typography variant="caption">Date</Typography>
-          <BasePicker value={selectedDate} onChange={handleDateChange}>
-          {
-            ({
-              date,
-              handleAccept,
-              handleChange,
-              handleClear,
-              handleDismiss,
-              handleSetTodayDate,
-              handleTextFieldChange,
-              pick12hOr24hFormat,
-            }) => (
-              <div className="picker">
-                <Calendar
-                  disablePast
-                  maxDate={addDays(selectedDate, 60)}
-                  leftArrowIcon={<ChevronLeft/>}
-                  rightArrowIcon={<ChevronRight/>}
-                  date={date}
-                  onChange={handleChange} />
-              </div>
-            )
-          }
-          </BasePicker>
-          <Typography variant="caption">Guests</Typography>
-          <ValuePicker selected={1} options={['1', '2', '3', '4', '5', '6', '7+']}/>
-          <FormControl style={{marginTop: 16}} fullWidth className={classes.formControl}>
-            <InputLabel htmlFor="time-input-booking">Time</InputLabel>
-            <Select
-              native
-              value={3}
-              onChange={() => {}}
-              inputProps={{
-                name: 'time',
-                id: 'time-input-booking',
-              }}
-            >
-              <option value="" />
-              <option value={0}>6:30 PM</option>
-              <option value={1}>6:45 PM</option>
-              <option value={2}>7:00 PM</option>
-              <option value={3}>7:15 PM</option>
-              <option value={4}>7:30 PM</option>
-              <option value={5}>7:45 PM</option>
-              <option value={6}>8:00 PM</option>
-              <option value={7}>8:15 PM</option>
-              <option value={8}>8:30 PM</option>
-            </Select>
-          </FormControl>
-        </div>
-      )
     return (
       <div>
         <AppBar position="static"/>
@@ -270,13 +288,14 @@ class RestaurantView extends React.PureComponent {
               <Grid container spacing={mediumScreen ? 24 : 16}>
                 <Grid item xs={12} sm={12} md={12}>
 
-                  <HorizontalScroller>
+                  <HorizontalScroller height={100}>
 
                     {menuCategoriesList.map((category, i) =>
-                      <CategoryImage
-                        key={i}
-                        src="https://images.unsplash.com/24/SAM_0551.JPG?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=cb5ed1a3fb606612dc325ecee33d4950"
-                      />
+                      <Link to={`/category/${category.id}`} key={i}>
+                        <img
+                          src="https://images.unsplash.com/24/SAM_0551.JPG?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=160&h=100&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=cb5ed1a3fb606612dc325ecee33d4950"
+                        />
+                      </Link>
                     )}
 
                   </HorizontalScroller>
@@ -297,11 +316,11 @@ class RestaurantView extends React.PureComponent {
               <Grid container justify="center">
                 <Grid item>
                   {smallScreen && <div>
-                    {bookingForm}
+                    <BookingForm classes={classes} />
                   </div>}
                   {!smallScreen && <Card>
                     <CardContent>
-                      {bookingForm}
+                      <BookingForm classes={classes} />
                     </CardContent>
                     <CardActions>
                       <Button size="small" color="primary">Book</Button>
