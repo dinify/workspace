@@ -18,6 +18,12 @@ export function GetMenucategories({ subdomain }: GetCategoriesArgs) {
   return Get({ path: `restaurant/${subdomain}/categories` });
 }
 
+type GetMenuitemsArgs = { categoryId: string };
+
+export function GetMenuitems({ categoryId }: GetMenuitemsArgs) {
+  return Get({ path: `menu/category/${categoryId}/items` });
+}
+
 type CheckinWithQr = { qr: string, code?: null };
 type CheckinWithCode = { qr?: null, code: string };
 

@@ -1,0 +1,5 @@
+export default {
+  FETCH_MENUITEMS_INIT: 'tabb/menuCategory/FETCH_MENUITEMS_INIT',
+  FETCH_MENUITEMS_DONE: 'tabb/menuCategory/FETCH_MENUITEMS_DONE',
+  FETCH_MENUITEMS_FAIL: 'tabb/menuCategory/FETCH_MENUITEMS_FAIL',
+};

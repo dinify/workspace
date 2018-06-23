@@ -1,10 +1,8 @@
 // @flow
 import React from 'react';
-import { BrowserRouter as Router, Route, IndexRoute, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { matchPath } from 'react-router';
-import { connect } from 'react-redux';
 
-import Login from 'web/pages/Login';
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
 import CategoryView from 'web/pages/CategoryView';
@@ -18,11 +16,7 @@ import OnboardingDialog from 'web/components/OnboardingDialog';
 
 import withRoot from 'withRoot.js';
 
-import { logoutInit } from 'ducks/auth/actions';
-import { getLoggedUser } from 'ducks/user/selectors';
-
 class ModalSwitch extends React.Component {
-  previousLocation = this.props.location;
 
   componentWillUpdate(nextProps) {
     const { location } = this.props;
@@ -34,6 +28,8 @@ class ModalSwitch extends React.Component {
       this.previousLocation = this.props.location;
     }
   }
+
+  previousLocation = this.props.location;
 
   match = (...paths) => {
     let matched = false;
@@ -49,7 +45,7 @@ class ModalSwitch extends React.Component {
   }
 
   render() {
-    const { history, location } = this.props;
+    const { location } = this.props;
     const isModal = !!(
       location.state &&
       location.state.modal &&
