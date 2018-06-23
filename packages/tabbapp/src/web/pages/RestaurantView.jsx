@@ -71,6 +71,14 @@ let RestaurantView = ({
     fetchMenucategories({ restaurantId: params.id });
   }
 
+  let allTags = FN.MapToList(restaurant.tags);
+  let tags = [];
+  allTags.forEach(tag => {
+    if (tags.join().length + tag.name.length <= 50) {
+      tags.push(tag.name.split('_').join(' '))
+    }
+  });
+
   // Temporary variables
   const selectedDate = new Date()
   const handleDateChange = () => {}
@@ -147,12 +155,12 @@ let RestaurantView = ({
           <Grid item xs={12} md={6}>
             <Grid container spacing={mediumScreen ? 24 : 16}>
               <Grid item style={{flex: 1}}>
-                {restaurant.tags && (
+                {tags && (
                   <Typography
                     gutterBottom
                     variant="overline"
                     color="primary">
-                    {restaurant.tags.join(' · ')}
+                    {tags.join(' · ')}
                   </Typography>
                 )}
                 <Typography gutterBottom variant="title">{restaurant.name}</Typography>

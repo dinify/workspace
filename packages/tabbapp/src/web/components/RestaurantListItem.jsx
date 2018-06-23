@@ -40,8 +40,14 @@ const RestaurantListItem = ({
   restaurant,
 }) => {
   const images = R.pluck('url')(FN.MapToList(restaurant.images));
-  const shortDescription = 'Sweet and savory crepes in a space like a country cafe';
-  const tags = null;
+  let allTags = FN.MapToList(restaurant.tags);
+  let tags = [];
+  allTags.forEach(tag => {
+    if (tags.join().length + tag.name.length <= 25) {
+      tags.push(tag.name.split('_').join(' '))
+    }
+  });
+
   const RestaurantLink = props => <Link to={`/restaurant/${restaurant.id}`} {...props}/>
   return (
     <ButtonBase
@@ -72,7 +78,7 @@ const RestaurantListItem = ({
         )}
 
         <Typography variant="title">{restaurant.name}</Typography>
-        <Typography variant="body1">{shortDescription}</Typography>
+        <Typography variant="body1">{restaurant.description}</Typography>
       </div>
     </ButtonBase>
   );

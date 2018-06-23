@@ -2,7 +2,7 @@
 import { Get, Post } from './Network';
 
 export function GetRestaurants() {
-  return Get({ path: `restaurant/list` });
+  return Get({ path: `restaurant/list?with=images,tags` });
 }
 
 type GetCategoriesArgs = { restaurantId: string };
