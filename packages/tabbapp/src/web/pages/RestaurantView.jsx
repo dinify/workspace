@@ -61,17 +61,15 @@ const CategoryImage = styled.div`
 let RestaurantView = ({
   width,
   classes,
-  restaurantsMap,
+  restaurant,
   match: { params },
   fetchMenucategories,
   menuCategoriesList
 }) => {
-  let restaurant = null
-  if (params.id) {
-    restaurant = restaurantsMap[params.id];
-    if (menuCategoriesList.length < 1) fetchMenucategories({ restaurantId: params.id });
-  }
   if (!restaurant) return <div />;
+  if (params.id && menuCategoriesList.length < 1) {
+    fetchMenucategories({ restaurantId: params.id });
+  }
 
   // Temporary variables
   const selectedDate = new Date()
@@ -276,8 +274,8 @@ let RestaurantView = ({
 
 RestaurantView = connect(
   (state, ownProps) => ({
-    restaurantsMap: state.restaurant.all,
-    menuCategoriesList: getCategoriesOfRestaurant(state, ownProps)
+    restaurant: state.restaurant.all[ownProps.match.params.id],
+    menuCategoriesList: getCategoriesOfRestaurant(state, ownProps.match.params.id)
   }),
   {
     fetchMenucategories: fetchMenucategoriesInit
