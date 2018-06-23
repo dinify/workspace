@@ -73,11 +73,10 @@ let BookingForm = ({
   setDate
 }) => {
   // Temporary variables
-  const handleDateChange = () => {}
   return (
     <div>
       <Typography variant="caption">Date</Typography>
-      <BasePicker value={selectedDate} onChange={handleDateChange}>
+      <BasePicker value={selectedDate} onChange={setDate}>
       {
         ({
           date,
@@ -96,7 +95,7 @@ let BookingForm = ({
               leftArrowIcon={<ChevronLeft/>}
               rightArrowIcon={<ChevronRight/>}
               date={date}
-              onChange={(val) => setDate(val)} />
+              onChange={handleChange} />
           </div>
         )
       }
