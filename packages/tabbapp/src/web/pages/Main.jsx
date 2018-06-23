@@ -11,12 +11,11 @@ import RestaurantListItem from 'web/components/RestaurantListItem';
 import * as FN from 'lib/FN';
 
 const Main = ({ classes, restaurantsMap }) => {
-  const viewMode = 1;
   const restaurantsList = FN.MapToList(restaurantsMap);
   return (
     <div>
       <AppBar />
-      <ResponsiveContainer narrow={viewMode === 2}>
+      <ResponsiveContainer>
         <Typography
           style={{ paddingTop: '32px' }}
           variant="headline"
@@ -24,7 +23,7 @@ const Main = ({ classes, restaurantsMap }) => {
         >
           Explore local places
         </Typography>
-        <ResponsiveGrid lg={viewMode === 2 ? 4 : 3}>
+        <ResponsiveGrid>
           {restaurantsList.map(restaurant => (
             <RestaurantListItem
               restaurant={restaurant}

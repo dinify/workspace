@@ -21,8 +21,10 @@ primary_900    #B1312F
 */
 const t = createMuiTheme().typography;
 
+const dark = false;
 const theme = createMuiTheme({
   palette: {
+    type: dark ? 'dark' : 'light',
     primary: {
       light: '#E14846', // primary_600
       main: '#C13939', // primary_800
@@ -34,8 +36,8 @@ const theme = createMuiTheme({
       dark: blueGrey[700],
     },
     text: {
-      primary: 'rgba(0, 0, 0, 0.72)',
-      secondary: 'rgba(0, 0, 0, 0.38)',
+      primary: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
+      secondary: dark ? 'rgba(255, 255, 255, 0.54)' : 'rgba(0, 0, 0, 0.38)',
     },
   },
   typography: {

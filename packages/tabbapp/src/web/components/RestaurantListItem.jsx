@@ -57,8 +57,8 @@ const RestaurantListItem = ({
         width: '100%',
       }}
     >
-      <div>
-        <div className={classes.image}>
+      <div style={{width: '100%'}}>
+        <div style={{width: '100%'}} className={classes.image}>
           <Carousel
             borderRadius={4}
             aspectRatio={3/2}

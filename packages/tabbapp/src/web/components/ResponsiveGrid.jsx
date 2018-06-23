@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
+import withWidth from '@material-ui/core/withWidth';
 
 class ResponsiveGrid extends React.Component {
   state = {
-    extraSmallScreen: false,
+    breakpoint: 0,
   };
 
   componentDidMount() {
@@ -18,23 +17,21 @@ class ResponsiveGrid extends React.Component {
   }
 
   _resize = () => {
-    if (window.innerWidth <= 400) {
-      this.setState({ extraSmallScreen: true });
-    } else if (this.state.extraSmallScreen)
-      this.setState({ extraSmallScreen: false });
+    const w = window.innerWidth;
+    if      (w < 400) this.setState({ breakpoint: 0 });
+    else if (w < 720) this.setState({ breakpoint: 1 });
+    else this.setState({ breakpoint: 3 });
   };
 
   render() {
-    const { classes, children, lg } = this.props;
-    const { extraSmallScreen } = this.state;
-
-    let smallScreen = isWidthDown('xs', this.props.width);
+    const { children } = this.props;
+    const { breakpoint } = this.state;
 
     return (
-      <Grid container spacing={smallScreen ? 16 : 24}>
+      <Grid container spacing={false ? 16 : 24}>
         {children &&
           children.map((child, i) => (
-            <Grid item xs={extraSmallScreen ? 12 : 6} key={i} sm={6} lg={lg}>
+            <Grid item key={i} xs={breakpoint === 0 ? 12 : 6} sm={breakpoint === 1 ? 6 : 4} md={3} lg={3}>
               {child}
             </Grid>
           ))}
@@ -42,13 +39,5 @@ class ResponsiveGrid extends React.Component {
     );
   }
 }
-
-ResponsiveGrid.propTypes = {
-  lg: PropTypes.number,
-};
-
-ResponsiveGrid.defaultProps = {
-  lg: 4,
-};
 
 export default withWidth()(ResponsiveGrid);

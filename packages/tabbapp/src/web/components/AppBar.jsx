@@ -1,14 +1,14 @@
 // @flow
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LogoText from 'icons/LogoText';
+import Logo from 'icons/Logo';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
-import OnboardingDialog from 'web/components/OnboardingDialog';
-import SVG from 'react-inlinesvg';
 
 import { connect } from 'react-redux';
 import { logoutInit } from 'ducks/auth/actions';
@@ -22,30 +22,10 @@ const styles = theme => ({
   flex: {
     flex: 1,
   },
-  logo: {
-    width: '24px',
-    maxWidth: '24px',
-    opacity: '0.87',
-    display: 'inline-block',
-  },
-  logoText: {
-    width: '74px',
-    maxWidth: '74px',
-    opacity: '0.87',
-    display: 'inline-block',
-  },
+  primary: {
+    color: theme.palette.text.primary
+  }
 });
-
-const logoFiles = {
-  shape: {
-    dark: 'logo-dark.svg',
-    light: 'logo.svg',
-  },
-  text: {
-    dark: 'logo-text-dark.svg',
-    light: 'logo-text.svg',
-  },
-};
 
 type AppBarProps = {
   classes: object,
@@ -67,16 +47,11 @@ const AppBar = ({
   logout,
 }: AppBarProps) => {
   const logoWithText = isWidthUp('md', width);
-  const logoFile = logoFiles[logoWithText ? 'text' : 'shape'][dark ? 'light' : 'dark'];
-  const logoURL = `http://images.tabb.global/brand/${logoFile}`;
+
   const logo = (
-    <Link to="/" className={logoWithText ? classes.logoText : classes.logo}>
-      <SVG
-        className={logoWithText ? classes.logoText : classes.logo}
-        src={logoURL}
-      >
-        <img src={logoURL} alt="TABB" />
-      </SVG>
+    <Link to="/">
+      {logoWithText && <LogoText className={classes.primary} style={{width: 74}}/>}
+      {!logoWithText && <Logo className={classes.primary}/>}
     </Link>
   );
   const LoginLink = props => <Link to={{
@@ -119,7 +94,6 @@ const AppBar = ({
         }
       </Toolbar>
       <Divider />
-      <OnboardingDialog isSignup={true} open={false} onClose={() => ({})} />
     </MuiAppBar>
   );
 };

@@ -20,8 +20,6 @@
     "raven-js": "^3.26.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-inlinesvg": "^0.8.1",
-    "react-map-gl": "^3.2.10",
     "react-motion": "^0.5.2",
     "react-qr-reader": "^2.1.0",
     "react-redux": "^5.0.7",
