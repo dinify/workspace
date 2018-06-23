@@ -11,7 +11,7 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case types.FETCH_RESTAURANTS_DONE: {
-      let newState = state;
+      let newState = R.assoc('all', {})(state); // reset
       const restaurants = action.payload.res;
       restaurants.forEach(r => {
         newState = R.assocPath(['all', r.id], r)(newState);

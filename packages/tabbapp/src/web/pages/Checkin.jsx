@@ -50,8 +50,8 @@ class Checkin extends React.PureComponent {
 
 
 export default connect(
-  state => ({
-    query: state.routing.locationBeforeTransitions.query,
+  (state, ownProps) => ({
+    query: ownProps.location.query,
     checkedInRestaurant: state.restaurant.checkedInRestaurant
   }),
   {
