@@ -70,7 +70,7 @@ const RestaurantListItem = ({
           <Typography
             gutterBottom
             className={classes.category}
-            variant="overline"
+            variant="body2"
             color="primary"
           >
             {tags.join(' · ')}

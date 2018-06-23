@@ -32,3 +32,18 @@ export const checkinFail = (e) => ({
   type: types.CHECKIN_FAIL,
   payload: e
 });
+
+export const favRestaurantInit = (payload) => ({
+  type: types.FAV_RESTAURANT_INIT,
+  payload
+});
+
+export const favRestaurantDone = (res) => ({
+  type: types.FAV_RESTAURANT_DONE,
+  payload: res
+});
+
+export const favRestaurantFail = (e) => ({
+  type: types.FAV_RESTAURANT_FAIL,
+  payload: e
+});

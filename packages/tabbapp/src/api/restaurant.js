@@ -31,3 +31,7 @@ export function Checkin({ qr, code }: CheckinWithQr | CheckinWithCode) {
 export function GetStatus() {
   return Get({ path: `status` });
 }
+
+export function FavRestaurant({ id }) {
+  return Post({ path: `restaurant/${id}/favorite/toggle` });
+}

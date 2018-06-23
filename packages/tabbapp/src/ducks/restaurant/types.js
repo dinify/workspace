@@ -11,4 +11,7 @@ export default {
   CHECKIN_INIT: 'tabb/restaurant/CHECKIN_INIT',
   CHECKIN_DONE: 'tabb/restaurant/CHECKIN_DONE',
   CHECKIN_FAIL: 'tabb/restaurant/CHECKIN_FAIL',
+  FAV_RESTAURANT_INIT: 'tabb/restaurant/FAV_RESTAURANT_INIT',
+  FAV_RESTAURANT_FAIL: 'tabb/restaurant/FAV_RESTAURANT_FAIL',
+  FAV_RESTAURANT_DONE: 'tabb/restaurant/FAV_RESTAURANT_DONE',
 };

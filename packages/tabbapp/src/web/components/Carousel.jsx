@@ -14,7 +14,7 @@ import {
 } from 'lib/FN';
 import { Motion, spring } from 'react-motion';
 
-const styles = theme => ({
+const styles = () => ({
   carouselButton: {
     position: 'absolute',
     width: 56,
@@ -91,7 +91,7 @@ class Carousel extends React.Component {
 
   handlePageChange = (delta, e) => {
     e.preventDefault();
-    let pageCount = this.props.images.length;
+    const pageCount = this.props.images.length;
     if (delta < 0 && this.state.selectedPage <= 0) {
       this.setState({ selectedPage: pageCount - 1 });
     } else if (delta > 0 && this.state.selectedPage >= pageCount - 1) {
@@ -104,12 +104,12 @@ class Carousel extends React.Component {
   };
 
   handleScroll = e => {
-    let ratio = e.target.scrollLeft / e.target.scrollWidth;
-    let count = this.props.images ? this.props.images.length : 0;
+    const ratio = e.target.scrollLeft / e.target.scrollWidth;
+    const count = this.props.images ? this.props.images.length : 0;
     if (count > 1) {
-      let relWidth = 1 / count;
-      let proximity = relWidth / 20;
-      let last = count - 1;
+      const relWidth = 1 / count;
+      const proximity = relWidth / 20;
+      const last = count - 1;
       if (ratio >= 0 && ratio < 2 * proximity) {
         if (this.state.selectedPage !== 0) this.setState({ selectedPage: 0 });
       } else if (
@@ -119,8 +119,7 @@ class Carousel extends React.Component {
         if (this.state.selectedPage !== last)
           this.setState({ selectedPage: last });
       } else {
-        for (let i = 1; i < last; i++) {
-          let current = relWidth * i;
+        for (let i = 1; i < last; i += 1) {
           if (
             ratio > i * relWidth - proximity &&
             ratio < i * relWidth + proximity
@@ -136,7 +135,7 @@ class Carousel extends React.Component {
   render() {
     const { classes, images, aspectRatio, borderRadius } = this.props;
     const { selectedPage } = this.state;
-    const swipeable = isTouchMobile();
+    // const swipeable = isTouchMobile();
     const platform = getPlatform();
 
     const TYPE_FIX = 0;
@@ -144,7 +143,7 @@ class Carousel extends React.Component {
     const TYPE_SCROLL_SNAP = 2;
     const TYPE_SWIPE = 3;
 
-    let type =
+    const type =
       images.length <= 1
         ? TYPE_FIX
         : supportsScrollSnap()
@@ -153,9 +152,9 @@ class Carousel extends React.Component {
             ? TYPE_SWIPE
             : TYPE_BUTTONS;
 
-    let imagesAnimated = images.map((image, i) => (
+    const imagesAnimated = images.map((image, i) => (
       <Motion
-        key={i}
+        key={image}
         defaultStyle={{ x: i - selectedPage }}
         style={{ x: spring(i - selectedPage) }}
       >
@@ -174,7 +173,7 @@ class Carousel extends React.Component {
       </Motion>
     ));
 
-    let ratio = Math.round((1 / aspectRatio) * 100 * 10000) / 10000;
+    const ratio = Math.round((1 / aspectRatio) * 100 * 10000) / 10000;
     return (
       <div
         style={{
@@ -201,8 +200,9 @@ class Carousel extends React.Component {
               index={selectedPage}
               onChangeIndex={this.handleChangeIndex}
             >
-              {images.map((image, i) => (
+              {images.map((image) => (
                 <span
+                  key={image}
                   className={classes.imageSrc}
                   style={{
                     backgroundImage: `url(${image})`
@@ -218,11 +218,12 @@ class Carousel extends React.Component {
             className={classes.scrollSnapContainer}
             onScroll={this.handleScroll}
           >
-            {images.map((image, i) => (
+            {images.map((image) => (
               <div
+                key={image}
                 className={classes.scrollSnapChild}
                 style={{
-                  borderRadius: borderRadius,
+                  borderRadius,
                   backgroundImage: `url(${image})`
                 }}/>
             ))}
@@ -272,7 +273,7 @@ class Carousel extends React.Component {
 }
 
 Carousel.propTypes = {
-  images: PropTypes.array.isRequired,
+  images: PropTypes.array,
   backdrop: PropTypes.any,
   aspectRatio: PropTypes.number,
 };

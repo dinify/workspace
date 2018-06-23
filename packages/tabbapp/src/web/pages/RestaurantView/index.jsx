@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import Today from 'icons/Today';
 import Favorite from 'icons/Favorite';
 import RestaurantMenu from 'icons/RestaurantMenu';
@@ -17,15 +20,12 @@ import OrderItemListItem from 'web/components/OrderItemListItem';
 import HorizontalScroller from 'web/components/HorizontalScroller';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
-import { withStyles } from '@material-ui/core/styles';
-import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import * as FN from 'lib/FN';
 import orderItemSample from './orderItem';
-import { fetchRestaurantInit } from 'ducks/restaurant/actions';
+import { fetchRestaurantInit, favRestaurantInit } from 'ducks/restaurant/actions';
 import { fetchMenucategoriesInit } from 'ducks/menuCategory/actions';
 import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
-import { Link } from 'react-router-dom';
 import BookingForm from './BookingForm';
 
 const styles = theme => ({
@@ -69,7 +69,8 @@ class RestaurantView extends React.PureComponent {
       width,
       classes,
       restaurant,
-      menuCategoriesList
+      menuCategoriesList,
+      favRestaurant
     } = this.props;
     if (!restaurant) {
       return <div />
@@ -121,7 +122,7 @@ class RestaurantView extends React.PureComponent {
                   {tags && (
                     <Typography
                       gutterBottom
-                      variant="overline"
+                      variant="body2"
                       color="primary">
                       {tags.join(' · ')}
                     </Typography>
@@ -139,7 +140,13 @@ class RestaurantView extends React.PureComponent {
                   </Grid>
                 </Grid>
                 <Grid item>
-                  <FavoriteToggle />
+                  <FavoriteToggle
+                    checked={restaurant.favorite}
+                    onChange={() => favRestaurant({
+                      fav: !restaurant.favorite,
+                      id: restaurant.id
+                    })}
+                  />
                 </Grid>
               </Grid>
 
@@ -148,7 +155,7 @@ class RestaurantView extends React.PureComponent {
                 className={classes.secondary}
                 style={{ paddingTop: mediumScreen ? 24 : 16 }}
                 gutterBottom
-                variant="overline">
+                variant="body2">
                 About
               </Typography>
               <Typography gutterBottom variant="body1">{restaurant.about}</Typography>
@@ -254,6 +261,7 @@ RestaurantView = connect(
   {
     fetchMenucategories: fetchMenucategoriesInit,
     fetchRestaurant: fetchRestaurantInit,
+    favRestaurant: favRestaurantInit
   }
 )(RestaurantView)
 

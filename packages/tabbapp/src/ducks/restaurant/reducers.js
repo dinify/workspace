@@ -44,6 +44,10 @@ export default function reducer(state = initialState, action) {
     case authTypes.LOGOUT_DONE: {
       return R.assoc('checkedInRestaurant', null)(state);
     }
+    case types.FAV_RESTAURANT_INIT: {
+      const { id, fav } = action.payload;
+      return R.assocPath(['all', id, 'favorite'], fav)(state);
+    }
     default:
       return state;
   }
