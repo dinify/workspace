@@ -1,7 +1,13 @@
 import React from 'react';
+import AppBar from 'web/components/AppBar';
 
-const CategoryContent = () => {
-  return <div />;
+const CategoryView = () => {
+  return (
+    <div>
+      <AppBar position="static"/>
+      f
+    </div>
+  );
 };
 
-export default CategoryContent;
+export default CategoryView;

@@ -5,14 +5,7 @@ import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
-import BasePicker from 'material-ui-pickers/_shared/BasePicker';
-import Calendar from 'material-ui-pickers/DatePicker/Calendar';
-import ChevronRight from 'icons/ChevronRight';
-import ChevronLeft from 'icons/ChevronLeft';
 import Today from 'icons/Today';
 import Favorite from 'icons/Favorite';
 import RestaurantMenu from 'icons/RestaurantMenu';
@@ -21,21 +14,19 @@ import FavoriteToggle from 'web/components/FavoriteToggle';
 import Typography from 'web/components/Typography';
 import Rating from 'web/components/Rating';
 import OrderItemListItem from 'web/components/OrderItemListItem';
-import ValuePicker from 'web/components/ValuePicker';
 import HorizontalScroller from 'web/components/HorizontalScroller';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
-import addDays from 'date-fns/addDays'
 import * as FN from 'lib/FN';
 import orderItemSample from './orderItem';
 import { fetchRestaurantInit } from 'ducks/restaurant/actions';
 import { fetchMenucategoriesInit } from 'ducks/menuCategory/actions';
-import { setGuestsInit, setTimeInit, setDateInit } from 'ducks/booking/actions';
 import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
 import { Link } from 'react-router-dom';
+import BookingForm from './BookingForm';
 
 const styles = theme => ({
   category: {
@@ -63,86 +54,6 @@ const styles = theme => ({
   }
 });
 
-let BookingForm = ({
-  classes,
-  time,
-  guests,
-  selectedDate,
-  setTime,
-  setGuests,
-  setDate
-}) => {
-  // Temporary variables
-  return (
-    <div>
-      <Typography variant="caption">Date</Typography>
-      <BasePicker value={selectedDate} onChange={setDate}>
-      {
-        ({
-          date,
-          handleAccept,
-          handleChange,
-          handleClear,
-          handleDismiss,
-          handleSetTodayDate,
-          handleTextFieldChange,
-          pick12hOr24hFormat,
-        }) => (
-          <div className="picker">
-            <Calendar
-              disablePast
-              maxDate={addDays(selectedDate, 60)}
-              leftArrowIcon={<ChevronLeft/>}
-              rightArrowIcon={<ChevronRight/>}
-              date={date}
-              onChange={handleChange} />
-          </div>
-        )
-      }
-      </BasePicker>
-      <Typography variant="caption">Guests</Typography>
-      <ValuePicker handleChange={setGuests} selected={guests} options={['1', '2', '3', '4', '5', '6', '7+']}/>
-      <FormControl style={{marginTop: 16}} fullWidth className={classes.formControl}>
-        <InputLabel htmlFor="time-input-booking">Time</InputLabel>
-        <Select
-          native
-          value={time || ''}
-          onChange={(event) => setTime(event.target.value)}
-          inputProps={{
-            name: 'time',
-            id: 'time-input-booking',
-          }}
-        >
-          <option value="" />
-          <option value={0}>6:30 PM</option>
-          <option value={1}>6:45 PM</option>
-          <option value={2}>7:00 PM</option>
-          <option value={3}>7:15 PM</option>
-          <option value={4}>7:30 PM</option>
-          <option value={5}>7:45 PM</option>
-          <option value={6}>8:00 PM</option>
-          <option value={7}>8:15 PM</option>
-          <option value={8}>8:30 PM</option>
-        </Select>
-      </FormControl>
-    </div>
-  )
-}
-
-BookingForm = connect(
-  (state) => ({
-    time: state.booking.time,
-    guests: state.booking.guests,
-    selectedDate: state.booking.date
-  }),
-  {
-    setGuests: setGuestsInit,
-    setTime: setTimeInit,
-    setDate: setDateInit,
-  }
-)(BookingForm)
-
-
 class RestaurantView extends React.PureComponent {
   componentWillMount() {
     const {
@@ -164,8 +75,8 @@ class RestaurantView extends React.PureComponent {
       return <div />
     }
     const images = FN.MapToList(restaurant.images);
-    let allTags = FN.MapToList(restaurant.tags);
-    let tags = [];
+    const allTags = FN.MapToList(restaurant.tags);
+    const tags = [];
     allTags.forEach(tag => {
       if (tags.join().length + tag.name.length <= 50) {
         tags.push(tag.name.split('_').join(' '))
@@ -179,7 +90,6 @@ class RestaurantView extends React.PureComponent {
     const sm = isWidthDown('sm', width);
     const md = !sm && isWidthDown('md', width);
     const lg = !md && isWidthDown('lg', width);
-    const xl = !lg && isWidthDown('xl', width);
 
     return (
       <div>
@@ -190,7 +100,7 @@ class RestaurantView extends React.PureComponent {
         {!extraSmallScreen &&
           <Grid container wrap="nowrap" spacing={8} className={classes.imageContainer}>
             {images.map((image, i) =>
-              <Grid item style={{minWidth: sm ? '50%' : (md ? '33.3333%' : (lg ? '25%' : '20%'))}} xs={12}>
+              <Grid item key={i} style={{minWidth: sm ? '50%' : (md ? '33.3333%' : (lg ? '25%' : '20%'))}} xs={12}>
                 <div
                   className={classes.imageSrc}
                   style={{

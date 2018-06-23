@@ -1,5 +1,4 @@
 import React from 'react';
-import R from 'ramda';
 import { connect } from 'react-redux';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import ResponsiveGrid from 'web/components/ResponsiveGrid';
@@ -10,7 +9,7 @@ import ChevronRight from 'icons/ChevronRight';
 import RestaurantListItem from 'web/components/RestaurantListItem';
 import * as FN from 'lib/FN';
 
-const Main = ({ classes, restaurantsMap }) => {
+const Main = ({ restaurantsMap }) => {
   const restaurantsList = FN.MapToList(restaurantsMap);
   return (
     <div>
@@ -49,6 +48,5 @@ const Main = ({ classes, restaurantsMap }) => {
 export default connect(
   state => ({
     restaurantsMap: state.restaurant.all,
-  }),
-  {},
+  })
 )(Main);

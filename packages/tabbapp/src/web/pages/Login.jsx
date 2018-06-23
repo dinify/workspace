@@ -53,7 +53,7 @@ const Login = ({ login }) => {
 };
 
 export default connect(
-  state => ({}),
+  () => ({}),
   {
     login: loginInit,
   },

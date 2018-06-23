@@ -66,7 +66,7 @@ class ModalSwitch extends React.Component {
 
           <Route path="/checkin" component={Checkin} />
           <Route path="/restaurant/:subdomain" component={RestaurantView} />
-          <Route path="/category/:id" component={FoodView} />
+          <Route path="/category/:id" component={CategoryView} />
           <Route path="/food/:id" component={FoodView} />
 
           <Route path="/cart" component={Cart} />
