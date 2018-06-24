@@ -9,9 +9,8 @@ global:
   application_name: TABB
   default_ec2_keyname: null
   default_platform: arn:aws:elasticbeanstalk:eu-central-1::platform/Node.js running
-    on 64bit Amazon Linux/4.2.0
+    on 64bit Amazon Linux/4.5.1
   default_region: eu-central-1
-  include_git_submodules: true
   instance_profile: null
   platform_name: null
   platform_version: null
