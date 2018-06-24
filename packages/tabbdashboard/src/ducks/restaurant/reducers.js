@@ -42,11 +42,11 @@ export default function reducer(state: State = initialState, action) {
       )(state);
     case 'UPDATE_LOCATION_INIT': {
       state = R.assocPath(
-        ['loggedRestaurant', 'location', 'longitude'],
+        ['loggedRestaurant', 'longitude'],
         Number(action.payload.longitude),
       )(state);
       return R.assocPath(
-        ['loggedRestaurant', 'location', 'latitude'],
+        ['loggedRestaurant', 'latitude'],
         Number(action.payload.latitude),
       )(state);
     }
