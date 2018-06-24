@@ -1,8 +1,8 @@
 branch-defaults:
   master:
-    environment: tabbapp
+    environment: tabbapp2
 environment-defaults:
-  tabbapp:
+  tabbapp2:
     branch: null
     repository: null
 global:
