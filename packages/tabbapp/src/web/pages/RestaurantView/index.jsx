@@ -27,6 +27,7 @@ import { fetchMenucategoriesInit } from 'ducks/menuCategory/actions';
 import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
 import BookingForm from './BookingForm';
+import InfoSection from './InfoSection';
 
 const styles = theme => ({
   category: {
@@ -51,7 +52,7 @@ const styles = theme => ({
   },
   secondary: {
     color: theme.palette.text.secondary
-  }
+  },
 });
 
 class RestaurantView extends React.PureComponent {
@@ -122,7 +123,7 @@ class RestaurantView extends React.PureComponent {
                   {tags && (
                     <Typography
                       gutterBottom
-                      variant="body2"
+                      variant="overline"
                       color="primary">
                       {tags.join(' · ')}
                     </Typography>
@@ -155,7 +156,7 @@ class RestaurantView extends React.PureComponent {
                 className={classes.secondary}
                 style={{ paddingTop: mediumScreen ? 24 : 16 }}
                 gutterBottom
-                variant="body2">
+                variant="overline">
                 About
               </Typography>
               <Typography gutterBottom variant="body1">{restaurant.about}</Typography>
@@ -222,6 +223,10 @@ class RestaurantView extends React.PureComponent {
             </Grid>
             <Grid item xs={12} md={6}>
               {smallScreen && <Divider/>}
+              {smallScreen && <InfoSection restaurant={restaurant}/>}
+              {!smallScreen && <Card>
+                {<InfoSection restaurant={restaurant}/>}
+              </Card>}
               <Typography
                 style={{ paddingTop: mediumScreen ? 24 : 16 }}
                 variant="subheading"
