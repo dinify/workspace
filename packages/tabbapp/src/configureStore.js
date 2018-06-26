@@ -13,6 +13,7 @@ import restaurant from 'ducks/restaurant';
 import menuCategory from 'ducks/menuCategory';
 import menuItem from 'ducks/menuItem';
 import booking from 'ducks/booking';
+import cart from 'ducks/cart';
 
 Raven.config('https://b34f069a5b2d40f2ac5b07a96353591e@sentry.io/1227775', {
   // options
@@ -25,6 +26,7 @@ const commonReducers = {
   menuCategory,
   menuItem,
   booking,
+  cart
 };
 
 const configureStore = (options, storage) => {

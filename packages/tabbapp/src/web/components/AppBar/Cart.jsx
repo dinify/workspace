@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { withStateHandlers } from 'recompose';
+import { connect } from 'react-redux';
 
 import ShoppingCart from 'icons/ShoppingCart';
 
@@ -15,20 +15,19 @@ import Avatar from '@material-ui/core/Avatar';
 
 const Cart = ({
   classes,
-  setCartAnchor,
   cartMenuOpen,
   handleCartMenuToggle,
   handleCartMenuClose,
-  cartAnchor,
-  anchor
+  anchor,
+  cartItems
 }) => {
   return (
-    <div ref={node => { setCartAnchor(ReactDOM.findDOMNode(node)) }}>
+    <div>
       <IconButton
         onClick={handleCartMenuToggle}
         style={{marginRight: 16}}
         className={classes.margin}>
-        <Badge badgeContent={4} color="primary">
+        <Badge badgeContent={cartItems.length} color="primary">
           <ShoppingCart />
         </Badge>
       </IconButton>
@@ -45,35 +44,37 @@ const Cart = ({
           vertical: 'top',
           horizontal: 'right',
         }}>
-
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <ShoppingCart className={classes.secondary}/>
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="Cabbage kimchi"
-            secondary="12.000 KD"
-            primaryTypographyProps={{variant: 'body1'}}
-            secondaryTypographyProps={{variant: 'caption'}}/>
-        </ListItem>
-
+          {cartItems.map((item) =>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  <ShoppingCart className={classes.secondary}/>
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={item.name}
+                secondary={item.price}
+                primaryTypographyProps={{variant: 'body1'}}
+                secondaryTypographyProps={{variant: 'caption'}}/>
+            </ListItem>
+          )}
       </Popover>
     </div>
   )
 }
 
-export default withStateHandlers(
+export default connect(
+  state => ({
+    cartItems: state.cart.items
+  })
+)(withStateHandlers(
   {
     cartMenuOpen: false,
-    cartAnchor: null
   },
   {
-    setCartAnchor: () => (node) => ({cartAnchor: node}),
     handleCartMenuToggle: ({ cartMenuOpen }) => () => ({
       cartMenuOpen: !cartMenuOpen
     }),
     handleCartMenuClose: () => () => ({ cartMenuOpen: false })
   }
-)(Cart);
+)(Cart));

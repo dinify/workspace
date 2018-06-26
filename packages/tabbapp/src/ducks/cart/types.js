@@ -1,3 +1,3 @@
 export default {
-  ADD_DISH: 'tabb/cart/ADD_DISH',
+  ADD_ITEM: 'tabb/cart/ADD_ITEM',
 };
