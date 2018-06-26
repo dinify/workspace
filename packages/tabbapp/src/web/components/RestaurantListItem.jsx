@@ -16,7 +16,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.divider,
     boxShadow: theme.shadows[2],
     overflow: 'hidden !important',
-    '&:hover, &$focusVisible': {
+    '&:hover': {
       zIndex: 1,
       '& $imageBackdrop': {
         opacity: 0.12,

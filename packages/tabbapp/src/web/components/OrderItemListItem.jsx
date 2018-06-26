@@ -13,7 +13,7 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit,
     backgroundColor: theme.palette.divider,
     overflow: 'hidden !important',
-    '&:hover, &$focusVisible': {
+    '&:hover': {
       zIndex: 1,
       '& $imageBackdrop': {
         opacity: 0.12,
@@ -45,7 +45,6 @@ const OrderItemListItem = ({
       <ButtonBase
         disableRipple
         className={classes.image}
-        focusVisibleClassName={classes.focusVisible}
         style={{
           width: '100%',
         }}>

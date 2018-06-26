@@ -43,7 +43,7 @@ const styles = () => ({
     overflowX: 'hidden',
     overflowY: 'hidden',
     top: 0,
-    '& $div': {
+    '& div': {
       width: '100%',
       height: '100%',
     },

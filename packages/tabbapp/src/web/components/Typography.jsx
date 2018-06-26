@@ -40,8 +40,23 @@ const Typography = props => {
       break;
   }
 
+  let reducedVariant = variant;
+  if (![
+    "display4",
+    "display3",
+    "display2",
+    "display1",
+    "headline",
+    "title",
+    "subheading",
+    "body2",
+    "body1",
+    "caption",
+    "button"
+  ].includes(variant)) reducedVariant = 'body1';
+
   return (
-    <MuiTypography className={classNames} headlineMapping={headlineMapping} variant={variant} {...other}>
+    <MuiTypography className={classNames} headlineMapping={headlineMapping} variant={reducedVariant} {...other}>
       {children}
     </MuiTypography>
   )
