@@ -1,6 +1,5 @@
 // @flow
 import R from 'ramda';
-import * as FN from 'lib/FN';
 import types from './types';
 
 const initialState = {
