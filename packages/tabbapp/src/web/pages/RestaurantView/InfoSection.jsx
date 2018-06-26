@@ -14,6 +14,7 @@ import Place from 'icons/Place';
 import Schedule from 'icons/Schedule';
 import StaticMap from 'web/components/StaticMap';
 import Typography from 'web/components/Typography';
+import uniqueId from 'lodash.uniqueid';
 
 const styles = theme => ({
   secondary: {
@@ -83,20 +84,18 @@ const InfoSection = ({
           <table style={{borderSpacing: 0, paddingLeft: 56}}>
             <tbody>
               {Object.entries(restaurant.open_hours).map(([day, values]) =>
-                <tr>
+                <tr key={uniqueId()}>
                   <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
                     <Typography className={classes.secondary} variant="body1">
                       {days[day]}
                     </Typography>
                   </td>
                   <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
-                    <Typography style={{paddingLeft: 24}} variant="body1">
-                      {values.map(value =>
-                        <div style={{marginRight: 16}}>
-                          {value.join(' - ')}
-                        </div>
-                      )}
-                    </Typography>
+                    {values.map(value =>
+                      <Typography key={uniqueId()} style={{paddingLeft: 24}} variant="body1">
+                        {value.join(' - ')}
+                      </Typography>
+                    )}
                   </td>
                 </tr>
               )}

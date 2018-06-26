@@ -42,8 +42,7 @@ const OrderItemListItem = ({
   const images = FN.MapToList(orderItem.menu_item.images).map(image => image.url)
   return (
     <div>
-      <ButtonBase
-        disableRipple
+      <div
         className={classes.image}
         style={{
           width: '100%',
@@ -52,7 +51,7 @@ const OrderItemListItem = ({
           images={images}
           backdrop={<span className={classes.imageBackdrop} />}
         />
-      </ButtonBase>
+      </div>
       <Grid container spacing={8}>
         <Grid item>
           <Typography

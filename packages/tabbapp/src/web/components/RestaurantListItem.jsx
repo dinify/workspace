@@ -4,7 +4,6 @@ import R from 'ramda';
 import * as FN from 'lib/FN';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from 'web/components/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Carousel from './Carousel';
 import { Link } from 'react-router-dom';
 
@@ -40,8 +39,8 @@ const RestaurantListItem = ({
   restaurant,
 }) => {
   const images = R.pluck('url')(FN.MapToList(restaurant.images));
-  let allTags = FN.MapToList(restaurant.tags);
-  let tags = [];
+  const allTags = FN.MapToList(restaurant.tags);
+  const tags = [];
   allTags.forEach(tag => {
     if (tags.join().length + tag.name.length <= 25) {
       tags.push(tag.name.split('_').join(' '))
@@ -50,10 +49,9 @@ const RestaurantListItem = ({
 
   const RestaurantLink = props => <Link to={`/restaurant/${restaurant.subdomain}`} {...props}/>
   return (
-    <ButtonBase
-      component={RestaurantLink}
-      disableRipple
+    <RestaurantLink
       style={{
+        textDecoration: 'none',
         width: '100%',
       }}
     >
@@ -80,7 +78,7 @@ const RestaurantListItem = ({
         <Typography variant="title">{restaurant.name}</Typography>
         <Typography variant="body1">{restaurant.description}</Typography>
       </div>
-    </ButtonBase>
+    </RestaurantLink>
   );
 };
 
