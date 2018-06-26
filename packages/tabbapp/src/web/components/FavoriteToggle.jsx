@@ -9,7 +9,7 @@ const FavoriteToggle = ({
   checked
 }) => {
 
-  console.log(checked);
+  // console.log(checked);
 
   return (
     <IconButton onClick={onChange}>

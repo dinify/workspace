@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import Text from 'web/components/Inputs/Text';
 import { loginInit } from 'ducks/auth/actions';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
 const gridItemStyle = {

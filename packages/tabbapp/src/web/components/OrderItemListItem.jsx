@@ -2,7 +2,6 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from 'web/components/Typography';
 import Grid from '@material-ui/core/Grid';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Carousel from 'web/components/Carousel';
 import * as FN from 'lib/FN';
 

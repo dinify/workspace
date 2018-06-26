@@ -19,7 +19,7 @@ primary_700    #CE3F40
 primary_800    #C13939
 primary_900    #B1312F
 */
-const t = createMuiTheme().typography;
+// const t = createMuiTheme().typography;
 
 const dark = false;
 const theme = createMuiTheme({

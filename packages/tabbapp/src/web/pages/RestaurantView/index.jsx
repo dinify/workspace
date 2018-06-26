@@ -28,6 +28,7 @@ import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
 import BookingForm from './BookingForm';
 import InfoSection from './InfoSection';
+import uniqueId from 'lodash.uniqueid';
 
 const styles = theme => ({
   category: {
@@ -102,7 +103,7 @@ class RestaurantView extends React.PureComponent {
         {!extraSmallScreen &&
           <Grid container wrap="nowrap" spacing={8} className={classes.imageContainer}>
             {images.map((image, i) =>
-              <Grid item key={i} style={{minWidth: sm ? '50%' : (md ? '33.3333%' : (lg ? '25%' : '20%'))}} xs={12}>
+              <Grid item key={uniqueId()} style={{minWidth: sm ? '50%' : (md ? '33.3333%' : (lg ? '25%' : '20%'))}} xs={12}>
                 <div
                   className={classes.imageSrc}
                   style={{
@@ -210,6 +211,7 @@ class RestaurantView extends React.PureComponent {
                     {menuCategoriesList.map((category, i) =>
                       <Link to={`/category/${category.id}`} key={i}>
                         <img
+                          alt={category.name}
                           src="https://images.unsplash.com/24/SAM_0551.JPG?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=160&h=100&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=cb5ed1a3fb606612dc325ecee33d4950"
                         />
                       </Link>

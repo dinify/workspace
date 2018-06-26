@@ -6,20 +6,20 @@ import uniqueId from 'lodash.uniqueid';
 import { StaggeredMotion, spring, presets } from 'react-motion';
 
 class PageIndicator extends React.Component {
-  state = {
-    to: 0,
-    from: 0,
-    baseColor: '',
-    baseOpacity: 0,
-    selectorContainer: null,
-  };
-
   constructor(props) {
     super();
 
-    let memoize = function(factory, ctx) {
-      var cache = {};
-      return function(key) {
+    this.state = {
+      to: 0,
+      from: 0,
+      baseColor: '',
+      baseOpacity: 0,
+      selectorContainer: null,
+    };
+
+    const memoize = (factory, ctx) => {
+      const cache = {};
+      return function result(key) {
         if (!(key in cache)) {
           cache[key] = factory.call(ctx, key);
         }
@@ -27,13 +27,14 @@ class PageIndicator extends React.Component {
       };
     };
 
-    this.colorToRGBA = (function() {
-      var canvas = document.createElement('canvas');
-      canvas.width = canvas.height = 1;
-      var ctx = canvas.getContext('2d');
+    this.colorToRGBA = (() => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1;
+      canvas.height = 1;
+      const ctx = canvas.getContext('2d');
 
       // TODO - invalid values of "color" are ignored
-      return memoize(function(color) {
+      return memoize(color => {
         ctx.clearRect(0, 0, 1, 1);
         ctx.fillStyle = color;
         ctx.fillRect(0, 0, 1, 1);
@@ -41,7 +42,7 @@ class PageIndicator extends React.Component {
       });
     })();
 
-    let base = this.colorToRGBA(props.dotColor);
+    const base = this.colorToRGBA(props.dotColor);
     this.state.baseColor = `rgb(${base[0]}, ${base[1]}, ${base[2]})`;
     this.state.baseOpacity = base[3] / 255;
   }
@@ -51,17 +52,17 @@ class PageIndicator extends React.Component {
   }
 
   componentDidMount() {
-    let container = document.getElementById(this.id);
+    const container = document.getElementById(this.id);
     this.setState({ selectorContainer: container });
   }
 
   componentWillReceiveProps(nextProps) {
-    //clip count to be bigger than 1
-    let count = Math.max(nextProps.count, 1);
+    // clip count to be bigger than 1
+    const count = Math.max(nextProps.count, 1);
 
-    //clip selected page between 0 and count - 1
-    let to = Math.min(count - 1, Math.max(0, nextProps.selectedPage));
-    let from = Math.min(count - 1, Math.max(0, this.props.selectedPage));
+    // clip selected page between 0 and count - 1
+    const to = Math.min(count - 1, Math.max(0, nextProps.selectedPage));
+    const from = Math.min(count - 1, Math.max(0, this.props.selectedPage));
     if (to !== from) {
       this.setState({ from, to });
     } else if (this.props.count !== count && nextProps.selectedPage >= count) {
@@ -79,7 +80,7 @@ class PageIndicator extends React.Component {
   }
 
   updateDotColor = dotColor => {
-    let base = this.colorToRGBA(dotColor);
+    const base = this.colorToRGBA(dotColor);
     this.setState({
       baseColor: `rgb(${base[0]}, ${base[1]}, ${base[2]})`,
       baseOpacity: base[3] / 255,
@@ -87,14 +88,15 @@ class PageIndicator extends React.Component {
   };
 
   render() {
-    let { gap, size, selectedDotColor, count } = this.props;
-    let { from, to, baseColor, baseOpacity, selectorContainer } = this.state;
+    const { gap, size, selectedDotColor } = this.props;
+    let { count } = this.props;
+    const { from, to, baseColor, baseOpacity, selectorContainer } = this.state;
 
-    //clip count to be bigger than 1
+    // clip count to be bigger than 1
     count = Math.max(count, 1);
 
-    let moveTo = (to / (count - 1)) * (count - 1) * (size + gap);
-    let moveFrom = (from / (count - 1)) * (count - 1) * (size + gap);
+    const moveTo = (to / (count - 1)) * (count - 1) * (size + gap);
+    const moveFrom = (from / (count - 1)) * (count - 1) * (size + gap);
 
     return (
       <div
@@ -124,13 +126,15 @@ class PageIndicator extends React.Component {
                         ? spring(moveTo, { stiffness: 440, damping: 48 })
                         : spring(moveFrom),
                   };
+                default:
+                  return {x: 0};
               }
             })
           }
         >
           {stylesParent => {
-            let width = Math.abs(stylesParent[0].x - stylesParent[2].x);
-            let translate =
+            const width = Math.abs(stylesParent[0].x - stylesParent[2].x);
+            const translate =
               stylesParent[stylesParent[0].x > stylesParent[2].x ? 2 : 0].x +
               size / 2;
             return (
@@ -175,7 +179,7 @@ class PageIndicator extends React.Component {
                     <div style={{ height: size, width: '100%' }}>
                       {interpolatingStyles.map((style, i) => (
                         <div
-                          key={i}
+                          key={uniqueId()}
                           style={{
                             display: 'inline-block',
                             position: 'absolute',
@@ -196,7 +200,7 @@ class PageIndicator extends React.Component {
                   style={{
                     display: 'inline-block',
                     position: 'absolute',
-                    width: width,
+                    width,
                     height: size,
                     WebkitTransform: `translateX(${translate}px)`,
                     transform: `translateX(${translate}px)`,
@@ -204,14 +208,14 @@ class PageIndicator extends React.Component {
                   }}
                 />
                 {stylesParent.map((style, i) => {
-                  let selector = i === 1;
-                  let currentDiv = (
+                  const selector = i === 1;
+                  const currentDiv = (
                     <div
-                      key={i}
+                      key={uniqueId()}
                       style={{
-                        display: 'inline-block', //inline-block
+                        display: 'inline-block', // inline-block
                         position: 'absolute',
-                        key: 'selector' + i,
+                        key: `selector${i}`,
                         width: size,
                         height: size,
                         WebkitTransform: `translateX(${style.x}px)`,
@@ -248,7 +252,8 @@ class PageIndicator extends React.Component {
 }
 
 PageIndicator.propTypes = {
-  color: PropTypes.string,
+  dotColor: PropTypes.string,
+  selectedDotColor: PropTypes.string,
   count: PropTypes.number,
   size: PropTypes.number,
   gap: PropTypes.number,
@@ -257,7 +262,7 @@ PageIndicator.propTypes = {
 
 PageIndicator.defaultProps = {
   selectedDotColor: '#757575',
-  dotColor: 'rgba(0, 0, 0, 0.12)', //'#E0E0E0',
+  dotColor: 'rgba(0, 0, 0, 0.12)', // '#E0E0E0',
   count: 3,
   size: 8,
   gap: 8,
