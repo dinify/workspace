@@ -31,13 +31,15 @@ export function Checkin({ qr, code }: CheckinWithQr | CheckinWithCode) {
   const payload = {}
   if (qr) payload.qr = qr
   if (code) payload.code = code
-  return Post({ path: `checkin` }, payload);
+  return Post({ path: `checkin?with=restaurant` }, payload);
 }
 
 export function GetStatus() {
-  return Get({ path: `status` });
+  return Get({ path: `status?with=table,restaurant` });
 }
 
-export function FavRestaurant({ id }) {
-  return Post({ path: `restaurant/${id}/favorite/toggle` });
+type FavRestaurantArgs = { id: string, fav: boolean  };
+
+export function FavRestaurant({ id, fav }: FavRestaurantArgs) {
+  return Post({ path: `restaurant/${id}/favorite` }, { favorite: fav });
 }

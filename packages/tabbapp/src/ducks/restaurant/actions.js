@@ -33,9 +33,9 @@ export const checkinFail = (e) => ({
   payload: e
 });
 
-export const favRestaurantInit = (payload) => ({
+export const favRestaurantInit = ({ fav, id }) => ({
   type: types.FAV_RESTAURANT_INIT,
-  payload
+  payload: { fav, id }
 });
 
 export const favRestaurantDone = (res) => ({
