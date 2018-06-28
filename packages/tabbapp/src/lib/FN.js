@@ -38,6 +38,20 @@ function getUA() {
   return navigator.userAgent || navigator.vendor || window.opera;
 }
 
+export function formatPrice(price) {
+  const displayCurrencies = {
+    KWD: 'KD'
+  };
+  return `${price.amount} ${displayCurrencies[price.currency]}`;
+  /* const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: price.currency,
+    minimumFractionDigits: 3,
+  });
+
+  return formatter.format(price.amount); */
+}
+
 export function isMobile(ua) {
   if (!ua && typeof navigator !== 'undefined') ua = getUA();
   if (ua && ua.headers && typeof ua.headers['user-agent'] === 'string') {

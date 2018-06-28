@@ -16,8 +16,8 @@ import AppBar from 'web/components/AppBar';
 import FavoriteToggle from 'web/components/FavoriteToggle';
 import Typography from 'web/components/Typography';
 import Rating from 'web/components/Rating';
-import OrderItemListItem from 'web/components/OrderItemListItem';
-import HorizontalScroller from 'web/components/HorizontalScroller';
+import OrderItemCard from 'web/components/OrderItemCard';
+import MenuItemCard from 'web/components/MenuItemCard';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import * as FN from 'lib/FN';
@@ -38,7 +38,7 @@ const styles = theme => ({
     height: 256,
     width: '100%',
     maxWidth: '100%',
-    overflowX: 'auto',
+    overflowX: 'scroll',
     overflowY: 'hidden'
   },
   image: {
@@ -173,7 +173,7 @@ class RestaurantView extends React.PureComponent {
               </Grid>
               <Grid container spacing={mediumScreen ? 24 : 16}>
                 <Grid item xs={6} sm={4} md={6}>
-                  <OrderItemListItem orderItem={orderItemSample[0]}/>
+                  <OrderItemCard orderItem={orderItemSample[0]}/>
                 </Grid>
               </Grid>
 
@@ -189,39 +189,37 @@ class RestaurantView extends React.PureComponent {
               </Grid>
               <Grid container spacing={mediumScreen ? 24 : 16}>
                 <Grid item xs={6} sm={4} md={6}>
-                  <OrderItemListItem orderItem={orderItemSample[1]}/>
+                  <OrderItemCard orderItem={orderItemSample[1]}/>
                 </Grid>
               </Grid>
 
               <Divider style={{marginTop: 16, marginBottom: 16}} />
-              <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
+              <Grid container wrap="nowrap" alignItems="center" spacing={16}>
                 <Grid item>
                   <RestaurantMenu className={classes.secondary} />
                 </Grid>
                 <Grid item>
-                  <Typography variant="subheading">Menu Categories</Typography>
+                  <Typography variant="subheading">Menu</Typography>
                   <Typography variant="caption">Everything you can get in {restaurant.name}</Typography>
                 </Grid>
               </Grid>
-              <Grid container spacing={mediumScreen ? 24 : 16}>
-                <Grid item xs={12} sm={12} md={12}>
-
-                  <HorizontalScroller height={100}>
-
-                    {menuCategoriesList.map((category, i) =>
-                      <Link to={`/category/${category.id}`} key={i}>
-                        <img
-                          alt={category.name}
-                          src="https://images.unsplash.com/24/SAM_0551.JPG?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=160&h=100&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=cb5ed1a3fb606612dc325ecee33d4950"
-                        />
-                      </Link>
+              {menuCategoriesList.map(category =>
+                <div key={uniqueId()}>
+                  <Divider style={{marginTop: 16, marginBottom: 16}} />
+                  <Link style={{textDecoration: 'none'}} to={`/category/${category.id}`}>
+                    <Typography gutterBottom variant="headline">
+                      {category.name}
+                    </Typography>
+                  </Link>
+                  <Grid container spacing={mediumScreen ? 24 : 16}>
+                    {FN.MapToList(category.items).map(menuItem =>
+                      <Grid item xs={6} sm={4} md={6} key={uniqueId()}>
+                        <MenuItemCard menuItem={menuItem}/>
+                      </Grid>
                     )}
-
-                  </HorizontalScroller>
-
-                </Grid>
-              </Grid>
-
+                  </Grid>
+                </div>
+              )}
             </Grid>
             <Grid item xs={12} md={6}>
               {smallScreen && <Divider/>}

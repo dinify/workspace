@@ -15,7 +15,7 @@ export function GetRestaurant({ subdomain }: GetRestaurantById | GetRestaurantBy
 type GetCategoriesArgs = { subdomain: string };
 
 export function GetMenucategories({ subdomain }: GetCategoriesArgs) {
-  return Get({ path: `restaurant/${subdomain}/categories` });
+  return Get({ path: `restaurant/${subdomain}/categories?with=categories.items.images` });
 }
 
 type GetMenuitemsArgs = { categoryId: string };

@@ -2,16 +2,34 @@
 import React from 'react';
 import { withStateHandlers } from 'recompose';
 import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
 
 import ShoppingCart from 'icons/ShoppingCart';
 
 import Popover from '@material-ui/core/Popover';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
+import Typography from 'web/components/Typography';
+import CartItem from './CartItem';
+import * as FN from 'lib/FN';
+import uniqueId from 'lodash.uniqueid';
+
+const styles = theme => ({
+  primary: {
+    color: theme.palette.text.primary
+  },
+  secondary: {
+    color: theme.palette.text.secondary
+  },
+  rounded: {
+    borderRadius: 20,
+    border: `1px solid ${theme.palette.divider}`
+  },
+  popover: {
+    boxShadow: theme.shadows[2]
+  },
+});
 
 const Cart = ({
   classes,
@@ -19,14 +37,17 @@ const Cart = ({
   handleCartMenuToggle,
   handleCartMenuClose,
   anchor,
-  cartItems
+  cart
 }) => {
+
+  const cartItems = [];
+  Object.keys(cart).map(key => cartItems.push(...cart[key]));
+
   return (
     <div>
       <IconButton
         onClick={handleCartMenuToggle}
-        style={{marginRight: 16}}
-        className={classes.margin}>
+        style={{marginRight: 16}}>
         <Badge badgeContent={cartItems.length} color="primary">
           <ShoppingCart />
         </Badge>
@@ -38,26 +59,30 @@ const Cart = ({
         onClose={handleCartMenuClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'right',
+          horizontal: 'left',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'right',
+          horizontal: 'center',
         }}>
-          {cartItems.map((item) =>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <ShoppingCart className={classes.secondary}/>
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                primary={item.name}
-                secondary={item.price}
-                primaryTypographyProps={{variant: 'body1'}}
-                secondaryTypographyProps={{variant: 'caption'}}/>
-            </ListItem>
-          )}
+        <div>
+          <div style={{padding: 8}}>
+            {cartItems.map(item =>
+              <CartItem item={item}/>
+            )}
+          </div>
+          <Divider />
+          <div style={{display: 'flex', alignItems: 'center', padding: 16}}>
+            <Typography style={{flex: 1}} variant="button">
+              Total
+            </Typography>
+
+            <Typography variant="subheading">
+              {FN.formatPrice({amount: '233.130', currency: 'KWD'})}
+            </Typography>
+          </div>
+        </div>
+
       </Popover>
     </div>
   )
@@ -65,7 +90,7 @@ const Cart = ({
 
 export default connect(
   state => ({
-    cartItems: state.cart.items
+    cart: state.cart
   })
 )(withStateHandlers(
   {
@@ -77,4 +102,4 @@ export default connect(
     }),
     handleCartMenuClose: () => () => ({ cartMenuOpen: false })
   }
-)(Cart));
+)(withStyles(styles)(Cart)));

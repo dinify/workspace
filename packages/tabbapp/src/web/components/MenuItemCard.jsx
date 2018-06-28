@@ -32,40 +32,45 @@ const styles = theme => ({
   price: {
     color: theme.palette.text.secondary
   },
+  imageSrc: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
 });
 
-const OrderItemListItem = ({
+const MenuItemCard = ({
   classes,
-  orderItem
+  menuItem
 }) => {
-  const images = FN.MapToList(orderItem.menu_item.images).map(image => image.url)
+  const images = FN.MapToList(menuItem.images).map(image => image.url)
   return (
     <div>
       <div
         className={classes.image}
         style={{
           width: '100%',
+          paddingTop: '66.6667%'
         }}>
-        <Carousel
-          images={images}
-          backdrop={<span className={classes.imageBackdrop} />}
-        />
+        <span
+          className={classes.imageSrc}
+          style={{
+            backgroundImage: `url(${images[0]})`
+          }}/>
       </div>
-      <Grid container spacing={8}>
-        <Grid item>
-          <Typography
-            className={classes.price}
-            variant="overline">
-            {`${orderItem.subtotal.amount} ${orderItem.subtotal.currency}`}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="title">{orderItem.menu_item.name}</Typography>
-        </Grid>
-      </Grid>
-      <Typography noWrap variant="body1">{orderItem.menu_item.description}</Typography>
+      <Typography
+        className={classes.price}
+        variant="overline">
+        {FN.formatPrice(menuItem.price)}
+      </Typography>
+      <Typography variant="title">{menuItem.name}</Typography>
+      <Typography noWrap variant="body1">{menuItem.description}</Typography>
     </div>
   );
 };
 
-export default withStyles(styles)(OrderItemListItem);
+export default withStyles(styles)(MenuItemCard);

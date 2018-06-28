@@ -18,7 +18,7 @@ class ResponsiveGrid extends React.Component {
 
   _resize = () => {
     const w = window.innerWidth;
-    if      (w < 400) this.setState({ breakpoint: 0 });
+    if      (w < 360) this.setState({ breakpoint: 0 });
     else if (w < 720) this.setState({ breakpoint: 1 });
     else this.setState({ breakpoint: 3 });
   };

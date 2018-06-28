@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import PageIndicator from './PageIndicator';
@@ -13,6 +12,7 @@ import {
   supportsScrollSnap,
 } from 'lib/FN';
 import { Motion, spring } from 'react-motion';
+import isFunction from 'lodash.isfunction';
 
 const styles = () => ({
   carouselButton: {
@@ -133,7 +133,7 @@ class Carousel extends React.Component {
   };
 
   render() {
-    const { classes, images, aspectRatio, borderRadius } = this.props;
+    const { classes, images, aspectRatio, borderRadius, backdrop, fixed } = this.props;
     const { selectedPage } = this.state;
     // const swipeable = isTouchMobile();
     const platform = getPlatform();
@@ -144,7 +144,7 @@ class Carousel extends React.Component {
     const TYPE_SWIPE = 3;
 
     const type =
-      images.length <= 1
+      (images.length <= 1 || fixed)
         ? TYPE_FIX
         : supportsScrollSnap()
           ? TYPE_SCROLL_SNAP
@@ -232,7 +232,7 @@ class Carousel extends React.Component {
 
         {type === TYPE_BUTTONS && imagesAnimated}
         {!isMobile() && (
-          <div style={{ pointerEvents: 'none' }}>{this.props.backdrop}</div>
+          <div style={{ pointerEvents: 'none' }}>{isFunction(backdrop) ? backdrop() : backdrop}</div>
         )}
         {type === TYPE_BUTTONS && (
           <div>
@@ -272,16 +272,10 @@ class Carousel extends React.Component {
   }
 }
 
-Carousel.propTypes = {
-  images: PropTypes.array,
-  backdrop: PropTypes.any,
-  aspectRatio: PropTypes.number,
-};
-
 Carousel.defaultProps = {
   images: [],
-  aspectRatio: 3/2,
-  backdrop: PropTypes.any
+  fixed: false,
+  aspectRatio: 3/2
 };
 
 export default withStyles(styles)(Carousel);

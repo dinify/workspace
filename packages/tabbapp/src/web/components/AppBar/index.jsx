@@ -48,6 +48,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.type === 'light' ? '#fff' : '#000',
     border: `1px solid ${theme.palette.divider}`
   },
+  expand: theme.mixins.toolbar,
   primary: {
     color: theme.palette.text.primary
   },
@@ -77,6 +78,8 @@ const AppBar = ({
   children,
   setAnchor,
   anchor,
+  setCartAnchor,
+  cartAnchor,
 }: AppBarProps) => {
 
   const logoWithText = isWidthUp('md', width);
@@ -116,7 +119,8 @@ const AppBar = ({
           <div style={{flex: 1}} />
         }
         {children}
-        <Cart classes={classes} anchor={anchor} />
+        <div style={{transform: 'translateX(24px)', WebkitTransform: 'translateX(24px)'}} className={classes.expand} ref={node => { setCartAnchor(ReactDOM.findDOMNode(node)) }}/>
+        <Cart anchor={cartAnchor}/>
         <Account classes={classes} anchor={anchor} />
       </Toolbar>
       <Divider ref={node => { setAnchor(ReactDOM.findDOMNode(node)) }} />
@@ -127,8 +131,10 @@ const AppBar = ({
 export default withStateHandlers(
   {
     anchor: null,
+    cartAnchor: null,
   },
   {
     setAnchor: () => (node) => ({anchor: node}),
+    setCartAnchor: () => (node) => ({cartAnchor: node}),
   }
 )(withStyles(styles)(withWidth()(AppBar)));

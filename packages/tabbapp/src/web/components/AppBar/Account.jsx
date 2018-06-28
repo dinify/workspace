@@ -39,7 +39,7 @@ const Account = ({
           component={LoginLink}
           variant="outlined"
           color="primary"
-          style={{ marginRight: 24, marginLeft: 24 }}
+          style={{ marginRight: 24 }}
         >
           Log in
         </Button>
