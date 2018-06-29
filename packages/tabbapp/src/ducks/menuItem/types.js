@@ -5,4 +5,7 @@ export default {
   FETCH_MENUITEM_INIT: 'tabb/menuCategory/FETCH_MENUITEM_INIT',
   FETCH_MENUITEM_DONE: 'tabb/menuCategory/FETCH_MENUITEM_DONE',
   FETCH_MENUITEM_FAIL: 'tabb/menuCategory/FETCH_MENUITEM_FAIL',
+  FAV_MENUITEM_INIT: 'tabb/restaurant/FAV_MENUITEM_INIT',
+  FAV_MENUITEM_FAIL: 'tabb/restaurant/FAV_MENUITEM_FAIL',
+  FAV_MENUITEM_DONE: 'tabb/restaurant/FAV_MENUITEM_DONE',
 };

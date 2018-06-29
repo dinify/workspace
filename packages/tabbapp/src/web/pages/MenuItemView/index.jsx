@@ -14,7 +14,7 @@ import * as FN from 'lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import Customizations from './Customizations';
 import NutritionFacts from './NutritionFacts';
-import { fetchMenuitemInit } from 'ducks/menuItem/actions';
+import { fetchMenuitemInit, favMenuitemInit } from 'ducks/menuItem/actions';
 
 const styles = theme => ({
   category: {
@@ -54,7 +54,8 @@ class MenuItemView extends React.PureComponent {
     const {
       width,
       classes,
-      menuItem
+      menuItem,
+      favMenuitem,
     } = this.props;
     if (!menuItem) return <div />;
     const images = FN.MapToList(menuItem.images);
@@ -101,7 +102,10 @@ class MenuItemView extends React.PureComponent {
                 <Grid item>
                   <FavoriteToggle
                     checked={menuItem.favorite}
-                    onChange={() => {}}
+                    onChange={() => favMenuitem({
+                      fav: !menuItem.favorite,
+                      id: menuItem.id
+                    })}
                   />
                 </Grid>
               </Grid>
@@ -143,7 +147,8 @@ MenuItemView = connect(
     menuItem: state.menuItem.all[match.params.id]
   }),
   {
-    fetchMenuitem: fetchMenuitemInit
+    fetchMenuitem: fetchMenuitemInit,
+    favMenuitem: favMenuitemInit
   }
 )(MenuItemView)
 

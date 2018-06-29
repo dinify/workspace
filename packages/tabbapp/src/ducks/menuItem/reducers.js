@@ -29,7 +29,10 @@ export default function reducer(state = initialState, action) {
       })
       return newState;
     }
-
+    case types.FAV_MENUITEM_INIT: {
+      const { id, fav } = action.payload;
+      return R.assocPath(['all', id, 'favorite'], fav)(state);
+    }
     default:
       return state;
   }

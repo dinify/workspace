@@ -55,6 +55,12 @@ export function FavRestaurant({ id, fav }: FavRestaurantArgs) {
   return Post({ path: `restaurant/${id}/favorite` }, { favorite: fav });
 }
 
+type FavMenuitemArgs = { id: string, fav: boolean  };
+
+export function FavMenuitem({ id, fav }: FavMenuitemArgs) {
+  return Post({ path: `menu/item/${id}/favorite` }, { favorite: fav });
+}
+
 export function GetCart() {
   return Get({ path: `cart?with=addons.price,excludes,choices.difference,menu_item.images` });
 }

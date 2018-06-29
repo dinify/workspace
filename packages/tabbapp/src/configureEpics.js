@@ -3,6 +3,8 @@ import { epics as crud } from 'ducks/crudEpics';
 import { authEpics as auth } from 'ducks/auth';
 import { restaurantEpics as restaurant } from 'ducks/restaurant';
 import { userEpics as user } from 'ducks/user';
+import { menuItemEpics as menuItem } from 'ducks/menuItem';
+
 import appEpics from 'ducks/appEpics';
 
 const epics = [
@@ -11,6 +13,7 @@ const epics = [
   ...auth,
   ...user,
   ...restaurant,
+  ...menuItem,
 ];
 
 export default (deps = {}, platformEpics = []) => (
