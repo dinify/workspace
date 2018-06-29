@@ -13,9 +13,14 @@ export function GetRestaurant({ subdomain }: GetRestaurantById | GetRestaurantBy
 }
 
 type GetCategoriesArgs = { subdomain: string };
-
+const populateCategoriesWith = [
+  'categories.items.images',
+  'categories.items.addons',
+  'categories.items.ingredients',
+  'categories.items.options',
+].join(',');
 export function GetMenucategories({ subdomain }: GetCategoriesArgs) {
-  return Get({ path: `restaurant/${subdomain}/categories?with=categories.items.images` });
+  return Get({ path: `restaurant/${subdomain}/categories?with=${populateCategoriesWith}` });
 }
 
 type GetMenuitemsArgs = { categoryId: string };
@@ -42,4 +47,16 @@ type FavRestaurantArgs = { id: string, fav: boolean  };
 
 export function FavRestaurant({ id, fav }: FavRestaurantArgs) {
   return Post({ path: `restaurant/${id}/favorite` }, { favorite: fav });
+}
+
+export function GetCart() {
+  return Get({ path: `cart?with=addons.price,excludes,choices.difference,menu_item.images` });
+}
+
+export function AddItemToCart({ itemId, choices, excludes, addons }) {
+  return Post({ path: `menu/item/${itemId}/cart/add` },
+    {
+    	choices, excludes, addons
+    }
+  );
 }

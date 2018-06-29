@@ -10,7 +10,8 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case types.FETCH_MENUCATEGORIES_DONE: {
-      const categories = action.payload.res;
+      let categories = action.payload.res || [];
+      categories = categories.map((c) => R.dissoc('items')(c))
       return R.assoc('all', FN.ListToMap(categories))(state);
     }
 

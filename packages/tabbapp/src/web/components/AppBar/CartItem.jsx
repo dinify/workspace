@@ -29,7 +29,7 @@ const CartItem = ({
     const customizations = [];
     const choices = FN.MapToList(item.choices);
     const addons = FN.MapToList(item.addons);
-    const images = FN.MapToList(item.menu_item.images);
+    const images = item.menu_item ? FN.MapToList(item.menu_item.images) : [];
     customizations.push(...choices.map(choice => {
       return {
         name: choice.name,
@@ -58,12 +58,12 @@ const CartItem = ({
       <div style={{flex: 1, marginLeft: 16}}>
         <div style={{display: 'flex'}}>
           <Typography style={{flex: 1, marginRight: 32}} variant="body1">
-            {item.menu_item.name}
+            {item.menu_item && item.menu_item.name}
           </Typography>
           <Typography
             style={{alignSelf: 'flex-end'}}
             variant="overline">
-            {FN.formatPrice(item.menu_item.price)}
+            {item.menu_item && FN.formatPrice(item.menu_item.price)}
           </Typography>
         </div>
         {customizations.length ? customizations.map(customization =>

@@ -2,6 +2,7 @@
 import { Observable } from 'rxjs';
 import { fetchRestaurantsInit, fetchStatusInit, fetchStatusFail } from 'ducks/restaurant/actions';
 import { fetchMeInit, fetchMeFail } from 'ducks/user/actions';
+import { fetchCartInit } from 'ducks/cart/actions';
 import { getCookie } from 'lib/FN';
 
 const bootstrapEpic = (action$: Observable) =>
@@ -16,6 +17,7 @@ const bootstrapEpic = (action$: Observable) =>
         // seems like logged in, so let's find out
         callActions.push(fetchMeInit());
         callActions.push(fetchStatusInit());
+        callActions.push(fetchCartInit());
       } else {
         // no token means logged out, so make sure that there's no user data
         callActions.push(fetchMeFail([{ status: 401 }]));

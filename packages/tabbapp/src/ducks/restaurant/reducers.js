@@ -31,7 +31,7 @@ export default function reducer(state = initialState, action) {
       if (!res || !(res instanceof Object)) {
         return R.assoc('checkedInRestaurant', null)(state);
       }
-      const id = res.table.restaurant.id;
+      const id = res.restaurant.id;
       return R.assoc('checkedInRestaurant', id)(state);
     }
     case types.FETCH_STATUS_FAIL: {

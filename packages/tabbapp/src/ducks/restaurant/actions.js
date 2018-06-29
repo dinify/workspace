@@ -5,7 +5,7 @@ export const fetchRestaurantsInit = () => ({
 });
 
 export const fetchRestaurantInit = (payload) => ({
-  type: types.FETCH_RESTAURANTS_INIT,
+  type: types.FETCH_RESTAURANT_INIT,
   payload
 });
 
