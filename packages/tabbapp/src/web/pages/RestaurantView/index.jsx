@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
@@ -16,23 +15,20 @@ import Instagram from 'icons/Instagram';
 import CalendarClock from 'icons/CalendarClock';
 import Place from 'icons/Place';
 import Favorite from 'icons/Favorite';
-import RestaurantMenu from 'icons/RestaurantMenu';
 import AppBar from 'web/components/AppBar';
 import FavoriteToggle from 'web/components/FavoriteToggle';
 import Typography from 'web/components/Typography';
-import Rating from 'web/components/Rating';
 import OrderItemCard from 'web/components/OrderItemCard';
-import MenuItemCard from 'web/components/MenuItemCard';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import * as FN from 'lib/FN';
 import orderItemSample from './orderItem';
 import { fetchRestaurantInit, favRestaurantInit } from 'ducks/restaurant/actions';
 import { fetchMenucategoriesInit } from 'ducks/menuCategory/actions';
-import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
 import BookingForm from './BookingForm';
 import InfoSection from './InfoSection';
+import MenuSection from './MenuSection';
 import uniqueId from 'lodash.uniqueid';
 
 const styles = theme => ({
@@ -100,12 +96,13 @@ class RestaurantView extends React.PureComponent {
       width,
       classes,
       restaurant,
-      menuCategoriesList,
-      favRestaurant
+      favRestaurant,
+      match: { params }
     } = this.props;
     if (!restaurant) {
       return <div />
     }
+    const subdomain = params.subdomain;
     const images = FN.MapToList(restaurant.images);
     const allTags = FN.MapToList(restaurant.tags);
     const tags = [];
@@ -232,36 +229,8 @@ class RestaurantView extends React.PureComponent {
               </Grid>
 
               <Divider style={{marginTop: 16, marginBottom: 16}} />
-              <Grid container wrap="nowrap" spacing={16}>
-                <Grid item>
-                  <RestaurantMenu className={classes.primary} />
-                </Grid>
-                <Grid item>
-                  <Typography variant="subheading">Menu</Typography>
-                  <Typography variant="caption">Everything you can get in {restaurant.name}</Typography>
-                </Grid>
-              </Grid>
-              {menuCategoriesList.map((category, i) =>
-                <div style={{marginTop: i === 0 ? 32 : 0}} key={uniqueId()}>
-                  {i > 0 && <Divider style={{marginTop: 32, marginBottom: 32}} />}
-                  <Link style={{textDecoration: 'none'}} to={`/category/${category.id}`}>
-                    <Typography gutterBottom variant="title">
-                      {category.name}
-                    </Typography>
-                  </Link>
-                  <Grid
-                    className={classes.scroller}
-                    wrap="nowrap"
-                    container
-                    spacing={mediumScreen ? 24 : 16}>
-                    {FN.MapToList(category.items).map(menuItem =>
-                      <Grid item xs={6} sm={4} md={6} key={uniqueId()}>
-                        <MenuItemCard menuItem={menuItem}/>
-                      </Grid>
-                    )}
-                  </Grid>
-                </div>
-              )}
+
+              <MenuSection restaurant={restaurant} subdomain={subdomain} />
             </Grid>
             <Grid item xs={12} md={6}>
               {smallScreen && <Divider/>}
@@ -303,7 +272,6 @@ class RestaurantView extends React.PureComponent {
 RestaurantView = connect(
   (state, { match }) => ({
     restaurant: getRestaurantBySubdomain(state, match.params.subdomain),
-    menuCategoriesList: getCategoriesBySubdomain(state, match.params.subdomain)
   }),
   {
     fetchMenucategories: fetchMenucategoriesInit,

@@ -45,12 +45,10 @@ class MenuItemView extends React.PureComponent {
   render() {
     const {
       width,
-      classes
+      classes,
+      menuItem
     } = this.props;
-
-    // TODO: use prop from redux instead
-    const menuItem = menuItemSample[1];
-
+    if (!menuItem) return <div />;
     const images = FN.MapToList(menuItem.images);
 
     const extraSmallScreen = isWidthDown('xs', width);
@@ -182,7 +180,7 @@ class MenuItemView extends React.PureComponent {
 
 MenuItemView = connect(
   (state, { match }) => ({
-
+    menuItem: state.menuItem.all[match.params.id]
   }),
   {
 
