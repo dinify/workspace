@@ -1,28 +1,36 @@
 // @flow
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { withStateHandlers } from 'recompose';
+import { withStateHandlers, getContext } from 'recompose';
 
 import LogoText from 'icons/LogoText';
 import Logo from 'icons/Logo';
 import Search from 'icons/Search';
+import ChevronLeft from 'icons/ChevronLeft';
+import Menu from 'icons/Menu';
 
 import Divider from '@material-ui/core/Divider';
 import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Input from '@material-ui/core/Input';
+import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
+import * as FN from 'lib/FN';
 
 import Cart from './Cart';
 import Account from './Account';
 
 const styles = theme => ({
-  appBar: {
+  appBarDefault: {
     boxShadow: 'none',
     backgroundColor: theme.palette.background.default,
+  },
+  appBar: {
+
   },
   searchBar: {
     height: '100%',
@@ -52,6 +60,9 @@ const styles = theme => ({
   primary: {
     color: theme.palette.text.primary
   },
+  contrastText: {
+    color: theme.palette.primary.contrastText
+  },
   secondary: {
     color: theme.palette.text.secondary
   },
@@ -67,6 +78,7 @@ const styles = theme => ({
 type AppBarProps = {
   classes: object,
   position: string,
+  color: string,
   width: number,
   children?: React.Node,
 };
@@ -75,28 +87,40 @@ const AppBar = ({
   classes,
   position = 'sticky',
   width = 1000,
+  color = 'default',
   children,
   setAnchor,
   anchor,
   setCartAnchor,
   cartAnchor,
+  router,
 }: AppBarProps) => {
 
   const logoWithText = isWidthUp('md', width);
   const logo = (
     <Link to="/">
-      {logoWithText && <LogoText className={classes.primary} style={{width: 74}}/>}
-      {!logoWithText && <Logo className={classes.primary}/>}
+      {logoWithText && <LogoText className={color === 'default' ? classes.primary : classes.contrastText} style={{width: 74}}/>}
+      {!logoWithText && <Logo className={color === 'default' ? classes.primary : classes.contrastText}/>}
     </Link>
   );
+  const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
 
+  const root = router.history.location.pathname === '/';
+  console.log(router.history.location.pathname);
   return (
     <MuiAppBar
       position={position}
-      color="default"
-      className={classes.appBar}>
+      color={color}
+      className={color !== 'default' ? classes.appBar : classes.appBarDefault}>
       <Toolbar>
-        {logo}
+        {iosInstalled &&
+          <IconButton
+            style={{marginLeft: -16}}
+            onClick={root ? () => { /* Open drawer */ } : router.history.goBack}>
+            {root ? <Menu /> : <ChevronLeft />}
+          </IconButton>
+        }
+        {!iosInstalled && logo}
         {isWidthUp('sm', width) ?
           <div className={classes.searchBar} >
             <Input
@@ -120,10 +144,13 @@ const AppBar = ({
         }
         {children}
         <div style={{transform: 'translateX(24px)', WebkitTransform: 'translateX(24px)'}} className={classes.expand} ref={node => { setCartAnchor(ReactDOM.findDOMNode(node)) }}/>
-        <Cart anchor={cartAnchor}/>
-        <Account classes={classes} anchor={anchor} />
+        <Cart color="inherit" anchor={cartAnchor}/>
+        <Account color={color} classes={classes} anchor={anchor} />
       </Toolbar>
-      <Divider ref={node => { setAnchor(ReactDOM.findDOMNode(node)) }} />
+      {color === 'default' ?
+        <Divider ref={node => { setAnchor(ReactDOM.findDOMNode(node)) }} /> :
+        <div ref={node => { setAnchor(ReactDOM.findDOMNode(node)) }} style={{width: '100%'}}/>
+      }
     </MuiAppBar>
   );
 };
@@ -137,4 +164,6 @@ export default withStateHandlers(
     setAnchor: () => (node) => ({anchor: node}),
     setCartAnchor: () => (node) => ({cartAnchor: node}),
   }
-)(withStyles(styles)(withWidth()(AppBar)));
+)(withStyles(styles)(withWidth()(getContext({
+  router: PropTypes.object
+})(AppBar))));

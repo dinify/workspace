@@ -52,19 +52,14 @@ const OrderItemCard = ({
             backgroundImage: `url(${images[0]})`
           }}/>
       </div>
-      <Grid container spacing={8}>
-        <Grid item>
-          <Typography
-            className={classes.price}
-            variant="overline">
-            {`${orderItem.subtotal.amount} ${orderItem.subtotal.currency}`}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="title">{orderItem.menu_item.name}</Typography>
-        </Grid>
-      </Grid>
-      <Typography noWrap variant="body1">{orderItem.menu_item.description}</Typography>
+      <Typography
+        className={classes.price}
+        variant="overline">
+        {FN.formatPrice(orderItem.menu_item.price)}
+      </Typography>
+      <Typography variant="subheading">{orderItem.menu_item.name}</Typography>
+      <div style={{width: 1000}} />
+      { /* <Typography noWrap variant="body1">{orderItem.menu_item.description}</Typography> */ }
     </div>
   );
 };

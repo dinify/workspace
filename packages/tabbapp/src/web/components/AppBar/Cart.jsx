@@ -37,6 +37,7 @@ const Cart = ({
   handleCartMenuToggle,
   handleCartMenuClose,
   anchor,
+  color = 'default',
   cart
 }) => {
 
@@ -46,6 +47,7 @@ const Cart = ({
   return (
     <div>
       <IconButton
+        color={color}
         onClick={handleCartMenuToggle}
         style={{marginRight: 16}}>
         <Badge badgeContent={cartItems.length} color="primary">
@@ -68,7 +70,7 @@ const Cart = ({
         <div>
           <div style={{padding: 8}}>
             {cartItems.map(item =>
-              <CartItem item={item}/>
+              <CartItem key={uniqueId()} item={item}/>
             )}
           </div>
           <Divider />

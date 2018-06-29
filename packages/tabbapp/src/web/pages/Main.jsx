@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withTheme } from '@material-ui/core/styles';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import ResponsiveGrid from 'web/components/ResponsiveGrid';
 import AppBar from 'web/components/AppBar';
@@ -9,11 +10,12 @@ import ChevronRight from 'icons/ChevronRight';
 import RestaurantListItem from 'web/components/RestaurantListItem';
 import * as FN from 'lib/FN';
 
-const Main = ({ restaurantsMap }) => {
+const Main = ({ restaurantsMap, theme }) => {
   const restaurantsList = FN.MapToList(restaurantsMap);
+  const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
   return (
     <div>
-      <AppBar />
+      {!iosInstalled && <AppBar />}
       <ResponsiveContainer>
         <Typography
           style={{ paddingTop: 32 }}
@@ -49,4 +51,4 @@ export default connect(
   state => ({
     restaurantsMap: state.restaurant.all,
   })
-)(Main);
+)(withTheme()(Main));

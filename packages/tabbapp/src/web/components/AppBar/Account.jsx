@@ -28,6 +28,7 @@ const Account = ({
   handleAccountMenuToggle,
   classes,
   user,
+  color = 'default',
   accountMenuOpen,
   handleAccountMenuClose,
   logout
@@ -38,7 +39,7 @@ const Account = ({
         <Button
           component={LoginLink}
           variant="outlined"
-          color="primary"
+          color={color === 'default' ? 'primary' : 'inherit'}
           style={{ marginRight: 24 }}
         >
           Log in
@@ -46,7 +47,7 @@ const Account = ({
         <Button
           component={SignupLink}
           variant="contained"
-          color="primary"
+          color={color === 'default' ? 'primary' : 'inherit'}
         >
           Sign up
         </Button>
@@ -56,6 +57,7 @@ const Account = ({
   return (
     <div>
       <ButtonBase
+
         aria-owns={anchor ? 'simple-menu' : null}
         aria-haspopup="true"
         onClick={handleAccountMenuToggle}
@@ -64,7 +66,9 @@ const Account = ({
         <Avatar className={classes.avatar}>
           <Person />
         </Avatar>
-        <Typography style={{marginLeft: 16, marginRight: 16}}>
+        <Typography
+          color='inherit'
+          style={{marginLeft: 16, marginRight: 16}}>
           {user.name}
         </Typography>
       </ButtonBase>

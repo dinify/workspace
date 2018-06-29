@@ -7,9 +7,14 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import Today from 'icons/Today';
+import FacebookBox from 'icons/FacebookBox';
+import Instagram from 'icons/Instagram';
+import CalendarClock from 'icons/CalendarClock';
+import Place from 'icons/Place';
 import Favorite from 'icons/Favorite';
 import RestaurantMenu from 'icons/RestaurantMenu';
 import AppBar from 'web/components/AppBar';
@@ -54,6 +59,30 @@ const styles = theme => ({
   secondary: {
     color: theme.palette.text.secondary
   },
+  primary: {
+    color: theme.palette.primary.main
+  },
+  chip: {
+    margin: theme.spacing.unit,
+  },
+  scroller: {
+    overflowX: 'auto',
+    overflowY: 'hidden',
+    paddingRight: 32,
+    WebkitScrollSnapType: 'mandatory',
+    scrollSnapType: 'x mandatory',
+    WebkitScrollSnapPointsX: 'repeat(100%)',
+    scrollSnapPointsX: 'repeat(100%)',
+    WebkitOverflowScrolling: 'touch',
+    whiteSpace: 'nowrap',
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    },
+    '& > div': {
+      WebkitOverflowScrolling: 'touch',
+      scrollSnapAlign: 'start',
+    }
+  }
 });
 
 class RestaurantView extends React.PureComponent {
@@ -94,9 +123,10 @@ class RestaurantView extends React.PureComponent {
     const md = !sm && isWidthDown('md', width);
     const lg = !md && isWidthDown('lg', width);
 
+    const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     return (
       <div>
-        <AppBar position="static"/>
+        {!iosInstalled && <AppBar position="static"/>}
         {extraSmallScreen &&
           <Carousel images={images.map(image => image.url)}/>
         }
@@ -119,27 +149,30 @@ class RestaurantView extends React.PureComponent {
         <ResponsiveContainer>
           <Grid container spacing={mediumScreen ? 24 : 16} style={{marginTop: mediumScreen ? 24 : 16}}>
             <Grid item xs={12} md={6}>
-              <Grid container spacing={mediumScreen ? 24 : 16}>
-                <Grid item style={{flex: 1}}>
-                  {tags && (
-                    <Typography
-                      gutterBottom
-                      variant="overline"
-                      color="primary">
-                      {tags.join(' · ')}
-                    </Typography>
-                  )}
-                  <Typography gutterBottom variant="title">{restaurant.name}</Typography>
-                  <Grid container spacing={8} alignItems="center">
-                    <Grid item>
-                      <Rating size={16} stars={5} rating={restaurant.rating}/>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="caption">
-                        {`${restaurant.rating} (${restaurant.rating_count})`}
-                      </Typography>
-                    </Grid>
-                  </Grid>
+              {tags && (
+                <Typography
+                  gutterBottom
+                  variant="overline"
+                  color="primary">
+                  {tags.join(' · ')}
+                </Typography>
+              )}
+              <Typography gutterBottom variant="title">{restaurant.name}</Typography>
+              <Grid container style={{marginLeft: -16}} spacing={8}>
+                <Grid item>
+                  <IconButton>
+                    <FacebookBox className={classes.secondary} />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <IconButton>
+                    <Instagram className={classes.secondary} />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <IconButton>
+                    <Place className={classes.secondary} />
+                  </IconButton>
                 </Grid>
                 <Grid item>
                   <FavoriteToggle
@@ -150,9 +183,14 @@ class RestaurantView extends React.PureComponent {
                     })}
                   />
                 </Grid>
+                <Grid item>
+                  <IconButton>
+                    <CalendarClock className={classes.secondary} />
+                  </IconButton>
+                </Grid>
               </Grid>
 
-              <Typography style={{marginTop: 8}} gutterBottom variant="subheading">{restaurant.description}</Typography>
+              { /* <Typography style={{marginTop: 8}} gutterBottom variant="subheading">{restaurant.description}</Typography>
               <Typography
                 className={classes.secondary}
                 style={{ paddingTop: mediumScreen ? 24 : 16 }}
@@ -160,15 +198,15 @@ class RestaurantView extends React.PureComponent {
                 variant="overline">
                 About
               </Typography>
-              <Typography gutterBottom variant="body1">{restaurant.about}</Typography>
+              <Typography gutterBottom variant="body1">{restaurant.about}</Typography> */ }
               <Divider style={{marginTop: 16, marginBottom: 16}} />
               <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
                 <Grid item>
-                  <Today className={classes.secondary} />
+                  <Today className={classes.primary} />
                 </Grid>
                 <Grid item>
                   <Typography variant="subheading">Recent orders</Typography>
-                  <Typography variant="caption">See what people are eating in {restaurant.name} at the moment</Typography>
+                  { /* <Typography variant="caption">See what people are eating in {restaurant.name} at the moment</Typography> */ }
                 </Grid>
               </Grid>
               <Grid container spacing={mediumScreen ? 24 : 16}>
@@ -178,13 +216,13 @@ class RestaurantView extends React.PureComponent {
               </Grid>
 
               <Divider style={{marginTop: 16, marginBottom: 16}} />
-              <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
+              <Grid container wrap="nowrap" style={{marginBottom: 8}} spacing={16}>
                 <Grid item>
-                  <Favorite className={classes.secondary} />
+                  <Favorite className={classes.primary} />
                 </Grid>
                 <Grid item>
                   <Typography variant="subheading">Favorited</Typography>
-                  <Typography variant="caption">Your top picks in {restaurant.name}</Typography>
+                  { /* <Typography variant="caption">Your top picks in {restaurant.name}</Typography> */ }
                 </Grid>
               </Grid>
               <Grid container spacing={mediumScreen ? 24 : 16}>
@@ -194,24 +232,28 @@ class RestaurantView extends React.PureComponent {
               </Grid>
 
               <Divider style={{marginTop: 16, marginBottom: 16}} />
-              <Grid container wrap="nowrap" alignItems="center" spacing={16}>
+              <Grid container wrap="nowrap" spacing={16}>
                 <Grid item>
-                  <RestaurantMenu className={classes.secondary} />
+                  <RestaurantMenu className={classes.primary} />
                 </Grid>
                 <Grid item>
                   <Typography variant="subheading">Menu</Typography>
                   <Typography variant="caption">Everything you can get in {restaurant.name}</Typography>
                 </Grid>
               </Grid>
-              {menuCategoriesList.map(category =>
-                <div key={uniqueId()}>
-                  <Divider style={{marginTop: 16, marginBottom: 16}} />
+              {menuCategoriesList.map((category, i) =>
+                <div style={{marginTop: i === 0 ? 32 : 0}} key={uniqueId()}>
+                  {i > 0 && <Divider style={{marginTop: 32, marginBottom: 32}} />}
                   <Link style={{textDecoration: 'none'}} to={`/category/${category.id}`}>
-                    <Typography gutterBottom variant="headline">
+                    <Typography gutterBottom variant="title">
                       {category.name}
                     </Typography>
                   </Link>
-                  <Grid container spacing={mediumScreen ? 24 : 16}>
+                  <Grid
+                    className={classes.scroller}
+                    wrap="nowrap"
+                    container
+                    spacing={mediumScreen ? 24 : 16}>
                     {FN.MapToList(category.items).map(menuItem =>
                       <Grid item xs={6} sm={4} md={6} key={uniqueId()}>
                         <MenuItemCard menuItem={menuItem}/>

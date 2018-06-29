@@ -12,6 +12,23 @@
     <!-- Application manifest -->
     <link rel="manifest" href="/manifest.json">
 
+    <!-- Fulscreen webapp on iOS < 11.3 that don't support manifest spec -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Set status bar content for a more native feel -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+
+    <!-- Application splash image on iOs devices -->
+    <link href="/apple-splash-2048x2732.png" sizes="2048x2732" rel="apple-touch-startup-image" />
+    <link href="/apple-splash-1668x2224.png" sizes="1668x2224" rel="apple-touch-startup-image" />
+    <link href="/apple-splash-1536x2048.png" sizes="1536x2048" rel="apple-touch-startup-image" />
+    <link href="/apple-splash-1125x2436.png" sizes="1125x2436" rel="apple-touch-startup-image" />
+    <link href="/apple-splash-1242x2208.png" sizes="1242x2208" rel="apple-touch-startup-image" />
+    <link href="/apple-splash-750x1334.png" sizes="750x1334" rel="apple-touch-startup-image" />
+
+    <!-- When adding to home screen on iOS devices -->
+    <meta name="apple-mobile-web-app-title" content="TABB">
+
     <!-- iPhone(first generation or 2G), iPhone 3G, iPhone 3GS -->
     <link rel="apple-touch-icon" sizes="57x57" href="touch-icon-57x57.png">
     <!-- iPad and iPad mini @1x -->
@@ -48,7 +65,8 @@
     <meta name="msapplication-TileColor" content="#c13939">
 
     <!-- Fonts and stylesheets -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500">
+    <!--link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" /-->
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css' rel='stylesheet' />
     <style>
       a.mapboxgl-ctrl-logo {

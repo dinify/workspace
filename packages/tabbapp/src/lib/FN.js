@@ -15,6 +15,18 @@ export const ListToMap = items => {
 
 export const Identity = (val, cb) => cb(val);
 
+export function isInstalled() {
+  const url = window.location.search;
+  const getQuery = url.split('?')[1];
+  if (!getQuery) return false;
+  const params = getQuery.split('&');
+  for (let i = 0; i < params.length; i += 1) {
+    const s = params[i].split('=');
+    if (s[0] === 'source' && s[1] === 'pwa') return true;
+  }
+  return false;
+}
+
 export const MapPath = R.curry((path, f, obj) =>
   R.assocPath(path, f(R.path(path, obj)), obj),
 );

@@ -42,7 +42,8 @@ const theme = createMuiTheme({
   },
   typography: {
     // System font stack
-    /* fontFamily: [
+    fontFamily: [
+      'Poppins',
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',
@@ -53,7 +54,7 @@ const theme = createMuiTheme({
       '"Apple Color Emoji"',
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
-    ].join(','), */
+    ].join(','),
   },
 });
 

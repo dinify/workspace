@@ -6,11 +6,13 @@ import { matchPath } from 'react-router';
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
 import CategoryView from 'web/pages/CategoryView';
-import FoodView from 'web/pages/FoodView';
+import MenuItemView from 'web/pages/MenuItemView';
 import Cart from 'web/pages/Cart';
 import Bill from 'web/pages/Bill';
 import Receipt from 'web/pages/Receipt';
 import Main from 'web/pages/Main';
+import AppBar from 'web/components/AppBar';
+import * as FN from 'lib/FN';
 
 import OnboardingDialog from 'web/components/OnboardingDialog';
 
@@ -51,8 +53,11 @@ class ModalSwitch extends React.Component {
       location.state.modal &&
       this.previousLocation !== location
     ); // not initial render
+
+    const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     return (
       <div>
+        {iosInstalled && <AppBar />}
         <Switch location={isModal ? this.previousLocation : location}>
           <Route exact path="/" component={Main} />
 
@@ -63,7 +68,7 @@ class ModalSwitch extends React.Component {
           <Route path="/checkin" component={Checkin} />
           <Route path="/restaurant/:subdomain" component={RestaurantView} />
           <Route path="/category/:id" component={CategoryView} />
-          <Route path="/food/:id" component={FoodView} />
+          <Route path="/menu/item/:id" component={MenuItemView} />
 
           <Route path="/cart" component={Cart} />
           <Route path="/bill" component={Bill} />

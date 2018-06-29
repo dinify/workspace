@@ -47,7 +47,8 @@ const RestaurantListItem = ({
     }
   });
 
-  const RestaurantLink = props => <Link to={`/restaurant/${restaurant.subdomain}`} {...props}/>
+
+  const RestaurantLink = props => <Link to={`/restaurant/${restaurant.subdomain}${FN.isInstalled() ? '?source=pwa' : ''}`} {...props}/>
   return (
     <RestaurantLink
       style={{
@@ -76,7 +77,7 @@ const RestaurantListItem = ({
         )}
 
         <Typography variant="title">{restaurant.name}</Typography>
-        <Typography variant="body1">{restaurant.description}</Typography>
+        { /* <Typography variant="body1">{restaurant.description}</Typography> */}
       </div>
     </RestaurantLink>
   );

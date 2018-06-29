@@ -1,8 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from 'web/components/Typography';
-import Grid from '@material-ui/core/Grid';
-import Carousel from 'web/components/Carousel';
+import { Link } from 'react-router-dom';
 import * as FN from 'lib/FN';
 
 const styles = theme => ({
@@ -48,8 +47,14 @@ const MenuItemCard = ({
   menuItem
 }) => {
   const images = FN.MapToList(menuItem.images).map(image => image.url)
+  const MenuItemLink = props => <Link to={`/menu/item/${menuItem.id}${FN.isInstalled() ? '?source=pwa' : ''}`} {...props}/>
+
   return (
-    <div>
+    <MenuItemLink
+      style={{
+        textDecoration: 'none',
+        width: '100%',
+      }}>
       <div
         className={classes.image}
         style={{
@@ -67,9 +72,10 @@ const MenuItemCard = ({
         variant="overline">
         {FN.formatPrice(menuItem.price)}
       </Typography>
-      <Typography variant="title">{menuItem.name}</Typography>
-      <Typography noWrap variant="body1">{menuItem.description}</Typography>
-    </div>
+      <Typography variant="subheading">{menuItem.name}</Typography>
+      <div style={{width: 1000}} />
+      { /* <Typography noWrap variant="body1">{menuItem.description}</Typography> */ }
+    </MenuItemLink>
   );
 };
 
