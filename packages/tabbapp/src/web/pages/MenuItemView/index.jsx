@@ -14,6 +14,7 @@ import * as FN from 'lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import menuItemSample from './menuItem.js';
 import Customizations from './Customizations';
+import NutritionFacts from './NutritionFacts';
 
 const styles = theme => ({
   category: {
@@ -109,57 +110,9 @@ class MenuItemView extends React.PureComponent {
                   </Typography>
                   <Typography variant="body1">{menuItem.description}</Typography>
                 </Grid>
-                {menuItem.calories &&
-                  <Grid item xs={6}>
-                    <Typography
-                      className={classes.secondary}
-                      gutterBottom
-                      variant="overline">
-                      Calories
-                    </Typography>
-                    <div style={{display: 'flex'}}>
-                      <Typography style={{flex: 1}} variant="body1">
-                        Fats
-                      </Typography>
-                      <Typography
-                        style={{alignSelf: 'flex-end'}}
-                        variant="overline">
-                        {menuItem.calories.fats}
-                      </Typography>
-                    </div>
-                    <div style={{display: 'flex'}}>
-                      <Typography style={{flex: 1}} variant="body1">
-                        Carbs
-                      </Typography>
-                      <Typography
-                        style={{alignSelf: 'flex-end'}}
-                        variant="overline">
-                        {menuItem.calories.carbs}
-                      </Typography>
-                    </div>
-                    <div style={{display: 'flex'}}>
-                      <Typography style={{flex: 1}} variant="body1">
-                        Proteins
-                      </Typography>
-                      <Typography
-                        style={{alignSelf: 'flex-end'}}
-                        variant="overline">
-                        {menuItem.calories.proteins}
-                      </Typography>
-                    </div>
-                    <Divider style={{marginTop: 8, marginBottom: 8}}/>
-                    <div style={{display: 'flex'}}>
-                      <Typography style={{flex: 1}} variant="body2">
-                        Total
-                      </Typography>
-                      <Typography
-                        style={{alignSelf: 'flex-end'}}
-                        variant="overline">
-                        {menuItem.calories.total}
-                      </Typography>
-                    </div>
-                  </Grid>
-                }
+
+                <NutritionFacts calories={menuItem.calories} />
+
               </Grid>
 
 

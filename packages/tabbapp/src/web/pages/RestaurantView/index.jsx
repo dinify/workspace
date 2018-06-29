@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as FN from 'lib/FN';
+import uniqueId from 'lodash.uniqueid';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
@@ -15,16 +17,14 @@ import Typography from 'web/components/Typography';
 import OrderItemCard from 'web/components/OrderItemCard';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
-import * as FN from 'lib/FN';
-import orderItemSample from './orderItem';
 import { fetchRestaurantInit } from 'ducks/restaurant/actions';
 import { fetchMenucategoriesInit } from 'ducks/menuCategory/actions';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
+import orderItemSample from './orderItem';
 import BookingForm from './BookingForm';
 import InfoSection from './InfoSection';
 import MenuSection from './MenuSection';
 import Nav from './Nav';
-import uniqueId from 'lodash.uniqueid';
 
 const styles = theme => ({
   category: {
