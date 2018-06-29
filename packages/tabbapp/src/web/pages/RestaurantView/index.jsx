@@ -6,29 +6,24 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import Today from 'icons/Today';
-import FacebookBox from 'icons/FacebookBox';
-import Instagram from 'icons/Instagram';
-import CalendarClock from 'icons/CalendarClock';
-import Place from 'icons/Place';
 import Favorite from 'icons/Favorite';
 import AppBar from 'web/components/AppBar';
-import FavoriteToggle from 'web/components/FavoriteToggle';
 import Typography from 'web/components/Typography';
 import OrderItemCard from 'web/components/OrderItemCard';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import * as FN from 'lib/FN';
 import orderItemSample from './orderItem';
-import { fetchRestaurantInit, favRestaurantInit } from 'ducks/restaurant/actions';
+import { fetchRestaurantInit } from 'ducks/restaurant/actions';
 import { fetchMenucategoriesInit } from 'ducks/menuCategory/actions';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
 import BookingForm from './BookingForm';
 import InfoSection from './InfoSection';
 import MenuSection from './MenuSection';
+import Nav from './Nav';
 import uniqueId from 'lodash.uniqueid';
 
 const styles = theme => ({
@@ -61,24 +56,6 @@ const styles = theme => ({
   chip: {
     margin: theme.spacing.unit,
   },
-  scroller: {
-    overflowX: 'auto',
-    overflowY: 'hidden',
-    paddingRight: 32,
-    WebkitScrollSnapType: 'mandatory',
-    scrollSnapType: 'x mandatory',
-    WebkitScrollSnapPointsX: 'repeat(100%)',
-    scrollSnapPointsX: 'repeat(100%)',
-    WebkitOverflowScrolling: 'touch',
-    whiteSpace: 'nowrap',
-    '&::-webkit-scrollbar': {
-      display: 'none'
-    },
-    '& > div': {
-      WebkitOverflowScrolling: 'touch',
-      scrollSnapAlign: 'start',
-    }
-  }
 });
 
 class RestaurantView extends React.PureComponent {
@@ -96,7 +73,6 @@ class RestaurantView extends React.PureComponent {
       width,
       classes,
       restaurant,
-      favRestaurant,
       match: { params }
     } = this.props;
     if (!restaurant) {
@@ -155,37 +131,7 @@ class RestaurantView extends React.PureComponent {
                 </Typography>
               )}
               <Typography gutterBottom variant="title">{restaurant.name}</Typography>
-              <Grid container style={{marginLeft: -16}} spacing={8}>
-                <Grid item>
-                  <IconButton>
-                    <FacebookBox className={classes.secondary} />
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <IconButton>
-                    <Instagram className={classes.secondary} />
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <IconButton>
-                    <Place className={classes.secondary} />
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <FavoriteToggle
-                    checked={restaurant.favorite}
-                    onChange={() => favRestaurant({
-                      fav: !restaurant.favorite,
-                      id: restaurant.id
-                    })}
-                  />
-                </Grid>
-                <Grid item>
-                  <IconButton>
-                    <CalendarClock className={classes.secondary} />
-                  </IconButton>
-                </Grid>
-              </Grid>
+              <Nav restaurant={restaurant} />
 
               { /* <Typography style={{marginTop: 8}} gutterBottom variant="subheading">{restaurant.description}</Typography>
               <Typography
@@ -276,7 +222,6 @@ RestaurantView = connect(
   {
     fetchMenucategories: fetchMenucategoriesInit,
     fetchRestaurant: fetchRestaurantInit,
-    favRestaurant: favRestaurantInit
   }
 )(RestaurantView)
 
