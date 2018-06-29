@@ -12,9 +12,9 @@ import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import * as FN from 'lib/FN';
 import uniqueId from 'lodash.uniqueid';
-import menuItemSample from './menuItem.js';
 import Customizations from './Customizations';
 import NutritionFacts from './NutritionFacts';
+import { fetchMenuitemInit } from 'ducks/menuItem/actions';
 
 const styles = theme => ({
   category: {
@@ -43,6 +43,13 @@ const styles = theme => ({
 });
 
 class MenuItemView extends React.PureComponent {
+  componentWillMount() {
+    const {
+      fetchMenuitem,
+      match: { params }
+    } = this.props;
+    fetchMenuitem({ id: params.id });
+  }
   render() {
     const {
       width,
@@ -136,7 +143,7 @@ MenuItemView = connect(
     menuItem: state.menuItem.all[match.params.id]
   }),
   {
-
+    fetchMenuitem: fetchMenuitemInit
   }
 )(MenuItemView)
 

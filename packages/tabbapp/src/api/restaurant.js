@@ -29,6 +29,12 @@ export function GetMenuitems({ categoryId }: GetMenuitemsArgs) {
   return Get({ path: `menu/category/${categoryId}/items` });
 }
 
+type GetMenuitemArgs = { id: string };
+
+export function GetMenuitem({ id }: GetMenuitemArgs) {
+  return Get({ path: `menu/item/${id}?with=images,addons,ingredients,options` });
+}
+
 type CheckinWithQr = { qr: string, code?: null };
 type CheckinWithCode = { qr?: null, code: string };
 
