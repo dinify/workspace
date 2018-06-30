@@ -2,10 +2,12 @@ import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Favorite from 'icons/Favorite';
 import FavoriteBorder from 'icons/FavoriteBorder';
+import { withTheme } from '@material-ui/core/styles';
 import { Motion, spring } from 'react-motion';
 
 const FavoriteToggle = ({
   onChange,
+  theme,
   checked
 }) => {
 
@@ -21,14 +23,15 @@ const FavoriteToggle = ({
             position: 'relative'
           }}>
             <FavoriteBorder style={{
+              color: theme.palette.text.secondary,
               position: 'absolute',
-              top: -10,
+              top: -12,
               left: -12,
               opacity: Math.max(0, 1 - style.x)
             }}/>
             <div style={{
               position: 'absolute',
-              top: -10,
+              top: -12,
               left: -12,
             }}>
               <Favorite color="primary" style={{
@@ -45,4 +48,4 @@ const FavoriteToggle = ({
 
 }
 
-export default FavoriteToggle;
+export default withTheme()(FavoriteToggle);

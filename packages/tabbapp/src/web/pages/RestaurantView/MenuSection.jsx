@@ -16,10 +16,22 @@ const styles = theme => ({
   primary: {
     color: theme.palette.primary.main
   },
+  expand: {
+    marginLeft: -16,
+    marginRight: -16,
+  },
+  margin: {
+    marginLeft: 16,
+    marginRight: 16,
+  },
   scroller: {
     overflowX: 'auto',
     overflowY: 'hidden',
+    width: '100%',
+    marginLeft: 0,
+    marginRight: 0,
     paddingRight: 32,
+    paddingLeft: 8,
     WebkitScrollSnapType: 'mandatory',
     scrollSnapType: 'x mandatory',
     WebkitScrollSnapPointsX: 'repeat(100%)',
@@ -46,6 +58,7 @@ let MenuSection = ({
     return <div />
   }
   const mediumScreen = isWidthUp('md', width);
+  const mobile = FN.isMobile();
   return (
     <div>
       <Grid container wrap="nowrap" spacing={16}>
@@ -58,16 +71,16 @@ let MenuSection = ({
         </Grid>
       </Grid>
       {menuCategoriesList.map((category, i) =>
-        <div style={{marginTop: i === 0 ? 32 : 0}} key={uniqueId()}>
-          {i > 0 && <Divider style={{marginTop: 32, marginBottom: 32}} />}
+        <div className={mobile ? classes.expand : null} style={{marginTop: i === 0 ? 32 : 0}} key={uniqueId()}>
+          {i > 0 && <Divider className={mobile ? classes.margin : null} style={{marginTop: 32, marginBottom: 32}} />}
           <Link style={{textDecoration: 'none'}} to={`/category/${category.id}`}>
-            <Typography gutterBottom variant="title">
+            <Typography className={mobile ? classes.margin : null} gutterBottom variant="title">
               {category.name}
             </Typography>
           </Link>
           <Grid
-            className={classes.scroller}
-            wrap="nowrap"
+            className={mobile ? classes.scroller : null}
+            wrap={mobile ? 'nowrap' : 'wrap'}
             container
             spacing={mediumScreen ? 24 : 16}>
             {FN.MapToList(category.items).map(menuItem =>

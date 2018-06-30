@@ -109,23 +109,16 @@ class MenuItemView extends React.PureComponent {
                   />
                 </Grid>
               </Grid>
-              <Grid
-                container wrap="nowrap" spacing={mediumScreen ? 24 : 16}
-                style={{ paddingTop: mediumScreen ? 24 : 16 }}>
-                <Grid item xs={menuItem.calories ? 6 : 12}>
-                  <Typography
-                    className={classes.secondary}
-                    gutterBottom
-                    variant="overline">
-                    Description
-                  </Typography>
-                  <Typography variant="body1">{menuItem.description}</Typography>
-                </Grid>
 
-                <NutritionFacts calories={menuItem.calories} />
+              <Typography
+                className={classes.secondary}
+                gutterBottom
+                variant="overline">
+                Description
+              </Typography>
+              <Typography gutterBottom variant="body1">{menuItem.description}</Typography>
 
-              </Grid>
-
+              <NutritionFacts calories={menuItem.calories} />
 
             </Grid>
             <Grid item xs={12} md={6}>

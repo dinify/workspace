@@ -1,13 +1,11 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Typography from 'web/components/Typography';
-import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
   secondary: {
     color: theme.palette.text.secondary
-  },
+  }
 });
 
 const NutritionFacts = ({
@@ -16,7 +14,7 @@ const NutritionFacts = ({
 }) => {
   if (!calories) return <div />;
   return (
-    <Grid item xs={6}>
+    <div>
       <Typography
         className={classes.secondary}
         gutterBottom
@@ -53,18 +51,17 @@ const NutritionFacts = ({
           {calories.proteins} g
         </Typography>
       </div>
-      <Divider style={{marginTop: 8, marginBottom: 8}}/>
       <div style={{display: 'flex'}}>
-        <Typography style={{flex: 1}} variant="body2">
-          Total
+        <Typography style={{flex: 1}} variant="body1">
+          Calories
         </Typography>
         <Typography
           style={{alignSelf: 'flex-end', textTransform: 'none'}}
           variant="overline">
-          {calories.total} kJ
+          {calories.total} Kcal
         </Typography>
       </div>
-    </Grid>
+    </div>
   )
 }
 
