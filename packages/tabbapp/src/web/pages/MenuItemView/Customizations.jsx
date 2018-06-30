@@ -22,6 +22,7 @@ import {
   incAddonQty as incAddonQtyAction,
   selectChoice as selectChoiceAction
 } from 'ducks/menuItem/actions';
+import { addToCartInit } from 'ducks/cart/actions';
 
 const styles = theme => ({
   secondary: {
@@ -54,6 +55,7 @@ let Customizations = ({
   excludeIngredient,
   incAddonQty,
   selectChoice,
+  addToCart,
 }) => {
 
   const ingredients = FN.MapToList(menuItem.ingredients);
@@ -189,7 +191,9 @@ let Customizations = ({
         )
       })}
       <Button
-        onClick={() => {}} // add item to cart
+        onClick={() => {
+          addToCart({ menuItemId: menuItem.id })
+        }} // add item to cart
         style={{marginTop: 24, marginBottom: 32}}
         fullWidth
         variant="contained"
@@ -208,6 +212,7 @@ Customizations = connect(
     excludeIngredient: excludeIngredientAction,
     incAddonQty: incAddonQtyAction,
     selectChoice: selectChoiceAction,
+    addToCart: addToCartInit,
   }
 )(Customizations)
 

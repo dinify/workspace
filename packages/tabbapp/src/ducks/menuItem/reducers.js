@@ -58,8 +58,7 @@ export default function reducer(state = initialState, action) {
     case types.SELECT_CHOICE: {
       const { menuItemId, optionId, choiceId } = action.payload;
       let newState = state;
-      const choicesIds = R.keys(state.all[menuItemId].options[optionId].choices)
-      choicesIds.forEach((chId) => {
+      R.keys(state.all[menuItemId].options[optionId].choices).forEach((chId) => {
         newState = R.assocPath([
           'all', menuItemId, 'options', optionId, 'choices', chId, 'selected'
         ], chId === choiceId)(newState);

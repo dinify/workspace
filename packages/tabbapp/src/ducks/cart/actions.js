@@ -4,7 +4,17 @@ export const fetchCartInit = () => ({
   type: types.FETCH_CART_INIT,
 })
 
-export const addItem = (payload) => ({
-  type: types.ADD_ITEM,
-  payload
+export const addToCartInit = ({ menuItemId }) => ({
+  type: types.ADD_TO_CART_INIT,
+  payload: { menuItemId }
+});
+
+export const addToCartDone = (res) => ({
+  type: types.ADD_TO_CART_DONE,
+  payload: res
+});
+
+export const addToCartFail = (e) => ({
+  type: types.ADD_TO_CART_FAIL,
+  payload: e
 });
