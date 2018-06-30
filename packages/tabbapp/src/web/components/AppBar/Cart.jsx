@@ -38,11 +38,10 @@ const Cart = ({
   handleCartMenuClose,
   anchor,
   color = 'default',
-  cart
+  cartItems,
+  subtotal
 }) => {
-
-  const cartItems = [];
-  Object.keys(cart).map(key => cartItems.push(...cart[key]));
+  const cartItemsList = FN.MapToList(cartItems);
 
   return (
     <div>
@@ -50,7 +49,7 @@ const Cart = ({
         color={color}
         onClick={handleCartMenuToggle}
         style={{marginRight: 16}}>
-        <Badge badgeContent={cartItems.length} color="primary">
+        <Badge badgeContent={cartItemsList.length} color="primary">
           <ShoppingCart />
         </Badge>
       </IconButton>
@@ -69,7 +68,7 @@ const Cart = ({
         }}>
         <div>
           <div style={{padding: 8}}>
-            {cartItems.map(item =>
+            {cartItemsList.map(item =>
               <CartItem key={uniqueId()} item={item}/>
             )}
           </div>
@@ -80,7 +79,7 @@ const Cart = ({
             </Typography>
 
             <Typography variant="subheading">
-              {FN.formatPrice({amount: '233.130', currency: 'KWD'})}
+              {FN.formatPrice(subtotal)}
             </Typography>
           </div>
         </div>
@@ -92,7 +91,8 @@ const Cart = ({
 
 export default connect(
   state => ({
-    cart: state.cart
+    cartItems: state.cart.items,
+    subtotal: state.cart.subtotal
   })
 )(withStateHandlers(
   {
