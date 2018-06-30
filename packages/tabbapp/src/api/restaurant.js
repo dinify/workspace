@@ -15,9 +15,9 @@ export function GetRestaurant({ subdomain }: GetRestaurantById | GetRestaurantBy
 type GetCategoriesArgs = { subdomain: string };
 const populateCategoriesWith = [
   'categories.items.images',
-  'categories.items.addons',
+  'categories.items.addons.price',
   'categories.items.ingredients',
-  'categories.items.options',
+  'categories.items.options.choices',
 ].join(',');
 export function GetMenucategories({ subdomain }: GetCategoriesArgs) {
   return Get({ path: `restaurant/${subdomain}/categories?with=${populateCategoriesWith}` });
@@ -32,7 +32,7 @@ export function GetMenuitems({ categoryId }: GetMenuitemsArgs) {
 type GetMenuitemArgs = { id: string };
 
 export function GetMenuitem({ id }: GetMenuitemArgs) {
-  return Get({ path: `menu/item/${id}?with=images,addons,ingredients,options` });
+  return Get({ path: `menu/item/${id}?with=images,addons.price,ingredients,options.choices` });
 }
 
 type CheckinWithQr = { qr: string, code?: null };
