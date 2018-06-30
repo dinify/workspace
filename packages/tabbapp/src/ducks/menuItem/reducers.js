@@ -33,6 +33,39 @@ export default function reducer(state = initialState, action) {
       const { id, fav } = action.payload;
       return R.assocPath(['all', id, 'favorite'], fav)(state);
     }
+    case types.EXCLUDE_INGREDIENT: {
+      const { menuItemId, ingredientId, excluded } = action.payload;
+      return R.assocPath([
+        'all',
+        menuItemId,
+        'ingredients',
+        ingredientId,
+        'excluded'
+      ], excluded)(state);
+    }
+    case types.INC_ADDON_QTY: {
+      const { menuItemId, addonId, inc } = action.payload;
+      let preQty = state.all[menuItemId].addons[addonId].qty;
+      if (!preQty) preQty = 0;
+      return R.assocPath([
+        'all',
+        menuItemId,
+        'addons',
+        addonId,
+        'qty'
+      ], preQty + inc)(state);
+    }
+    case types.SELECT_CHOICE: {
+      const { menuItemId, optionId, choiceId } = action.payload;
+      let newState = state;
+      const choicesIds = R.keys(state.all[menuItemId].options[optionId].choices)
+      choicesIds.forEach((chId) => {
+        newState = R.assocPath([
+          'all', menuItemId, 'options', optionId, 'choices', chId, 'selected'
+        ], chId === choiceId)(newState);
+      })
+      return newState;
+    }
     default:
       return state;
   }

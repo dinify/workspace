@@ -65,7 +65,14 @@ export function GetCart() {
   return Get({ path: `cart?with=addons.price,excludes,choices.difference,menu_item.images` });
 }
 
-export function AddItemToCart({ itemId, choices, excludes, addons }) {
+type AddItemToCartArgs = {
+  itemId: string,
+  choices: array,
+  excludes?: array,
+  addons?: array,
+};
+
+export function AddItemToCart({ itemId, choices, excludes, addons }: AddItemToCartArgs) {
   return Post({ path: `menu/item/${itemId}/cart/add` },
     {
     	choices, excludes, addons

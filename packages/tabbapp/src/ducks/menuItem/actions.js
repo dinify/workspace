@@ -24,3 +24,18 @@ export const favMenuitemFail = (e) => ({
   type: types.FAV_MENUITEM_FAIL,
   payload: e
 });
+
+export const excludeIngredient = ({ menuItemId, ingredientId, excluded }) => ({
+  type: types.EXCLUDE_INGREDIENT,
+  payload: { menuItemId, ingredientId, excluded }
+})
+
+export const incAddonQty = ({ menuItemId, addonId, inc }) => ({
+  type: types.INC_ADDON_QTY,
+  payload: { menuItemId, addonId, inc }
+})
+
+export const selectChoice = ({ menuItemId, optionId, choiceId }) => ({
+  type: types.SELECT_CHOICE,
+  payload: { menuItemId, optionId, choiceId }
+})

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Typography from 'web/components/Typography';
@@ -16,6 +17,11 @@ import RemoveCircle from 'icons/RemoveCircle';
 import AddShoppingCart from 'icons/AddShoppingCart';
 import * as FN from 'lib/FN';
 import uniqueId from 'lodash.uniqueid';
+import {
+  excludeIngredient as excludeIngredientAction,
+  incAddonQty as incAddonQtyAction,
+  selectChoice as selectChoiceAction
+} from 'ducks/menuItem/actions';
 
 const styles = theme => ({
   secondary: {
@@ -42,9 +48,12 @@ const styles = theme => ({
   }
 });
 
-const Customizations = ({
+let Customizations = ({
   classes,
-  menuItem
+  menuItem,
+  excludeIngredient,
+  incAddonQty,
+  selectChoice,
 }) => {
 
   const ingredients = FN.MapToList(menuItem.ingredients);
@@ -68,22 +77,35 @@ const Customizations = ({
             disabled={!ingredient.excludable}
             dense
             button
-            onClick={() => {}} // toggle checkbox state
+            onClick={() => {
+              excludeIngredient({
+                menuItemId: menuItem.id,
+                ingredientId: ingredient.id,
+                excluded: !ingredient.excluded
+              })
+            }} // toggle checkbox state
             className={classes.listItem}>
             {ingredient.excludable ?
               <Checkbox
                 icon={<RemoveCircle />}
                 checkedIcon={<AddCircle />}
-                checked={false}
+                checked={ingredient.excluded}
                 tabIndex={-1}
                 disableRipple/> :
                 <div style={{width: 48, height: 40}}/>
             }
-            <ListItemText primary={ingredient.name} />
+            <ListItemText
+              primary={ingredient.name}
+              style={{
+                textDecoration: ingredient.excluded ? 'line-through' : 'none'
+              }}
+            />
           </ListItem>
         )}
       </List>
+
       <Divider />
+
       {addons.length &&
         <Typography
           style={{marginTop: 16}}
@@ -96,8 +118,14 @@ const Customizations = ({
         <Grid key={uniqueId()} container wrap="nowrap" style={{marginTop: 8, alignItems: 'center'}} spacing={16}>
           <Grid item>
             <IconButton
-              onClick={() => {}} // remove addon if amount > 0
-              disabled={true || true}>
+              onClick={() => {
+                if (addon.qty > 0) incAddonQty({
+                  menuItemId: menuItem.id,
+                  addonId: addon.id,
+                  inc: - 1
+                })
+              }} // remove addon if amount > 0
+              disabled={!addon.qty || addon.qty < 1}>
               <RemoveCircle className={classes.secondary} />
             </IconButton>
           </Grid>
@@ -111,21 +139,28 @@ const Customizations = ({
           </Grid>
           <Grid item>
             <Typography variant="subheading">
-              × 2
+              {addon.qty ? `× ${addon.qty}` : ''}
             </Typography>
           </Grid>
           <Grid item>
             <IconButton
-              onClick={() => {}}  // add addon if amount < max - 1
+              onClick={() => {
+                incAddonQty({
+                  menuItemId: menuItem.id,
+                  addonId: addon.id,
+                  inc: 1
+                })
+              }}  // add addon if amount < max - 1
               disabled={false}>
               <AddCircle className={classes.secondary} />
             </IconButton>
           </Grid>
         </Grid>
       )}
+
       <Divider style={{marginTop: 16}} />
+
       {options.map(option => {
-        const choices = FN.MapToList(option.choices);
         return (
           <div key={uniqueId()}>
             <Typography
@@ -135,11 +170,17 @@ const Customizations = ({
               {option.name}
             </Typography>
             <div className={classes.chipContainer}>
-              {choices.map((choice, i) =>
+              {FN.MapToList(option.choices).map((choice) =>
                 <Chip
                   key={uniqueId()}
-                  classes={{root: i === 0 ? classes.selected : null}} // add class if selected
-                  onClick={() => {}} // select choice
+                  classes={{root: choice.selected ? classes.selected : null}} // add class if selected
+                  onClick={() => {
+                    selectChoice({
+                      menuItemId: menuItem.id,
+                      optionId: option.id,
+                      choiceId: choice.id,
+                    })
+                  }} // select choice
                   className={classes.chip}
                   label={choice.name}/>
               )}
@@ -160,5 +201,14 @@ const Customizations = ({
     </div>
   )
 }
+
+Customizations = connect(
+  null,
+  {
+    excludeIngredient: excludeIngredientAction,
+    incAddonQty: incAddonQtyAction,
+    selectChoice: selectChoiceAction,
+  }
+)(Customizations)
 
 export default withStyles(styles)(Customizations);
