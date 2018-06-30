@@ -28,7 +28,7 @@ const NutritionFacts = ({
           Fats
         </Typography>
         <Typography
-          style={{alignSelf: 'flex-end'}}
+          style={{alignSelf: 'flex-end', textTransform: 'none'}}
           variant="overline">
           {calories.fats} g
         </Typography>
@@ -38,7 +38,7 @@ const NutritionFacts = ({
           Carbs
         </Typography>
         <Typography
-          style={{alignSelf: 'flex-end'}}
+          style={{alignSelf: 'flex-end', textTransform: 'none'}}
           variant="overline">
           {calories.carbs} g
         </Typography>
@@ -48,7 +48,7 @@ const NutritionFacts = ({
           Proteins
         </Typography>
         <Typography
-          style={{alignSelf: 'flex-end'}}
+          style={{alignSelf: 'flex-end', textTransform: 'none'}}
           variant="overline">
           {calories.proteins} g
         </Typography>
@@ -59,7 +59,7 @@ const NutritionFacts = ({
           Total
         </Typography>
         <Typography
-          style={{alignSelf: 'flex-end'}}
+          style={{alignSelf: 'flex-end', textTransform: 'none'}}
           variant="overline">
           {calories.total} kJ
         </Typography>
