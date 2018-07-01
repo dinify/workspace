@@ -8,6 +8,8 @@ import {
   addToCartDone,
   addToCartFail,
   fetchCartInit,
+  orderDone,
+  orderFail,
 } from './actions';
 
 
@@ -47,7 +49,18 @@ const addToCartEpic = (action$: Observable, { getState }) =>
         .catch(error => Observable.of(addToCartFail(error)))
     });
 
+const orderEpic = (action$: Observable) =>
+  action$
+    .ofType(types.ORDER_INIT)
+    .switchMap(() => {
+      return Observable.fromPromise(API.Order())
+        .mergeMap(res => {
+          return Observable.of(orderDone(res));
+        })
+        .catch(error => Observable.of(orderFail(error)))
+    });
 
 export default [
-  addToCartEpic
+  addToCartEpic,
+  orderEpic,
 ];

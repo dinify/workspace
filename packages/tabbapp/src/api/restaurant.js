@@ -88,5 +88,5 @@ export function RemoveOrderitem({ orderItemId }: RmFromCartArgs) {
 }
 
 export function Order() {
-  return Post({ path: 'order' }, {})
+  return Post({ path: 'order' }, { code: '0345' })
 }

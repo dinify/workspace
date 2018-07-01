@@ -106,7 +106,7 @@ const AppBar = ({
   const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
 
   const root = router.history.location.pathname === '/';
-  console.log(router.history.location.pathname);
+  // console.log(router.history.location.pathname);
   return (
     <MuiAppBar
       position={position}

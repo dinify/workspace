@@ -28,3 +28,17 @@ export const rmFromCartInit = ({ orderItemId }) => ({
   type: types.REMOVE_ORDERITEM_INIT,
   payload: { orderItemId }
 });
+
+export const orderInit = () => ({
+  type: types.ORDER_INIT
+});
+
+export const orderDone = (res) => ({
+  type: types.ORDER_DONE,
+  payload: res
+});
+
+export const orderFail = (e) => ({
+  type: types.ORDER_FAIL,
+  payload: e
+});

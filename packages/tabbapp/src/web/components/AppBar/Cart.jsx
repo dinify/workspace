@@ -10,11 +10,12 @@ import Popover from '@material-ui/core/Popover';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 import Typography from 'web/components/Typography';
 import CartItem from './CartItem';
 import * as FN from 'lib/FN';
 import uniqueId from 'lodash.uniqueid';
-import { rmFromCartInit } from 'ducks/cart/actions';
+import { rmFromCartInit, orderInit } from 'ducks/cart/actions';
 
 const styles = theme => ({
   primary: {
@@ -42,6 +43,7 @@ const Cart = ({
   cartItems,
   subtotal,
   rmFromCart,
+  order
 }) => {
   const cartItemsList = FN.MapToList(cartItems);
 
@@ -84,6 +86,10 @@ const Cart = ({
               {FN.formatPrice(subtotal)}
             </Typography>
           </div>
+          <Divider />
+          {cartItemsList.length > 0 &&
+            <Button fullWidth onClick={() => order()}>Order</Button>
+          }
         </div>
 
       </Popover>
@@ -97,7 +103,8 @@ export default connect(
     subtotal: state.cart.subtotal
   }),
   {
-    rmFromCart: rmFromCartInit
+    rmFromCart: rmFromCartInit,
+    order: orderInit
   }
 )(withStateHandlers(
   {
