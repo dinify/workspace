@@ -14,11 +14,10 @@ type FavProps = {
 const favEpic = (action$: Observable) =>
   action$
     .ofType(types.FAV_MENUITEM_INIT)
-    .switchMap(({ payload }: FavProps) => {
+    .debounceTime(500)
+    .exhaustMap(({ payload }: FavProps) => {
       return Observable.fromPromise(API.FavMenuitem(payload))
-        .mergeMap(res => {
-          return Observable.of(favMenuitemDone(res));
-        })
+        .map(res => favMenuitemDone(res))
         .catch(error => Observable.of(favMenuitemFail(error)))
     });
 
