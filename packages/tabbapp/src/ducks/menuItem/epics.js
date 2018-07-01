@@ -17,8 +17,8 @@ const favEpic = (action$: Observable) =>
     .debounceTime(500)
     .exhaustMap(({ payload }: FavProps) => {
       return Observable.fromPromise(API.FavMenuitem(payload))
-        .map(res => favMenuitemDone(res))
-        .catch(error => Observable.of(favMenuitemFail(error)))
+        .map(res => favMenuitemDone({res, prePayload: payload }))
+        .catch(error => Observable.of(favMenuitemFail({error, prePayload: payload })))
     });
 
 

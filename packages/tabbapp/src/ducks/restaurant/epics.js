@@ -37,8 +37,8 @@ const favEpic = (action$: Observable) =>
     .debounceTime(500)
     .exhaustMap(({ payload }: FavProps) => {
       return Observable.fromPromise(API.FavRestaurant(payload))
-        .map(res => favRestaurantDone(res))
-        .catch(error => Observable.of(favRestaurantFail(error)))
+        .map(res => favRestaurantDone({res, prePayload: payload }))
+        .catch(error => Observable.of(favRestaurantFail({error, prePayload: payload })))
     });
 
 

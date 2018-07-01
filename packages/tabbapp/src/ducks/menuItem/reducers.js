@@ -33,6 +33,14 @@ export default function reducer(state = initialState, action) {
       const { id, fav } = action.payload;
       return R.assocPath(['all', id, 'favorite'], fav)(state);
     }
+    case types.FAV_MENUITEM_DONE: {
+      const { id, fav } = action.payload.prePayload;
+      return R.assocPath(['all', id, 'favorite'], fav)(state);
+    }
+    case types.FAV_MENUITEM_FAIL: {
+      const { id, fav } = action.payload.prePayload;
+      return R.assocPath(['all', id, 'favorite'], !fav)(state);
+    }
     case types.EXCLUDE_INGREDIENT: {
       const { menuItemId, ingredientId, excluded } = action.payload;
       return R.assocPath([
