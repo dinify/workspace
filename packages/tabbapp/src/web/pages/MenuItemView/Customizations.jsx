@@ -153,7 +153,7 @@ let Customizations = ({
                   inc: 1
                 })
               }}  // add addon if amount < max - 1
-              disabled={false}>
+              disabled={addon.qty >= addon.maximum}>
               <AddCircle className={classes.secondary} />
             </IconButton>
           </Grid>

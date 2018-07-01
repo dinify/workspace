@@ -3,8 +3,7 @@ import { Observable } from 'rxjs';
 import * as API from 'api/user';
 import types from './types';
 import { loginFail, loginDone, logoutDone } from './actions';
-import { fetchMeInit } from 'ducks/user/actions';
-import { fetchStatusInit } from 'ducks/restaurant/actions';
+import { loadUserData } from 'ducks/app/actions';
 import { setCookie } from 'lib/FN';
 
 const loginInitEpic = (action$: Observable) =>
@@ -14,7 +13,7 @@ const loginInitEpic = (action$: Observable) =>
       Observable.fromPromise(API.Login({ email, password }))
         .mergeMap(res => {
           setCookie('access_token', res.token, 30);
-          return Observable.of(loginDone(res), fetchMeInit(), fetchStatusInit());
+          return Observable.of(loginDone(res), loadUserData());
         })
         .catch(error => Observable.of(loginFail(error))),
     );
@@ -22,9 +21,9 @@ const loginInitEpic = (action$: Observable) =>
 const logoutInitEpic = (action$: Observable) =>
   action$
     .ofType(types.LOGOUT_INIT)
-    .map(() => {
+    .mergeMap(() => {
       setCookie('access_token', '', 30);
-      return logoutDone();
+      return Observable.of(logoutDone(), loadUserData());
     });
 
 export default [

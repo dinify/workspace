@@ -16,6 +16,13 @@ export default function reducer(state = initialState, action) {
         R.assocPath(['all', user.id], user)(state),
       );
     }
+    case types.FETCH_ME_FAIL: {
+      const payload = action.payload;
+      if (payload instanceof Array && payload[0].status === 401) {
+        return R.assoc('loggedUserId', null)(state);
+      }
+      return state;
+    }
     case authTypes.LOGOUT_DONE: {
       if (state.loggedUserId) {
         let newState = state;

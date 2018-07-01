@@ -6,11 +6,11 @@ import { userEpics as user } from 'ducks/user';
 import { menuItemEpics as menuItem } from 'ducks/menuItem';
 import { cartEpics as cart } from 'ducks/cart';
 
-import appEpics from 'ducks/appEpics';
+import { appEpics as app } from 'ducks/app';
 
 const epics = [
+  ...app,
   ...crud,
-  ...appEpics,
   ...auth,
   ...user,
   ...restaurant,

@@ -79,3 +79,7 @@ export function AddToCart({ menuItemId, choices, excludes, addons }: AddToCartAr
     }
   );
 }
+
+export function Order() {
+  return Post({ path: 'order' }, {})
+}

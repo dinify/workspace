@@ -5,4 +5,7 @@ export default {
   FETCH_CART_INIT: 'tabb/cart/FETCH_CART_INIT',
   FETCH_CART_DONE: 'tabb/cart/FETCH_CART_DONE',
   FETCH_CART_FAIL: 'tabb/cart/FETCH_CART_FAIL',
+  ORDER_INIT: 'tabb/cart/ORDER_INIT',
+  ORDER_DONE: 'tabb/cart/ORDER_DONE',
+  ORDER_FAIL: 'tabb/cart/ORDER_FAIL',
 };

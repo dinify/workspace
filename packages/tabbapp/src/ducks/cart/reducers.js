@@ -14,7 +14,8 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case types.ADD_TO_CART_DONE: {
-      return state;
+      const menuItem = action.payload.menu_item;
+      return R.assocPath(['items', menuItem.id], menuItem)(state);
     }
     case types.FETCH_CART_DONE: {
       const res = action.payload.res;
@@ -22,22 +23,27 @@ export default function reducer(state = initialState, action) {
         return initialState;
       }
       let newState = state;
+      newState = R.assoc('items', {})(newState);
       R.keys(res).forEach((key) => {
         if (key === 'subtotal') {
           newState = R.assoc('subtotal', res.subtotal)(newState)
         } else {
-          newState = R.assoc('items', {})(newState);
-          const restaurantId = key;
-          R.keys(res[restaurantId]).forEach((itemId) => {
+          R.keys(res[key]).forEach((itemId) => {
             if (itemId !== 'subtotal' && itemId !== 'id') {
-              newState = R.assocPath(['items', itemId], res[restaurantId][itemId])(newState);
+              newState = R.assocPath(['items', itemId], res[key][itemId])(newState);
             }
           })
         }
       })
       return newState;
     }
-
+    case types.FETCH_CART_FAIL: {
+      const payload = action.payload;
+      if (payload instanceof Array && payload[0].status === 401) {
+        return initialState;
+      }
+      return state;
+    }
     default:
       return state;
   }

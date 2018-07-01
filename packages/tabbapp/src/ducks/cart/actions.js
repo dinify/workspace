@@ -4,6 +4,11 @@ export const fetchCartInit = () => ({
   type: types.FETCH_CART_INIT,
 })
 
+export const fetchCartFail = (e) => ({
+  type: types.FETCH_CART_FAIL,
+  payload: e
+})
+
 export const addToCartInit = ({ menuItemId }) => ({
   type: types.ADD_TO_CART_INIT,
   payload: { menuItemId }
