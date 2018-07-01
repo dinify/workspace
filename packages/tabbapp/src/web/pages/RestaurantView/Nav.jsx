@@ -21,23 +21,36 @@ let Nav = ({
   restaurant,
   favRestaurant,
 }) => {
+  const social = restaurant.social;
   return (
     <Grid container style={{marginLeft: -16}} spacing={8}>
-      <Grid item>
-        <IconButton>
-          <FacebookBox className={classes.secondary} />
-        </IconButton>
-      </Grid>
-      <Grid item>
-        <IconButton>
-          <Instagram className={classes.secondary} />
-        </IconButton>
-      </Grid>
+
+      {!!social.facebook &&
+        <Grid item>
+          <a href={social.facebook} target="_blank" rel="noopener noreferrer">
+            <IconButton>
+              <FacebookBox className={classes.secondary} />
+            </IconButton>
+          </a>
+        </Grid>
+      }
+
+      {!!social.instagram &&
+        <Grid item>
+          <a href={social.instagram} target="_blank" rel="noopener noreferrer">
+            <IconButton>
+              <Instagram className={classes.secondary} />
+            </IconButton>
+          </a>
+        </Grid>
+      }
+
       <Grid item>
         <IconButton>
           <Place className={classes.secondary} />
         </IconButton>
       </Grid>
+
       <Grid item>
         <FavoriteToggle
           checked={restaurant.favorite}
@@ -47,6 +60,7 @@ let Nav = ({
           })}
         />
       </Grid>
+
       <Grid item>
         <IconButton>
           <CalendarClock className={classes.secondary} />
