@@ -4,7 +4,11 @@ import * as API from 'api/restaurant';
 // import R from 'ramda';
 import * as FN from 'lib/FN';
 import types from './types';
-import { addToCartDone, addToCartFail } from './actions';
+import {
+  addToCartDone,
+  addToCartFail,
+  fetchCartInit,
+} from './actions';
 
 
 type addToCartProps = {
@@ -38,7 +42,7 @@ const addToCartEpic = (action$: Observable, { getState }) =>
       const apiPayload = { menuItemId, choices, excludes, addons }
       return Observable.fromPromise(API.AddToCart(apiPayload))
         .mergeMap(res => {
-          return Observable.of(addToCartDone(res));
+          return Observable.of(addToCartDone(res), fetchCartInit());
         })
         .catch(error => Observable.of(addToCartFail(error)))
     });

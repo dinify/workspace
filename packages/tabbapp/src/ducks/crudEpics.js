@@ -91,7 +91,7 @@ const removeEpic = (action$: Observable) =>
     .filter(action => filterAction(action.type, 'REMOVE', 'INIT'))
     .mergeMap(({ payload, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'REMOVE', 'INIT');
-      const apiFnName = `Delete${camel(subject)}`;
+      const apiFnName = `Remove${camel(subject)}`;
       return Observable.fromPromise(
         API[apiFnName]({
           ...payload,

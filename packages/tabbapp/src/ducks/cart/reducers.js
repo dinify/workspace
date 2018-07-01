@@ -12,9 +12,14 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case types.ADD_TO_CART_DONE: {
-      const menuItem = action.payload.menu_item;
-      return R.assocPath(['items', menuItem.id], menuItem)(state);
+    // case types.ADD_TO_CART_DONE: {
+    //   const res = action.payload;
+    //   return R.assocPath(['items', res.id], res)(state);
+    // }
+    case types.REMOVE_ORDERITEM_INIT: {
+      const { orderItemId } = action.payload;
+      // TODO handle subtotal
+      return R.dissocPath(['items', orderItemId])(state);
     }
     case types.FETCH_CART_DONE: {
       const res = action.payload.res;

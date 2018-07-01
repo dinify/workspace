@@ -23,3 +23,8 @@ export const addToCartFail = (e) => ({
   type: types.ADD_TO_CART_FAIL,
   payload: e
 });
+
+export const rmFromCartInit = ({ orderItemId }) => ({
+  type: types.REMOVE_ORDERITEM_INIT,
+  payload: { orderItemId }
+});

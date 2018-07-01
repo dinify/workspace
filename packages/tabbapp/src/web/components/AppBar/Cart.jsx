@@ -14,6 +14,7 @@ import Typography from 'web/components/Typography';
 import CartItem from './CartItem';
 import * as FN from 'lib/FN';
 import uniqueId from 'lodash.uniqueid';
+import { rmFromCartInit } from 'ducks/cart/actions';
 
 const styles = theme => ({
   primary: {
@@ -39,7 +40,8 @@ const Cart = ({
   anchor,
   color = 'default',
   cartItems,
-  subtotal
+  subtotal,
+  rmFromCart,
 }) => {
   const cartItemsList = FN.MapToList(cartItems);
 
@@ -69,7 +71,7 @@ const Cart = ({
         <div>
           <div style={{padding: 8}}>
             {cartItemsList.map(item =>
-              <CartItem key={uniqueId()} item={item}/>
+              <CartItem key={uniqueId()} item={item} rmFromCart={rmFromCart} />
             )}
           </div>
           <Divider />
@@ -93,7 +95,10 @@ export default connect(
   state => ({
     cartItems: state.cart.items,
     subtotal: state.cart.subtotal
-  })
+  }),
+  {
+    rmFromCart: rmFromCartInit
+  }
 )(withStateHandlers(
   {
     cartMenuOpen: false,

@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from 'web/components/Typography';
 import * as FN from 'lib/FN';
 import uniqueId from 'lodash.uniqueid';
+import IconButton from '@material-ui/core/IconButton';
+import Remove from 'icons/Remove';
 
 const styles = theme => ({
   cartItemImage: {
@@ -24,7 +26,8 @@ const styles = theme => ({
 
 const CartItem = ({
   classes,
-  item
+  item,
+  rmFromCart
 }) => {
     const customizations = [];
     const choices = FN.MapToList(item.choices);
@@ -59,6 +62,12 @@ const CartItem = ({
         <div style={{display: 'flex'}}>
           <Typography style={{flex: 1, marginRight: 32}} variant="body1">
             {item.menu_item && item.menu_item.name}
+
+            {/* Re-design this */}
+            <IconButton onClick={() => rmFromCart({ orderItemId: item.id })}>
+              <Remove />
+            </IconButton>
+
           </Typography>
           <Typography
             style={{alignSelf: 'flex-end'}}

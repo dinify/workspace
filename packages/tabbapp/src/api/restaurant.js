@@ -80,6 +80,13 @@ export function AddToCart({ menuItemId, choices, excludes, addons }: AddToCartAr
   );
 }
 
+type RmFromCartArgs = {
+  orderItemId: string,
+};
+export function RemoveOrderitem({ orderItemId }: RmFromCartArgs) {
+  return Post({ path: `order/item/${orderItemId}/delete` });
+}
+
 export function Order() {
   return Post({ path: 'order' }, {})
 }
