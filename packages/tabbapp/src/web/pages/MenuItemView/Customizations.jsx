@@ -10,13 +10,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
 import AddCircle from 'icons/AddCircle';
 import RemoveCircle from 'icons/RemoveCircle';
 import AddShoppingCart from 'icons/AddShoppingCart';
 import * as FN from 'lib/FN';
-import uniqueId from 'lodash.uniqueid';
 import {
   excludeIngredient as excludeIngredientAction,
   incAddonQty as incAddonQtyAction,
@@ -46,6 +44,10 @@ const styles = theme => ({
       boxShadow: theme.shadows[1],
       backgroundColor: fade(theme.palette.primary.main, 0.38),
     },
+  },
+  excluded: {
+    textDecoration: 'line-through',
+    color: theme.palette.text.secondary
   }
 });
 
@@ -73,7 +75,7 @@ let Customizations = ({
       <List>
         {ingredients.map(ingredient =>
           <ListItem
-            key={uniqueId()}
+            key={ingredient.id}
             style={{padding: 0}}
             role={undefined}
             disabled={!ingredient.excludable}
@@ -88,18 +90,21 @@ let Customizations = ({
             }} // toggle checkbox state
             className={classes.listItem}>
             {ingredient.excludable ?
-              <Checkbox
-                icon={<RemoveCircle />}
-                checkedIcon={<AddCircle />}
-                checked={ingredient.excluded}
-                tabIndex={-1}
-                disableRipple/> :
-                <div style={{width: 48, height: 40}}/>
+              <div style={{width: 40, height: 40, marginRight: 8, padding: 8}}>
+                {ingredient.excluded ?
+                  <AddCircle className={classes.secondary}/> :
+                  <RemoveCircle className={classes.secondary}/>
+                }
+              </div> :
+              <div style={{width: 40, height: 40, marginRight: 8}}/>
             }
             <ListItemText
               primary={ingredient.name}
-              style={{
-                textDecoration: ingredient.excluded ? 'line-through' : 'none'
+              primaryTypographyProps={{
+                color: ingredient.excluded ? 'textSecondary' : 'default',
+                style: {
+                  textDecoration: ingredient.excluded ? 'line-through' : 'none'
+                }
               }}
             />
           </ListItem>
@@ -117,7 +122,7 @@ let Customizations = ({
         </Typography>
       }
       {addons.map(addon =>
-        <Grid key={uniqueId()} container wrap="nowrap" style={{marginTop: 8, alignItems: 'center'}} spacing={16}>
+        <Grid key={addon.id} container wrap="nowrap" style={{marginTop: 8, alignItems: 'center'}} spacing={16}>
           <Grid item>
             <IconButton
               onClick={() => {
@@ -128,7 +133,7 @@ let Customizations = ({
                 })
               }} // remove addon if amount > 0
               disabled={!addon.qty || addon.qty < 1}>
-              <RemoveCircle className={classes.secondary} />
+              <RemoveCircle />
             </IconButton>
           </Grid>
           <Grid item style={{flex: 1}}>
@@ -154,7 +159,7 @@ let Customizations = ({
                 })
               }}  // add addon if amount < max - 1
               disabled={addon.qty >= addon.maximum}>
-              <AddCircle className={classes.secondary} />
+              <AddCircle />
             </IconButton>
           </Grid>
         </Grid>
@@ -164,7 +169,7 @@ let Customizations = ({
 
       {options.map(option => {
         return (
-          <div key={uniqueId()}>
+          <div key={option.id}>
             <Typography
               style={{marginTop: 32}}
               className={classes.secondary}
@@ -174,7 +179,7 @@ let Customizations = ({
             <div className={classes.chipContainer}>
               {FN.MapToList(option.choices).map((choice) =>
                 <Chip
-                  key={uniqueId()}
+                  key={choice.id}
                   classes={{root: choice.selected ? classes.selected : null}} // add class if selected
                   onClick={() => {
                     selectChoice({
