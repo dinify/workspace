@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { withStateHandlers, getContext } from 'recompose';
 
@@ -10,7 +11,10 @@ import Logo from 'icons/Logo';
 import Search from 'icons/Search';
 import ChevronLeft from 'icons/ChevronLeft';
 import Menu from 'icons/Menu';
+import ShoppingCart from 'icons/ShoppingCart';
 
+
+import Badge from '@material-ui/core/Badge';
 import Divider from '@material-ui/core/Divider';
 import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,7 +25,6 @@ import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import * as FN from 'lib/FN';
 
-import Cart from './Cart';
 import Account from './Account';
 
 const styles = theme => ({
@@ -91,10 +94,11 @@ const AppBar = ({
   children,
   setAnchor,
   anchor,
-  setCartAnchor,
-  cartAnchor,
+  cartItems,
   router,
 }: AppBarProps) => {
+
+  const cartItemsList = FN.MapToList(cartItems);
 
   const logoWithText = isWidthUp('md', width);
   const logo = (
@@ -143,8 +147,14 @@ const AppBar = ({
           <div style={{flex: 1}} />
         }
         {children}
-        <div style={{transform: 'translateX(24px)', WebkitTransform: 'translateX(24px)'}} className={classes.expand} ref={node => { setCartAnchor(ReactDOM.findDOMNode(node)) }}/>
-        <Cart color="inherit" anchor={cartAnchor}/>
+        <IconButton
+          color={color}
+          onClick={() => {router.history.push('/cart')}}
+          style={{marginRight: 16}}>
+          <Badge badgeContent={cartItemsList.length} color="primary">
+            <ShoppingCart />
+          </Badge>
+        </IconButton>
         <Account color={color} classes={classes} anchor={anchor} />
       </Toolbar>
       {color === 'default' ?
@@ -155,15 +165,17 @@ const AppBar = ({
   );
 };
 
-export default withStateHandlers(
+export default connect(
+  state => ({
+    cartItems: state.cart.items
+  }),
+)(withStateHandlers(
   {
     anchor: null,
-    cartAnchor: null,
   },
   {
     setAnchor: () => (node) => ({anchor: node}),
-    setCartAnchor: () => (node) => ({cartAnchor: node}),
   }
 )(withStyles(styles)(withWidth()(getContext({
   router: PropTypes.object
-})(AppBar))));
+})(AppBar)))));
