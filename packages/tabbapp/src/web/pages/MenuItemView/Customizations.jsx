@@ -5,9 +5,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import Typography from 'web/components/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Chip from '@material-ui/core/Chip';
@@ -64,6 +62,11 @@ let Customizations = ({
   const addons = FN.MapToList(menuItem.addons);
   const options = FN.MapToList(menuItem.options);
 
+  let allNonExcludable = true;
+  ingredients.forEach(ingredient => {
+    allNonExcludable = allNonExcludable && !ingredient.excludable;
+  });
+
   return (
     <div>
       <Typography
@@ -72,46 +75,43 @@ let Customizations = ({
         variant="overline">
         Ingredients
       </Typography>
-      <List>
-        {ingredients.map(ingredient =>
-          <ListItem
-            key={ingredient.id}
-            style={{padding: 0}}
-            role={undefined}
+
+      {ingredients.map(ingredient =>
+        <div key={ingredient.id} style={{width: '100%', marginTop: allNonExcludable ? 0 : 8}}>
+          <ButtonBase
+            style={{borderRadius: 4, width: '100%'}}
             disabled={!ingredient.excludable}
-            dense
-            button
             onClick={() => {
               excludeIngredient({
                 menuItemId: menuItem.id,
                 ingredientId: ingredient.id,
                 excluded: !ingredient.excluded
               })
-            }} // toggle checkbox state
-            className={classes.listItem}>
-            {ingredient.excludable ?
-              <div style={{width: 40, height: 40, marginRight: 8, padding: 8}}>
-                {ingredient.excluded ?
-                  <AddCircle className={classes.secondary}/> :
-                  <RemoveCircle className={classes.secondary}/>
-                }
-              </div> :
-              <div style={{width: 40, height: 40, marginRight: 8}}/>
-            }
-            <ListItemText
-              primary={ingredient.name}
-              primaryTypographyProps={{
-                color: ingredient.excluded ? 'textSecondary' : 'default',
-                style: {
+            }}>
+            <div style={{display: 'flex', alignItems: 'center', width: '100%'}}>
+              {ingredient.excludable ?
+                <div style={{width: 40, height: 40, marginRight: 8, padding: 8}}>
+                  {ingredient.excluded ?
+                    <AddCircle className={classes.secondary}/> :
+                    <RemoveCircle className={classes.secondary}/>
+                  }
+                </div> :
+                <div style={{width: allNonExcludable ? 0 : 48, height: 40}}/>
+              }
+              <Typography
+                variant="body1"
+                color={ingredient.excluded ? 'textSecondary' : 'default'}
+                style={{
                   textDecoration: ingredient.excluded ? 'line-through' : 'none'
-                }
-              }}
-            />
-          </ListItem>
-        )}
-      </List>
+                }}>
+                {ingredient.name}
+              </Typography>
+            </div>
+          </ButtonBase>
+        </div>
+      )}
 
-      <Divider />
+      <Divider style={{marginTop: 16}} />
 
       {addons.length &&
         <Typography
