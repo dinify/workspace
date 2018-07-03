@@ -48,7 +48,7 @@ const Cart = ({
       {cartItemsList.map((item, i, arr) =>
         <SwipableItem
           key={item.id}
-          actionIcon={<Delete style={{color: "#fff"}} />}
+          actionIcon={<Delete />}
           actionColor="#c13939">
           <CartItem item={item} rmFromCart={rmFromCart} />
           {/* i + 1 < arr.length && <Divider style={{marginLeft: 80}}/> */ }

@@ -28,6 +28,8 @@ const styles = theme => ({
   },
 });
 
+let touching;
+
 class SwipableItem extends React.Component {
   state = {
     actionActive: false,
@@ -37,7 +39,15 @@ class SwipableItem extends React.Component {
   componentDidMount() {
     const width = this.divElement.clientWidth;
     const height = this.divElement.clientHeight;
-    this.setState({ rippleRadius: Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2)) });
+    this.setState({ rippleRadius: Math.sqrt(width**2 + height**2) });
+  }
+
+  onTouchStart = () => {
+    touching = true
+  }
+
+  onTouchEnd = () => {
+    touching = false
   }
 
   onScroll = (e) => {
@@ -73,7 +83,7 @@ class SwipableItem extends React.Component {
         }}>
           <Motion
             defaultStyle={{x: 0}}
-            style={{x: spring(actionActive ? 1 : 0, { stiffness: 480, damping: 24 })}}>
+            style={{x: spring(actionActive ? 1 : 0)}}>
             {style =>
               <div style={{
                 position: 'absolute',
@@ -81,20 +91,12 @@ class SwipableItem extends React.Component {
                 borderRadius: rippleRadius / 2,
                 minHeight: rippleRadius,
                 minWidth: rippleRadius,
-                transform: `scale(${style.x}, ${style.x})`,
-                left: `calc(100% - 40)`
+                left: rippleRadius / 2 - 48,
+                opacity: actionActive ? 1 : style.x,
+                transform: `scale(${actionActive ? style.x : 1}, ${actionActive ? style.x : 1})`,
               }}/>
             }
           </Motion>
-        </div>
-        <div
-          className={classes.scrollContainer}
-          onScroll={this.onScroll}
-          style={{
-            display: 'flex',
-          }}>
-          {children}
-          <div style={{minWidth: 1}}/>
         </div>
         <Motion
           defaultStyle={{x: 0}}
@@ -111,8 +113,17 @@ class SwipableItem extends React.Component {
               right: 0,
             }}>
               <div style={{
+                position: 'absolute',
+                color: 'rgba(0, 0, 0, 0.38)',
+                width: 24,
+                height: 24}}>
+                {actionIcon}
+              </div>
+              <div style={{
                 width: 24,
                 height: 24,
+                color: '#fff',
+                opacity: Math.min(1, style.x),
                 transform: `scale(${style.x}, ${style.x})`}}>
 
                 {actionIcon}
@@ -120,6 +131,17 @@ class SwipableItem extends React.Component {
             </div>
           }
         </Motion>
+        <div
+          className={classes.scrollContainer}
+          onScroll={this.onScroll}
+          onTouchStart={this.onTouchStart}
+          onTouchEnd={this.onTouchEnd}
+          style={{
+            display: 'flex',
+          }}>
+          {children}
+          <div style={{minWidth: 1}}/>
+        </div>
       </div>
     )
   }

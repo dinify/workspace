@@ -2,6 +2,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
+import Paper from '@material-ui/core/Paper';
 import Typography from 'web/components/Typography';
 import * as FN from 'lib/FN';
 import uniqueId from 'lodash.uniqueid';
@@ -46,7 +47,7 @@ const CartItem = ({
 
     // if (item.menu_item.addons.length || item.menu_item.excludes.length)
     return (
-      <div
+      <Paper
         style={{minWidth: '100%', display: 'flex', padding: 8, alignItems: 'center'}} >
         <div className={classes.cartItemImage}>
           {images.length &&
@@ -87,7 +88,7 @@ const CartItem = ({
             </Typography>
           }
         </div>
-      </div>
+      </Paper>
     )
 }
 
