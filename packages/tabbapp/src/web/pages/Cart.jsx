@@ -2,13 +2,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import { withStateHandlers } from 'recompose';
 
+import Edit from 'icons/Edit';
+import Done from 'icons/Done';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import Delete from 'icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 import AppBar from 'web/components/AppBar';
-import SwipableItem from 'web/components/SwipableItem';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Typography from 'web/components/Typography';
 import CartItem from 'web/components/CartItem';
@@ -36,6 +38,8 @@ const Cart = ({
   cartItems,
   subtotal,
   rmFromCart,
+  editing,
+  setEditing,
   order
 }) => {
   const cartItemsList = FN.MapToList(cartItems);
@@ -45,9 +49,23 @@ const Cart = ({
     <div style={{paddingBottom: 64}}>
       {!iosInstalled && <AppBar position="static"/>}
       <ResponsiveContainer>
+        <div style={{display: 'flex', alignItems: 'center', paddingTop: 16}}>
+          <div style={{flex: 1}}>
+            <Typography variant="subheading">
+              Cart
+            </Typography>
+            <Typography variant="caption">
+              {`${cartItemsList.length > 0 ? cartItemsList.length : 'no'} item${cartItemsList.length !== 1 ? 's' : ''}`}
+            </Typography>
+          </div>
+
+          <IconButton onClick={() => setEditing(!editing)}>
+            {editing ? <Done /> : <Edit />}
+          </IconButton>
+        </div>
         {cartItemsList.map(item =>
-          <div style={{paddingTop: 16}}>
-            <CartItem item={item} />
+          <div key={item.id} style={{paddingTop: 16}}>
+            <CartItem rmFromCart={rmFromCart} editing={editing} item={item} />
           </div>
         )}
         <Divider style={{marginTop: 16, marginBottom: 16}}/>
@@ -78,4 +96,11 @@ export default connect(
     rmFromCart: rmFromCartInit,
     order: orderInit
   }
-)(withStyles(styles)(Cart));
+)(withStateHandlers(
+  {
+    editing: false,
+  },
+  {
+    setEditing: () => (editing) => ({editing}),
+  }
+)(withStyles(styles)(Cart)));

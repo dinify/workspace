@@ -2,7 +2,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
-import Paper from '@material-ui/core/Paper';
+import Delete from 'icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from 'web/components/Typography';
 import * as FN from 'lib/FN';
 import uniqueId from 'lodash.uniqueid';
@@ -25,29 +26,40 @@ const styles = theme => ({
 
 const CartItem = ({
   classes,
+  editing,
+  rmFromCart,
   item
 }) => {
     const customizations = [];
     const choices = FN.MapToList(item.choices);
     const addons = FN.MapToList(item.addons);
+    const excludes = FN.MapToList(item.excludes);
     const images = item.menu_item ? FN.MapToList(item.menu_item.images) : [];
     customizations.push(...choices.map(choice => {
       return {
         name: choice.name,
+        crossover: false,
         price: FN.formatPrice(choice.difference)
       }
     }));
     customizations.push(...addons.map(addon => {
       return {
         name: addon.name,
+        crossover: false,
         price: FN.formatPrice(addon.price)
+      }
+    }));
+    customizations.push(...excludes.map(ingredient => {
+      return {
+        name: ingredient.name,
+        crossover: true
       }
     }));
 
     // if (item.menu_item.addons.length || item.menu_item.excludes.length)
     return (
       <div
-        style={{minWidth: '100%', display: 'flex', alignItems: 'center'}} >
+        style={{minWidth: '100%', display: 'flex', alignItems: 'top'}} >
         <div className={classes.cartItemImage}>
           {images.length &&
             <div
@@ -58,33 +70,55 @@ const CartItem = ({
             />
           }
         </div>
-        <div style={{flex: 1, marginLeft: 16}}>
+        <div style={{flex: 1, marginLeft: 16, position: 'relative'}}>
           <div style={{display: 'flex'}}>
             <Typography style={{flex: 1, marginRight: 32}} variant="body1">
               {item.menu_item && item.menu_item.name}
             </Typography>
             <Typography
-              style={{alignSelf: 'flex-end'}}
+              style={{alignSelf: 'flex-end', opacity: editing ? 0 : 1}}
               variant="overline">
               {item.menu_item && FN.formatPrice(item.menu_item.price)}
             </Typography>
           </div>
           {customizations.length ? customizations.map(customization =>
             <div key={uniqueId()} style={{display: 'flex'}}>
-              <Typography style={{flex: 1, marginRight: 32}} variant="caption">
+              <Typography style={{
+                flex: 1,
+                marginRight: 32,
+                textDecoration: customization.crossover ? 'line-through' : 'none',
+              }} variant="caption">
                 {customization.name}
               </Typography>
-              <Typography
+              {customization.price && <Typography
                 color="textSecondary"
-                style={{alignSelf: 'flex-end'}}
+                style={{
+                  alignSelf: 'flex-end',
+                  opacity: editing ? 0 : 1,
+                }}
                 variant="overline">
                 {customization.price}
-              </Typography>
+              </Typography>}
             </div>
           ) :
-            <Typography variant="caption">
+            <Typography variant="caption" style={{
+              opacity: editing ? 0 : 1,
+            }}>
               original
             </Typography>
+          }
+          {editing &&
+            <div style={{
+              position: 'absolute',
+              display: 'flex',
+              alignItems: 'center',
+              top: 0,
+              right: 0
+            }}>
+              <IconButton onClick={() => {rmFromCart({ orderItemId: item.id})}}>
+                <Delete />
+              </IconButton>
+            </div>
           }
         </div>
       </div>
