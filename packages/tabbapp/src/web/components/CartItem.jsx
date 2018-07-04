@@ -25,8 +25,7 @@ const styles = theme => ({
 
 const CartItem = ({
   classes,
-  item,
-  rmFromCart
+  item
 }) => {
     const customizations = [];
     const choices = FN.MapToList(item.choices);
@@ -47,8 +46,8 @@ const CartItem = ({
 
     // if (item.menu_item.addons.length || item.menu_item.excludes.length)
     return (
-      <Paper
-        style={{minWidth: '100%', display: 'flex', padding: 8, alignItems: 'center'}} >
+      <div
+        style={{minWidth: '100%', display: 'flex', alignItems: 'center'}} >
         <div className={classes.cartItemImage}>
           {images.length &&
             <div
@@ -88,7 +87,7 @@ const CartItem = ({
             </Typography>
           }
         </div>
-      </Paper>
+      </div>
     )
 }
 

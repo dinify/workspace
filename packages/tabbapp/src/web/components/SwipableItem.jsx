@@ -33,13 +33,14 @@ let touching;
 class SwipableItem extends React.Component {
   state = {
     actionActive: false,
+    removed: false,
     rippleRadius: 0
   }
 
   componentDidMount() {
     const width = this.divElement.clientWidth;
     const height = this.divElement.clientHeight;
-    this.setState({ rippleRadius: Math.sqrt(width**2 + height**2) });
+    this.setState({ rippleRadius: Math.sqrt(width**2 + height**2) * 2 });
   }
 
   onTouchStart = () => {
@@ -47,15 +48,23 @@ class SwipableItem extends React.Component {
   }
 
   onTouchEnd = () => {
-    touching = false
+    touching = false;
+    if (this.state.actionActive) {
+      this.setState({removed: true});
+      this.props.action();
+    }
   }
 
   onScroll = (e) => {
     if (e.target.scrollLeft > 80 && !this.state.actionActive) {
       this.setState({actionActive: true});
+      if (!touching) {
+        this.setState({removed: true});
+        this.props.action();
+      }
     }
     else if (e.target.scrollLeft < 80 && this.state.actionActive) {
-      this.setState({actionActive: false});
+      if (!this.props.remove || touching) this.setState({actionActive: false});
     }
   }
 
@@ -68,8 +77,10 @@ class SwipableItem extends React.Component {
     } = this.props;
     const {
       rippleRadius,
-      actionActive,
+      removed,
     } = this.state;
+
+    const actionActive = this.state.actionActive || removed;
 
     return (
       <div style={{position: 'relative'}} ref={(divElement) => {this.divElement = divElement}}>
@@ -91,7 +102,7 @@ class SwipableItem extends React.Component {
                 borderRadius: rippleRadius / 2,
                 minHeight: rippleRadius,
                 minWidth: rippleRadius,
-                left: rippleRadius / 2 - 48,
+                left: -48,
                 opacity: actionActive ? 1 : style.x,
                 transform: `scale(${actionActive ? style.x : 1}, ${actionActive ? style.x : 1})`,
               }}/>
@@ -131,17 +142,23 @@ class SwipableItem extends React.Component {
             </div>
           }
         </Motion>
-        <div
-          className={classes.scrollContainer}
-          onScroll={this.onScroll}
-          onTouchStart={this.onTouchStart}
-          onTouchEnd={this.onTouchEnd}
-          style={{
-            display: 'flex',
-          }}>
-          {children}
-          <div style={{minWidth: 1}}/>
-        </div>
+        <Motion defaultStyle={{x: 0}} style={{x: spring(removed ? 1 : 0, {stiffness: 410, damping: 60})}}>
+          {value =>
+            <div
+              className={classes.scrollContainer}
+              onScroll={this.onScroll}
+              onTouchStart={this.onTouchStart}
+              onTouchEnd={this.onTouchEnd}
+              style={{
+                display: 'flex',
+                transform: `translateX(-${value.x * 100}%)`
+              }}>
+              {children}
+              <div style={{minWidth: 1}}/>
+            </div>
+          }
+        </Motion>
+
       </div>
     )
   }

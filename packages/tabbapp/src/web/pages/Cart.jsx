@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import Delete from 'icons/Delete';
 
 import AppBar from 'web/components/AppBar';
@@ -45,19 +44,14 @@ const Cart = ({
   return (
     <div style={{paddingBottom: 64}}>
       {!iosInstalled && <AppBar position="static"/>}
-      {cartItemsList.map((item, i, arr) =>
-        <SwipableItem
-          key={item.id}
-          actionIcon={<Delete />}
-          actionColor="#c13939">
-          <CartItem item={item} rmFromCart={rmFromCart} />
-          {/* i + 1 < arr.length && <Divider style={{marginLeft: 80}}/> */ }
-        </SwipableItem>
-
-      )}
-      <Divider />
       <ResponsiveContainer>
-        <div style={{display: 'flex', alignItems: 'center', padding: 16}}>
+        {cartItemsList.map(item =>
+          <div style={{paddingTop: 16}}>
+            <CartItem item={item} />
+          </div>
+        )}
+        <Divider style={{marginTop: 16, marginBottom: 16}}/>
+        <div style={{display: 'flex', alignItems: 'center', paddingLeft: 72}}>
           <Typography style={{flex: 1}} variant="button">
             Total
           </Typography>
@@ -67,7 +61,7 @@ const Cart = ({
           </Typography>
         </div>
         {cartItemsList.length > 0 &&
-          <Button variant="contained" color="primary" fullWidth onClick={() => order()}>Order</Button>
+          <Button style={{marginTop: 16}} variant="contained" color="primary" fullWidth onClick={() => order()}>Order</Button>
         }
       </ResponsiveContainer>
 
