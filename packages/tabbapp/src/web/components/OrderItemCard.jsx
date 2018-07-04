@@ -11,10 +11,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.divider,
     overflow: 'hidden !important',
     '&:hover': {
-      zIndex: 1,
-      '& $imageBackdrop': {
-        opacity: 0.12,
-      },
+      zIndex: 1
     },
   },
   price: {

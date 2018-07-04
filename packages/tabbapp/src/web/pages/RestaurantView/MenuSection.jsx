@@ -78,7 +78,7 @@ let MenuSection = ({
           {mobile ?
             <div className={classes.scroller}>
               {FN.MapToList(category.items).map((menuItem, i, arr) =>
-                <div style={{
+                <div key={menuItem.id} style={{
                   display: 'inline-block',
                   width: 'calc(50% - 16px)',
                   paddingLeft: 16,
