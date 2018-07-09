@@ -76,5 +76,52 @@
   </head>
   <body>
     <div id="root"></div>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-messaging.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAwKYz-JN76QWYpK60TEL1YJhV_cIh9ciM",
+        projectId: "tabb-global",
+        storageBucket: "tabb-client-app.appspot.com",
+        messagingSenderId: "448538111630"
+      };
+      firebase.initializeApp(config);
+      var messaging = firebase.messaging();
+
+      messaging.usePublicVapidKey("BITD-4Cv-rGg9cYTpcix1Q9a8WVEph6fmSDets8TImuVMtKNaXuMWvgm70jXOCwAbopwk-cnPLteitUVBA1M-MY");
+      messaging.requestPermission().then(function() {
+        console.log('Notification permission granted.');
+        // TODO(developer): Retrieve an Instance ID token for use with FCM.
+
+        messaging.getToken().then((currentToken) => {
+          if (currentToken) {
+            // we've got the token from Firebase, now let's store it in the database
+            return console.log(currentToken);
+          } else {
+            console.log('No Instance ID token available. Request permission to generate one.');
+          }
+        });
+
+      }).catch(function(err) {
+        console.log('Unable to get permission to notify.', err);
+      });
+
+      messaging.onMessage(function(payload) {
+        console.log('Message received. ', payload);
+        // ...
+      });
+
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('./firebase-messaging-sw.js')
+          .then(function(registration) {
+            console.log('Registration successful, scope is:', registration.scope);
+          }).catch(function(err) {
+            console.log('Service worker registration failed, error:', err);
+          });
+        }
+    </script>
   </body>
 </html>

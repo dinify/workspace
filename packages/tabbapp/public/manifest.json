@@ -27,5 +27,6 @@
   "background_color": "#C13939",
   "display": "standalone",
   "scope": "/",
-  "theme_color": "#C13939"
+  "theme_color": "#C13939",
+  "gcm_sender_id": "103953800507"
 }
