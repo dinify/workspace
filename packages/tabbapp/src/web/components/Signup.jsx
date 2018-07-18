@@ -2,18 +2,37 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import Text from 'web/components/Inputs/Text';
-import { loginInit, fbloginInit } from 'ducks/auth/actions';
-import Button from '@material-ui/core/Button';
+import { signupInit } from 'ducks/auth/actions';
 import Grid from '@material-ui/core/Grid';
 
 const gridItemStyle = {
   width: '100%',
 };
 
-let LoginForm = ({ handleSubmit }) => {
+let SignupForm = ({ handleSubmit, submitComponent }) => {
   return (
     <form onSubmit={handleSubmit}>
       <Grid container alignItems="center" direction="column">
+        <Grid item style={gridItemStyle}>
+          <Field
+            name="name"
+            component={Text}
+            componentProps={{
+              label: 'Full name',
+              fullWidth: true,
+            }}
+          />
+        </Grid>
+        <Grid item style={gridItemStyle}>
+          <Field
+            name="phone"
+            component={Text}
+            componentProps={{
+              label: 'Phone number',
+              fullWidth: true,
+            }}
+          />
+        </Grid>
         <Grid item style={gridItemStyle}>
           <Field
             name="email"
@@ -36,26 +55,25 @@ let LoginForm = ({ handleSubmit }) => {
           />
         </Grid>
       </Grid>
-      <Button type="submit">Log in</Button>
+      {submitComponent}
     </form>
   );
 };
-LoginForm = reduxForm({
-  form: 'auth/login',
-})(LoginForm);
+SignupForm = reduxForm({
+  form: 'auth/signup',
+})(SignupForm);
 
-const Login = ({ login }) => {
+const Signup = ({ signup, submitComponent }) => {
   return (
     <div>
-      <LoginForm onSubmit={login} />
+      <SignupForm onSubmit={signup} submitComponent={submitComponent} />
     </div>
   );
 };
 
 export default connect(
-  () => ({}),
+  state => ({}),
   {
-    login: loginInit,
-    fblogin: fbloginInit
+    signup: signupInit,
   },
-)(Login);
+)(Signup);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,8 +10,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import GoogleLogo from 'icons/GoogleLogo';
 import FacebookLogo from 'icons/FacebookLogo';
-
+import { fbAuthInit } from 'ducks/auth/actions';
 import Login from 'web/components/Login';
+import Signup from 'web/components/Signup';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+
 
 const styles = theme => ({
   grow: {
@@ -88,7 +92,7 @@ class OnboardingDialog extends React.Component {
   };
 
   render() {
-    const { classes, open, onClose } = this.props;
+    const { classes, open, onClose, fbAuth } = this.props;
     const { selectedTab } = this.state;
     const title = selectedTab ? 'Next' : 'Log in';
 
@@ -109,18 +113,32 @@ class OnboardingDialog extends React.Component {
           <Tab label="Sign up" />
         </Tabs>
         <div style={{ padding: 24, paddingBottom: 0 }}>
-          <div>
-            <Button
-              fullWidth
-              className={classes.facebookButton}
-              classes={{ label: classes.uncapitalized }}
-              variant="contained"
-              onClick={() => {}}
-            >
-              <FacebookLogo />
-              <span className={classes.leftGutter}>Continue with Facebook</span>
-            </Button>
+          <div style={{ paddingBottom: 16 }}>
+            <FacebookLogin
+              appId="123605498281814"
+              autoLoad
+              fields="name,email,gender,birthday"
+              callback={(res) => fbAuth({
+                name: res.name,
+                email: res.email,
+                accessToken: res.accessToken
+              })}
+              render={renderProps => (
+                <Button
+                  fullWidth
+                  className={classes.facebookButton}
+                  classes={{ label: classes.uncapitalized }}
+                  variant="contained"
+                  onClick={renderProps.onClick}
+                >
+                  <FacebookLogo />
+                  <span className={classes.leftGutter}>Continue with Facebook</span>
+                </Button>
+              )}
+            />
+
           </div>
+          {/*
           <div style={{ paddingBottom: 16 }}>
             <Button
               fullWidth
@@ -133,6 +151,8 @@ class OnboardingDialog extends React.Component {
               <span className={classes.leftGutter}>Continue with Google</span>
             </Button>
           </div>
+            */}
+
           <div className={classes.flex}>
             <Divider className={classes.grow} />
             <Typography
@@ -156,14 +176,27 @@ class OnboardingDialog extends React.Component {
             />
           }
           {selectedTab === 1 &&
-            <Typography align="center" variant="caption" style={{padding: 32}}>
-              [ Registration form placeholder ]
-            </Typography>
+            <Signup
+              submitComponent={
+                <DialogActions>
+                  <Button type="submit" color="primary">
+                    Sign up
+                  </Button>
+                </DialogActions>
+              }
+            />
           }
         </div>
       </Dialog>
     );
   }
 }
+
+OnboardingDialog =  connect(
+  null,
+  {
+    fbAuth: fbAuthInit,
+  },
+)(OnboardingDialog);
 
 export default withStyles(styles, { withTheme: true })(OnboardingDialog);

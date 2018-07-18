@@ -1,28 +1,34 @@
 // @flow
 import { Get, Post } from './Network';
 
-type RegisterProps = {
+type RegisterLocalProps = {
   name: string,
   phone: string,
   email: string,
   password: string,
+  registrationType: 'LOCAL'
 }
-export function Register({ name, phone, email, password }: RegisterProps) {
-  return Post(
-    {
-      path: 'user/register',
-      noToken: true,
-    },
-    {
-      email,
-      password,
-      name,
-      phone,
-      gender: 'OTHER',
-      birth_date: '1990-01-01',
-      registration_type: 'LOCAL',
-    },
-  );
+type RegisterFacebookProps = {
+  name: string,
+  phone: string,
+  email: string,
+  accessToken: string,
+  registrationType: 'FACEBOOK'
+}
+export function Register(
+  { name, phone, email, password, accessToken, registrationType }: RegisterLocalProps | RegisterFacebookProps
+) {
+  const body = {
+    name,
+    phone,
+    email,
+    gender: 'OTHER',
+    birth_date: '1990-01-01',
+    registration_type: registrationType
+  }
+  if (password) body.password = password;
+  if (accessToken) body.oauth_access_token = accessToken;
+  return Post({ path: 'user/register', noToken: true }, body);
 }
 
 type LoginProps = {
@@ -39,6 +45,17 @@ export function Login({ email, password }: LoginProps) {
       email,
       password,
     },
+  );
+}
+export function LoginWithFacebook({ accessToken }) {
+  return Post(
+    {
+      path: 'user/login/facebook',
+      noToken: true,
+    },
+    {
+      oauth_access_token: accessToken
+    }
   );
 }
 

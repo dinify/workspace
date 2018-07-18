@@ -37,7 +37,10 @@ export function Request(url, options = {}, noToken) {
       .then(({ status, json }) => {
         if (status >= 200 && status < 300) {
           // success
-          if (json) resolve(json.data || json);
+          if (json) {
+            if (json.metadata) resolve(json)
+            else resolve(json.data || json);
+          }
           else resolve('no json');
         } else {
           // error
