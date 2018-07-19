@@ -48,6 +48,9 @@ const initialState = {
   acceptedBookings: [],
   sales: 0,
   order_ahead_enabled: null,
+  timer: {
+    o: 200
+  }
 };
 
 const makeEventId = (type, id) => `${type}_${id}`
@@ -110,8 +113,8 @@ export default function reducer(state: State = initialState, action: Action) {
     }
     case 'GET_SERVICES_DONE':
       return R.assoc('events', makeUpdatedEvents(action, state, 'SERVICE'))(state);
-    case 'GET_ORDERS_DONE':
-      return R.assoc('events', makeUpdatedEvents(action, state, 'ORDER'))(state);
+    //case 'GET_ORDERS_DONE':
+    //  return R.assoc('events', makeUpdatedEvents(action, state, 'ORDER'))(state);
     case 'GET_ORDERAHEADS_DONE':
       return R.assoc('events', makeUpdatedEvents(action, state, 'ORDERAHEAD'))(state);
     case 'GET_BILLS_DONE':
@@ -260,7 +263,9 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
           const oh = R.filter((o) => o.type === 'AHEAD')(response)
           const di = R.filter((o) => o.type === 'DINE_IN')(response)
           dispatch({ type: 'GET_ORDERS_DONE', payload: di });
-          dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: oh });
+          const userIds = R.pluck('initiator', di).filter((id) => id.length === 24)
+          dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
+          //dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: oh });
         })
 
         API.GetSeats({ waiterboardId }).then((seats) => {

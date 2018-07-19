@@ -18,6 +18,7 @@ import ModalListOfBookings from './ModalListOfBookings'
 import Event from './Events'
 import Booking from './Events/Booking'
 import Call from './Events/Call'
+import Order from './Events/Order'
 
 import { toggleFrames, toggleModal } from 'ducks/ui'
 import { setOHEnabled, logoutInitAction } from 'ducks/restaurant'
@@ -126,7 +127,8 @@ const Board = ({
   calls,
   logout,
   selectedWBId,
-  loggedUser
+  loggedUser,
+  orders
 }: BoardProps) => {
 
   const frames = ['actions','tables']
@@ -171,7 +173,7 @@ const Board = ({
         <Frame n={0}>
           <Container>
             <Container>
-              {events && R.values(events).length > 0 || pendingBookings.length > 0 ?
+              {orders.length > 0 || pendingBookings.length > 0 ?
                 <Masonry
                     className={'my-gallery-class'} // default ''
                     elementType={'ul'} // default 'div'
@@ -185,9 +187,12 @@ const Board = ({
                   {callsList.map((call) =>
                     <Call key={call.id} call={call} />
                   )}
-                  {R.values(events).sort((a,b) => a.content.id - b.content.id).map((event, i) =>
-                    <Event key={i} event={event} />
+                  {orders.map((order) =>
+                    <Order key={order.id} order={order} />
                   )}
+                  {/*R.values(events).sort((a,b) => a.content.id - b.content.id).map((event, i) =>
+                    <Event key={i} event={event} />
+                  )*/}
                 </Masonry>
                 :
                 <EventsPlaceholder>Everything is done.</EventsPlaceholder>
@@ -223,6 +228,7 @@ const Board = ({
 export default connect(
   state => ({
     bookings: state.booking.all,
+    orders: state.order.list,
     calls: state.call.all,
     tables: state.table.all,
     guests: state.guests.all,

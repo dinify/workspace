@@ -10,10 +10,10 @@ export function Login({ email, password }) {
 }
 
 export function GetLoggedRestaurant() {
-  return Get({ path: `restaurant/my/all`, v3: true })
+  return Get({ path: `restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices`, v3: true })
 }
 
-export function GetTables({waiterboardId}) {
+export function GetTables({ waiterboardId }) {
   return Get({ v3: true, path: `waiterboard/${waiterboardId}/tables` })
 }
 
@@ -23,7 +23,7 @@ export function ChangeTable(payload) {
   return Post({ v3: true, path: `table/${id}` }, payload)
 }
 
-export function GetSeats({waiterboardId}) {
+export function GetSeats({ waiterboardId }) {
   return Get({ v3: true, path: `waiterboard/${waiterboardId}/seats/all` })
 }
 
@@ -59,12 +59,12 @@ export function ConfirmService({ serviceId }) {
   return Post({ path: `api/v2/waiterboard/service_call/${serviceId}/confirm` })
 }
 
-export function GetOrders({waiterboardId}) {
-  return Get({ v3: true, path: `waiterboard/${waiterboardId}/orders` })
+export function GetOrders({ waiterboardId }) {
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/orders?with=items.choices,items.addons,items.excludes` })
 }
 
 export function ConfirmOrder({ orderId }) {
-  return Post({ v3: true, path: `/order/${orderId}/confirm` })
+  return Post({ v3: true, path: `order/${orderId}/confirm` })
 }
 export function ConfirmOrderahead({ orderId }) {
   return Post({ path: `api/v2/waiterboard/orderahead/${orderId}/confirm` })

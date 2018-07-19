@@ -25,15 +25,15 @@ const ListOfCustomizations = ({ list }) => {
 	return null
 }
 
-const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime }) => (
+const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime, users }) => (
 	<ActionBox className={removed ? 'vhs-zoom vhs-reverse Order' : 'Order'}>
     <Header>
 
       <TableId bg={color}>
-        ?
+        1
       </TableId>
 
-      <User user={order.initiator} />
+      <User user={users[order.initiator]} />
 
 			<Text color={color}>
 				{datetime ? moment(order.processed).format('DD/MM/YYYY HH:mm') : ''}
@@ -50,8 +50,8 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime }) => 
       <TableTag>
         <thead>
           <tr>
-            <Th color={color}>DESCRIPTION</Th>
-            <Th color={color}>OPTION</Th>
+            <Th color={color}>NAME</Th>
+            <Th color={color}>CHOICES</Th>
             <Th color={color}>EXCLUDE</Th>
             <Th color={color}>ADD-ON</Th>
 						<Th color={color}>PRICE</Th>
@@ -62,11 +62,11 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime }) => 
 						<Tr key={i}>
 	            <Td>{item.menu_item.name}</Td>
 							<Td items>
-								{item.option ?
+								{item.choices ? FN.MapToList(item.choices).map((choice) =>
 									<FoodItem bgIndex={0}>
-										<span style={{whiteSpace: 'nowrap'}}>{item.option.name}</span>
+										<span style={{whiteSpace: 'nowrap'}}>{choice.name}</span>
 									</FoodItem>
-								: ''}
+								) : ''}
 							</Td>
 							<Td items>
 								<ListOfCustomizations list={item.excludes}></ListOfCustomizations>
@@ -82,7 +82,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime }) => 
 						<Td></Td>
 						<Td></Td>
 						<Td></Td>
-						<Td>{order.subtotal.amount} {order.subtotal.currency}</Td>
+						<Td>{order.subtotal.amount} {order.subtotal.currency === 'KWD' ? 'KD' : order.subtotal.currency}</Td>
 					</Tr>
         </tbody>
       </TableTag>
@@ -92,7 +92,8 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime }) => 
 
 export default connect(
   state => ({
-		timer: state.restaurant.timer
+		timer: state.restaurant.timer,
+		users: state.user.all,
 	}),
   {
     confirmOrder
