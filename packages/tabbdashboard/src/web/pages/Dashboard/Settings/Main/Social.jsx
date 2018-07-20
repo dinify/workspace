@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import Grid from 'material-ui/Grid';
 import {
   FormBox,
   FormBoxHead,
@@ -10,48 +9,30 @@ import {
 } from 'web/components/styled/FormBox';
 import { updateSocialInitAction } from 'ducks/restaurantLegacy';
 import Progress from 'web/components/Progress';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
-
-const WrappedIcon = ({ name }) => (
-  <div style={{ height: '40px', textAlign: 'center' }}>
-    <i className={name} style={{ fontSize: 24 }} />
-  </div>
-);
 
 let SocialForm = ({ handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container spacing={8} alignItems="flex-end">
-        <Grid item xs={1}>
-          <WrappedIcon name="ion-social-facebook" />
-        </Grid>
-        <Grid item xs={11}>
-          <Field
-            name="facebook"
-            component={Text}
-            componentProps={{
-              label: 'Facebook URL',
-              fullWidth: true,
-              margin: 'normal',
-            }}
-          />
-        </Grid>
-        <Grid item xs={1}>
-          <WrappedIcon name="ion-social-instagram" />
-        </Grid>
-        <Grid item xs={11}>
-          <Field
-            name="instagram"
-            component={Text}
-            componentProps={{
-              label: 'Instagram URL',
-              fullWidth: true,
-              margin: 'normal',
-            }}
-          />
-        </Grid>
-      </Grid>
+      <Field
+        name="facebook"
+        component={Text}
+        componentProps={{
+          label: 'Facebook URL',
+          fullWidth: true,
+          margin: 'normal',
+        }}
+      />
+      <Field
+        name="instagram"
+        component={Text}
+        componentProps={{
+          label: 'Instagram URL',
+          fullWidth: true,
+          margin: 'normal',
+        }}
+      />
       <Button type="submit" fullWidth={true}>
         SAVE
       </Button>

@@ -10,7 +10,7 @@ import {
 import { updateNameInitAction } from 'ducks/restaurantLegacy';
 import { createServiceInit, removeServiceInit } from 'ducks/service/actions';
 import Progress from 'web/components/Progress';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 import * as FN from 'lib/FN';
 import Chip from '@material-ui/core/Chip';

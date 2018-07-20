@@ -4,16 +4,19 @@ import { connect } from 'react-redux';
 import * as FN from 'lib/FN';
 import { Field, reduxForm } from 'redux-form';
 
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Collapse from 'material-ui/transitions/Collapse';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Collapse from '@material-ui/core/Collapse';
 
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import AddCircle from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from 'material-ui/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 import ChevronRight from '@material-ui/icons/ChevronRight';
-import Tooltip from 'material-ui/Tooltip';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import InputAndButton from 'web/components/MaterialInputs/InputAndButton';
 
@@ -34,6 +37,15 @@ let AddChoiceForm = ({ handleSubmit }) => {
         buttonIcon={<AddCircle />}
         componentProps={{
           placeholder: 'Add choice',
+          fullWidth: true,
+        }}
+      />
+      <Field
+        name="price"
+        component={InputAndButton}
+        buttonIcon={<AddCircle />}
+        componentProps={{
+          placeholder: 'Price',
           fullWidth: true,
         }}
       />
@@ -130,8 +142,8 @@ const Options = ({
                 <ListItem>
                   <ListItemText inset>
                     <AddChoiceForm
-                      onSubmit={({ name }) =>
-                        createChoice({ name, optionId: option.id })
+                      onSubmit={({ name, price }) =>
+                        createChoice({ name, price, optionId: option.id })
                       }
                     />
                   </ListItemText>

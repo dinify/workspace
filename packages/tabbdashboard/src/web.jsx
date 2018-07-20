@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import AppComponent from 'web/App';
 import configureStore from './configureStore';
 import './index.css';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {MuiThemeProvider} from '@material-ui/core/styles';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContextProvider } from 'react-dnd';
 

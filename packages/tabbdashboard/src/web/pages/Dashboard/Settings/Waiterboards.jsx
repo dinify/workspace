@@ -7,13 +7,15 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import 'react-switch-button/dist/react-switch-button.css';
-import Tooltip from 'material-ui/Tooltip';
-import Button from 'material-ui/Button';
+import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 import { Field, reduxForm } from 'redux-form';
 import Progress from 'web/components/Progress';
 import { DragSource, DropTarget } from 'react-dnd';
 import PropTypes from 'prop-types';
+
+import Group from '@material-ui/icons/Group';
 
 import {
   FormBox,
@@ -320,7 +322,7 @@ let TableComponent = ({
           <Tooltip placement="top" title="Capacity">
             <div className="capacity">
               <span>{table.capacity}</span>
-              <i className="material-icons">group</i>
+              <Group />
             </div>
           </Tooltip>
           <Tooltip placement="left" title="Delete Table">
@@ -444,7 +446,7 @@ class Waiterboards extends React.Component {
               <Tooltip placement="top" title="Total Capacity">
                 <WBinfo>
                   {wb.capacity}
-                  <i className="material-icons">group</i>
+                  <Group />
                 </WBinfo>
               </Tooltip>
               <Tooltip placement="top" title="Delete Waiterboard">

@@ -1,7 +1,9 @@
 // @flow
 import React from 'react';
-import Input, { InputAdornment } from 'material-ui/Input';
-import IconButton from 'material-ui/IconButton';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+
+import IconButton from '@material-ui/core/IconButton';
 
 const InputAndButton = props => {
   const { value, onChange, name } = props.input;

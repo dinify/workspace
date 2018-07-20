@@ -3,13 +3,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as FN from 'lib/FN';
 import { Field, reduxForm } from 'redux-form';
-import List, { ListItem, ListItemText } from 'material-ui/List';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import AddCircle from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
-import Switch from 'material-ui/Switch';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import Switch from '@material-ui/core/Switch';
 
 import InputAndButton from 'web/components/MaterialInputs/InputAndButton';
 import FormHelperText from '@material-ui/core/FormHelperText';

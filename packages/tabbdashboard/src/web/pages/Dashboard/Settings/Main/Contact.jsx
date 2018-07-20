@@ -10,7 +10,7 @@ import {
 import { updateContactInitAction } from 'ducks/restaurantLegacy';
 import Progress from 'web/components/Progress';
 import Text from 'web/components/MaterialInputs/Text';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 
 let ContactForm = ({ handleSubmit }) => {
   return (

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import ListOfCategories from './ListOfCategories';
 import ListOfDishes from './ListOfDishes';
 import ItemDetail from './ItemDetail';
-import Grid from 'material-ui/Grid';
+import Grid from '@material-ui/core/Grid';
 
 const HeadLine = styled.div`
   height: 50px;

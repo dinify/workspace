@@ -46,7 +46,7 @@ export function CreateRestaurant({ name, subdomain }) {
 }
 
 export function GetLoggedRestaurant() {
-  return Get({ path: `restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices`, v3: true });
+  return Get({ path: `restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices.difference`, v3: true });
 }
 
 export function ChangeCategory({ category }) {
@@ -273,10 +273,16 @@ export function DeleteOption({ id }) {
   return Post({ path: `menu/option/${id}/delete`, v3: true });
 }
 
-export function CreateChoice({ name, optionId }) {
+export function CreateChoice({ name, price, optionId }) {
   return Post(
     { path: `menu/option/${optionId}/choice/add`, v3: true },
-    { name },
+    {
+      name,
+      difference: {
+        amount: price,
+        currency: "KWD"
+      }
+    },
   );
 }
 

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
-import SelectField from 'material-ui/Select';
-import { MenuItem } from 'material-ui/Menu';
+import SelectField from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const Select = props => {
   const { value, onChange, name } = props.input;

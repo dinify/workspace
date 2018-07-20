@@ -9,7 +9,7 @@ import {
 } from 'web/components/styled/FormBox';
 import { updateNameInitAction } from 'ducks/restaurantLegacy';
 import Progress from 'web/components/Progress';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 
 let NameForm = ({ handleSubmit }) => {

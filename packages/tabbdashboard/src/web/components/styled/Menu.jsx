@@ -7,6 +7,7 @@ export const Menu = styled.ul`
   width: 160px;
   margin-left: 53px;
   margin-top: 80px;
+  white-space: nowrap;
 `;
 
 export const MenuItem = styled.li`
@@ -17,6 +18,7 @@ export const MenuItem = styled.li`
   font-weight: 300;
   letter-spacing: 2px;
   vertical-align: middle;
+  white-space: nowrap;
   a {
     text-decoration: none;
     color: ${({ active }) => (active ? 'white' : 'rgba(255,255,255,0.6)')};
@@ -36,10 +38,10 @@ export const MenuItem = styled.li`
   }
 `;
 
-export const MenuLink = ({ title, to, l, iconName = 'ion-gear-b' }) => (
+export const MenuLink = ({ title, to, l, icon }) => (
   <MenuItem active={l.pathname.indexOf(to) > -1}>
     <Link to={to}>
-      <i className="material-icons">{iconName}</i>
+      {icon}
       {title}
     </Link>
   </MenuItem>
@@ -47,6 +49,7 @@ export const MenuLink = ({ title, to, l, iconName = 'ion-gear-b' }) => (
 
 export const HorMenu = styled.ul`
   list-style-type: none;
+  white-space: nowrap;
 `;
 
 export const HorMenuItem = styled.li`

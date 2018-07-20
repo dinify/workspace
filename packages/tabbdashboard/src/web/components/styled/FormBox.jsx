@@ -21,15 +21,6 @@ export const FormBoxBody = styled.div`
   padding-top: ${p => p.pt || 0}px;
   padding-bottom: ${p => p.pb || 10}px;
   text-align: ${p => (p.center ? 'center' : 'left')};
-  input,
-  select,
-  textarea {
-    font-weight: 300 !important;
-    font-size: 13px !important;
-  }
-  button span {
-    font-weight: 400 !important;
-  }
   .sep {
     display: inline-block;
     padding: 14px 5px;
@@ -38,9 +29,6 @@ export const FormBoxBody = styled.div`
   .FormInput {
     display: ${p => (p.half ? 'inline-block' : 'block')};
     width: ${p => (p.half ? '46.7%' : '100%')};
-  }
-  select {
-    height: 34px;
   }
 `;
 export const FormBoxSubmit = styled.button`

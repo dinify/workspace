@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { updateFoodNutritionInit } from 'ducks/restaurantLegacy';
 import Progress from 'web/components/Progress';
 import { Field, reduxForm } from 'redux-form';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 
 let NutritionForm = ({ handleSubmit }) => {
@@ -19,7 +19,7 @@ let NutritionForm = ({ handleSubmit }) => {
         componentProps={{
           type: 'number',
           min: 1,
-          label: 'Total Calories (kJ)',
+          label: 'Calories (Kcal)',
           fullWidth: true,
           InputLabelProps: {
             shrink: true,

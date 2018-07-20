@@ -13,10 +13,13 @@ import * as FN from 'lib/FN';
 import R from 'ramda';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Checkbox from 'material-ui/Checkbox';
-import Tooltip from 'material-ui/Tooltip';
+import Checkbox from '@material-ui/core/Checkbox';
+import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from 'material-ui/IconButton';
+import Add from '@material-ui/icons/Add';
+
+import IconButton from '@material-ui/core/IconButton';
+
 
 import {
   updateMenuitemInitAction,
@@ -116,7 +119,7 @@ let CreateItemForm = ({ handleSubmit }) => {
         className="ItemInput"
       />
       <NewFoodButton>
-        <i className="material-icons">add</i>
+        <Add />
       </NewFoodButton>
     </form>
   );

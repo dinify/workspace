@@ -6,10 +6,22 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { logoutInitAction } from 'ducks/restaurantLegacy';
 import { HorizontalLine } from 'web/components/styled/HorizontalLine';
 import { Menu, MenuLink } from 'web/components/styled/Menu';
+import { Link } from 'react-router-dom';
 
 import SettingsSection from './Settings';
 import MenuSection from './Menu';
 import BillingSection from './Billing';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
+import ExitToApp from '@material-ui/icons/ExitToApp';
+import Settings from '@material-ui/icons/Settings';
+import RestaurantMenu from '@material-ui/icons/RestaurantMenu';
+import AttachMoney from '@material-ui/icons/AttachMoney';
 
 //import GuestsSection from './Guests'
 //import SalesSection from './Sales'
@@ -84,45 +96,72 @@ const MenuItem = styled.li`
   }
 `;
 
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+  typography: {
+    fontFamily: 'Montserrat',
+    subheading: {
+      fontWeight: 100
+    }
+  }
+});
+
 const Dashboard = ({ location, logout }) => (
   <div>
     <Sidebar>
-      <Logo>
-        <img src={require('assets/img/logo.svg')} alt="" />
-        <span>Dashboard</span>
-      </Logo>
-      <Menu>
-        <MenuLink
-          l={location}
-          iconName="settings"
-          title="Settings"
-          to="/settings"
-        />
-        <MenuLink
-          l={location}
-          iconName="restaurant_menu"
-          title="Menu"
-          to="/menu"
-        />
-        <MenuLink
-          l={location}
-          iconName="attach_money"
-          title="Billing"
-          to="/billing"
-        />
-        {
-          //<MenuLink l={location} iconName="group" title="Guests" to="/dashboard/guests" />
-          //<MenuLink l={location} iconName="assessment" title="Sales" to="/dashboard/sales" />
-          //<MenuLink l={location} iconName="show_chart" title="Engagement" to="/dashboard/engagement" />
-        }
-        <HorizontalLine />
-        <MenuItem onClick={logout}>
-          <a>
-            <i className="material-icons">exit_to_app</i>
-            <span>LOG OUT</span>
-          </a>
-        </MenuItem>
-      </Menu>
+
+      <MuiThemeProvider theme={theme}>
+        <List
+          component="nav"
+        >
+          <Link to="/">
+            <ListItem button style={{padding: '14px 24px'}} divider>
+              <ListItemIcon>
+                <img src={require('assets/img/logo.svg')} width={26} alt="" />
+              </ListItemIcon>
+              <ListItemText inset primary="Dashboard" />
+            </ListItem>
+          </Link>
+
+          <Link to="/settings">
+            <ListItem button>
+              <ListItemIcon>
+                <Settings />
+              </ListItemIcon>
+              <ListItemText inset primary="Settings" />
+            </ListItem>
+          </Link>
+
+          <Link to="/menu">
+            <ListItem button>
+              <ListItemIcon>
+                <RestaurantMenu />
+              </ListItemIcon>
+              <ListItemText inset primary="Menu" />
+            </ListItem>
+          </Link>
+
+          <Link to="/billing">
+            <ListItem button divider>
+              <ListItemIcon>
+                <AttachMoney />
+              </ListItemIcon>
+              <ListItemText inset primary="Billing" />
+            </ListItem>
+          </Link>
+
+          <ListItem button onClick={logout}>
+            <ListItemIcon>
+              <ExitToApp />
+            </ListItemIcon>
+            <ListItemText inset primary="Log out" />
+          </ListItem>
+        </List>
+      </MuiThemeProvider>
+
+
     </Sidebar>
     <Content>
       <Switch>
