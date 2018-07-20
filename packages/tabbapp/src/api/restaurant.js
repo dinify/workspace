@@ -90,3 +90,7 @@ export function RemoveOrderitem({ orderItemId }: RmFromCartArgs) {
 export function Order() {
   return Post({ path: 'order' }, { type: 'DINE_IN' })
 }
+
+export function GetBill() {
+  return Get({ path: 'bill' })
+}
