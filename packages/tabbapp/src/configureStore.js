@@ -15,6 +15,7 @@ import menuItem from 'ducks/menuItem';
 import booking from 'ducks/booking';
 import cart from 'ducks/cart';
 import bill from 'ducks/bill';
+import seat from 'ducks/seat';
 
 Raven.config('https://b34f069a5b2d40f2ac5b07a96353591e@sentry.io/1227775', {
   // options
@@ -28,7 +29,8 @@ const commonReducers = {
   menuItem,
   booking,
   cart,
-  bill
+  bill,
+  seat,
 };
 
 const configureStore = (options, storage) => {

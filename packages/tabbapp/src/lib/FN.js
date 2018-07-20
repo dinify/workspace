@@ -54,7 +54,8 @@ export function formatPrice(price) {
   const displayCurrencies = {
     KWD: 'KD'
   };
-  return `${price.amount} ${displayCurrencies[price.currency]}`;
+  const amount = Math.ceil(price.amount * 1000) / 1000;
+  return `${amount} ${displayCurrencies[price.currency]}`;
   /* const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: price.currency,

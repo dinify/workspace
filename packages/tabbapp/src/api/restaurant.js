@@ -94,3 +94,7 @@ export function Order() {
 export function GetBill() {
   return Get({ path: 'bill' })
 }
+
+export function GetSeats() {
+  return Get({ path: 'seat/list'})
+}

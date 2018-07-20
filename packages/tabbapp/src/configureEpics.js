@@ -5,7 +5,8 @@ import { restaurantEpics as restaurant } from 'ducks/restaurant';
 import { userEpics as user } from 'ducks/user';
 import { menuItemEpics as menuItem } from 'ducks/menuItem';
 import { cartEpics as cart } from 'ducks/cart';
-import { billEpics as bill } from 'ducks/bill'
+import { billEpics as bill } from 'ducks/bill';
+import { seatEpics as seat } from 'ducks/seat';
 
 import { appEpics as app } from 'ducks/app';
 
@@ -18,6 +19,7 @@ const epics = [
   ...menuItem,
   ...cart,
   ...bill,
+  ...seat,
 ];
 
 export default (deps = {}, platformEpics = []) => (

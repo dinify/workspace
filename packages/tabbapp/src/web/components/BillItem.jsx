@@ -1,5 +1,7 @@
 // @flow
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { withStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from 'web/components/Typography';
@@ -7,6 +9,8 @@ import CheckCircle from 'icons/CheckCircle';
 import { Motion, spring } from 'react-motion';
 import * as FN from 'lib/FN';
 import uniqueId from 'lodash.uniqueid';
+
+import { selectBillItem as selectBillItemAction } from 'ducks/bill/actions';
 
 const styles = theme => ({
   cartItemImage: {
@@ -29,7 +33,6 @@ const styles = theme => ({
 
 class BillItem extends React.Component {
   state = {
-    selected: false,
     rippleRadius: Math.sqrt(56**2 + 56**2)
   }
 
@@ -37,15 +40,17 @@ class BillItem extends React.Component {
     const {
       classes,
       padding,
+      index,
+      selectBillItem,
     } = this.props;
     const {
-      selected,
       rippleRadius,
     } = this.state;
     const customizations = [];
 
-    let billItem = this.props.item;
-    let item = billItem.order_item;
+    const billItem = this.props.item;
+    const selected = billItem.selected;
+    const item = billItem.order_item;
 
     const choices = FN.MapToList(item.choices);
     const addons = FN.MapToList(item.addons);
@@ -91,7 +96,7 @@ class BillItem extends React.Component {
             justifyContent: 'center',
             overflow: 'hidden',
           }}
-          onClick={() => this.setState({selected: !this.state.selected})}
+          onClick={() => selectBillItem({ index, selected: !selected })}
           className={classes.cartItemImage}
           ref={(divElement) => {this.divElement = divElement}}>
             {images.length > 0 &&
@@ -171,5 +176,12 @@ class BillItem extends React.Component {
     )
   }
 }
+
+BillItem = connect(
+  null,
+  {
+    selectBillItem: selectBillItemAction,
+  }
+)(BillItem)
 
 export default withStyles(styles)(BillItem);
