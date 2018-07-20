@@ -38,7 +38,7 @@ class Checkin extends React.PureComponent {
           delay={500}
           onError={(e) => console.log(e)}
           onScan={this.onScan}
-          style={{ width: '33%' }}
+          style={{ width: '100%' }}
           legacyMode={isLegacy}
           />
           {isLegacy && <input type="button" value="Submit QR Code" onClick={this.openImageDialog} />}

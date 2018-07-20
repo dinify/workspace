@@ -6,10 +6,12 @@ import { withStateHandlers } from 'recompose';
 
 import Edit from 'icons/Edit';
 import Done from 'icons/Done';
+import Delete from 'icons/Delete';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
+import SwipableItem from 'web/components/SwipableItem';
 import AppBar from 'web/components/AppBar';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Typography from 'web/components/Typography';
@@ -48,6 +50,16 @@ const Cart = ({
   return (
     <div style={{paddingBottom: 64}}>
       {!iosInstalled && <AppBar position="static"/>}
+      {/* cartItemsList.map(item =>
+        <div key={item.id} style={{paddingTop: 16}}>
+          <SwipableItem
+            actionColor="#c13939"
+            actionIcon={<Delete/>}
+            action={() => {}}>
+            <CartItem padding rmFromCart={rmFromCart} editing={editing && false} item={item} />
+          </SwipableItem>
+        </div>
+      ) */}
       <ResponsiveContainer>
         <div style={{display: 'flex', alignItems: 'center', paddingTop: 16}}>
           <div style={{flex: 1}}>

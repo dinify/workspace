@@ -12,6 +12,7 @@ import Search from 'icons/Search';
 import ChevronLeft from 'icons/ChevronLeft';
 import Menu from 'icons/Menu';
 import ShoppingCart from 'icons/ShoppingCart';
+import Receipt from 'icons/Receipt';
 
 
 import Badge from '@material-ui/core/Badge';
@@ -154,6 +155,12 @@ const AppBar = ({
           <Badge badgeContent={cartItemsList.length} color="primary">
             <ShoppingCart />
           </Badge>
+        </IconButton>
+        <IconButton
+          color={color}
+          onClick={() => {router.history.push('/bill')}}
+          style={{marginRight: 16}}>
+          <Receipt />
         </IconButton>
         <Account color={color} classes={classes} anchor={anchor} />
       </Toolbar>

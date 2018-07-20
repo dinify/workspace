@@ -25,7 +25,7 @@ const styles = theme => ({
       WebkitOverflowScrolling: 'touch',
       scrollSnapAlign: 'start',
     },
-  },
+  }
 });
 
 let touching;
@@ -142,7 +142,7 @@ class SwipableItem extends React.Component {
             </div>
           }
         </Motion>
-        <Motion defaultStyle={{x: 0}} style={{x: spring(removed ? 1 : 0, {stiffness: 410, damping: 60})}}>
+        <Motion defaultStyle={{x: 0}} style={{x: spring(removed ? 1.5 : (actionActive ? 0.3 : 0), {stiffness: 410, damping: 60})}}>
           {value =>
             <div
               className={classes.scrollContainer}
@@ -153,7 +153,7 @@ class SwipableItem extends React.Component {
                 display: 'flex',
                 transform: `translateX(-${value.x * 100}%)`
               }}>
-              {children}
+                {children}
               <div style={{minWidth: 1}}/>
             </div>
           }
