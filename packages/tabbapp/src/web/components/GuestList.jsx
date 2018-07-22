@@ -4,7 +4,9 @@ import Person from 'icons/Person';
 import Typography from 'web/components/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import { Motion, spring } from 'react-motion';
 import { Link } from 'react-router-dom';
+import CheckCircle from 'icons/CheckCircle';
 import * as FN from 'lib/FN';
 
 const styles = theme => ({
@@ -29,54 +31,91 @@ const styles = theme => ({
   }
 });
 
-const GuestList = ({
-  classes,
-  seats,
-}) => {
+class GuestList extends React.Component {
+  state = {
+    selectedGuests: []
+  }
 
-  // TODO: fetch user base on seat.user_id
-  const user = {
-    name: "John Doe",
-    image: null
+  selectGuest = (id) => {
+    const selectedGuests = this.state.selectedGuests;
+    selectedGuests[id] = !selectedGuests[id];
+    this.setState({selectedGuests});
+  }
+
+  render() {
+    const {
+      classes,
+      selecting,
+      seats,
+    } = this.props;
+    const { selectedGuests } = this.state;
+
+    // TODO: fetch user base on seat.user_id
+    const user = {
+      name: "John Doe",
+      image: null
+    };
+    const rippleRadius = 40;
+
+    return (
+      <div className={classes.scroller}>
+        {seats.map((seat, i, arr) => {
+          const selected = selectedGuests[seat.id] && selecting;
+          return <div key={seat.id} style={{
+            borderRadius: 4,
+            display: 'inline-block',
+            paddingLeft: 16,
+            marginRight: arr.length - 1 === i ? 16 : 0
+          }}>
+            <ButtonBase
+              onClick={() => this.selectGuest(seat.id)}
+              style={{borderRadius: 4, padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start'}}>
+              {user.image && <Avatar alt={user.name} src={user.image} />}
+              {!user.image &&
+                <Avatar className={classes.avatar}>
+                  <Person />
+                </Avatar>
+              }
+              <Motion
+                defaultStyle={{x: 0}}
+                style={{x: spring(selected ? 1 : 0, { stiffness: 260, damping: 24 })}}>
+                {style =>
+                  <div style={{
+                    position: 'absolute',
+                    backgroundColor: '#c13939',
+                    borderRadius: rippleRadius / 2,
+                    minHeight: rippleRadius,
+                    minWidth: rippleRadius,
+                    opacity: Math.min(1, style.x * 2),
+                    transform: `scale(${Math.max(style.x, 1/rippleRadius)}, ${Math.max(style.x, 1/rippleRadius)})`,
+                  }}/>
+                }
+              </Motion>
+              <Motion
+                defaultStyle={{x: 0}}
+                style={{x: spring(selected ? 1 : 0, { stiffness: 480, damping: selected ? 15 : 24 })}}>
+                {style =>
+                  <div style={{
+                    position: 'absolute',
+                    color: '#fff',
+                    top: 16,
+                    opacity: Math.min(1, style.x),
+                    transform: `scale(${style.x}, ${style.x})`,
+                  }}>
+                    <CheckCircle />
+                  </div>
+                }
+              </Motion>
+              <Typography variant="caption" color={seat.selected ? 'default' : 'textSecondary'} style={{paddingTop: 8}}>
+                {seat.user_id.substring(0, 8)}...
+              </Typography>
+            </ButtonBase>
+          </div>
+        }
+        )}
+      </div>
+    );
   };
-  const names = [
-    'John Doe',
-    'Glen Combs',
-    'Nick Miles',
-    'Steven Best',
-    'Cecil Conley',
-    'Tracy Lamb',
-    'Arnold Snyder',
-    'Cody Buckley',
-    'Ronald Johnston',
-    'Joseph Carter',
-    'Roberto Yates',
-  ];
-
-  return (
-    <div className={classes.scroller}>
-      {seats.map((seat, i, arr) =>
-        <div key={seat.id} style={{
-          borderRadius: 4,
-          display: 'inline-block',
-          paddingLeft: 16,
-          marginRight: arr.length - 1 === i ? 16 : 0
-        }}>
-          <ButtonBase style={{borderRadius: 4, padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-            {user.image && <Avatar alt={user.name} src={user.image} />}
-            {!user.image &&
-              <Avatar className={classes.avatar}>
-                <Person />
-              </Avatar>
-            }
-            <Typography variant="caption" color={seat.selected ? 'default' : 'textSecondary'} style={{paddingTop: 8}}>
-              {names[Math.floor(Math.random()*names.length)]}
-            </Typography>
-          </ButtonBase>
-        </div>
-      )}
-    </div>
-  );
-};
+}
 
 export default withStyles(styles)(GuestList);

@@ -31,10 +31,7 @@ const styles = theme => ({
   }
 });
 
-class BillItem extends React.Component {
-  state = {
-    rippleRadius: Math.sqrt(56**2 + 56**2)
-  }
+class BillItem extends React.PureComponent {
 
   render() {
     const {
@@ -43,9 +40,7 @@ class BillItem extends React.Component {
       index,
       selectBillItem,
     } = this.props;
-    const {
-      rippleRadius,
-    } = this.state;
+    const rippleRadius = Math.sqrt(56**2 + 56**2);
     const customizations = [];
 
     const billItem = this.props.item;

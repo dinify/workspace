@@ -92,7 +92,7 @@ export function Order() {
 }
 
 export function GetBill() {
-  return Get({ path: 'bill' })
+  return Get({ path: 'bill?with=addons,choices,excludes,menu_item.images' })
 }
 
 export function GetSeats() {
