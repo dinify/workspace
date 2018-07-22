@@ -37,6 +37,7 @@ class GuestList extends React.Component {
   }
 
   selectGuest = (id) => {
+    if (!this.props.selecting) return;
     const selectedGuests = this.state.selectedGuests;
     selectedGuests[id] = !selectedGuests[id];
     this.setState({selectedGuests});
