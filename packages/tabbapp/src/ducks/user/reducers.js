@@ -23,6 +23,10 @@ export default function reducer(state = initialState, action) {
       }
       return state;
     }
+    case types.FETCH_USER_DONE: {
+      const payload = action.payload.res;
+      return R.assocPath(['all', payload.id], payload)(state);
+    }
     case authTypes.LOGOUT_DONE: {
       if (state.loggedUserId) {
         let newState = state;

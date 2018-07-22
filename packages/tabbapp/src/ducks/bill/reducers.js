@@ -4,7 +4,6 @@ import types from './types';
 
 const initialState = {
   bill: {},
-  stage: 'PAYING', // or SELECTING
   gratitude: 10
 };
 

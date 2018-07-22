@@ -1,6 +1,7 @@
 // @flow
 import { Observable } from 'rxjs';
 import API from 'api';
+import R from 'ramda';
 
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 const camel = str => capitalize(str.toLowerCase());
@@ -63,6 +64,30 @@ const fetchEpic = (action$: Observable) =>
         );
     });
 
+const fetchAllEpic = (action$: Observable, { getState }: EpicDependencies) =>
+  action$
+  .filter(action => filterAction(action.type, 'FETCHALL', 'INIT'))
+  .mergeMap(({ payload, type }) => {
+    const { subject, path } = getSubjectAndPath(type, 'FETCHALL', 'INIT');
+
+    let ids = payload.ids
+
+    if (payload.cache) {
+      const storeKey = subject.toLowerCase()
+      const all = getState()[storeKey].all
+      ids = R.filter((id) => !all[id], ids)
+    }
+
+    return ids.map((id) => ({
+      type: `${path}FETCH_${subject}_INIT`,
+      payload: {
+        id
+      }
+    })).concat({
+      type: `${path}FETCHALL_${subject}_DONE`
+    })
+  })
+
 const updateEpic = (action$: Observable) =>
   action$
     .filter(action => filterAction(action.type, 'UPDATE', 'INIT'))
@@ -109,4 +134,10 @@ const removeEpic = (action$: Observable) =>
         );
     });
 
-export const epics = [createEpic, fetchEpic, updateEpic, removeEpic];
+export const epics = [
+  createEpic,
+  fetchEpic,
+  fetchAllEpic,
+  updateEpic,
+  removeEpic
+];

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Person from 'icons/Person';
 import Typography from 'web/components/Typography';
@@ -48,6 +49,7 @@ class GuestList extends React.Component {
       classes,
       selecting,
       seats,
+      users
     } = this.props;
     const { selectedGuests } = this.state;
 
@@ -108,7 +110,7 @@ class GuestList extends React.Component {
                 }
               </Motion>
               <Typography variant="caption" color={seat.selected ? 'default' : 'textSecondary'} style={{paddingTop: 8}}>
-                {seat.user_id.substring(0, 8)}...
+                {users[seat.user_id] ? users[seat.user_id].name : ''}
               </Typography>
             </ButtonBase>
           </div>
@@ -118,5 +120,11 @@ class GuestList extends React.Component {
     );
   };
 }
+
+GuestList = connect(
+  state => ({
+    users: state.user.all
+  })
+)(GuestList)
 
 export default withStyles(styles)(GuestList);
