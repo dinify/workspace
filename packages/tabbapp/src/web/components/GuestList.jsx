@@ -15,7 +15,6 @@ const styles = theme => ({
     overflowX: 'auto',
     overflowY: 'hidden',
     width: '100%',
-    paddingBottom: 32,
     WebkitScrollSnapType: 'mandatory',
     scrollSnapType: 'x mandatory',
     WebkitScrollSnapPointsX: 'repeat(100%)',
@@ -34,7 +33,12 @@ const styles = theme => ({
 
 class GuestList extends React.Component {
   state = {
-    selectedGuests: []
+    selectedGuests: [],
+    active: 0
+  }
+
+  setActive(index) {
+    this.setState({active: index});
   }
 
   selectGuest = (id) => {
@@ -51,19 +55,15 @@ class GuestList extends React.Component {
       seats,
       users
     } = this.props;
-    const { selectedGuests } = this.state;
+    const { selectedGuests, active } = this.state;
 
-    // TODO: fetch user base on seat.user_id
-    const user = {
-      name: "John Doe",
-      image: null
-    };
     const rippleRadius = 40;
 
     return (
       <div className={classes.scroller}>
         {seats.map((seat, i, arr) => {
           const selected = selectedGuests[seat.id] && selecting;
+          const user = users[seat.user_id];
           return <div key={seat.id} style={{
             borderRadius: 4,
             display: 'inline-block',
@@ -71,7 +71,7 @@ class GuestList extends React.Component {
             marginRight: arr.length - 1 === i ? 16 : 0
           }}>
             <ButtonBase
-              onClick={() => this.selectGuest(seat.id)}
+              onClick={selecting ? () => this.selectGuest(seat.id) : () => this.setActive(i)}
               style={{borderRadius: 4, padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start'}}>
               {user.image && <Avatar alt={user.name} src={user.image} />}
               {!user.image &&
@@ -109,9 +109,19 @@ class GuestList extends React.Component {
                   </div>
                 }
               </Motion>
-              <Typography variant="caption" color={seat.selected ? 'default' : 'textSecondary'} style={{paddingTop: 8}}>
-                {users[seat.user_id] ? users[seat.user_id].name : ''}
-              </Typography>
+              <Motion
+                defaultStyle={{x: 0.86}}
+                style={{x: spring(active === i ? 1 : 0.86, { stiffness: 480, damping: selected ? 15 : 24 })}}>
+                {style =>
+                  <Typography style={{
+                    paddingTop: 8,
+                    transform: `scale(${style.x}, ${style.x})`,
+                  }} variant="body1" color={active === i ? 'default' : 'textSecondary'}>
+                    {user ? user.name : ''}
+                  </Typography>
+                }
+              </Motion>
+
             </ButtonBase>
           </div>
         }

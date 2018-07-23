@@ -24,7 +24,24 @@ import { checkSelecting } from 'ducks/bill/selectors';
 import * as FN from 'lib/FN';
 
 const styles = theme => ({
-
+  scroller: {
+    overflowX: 'auto',
+    overflowY: 'hidden',
+    width: '100%',
+    WebkitScrollSnapType: 'mandatory',
+    scrollSnapType: 'x mandatory',
+    WebkitScrollSnapPointsX: 'repeat(100%)',
+    scrollSnapPointsX: 'repeat(100%)',
+    WebkitOverflowScrolling: 'touch',
+    whiteSpace: 'nowrap',
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    },
+    '& > div': {
+      WebkitOverflowScrolling: 'touch',
+      scrollSnapAlign: 'start',
+    }
+  },
 });
 
 class Bill extends React.Component {
@@ -72,11 +89,20 @@ class Bill extends React.Component {
           </div>
         </ResponsiveContainer>
         <GuestList seats={seats} selecting={selecting}/>
-        <ResponsiveContainer>
-          {billItems.map((item, i) =>
-            <BillItem key={item.order_item.id} item={item} index={i} />
+        <div className={classes.scroller}>
+          {seats.map(seat =>
+            <div style={{
+              display: 'inline-block',
+              width: '100%'
+            }} key={seat.id}>
+              <ResponsiveContainer>
+                {billItems.map((item, i) =>
+                  <BillItem key={item.order_item.id} item={item} index={i} />
+                )}
+              </ResponsiveContainer>
+            </div>
           )}
-        </ResponsiveContainer>
+        </div>
         <Divider style={{marginTop: 16, marginBottom: 16}}/>
         <Motion
           defaultStyle={{x: 1}}
@@ -121,41 +147,41 @@ class Bill extends React.Component {
           }
         </Motion>
         <ClickAwayListener onClickAway={() => this.togglePayMenu(false)}>
-        <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginTop: 16, marginBottom: 16,}}>
-          <StaggeredMotion
-            defaultStyles={[{x: 0.1}, {x: 0.1}, {x: 0.1}]}
-            styles={prevStyles => prevStyles.map((_, i) => {
-              return i === 0
-                ? {x: spring(payMenuOpen ? 1 : 0.1, {stiffness: 240, damping: 14})}
-                : {x: spring(prevStyles[i - 1].x, {stiffness: 240, damping: 22})}
-            })}>
-            {styles =>
-              <div style={{position: 'absolute'}}>
-                {styles.map((style, i) =>
-                  <div key={i} style={{
-                    position: 'absolute',
-                    left: -20,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    transform: `translate(${(i - 1) * style.x * 128}px, -${i === 1 ? style.x * 72 : style.x * 24}px) scale(${style.x}, ${style.x})`
-                  }}>
-                    <Button color="default" variant="fab" aria-label="Pay" mini>
-                      {i === 0 ? <Wallet /> : (i === 1 ? <CreditCard/> : <MobileScreenShare />)}
-                    </Button>
-                    <Typography style={{marginTop: 8}} variant="caption">
-                      {i === 0 ? 'Cash' : (i === 1 ? 'Card' : 'Online')}
-                    </Typography>
-                  </div>
-                )}
-              </div>
-            }
-          </StaggeredMotion>
-          <Button onClick={() => this.togglePayMenu()} color="primary" variant="extendedFab" aria-label="Pay">
-            <CreditCard style={{marginRight: 16}} className={classes.extendedIcon} />
-            {selecting ? 'Split / transfer' : 'Pay my bill'}
-          </Button>
-        </div>
+          <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginTop: 16, marginBottom: 16,}}>
+            <StaggeredMotion
+              defaultStyles={[{x: 0.1}, {x: 0.1}, {x: 0.1}]}
+              styles={prevStyles => prevStyles.map((_, i) => {
+                return i === 0
+                  ? {x: spring(payMenuOpen ? 1 : 0.1, {stiffness: 240, damping: 14})}
+                  : {x: spring(prevStyles[i - 1].x, {stiffness: 240, damping: 22})}
+              })}>
+              {styles =>
+                <div style={{position: 'absolute'}}>
+                  {styles.map((style, i) =>
+                    <div key={i} style={{
+                      position: 'absolute',
+                      left: -20,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      transform: `translate(${(i - 1) * style.x * 128}px, -${(i === 1 ? style.x * 72 : style.x * 24) + 16}px) scale(${style.x}, ${style.x})`
+                    }}>
+                      <Button color="default" variant="fab" aria-label="Pay" mini>
+                        {i === 0 ? <Wallet /> : (i === 1 ? <CreditCard/> : <MobileScreenShare />)}
+                      </Button>
+                      <Typography style={{marginTop: 8}} variant="caption">
+                        {i === 0 ? 'Cash' : (i === 1 ? 'Card' : 'Online')}
+                      </Typography>
+                    </div>
+                  )}
+                </div>
+              }
+            </StaggeredMotion>
+            <Button onClick={() => this.togglePayMenu()} color="primary" variant="extendedFab" aria-label="Pay">
+              <CreditCard style={{marginRight: 16}} className={classes.extendedIcon} />
+              {selecting ? 'Split / transfer' : 'Pay my bill'}
+            </Button>
+          </div>
         </ClickAwayListener>
       </div>
     )
