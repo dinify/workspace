@@ -96,7 +96,7 @@ export function GetBill() {
 }
 
 export function GetSeats() {
-  return Get({ path: 'seat/list'})
+  return Get({ path: 'seat/list?with=addons,choices,excludes,menu_item.images'})
 }
 
 export function SplitBill({ itemId, userIds }) {

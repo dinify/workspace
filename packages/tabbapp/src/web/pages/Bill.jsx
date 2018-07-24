@@ -8,6 +8,7 @@ import AppBar from 'web/components/AppBar';
 import BillItem from 'web/components/BillItem';
 import GuestList from 'web/components/GuestList';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
+import ScrollLink from 'web/components/ScrollLink';
 import Typography from 'web/components/Typography';
 import CreditCard from 'icons/CreditCard';
 import Wallet from 'icons/Wallet';
@@ -19,6 +20,7 @@ import {
   splitBillInit,
   transferBillInit,
 } from 'ducks/bill/actions';
+import scrollIntoView from 'scroll-into-view-if-needed';
 import { StaggeredMotion, Motion, spring } from 'react-motion';
 import { fetchSeatsInit } from 'ducks/seat/actions';
 import { checkSelecting } from 'ducks/bill/selectors';
@@ -30,12 +32,12 @@ const styles = theme => ({
     overflowX: 'auto',
     overflowY: 'hidden',
     width: '100%',
+    whiteSpace: 'nowrap',
     WebkitScrollSnapType: 'mandatory',
     scrollSnapType: 'x mandatory',
     WebkitScrollSnapPointsX: 'repeat(100%)',
     scrollSnapPointsX: 'repeat(100%)',
     WebkitOverflowScrolling: 'touch',
-    whiteSpace: 'nowrap',
     '&::-webkit-scrollbar': {
       display: 'none'
     },
@@ -48,7 +50,8 @@ const styles = theme => ({
 
 class Bill extends React.Component {
   state = {
-    payMenuOpen: false
+    payMenuOpen: false,
+    activeGuest: 0
   }
 
   componentWillMount() {
@@ -60,13 +63,52 @@ class Bill extends React.Component {
     fetchSeats();
   }
 
+  setActiveGuest = (i) => {
+    this.setState({activeGuest: i})
+    const node = document.getElementById(this.props.seats[i].id);
+    scrollIntoView(node, {
+      behavior: 'smooth',
+      scrollMode: 'always',
+      inline: 'center',
+    });
+  }
+
+  handleScroll = e => {
+    const ratio = e.target.scrollLeft / e.target.scrollWidth;
+    const count = this.props.seats ? this.props.seats.length : 0;
+    if (count > 1) {
+      const relWidth = 1 / count;
+      const proximity = relWidth / 20;
+      const last = count - 1;
+      if (ratio >= 0 && ratio < 2 * proximity) {
+        if (this.state.activeGuest !== 0) this.setState({ activeGuest: 0 });
+      } else if (
+        ratio > last * relWidth - proximity * 2 &&
+        ratio <= last * relWidth
+      ) {
+        if (this.state.activeGuest !== last)
+          this.setState({ activeGuest: last });
+      } else {
+        for (let i = 1; i < last; i += 1) {
+          if (
+            ratio > i * relWidth - proximity &&
+            ratio < i * relWidth + proximity
+          ) {
+            if (this.state.activeGuest !== i)
+              this.setState({ activeGuest: i });
+          }
+        }
+      }
+    }
+  };
+
   togglePayMenu = (value = null) => {
     this.setState({payMenuOpen: value !== null ? value : !this.state.payMenuOpen})
   }
 
   render() {
     const { classes, bill, seats = [], selecting, setGratitude, gratitude, splitBill, transferBill } = this.props;
-    const { payMenuOpen } = this.state;
+    const { payMenuOpen, activeGuest } = this.state;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     const billItems = bill.items || [];
     let currency = 'KWD';
@@ -77,32 +119,48 @@ class Bill extends React.Component {
     }
     const gratitudeAmount = subtotalAmount * (gratitude / 100);
     const totalAmount = subtotalAmount + gratitudeAmount;
+    const activeBillItemCount = seats && seats[activeGuest] && seats[activeGuest].bill ? seats[activeGuest].bill.items.length : 0;
     return (
       <div>
         {!iosInstalled && <AppBar position="static"/>}
         <ResponsiveContainer>
           <div style={{display: 'flex', alignItems: 'center', paddingTop: 16, marginBottom: 16}}>
             <Typography style={{flex: 1}} variant="subheading">
-              My bill
+              {activeGuest === 0 ? 'My bill' : 'Other bill'}
             </Typography>
             <Typography variant="caption">
-              {`${billItems.length > 0 ? billItems.length : 'no'} item${billItems.length !== 1 ? 's' : ''}`}
+              {`${activeBillItemCount > 0 ? activeBillItemCount : 'no'} item${activeBillItemCount !== 1 ? 's' : ''}`}
             </Typography>
           </div>
         </ResponsiveContainer>
-        <GuestList seats={seats} selecting={selecting}/>
-        <div className={classes.scroller}>
-          {seats.map(seat =>
-            <div style={{
-              display: 'inline-block',
-              width: '100%'
-            }} key={seat.id}>
-              <ResponsiveContainer>
-                {billItems.map((item, i) =>
-                  <BillItem key={item.order_item.id} item={item} index={i} />
-                )}
-              </ResponsiveContainer>
-            </div>
+        <GuestList onGuestClick={this.setActiveGuest} active={activeGuest} seats={seats} selecting={selecting}/>
+
+        { /* <Motion
+          defaultStyle={{x: 0}}
+          style={{x: spring(activeGuest, { stiffness: 260, damping: 32 })}}>
+          {style =>
+            <ScrollLink scrollLeft={style.x * document.body.clientWidth} className={classes.scroller}>
+
+            </ScrollLink>
+          }
+        </Motion> */ }
+        <div className={classes.scroller} onScroll={this.handleScroll}>
+          {seats.map(seat => {
+            return <div id={seat.id} style={{
+                display: 'inline-block',
+                verticalAlign: 'top',
+                width: '100%'
+              }} key={seat.id}>
+                <ResponsiveContainer>
+                  {seat.bill && seat.bill.items.map((item, i) =>
+                    <BillItem key={item.order_item.id} item={item} index={i} />
+                  )}
+                  {!seat.bill && <Typography style={{padding: 32, width: '100%', textAlign: 'center'}} variant="caption">
+                    This user does not have an outstanding bill.
+                  </Typography>}
+                </ResponsiveContainer>
+              </div>
+            }
           )}
         </div>
         <Divider style={{marginTop: 16, marginBottom: 16}}/>

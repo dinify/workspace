@@ -33,12 +33,7 @@ const styles = theme => ({
 
 class GuestList extends React.Component {
   state = {
-    selectedGuests: [],
-    active: 0
-  }
-
-  setActive(index) {
-    this.setState({active: index});
+    selectedGuests: []
   }
 
   selectGuest = (id) => {
@@ -53,9 +48,11 @@ class GuestList extends React.Component {
       classes,
       selecting,
       seats,
+      active,
+      onGuestClick = () => {},
       users
     } = this.props;
-    const { selectedGuests, active } = this.state;
+    const { selectedGuests } = this.state;
 
     const rippleRadius = 40;
 
@@ -71,7 +68,7 @@ class GuestList extends React.Component {
             marginRight: arr.length - 1 === i ? 16 : 0
           }}>
             <ButtonBase
-              onClick={selecting ? () => this.selectGuest(seat.id) : () => this.setActive(i)}
+              onClick={selecting ? () => this.selectGuest(seat.id) : () => onGuestClick(i)}
               style={{borderRadius: 4, padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start'}}>
               {user && user.image && <Avatar alt={user.name} src={user.image} />}
               {user && !user.image &&
