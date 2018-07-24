@@ -73,8 +73,8 @@ class GuestList extends React.Component {
             <ButtonBase
               onClick={selecting ? () => this.selectGuest(seat.id) : () => this.setActive(i)}
               style={{borderRadius: 4, padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start'}}>
-              {user.image && <Avatar alt={user.name} src={user.image} />}
-              {!user.image &&
+              {user && user.image && <Avatar alt={user.name} src={user.image} />}
+              {user && !user.image &&
                 <Avatar className={classes.avatar}>
                   <Person />
                 </Avatar>
