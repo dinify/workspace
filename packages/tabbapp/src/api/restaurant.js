@@ -98,3 +98,11 @@ export function GetBill() {
 export function GetSeats() {
   return Get({ path: 'seat/list'})
 }
+
+export function SplitBill({ itemId, userIds }) {
+  return Post({ path: `order/item/${itemId}/split` }, { with: userIds });
+}
+
+export function TransferBill({ itemId, userId }) {
+  return Post({ path: `order/item/${itemId}/split` }, { to: userId });
+}

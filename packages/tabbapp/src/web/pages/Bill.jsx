@@ -15,7 +15,9 @@ import MobileScreenShare from 'icons/MobileScreenShare';
 import Slider from '@material-ui/lab/Slider';
 import {
   fetchBillInit,
-  setGratitude as setGratitudeAction
+  setGratitude as setGratitudeAction,
+  splitBillInit,
+  transferBillInit,
 } from 'ducks/bill/actions';
 import { StaggeredMotion, Motion, spring } from 'react-motion';
 import { fetchSeatsInit } from 'ducks/seat/actions';
@@ -63,7 +65,7 @@ class Bill extends React.Component {
   }
 
   render() {
-    const { classes, bill, seats = [], selecting, setGratitude, gratitude } = this.props;
+    const { classes, bill, seats = [], selecting, setGratitude, gratitude, splitBill, transferBill } = this.props;
     const { payMenuOpen } = this.state;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     const billItems = bill.items || [];
@@ -178,6 +180,10 @@ class Bill extends React.Component {
                 </div>
               }
             </StaggeredMotion>
+            {/*
+              splitBill({ itemId: , userIds: })
+              transferBill({ itemId: , userId: })
+            */}
             <Button onClick={() => this.togglePayMenu()} color="primary" variant="extendedFab" aria-label="Pay">
               <CreditCard style={{marginRight: 16}} className={classes.extendedIcon} />
               {selecting ? 'Split / transfer' : 'Pay my bill'}
@@ -199,7 +205,9 @@ Bill = connect(
   {
     fetchBill: fetchBillInit,
     fetchSeats: fetchSeatsInit,
-    setGratitude: setGratitudeAction
+    setGratitude: setGratitudeAction,
+    splitBill: splitBillInit,
+    transferBill: transferBillInit
   }
 )(Bill)
 
