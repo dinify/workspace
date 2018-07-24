@@ -113,7 +113,7 @@ class BillItem extends React.PureComponent {
                   minHeight: rippleRadius,
                   minWidth: rippleRadius,
                   opacity: Math.min(1, style.x * 2),
-                  transform: `scale(${Math.max(style.x, 1/rippleRadius)}, ${Math.max(style.x, 1/rippleRadius)})`,
+                  transform: `translate3d(0,0,0) scale(${Math.max(style.x, 1/rippleRadius)}, ${Math.max(style.x, 1/rippleRadius)})`,
                 }}/>
               }
             </Motion>
@@ -125,7 +125,7 @@ class BillItem extends React.PureComponent {
                   position: 'absolute',
                   color: '#fff',
                   opacity: Math.min(1, style.x),
-                  transform: `scale(${style.x}, ${style.x})`,
+                  transform: `translate3d(0,0,0) scale(${style.x}, ${style.x})`,
                 }}>
                   <CheckCircle />
                 </div>

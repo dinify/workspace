@@ -108,7 +108,7 @@ class Bill extends React.Component {
           defaultStyle={{x: 1}}
           style={{x: spring(payMenuOpen ? 0.12 : 1, { stiffness: 260, damping: 24 })}}>
           {style =>
-            <div style={{pointerEvents: payMenuOpen ? 'none' : null, opacity: style.x}}>
+            <div style={{pointerEvents: payMenuOpen ? 'none' : null, opacity: style.x, transform: 'translate3d(0,0,0)'}}>
               <ResponsiveContainer>
                 <div style={{display: 'flex'}}>
                   <Typography style={{flex: 1}}>
@@ -164,7 +164,8 @@ class Bill extends React.Component {
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
-                      transform: `translate(${(i - 1) * style.x * 128}px, -${(i === 1 ? style.x * 72 : style.x * 24) + 16}px) scale(${style.x}, ${style.x})`
+                      transform: `translate3d(${(i - 1) * style.x * 128}px, -${(i === 1 ? style.x * 72 : style.x * 24) + 16}px, 0) scale(${style.x}, ${style.x})`,
+                      WebkitTransform: `translate3d(${(i - 1) * style.x * 128}px, -${(i === 1 ? style.x * 72 : style.x * 24) + 16}px, 0) scale(${style.x}, ${style.x})`
                     }}>
                       <Button color="default" variant="fab" aria-label="Pay" mini>
                         {i === 0 ? <Wallet /> : (i === 1 ? <CreditCard/> : <MobileScreenShare />)}

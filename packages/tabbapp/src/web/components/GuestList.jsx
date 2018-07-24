@@ -90,7 +90,7 @@ class GuestList extends React.Component {
                     minHeight: rippleRadius,
                     minWidth: rippleRadius,
                     opacity: Math.min(1, style.x * 2),
-                    transform: `scale(${Math.max(style.x, 1/rippleRadius)}, ${Math.max(style.x, 1/rippleRadius)})`,
+                    transform: `translate3d(0,0,0) scale(${Math.max(style.x, 1/rippleRadius)}, ${Math.max(style.x, 1/rippleRadius)})`,
                   }}/>
                 }
               </Motion>
@@ -103,7 +103,7 @@ class GuestList extends React.Component {
                     color: '#fff',
                     top: 16,
                     opacity: Math.min(1, style.x),
-                    transform: `scale(${style.x}, ${style.x})`,
+                    transform: `translate3d(0,0,0) scale(${style.x}, ${style.x})`,
                   }}>
                     <CheckCircle />
                   </div>
@@ -115,7 +115,7 @@ class GuestList extends React.Component {
                 {style =>
                   <Typography style={{
                     paddingTop: 8,
-                    transform: `scale(${style.x}, ${style.x})`,
+                    transform: `translate3d(0,0,0) scale(${style.x}, ${style.x})`,
                   }} variant="body1" color={active === i ? 'default' : 'textSecondary'}>
                     {user ? user.name : ''}
                   </Typography>
