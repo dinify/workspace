@@ -4,12 +4,16 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grid from '@material-ui/core/Grid';
 import AppBar from 'web/components/AppBar';
 import BillItem from 'web/components/BillItem';
 import GuestList from 'web/components/GuestList';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import ScrollLink from 'web/components/ScrollLink';
 import Typography from 'web/components/Typography';
+import AlignBottom from 'icons/AlignBottom';
+import AlignTop from 'icons/AlignTop';
+import CallSplit from 'icons/CallSplit';
 import CreditCard from 'icons/CreditCard';
 import Wallet from 'icons/Wallet';
 import MobileScreenShare from 'icons/MobileScreenShare';
@@ -117,6 +121,10 @@ class Bill extends React.Component {
       currency = bill.subtotal.currency;
       subtotalAmount = Number(bill.subtotal.amount);
     }
+
+    // TODO compare seats[activeGuest].user_id with currently logged user id
+    const meSelected = false;
+
     const gratitudeAmount = subtotalAmount * (gratitude / 100);
     const totalAmount = subtotalAmount + gratitudeAmount;
     const activeBillItemCount = seats && seats[activeGuest] && seats[activeGuest].bill ? seats[activeGuest].bill.items.length : 0;
@@ -164,49 +172,52 @@ class Bill extends React.Component {
           )}
         </div>
         <Divider style={{marginTop: 16, marginBottom: 16}}/>
-        <Motion
-          defaultStyle={{x: 1}}
-          style={{x: spring(payMenuOpen ? 0.12 : 1, { stiffness: 260, damping: 24 })}}>
-          {style =>
-            <div style={{pointerEvents: payMenuOpen ? 'none' : null, opacity: style.x, transform: 'translate3d(0,0,0)'}}>
-              <ResponsiveContainer>
-                <div style={{display: 'flex'}}>
-                  <Typography style={{flex: 1}}>
-                    Sub total
-                  </Typography>
-                  <Typography>
-                    {FN.formatPrice({amount: subtotalAmount, currency})}
-                  </Typography>
-                </div>
-                <div style={{display: 'flex', marginTop: 8}}>
-                  <Typography style={{fontWeight: 700, marginRight: 8}}>
-                    {gratitude}%
-                  </Typography>
-                  <Typography style={{flex: 1}}>
-                    Gratitude
-                  </Typography>
-                  <Typography>
-                    {FN.formatPrice({amount: gratitudeAmount, currency})}
-                  </Typography>
-                </div>
-                <Slider
-                  style={{marginTop: 8, marginBottom: 8}}
-                  value={gratitude} min={0} max={50} step={1}
-                  onChange={(event, val) => setGratitude({ percentage: val })}
-                />
-                <div style={{display: 'flex'}}>
-                  <Typography style={{flex: 1}}>
-                    Total
-                  </Typography>
-                  <Typography>
-                    {FN.formatPrice({amount: totalAmount, currency})}
-                  </Typography>
-                </div>
-              </ResponsiveContainer>
-            </div>
-          }
-        </Motion>
-        <ClickAwayListener onClickAway={() => this.togglePayMenu(false)}>
+        {meSelected &&
+          <Motion
+            defaultStyle={{x: 1}}
+            style={{x: spring(payMenuOpen ? 0.12 : 1, { stiffness: 260, damping: 24 })}}>
+            {style =>
+              <div style={{pointerEvents: payMenuOpen ? 'none' : null, opacity: style.x, transform: 'translate3d(0,0,0)'}}>
+                <ResponsiveContainer>
+                  <div style={{display: 'flex'}}>
+                    <Typography style={{flex: 1}}>
+                      Sub total
+                    </Typography>
+                    <Typography>
+                      {FN.formatPrice({amount: subtotalAmount, currency})}
+                    </Typography>
+                  </div>
+                  <div style={{display: 'flex', marginTop: 8}}>
+                    <Typography style={{fontWeight: 700, marginRight: 8}}>
+                      {gratitude}%
+                    </Typography>
+                    <Typography style={{flex: 1}}>
+                      Gratitude
+                    </Typography>
+                    <Typography>
+                      {FN.formatPrice({amount: gratitudeAmount, currency})}
+                    </Typography>
+                  </div>
+                  <Slider
+                    style={{marginTop: 8, marginBottom: 8}}
+                    value={gratitude} min={0} max={50} step={1}
+                    onChange={(event, val) => setGratitude({ percentage: val })}
+                  />
+                  <div style={{display: 'flex'}}>
+                    <Typography style={{flex: 1}}>
+                      Total
+                    </Typography>
+                    <Typography>
+                      {FN.formatPrice({amount: totalAmount, currency})}
+                    </Typography>
+                  </div>
+                </ResponsiveContainer>
+              </div>
+            }
+          </Motion>
+        }
+        {meSelected &&
+          <ClickAwayListener onClickAway={() => this.togglePayMenu(false)}>
           <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginTop: 16, marginBottom: 16,}}>
             <StaggeredMotion
               defaultStyles={[{x: 0.1}, {x: 0.1}, {x: 0.1}]}
@@ -242,12 +253,40 @@ class Bill extends React.Component {
               splitBill({ itemId: , userIds: })
               transferBill({ itemId: , userId: })
             */}
-            <Button onClick={() => this.togglePayMenu()} color="primary" variant="extendedFab" aria-label="Pay">
-              <CreditCard style={{marginRight: 16}} className={classes.extendedIcon} />
+            <Button onClick={selecting ? () => {} : () => this.togglePayMenu()} color="primary" variant="extendedFab" aria-label="Pay">
+              {selecting && <CreditCard style={{marginRight: 16}} />}
+              {selecting && <CallSplit style={{marginRight: 16}} />}
               {selecting ? 'Split / transfer' : 'Pay my bill'}
             </Button>
           </div>
-        </ClickAwayListener>
+          </ClickAwayListener>
+        }
+        {!meSelected &&
+          <ResponsiveContainer>
+            <div style={{display: 'flex'}}>
+              <Typography style={{flex: 1}}>
+                Sub total
+              </Typography>
+              <Typography>
+                {FN.formatPrice({amount: subtotalAmount, currency})}
+              </Typography>
+            </div>
+            <Grid style={{width: '100%', justifyContent: 'center'}} container spacing={16}>
+              <Grid item>
+                <Button onClick={() => {}} color="primary" variant="extendedFab" aria-label="Pay">
+                  <AlignBottom style={{marginRight: 16}} className={classes.extendedIcon} />
+                  Transfer in
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button onClick={() => {}} color="primary" variant="extendedFab" aria-label="Pay">
+                  <AlignTop style={{marginRight: 16}} className={classes.extendedIcon} />
+                  Transfer out
+                </Button>
+              </Grid>
+            </Grid>
+          </ResponsiveContainer>
+        }
       </div>
     )
   }
