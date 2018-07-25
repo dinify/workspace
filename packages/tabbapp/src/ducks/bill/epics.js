@@ -8,7 +8,9 @@ import {
   splitBillDone,
   splitBillFail,
   transferBillDone,
-  transferBillFail
+  transferBillFail,
+  initTransactionDone,
+  initTransactionFail
 } from './actions';
 
 const splitEpic = (action$: Observable) =>
@@ -33,7 +35,19 @@ const transferEpic = (action$: Observable) =>
         .catch(error => Observable.of(transferBillFail(error)))
     });
 
+const initTransactionEpic = (action$: Observable) =>
+  action$
+    .ofType(types.INIT_TRANSACTION_INIT)
+    .switchMap(({ payload: { type, gratuity } }) => {
+      return Observable.fromPromise(API.InitiateTransaction({ type, gratuity }))
+        .mergeMap(res => {
+          return Observable.of(initTransactionDone(res));
+        })
+        .catch(error => Observable.of(initTransactionFail(error)))
+    });
+
 export default [
   splitEpic,
-  transferEpic
+  transferEpic,
+  initTransactionEpic
 ];

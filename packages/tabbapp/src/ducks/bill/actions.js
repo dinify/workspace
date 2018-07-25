@@ -48,3 +48,18 @@ export const transferBillFail = (e) => ({
   type: types.TRANSFER_BILL_FAIL,
   payload: e
 })
+
+export const initTransactionInit = ({ type, gratuity }) => ({
+  type: types.INIT_TRANSACTION_INIT,
+  payload: { type, gratuity }
+})
+
+export const initTransactionDone = (res) => ({
+  type: types.INIT_TRANSACTION_DONE,
+  payload: res
+})
+
+export const initTransactionFail = (e) => ({
+  type: types.INIT_TRANSACTION_FAIL,
+  payload: e
+})

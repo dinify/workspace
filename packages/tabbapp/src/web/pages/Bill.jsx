@@ -23,6 +23,7 @@ import {
   setGratitude as setGratitudeAction,
   splitBillInit,
   transferBillInit,
+  initTransactionInit
 } from 'ducks/bill/actions';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { StaggeredMotion, Motion, spring } from 'react-motion';
@@ -111,7 +112,12 @@ class Bill extends React.Component {
   }
 
   render() {
-    const { classes, bill, seats = [], selecting, setGratitude, gratitude, splitBill, transferBill } = this.props;
+    const {
+      classes, bill, seats = [],
+      selecting, setGratitude, gratitude,
+      splitBill, transferBill, loggedUserId,
+      initTransaction
+    } = this.props;
     const { payMenuOpen, activeGuest } = this.state;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     const billItems = bill.items || [];
@@ -123,7 +129,7 @@ class Bill extends React.Component {
     }
 
     // TODO compare seats[activeGuest].user_id with currently logged user id
-    const meSelected = false;
+    const meSelected = seats && seats[activeGuest] && seats[activeGuest].user_id === loggedUserId;
 
     const gratitudeAmount = subtotalAmount * (gratitude / 100);
     const totalAmount = subtotalAmount + gratitudeAmount;
@@ -238,7 +244,13 @@ class Bill extends React.Component {
                       transform: `translate3d(${(i - 1) * style.x * 128}px, -${(i === 1 ? style.x * 72 : style.x * 24) + 16}px, 0) scale(${style.x}, ${style.x})`,
                       WebkitTransform: `translate3d(${(i - 1) * style.x * 128}px, -${(i === 1 ? style.x * 72 : style.x * 24) + 16}px, 0) scale(${style.x}, ${style.x})`
                     }}>
-                      <Button color="default" variant="fab" aria-label="Pay" mini>
+                      <Button
+                        color="default"
+                        variant="fab"
+                        aria-label="Pay"
+                        mini
+                        onClick={() => initTransaction({gratuity: gratitude, type: 'CASH'})}
+                      >
                         {i === 0 ? <Wallet /> : (i === 1 ? <CreditCard/> : <MobileScreenShare />)}
                       </Button>
                       <Typography style={{marginTop: 8}} variant="caption">
@@ -297,14 +309,16 @@ Bill = connect(
     bill: state.bill.bill,
     seats: state.seat.seats,
     selecting: checkSelecting(state),
-    gratitude: state.bill.gratitude
+    gratitude: state.bill.gratitude,
+    loggedUserId: state.user.loggedUserId,
   }),
   {
     fetchBill: fetchBillInit,
     fetchSeats: fetchSeatsInit,
     setGratitude: setGratitudeAction,
     splitBill: splitBillInit,
-    transferBill: transferBillInit
+    transferBill: transferBillInit,
+    initTransaction: initTransactionInit
   }
 )(Bill)
 

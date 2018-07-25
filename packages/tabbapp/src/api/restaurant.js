@@ -106,3 +106,7 @@ export function SplitBill({ itemId, userIds }) {
 export function TransferBill({ itemId, userId }) {
   return Post({ path: `order/item/${itemId}/split` }, { to: userId });
 }
+
+export function InitiateTransaction({ type, gratuity }) {
+  return Post({ path: `transaction/initiate` }, { type, gratuity });
+}
