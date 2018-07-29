@@ -57,7 +57,7 @@ const getLoggedEpic = (action$: Observable) =>
   );
 
 export const signupDoneAction = (payload: object) => {
-  console.log(payload);
+  //console.log(payload);
   //window.location.replace('/')
   return { type: 'LOGIN_INIT', payload: { ...payload, crRest: true } };
 };
@@ -80,7 +80,7 @@ const registrationEpic = (action$: Observable, { getState }) =>
           return Observable.fromPromise(
             API.RegisterUser({ name, phone, email, password }),
           )
-            .map(() => signupDoneAction({ email, password, name, subdomain }))
+            .map(() => signupDoneAction({ name, phone, email, password, restaurantName, subdomain }))
             .catch(error => Observable.of(signupFailAction(error)));
         } else {
           // create restaurant
@@ -104,14 +104,14 @@ export const loginDoneAction = (res: object) => {
 const loginEpic = (action$: Observable, { getState }) =>
   action$
     .ofType('LOGIN_INIT')
-    .switchMap(({ payload: { email, password, crRest, name, subdomain } }) => {
+    .switchMap(({ payload: { email, password, crRest, restaurantName, subdomain } }) => {
       return Observable.fromPromise(API.LoginUser({ email, password }))
         .map(res => {
           setCookie('access_token', res.token, 30);
           if (crRest) {
             return {
               type: 'REGISTER_RESTAURANT_INIT',
-              payload: { name, subdomain, email, password },
+              payload: { restaurantName, subdomain, email, password },
             };
           } else {
             return loginDoneAction(res);
@@ -128,8 +128,8 @@ export const createRestaurantDoneAction = ({ email, password }) => {
 const registerRestaurantEpic = (action$: Observable, { getState }) =>
   action$
     .ofType('REGISTER_RESTAURANT_INIT')
-    .switchMap(({ payload: { name, subdomain, email, password } }) => {
-      return Observable.fromPromise(API.CreateRestaurant({ name, subdomain }))
+    .switchMap(({ payload: { restaurantName, subdomain, email, password } }) => {
+      return Observable.fromPromise(API.CreateRestaurant({ restaurantName, subdomain }))
         .map(() => createRestaurantDoneAction({ email, password }))
         .catch(error => Observable.of(loginFailAction(error)));
     });

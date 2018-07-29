@@ -9,6 +9,7 @@ import Options from './Options';
 
 const SolidContainer = styled.div`
   min-width: 800px;
+  padding-bottom: 50px;
 `;
 const HeadLine = styled.div`
   height: 50px;
@@ -43,7 +44,7 @@ const Menucontrol = () => {
               <H>Ingredients</H>
             </Grid>
             <Grid item xs={4}>
-              <H>Options</H>
+              <H>Option groups</H>
             </Grid>
           </Grid>
         </HeadLine>

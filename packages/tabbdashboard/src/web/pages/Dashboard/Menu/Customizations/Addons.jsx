@@ -12,23 +12,51 @@ import AddCircle from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
-import InputAndButton from 'web/components/MaterialInputs/InputAndButton';
+import Text from 'web/components/MaterialInputs/Text';
 
 import { createAddonInit, removeAddonInit } from 'ducks/addon/actions';
 
 let AddAddonForm = ({ handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-      <Field
-        name="name"
-        component={InputAndButton}
-        buttonIcon={<AddCircle />}
-        componentProps={{
-          placeholder: 'Enter addon',
-          fullWidth: true,
-        }}
-      />
+      <Grid container spacing={8} alignItems="flex-start" justify="center">
+        <Grid item xs={8}>
+          <Field
+            name="name"
+            component={Text}
+            componentProps={{
+              label: 'Name of new addon',
+              fullWidth: true,
+              InputLabelProps: {
+                shrink: true,
+              },
+              placeholder: 'e.g. Extra cheese'
+            }}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <Field
+            name="price"
+            component={Text}
+            componentProps={{
+              label: 'Price',
+              fullWidth: true,
+              type: 'number'
+            }}
+          />
+        </Grid>
+        <Grid item xs={1}>
+          <Tooltip placement="top" title="Add addon">
+            <IconButton type="submit" aria-label="Add addon">
+              <AddCircle />
+            </IconButton>
+          </Tooltip>
+        </Grid>
+      </Grid>
     </form>
   );
 };
@@ -59,10 +87,12 @@ const Addons = ({ createAddon, addons, removeAddon, styles }) => {
             </ListItem>
           </div>
         ))}
-        <ListItem>
-          <AddAddonForm onSubmit={createAddon} />
-        </ListItem>
       </List>
+      <Card square>
+        <CardContent>
+          <AddAddonForm onSubmit={createAddon} />
+        </CardContent>
+      </Card>
     </div>
   );
 };

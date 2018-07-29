@@ -17,8 +17,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import Tooltip from '@material-ui/core/Tooltip';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
-import InputAndButton from 'web/components/MaterialInputs/InputAndButton';
+import Text from 'web/components/MaterialInputs/Text';
 
 import {
   collapseOptionInit,
@@ -31,24 +34,40 @@ import {
 let AddChoiceForm = ({ handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-      <Field
-        name="name"
-        component={InputAndButton}
-        buttonIcon={<AddCircle />}
-        componentProps={{
-          placeholder: 'Add choice',
-          fullWidth: true,
-        }}
-      />
-      <Field
-        name="price"
-        component={InputAndButton}
-        buttonIcon={<AddCircle />}
-        componentProps={{
-          placeholder: 'Price',
-          fullWidth: true,
-        }}
-      />
+      <Grid container spacing={8} alignItems="flex-end" justify="center">
+        <Grid item xs={7}>
+          <Field
+            name="name"
+            component={Text}
+            componentProps={{
+              label: 'Name of choice',
+              fullWidth: true,
+              InputLabelProps: {
+                shrink: true,
+              },
+              placeholder: 'e.g. White bread'
+            }}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <Field
+            name="price"
+            component={Text}
+            componentProps={{
+              label: 'Price',
+              fullWidth: true,
+              type: 'number'
+            }}
+          />
+        </Grid>
+        <Grid item xs={2}>
+          <Tooltip placement="top" title="Add choice">
+            <IconButton type="submit" aria-label="Add choice">
+              <AddCircle />
+            </IconButton>
+          </Tooltip>
+        </Grid>
+      </Grid>
     </form>
   );
 };
@@ -59,15 +78,29 @@ AddChoiceForm = reduxForm({
 let AddOptionForm = ({ handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-      <Field
-        name="name"
-        component={InputAndButton}
-        buttonIcon={<AddCircle />}
-        componentProps={{
-          placeholder: 'Enter option',
-          fullWidth: true,
-        }}
-      />
+      <Grid container spacing={0} alignItems="flex-end" justify="center">
+        <Grid item xs={11}>
+          <Field
+            name="name"
+            component={Text}
+            componentProps={{
+              label: 'Name of new option group',
+              fullWidth: true,
+              InputLabelProps: {
+                shrink: true,
+              },
+              placeholder: 'e.g. Breads'
+            }}
+          />
+        </Grid>
+        <Grid item xs={1}>
+          <Tooltip placement="top" title="Add option group">
+            <IconButton type="submit" aria-label="Add option">
+              <AddCircle />
+            </IconButton>
+          </Tooltip>
+        </Grid>
+      </Grid>
     </form>
   );
 };
@@ -140,22 +173,28 @@ const Options = ({
                   </ListItem>
                 ))}
                 <ListItem>
-                  <ListItemText inset>
-                    <AddChoiceForm
-                      onSubmit={({ name, price }) =>
-                        createChoice({ name, price, optionId: option.id })
-                      }
-                    />
+                  <ListItemText>
+                    <Card square>
+                      <CardContent>
+                        <AddChoiceForm
+                          onSubmit={({ name, price }) =>
+                            createChoice({ name, price, optionId: option.id })
+                          }
+                        />
+                      </CardContent>
+                    </Card>
                   </ListItemText>
                 </ListItem>
               </List>
             </Collapse>
           </div>
         ))}
-        <ListItem>
-          <AddOptionForm onSubmit={createOption} />
-        </ListItem>
       </List>
+      <Card square>
+        <CardContent>
+          <AddOptionForm onSubmit={createOption} />
+        </CardContent>
+      </Card>
     </div>
   );
 };

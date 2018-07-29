@@ -38,7 +38,9 @@ const Main = ({ loggedRestaurant }) => {
       </Column>
 
       <Column>
-        <Address address={loggedRestaurant.address.business} />
+        <Address address={
+          loggedRestaurant.address ? loggedRestaurant.address.business : {}
+        } />
         <BusinessHours openHours={loggedRestaurant.open_hours} />
       </Column>
 

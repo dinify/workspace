@@ -32,14 +32,14 @@ export function LoginUser({ email, password }) {
     },
   );
 }
-export function CreateRestaurant({ name, subdomain }) {
+export function CreateRestaurant({ restaurantName, subdomain }) {
   return Post(
     {
       path: 'restaurant/create',
       v3: true,
     },
     {
-      name,
+      name: restaurantName,
       subdomain,
     },
   );
@@ -244,7 +244,13 @@ export function GetAddons() {
 }
 
 export function CreateAddon({ name, price }) {
-  return Post({ path: `menu/addon/create`, v3: true }, { name, price });
+  return Post({ path: `menu/addon/create`, v3: true }, {
+    name,
+    price: {
+      amount: price,
+      currency: 'KWD'
+    }
+  });
 }
 
 export function DeleteAddon({ id }) {

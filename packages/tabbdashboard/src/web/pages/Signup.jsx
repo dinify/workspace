@@ -109,14 +109,6 @@ const Signup = ({
           onSubmit={form => {
             doSignup(form);
           }}
-          defaultValues={{
-            name: 'John Doe',
-            phone: '9338293832',
-            email: 'test@testing.com',
-            password: 'Testtest1',
-            restaurantName: 'Test23',
-            subdomain: 'test23',
-          }}
           validate={({
             name,
             phone,

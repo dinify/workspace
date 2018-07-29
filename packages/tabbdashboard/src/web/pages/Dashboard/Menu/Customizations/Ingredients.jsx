@@ -12,10 +12,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Switch from '@material-ui/core/Switch';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
-import InputAndButton from 'web/components/MaterialInputs/InputAndButton';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
+
+import Text from 'web/components/MaterialInputs/Text';
 
 import {
   createIngredientInit,
@@ -30,16 +34,31 @@ let AddIngredientForm = ({ handleSubmit, progress, errorMessage }) => {
       <FormControl
         error={progress === 'ERROR'}
         aria-describedby="name-error-text"
+        fullWidth
       >
-        <Field
-          name="name"
-          component={InputAndButton}
-          buttonIcon={<AddCircle />}
-          componentProps={{
-            placeholder: 'Enter ingredient',
-            fullWidth: true,
-          }}
-        />
+        <Grid container spacing={0} alignItems="flex-end" justify="center">
+          <Grid item xs={11}>
+            <Field
+              name="name"
+              component={Text}
+              componentProps={{
+                label: 'Name of new ingredient',
+                fullWidth: true,
+                InputLabelProps: {
+                  shrink: true,
+                },
+                placeholder: 'e.g. Glass noodles'
+              }}
+            />
+          </Grid>
+          <Grid item xs={1}>
+            <Tooltip placement="top" title="Add ingredient">
+              <IconButton type="submit" aria-label="Add ingredient">
+                <AddCircle />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </Grid>
         {progress === 'ERROR' ? (
           <FormHelperText>{errorMessage}</FormHelperText>
         ) : (
@@ -98,14 +117,16 @@ const Ingredients = ({
             </ListItem>
           </div>
         ))}
-        <ListItem>
+      </List>
+      <Card square>
+        <CardContent>
           <AddIngredientForm
             onSubmit={createIngredient}
             progress={progressMap['CREATE_INGREDIENT']}
             errorMessage={errorsMap['CREATE_INGREDIENT']}
           />
-        </ListItem>
-      </List>
+        </CardContent>
+      </Card>
     </div>
   );
 };
