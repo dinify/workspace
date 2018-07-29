@@ -16,7 +16,13 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Add from '@material-ui/icons/Add';
+import AddCircle from '@material-ui/icons/AddCircle';
+import Grid from '@material-ui/core/Grid';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Text from 'web/components/MaterialInputs/Text';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 import IconButton from '@material-ui/core/IconButton';
 
@@ -108,19 +114,43 @@ const NewFoodButton = styled.button`
   cursor: pointer;
 `;
 
-let CreateItemForm = ({ handleSubmit }) => {
+let CreateItemForm = ({ handleSubmit, categoryName, progress, errorMessage }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <Field
-        name="name"
-        component="input"
-        type="text"
-        placeholder="Add a new dish"
-        className="ItemInput"
-      />
-      <NewFoodButton>
-        <Add />
-      </NewFoodButton>
+    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+      <FormControl
+        error={progress === 'ERROR'}
+        aria-describedby="name-error-text"
+        fullWidth
+      >
+        <Grid container spacing={0} alignItems="flex-end" justify="center">
+          <Grid item xs={10}>
+            <Field
+              name="name"
+              component={Text}
+              componentProps={{
+                label: `A dish of ${categoryName}`,
+                fullWidth: true,
+                InputLabelProps: {
+                  shrink: true,
+                },
+                placeholder: 'e.g. Fried chicken'
+              }}
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <Tooltip placement="top" title="Add dish">
+              <IconButton type="submit" aria-label="Add dish">
+                <AddCircle />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </Grid>
+        {progress === 'ERROR' ? (
+          <FormHelperText>{errorMessage}</FormHelperText>
+        ) : (
+          ''
+        )}
+      </FormControl>
     </form>
   );
 };
@@ -186,6 +216,7 @@ const SortableList = SortableContainer(({ items, deps }) => {
 });
 
 const ListOfDishes = ({
+  categoriesMap,
   selectedFoodId,
   selectedCategoryId,
   selectFood,
@@ -194,12 +225,15 @@ const ListOfDishes = ({
   createItem,
   deleteItem,
   reorderItems,
+  progressMap,
+  errorsMap,
 }) => {
   if (!selectedCategoryId) return <div />;
   const menuItemsList = R.filter(
     item => item.menu_category_id === selectedCategoryId,
     FN.MapToList(menuItemsMap),
   ).sort((a, b) => a.precedence - b.precedence);
+  const categoryName = categoriesMap[selectedCategoryId].name;
   return (
     <FoodList>
       <SortableList
@@ -217,17 +251,23 @@ const ListOfDishes = ({
           deleteItem,
         }}
       />
-      <NewFood>
-        <CreateItemForm
-          onSubmit={({ name }) => {
-            createItem({
-              name,
-              precedence: menuItemsList.length,
-              categoryId: selectedCategoryId,
-            });
-          }}
-        />
-      </NewFood>
+      <Card square>
+        <CardContent>
+          <CreateItemForm
+            progress={progressMap['CREATE_MENUITEM']}
+            errorMessage={errorsMap['CREATE_MENUITEM']}
+            categoryName={categoryName}
+            onSubmit={({ name }) => {
+              createItem({
+                name,
+                precedence: menuItemsList.length,
+                categoryId: selectedCategoryId,
+                form: 'menu/createItem'
+              });
+            }}
+          />
+        </CardContent>
+      </Card>
     </FoodList>
   );
 };
@@ -235,6 +275,9 @@ const ListOfDishes = ({
 export default connect(
   state => ({
     menuItemsMap: state.menuItem.all,
+    categoriesMap: state.menuCategory.all,
+    progressMap: state.ui.progressMap,
+    errorsMap: state.ui.errorsMap,
   }),
   {
     updateItem: updateMenuitemInitAction,

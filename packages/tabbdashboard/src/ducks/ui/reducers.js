@@ -5,6 +5,27 @@ const initialState = {
   errorsMap: {},
 };
 
+function findNested(obj, key, memo) {
+  let i;
+  let proto = Object.prototype;
+  let ts = proto.toString;
+  const hasOwn = proto.hasOwnProperty.bind(obj);
+
+  if ('[object Array]' !== ts.call(memo)) memo = [];
+
+  for (i in obj) {
+    if (hasOwn(i)) {
+      if (i === key) {
+        memo.push(obj[i]);
+      } else if ('[object Array]' === ts.call(obj[i]) || '[object Object]' === ts.call(obj[i])) {
+        findNested(obj[i], key, memo);
+      }
+    }
+  }
+
+  return memo;
+}
+
 export default function reducer(state = initialState, action) {
   if (action.type === 'persist/REHYDRATE') {
     return R.assoc('errorsMap', {})(R.assoc('progressMap', {})(state));
@@ -30,13 +51,9 @@ export default function reducer(state = initialState, action) {
     if (action.type.includes('_FAIL')) {
       stage = 'ERROR';
       key = key.replace('_FAIL', '');
-      if (action.payload.message) {
-        state = R.assocPath(['errorsMap', key], action.payload.message)(state);
-      }
-      if (action.payload instanceof Array && action.payload[0].message) {
-        state = R.assocPath(['errorsMap', key], action.payload[0].message)(
-          state,
-        );
+      const theMessage = findNested(action.payload, 'message');
+      if (theMessage) {
+        state = R.assocPath(['errorsMap', key], theMessage)(state);
       }
     }
     state = R.assocPath(['progressMap', key], stage)(state);

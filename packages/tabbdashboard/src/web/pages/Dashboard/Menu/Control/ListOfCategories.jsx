@@ -16,8 +16,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-import Add from '@material-ui/icons/Add';
-
+import AddCircle from '@material-ui/icons/AddCircle';
+import Grid from '@material-ui/core/Grid';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Text from 'web/components/MaterialInputs/Text';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import {
   updateMenucategoryInitAction,
   createMenucategoryInitAction,
@@ -30,43 +35,7 @@ const CategoriesList = styled.ul`
   list-style: none;
   margin: 0 10px;
 `;
-const NewFoodButton = styled.button`
-  position: absolute;
-  top: 0px;
-  right: 5px;
-  background: rgba(0, 0, 0, 0);
-  border: none;
-  color: white;
-  font-size: 20px;
-  padding: 10px;
-  cursor: pointer;
-`;
 
-const NewCategory = styled.li`
-  position: relative;
-  background: black;
-  color: white;
-  cursor: pointer;
-  padding: 10px 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  font-weight: 300;
-  background-color: ${p => (p.selected ? 'rgb(0, 20, 50)' : 'rgb(53, 75, 92)')};
-  font-size: 12px;
-  .CategoryInput {
-    background: transparent;
-    width: 100%;
-    padding: 5px;
-    color: white;
-    border: none;
-    outline: none;
-  }
-  &:hover {
-    i {
-      color: white;
-    }
-  }
-`;
 const ToggleContainer = styled.div`
   position: absolute;
   right: 0;
@@ -106,19 +75,43 @@ const CategoryItem = styled.div`
   }
 `;
 
-let CreateCategoryForm = ({ handleSubmit }) => {
+let CreateCategoryForm = ({ handleSubmit, progress, errorMessage }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <Field
-        name="name"
-        className="CategoryInput"
-        component="input"
-        type="text"
-        placeholder="Add a new category"
-      />
-      <NewFoodButton>
-        <Add />
-      </NewFoodButton>
+    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+      <FormControl
+        error={progress === 'ERROR'}
+        aria-describedby="name-error-text"
+        fullWidth
+      >
+        <Grid container spacing={0} alignItems="flex-end" justify="center">
+          <Grid item xs={10}>
+            <Field
+              name="name"
+              component={Text}
+              componentProps={{
+                label: 'Name of new category',
+                fullWidth: true,
+                InputLabelProps: {
+                  shrink: true,
+                },
+                placeholder: 'e.g. Appetizers'
+              }}
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <Tooltip placement="top" title="Add ingredient">
+              <IconButton type="submit" aria-label="Add ingredient">
+                <AddCircle />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </Grid>
+        {progress === 'ERROR' ? (
+          <FormHelperText>{errorMessage}</FormHelperText>
+        ) : (
+          ''
+        )}
+      </FormControl>
     </form>
   );
 };
@@ -197,6 +190,8 @@ const ListOfCategories = ({
   deleteCategory,
   selectCategory,
   reorderCategories,
+  progressMap,
+  errorsMap,
 }) => {
   const categoriesList = FN.MapToList(categoriesMap).sort(
     (a, b) => a.precedence - b.precedence,
@@ -219,13 +214,21 @@ const ListOfCategories = ({
         }}
       />
 
-      <NewCategory>
-        <CreateCategoryForm
-          onSubmit={({ name }) => {
-            createCategory({ name, precedence: categoriesList.length });
-          }}
-        />
-      </NewCategory>
+      <Card square>
+        <CardContent>
+          <CreateCategoryForm
+            progress={progressMap['CREATE_MENUCATEGORY']}
+            errorMessage={errorsMap['CREATE_MENUCATEGORY']}
+            onSubmit={({ name }) => {
+              createCategory({
+                name,
+                precedence: categoriesList.length,
+                form: 'menu/createCategory'
+              });
+            }}
+          />
+        </CardContent>
+      </Card>
     </CategoriesList>
   );
 };
@@ -233,6 +236,8 @@ const ListOfCategories = ({
 export default connect(
   state => ({
     categoriesMap: state.menuCategory.all,
+    progressMap: state.ui.progressMap,
+    errorsMap: state.ui.errorsMap,
   }),
   {
     updateCategory: updateMenucategoryInitAction,

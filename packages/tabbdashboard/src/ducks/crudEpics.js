@@ -1,6 +1,7 @@
 // @flow
 import { Observable } from 'rxjs';
 import * as API from 'api/restaurant';
+import { reset } from 'redux-form';
 
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 const camel = str => capitalize(str.toLowerCase());
@@ -11,7 +12,7 @@ const createEpic = (action$: Observable, { getState }: EpicDependencies) =>
       action =>
         action.type.startsWith('CREATE_') && action.type.endsWith('_INIT'),
     )
-    .switchMap(({ payload, type }) => {
+    .exhaustMap(({ payload, type }) => {
       const subject = type.replace('CREATE_', '').replace('_INIT', '');
       const apiFnName = `Create${camel(subject)}`;
       return Observable.fromPromise(
@@ -20,10 +21,14 @@ const createEpic = (action$: Observable, { getState }: EpicDependencies) =>
           ...payload,
         }),
       )
-        .map(res => ({
-          type: `CREATE_${subject}_DONE`,
-          payload: { res, prePayload: payload },
-        }))
+        .mergeMap(res => {
+          const actions = [{
+            type: `CREATE_${subject}_DONE`,
+            payload: { res, prePayload: payload },
+          }];
+          if (payload.form) actions.push(reset(payload.form));
+          return actions;
+        })
         .catch(error =>
           Observable.of({ type: `CREATE_${subject}_FAIL`, payload: error }),
         );

@@ -28,7 +28,6 @@ import {
 } from 'ducks/ingredient/actions';
 
 let AddIngredientForm = ({ handleSubmit, progress, errorMessage }) => {
-  console.log(errorMessage);
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
       <FormControl
