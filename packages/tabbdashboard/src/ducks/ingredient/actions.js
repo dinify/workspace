@@ -1,6 +1,6 @@
 // @flow
 
-export const createIngredientInit = ({ name }) => {
+export const createIngredientInit = ({ name, form }) => {
   if (!name || name.length <= 2) {
     return {
       type: 'CREATE_INGREDIENT_FAIL',
@@ -17,7 +17,7 @@ export const createIngredientInit = ({ name }) => {
       },
     };
   }
-  return { type: 'CREATE_INGREDIENT_INIT', payload: { name } };
+  return { type: 'CREATE_INGREDIENT_INIT', payload: { name, form } };
 };
 
 export const removeIngredientInit = payload => ({

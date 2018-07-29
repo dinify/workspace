@@ -15,48 +15,61 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
 
 import Text from 'web/components/MaterialInputs/Text';
 
 import { createAddonInit, removeAddonInit } from 'ducks/addon/actions';
 
-let AddAddonForm = ({ handleSubmit }) => {
+let AddAddonForm = ({ handleSubmit, progress, errorMessage  }) => {
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-      <Grid container spacing={8} alignItems="flex-start" justify="center">
-        <Grid item xs={8}>
-          <Field
-            name="name"
-            component={Text}
-            componentProps={{
-              label: 'Name of new addon',
-              fullWidth: true,
-              InputLabelProps: {
-                shrink: true,
-              },
-              placeholder: 'e.g. Extra cheese'
-            }}
-          />
+      <FormControl
+        error={progress === 'ERROR'}
+        aria-describedby="name-error-text"
+        fullWidth
+      >
+        <Grid container spacing={8} alignItems="flex-start" justify="center">
+          <Grid item xs={8}>
+            <Field
+              name="name"
+              component={Text}
+              componentProps={{
+                label: 'Name of new addon',
+                fullWidth: true,
+                InputLabelProps: {
+                  shrink: true,
+                },
+                placeholder: 'e.g. Extra cheese'
+              }}
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <Field
+              name="price"
+              component={Text}
+              componentProps={{
+                label: 'Price',
+                fullWidth: true,
+                type: 'number'
+              }}
+            />
+          </Grid>
+          <Grid item xs={1}>
+            <Tooltip placement="top" title="Add addon">
+              <IconButton type="submit" aria-label="Add addon">
+                <AddCircle />
+              </IconButton>
+            </Tooltip>
+          </Grid>
         </Grid>
-        <Grid item xs={3}>
-          <Field
-            name="price"
-            component={Text}
-            componentProps={{
-              label: 'Price',
-              fullWidth: true,
-              type: 'number'
-            }}
-          />
-        </Grid>
-        <Grid item xs={1}>
-          <Tooltip placement="top" title="Add addon">
-            <IconButton type="submit" aria-label="Add addon">
-              <AddCircle />
-            </IconButton>
-          </Tooltip>
-        </Grid>
-      </Grid>
+        {progress === 'ERROR' ? (
+          <FormHelperText>{errorMessage}</FormHelperText>
+        ) : (
+          ''
+        )}
+      </FormControl>
     </form>
   );
 };
@@ -64,7 +77,11 @@ AddAddonForm = reduxForm({
   form: 'customizations/addon',
 })(AddAddonForm);
 
-const Addons = ({ createAddon, addons, removeAddon, styles }) => {
+const Addons = ({
+  createAddon, addons, removeAddon, styles,
+  progressMap,
+  errorsMap,
+}) => {
   const addonsList = FN.MapToList(addons).sort((a, b) =>
     a.name.localeCompare(b.name),
   );
@@ -90,7 +107,15 @@ const Addons = ({ createAddon, addons, removeAddon, styles }) => {
       </List>
       <Card square>
         <CardContent>
-          <AddAddonForm onSubmit={createAddon} />
+          <AddAddonForm
+            progress={progressMap['CREATE_ADDON']}
+            errorMessage={errorsMap['CREATE_ADDON']}
+            onSubmit={({ name, price }) => createAddon({
+              name,
+              price,
+              form: 'customizations/addon'
+            })}
+          />
         </CardContent>
       </Card>
     </div>
@@ -100,6 +125,8 @@ const Addons = ({ createAddon, addons, removeAddon, styles }) => {
 export default connect(
   state => ({
     addons: state.addon.all,
+    progressMap: state.ui.progressMap,
+    errorsMap: state.ui.errorsMap,
   }),
   {
     createAddon: createAddonInit,

@@ -20,7 +20,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
 import Text from 'web/components/MaterialInputs/Text';
 
 import {
@@ -31,9 +32,14 @@ import {
   removeChoiceInit,
 } from 'ducks/option/actions';
 
-let AddChoiceForm = ({ handleSubmit }) => {
+let AddChoiceForm = ({ handleSubmit, progress, errorMessage }) => {
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+      <FormControl
+        error={progress === 'ERROR'}
+        aria-describedby="name-error-text"
+        fullWidth
+      >
       <Grid container spacing={8} alignItems="flex-end" justify="center">
         <Grid item xs={7}>
           <Field
@@ -68,6 +74,12 @@ let AddChoiceForm = ({ handleSubmit }) => {
           </Tooltip>
         </Grid>
       </Grid>
+      {progress === 'ERROR' ? (
+        <FormHelperText>{errorMessage}</FormHelperText>
+      ) : (
+        ''
+      )}
+    </FormControl>
     </form>
   );
 };
@@ -117,6 +129,8 @@ const Options = ({
   removeChoice,
   removeOption,
   styles,
+  progressMap,
+  errorsMap,
 }) => {
   const optionsList = FN.MapToList(optionsMap).sort((a, b) =>
     a.name.localeCompare(b.name),
@@ -177,8 +191,13 @@ const Options = ({
                     <Card square>
                       <CardContent>
                         <AddChoiceForm
+                          progress={progressMap['CREATE_CHOICE']}
+                          errorMessage={errorsMap['CREATE_CHOICE']}
                           onSubmit={({ name, price }) =>
-                            createChoice({ name, price, optionId: option.id })
+                            createChoice({
+                              name, price, optionId: option.id,
+                              form: 'customizations/option/choice'
+                            })
                           }
                         />
                       </CardContent>
@@ -192,7 +211,10 @@ const Options = ({
       </List>
       <Card square>
         <CardContent>
-          <AddOptionForm onSubmit={createOption} />
+          <AddOptionForm onSubmit={({ name }) => createOption({
+            name,
+            form: 'customizations/option'
+          })} />
         </CardContent>
       </Card>
     </div>
@@ -203,6 +225,8 @@ export default connect(
   state => ({
     loggedRestaurant: state.restaurant.loggedRestaurant,
     optionsMap: state.option.all,
+    progressMap: state.ui.progressMap,
+    errorsMap: state.ui.errorsMap,
   }),
   {
     createOption: createOptionInit,

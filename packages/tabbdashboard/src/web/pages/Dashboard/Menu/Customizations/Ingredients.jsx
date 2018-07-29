@@ -120,7 +120,10 @@ const Ingredients = ({
       <Card square>
         <CardContent>
           <AddIngredientForm
-            onSubmit={createIngredient}
+            onSubmit={({ name }) => createIngredient({
+              name,
+              form: 'customizations/ingredient'
+            })}
             progress={progressMap['CREATE_INGREDIENT']}
             errorMessage={errorsMap['CREATE_INGREDIENT']}
           />
