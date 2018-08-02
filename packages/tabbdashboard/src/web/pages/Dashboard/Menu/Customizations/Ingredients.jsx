@@ -85,6 +85,18 @@ const Ingredients = ({
   );
   return (
     <div>
+      <Card square>
+        <CardContent>
+          <AddIngredientForm
+            onSubmit={({ name }) => createIngredient({
+              name,
+              form: 'customizations/ingredient'
+            })}
+            progress={progressMap['CREATE_INGREDIENT']}
+            errorMessage={errorsMap['CREATE_INGREDIENT']}
+          />
+        </CardContent>
+      </Card>
       <List component="nav">
         {ingredientsList.map((ingredient, i) => (
           <div key={ingredient.id}>
@@ -117,18 +129,6 @@ const Ingredients = ({
           </div>
         ))}
       </List>
-      <Card square>
-        <CardContent>
-          <AddIngredientForm
-            onSubmit={({ name }) => createIngredient({
-              name,
-              form: 'customizations/ingredient'
-            })}
-            progress={progressMap['CREATE_INGREDIENT']}
-            errorMessage={errorsMap['CREATE_INGREDIENT']}
-          />
-        </CardContent>
-      </Card>
     </div>
   );
 };

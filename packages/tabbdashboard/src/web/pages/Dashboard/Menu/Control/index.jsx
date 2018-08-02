@@ -21,7 +21,7 @@ const H = styled.div`
 
 const SolidContainer = styled.div`
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 100px;
 `;
 
 class Menucontrol extends React.Component {

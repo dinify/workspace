@@ -1,6 +1,11 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
+import Delete from '@material-ui/icons/Delete';
+import Chip from '@material-ui/core/Chip';
+import { withStyles } from '@material-ui/core/styles';
+
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 export const Customizations = styled.div`
   margin-top: 10px;
@@ -20,50 +25,47 @@ const customItemColors = [
   '#FFCA28',
   '#8D6E63',
 ];
-
-export const CustomItem = styled.div`
-  display: inline-block;
-  background: ${p =>
-    customItemColors[p.bgIndex] ? customItemColors[p.bgIndex] : 'black'};
-  margin: 3px;
-  border-radius: 40px;
-  color: white;
-  padding: 3px 12px;
-  letter-spacing: 0.3px;
-  font-weight: 400;
-  font-size: 12px;
-  button {
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: rgba(255, 255, 255, 0.6);
-    margin-left: 5px;
-    &:hover {
-      color: white;
-    }
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
   }
-`;
+});
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    padding: theme.spacing.unit / 2,
+  },
+  chip: {
+    margin: theme.spacing.unit / 2,
+  },
+});
 
-const ListOfCustomizations = ({ list, rmButtonFunction }) => {
+const ListOfCustomizations = ({ list, rmButtonFunction, classes }) => {
   if (list && list.length > 0) {
     return (
-      <Customizations>
-        {list.map((customization, i) => (
-          <CustomItem key={i} bgIndex={i}>
-            <span style={{ whiteSpace: 'nowrap' }}>
-              {customization.name}{' '}
-              {customization.price ? `${customization.price.amount}KD` : ''}
-            </span>
-            <button onClick={() => rmButtonFunction(customization)}>
-              <i className="ion-close" />
-            </button>
-          </CustomItem>
-        ))}
-      </Customizations>
+      <MuiThemeProvider theme={theme}>
+        <Customizations>
+          {list.map((customization, i) => (
+            <Chip
+              style={{background: customItemColors[i] || 'black'}}
+              key={i}
+              label={
+                <span style={{ whiteSpace: 'nowrap' }}>
+                  {customization.name}{' '}
+                  {customization.price ? `${customization.price.amount}KD` : ''}
+                </span>
+              }
+              onDelete={() => rmButtonFunction(customization)}
+              className={classes.chip}
+            />
+          ))}
+        </Customizations>
+      </MuiThemeProvider>
     );
   }
   return null;
 };
 
-export default ListOfCustomizations;
+export default withStyles(styles)(ListOfCustomizations);

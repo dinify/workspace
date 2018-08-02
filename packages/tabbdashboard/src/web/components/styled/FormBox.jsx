@@ -86,6 +86,8 @@ export const FieldWrapper = styled.div`
 
 export const Label = styled.div`
   font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   margin-top: 18px;
   margin-bottom: -4px;
 `;

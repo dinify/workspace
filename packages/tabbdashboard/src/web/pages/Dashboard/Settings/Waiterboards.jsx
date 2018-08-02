@@ -16,6 +16,9 @@ import { DragSource, DropTarget } from 'react-dnd';
 import PropTypes from 'prop-types';
 
 import Group from '@material-ui/icons/Group';
+import DragHandle from '@material-ui/icons/DragHandle';
+import Delete from '@material-ui/icons/Delete';
+import OpenInBrowser from '@material-ui/icons/OpenInBrowser';
 
 import {
   FormBox,
@@ -314,7 +317,7 @@ let TableComponent = ({
           <div style={{ height: '50px' }}>
             <Thumbnail>
               <Id>{table.number}</Id>
-              <i className="ion-arrow-move" />
+              <DragHandle />
             </Thumbnail>
           </div>,
         )}
@@ -332,7 +335,7 @@ let TableComponent = ({
                 deleteTable({ id: table.id, waiterboardId: wb.id })
               }
             >
-              <i className="ion-ios-trash-outline" />
+              <Delete />
             </button>
           </Tooltip>
         </Seats>
@@ -439,7 +442,7 @@ class Waiterboards extends React.Component {
                   <div className="label">WAITERBOARD</div>
                   <div>
                     <span>{wb.name}</span>
-                    <i className="linkIcon ion-android-open" />
+                    <OpenInBrowser />
                   </div>
                 </WBtitle>
               </Link>
@@ -453,7 +456,7 @@ class Waiterboards extends React.Component {
                 <DeleteWaiterboard
                   onClick={() => deleteWaiterboard({ id: wb.id })}
                 >
-                  <i className="ion-ios-trash-outline" />
+                  <Delete />
                 </DeleteWaiterboard>
               </Tooltip>
             </WBheader>

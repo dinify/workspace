@@ -6,6 +6,18 @@ import * as FN from 'lib/FN';
 import { Label } from 'web/components/styled/FormBox';
 import { assignOptionInit, unassignOptionInit } from 'ducks/restaurantLegacy';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
+import S from 'string';
+
+const choicesEnumText = (choices) => {
+  let text = ''
+  const choicesList = FN.MapToList(choices)
+  choicesList.forEach((choice, i) => {
+    text = `${text}${choice.name}${choicesList.length > (i + 1) ? ', ' : ''}`;
+  })
+  return S(text).truncate(40).s
+}
 
 const ItemOptions = ({
   optionsMap,
@@ -19,32 +31,40 @@ const ItemOptions = ({
   const selectedFood = menuItems[selectedFoodId];
   console.log(selectedFood.options, 'optionsList');
   return (
-    <div>
+    <div style={{ marginBottom: 30 }}>
       <Label>Options</Label>
 
       {selectedFood.options ? (
         <div>
           {FN.MapToList(selectedFood.options).map((option, i) => (
-            <div key={i}>{option.name}</div>
+            <div key={i}>
+              <Chip
+                style={{marginTop: '10px', maxWidth: '100%'}}
+                avatar={
+                  <Avatar style={{width: 'auto', borderRadius: '32px', padding: '0 10px'}}>
+                    {option.name}
+                  </Avatar>
+                }
+                onDelete={() => unassignOption({
+                  foodId: selectedFoodId,
+                  optionId: option.id,
+                  originalObject: {
+                    options: R.mapObjIndexed(o => {
+                      if (!o.difference) o.difference = o.pivot.difference;
+                      return o;
+                    }, selectedFood.options),
+                  },
+                })}
+                label={<div style={{maxWidth: '280px', overflow: 'hidden'}}>
+                  {choicesEnumText(option.choices)}
+                </div>}
+              />
+            </div>
           ))}
         </div>
       ) : (
         'No options'
       )}
-
-      {
-        //  <ListOfCustomizations
-        //    list={FN.MapToList(selectedFood.options)}
-        //    rmButtonFunction={(option) => unassignOption({
-        //      id: selectedFoodId,
-        //      optionId: option.id,
-        //      originalObject: {options: R.mapObjIndexed((o) => {
-        //        if(!o.difference) o.difference = o.pivot.difference
-        //        return o
-        //      }, selectedFood.options)}
-        //    })}
-        //  />
-      }
 
       <AutoComplete
         label="Options"

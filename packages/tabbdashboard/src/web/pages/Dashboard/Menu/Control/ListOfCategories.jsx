@@ -23,6 +23,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Text from 'web/components/MaterialInputs/Text';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+
 import {
   updateMenucategoryInitAction,
   createMenucategoryInitAction,
@@ -59,7 +60,7 @@ const CategoryItem = styled.div`
   color: white;
   padding: 10px 10px;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-top: 10px;
   font-weight: 300;
   background-color: ${p => {
     if (p.disabled)
@@ -89,6 +90,7 @@ let CreateCategoryForm = ({ handleSubmit, progress, errorMessage }) => {
               name="name"
               component={Text}
               componentProps={{
+                style: {whiteSpace: 'nowrap'},
                 label: 'Name of new category',
                 fullWidth: true,
                 InputLabelProps: {
@@ -99,8 +101,8 @@ let CreateCategoryForm = ({ handleSubmit, progress, errorMessage }) => {
             />
           </Grid>
           <Grid item xs={2}>
-            <Tooltip placement="top" title="Add ingredient">
-              <IconButton type="submit" aria-label="Add ingredient">
+            <Tooltip placement="top" title="Add category">
+              <IconButton type="submit" aria-label="Add category">
                 <AddCircle />
               </IconButton>
             </Tooltip>
@@ -198,6 +200,21 @@ const ListOfCategories = ({
   );
   return (
     <CategoriesList>
+      <Card>
+        <CardContent>
+          <CreateCategoryForm
+            progress={progressMap['CREATE_MENUCATEGORY']}
+            errorMessage={errorsMap['CREATE_MENUCATEGORY']}
+            onSubmit={({ name }) => {
+              createCategory({
+                name,
+                precedence: categoriesList.length,
+                form: 'menu/createCategory'
+              });
+            }}
+          />
+        </CardContent>
+      </Card>
       <SortableList
         distance={1}
         axis={'y'}
@@ -213,22 +230,6 @@ const ListOfCategories = ({
           deleteCategory,
         }}
       />
-
-      <Card square>
-        <CardContent>
-          <CreateCategoryForm
-            progress={progressMap['CREATE_MENUCATEGORY']}
-            errorMessage={errorsMap['CREATE_MENUCATEGORY']}
-            onSubmit={({ name }) => {
-              createCategory({
-                name,
-                precedence: categoriesList.length,
-                form: 'menu/createCategory'
-              });
-            }}
-          />
-        </CardContent>
-      </Card>
     </CategoriesList>
   );
 };

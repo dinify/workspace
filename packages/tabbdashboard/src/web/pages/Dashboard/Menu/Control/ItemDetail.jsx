@@ -26,6 +26,7 @@ import blue from '@material-ui/core/colors/blue';
 
 import { withStyles } from '@material-ui/core/styles';
 
+
 let DetailForm = ({ handleSubmit }) => {
   const style = { height: '64px' };
   return (
@@ -46,7 +47,7 @@ let DetailForm = ({ handleSubmit }) => {
           label: 'Description',
           multiline: true,
           fullWidth: true,
-          rows: 2,
+          rows: 4,
           margin: 'normal',
         }}
       />
@@ -58,12 +59,12 @@ let DetailForm = ({ handleSubmit }) => {
           min: 0.0,
           label: 'Price (KD)',
           fullWidth: true,
-          step: 0.1,
+          step: 0.05,
           margin: 'normal',
           style,
         }}
       />
-      <Button type="submit" fullWidth={true}>
+      <Button variant="contained" color="primary" type="submit" fullWidth>
         Save
       </Button>
     </form>
@@ -162,9 +163,7 @@ let ItemDetail = ({
         />
 
         <ItemOptions selectedFoodId={selectedFoodId} />
-
         <ItemIngredients selectedFoodId={selectedFoodId} />
-
         <ItemAddons selectedFoodId={selectedFoodId} />
       </CardContent>
     </Card>

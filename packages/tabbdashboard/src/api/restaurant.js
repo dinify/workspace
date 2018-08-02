@@ -190,7 +190,7 @@ export function ChangeMenuitem(payload) {
   const id = payload.id;
   let updObj = payload;
   delete updObj.id;
-  updObj = R.filter(R.identity)(updObj);
+  //updObj = R.filter(R.identity)(updObj);
   return Post({ path: `menu/item/${id}`, v3: true }, updObj);
 }
 export function DeleteMenuitem({ id }) {

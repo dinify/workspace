@@ -46,7 +46,7 @@ const FoodItem = styled.div`
   cursor: pointer;
   padding: 10px 10px;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-top: 10px;
   font-weight: 300;
   background-color: ${p => {
     if (p.disabled)
@@ -128,6 +128,7 @@ let CreateItemForm = ({ handleSubmit, categoryName, progress, errorMessage }) =>
               name="name"
               component={Text}
               componentProps={{
+                style: {whiteSpace: 'nowrap'},
                 label: `A dish of ${categoryName}`,
                 fullWidth: true,
                 InputLabelProps: {
@@ -228,7 +229,7 @@ const ListOfDishes = ({
   progressMap,
   errorsMap,
 }) => {
-  if (!selectedCategoryId) return <div />;
+  if (!selectedCategoryId || !categoriesMap[selectedCategoryId]) return <div />;
   const menuItemsList = R.filter(
     item => item.menu_category_id === selectedCategoryId,
     FN.MapToList(menuItemsMap),
@@ -236,22 +237,7 @@ const ListOfDishes = ({
   const categoryName = categoriesMap[selectedCategoryId].name;
   return (
     <FoodList>
-      <SortableList
-        distance={1}
-        axis={'y'}
-        lockAxis={'y'}
-        items={menuItemsList}
-        onSortEnd={({ oldIndex, newIndex }) => {
-          reorderItems(arrayMove(menuItemsList, oldIndex, newIndex));
-        }}
-        deps={{
-          selectedFoodId,
-          selectFood,
-          updateItem,
-          deleteItem,
-        }}
-      />
-      <Card square>
+      <Card>
         <CardContent>
           <CreateItemForm
             progress={progressMap['CREATE_MENUITEM']}
@@ -268,6 +254,21 @@ const ListOfDishes = ({
           />
         </CardContent>
       </Card>
+      <SortableList
+        distance={1}
+        axis={'y'}
+        lockAxis={'y'}
+        items={menuItemsList}
+        onSortEnd={({ oldIndex, newIndex }) => {
+          reorderItems(arrayMove(menuItemsList, oldIndex, newIndex));
+        }}
+        deps={{
+          selectedFoodId,
+          selectFood,
+          updateItem,
+          deleteItem,
+        }}
+      />
     </FoodList>
   );
 };

@@ -87,6 +87,19 @@ const Addons = ({
   );
   return (
     <div>
+      <Card square>
+        <CardContent>
+          <AddAddonForm
+            progress={progressMap['CREATE_ADDON']}
+            errorMessage={errorsMap['CREATE_ADDON']}
+            onSubmit={({ name, price }) => createAddon({
+              name,
+              price,
+              form: 'customizations/addon'
+            })}
+          />
+        </CardContent>
+      </Card>
       <List component="nav">
         {addonsList.map((addon) => (
           <div key={addon.id}>
@@ -105,19 +118,6 @@ const Addons = ({
           </div>
         ))}
       </List>
-      <Card square>
-        <CardContent>
-          <AddAddonForm
-            progress={progressMap['CREATE_ADDON']}
-            errorMessage={errorsMap['CREATE_ADDON']}
-            onSubmit={({ name, price }) => createAddon({
-              name,
-              price,
-              form: 'customizations/addon'
-            })}
-          />
-        </CardContent>
-      </Card>
     </div>
   );
 };

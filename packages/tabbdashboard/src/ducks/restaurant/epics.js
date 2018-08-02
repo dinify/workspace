@@ -182,7 +182,7 @@ const unassignEpic = (action$: Observable) =>
       // original without dissociated entity
       const newObject = R.dissoc(payload[`${singular}Id`])(originalObject);
 
-      let updatePayload = {};
+      const updatePayload = {};
       updatePayload[originalObjectKey] = FN.MapToList(newObject);
       updatePayload.id = payload.id; // id of main entity
 

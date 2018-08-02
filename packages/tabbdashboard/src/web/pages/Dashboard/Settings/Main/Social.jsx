@@ -45,7 +45,7 @@ SocialForm = reduxForm({
 })(SocialForm);
 
 const Social = ({ updateSocial, social }) => {
-  if (!social) return <div />;
+  //if (!social) return <div />;
   return (
     <FormBox>
       <FormBoxHead>

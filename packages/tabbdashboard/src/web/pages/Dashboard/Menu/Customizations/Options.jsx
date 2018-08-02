@@ -137,6 +137,14 @@ const Options = ({
   );
   return (
     <div>
+      <Card square>
+        <CardContent>
+          <AddOptionForm onSubmit={({ name }) => createOption({
+            name,
+            form: 'customizations/option'
+          })} />
+        </CardContent>
+      </Card>
       <List component="nav">
         {optionsList.map((option, i) => (
           <div key={option.id}>
@@ -209,14 +217,6 @@ const Options = ({
           </div>
         ))}
       </List>
-      <Card square>
-        <CardContent>
-          <AddOptionForm onSubmit={({ name }) => createOption({
-            name,
-            form: 'customizations/option'
-          })} />
-        </CardContent>
-      </Card>
     </div>
   );
 };

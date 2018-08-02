@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { logoutInitAction } from 'ducks/restaurantLegacy';
-import { HorizontalLine } from 'web/components/styled/HorizontalLine';
-import { Menu, MenuLink } from 'web/components/styled/Menu';
 import { Link } from 'react-router-dom';
 
 import SettingsSection from './Settings';

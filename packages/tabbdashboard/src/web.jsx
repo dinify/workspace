@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
 import AppComponent from 'web/App';
 import configureStore from './configureStore';
 import './index.css';
@@ -31,4 +31,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root'),
 );
-registerServiceWorker();
+unregister();

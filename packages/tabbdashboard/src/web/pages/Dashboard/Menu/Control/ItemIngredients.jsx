@@ -21,7 +21,7 @@ const ItemIngredients = ({
   const dataSource = ingredientsList.map(o => ({ value: o.id, label: o.name }));
   const selectedFood = menuItems[selectedFoodId];
   return (
-    <div>
+    <div style={{ marginBottom: 30 }}>
       <Label>Ingredients</Label>
       {selectedFood.ingredients ? (
         <ListOfCustomizations
