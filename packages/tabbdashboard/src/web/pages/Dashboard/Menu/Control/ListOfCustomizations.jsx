@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import Delete from '@material-ui/icons/Delete';
 import Chip from '@material-ui/core/Chip';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -42,7 +41,7 @@ const styles = theme => ({
   },
 });
 
-const ListOfCustomizations = ({ list, rmButtonFunction, classes }) => {
+const ListOfCustomizations = ({ list, rmButtonFunction, classes, ActionComponent }) => {
   if (list && list.length > 0) {
     return (
       <MuiThemeProvider theme={theme}>
@@ -55,6 +54,7 @@ const ListOfCustomizations = ({ list, rmButtonFunction, classes }) => {
                 <span style={{ whiteSpace: 'nowrap' }}>
                   {customization.name}{' '}
                   {customization.price ? `${customization.price.amount}KD` : ''}
+                  {ActionComponent ? <ActionComponent ingredient={customization} /> : ''}
                 </span>
               }
               onDelete={() => rmButtonFunction(customization)}

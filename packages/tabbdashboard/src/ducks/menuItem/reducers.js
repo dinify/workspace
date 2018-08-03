@@ -25,9 +25,15 @@ export default function reducer(state = initialState, action) {
       return R.assocPath(['all', newItem.id], newItem)(state);
     }
 
+    case 'UPDATECUSOMIZATIONS_UPDATING': {
+      const { id, custKey, updatedCusts } = action.payload;
+      return R.assocPath(['all', id, custKey], updatedCusts)(state);
+    }
+
     case 'UPDATE_MENUITEM_INIT': {
       const payload = action.payload;
       const original = state.all[payload.id];
+      if (payload.ingredients) return state;
       return R.assocPath(['all', payload.id], { ...original, ...payload })(
         state,
       );

@@ -20,6 +20,7 @@ import ItemNutrition from './ItemNutrition';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import { CardLabel } from 'web/components/styled/FormBox';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
@@ -111,6 +112,7 @@ let ItemDetail = ({
   }
   console.log(foodImageUrl);
   return (
+    <div>
     <Card>
       <CardMedia
         className={classes.media}
@@ -161,12 +163,17 @@ let ItemDetail = ({
             price: Number.parseFloat(selectedFood.price.amount).toFixed(3),
           }}
         />
-
+      </CardContent>
+    </Card>
+    <Card style={{marginTop: 20, overflow: 'visible'}}>
+      <CardContent>
+        <CardLabel>{selectedFood.name} Customizations</CardLabel>
         <ItemOptions selectedFoodId={selectedFoodId} />
         <ItemIngredients selectedFoodId={selectedFoodId} />
         <ItemAddons selectedFoodId={selectedFoodId} />
       </CardContent>
     </Card>
+    </div>
   );
 };
 

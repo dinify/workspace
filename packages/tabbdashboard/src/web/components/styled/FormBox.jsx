@@ -91,3 +91,12 @@ export const Label = styled.div`
   margin-top: 18px;
   margin-bottom: -4px;
 `;
+
+export const CardLabel = styled.div`
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: -4px;
+  text-align: center;
+  color: #999;
+`;

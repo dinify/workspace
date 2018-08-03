@@ -7,8 +7,44 @@ import {
   assignIngredientInit,
   unassignIngredientInit,
 } from 'ducks/restaurantLegacy';
+import {
+  updateCusomizationsInit
+} from 'ducks/menuItem/actions';
 import ListOfCustomizations from './ListOfCustomizations';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
+import Checkbox from '@material-ui/core/Checkbox';
+import Tooltip from '@material-ui/core/Tooltip';
+import RemoveCircle from '@material-ui/icons/RemoveCircle';
+import RemoveCircleOutline from '@material-ui/icons/RemoveCircleOutline';
+
+const Excludability = ({ selectedFoodId, updateCusomizations }) => ({ ingredient }) => {
+  const excludable = ingredient.pivot ? ingredient.pivot.excludable : true;
+  return (
+    <Tooltip
+      placement="left"
+      title={excludable ? 'Excludable' : 'Mandatory'}
+    >
+      <Checkbox
+        style={{width: 28}}
+        color="default"
+        icon={<RemoveCircleOutline />}
+        checkedIcon={<RemoveCircle />}
+        checked={excludable}
+        onChange={ev =>
+          updateCusomizations({
+            menuItemId: selectedFoodId,
+            actionKind: 'UPDATE',
+            updateObj: {
+              excludable: ev.target.checked,
+            },
+            custKey: 'ingredients',
+            custId: ingredient.id
+          })
+        }
+      />
+    </Tooltip>
+  )
+}
 
 const ItemIngredients = ({
   selectedFoodId,
@@ -16,6 +52,7 @@ const ItemIngredients = ({
   unassignIngredient,
   ingredientsMap,
   menuItems,
+  updateCusomizations
 }) => {
   const ingredientsList = FN.MapToList(ingredientsMap);
   const dataSource = ingredientsList.map(o => ({ value: o.id, label: o.name }));
@@ -27,12 +64,14 @@ const ItemIngredients = ({
         <ListOfCustomizations
           list={FN.MapToList(selectedFood.ingredients)}
           rmButtonFunction={ingredient =>
-            unassignIngredient({
-              id: selectedFoodId,
-              ingredientId: ingredient.id,
-              originalObject: { ingredients: selectedFood.ingredients },
+            updateCusomizations({
+              menuItemId: selectedFoodId,
+              actionKind: 'REMOVE',
+              custKey: 'ingredients',
+              custId: ingredient.id
             })
           }
+          ActionComponent={Excludability({ selectedFoodId, updateCusomizations })}
         />
       ) : (
         'No ingredients'
@@ -41,11 +80,12 @@ const ItemIngredients = ({
         dataSource={dataSource}
         placeholder="Select ingredients here"
         onChange={ingredientId =>
-          assignIngredient({
-            id: selectedFoodId,
-            ingredientId,
-            ingredient: ingredientsMap[ingredientId],
-            originalObject: { ingredients: selectedFood.ingredients },
+          updateCusomizations({
+            menuItemId: selectedFoodId,
+            actionKind: 'ADD',
+            custKey: 'ingredients',
+            custId: ingredientId,
+            cust: ingredientsMap[ingredientId],
           })
         }
       />
@@ -61,5 +101,6 @@ export default connect(
   {
     assignIngredient: assignIngredientInit,
     unassignIngredient: unassignIngredientInit,
+    updateCusomizations: updateCusomizationsInit
   },
 )(ItemIngredients);

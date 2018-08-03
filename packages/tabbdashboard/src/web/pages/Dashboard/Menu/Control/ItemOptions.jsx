@@ -14,7 +14,7 @@ const choicesEnumText = (choices) => {
   let text = ''
   const choicesList = FN.MapToList(choices)
   choicesList.forEach((choice, i) => {
-    text = `${text}${choice.name}${choicesList.length > (i + 1) ? ', ' : ''}`;
+    text = `${text}${choice.name}${choicesList.length > (i + 1) ? ' | ' : ''}`;
   })
   return S(text).truncate(40).s
 }

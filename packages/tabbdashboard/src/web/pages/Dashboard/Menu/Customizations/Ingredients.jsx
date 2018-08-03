@@ -11,7 +11,6 @@ import AddCircle from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -102,21 +101,6 @@ const Ingredients = ({
           <div key={ingredient.id}>
             <ListItem dense style={styles.ListItem}>
               <ListItemText primary={ingredient.name} />
-              <Tooltip
-                placement="left"
-                title={ingredient.excludable ? 'Excludable' : 'Mandatory'}
-              >
-                <Switch
-                  checked={ingredient.excludable}
-                  onChange={ev =>
-                    updateIngredient({
-                      id: ingredient.id,
-                      excludable: ev.target.checked,
-                    })
-                  }
-                  color="primary"
-                />
-              </Tooltip>
               <Tooltip placement="left" title="Delete">
                 <IconButton
                   aria-label="Delete ingredient"
