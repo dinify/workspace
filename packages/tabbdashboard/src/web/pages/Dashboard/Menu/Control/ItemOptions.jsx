@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import R from 'ramda';
 import * as FN from 'lib/FN';
 import { Label } from 'web/components/styled/FormBox';
-import { assignOptionInit, unassignOptionInit } from 'ducks/restaurantLegacy';
+import { updateCusomizationsInit } from 'ducks/menuItem/actions';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
@@ -22,8 +22,7 @@ const choicesEnumText = (choices) => {
 const ItemOptions = ({
   optionsMap,
   selectedFoodId,
-  assignOption,
-  unassignOption,
+  updateCusomizations,
   menuItems,
 }) => {
   const optionsList = FN.MapToList(optionsMap);
@@ -45,16 +44,14 @@ const ItemOptions = ({
                     {option.name}
                   </Avatar>
                 }
-                onDelete={() => unassignOption({
-                  foodId: selectedFoodId,
-                  optionId: option.id,
-                  originalObject: {
-                    options: R.mapObjIndexed(o => {
-                      if (!o.difference) o.difference = o.pivot.difference;
-                      return o;
-                    }, selectedFood.options),
-                  },
-                })}
+                onDelete={() =>
+                  updateCusomizations({
+                    menuItemId: selectedFoodId,
+                    actionKind: 'REMOVE',
+                    custKey: 'options',
+                    custId: option.id
+                  })
+                }
                 label={<div style={{maxWidth: '280px', overflow: 'hidden'}}>
                   {choicesEnumText(option.choices)}
                 </div>}
@@ -71,18 +68,14 @@ const ItemOptions = ({
         placeholder="Select options here"
         dataSource={dataSource}
         onChange={optionId =>
-          assignOption({
-            id: selectedFoodId,
-            optionId,
-            option: {
+          updateCusomizations({
+            menuItemId: selectedFoodId,
+            actionKind: 'ADD',
+            custKey: 'options',
+            custId: optionId,
+            cust: {
               ...R.find(R.propEq('id', optionId))(optionsList),
-              difference: { amount: '-1.88', currency: 'KWD' },
-            },
-            originalObject: {
-              options: R.mapObjIndexed(o => {
-                if (!o.difference) o.difference = o.pivot.difference;
-                return o;
-              }, selectedFood.options),
+              difference: { amount: '0', currency: 'KWD' },
             },
           })
         }
@@ -97,7 +90,6 @@ export default connect(
     menuItems: state.menuItem.all,
   }),
   {
-    assignOption: assignOptionInit,
-    unassignOption: unassignOptionInit,
+    updateCusomizations: updateCusomizationsInit
   },
 )(ItemOptions);

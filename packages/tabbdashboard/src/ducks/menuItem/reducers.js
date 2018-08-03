@@ -33,7 +33,7 @@ export default function reducer(state = initialState, action) {
     case 'UPDATE_MENUITEM_INIT': {
       const payload = action.payload;
       const original = state.all[payload.id];
-      if (payload.ingredients) return state;
+      if (payload.ingredients || payload.options || payload.addons) return state;
       return R.assocPath(['all', payload.id], { ...original, ...payload })(
         state,
       );

@@ -3,13 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as FN from 'lib/FN';
 import { Label } from 'web/components/styled/FormBox';
-import {
-  assignIngredientInit,
-  unassignIngredientInit,
-} from 'ducks/restaurantLegacy';
-import {
-  updateCusomizationsInit
-} from 'ducks/menuItem/actions';
+import { updateCusomizationsInit } from 'ducks/menuItem/actions';
 import ListOfCustomizations from './ListOfCustomizations';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -48,8 +42,6 @@ const Excludability = ({ selectedFoodId, updateCusomizations }) => ({ ingredient
 
 const ItemIngredients = ({
   selectedFoodId,
-  assignIngredient,
-  unassignIngredient,
   ingredientsMap,
   menuItems,
   updateCusomizations
@@ -99,8 +91,6 @@ export default connect(
     menuItems: state.menuItem.all,
   }),
   {
-    assignIngredient: assignIngredientInit,
-    unassignIngredient: unassignIngredientInit,
     updateCusomizations: updateCusomizationsInit
   },
 )(ItemIngredients);

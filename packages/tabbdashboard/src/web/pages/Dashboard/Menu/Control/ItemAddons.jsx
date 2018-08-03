@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as FN from 'lib/FN';
 import { Label } from 'web/components/styled/FormBox';
-import { assignAddonInit, unassignAddonInit } from 'ducks/restaurantLegacy';
+import { updateCusomizationsInit } from 'ducks/menuItem/actions';
 import ListOfCustomizations from './ListOfCustomizations';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 
@@ -11,8 +11,7 @@ const ItemAddons = ({
   addonsMap,
   menuItems,
   selectedFoodId,
-  assignAddon,
-  unassignAddon,
+  updateCusomizations
 }) => {
   const addonsList = FN.MapToList(addonsMap);
   const dataSource = addonsList.map(o => ({ value: o.id, label: o.name }));
@@ -24,10 +23,11 @@ const ItemAddons = ({
         <ListOfCustomizations
           list={FN.MapToList(selectedFood.addons)}
           rmButtonFunction={addon =>
-            unassignAddon({
-              id: selectedFoodId,
-              addonId: addon.id,
-              originalObject: { addons: selectedFood.addons },
+            updateCusomizations({
+              menuItemId: selectedFoodId,
+              actionKind: 'REMOVE',
+              custKey: 'addons',
+              custId: addon.id
             })
           }
         />
@@ -38,11 +38,12 @@ const ItemAddons = ({
         dataSource={dataSource}
         placeholder="Select addons here"
         onChange={addonId =>
-          assignAddon({
-            id: selectedFoodId,
-            addonId,
-            addon: addonsMap[addonId],
-            originalObject: { addons: selectedFood.addons },
+          updateCusomizations({
+            menuItemId: selectedFoodId,
+            actionKind: 'ADD',
+            custKey: 'addons',
+            custId: addonId,
+            cust: addonsMap[addonId],
           })
         }
       />
@@ -56,7 +57,6 @@ export default connect(
     menuItems: state.menuItem.all,
   }),
   {
-    assignAddon: assignAddonInit,
-    unassignAddon: unassignAddonInit,
+    updateCusomizations: updateCusomizationsInit
   },
 )(ItemAddons);
