@@ -66,24 +66,13 @@ export function GetOrders({ waiterboardId }) {
 export function ConfirmOrder({ orderId }) {
   return Post({ v3: true, path: `order/${orderId}/confirm` })
 }
-export function ConfirmOrderahead({ orderId }) {
-  return Post({ path: `api/v2/waiterboard/orderahead/${orderId}/confirm` })
-}
 
-//export function GetOrdersAhead({ shopId }) {
-//  return Get({ path: `shop/${shopId}/orders_ahead/active` })
-//}
-//
-//export function ConfirmOrderahead({ restaurantId, orderId }) {
-//  return Post({ path: `shop/${restaurantId}/order_ahead/${orderId}/finish` })
-//}
-
-export function GetBills() {
-  return Get({ path: `api/v2/waiterboard/bills` })
+export function GetBills({ waiterboardId }) {
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/transactions/all` })
 }
 
 export function ConfirmBill({ billId, approvalNumber }) {
-  return Post({ path: `api/v2/waiterboard/bill/${billId}/confirm`}, { approvalNumber })
+  return Post({ v3: true, path: `transaction/${billId}/process`}, { approvalNumber })
 }
 
 export function GetSales() {

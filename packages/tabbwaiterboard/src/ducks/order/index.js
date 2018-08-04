@@ -1,7 +1,7 @@
 import reducer from './reducers'
 
-export { default as bookingSelectors } from './selectors'
-export { default as bookingEpics } from './epics'
-export { default as bookingTypes } from './types'
+export { default as orderSelectors } from './selectors'
+export { default as orderEpics } from './epics'
+export { default as orderTypes } from './types'
 
 export default reducer

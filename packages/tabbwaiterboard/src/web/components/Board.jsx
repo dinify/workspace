@@ -19,6 +19,7 @@ import Event from './Events'
 import Booking from './Events/Booking'
 import Call from './Events/Call'
 import Order from './Events/Order'
+import Bill from './Events/Bill'
 
 import { toggleFrames, toggleModal } from 'ducks/ui'
 import { setOHEnabled, logoutInitAction } from 'ducks/restaurant'
@@ -128,7 +129,8 @@ const Board = ({
   logout,
   selectedWBId,
   loggedUser,
-  orders
+  orders,
+  bills
 }: BoardProps) => {
 
   const frames = ['actions','tables']
@@ -156,6 +158,8 @@ const Board = ({
   const pendingBookings = bookingsList.filter((b) => b.status === 'PENDING')
 
   const callsList = MapToList(calls)
+
+  const newOrders = R.filter((o) => o.status !== 'CONFIRMED')(orders)
 //
   return (<div>
 
@@ -187,8 +191,11 @@ const Board = ({
                   {callsList.map((call) =>
                     <Call key={call.id} call={call} />
                   )}
-                  {orders.map((order) =>
+                  {newOrders.map((order) =>
                     <Order key={order.id} order={order} />
+                  )}
+                  {bills.map((bill) =>
+                    <Bill key={bill.id} bill={bill} />
                   )}
                   {/*R.values(events).sort((a,b) => a.content.id - b.content.id).map((event, i) =>
                     <Event key={i} event={event} />
@@ -202,7 +209,7 @@ const Board = ({
         </Frame>
         <Frame n={1}>
           <Container>
-            <Grid container spacing={8} justify="center" alignItems="flex-start">
+            <Grid container spacing={8} justify="flex-start" alignItems="flex-start">
               {FN.MapToList(tables).map((table, i) =>
                 <Grid item>
                   <Table openModal={openModal} tableId={i} table={table} key={i} index={i+1} />
@@ -229,6 +236,7 @@ export default connect(
   state => ({
     bookings: state.booking.all,
     orders: state.order.list,
+    bills: state.bill.list,
     calls: state.call.all,
     tables: state.table.all,
     guests: state.guests.all,

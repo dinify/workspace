@@ -11,6 +11,7 @@ import user from './ducks/user'
 import booking from './ducks/booking'
 import call from './ducks/call'
 import order from 'ducks/order'
+import bill from 'ducks/bill'
 
 const commonReducers = {
   table,
@@ -20,7 +21,8 @@ const commonReducers = {
   user,
   booking,
   call,
-  order
+  order,
+  bill
 }
 
 const configureStore = (options, storage) => {

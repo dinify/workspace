@@ -26,16 +26,16 @@ const TextInput = styled(FormText)`
 
 const color = colorsByStages['s5']
 
-const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime }) => {
+const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users }) => {
   if (!bill) return null
   return (
     <ActionBox className={removed ? 'vhs-zoom vhs-reverse Bill' : 'Bill'}>
       <Header>
         <TableId bg={color}>
-          {Number(bill.TableObject.position) === 0 ? 'OH' : bill.TableObject.position}
+          1
         </TableId>
-        {bill.UserObject ? <User user={bill.UserObject} /> : ''}
-  			{bill.BillObject.payment_method === 'DEBIT_CARD' && !noconfirm ?
+        <User user={users[bill.initiator]} />
+  			{bill.BillObject === 'DEBIT_CARD' && !noconfirm ?
   				<Form
   					className="ssss"
   					onSubmit={({ approvalNumber }) => {
@@ -57,9 +57,9 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime }) => {
   					}}
   				</Form>
   			: ''}
-  			<Text color={color}>
+  			{/*<Text color={color}>
           {datetime ? moment(bill.paid).subtract(3, 'h').format('DD/MM/YYYY HH:mm') : ''} {bill.BillObject.payment_method ? bill.BillObject.payment_method.replace('_',' ').replace('K NET','ONLINE') : ''}
-  			</Text>
+  			</Text>*/}
         <CheckButton bg={color} onClick={() => confirmBill({billId: bill.id})} flash={!noconfirm && isItOutdated(bill.requested, timer.p)} invisible={noconfirm}>
           <i className="ion-checkmark" />
         </CheckButton>
@@ -74,22 +74,22 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime }) => {
             </tr>
           </thead>
           <tbody>
-  					{bill.BillItems ? bill.BillItems.map((item, i) =>
+  					{bill.bill.items ? bill.bill.items.map((item, i) =>
   						<Tr key={i}>
-  	            <Td>{item.food_name}</Td>
-  	            <Td>{item.quantity}</Td>
-  	            <Td>{item.amount}KD</Td>
+  	            <Td>{item.order_item.menu_item.name}</Td>
+  	            <Td>1</Td>
+  	            <Td>{item.subtotal.amount}KD</Td>
   	          </Tr>
   					) : ''}
   					<Tr>
   	          <Td>Gratitude</Td>
-  	          <Td>{bill.BillObject.gratitude_ratio}%</Td>
-  	          <Td>{bill.BillObject.gratitude}KD</Td>
+  	          <Td>{bill.gratuity}%</Td>
+  	          <Td>{Math.round((bill.total.amount - (bill.total.amount / (1 + bill.gratuity/100 )))*1000)/1000}KD</Td>
   	        </Tr>
   					<Tr>
   	          <Td bold color={color}>TOTAL</Td>
   	          <Td></Td>
-  	          <Td bold color={color}>{bill.BillObject.total}KD</Td>
+  	          <Td bold color={color}>{bill.total.amount}KD</Td>
   	        </Tr>
           </tbody>
         </TableTag>
@@ -101,7 +101,8 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime }) => {
 
 export default connect(
   state => ({
-    timer: state.restaurant.timer
+    timer: state.restaurant.timer,
+    users: state.user.all,
   }),
   {
     confirmBill
