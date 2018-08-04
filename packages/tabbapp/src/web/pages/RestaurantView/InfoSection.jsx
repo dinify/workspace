@@ -55,16 +55,18 @@ const InfoSection = ({
         <div style={{width: '100%'}}>
           <StaticMap restaurant={restaurant} />
         </div>
-        <ListItem>
-          <ListItemIcon>
-            <Place className={classes.secondary}/>
-          </ListItemIcon>
-          <ListItemText
-            primary={`${addr.street}, ${addr.region}, ${addr.locality} ${addr.postal_code}`}
-            secondary="Address"
-            primaryTypographyProps={{variant: 'body1'}}
-            secondaryTypographyProps={{variant: 'caption'}}/>
-        </ListItem>
+        {addr &&
+          <ListItem>
+            <ListItemIcon>
+              <Place className={classes.secondary}/>
+            </ListItemIcon>
+            <ListItemText
+              primary={`${addr.street}, ${addr.region}, ${addr.locality} ${addr.postal_code}`}
+              secondary="Address"
+              primaryTypographyProps={{variant: 'body1'}}
+              secondaryTypographyProps={{variant: 'caption'}}/>
+          </ListItem>
+        }
       </a>
 
       <ExpansionPanel classes={{root: classes.expansionRoot, expanded: classes.nopad}}>
@@ -104,7 +106,7 @@ const InfoSection = ({
         </ExpansionPanelDetails>
       </ExpansionPanel>
 
-      <a rel="noopener noreferrer" target="_blank" href={`tel:${restaurant.contact.phone}`}
+      {restaurant.contact && restaurant.contact.phone && <a rel="noopener noreferrer" target="_blank" href={`tel:${restaurant.contact.phone}`}
         style={{textDecoration: 'none', display: 'block'}}>
         <ListItem>
           <ListItemIcon>
@@ -116,8 +118,8 @@ const InfoSection = ({
             primaryTypographyProps={{variant: 'body1'}}
             secondaryTypographyProps={{variant: 'caption'}}/>
         </ListItem>
-      </a>
-      <a rel="noopener noreferrer" target="_blank" href={`mailto:${restaurant.contact.email}`}
+      </a>}
+      {restaurant.contact && restaurant.contact.email && <a rel="noopener noreferrer" target="_blank" href={`mailto:${restaurant.contact.email}`}
         style={{textDecoration: 'none', display: 'block'}}>
         <ListItem>
           <ListItemIcon>
@@ -129,8 +131,8 @@ const InfoSection = ({
             primaryTypographyProps={{variant: 'body1'}}
             secondaryTypographyProps={{variant: 'caption'}}/>
         </ListItem>
-      </a>
-      <a rel="noopener noreferrer" target="_blank" href={restaurant.contact.website}
+      </a>}
+      {restaurant.contact && restaurant.contact.website && <a rel="noopener noreferrer" target="_blank" href={restaurant.contact.website}
         style={{textDecoration: 'none', display: 'block'}}>
         <ListItem>
           <ListItemIcon>
@@ -142,7 +144,7 @@ const InfoSection = ({
             primaryTypographyProps={{variant: 'body1'}}
             secondaryTypographyProps={{variant: 'caption'}}/>
         </ListItem>
-      </a>
+      </a>}
     </div>
   )
 }

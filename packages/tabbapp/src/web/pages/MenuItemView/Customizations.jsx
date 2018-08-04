@@ -69,14 +69,14 @@ let Customizations = ({
 
   return (
     <div>
-      <Typography
+      {ingredients.length > 0 && <Typography
         style={{marginTop: 16}}
         color="primary"
         variant="overline">
         Ingredients
-      </Typography>
+      </Typography>}
 
-      {ingredients.map(ingredient =>
+      {ingredients.length > 0 && ingredients.map(ingredient =>
         <div key={ingredient.id} style={{width: '100%', marginTop: allNonExcludable ? 0 : 8}}>
           <ButtonBase
             style={{borderRadius: 4, width: '100%'}}
@@ -111,9 +111,9 @@ let Customizations = ({
         </div>
       )}
 
-      <Divider style={{marginTop: 16}} />
+      {addons.length > 0 && <Divider style={{marginTop: 16}} />}
 
-      {addons.length &&
+      {addons.length > 0 &&
         <Typography
           style={{marginTop: 16}}
           color="primary"
@@ -121,7 +121,7 @@ let Customizations = ({
           Addons
         </Typography>
       }
-      {addons.map(addon =>
+      {addons.length > 0 && addons.map(addon =>
         <Grid key={addon.id} container wrap="nowrap" style={{marginTop: 8, alignItems: 'center'}} spacing={16}>
           <Grid item>
             <IconButton
@@ -165,9 +165,9 @@ let Customizations = ({
         </Grid>
       )}
 
-      <Divider style={{marginTop: 16}} />
+      {options.length > 0 && <Divider style={{marginTop: 16}} />}
 
-      {options.map(option => {
+      {options.length > 0 && options.map(option => {
         return (
           <div key={option.id}>
             <Typography
@@ -201,7 +201,7 @@ let Customizations = ({
         }} // add item to cart
         style={{marginTop: 24, marginBottom: 32}}
         fullWidth
-        variant="contained"
+        variant="extendedFab"
         color="primary"
         className={classes.button}>
         <AddShoppingCart style={{marginRight: 16}} />

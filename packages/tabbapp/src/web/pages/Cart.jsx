@@ -6,6 +6,7 @@ import { withStateHandlers } from 'recompose';
 
 import Edit from 'icons/Edit';
 import Done from 'icons/Done';
+import RestaurantMenu from 'icons/RestaurantMenu';
 import Delete from 'icons/Delete';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
@@ -91,7 +92,10 @@ const Cart = ({
           </Typography>
         </div>
         {cartItemsList.length > 0 &&
-          <Button style={{marginTop: 16}} variant="contained" color="primary" fullWidth onClick={() => order()}>Order</Button>
+          <Button style={{marginTop: 16}} variant="extendedFab" color="primary" fullWidth onClick={() => order()}>
+            <RestaurantMenu style={{marginRight: 16}} />
+            Order
+          </Button>
         }
       </ResponsiveContainer>
 

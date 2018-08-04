@@ -46,7 +46,10 @@ let Nav = ({
       }
 
       <Grid item>
-        <IconButton>
+        <IconButton
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`https://www.google.com/maps/search/${restaurant.name}/@${restaurant.latitude},${restaurant.longitude},17z`}>
           <Place className={classes.secondary} />
         </IconButton>
       </Grid>

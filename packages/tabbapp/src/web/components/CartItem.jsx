@@ -99,7 +99,7 @@ const CartItem = ({
               }} variant="caption">
                 {customization.name}
               </Typography>
-              {customization.price && <Typography
+              {customization.price && parseFloat(customization.price.amount) > 0 && <Typography
                 color="textSecondary"
                 style={{
                   alignSelf: 'flex-end',
