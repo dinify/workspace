@@ -1,4 +1,5 @@
 import R from 'ramda';
+import numeral from 'numeral';
 
 export const MapToList = items =>
   R.toPairs(items)
@@ -54,8 +55,11 @@ export function formatPrice(price) {
   const displayCurrencies = {
     KWD: 'KD'
   };
+  const formatAmount = {
+    KWD: (amount) => numeral(amount).format('0.000')
+  }
   const amount = Math.ceil(price.amount * 1000) / 1000;
-  return `${amount} ${displayCurrencies[price.currency]}`;
+  return `${formatAmount[price.currency](amount)} ${displayCurrencies[price.currency]}`;
   /* const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: price.currency,

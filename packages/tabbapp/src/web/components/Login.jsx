@@ -4,12 +4,17 @@ import { Field, reduxForm } from 'redux-form';
 import Text from 'web/components/Inputs/Text';
 import { loginInit } from 'ducks/auth/actions';
 import Grid from '@material-ui/core/Grid';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import ErrorMessage from 'web/components/ErrorMessage';
+import authTypes from 'ducks/auth/types';
+import FormControl from '@material-ui/core/FormControl';
 
 const gridItemStyle = {
   width: '100%',
 };
 
 let LoginForm = ({ handleSubmit, submitComponent }) => {
+  const ErrorComponent = () => (<ErrorMessage actionType={authTypes.LOGIN_FAIL}/>);
   return (
     <form onSubmit={handleSubmit}>
       <Grid container alignItems="center" direction="column">
@@ -33,6 +38,11 @@ let LoginForm = ({ handleSubmit, submitComponent }) => {
               fullWidth: true,
             }}
           />
+          <FormControl error>
+            <FormHelperText>
+              <ErrorComponent />
+            </FormHelperText>
+          </FormControl>
         </Grid>
       </Grid>
       {submitComponent}
