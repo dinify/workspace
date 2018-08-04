@@ -21,8 +21,8 @@ const Excludability = ({ selectedFoodId, updateCusomizations }) => ({ ingredient
       <Checkbox
         style={{width: 28}}
         color="default"
-        icon={<RemoveCircleOutline />}
-        checkedIcon={<RemoveCircle />}
+        icon={<RemoveCircleOutline style={{color: 'rgba(255,255,255,0.2)'}}/>}
+        checkedIcon={<RemoveCircle style={{color: 'rgba(255,255,255,1)'}}/>}
         checked={excludable}
         onChange={ev =>
           updateCusomizations({

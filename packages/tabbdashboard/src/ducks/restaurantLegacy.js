@@ -188,30 +188,3 @@ export const updateAddonInit = payload => ({
   type: 'UPDATE_ADDON_INIT',
   payload,
 });
-
-export const assignIngredientInit = payload => ({
-  type: 'ASSIGN_INGREDIENT-MENUITEM_INIT',
-  payload,
-});
-export const unassignIngredientInit = payload => ({
-  type: 'UNASSIGN_INGREDIENT-MENUITEM_INIT',
-  payload,
-});
-
-export const assignAddonInit = payload => ({
-  type: 'ASSIGN_ADDON-MENUITEM_INIT',
-  payload,
-});
-export const unassignAddonInit = payload => ({
-  type: 'UNASSIGN_ADDON-MENUITEM_INIT',
-  payload,
-});
-
-export const assignOptionInit = payload => ({
-  type: 'ASSIGN_OPTION-MENUITEM_INIT',
-  payload,
-});
-export const unassignOptionInit = payload => ({
-  type: 'UNASSIGN_OPTION-MENUITEM_INIT',
-  payload,
-});

@@ -134,64 +134,6 @@ const registerRestaurantEpic = (action$: Observable, { getState }) =>
         .catch(error => Observable.of(loginFailAction(error)));
     });
 
-const assignEpic = (action$: Observable) =>
-  action$
-    .filter(
-      action =>
-        action.type.startsWith('ASSIGN_') && action.type.endsWith('_INIT'),
-    )
-    .switchMap(({ payload, type }) => {
-      const middle = type.split('_')[1]; // INGREDIENT-FOOD
-      const assignTo = middle.split('-')[1]; // FOOD
-
-      const originalObjectKey = R.keys(payload.originalObject)[0]; // 'ingredients'
-      const originalObject = payload.originalObject[originalObjectKey]; // map of ingredients
-
-      const singular = originalObjectKey.slice(0, -1); // 'ingredient'
-      const assignedEntity = payload[singular]; // object of ingredient
-
-      const newObject = R.assoc(assignedEntity.id, assignedEntity)(
-        originalObject,
-      ); // original with new entity
-
-      let updatePayload = {};
-      updatePayload[originalObjectKey] = FN.MapToList(newObject);
-      updatePayload.id = payload.id; // foodId
-
-      return Observable.of({
-        type: `UPDATE_${assignTo}_INIT`,
-        payload: updatePayload,
-      });
-    });
-
-const unassignEpic = (action$: Observable) =>
-  action$
-    .filter(
-      action =>
-        action.type.startsWith('UNASSIGN_') && action.type.endsWith('_INIT'),
-    )
-    .switchMap(({ payload, type }) => {
-      const middle = type.split('_')[1]; // INGREDIENT-FOOD
-      const assignTo = middle.split('-')[1]; // FOOD
-
-      const originalObjectKey = R.keys(payload.originalObject)[0]; // 'ingredients'
-      const originalObject = payload.originalObject[originalObjectKey]; // map of ingredients
-
-      const singular = originalObjectKey.slice(0, -1); // 'ingredient'
-
-      // original without dissociated entity
-      const newObject = R.dissoc(payload[`${singular}Id`])(originalObject);
-
-      const updatePayload = {};
-      updatePayload[originalObjectKey] = FN.MapToList(newObject);
-      updatePayload.id = payload.id; // id of main entity
-
-      return Observable.of({
-        type: `UPDATE_${assignTo}_INIT`,
-        payload: updatePayload,
-      });
-    });
-
 const reorderEpic = (action$: Observable) =>
   action$
     .filter(
@@ -240,8 +182,6 @@ export default [
   loginEpic,
   registrationEpic,
   registerRestaurantEpic,
-  assignEpic,
-  unassignEpic,
   reorderEpic,
   editImageEpic,
 ];

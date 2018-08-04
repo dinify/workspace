@@ -40,7 +40,6 @@ ServiceForm = reduxForm({
 })(ServiceForm);
 
 const ServiceCalls = ({
-  updateName,
   createService,
   removeService,
   services,
@@ -52,7 +51,7 @@ const ServiceCalls = ({
     <FormBox>
       <FormBoxHead>
         <span>Service calls</span>
-        <Progress type={'UPDATE_CALLS'} />
+        <Progress type={'UPDATE_TAGS'} />
       </FormBoxHead>
       <FormBoxBody material>
         {servicesList.map(service => (

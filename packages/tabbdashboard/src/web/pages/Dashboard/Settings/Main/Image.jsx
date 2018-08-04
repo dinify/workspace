@@ -13,7 +13,7 @@ import Progress from 'web/components/Progress';
 
 const Image = ({ uploadMainImage, loggedRestaurant }) => {
   if (!loggedRestaurant) return <div />;
-  let imageUrl = '';
+  let imageUrl = '/static/placeholder.png';
   const images = R.values(loggedRestaurant.images);
   if (images.length > 0) {
     const sortedImages = R.sort((a, b) => a.precedence - b.precedence)(images);
