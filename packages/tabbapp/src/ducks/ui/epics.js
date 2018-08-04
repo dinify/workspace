@@ -6,7 +6,11 @@ import types from './types';
 
 const progressEpic = (action$: Observable) =>
   action$
-    .filter(({ type }) => type !== types.ACTIVE_ACTION && type !== types.UNACTIVE_ACTION)
+    .filter(({ type }) => {
+      if (type === types.ACTIVE_ACTION || type === types.UNACTIVE_ACTION) return false;
+      if (type.includes('DONE')) return true;
+      return false;
+    })
     .mergeMap(({ type }) => {
       const unactive = Observable.of({
         type: types.UNACTIVE_ACTION,

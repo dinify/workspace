@@ -71,7 +71,7 @@ let Customizations = ({
 
   let allNonExcludable = true;
   ingredients.forEach(ingredient => {
-    allNonExcludable = allNonExcludable && !ingredient.excludable;
+    allNonExcludable = allNonExcludable && !ingredient.pivot.excludable;
   });
 
   return (
@@ -87,7 +87,7 @@ let Customizations = ({
         <div key={ingredient.id} style={{width: '100%', marginTop: allNonExcludable ? 0 : 8}}>
           <ButtonBase
             style={{borderRadius: 4, width: '100%'}}
-            disabled={!ingredient.excludable}
+            disabled={!ingredient.pivot.excludable}
             onClick={() => {
               excludeIngredient({
                 menuItemId: menuItem.id,
@@ -96,7 +96,7 @@ let Customizations = ({
               })
             }}>
             <div style={{display: 'flex', alignItems: 'center', width: '100%'}}>
-              {ingredient.excludable ?
+              {ingredient.pivot.excludable ?
                 <div style={{width: 40, height: 40, marginRight: 8, padding: 8}}>
                   {ingredient.excluded ?
                     <AddCircle className={classes.secondary}/> :
