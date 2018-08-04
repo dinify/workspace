@@ -23,6 +23,7 @@ import {
 } from 'ducks/menuItem/actions';
 import { withStateHandlers } from 'recompose';
 import { addToCartInit } from 'ducks/cart/actions';
+import cartTypes from 'ducks/cart/types';
 
 const styles = theme => ({
   secondary: {
@@ -60,9 +61,8 @@ let Customizations = ({
   incAddonQty,
   selectChoice,
   addToCart,
-  snackbarOpen,
   onSnackClose,
-  openSnack,
+  addToCartDone,
 }) => {
 
   const ingredients = FN.MapToList(menuItem.ingredients);
@@ -205,24 +205,22 @@ let Customizations = ({
       <Button
         onClick={() => {
           addToCart({ menuItemId: menuItem.id })
-
-          // TODO: in callback when the request succeeded
-          openSnack()
         }} // add item to cart
         style={{marginTop: 24, marginBottom: 32}}
         fullWidth
         variant="extendedFab"
         color="primary"
-        className={classes.button}>
+        className={classes.button}
+      >
         <AddShoppingCart style={{marginRight: 16}} />
-        Add to cart
+        <span>Add to cart</span>
       </Button>
       <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left',
           }}
-          open={snackbarOpen}
+          open={addToCartDone}
           autoHideDuration={6000}
           onClose={onSnackClose}
           ContentProps={{
@@ -247,7 +245,9 @@ let Customizations = ({
 }
 
 Customizations = connect(
-  null,
+  (state) => ({
+    addToCartDone: state.ui.progressMap[cartTypes.ADD_TO_CART_DONE]
+  }),
   {
     excludeIngredient: excludeIngredientAction,
     incAddonQty: incAddonQtyAction,
@@ -256,12 +256,4 @@ Customizations = connect(
   }
 )(Customizations)
 
-export default withStateHandlers(
-  {
-    snackbarOpen: true,
-  },
-  {
-    openSnack: () => () => ({snackbarOpen: true}),
-    onSnackClose: () => () => ({snackbarOpen: false}),
-  }
-)(withStyles(styles)(Customizations));
+export default withStyles(styles)(Customizations);

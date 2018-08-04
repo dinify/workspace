@@ -1,0 +1,24 @@
+// @flow
+import { Observable } from 'rxjs';
+import types from './types';
+
+// import R from 'ramda';
+
+const progressEpic = (action$: Observable) =>
+  action$
+    .filter(({ type }) => type !== types.ACTIVE_ACTION && type !== types.UNACTIVE_ACTION)
+    .mergeMap(({ type }) => {
+      const unactive = Observable.of({
+        type: types.UNACTIVE_ACTION,
+        payload: type
+      }).delay(6000);
+      const active = Observable.of({
+        type: types.ACTIVE_ACTION,
+        payload: type
+      })
+      return Observable.merge(active, unactive);
+    });
+
+export default [
+  progressEpic,
+];

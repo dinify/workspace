@@ -13,6 +13,7 @@ const loginInitEpic = (action$: Observable) =>
       Observable.fromPromise(API.Login({ email, password }))
         .mergeMap(res => {
           setCookie('access_token', res.token, 30);
+          window.history.back();
           return Observable.of(loginDone(res), loadUserData());
         })
         .catch(error => Observable.of(loginFail(error))),
