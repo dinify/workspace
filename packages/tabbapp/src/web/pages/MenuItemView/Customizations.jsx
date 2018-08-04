@@ -9,15 +9,19 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Chip from '@material-ui/core/Chip';
+import Snackbar from '@material-ui/core/Snackbar';
+import Close from 'icons/Close';
 import AddCircle from 'icons/AddCircle';
 import RemoveCircle from 'icons/RemoveCircle';
 import AddShoppingCart from 'icons/AddShoppingCart';
+import { Link } from 'react-router-dom';
 import * as FN from 'lib/FN';
 import {
   excludeIngredient as excludeIngredientAction,
   incAddonQty as incAddonQtyAction,
   selectChoice as selectChoiceAction
 } from 'ducks/menuItem/actions';
+import { withStateHandlers } from 'recompose';
 import { addToCartInit } from 'ducks/cart/actions';
 
 const styles = theme => ({
@@ -56,6 +60,9 @@ let Customizations = ({
   incAddonQty,
   selectChoice,
   addToCart,
+  snackbarOpen,
+  onSnackClose,
+  openSnack,
 }) => {
 
   const ingredients = FN.MapToList(menuItem.ingredients);
@@ -198,6 +205,9 @@ let Customizations = ({
       <Button
         onClick={() => {
           addToCart({ menuItemId: menuItem.id })
+
+          // TODO: in callback when the request succeeded
+          openSnack()
         }} // add item to cart
         style={{marginTop: 24, marginBottom: 32}}
         fullWidth
@@ -207,6 +217,31 @@ let Customizations = ({
         <AddShoppingCart style={{marginRight: 16}} />
         Add to cart
       </Button>
+      <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={snackbarOpen}
+          autoHideDuration={6000}
+          onClose={onSnackClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Added to cart</span>}
+          action={[
+            <Button key="cart" color="inherit" size="small" onClick={onSnackClose}>
+              Go to cart
+            </Button>,
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={onSnackClose}>
+              <Close />
+            </IconButton>,
+          ]}
+        />
     </div>
   )
 }
@@ -221,4 +256,12 @@ Customizations = connect(
   }
 )(Customizations)
 
-export default withStyles(styles)(Customizations);
+export default withStateHandlers(
+  {
+    snackbarOpen: true,
+  },
+  {
+    openSnack: () => () => ({snackbarOpen: true}),
+    onSnackClose: () => () => ({snackbarOpen: false}),
+  }
+)(withStyles(styles)(Customizations));

@@ -7,7 +7,6 @@ import { withStateHandlers } from 'recompose';
 import Edit from 'icons/Edit';
 import Done from 'icons/Done';
 import RestaurantMenu from 'icons/RestaurantMenu';
-import Delete from 'icons/Delete';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -98,7 +97,6 @@ const Cart = ({
           </Button>
         }
       </ResponsiveContainer>
-
     </div>
   )
 }
