@@ -24,6 +24,7 @@ let LoginForm = ({ handleSubmit, submitComponent }) => {
             component={Text}
             componentProps={{
               label: 'Email',
+              type: 'email',
               fullWidth: true,
             }}
           />

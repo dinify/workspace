@@ -143,13 +143,12 @@ class RestaurantView extends React.PureComponent {
               </Typography>
               <Typography gutterBottom variant="body1">{restaurant.about}</Typography> */ }
               <Divider style={{marginTop: 16, marginBottom: 16}} />
-              <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
+              { /* <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
                 <Grid item>
                   <Today className={classes.primary} />
                 </Grid>
                 <Grid item>
                   <Typography variant="subheading">Recent orders</Typography>
-                  { /* <Typography variant="caption">See what people are eating in {restaurant.name} at the moment</Typography> */ }
                 </Grid>
               </Grid>
               <Grid container spacing={mediumScreen ? 24 : 16}>
@@ -165,7 +164,6 @@ class RestaurantView extends React.PureComponent {
                 </Grid>
                 <Grid item>
                   <Typography variant="subheading">Favorited</Typography>
-                  { /* <Typography variant="caption">Your top picks in {restaurant.name}</Typography> */ }
                 </Grid>
               </Grid>
               <Grid container spacing={mediumScreen ? 24 : 16}>
@@ -174,7 +172,7 @@ class RestaurantView extends React.PureComponent {
                 </Grid>
               </Grid>
 
-              <Divider style={{marginTop: 16, marginBottom: 16}} />
+              <Divider style={{marginTop: 16, marginBottom: 16}} /> */ }
 
               <MenuSection restaurant={restaurant} subdomain={subdomain} />
             </Grid>

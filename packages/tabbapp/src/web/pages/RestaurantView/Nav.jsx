@@ -8,6 +8,7 @@ import Instagram from 'icons/Instagram';
 import CalendarClock from 'icons/CalendarClock';
 import Place from 'icons/Place';
 import FavoriteToggle from 'web/components/FavoriteToggle';
+import scrollIntoView from 'scroll-into-view-if-needed';
 import { favRestaurantInit } from 'ducks/restaurant/actions';
 
 const styles = theme => ({
@@ -47,9 +48,14 @@ let Nav = ({
 
       <Grid item>
         <IconButton
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`https://www.google.com/maps/search/${restaurant.name}/@${restaurant.latitude},${restaurant.longitude},17z`}>
+          onClick={() => {
+            const node = document.getElementById('map');
+            scrollIntoView(node, {
+              behavior: 'smooth',
+              scrollMode: 'always',
+              block: 'start',
+            });
+          }}>
           <Place className={classes.secondary} />
         </IconButton>
       </Grid>
@@ -65,7 +71,15 @@ let Nav = ({
       </Grid>
 
       <Grid item>
-        <IconButton>
+        <IconButton
+          onClick={() => {
+            const node = document.getElementById('booking');
+            scrollIntoView(node, {
+              behavior: 'smooth',
+              scrollMode: 'always',
+              block: 'start',
+            });
+          }}>
           <CalendarClock className={classes.secondary} />
         </IconButton>
       </Grid>

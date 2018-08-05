@@ -23,7 +23,7 @@ const BookingForm = ({
 }) => {
   // Temporary variables
   return (
-    <div>
+    <div id="booking">
       <Typography variant="caption">Date</Typography>
       <BasePicker value={selectedDate} onChange={setDate}>
       {

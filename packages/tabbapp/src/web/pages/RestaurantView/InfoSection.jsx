@@ -33,6 +33,16 @@ const styles = theme => ({
   }
 });
 
+const jsdays = [
+  'sun',
+  'mon',
+  'tue',
+  'wed',
+  'thu',
+  'fri',
+  'sat',
+]
+
 const days = {
   mon: 'Monday',
   tue: 'Tuesday',
@@ -48,11 +58,12 @@ const InfoSection = ({
   restaurant
 }) => {
   const addr = restaurant.address.postal;
+  const currentHours = restaurant.open_hours[jsdays[(new Date()).getDay()]];
   return (
     <div>
       <a rel="noopener noreferrer" target="_blank" href={`https://www.google.com/maps/search/${restaurant.name}/@${restaurant.latitude},${restaurant.longitude},17z`}
         style={{textDecoration: 'none', display: 'block'}}>
-        <div style={{width: '100%'}}>
+        <div id='map' style={{width: '100%'}}>
           <StaticMap restaurant={restaurant} />
         </div>
         {addr &&
@@ -76,8 +87,8 @@ const InfoSection = ({
               <Schedule className={classes.secondary}/>
             </ListItemIcon>
             <ListItemText
-              primary="Open now"
-              secondary="Closes at 10:30 PM"
+              primary={restaurant.open_now ? "Open now" : "Closed"}
+              secondary={`Closes at ${currentHours[0][1]}`}
               primaryTypographyProps={{variant: 'body1'}}
               secondaryTypographyProps={{variant: 'caption'}}/>
           </ListItem>
