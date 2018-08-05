@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 
@@ -62,12 +62,19 @@ class ModalSwitch extends React.Component {
       this.previousLocation !== location
     ); // not initial render
 
+    const TEMP_HOMEPAGE = true;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     return (
       <div>
         {iosInstalled && <AppBar />}
         <Switch location={isModal ? this.previousLocation : location}>
-          <Route exact path="/" component={Main} />
+          <Route exact path="/" render={() => (
+            TEMP_HOMEPAGE ? (
+              <Redirect to="/restaurant/koreagrill"/>
+            ) : (
+              <Main/>
+            )
+          )}/>
 
           { /* Renders if user opens a link in a new tab */ }
           <Route path="/login" component={Main} />
