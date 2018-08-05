@@ -68,7 +68,10 @@ let MenuSection = ({
           <Typography variant="caption">Everything you can get in {restaurant.name}</Typography>
         </Grid>
       </Grid>
-      {R.sort((a,b) => a.precedence - b.precedence, menuCategoriesList).map((category, i) =>
+      {R.sort((a,b) => a.precedence - b.precedence, menuCategoriesList).map((category, i) => {
+        const categoryItems = FN.MapToList(category.items);
+        if (categoryItems.length === 0) return <div />;
+        return (
         <div className={mobile ? classes.expand : null} style={{marginTop: i === 0 ? 32 : 0}} key={uniqueId()}>
           {i > 0 && <Divider className={mobile ? classes.margin : null} style={{marginTop: mobile ? 0 : 32, marginBottom: 32}} />}
           <Link style={{textDecoration: 'none'}} to={`/category/${category.id}`}>
@@ -78,7 +81,7 @@ let MenuSection = ({
           </Link>
           {mobile ?
             <div className={classes.scroller}>
-              {R.sort((a,b) => a.precedence - b.precedence, FN.MapToList(category.items)).map((menuItem, i, arr) =>
+              {R.sort((a,b) => a.precedence - b.precedence, categoryItems).map((menuItem, i, arr) =>
                 <div key={menuItem.id} style={{
                   display: 'inline-block',
                   width: 'calc(50% - 16px)',
@@ -102,6 +105,8 @@ let MenuSection = ({
             </Grid>
           }
         </div>
+      )
+      }
       )}
     </div>
   )
