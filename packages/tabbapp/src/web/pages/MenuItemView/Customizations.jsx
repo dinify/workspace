@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Typography from 'web/components/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -9,8 +10,6 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Chip from '@material-ui/core/Chip';
-import Snackbar from '@material-ui/core/Snackbar';
-import Close from 'icons/Close';
 import AddCircle from 'icons/AddCircle';
 import RemoveCircle from 'icons/RemoveCircle';
 import AddShoppingCart from 'icons/AddShoppingCart';
@@ -63,6 +62,7 @@ let Customizations = ({
   addToCart,
   onSnackClose,
   addToCartDone,
+  history,
 }) => {
 
   const ingredients = FN.MapToList(menuItem.ingredients);
@@ -204,7 +204,8 @@ let Customizations = ({
       })}
       <Button
         onClick={() => {
-          addToCart({ menuItemId: menuItem.id })
+          addToCart({ menuItemId: menuItem.id });
+          history.goBack();
         }} // add item to cart
         style={{marginTop: 24, marginBottom: 32}}
         fullWidth
@@ -215,31 +216,6 @@ let Customizations = ({
         <AddShoppingCart style={{marginRight: 16}} />
         <span>Add to cart</span>
       </Button>
-      <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          open={addToCartDone}
-          autoHideDuration={6000}
-          onClose={onSnackClose}
-          ContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">Added to cart</span>}
-          action={[
-            <Button key="cart" color="inherit" size="small" onClick={onSnackClose}>
-              Go to cart
-            </Button>,
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={onSnackClose}>
-              <Close />
-            </IconButton>,
-          ]}
-        />
     </div>
   )
 }
@@ -256,4 +232,4 @@ Customizations = connect(
   }
 )(Customizations)
 
-export default withStyles(styles)(Customizations);
+export default withRouter(withStyles(styles)(Customizations));

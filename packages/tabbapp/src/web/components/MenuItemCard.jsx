@@ -67,12 +67,12 @@ const MenuItemCard = ({
             backgroundImage: `url(${images[0]})`
           }}/>
       </div>
+      <Typography variant="subheading">{menuItem.name}</Typography>
       <Typography
         className={classes.price}
         variant="overline">
         {FN.formatPrice(menuItem.price)}
       </Typography>
-      <Typography variant="subheading">{menuItem.name}</Typography>
       <div style={{width: 1000}} />
       { /* <Typography noWrap variant="body1">{menuItem.description}</Typography> */ }
     </MenuItemLink>

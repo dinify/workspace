@@ -2,6 +2,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { matchPath } from 'react-router';
+import { connect } from 'react-redux';
+
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';
+import Close from 'icons/Close';
 
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
@@ -10,8 +16,10 @@ import MenuItemView from 'web/pages/MenuItemView';
 import Cart from 'web/pages/Cart';
 import Bill from 'web/pages/Bill';
 import Receipt from 'web/pages/Receipt';
+import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
 import AppBar from 'web/components/AppBar';
+import cartTypes from 'ducks/cart/types';
 import * as FN from 'lib/FN';
 
 import OnboardingDialog from 'web/components/OnboardingDialog';
@@ -47,7 +55,7 @@ class ModalSwitch extends React.Component {
   }
 
   render() {
-    const { location } = this.props;
+    const { location, addToCartDone, history } = this.props;
     const isModal = !!(
       location.state &&
       location.state.modal &&
@@ -73,7 +81,33 @@ class ModalSwitch extends React.Component {
           <Route path="/cart" component={Cart} />
           <Route path="/bill" component={Bill} />
           <Route path="/receipt" component={Receipt} />
+          <Route path="/services" component={Services} />
         </Switch>
+        <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            open={addToCartDone}
+            autoHideDuration={6000}
+            onClose={() => {}}
+            ContentProps={{
+              'aria-describedby': 'message-id',
+            }}
+            message={<span id="message-id">Added to cart</span>}
+            action={[
+              <Button key="cart" color="inherit" size="small" onClick={() => history.push('/cart')}>
+                Go to cart
+              </Button>,
+              <IconButton
+                key="close"
+                aria-label="Close"
+                color="inherit"
+                onClick={() => {}}>
+                <Close />
+              </IconButton>,
+            ]}
+          />
         <OnboardingDialog
           open={this.match('/login', '/signup')}
           isSignup={this.match('/signup')}
@@ -83,6 +117,15 @@ class ModalSwitch extends React.Component {
     );
   }
 }
+
+ModalSwitch = connect(
+  (state) => ({
+    addToCartDone: state.ui.progressMap[cartTypes.ADD_TO_CART_DONE]
+  }),
+  {
+
+  }
+)(ModalSwitch);
 
 const App = () => (
   <div>

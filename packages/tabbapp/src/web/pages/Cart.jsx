@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { withStateHandlers } from 'recompose';
 
-import Edit from 'icons/Edit';
+import Delete from 'icons/Delete';
 import Done from 'icons/Done';
 import RestaurantMenu from 'icons/RestaurantMenu';
 import Divider from '@material-ui/core/Divider';
@@ -72,7 +72,7 @@ const Cart = ({
           </div>
 
           <IconButton onClick={() => setEditing(!editing)}>
-            {editing ? <Done /> : <Edit />}
+            {editing ? <Done /> : <Delete />}
           </IconButton>
         </div>
         {cartItemsList.map(item =>
