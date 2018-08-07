@@ -3,6 +3,7 @@ import R from 'ramda';
 import types from './types';
 
 const initialState = {
+  orderType: 'DINE_IN', // AHEAD, TAKEAWAY
   items: {},
   subtotal: {
     amount: 0,
@@ -16,6 +17,9 @@ export default function reducer(state = initialState, action) {
     //   const res = action.payload;
     //   return R.assocPath(['items', res.id], res)(state);
     // }
+    case types.SET_ORDERTYPE: {
+      return R.assoc('orderType', action.payload.orderType)(state);
+    }
     case types.REMOVE_ORDERITEM_INIT: {
       const { orderItemId } = action.payload;
       const amount = state.subtotal.amount;

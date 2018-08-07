@@ -21,7 +21,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import * as FN from 'lib/FN';
-import { rmFromCartInit, orderInit } from 'ducks/cart/actions';
+import { rmFromCartInit, orderInit, setOrderTypeAction } from 'ducks/cart/actions';
 
 const styles = theme => ({
   primary: {
@@ -45,13 +45,19 @@ const Cart = ({
   rmFromCart,
   editing,
   setEditing,
-  order
+  order,
+  checkedInRestaurant,
+  orderType,
+  setOrderType
 }) => {
   const cartItemsList = FN.MapToList(cartItems);
   const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
 
-  // TODO: select this variable from redux store
-  const notCheckedIn = true;
+  const notCheckedIn = !checkedInRestaurant;
+
+  if (orderType === 'DINE_IN' && notCheckedIn) {
+    setOrderType({ orderType: 'AHEAD' })
+  }
 
   return (
     <div style={{paddingBottom: 64}}>
@@ -93,12 +99,12 @@ const Cart = ({
           </Typography>
           <RadioGroup
             aria-label="Order type"
-            name="gender1"
-            value="ahead"
-            onChange={() => {}}>
-            <FormControlLabel value="takeaway" control={<Radio />} label="Takeaway" />
-            <FormControlLabel value="ahead" control={<Radio />} label="Order ahead" />
-            <FormControlLabel value="delivery" disabled control={<Radio />} label="Delivery (coming soon!)" />
+            value={orderType}
+            onChange={(ev) => setOrderType({ orderType: ev.target.value })}
+          >
+            <FormControlLabel value="TAKEAWAY" control={<Radio />} label="Takeaway" />
+            <FormControlLabel value="AHEAD" control={<Radio />} label="Order ahead" />
+            <FormControlLabel value="DELIVERY" disabled control={<Radio />} label="Delivery (coming soon!)" />
           </RadioGroup>
           <div style={{display: 'flex', alignItems: 'center'}}>
             <Typography style={{flex: 1}} variant="caption">
@@ -146,9 +152,12 @@ const Cart = ({
 export default connect(
   state => ({
     cartItems: state.cart.items,
-    subtotal: state.cart.subtotal
+    subtotal: state.cart.subtotal,
+    orderType: state.cart.orderType,
+    checkedInRestaurant: state.restaurant.checkedInRestaurant
   }),
   {
+    setOrderType: setOrderTypeAction,
     rmFromCart: rmFromCartInit,
     order: orderInit
   }

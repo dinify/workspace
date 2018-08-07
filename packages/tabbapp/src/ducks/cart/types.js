@@ -11,4 +11,5 @@ export default {
   ORDER_INIT: 'tabb/cart/ORDER_INIT',
   ORDER_DONE: 'tabb/cart/ORDER_DONE',
   ORDER_FAIL: 'tabb/cart/ORDER_FAIL',
+  SET_ORDERTYPE: 'tabb/cart/SET_ORDERTYPE'
 };

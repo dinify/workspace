@@ -42,3 +42,8 @@ export const orderFail = (e) => ({
   type: types.ORDER_FAIL,
   payload: e
 });
+
+export const setOrderTypeAction = ({ orderType }) => ({
+  type: types.SET_ORDERTYPE,
+  payload: { orderType }
+})
