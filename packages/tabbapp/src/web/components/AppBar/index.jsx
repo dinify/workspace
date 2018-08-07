@@ -13,7 +13,7 @@ import ChevronLeft from 'icons/ChevronLeft';
 import Menu from 'icons/Menu';
 import ShoppingCart from 'icons/ShoppingCart';
 import Receipt from 'icons/Receipt';
-
+import Restaurant from '@material-ui/icons/Restaurant';
 
 import Badge from '@material-ui/core/Badge';
 import Divider from '@material-ui/core/Divider';
@@ -21,6 +21,7 @@ import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Input from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
@@ -97,6 +98,8 @@ const AppBar = ({
   anchor,
   cartItems,
   router,
+  restaurants,
+  checkedInRestaurant
 }: AppBarProps) => {
 
   const cartItemsList = FN.MapToList(cartItems);
@@ -109,6 +112,7 @@ const AppBar = ({
     </Link>
   );
   const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
+  const activeRestaurant = checkedInRestaurant ? restaurants[checkedInRestaurant] : null
 
   const root = router.history.location.pathname === '/';
   // console.log(router.history.location.pathname);
@@ -148,6 +152,23 @@ const AppBar = ({
           <div style={{flex: 1}} />
         }
         {children}
+        {checkedInRestaurant ?
+          <IconButton
+            color={color}
+            onClick={() => {router.history.push('/restaurant/'+activeRestaurant.subdomain)}}
+            style={{marginRight: 16}}
+          >
+            <Restaurant />
+          </IconButton>
+          :
+          <Button
+            variant="contained" color="primary"
+            onClick={() => {router.history.push('/checkin')}}
+            style={{marginRight: 16}}
+            >
+            Check In
+          </Button>
+        }
         <IconButton
           color={color}
           onClick={() => {router.history.push('/cart')}}
@@ -174,7 +195,9 @@ const AppBar = ({
 
 export default connect(
   state => ({
-    cartItems: state.cart.items
+    cartItems: state.cart.items,
+    checkedInRestaurant: state.restaurant.checkedInRestaurant,
+    restaurants: state.restaurant.all
   }),
 )(withStateHandlers(
   {

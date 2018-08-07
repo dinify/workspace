@@ -25,6 +25,7 @@ import BookingForm from './BookingForm';
 import InfoSection from './InfoSection';
 import MenuSection from './MenuSection';
 import Nav from './Nav';
+import { checkinInit } from 'ducks/restaurant/actions';
 
 const styles = theme => ({
   category: {
@@ -63,8 +64,16 @@ class RestaurantView extends React.PureComponent {
     const {
       fetchRestaurant,
       fetchMenucategories,
-      match: { params }
+      checkin,
+      match: { params },
+      location: { search }
     } = this.props;
+    const query = search.match(/qr=([^&]*)/);
+    if (query && query[1]) {
+      const qr = query[1];
+      console.log(qr);
+      checkin({ qr });
+    }
     fetchRestaurant({ subdomain: params.subdomain });
     fetchMenucategories({ subdomain: params.subdomain });
   }
@@ -216,10 +225,12 @@ class RestaurantView extends React.PureComponent {
 RestaurantView = connect(
   (state, { match }) => ({
     restaurant: getRestaurantBySubdomain(state, match.params.subdomain),
+    checkedInRestaurant: state.restaurant.checkedInRestaurant
   }),
   {
     fetchMenucategories: fetchMenucategoriesInit,
     fetchRestaurant: fetchRestaurantInit,
+    checkin: checkinInit,
   }
 )(RestaurantView)
 

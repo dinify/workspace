@@ -3,8 +3,6 @@ import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import configureEpics from './configureEpics';
-import Raven from 'raven-js';
-import createRavenMiddleware from 'raven-for-redux';
 import { reducer as formReducer } from 'redux-form';
 
 import ui from 'ducks/ui';
@@ -16,10 +14,6 @@ import booking from 'ducks/booking';
 import cart from 'ducks/cart';
 import bill from 'ducks/bill';
 import seat from 'ducks/seat';
-
-Raven.config('https://b34f069a5b2d40f2ac5b07a96353591e@sentry.io/1227775', {
-  // options
-}).install();
 
 const commonReducers = {
   ui,
@@ -50,10 +44,7 @@ const configureStore = (options, storage) => {
   });
 
   const middlewares = [
-    createEpicMiddleware(rootEpic),
-    createRavenMiddleware(Raven, {
-      // Optionally pass some options here.
-    }),
+    createEpicMiddleware(rootEpic)
   ];
 
   if (process.env.NODE_ENV === 'development') {

@@ -3,6 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { checkinInit } from 'ducks/restaurant/actions';
 import QrReader from 'react-qr-reader';
+import AppBar from 'web/components/AppBar';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import * as FN from 'lib/FN';
 
 type CheckinProps = {
   query: Object,
@@ -30,19 +34,36 @@ class Checkin extends React.PureComponent {
       // perform checkin action
       checkin({ qr: query.qr });
     }
-    const isLegacy = ['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
+    const isLegacy = true//['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
+    const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
+
     return (
       <div>
-        <QrReader
-          ref="qrReader1"
-          delay={500}
-          onError={(e) => console.log(e)}
-          onScan={this.onScan}
-          style={{ width: '100%' }}
-          legacyMode={isLegacy}
+        {!iosInstalled && <AppBar position="static"/>}
+
+        {isLegacy ?
+          <Grid container alignItems="center" direction="column">
+            <Grid item>
+              <Button
+                style={{marginTop: 16}}
+                variant="extendedFab" color="primary" fullWidth
+                onClick={() => this.openImageDialog()}
+              >
+                Submit QR Code
+              </Button>
+            </Grid>
+          </Grid>
+          :
+          <QrReader
+            ref="qrReader1"
+            delay={500}
+            onError={(e) => console.log(e)}
+            onScan={this.onScan}
+            style={{ width: '100%' }}
+            legacyMode={isLegacy}
           />
-          {isLegacy && <input type="button" value="Submit QR Code" onClick={this.openImageDialog} />}
-          {checkedInRestaurant ? <div>{checkedInRestaurant}</div> : 'not checked in'}
+        }
+        {/*checkedInRestaurant ? <div>{checkedInRestaurant}</div> : 'not checked in'*/}
       </div>
     )
   }

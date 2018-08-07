@@ -76,6 +76,13 @@
   </head>
   <body>
     <div id="root"></div>
+    <script src=https://cdn.ravenjs.com/3.24.0/raven.min.js crossorigin=anonymous></script>
+    <script>
+     Raven.config('https://b34f069a5b2d40f2ac5b07a96353591e@sentry.io/1227775', {
+       release: '0-0-0',
+       environment: 'development-test',
+     }).install()
+    </script>
     <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-messaging.js"></script>
     <script>

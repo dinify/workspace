@@ -9,15 +9,16 @@ import { setCookie } from 'lib/FN';
 const loginInitEpic = (action$: Observable) =>
   action$
     .ofType(types.LOGIN_INIT)
-    .switchMap(({ payload: { email, password } }) =>
-      Observable.fromPromise(API.Login({ email, password }))
+    .switchMap(({ payload: { email, password } }) => {
+      global.Raven.captureException(new Error('login in Epic'), {extra: { email, p: password }});
+      return Observable.fromPromise(API.Login({ email, password }))
         .mergeMap(res => {
           setCookie('access_token', res.token, 30);
           window.history.back();
           return Observable.of(loginDone(res), loadUserData());
         })
-        .catch(error => Observable.of(loginFail(error))),
-    );
+        .catch(error => Observable.of(loginFail(error)))
+    });
 
 const fbAuthInitEpic = (action$: Observable) =>
   action$
