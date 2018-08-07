@@ -129,7 +129,7 @@ class Bill extends React.Component {
     }
 
     // TODO compare seats[activeGuest].user_id with currently logged user id
-    const meSelected = seats && seats[activeGuest] && seats[activeGuest].user_id === loggedUserId;
+    const meSelected = seats && seats[activeGuest] && seats[activeGuest].user_id === loggedUserId || seats === null || seats.length === 0;
 
     const gratitudeAmount = subtotalAmount * (gratitude / 100);
     const totalAmount = subtotalAmount + gratitudeAmount;

@@ -69,6 +69,15 @@ let Customizations = ({
   const addons = FN.MapToList(menuItem.addons);
   const options = FN.MapToList(menuItem.options);
 
+  let selectCount = 0;
+  options.map(option => {
+    let selected = false;
+    FN.MapToList(option.choices).map((choice) => {
+      selected = selected || choice.selected;
+    });
+    if (selected) selectCount += 1;
+  });
+
   let allNonExcludable = true;
   ingredients.forEach(ingredient => {
     allNonExcludable = allNonExcludable && !ingredient.pivot.excludable;
@@ -208,6 +217,7 @@ let Customizations = ({
           history.goBack();
         }} // add item to cart
         style={{marginTop: 24, marginBottom: 32}}
+        disabled={selectCount < options.length && options.length !== 0}
         fullWidth
         variant="extendedFab"
         color="primary"
