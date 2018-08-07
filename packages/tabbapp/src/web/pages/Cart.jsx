@@ -16,6 +16,9 @@ import AppBar from 'web/components/AppBar';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Typography from 'web/components/Typography';
 import CartItem from 'web/components/CartItem';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import * as FN from 'lib/FN';
 import { rmFromCartInit, orderInit } from 'ducks/cart/actions';
@@ -46,6 +49,9 @@ const Cart = ({
 }) => {
   const cartItemsList = FN.MapToList(cartItems);
   const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
+
+  // TODO: select this variable from redux store
+  const notCheckedIn = true;
 
   return (
     <div style={{paddingBottom: 64}}>
@@ -81,13 +87,49 @@ const Cart = ({
           </div>
         )}
         <Divider style={{marginTop: 16, marginBottom: 16}}/>
-        <div style={{display: 'flex', alignItems: 'center', paddingLeft: 72}}>
+        {notCheckedIn && <div>
+          <Typography variant="overline" color="textSecondary">
+            Order type
+          </Typography>
+          <RadioGroup
+            aria-label="Order type"
+            name="gender1"
+            value="ahead"
+            onChange={() => {}}>
+            <FormControlLabel value="takeaway" control={<Radio />} label="Takeaway" />
+            <FormControlLabel value="ahead" control={<Radio />} label="Order ahead" />
+            <FormControlLabel value="delivery" disabled control={<Radio />} label="Delivery (coming soon!)" />
+          </RadioGroup>
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            <Typography style={{flex: 1}} variant="caption">
+              Subtotal
+            </Typography>
+
+            <Typography variant="overline">
+              {FN.formatPrice(subtotal)}
+            </Typography>
+          </div>
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            <Typography style={{flex: 1}} variant="caption">
+              Service fee
+            </Typography>
+
+            <Typography variant="overline">
+              0.150 KD
+            </Typography>
+          </div>
+        </div>}
+        <div style={{display: 'flex', alignItems: 'center', paddingLeft: notCheckedIn ? 0 : 72}}>
+
           <Typography style={{flex: 1}} variant="button">
             Total
           </Typography>
 
           <Typography variant="subheading">
-            {FN.formatPrice(subtotal)}
+            {FN.formatPrice({
+              amount: parseFloat(subtotal.amount) + 0.15,
+              currency: subtotal.currency
+            })}
           </Typography>
         </div>
         {cartItemsList.length > 0 &&
