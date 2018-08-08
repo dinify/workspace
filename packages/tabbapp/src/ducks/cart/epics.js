@@ -49,11 +49,13 @@ const addToCartEpic = (action$: Observable, { getState }) =>
         .catch(error => Observable.of(addToCartFail(error)))
     });
 
-const orderEpic = (action$: Observable) =>
+const orderEpic = (action$: Observable, { getState }) =>
   action$
     .ofType(types.ORDER_INIT)
     .switchMap(() => {
-      return Observable.fromPromise(API.Order())
+      const state = getState();
+      const orderType = state.cart.orderType;
+      return Observable.fromPromise(API.Order({ orderType }))
         .mergeMap(res => {
           return Observable.of(orderDone(res));
         })

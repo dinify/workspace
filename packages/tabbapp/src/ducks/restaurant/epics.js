@@ -15,7 +15,9 @@ const checkinEpic = (action$: Observable, { getState }) =>
   action$
     .ofType(types.CHECKIN_INIT)
     .switchMap(({ payload }: CheckinProps) => {
-      if (!getState().user.loggedUserId) {
+      const state = getState();
+      if (!state.user.loggedUserId) {
+        console.log('this happened');
         return Observable.of(checkinFail([{ status: 401 }]));
       }
       return Observable.fromPromise(API.Checkin(payload))

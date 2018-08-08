@@ -87,8 +87,8 @@ export function RemoveOrderitem({ orderItemId }: RmFromCartArgs) {
   return Post({ path: `order/item/${orderItemId}/delete` });
 }
 
-export function Order() {
-  return Post({ path: 'order' }, { type: 'DINE_IN' })
+export function Order({ orderType = 'DINE_IN' }) {
+  return Post({ path: 'order' }, { type: orderType })
 }
 
 export function GetBill() {

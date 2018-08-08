@@ -64,16 +64,8 @@ class RestaurantView extends React.PureComponent {
     const {
       fetchRestaurant,
       fetchMenucategories,
-      checkin,
       match: { params },
-      location: { search }
     } = this.props;
-    const query = search.match(/qr=([^&]*)/);
-    if (query && query[1]) {
-      const qr = query[1];
-      console.log(qr);
-      checkin({ qr });
-    }
     fetchRestaurant({ subdomain: params.subdomain });
     fetchMenucategories({ subdomain: params.subdomain });
   }
@@ -82,11 +74,26 @@ class RestaurantView extends React.PureComponent {
       width,
       classes,
       restaurant,
-      match: { params }
+      router,
+      match: { params },
+      location: { search },
+      history,
+      checkin,
+      loggedUserId,
+      checkedInRestaurant
     } = this.props;
     if (!restaurant) {
       return <div />
     }
+    console.log(this.props);
+    const query = search.match(/qr=([^&]*)/);
+    if (!checkedInRestaurant && query && query[1]) {
+      if (loggedUserId) {
+        const qr = query[1];
+        checkin({ qr });
+      } else history.push('/login');
+    }
+
     const subdomain = params.subdomain;
     const images = FN.MapToList(restaurant.images);
     const allTags = FN.MapToList(restaurant.tags);
@@ -224,6 +231,7 @@ class RestaurantView extends React.PureComponent {
 
 RestaurantView = connect(
   (state, { match }) => ({
+    loggedUserId: state.user.loggedUserId,
     restaurant: getRestaurantBySubdomain(state, match.params.subdomain),
     checkedInRestaurant: state.restaurant.checkedInRestaurant
   }),

@@ -7,6 +7,7 @@ import AppBar from 'web/components/AppBar';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import * as FN from 'lib/FN';
+import QRscanner from './QRscanner';
 
 type CheckinProps = {
   query: Object,
@@ -15,54 +16,28 @@ type CheckinProps = {
 };
 
 class Checkin extends React.PureComponent {
-  constructor(props) {
-    super(props)
-    this.openImageDialog = this.openImageDialog.bind(this)
-  }
-  onScan = (data) => {
-    const { checkedInRestaurant, checkin }: CheckinProps = this.props;
-    if (!data) return;
-    const uuid = data.substr(data.length - 36);
-    if (!checkedInRestaurant) checkin({ qr: uuid });
-  }
-  openImageDialog() {
-    this.refs.qrReader1.openImageDialog();
-  }
   render() {
-    const { query, checkedInRestaurant, checkin }: CheckinProps = this.props;
-    if (query && query.qr) {
-      // perform checkin action
-      checkin({ qr: query.qr });
-    }
+    const { checkedInRestaurant, checkin }: CheckinProps = this.props;
+
     const isLegacy = true//['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
+
+    const onData = (data) => {
+      const query = data.match(/qr=([^&]*)/);
+      if (!checkedInRestaurant && query && query[1]) {
+        const qr = query[1];
+        checkin({ qr });
+      }
+    }
 
     return (
       <div>
         {!iosInstalled && <AppBar position="static"/>}
 
-        {isLegacy ?
-          <Grid container alignItems="center" direction="column">
-            <Grid item>
-              <Button
-                style={{marginTop: 16}}
-                variant="extendedFab" color="primary" fullWidth
-                onClick={() => this.openImageDialog()}
-              >
-                Submit QR Code
-              </Button>
-            </Grid>
-          </Grid>
-          :
-          <QrReader
-            ref="qrReader1"
-            delay={500}
-            onError={(e) => console.log(e)}
-            onScan={this.onScan}
-            style={{ width: '100%' }}
-            legacyMode={isLegacy}
-          />
-        }
+        <QRscanner
+          onData={onData}
+        />
+
         {/*checkedInRestaurant ? <div>{checkedInRestaurant}</div> : 'not checked in'*/}
       </div>
     )
@@ -72,7 +47,6 @@ class Checkin extends React.PureComponent {
 
 export default connect(
   (state, ownProps) => ({
-    query: ownProps.location.query,
     checkedInRestaurant: state.restaurant.checkedInRestaurant
   }),
   {
