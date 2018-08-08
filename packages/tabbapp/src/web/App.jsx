@@ -20,6 +20,7 @@ import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
 import AppBar from 'web/components/AppBar';
 import cartTypes from 'ducks/cart/types';
+import restaurantTypes from 'ducks/restaurant/types';
 import * as FN from 'lib/FN';
 
 import OnboardingDialog from 'web/components/OnboardingDialog';
@@ -55,7 +56,7 @@ class ModalSwitch extends React.Component {
   }
 
   render() {
-    const { location, addToCartDone, history } = this.props;
+    const { location, addToCartDone, history, checkInDone } = this.props;
     const isModal = !!(
       location.state &&
       location.state.modal &&
@@ -115,6 +116,31 @@ class ModalSwitch extends React.Component {
               </IconButton>,
             ]}
           />
+          <Snackbar
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              open={checkInDone}
+              autoHideDuration={6000}
+              onClose={() => {}}
+              ContentProps={{
+                'aria-describedby': 'message-id',
+              }}
+              message={<span id="message-id">You are now checked in</span>}
+              action={[
+                <Button key="menu" color="inherit" size="small" onClick={() => history.push('/')}>
+                  Go to restaurant menu
+                </Button>,
+                <IconButton
+                  key="close"
+                  aria-label="Close"
+                  color="inherit"
+                  onClick={() => {}}>
+                  <Close />
+                </IconButton>,
+              ]}
+            />
         <OnboardingDialog
           open={this.match('/login', '/signup')}
           isSignup={this.match('/signup')}
@@ -127,7 +153,8 @@ class ModalSwitch extends React.Component {
 
 ModalSwitch = connect(
   (state) => ({
-    addToCartDone: state.ui.progressMap[cartTypes.ADD_TO_CART_DONE]
+    addToCartDone: state.ui.progressMap[cartTypes.ADD_TO_CART_DONE],
+    checkInDone: state.ui.progressMap[restaurantTypes.CHECKIN_DONE]
   }),
   {
 

@@ -1,22 +1,54 @@
 import React from "react";
 import jsQR from 'jsqr';
+import QrScanner from "lib/qr-scanner.min.js";
 
 export default class QRscanner extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      cameraAccessible: 'INIT',
+      status: null
+    };
     this.setContext = this.setContext.bind(this);
     this.setVideoContext = this.setVideoContext.bind(this);
     this.tick = this.tick.bind(this);
     this.drawLine = this.drawLine.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   componentDidMount() {
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then((stream) => {
+    const displayVideo = (stream) => {
+      this.setState({ cameraAccessible: 'DONE' });
       this.video.srcObject = stream;
       this.video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
       this.video.play();
       requestAnimationFrame(this.tick);
-    });
+    }
+    navigator.getWebcam = (
+      navigator.getUserMedia ||
+      navigator.webKitGetUserMedia ||
+      navigator.moxGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.msGetUserMedia
+    );
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'environment' } })
+      .then(displayVideo)
+      .catch((e) => {
+        this.setState({ cameraAccessible: 'FAIL' });
+        console.log(e.name + ": " + e.message);
+      });
+    } else {
+      if (!navigator.getWebcam) this.setState({ cameraAccessible: 'FAIL' });
+      else {
+        navigator.getWebcam({ audio: true, video: { facingMode: 'environment' } }, displayVideo,
+          () => {
+            this.setState({ cameraAccessible: 'FAIL' });
+            console.log("Web cam is not accessible.");
+          }
+        );
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -60,21 +92,47 @@ export default class QRscanner extends React.Component {
           this.props.onData(code.data);
         }
       }
-      requestAnimationFrame(this.tick);
+      setTimeout(() => requestAnimationFrame(this.tick), 100);
     }
   }
 
-
+  handleInputChange(event) {
+    const file = event.target.files[0];
+    if (!file) {
+        return;
+    }
+    QrScanner.scanImage(file)
+      .then(result => {
+        this.props.onCode(result);
+      })
+      .catch(e => {
+        this.setState({ status: e });
+        console.log(e || 'No QR code found.')
+    });
+  }
 
   render() {
     return (
       <div id="container">
         <video ref={this.setVideoContext} id="qrVideo" hidden />
+        {this.state.cameraAccessible === 'INIT' ? 'Opening camera...' : ''}
         <canvas
+          hidden={this.state.cameraAccessible !== 'DONE'}
           id="qrCanvas"
           style={{width: '100%'}}
           ref={this.setContext}
         />
+        {this.state.cameraAccessible === 'FAIL' ?
+          <div>
+            Scanning QR from browser is not available on this device
+            <input
+              type="file"
+              accept="image/*"
+              onChange={this.handleInputChange}
+            />
+          </div>
+        : ''}
+        {this.state.status}
       </div>
     );
   }

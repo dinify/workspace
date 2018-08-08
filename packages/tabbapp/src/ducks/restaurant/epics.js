@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import * as API from 'api/restaurant';
 import types from './types';
 import { checkinFail, checkinDone, favRestaurantDone, favRestaurantFail } from './actions';
+import { fetchStatusInit } from 'ducks/restaurant/actions';
 
 type CheckinProps = {
   payload: {
@@ -14,7 +15,8 @@ type CheckinProps = {
 const checkinEpic = (action$: Observable, { getState }) =>
   action$
     .ofType(types.CHECKIN_INIT)
-    .switchMap(({ payload }: CheckinProps) => {
+    .debounceTime(500)
+    .exhaustMap(({ payload }: CheckinProps) => {
       const state = getState();
       if (!state.user.loggedUserId) {
         console.log('this happened');
@@ -22,7 +24,7 @@ const checkinEpic = (action$: Observable, { getState }) =>
       }
       return Observable.fromPromise(API.Checkin(payload))
         .mergeMap(res => {
-          return Observable.of(checkinDone(res));
+          return Observable.of(checkinDone(res), fetchStatusInit());
         })
         .catch(error => Observable.of(checkinFail(error)))
     });

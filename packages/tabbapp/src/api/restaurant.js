@@ -42,7 +42,7 @@ export function Checkin({ qr, code }: CheckinWithQr | CheckinWithCode) {
   const payload = {}
   if (qr) payload.qr = qr
   if (code) payload.code = code
-  return Post({ path: `checkin?with=restaurant` }, payload);
+  return Post({ path: `checkin?with=table` }, payload);
 }
 
 export function GetStatus() {
