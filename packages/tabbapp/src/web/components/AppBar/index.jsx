@@ -13,6 +13,7 @@ import ChevronLeft from 'icons/ChevronLeft';
 import Menu from 'icons/Menu';
 import ShoppingCart from 'icons/ShoppingCart';
 import Receipt from 'icons/Receipt';
+import QRCodeScan from 'icons/QRCodeScan';
 import Restaurant from '@material-ui/icons/Restaurant';
 
 import Badge from '@material-ui/core/Badge';
@@ -152,6 +153,7 @@ const AppBar = ({
           <div style={{flex: 1}} />
         }
         {children}
+        {/*
         {checkedInRestaurant ?
           <IconButton
             color={color}
@@ -161,13 +163,13 @@ const AppBar = ({
             <Restaurant />
           </IconButton>
           :
-          <Button
-            variant="contained" color="primary"
+          <IconButton
+            color={color}
             onClick={() => {router.history.push('/checkin')}}
             style={{marginRight: 16}}
             >
-            Check In
-          </Button>
+            <QRCodeScan />
+          </IconButton>
         }
         <IconButton
           color={color}
@@ -182,7 +184,7 @@ const AppBar = ({
           onClick={() => {router.history.push('/bill')}}
           style={{marginRight: 16}}>
           <Receipt />
-        </IconButton>
+        </IconButton> */}
         <Account color={color} classes={classes} anchor={anchor} />
       </Toolbar>
       {color === 'default' ?

@@ -19,6 +19,7 @@ import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
 import AppBar from 'web/components/AppBar';
+import Navigation from 'web/components/Navigation';
 import cartTypes from 'ducks/cart/types';
 import restaurantTypes from 'ducks/restaurant/types';
 import * as FN from 'lib/FN';
@@ -55,8 +56,15 @@ class ModalSwitch extends React.Component {
     this.props.history.goBack();
   }
 
+  onNavigate = (evt, val) => {
+    if (val === 0) this.props.history.push('/');
+    else if (val === 1) this.props.history.push('/cart');
+    else if (val === 2) this.props.history.push('/bill');
+    else if (val === 3) this.props.history.push('/checkin');
+  }
+
   render() {
-    const { location, addToCartDone, history, checkInDone } = this.props;
+    const { location, addToCartDone, history, checkInDone, checkedInRestaurant } = this.props;
     const isModal = !!(
       location.state &&
       location.state.modal &&
@@ -91,6 +99,12 @@ class ModalSwitch extends React.Component {
           <Route path="/receipt" component={Receipt} />
           <Route path="/services" component={Services} />
         </Switch>
+        <Navigation handleChange={this.onNavigate} checkedInRestaurant={checkedInRestaurant} value={(() => {
+          if (this.match('/cart')) return 1;
+          if (this.match('/bill')) return 2;
+          if (this.match('/checkin')) return 3;
+          return 0;
+        })()}/>
         <Snackbar
             anchorOrigin={{
               vertical: 'bottom',
@@ -154,6 +168,7 @@ class ModalSwitch extends React.Component {
 ModalSwitch = connect(
   (state) => ({
     addToCartDone: state.ui.progressMap[cartTypes.ADD_TO_CART_DONE],
+    checkedInRestaurant: state.restaurant.checkedInRestaurant,
     checkInDone: state.ui.progressMap[restaurantTypes.CHECKIN_DONE]
   }),
   {
