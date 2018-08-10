@@ -117,8 +117,6 @@ export default function reducer(state: State = initialState, action: Action) {
     //  return R.assoc('events', makeUpdatedEvents(action, state, 'ORDER'))(state);
     case 'GET_ORDERAHEADS_DONE':
       return R.assoc('events', makeUpdatedEvents(action, state, 'ORDERAHEAD'))(state);
-    case 'GET_BILLS_DONE':
-      return R.assoc('events', makeUpdatedEvents(action, state, 'BILL'))(state);
     case 'GET_ACCEPTED_BOOKING_DONE':
       return R.assoc('acceptedBookings', action.payload)(state);
     case 'GET_SALES_DONE':
@@ -191,7 +189,9 @@ export function guestsResults(payload) {
 }
 
 export const confirmService = (payload) => ({ type: 'SERVICE_CONFIRMATION_INIT', payload })
+
 export const confirmOrder = (payload) => ({ type: 'ORDER_CONFIRMATION_INIT', payload })
+
 export const confirmOrderAhead = (payload) => ({ type: 'ORDERAHEAD_CONFIRMATION_INIT', payload })
 export const confirmBill = (payload) => ({ type: 'BILL_CONFIRMATION_INIT', payload })
 
@@ -250,9 +250,9 @@ const getTablesEpic = (action$: Observable) =>
 const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
   action$
     .ofType('GUESTS_POLLING_INIT')
-    .switchMap(() => {
+    .mergeMap(() => {
       const loadInitData = () => {
-
+        console.log('start');
         const state = getState()
         const waiterboardId = state.restaurant.selectedWBId
 
@@ -283,8 +283,7 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
 
         return { type: 'GUESTS_POLLING_DONE', payload: {} };
       }
-      loadInitData();
-      return Observable.interval(8000).map(loadInitData);
+      return Observable.interval(8000).startWith(0).map(loadInitData);
     });
 
 const loginEpic = (action$: Observable) =>

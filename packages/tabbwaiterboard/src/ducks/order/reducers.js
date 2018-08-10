@@ -13,6 +13,12 @@ export default function reducer(state = initialState, action) {
       return R.assoc('list', payload)(state);
     }
 
+    case 'ORDER_CONFIRMATION_INIT': {
+      const { orderId } = action.payload;
+      const newList = R.filter((o) => o.id !== orderId, state.list);
+      return R.assoc('list', newList)(state);
+    }
+
     default:
       return state;
   }

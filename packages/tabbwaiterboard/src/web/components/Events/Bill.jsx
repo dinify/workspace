@@ -74,7 +74,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
             </tr>
           </thead>
           <tbody>
-  					{bill.bill.items ? bill.bill.items.map((item, i) =>
+  					{bill.bill && bill.bill.items ? bill.bill.items.map((item, i) =>
   						<Tr key={i}>
   	            <Td>{item.order_item.menu_item.name}</Td>
   	            <Td>1</Td>

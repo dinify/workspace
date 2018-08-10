@@ -135,10 +135,10 @@ const Sign = ({ guest, timer }) => {
 
 
 const Table = ({
-  table, clearTable, toggleModal, guests, users, timer, index, updateTable
+  table, clearTable, toggleModal, guestList, users, timer, updateTable
 }) => {
-  const presentGuests = R.values(guests)
-  .filter((g) => {
+
+  const presentGuests = guestList.filter((g) => {
     return g.table_id === table.id
   })
   .sort((a,b) => b.id.localeCompare(a.id))
@@ -157,7 +157,7 @@ const Table = ({
         <Grid container direction="column" justify="center" alignItems="center" spacing={16}>
           <Grid item>
             <Id onClick={() => toggleModal({ open: true, type: 'ListOfBills', tableId: table.id })}>
-              {index}
+              {table.number}
             </Id>
           </Grid>
           <Grid item>
@@ -211,7 +211,7 @@ const Table = ({
 
 export default connect(
   state => ({
-    guests: state.guests.all,
+    guestList: state.guests.list,
     users: state.user.all,
     loggedRestaurant: state.restaurant.loggedRestaurant,
     timer: state.restaurant.timer

@@ -113,7 +113,7 @@ const masonryOptions = {
 const Board = ({
   sales,
   tables,
-  guests,
+  guestList,
   frameIndex,
   modalOpen,
   modalType,
@@ -160,12 +160,13 @@ const Board = ({
   const callsList = MapToList(calls)
 
   const newOrders = R.filter((o) => o.status !== 'CONFIRMED')(orders)
+  const newBills = R.filter((o) => o.status === "INITIATED")(bills)
 //
   return (<div>
 
     <Header
       tablesCount={R.values(tables).length}
-      guestsCount={R.values(guests).length}
+      guestsCount={guestList.length}
       salesVolume={sales}
     />
 
@@ -194,7 +195,7 @@ const Board = ({
                   {newOrders.map((order) =>
                     <Order key={order.id} order={order} />
                   )}
-                  {bills.map((bill) =>
+                  {newBills.map((bill) =>
                     <Bill key={bill.id} bill={bill} />
                   )}
                   {/*R.values(events).sort((a,b) => a.content.id - b.content.id).map((event, i) =>
@@ -210,9 +211,9 @@ const Board = ({
         <Frame n={1}>
           <Container>
             <Grid container spacing={8} justify="flex-start" alignItems="flex-start">
-              {FN.MapToList(tables).map((table, i) =>
+              {FN.MapToList(tables).sort((a,b) => a.number - b.number).map((table) =>
                 <Grid item>
-                  <Table openModal={openModal} tableId={i} table={table} key={i} index={i+1} />
+                  <Table openModal={openModal} table={table} key={table.id} />
                 </Grid>
               )}
             </Grid>
@@ -239,7 +240,7 @@ export default connect(
     bills: state.bill.list,
     calls: state.call.all,
     tables: state.table.all,
-    guests: state.guests.all,
+    guestList: state.guests.list,
     events: state.restaurant.events,
     guestsCount: state.table.guestsCount,
     sales: state.restaurant.sales,

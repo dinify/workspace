@@ -19,7 +19,7 @@ const clearUserEpic = (action$: Observable) =>
       if(!global.confirm('Do you really want to check-out this user?')) return Observable.of({type: "CLEAR_USER_CANCELED"});
       return Observable.fromPromise(API.CheckOutUser({userId: payload.userId }))
         .map(() => ({type: 'CLEAR_USER_DONE', payload }))
-        .catch(error => Observable.of(({type: 'CLEAR_USER_FAIL'})))
+        .catch(error => Observable.of(({type: 'CLEAR_USER_FAIL', payload: error})))
     });
 
 export default [
