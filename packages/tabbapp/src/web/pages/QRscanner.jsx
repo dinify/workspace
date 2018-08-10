@@ -7,7 +7,16 @@ export default class QRscanner extends React.Component {
     super(props);
     this.state = {
       cameraAccessible: 'INIT',
-      status: null
+      box: {
+        visible: false,
+        location: {
+          topLeftCorner: {x: 0, y: 0},
+          topRightCorner: {x: 0, y: 0},
+          bottomLeftCorner: {x: 0, y: 0},
+          bottomRightCorner: {x: 0, y: 0},
+        },
+      },
+      status: null,
     };
     this.setContext = this.setContext.bind(this);
     this.setVideoContext = this.setVideoContext.bind(this);
@@ -21,6 +30,7 @@ export default class QRscanner extends React.Component {
       this.setState({ cameraAccessible: 'DONE' });
       this.video.srcObject = stream;
       this.video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+      this.video.setAttribute("autoplay", true); // required to tell iOS safari we don't want fullscreen
       this.video.play();
       requestAnimationFrame(this.tick);
     }
@@ -57,6 +67,11 @@ export default class QRscanner extends React.Component {
     });
   }
 
+  setOverlayContext = (r) => {
+    this.canvasOverlayElement = r;
+    if (r) this.ctx2 = r.getContext("2d");
+  }
+
   setContext(r) {
     this.canvasElement = r;
     if (r) this.ctx = r.getContext("2d");
@@ -66,13 +81,21 @@ export default class QRscanner extends React.Component {
     this.video = v;
   }
 
+  onLocation = (visible, location) => {
+    if (!this.state.box.visible && !visible) return;
+    const box = this.state.box;
+    if (location) box.location = location;
+    box.visible = visible;
+    this.setState({box});
+  }
+
   drawLine(begin, end, color) {
-    this.ctx.beginPath();
-    this.ctx.moveTo(begin.x, begin.y);
-    this.ctx.lineTo(end.x, end.y);
-    this.ctx.lineWidth = 4;
-    this.ctx.strokeStyle = color;
-    this.ctx.stroke();
+    this.ctx2.beginPath();
+    this.ctx2.moveTo(begin.x, begin.y);
+    this.ctx2.lineTo(end.x, end.y);
+    this.ctx2.lineWidth = 4;
+    this.ctx2.strokeStyle = color;
+    this.ctx2.stroke();
   }
 
   tick() {
@@ -80,17 +103,21 @@ export default class QRscanner extends React.Component {
       if (this.video.readyState === this.video.HAVE_ENOUGH_DATA) {
         this.canvasElement.height = this.video.videoHeight;
         this.canvasElement.width = this.video.videoWidth;
+        this.canvasOverlayElement.height = this.video.videoHeight;
+        this.canvasOverlayElement.width = this.video.videoWidth;
 
         this.ctx.drawImage(this.video, 0, 0, this.canvasElement.width, this.canvasElement.height);
         const imageData = this.ctx.getImageData(0, 0, this.canvasElement.width, this.canvasElement.height);
         const code = jsQR(imageData.data, imageData.width, imageData.height);
         if (code) {
+          this.onLocation(true, code.location);
           this.drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
           this.drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
           this.drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
           this.drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
           this.props.onData(code.data);
         }
+        else this.onLocation(false, null);
       }
       setTimeout(() => requestAnimationFrame(this.tick), 100);
     }
@@ -112,14 +139,38 @@ export default class QRscanner extends React.Component {
   }
 
   render() {
+    const b = this.state.box;
     return (
-      <div id="container">
-        <video ref={this.setVideoContext} id="qrVideo" hidden />
+      <div id="container" style={{
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'center'
+      }}>
+        <video
+          id="qrVideo"
+          ref={this.setVideoContext}
+          hidden={this.state.cameraAccessible !== 'DONE'}
+          style={{
+            minHeight: '100vh'
+          }}/>
         {this.state.cameraAccessible === 'INIT' ? 'Opening camera...' : ''}
         <canvas
           hidden={this.state.cameraAccessible !== 'DONE'}
+          id="qrCanvasOverlay"
+          style={{
+            position: 'absolute',
+            minHeight: '100vh'
+          }}
+          ref={this.setOverlayContext}
+        />
+
+        <canvas
+          hidden
           id="qrCanvas"
-          style={{width: '100%'}}
+          style={{
+            position: 'absolute',
+            minHeight: '100vh'
+          }}
           ref={this.setContext}
         />
         {this.state.cameraAccessible === 'FAIL' ?
