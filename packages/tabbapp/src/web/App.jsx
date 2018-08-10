@@ -22,6 +22,8 @@ import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
 import cartTypes from 'ducks/cart/types';
 import restaurantTypes from 'ducks/restaurant/types';
+import billTypes from 'ducks/bill/types';
+
 import * as FN from 'lib/FN';
 
 import OnboardingDialog from 'web/components/OnboardingDialog';
@@ -64,7 +66,7 @@ class ModalSwitch extends React.Component {
   }
 
   render() {
-    const { location, addToCartDone, history, checkInDone, checkedInRestaurant } = this.props;
+    const { location, addToCartDone, history, checkInDone, checkedInRestaurant, orderDone, initiatedTransaction } = this.props;
     const isModal = !!(
       location.state &&
       location.state.modal &&
@@ -135,6 +137,53 @@ class ModalSwitch extends React.Component {
                 vertical: 'bottom',
                 horizontal: 'left',
               }}
+              open={orderDone}
+              autoHideDuration={6000}
+              onClose={() => {}}
+              ContentProps={{
+                'aria-describedby': 'message-id',
+              }}
+              message={<span id="message-id">Order has been placed</span>}
+              action={[
+                <Button key="bill" color="inherit" size="small" onClick={() => history.push('/bill')}>
+                  Go to bill
+                </Button>,
+                <IconButton
+                  key="close"
+                  aria-label="Close"
+                  color="inherit"
+                  onClick={() => {}}>
+                  <Close />
+                </IconButton>,
+              ]}
+            />
+            <Snackbar
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                open={initiatedTransaction}
+                autoHideDuration={6000}
+                onClose={() => {}}
+                ContentProps={{
+                  'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">Payment request sent</span>}
+                action={[
+                  <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    onClick={() => {}}>
+                    <Close />
+                  </IconButton>
+                ]}
+              />
+          <Snackbar
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
               open={checkInDone}
               autoHideDuration={6000}
               onClose={() => {}}
@@ -167,7 +216,9 @@ class ModalSwitch extends React.Component {
 
 ModalSwitch = connect(
   (state) => ({
+    initiatedTransaction: state.ui.progressMap[billTypes.INIT_TRANSACTION_DONE],
     addToCartDone: state.ui.progressMap[cartTypes.ADD_TO_CART_DONE],
+    orderDone: state.ui.progressMap[cartTypes.ORDER_DONE],
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
     checkInDone: state.ui.progressMap[restaurantTypes.CHECKIN_DONE]
   }),

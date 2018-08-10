@@ -57,7 +57,7 @@ const orderEpic = (action$: Observable, { getState }) =>
       const orderType = state.cart.orderType;
       return Observable.fromPromise(API.Order({ orderType }))
         .mergeMap(res => {
-          return Observable.of(orderDone(res));
+          return Observable.of(orderDone(res), fetchCartInit());
         })
         .catch(error => Observable.of(orderFail(error)))
     });
