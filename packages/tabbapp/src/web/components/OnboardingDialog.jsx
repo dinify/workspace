@@ -15,7 +15,6 @@ import Login from 'web/components/Login';
 import Signup from 'web/components/Signup';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
-
 const styles = theme => ({
   grow: {
     flex: 1,
@@ -116,20 +115,19 @@ class OnboardingDialog extends React.Component {
           <div style={{ paddingBottom: 16 }}>
             <FacebookLogin
               appId="123605498281814"
-              autoLoad
               fields="name,email,gender,birthday"
-              callback={(res) => fbAuth({
-                name: res.name,
-                email: res.email,
-                accessToken: res.accessToken
-              })}
+              scope="user_gender,user_birthday"
+              disableMobileRedirect={true}
+              callback={(res) => {
+                fbAuth(res)
+              }}
               render={renderProps => (
                 <Button
                   fullWidth
                   className={classes.facebookButton}
                   classes={{ label: classes.uncapitalized }}
                   variant="contained"
-                  onClick={renderProps.onClick}
+                  onClick={() => renderProps.onClick()}
                 >
                   <FacebookLogo />
                   <span className={classes.leftGutter}>Continue with Facebook</span>

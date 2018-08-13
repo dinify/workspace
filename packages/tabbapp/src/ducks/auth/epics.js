@@ -5,6 +5,7 @@ import types from './types';
 import { loginFail, loginDone, logoutDone, signupFail } from './actions';
 import { loadUserData } from 'ducks/app/actions';
 import { setCookie } from 'lib/FN';
+import moment from 'moment';
 
 const loginInitEpic = (action$: Observable) =>
   action$
@@ -23,39 +24,46 @@ const loginInitEpic = (action$: Observable) =>
 const fbAuthInitEpic = (action$: Observable) =>
   action$
     .ofType(types.FBAUTH_INIT)
-    .switchMap(({ payload: { name, email, accessToken } }) =>
+    .switchMap(({ payload: { name, email, accessToken, gender, birthday } }) => {
+      return Observable.fromPromise(API.LoginWithFacebook({
+          accessToken
+        }))
+        .mergeMap(res => {
+          console.log(res, 'LoginWithFacebook');
+          if (res.token) setCookie('access_token', res.token, 30);
+          return Observable.of(loginDone(res), loadUserData());
+        })
+        .catch(error => {
+          console.log(error,'LoginWithFacebookError');
 
-    Observable.fromPromise(API.LoginWithFacebook({
-        accessToken
-      }))
-      .mergeMap(res => {
-        console.log(res, 'LoginWithFacebook');
-        if (res.metadata) setCookie('access_token', res.metadata.token, 30);
-        return Observable.of(loginDone(res), loadUserData());
-      })
-      .catch(error => {
-        console.log(error,'LoginWithFacebookError');
+          let formatedGender = 'OTHER';
+          if (gender === 'male') formatedGender = 'MALE';
+          if (gender === 'female') formatedGender = 'FEMALE';
+          let formatedBirthday = null;
+          if (birthday) formatedBirthday = moment(birthday, "MM/DD/YYYY").format("YYYY-MM-DD")
 
+          return Observable.fromPromise(API.Register({
+              name,
+              phone: String(Math.floor(Math.random() * 9283899800) + 22838998),
+              email,
+              accessToken,
+              registrationType: 'FACEBOOK',
+              birthday: formatedBirthday,
+              gender: formatedGender
+            }))
+            .mergeMap(res => {
+              console.log(res, 'Register');
+              if (res.metadata) setCookie('access_token', res.metadata.token, 30);
+              return Observable.of(loginDone(res), loadUserData());
+            })
+            .catch(error => {
+              console.log(error, 'RegisterError');
+              return Observable.of(loginFail(error))
+            })
 
-        return Observable.fromPromise(API.Register({
-            name, phone: '928389988', email, accessToken, registrationType: 'FACEBOOK'
-          }))
-          .mergeMap(res => {
-            console.log(res, 'Register');
-            if (res.metadata) setCookie('access_token', res.metadata.token, 30);
-            return Observable.of(loginDone(res), loadUserData());
-          })
-          .catch(error => {
-            console.log(error, 'RegisterError');
-            return Observable.of(loginFail(error))
-          })
-
-
-        //return Observable.of(loginFail(error))
-      })
-
-
-    );
+          //return Observable.of(loginFail(error))
+        });
+    });
 
 const signupInitEpic = (action$: Observable) =>
   action$

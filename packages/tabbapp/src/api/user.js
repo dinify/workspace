@@ -13,17 +13,21 @@ type RegisterFacebookProps = {
   phone: string,
   email: string,
   accessToken: string,
+  gender: string,
+  birthday: string,
   registrationType: 'FACEBOOK'
 }
 export function Register(
-  { name, phone, email, password, accessToken, registrationType }: RegisterLocalProps | RegisterFacebookProps
+  {
+    name, phone, email, password, accessToken, gender, birthday, registrationType
+  }: RegisterLocalProps | RegisterFacebookProps
 ) {
   const body = {
     name,
     phone,
     email,
-    gender: 'OTHER',
-    birth_date: '1990-01-01',
+    gender: gender || 'OTHER',
+    birth_date: birthday || '1990-01-01',
     registration_type: registrationType
   }
   if (password) body.password = password;
