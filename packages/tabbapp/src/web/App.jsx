@@ -55,7 +55,10 @@ class ModalSwitch extends React.Component {
     if (val === 0) this.props.history.push('/');
     else if (val === 1) this.props.history.push('/cart');
     else if (val === 2) this.props.history.push('/bill');
-    else if (val === 3) this.props.history.push('/checkin');
+    else if (val === 3) {
+      if (this.props.checkedInRestaurant) this.props.history.push('/services');
+      else this.props.history.push('/checkin');
+    }
   }
 
   render() {
@@ -102,7 +105,7 @@ class ModalSwitch extends React.Component {
         <Navigation handleChange={this.onNavigate} checkedInRestaurant={checkedInRestaurant} value={(() => {
           if (this.match('/cart')) return 1;
           if (this.match('/bill')) return 2;
-          if (this.match('/checkin')) return 3;
+          if (this.match('/checkin') || this.match('/services')) return 3;
           return 0;
         })()}/>
 
