@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import cartTypes from 'ducks/cart/types';
 import restaurantTypes from 'ducks/restaurant/types';
 import billTypes from 'ducks/bill/types';
+import serviceTypes from 'ducks/service/types';
 import Snackbar from 'web/components/Snackbar';
 
 const SnackbarDispatcher = ({
@@ -13,6 +14,7 @@ const SnackbarDispatcher = ({
   checkInDone,
   orderDone,
   initiatedTransaction,
+  serviceCallDone
 }) => {
   const snackbarsParams = [{
     message: "Added to cart",
@@ -35,6 +37,12 @@ const SnackbarDispatcher = ({
     action: () => historyPush('/'),
     actionTitle: "Go to restaurant menu",
     initiated: checkInDone
+  },
+  {
+    message: "Service called",
+    action: () => historyPush('/'),
+    actionTitle: "Go to restaurant menu",
+    initiated: serviceCallDone
   }];
   return (
     <div>
@@ -56,6 +64,7 @@ export default connect(
     initiatedTransaction: state.ui.progressMap[billTypes.INIT_TRANSACTION_DONE],
     addToCartDone: state.ui.progressMap[cartTypes.ADD_TO_CART_DONE],
     orderDone: state.ui.progressMap[cartTypes.ORDER_DONE],
-    checkInDone: state.ui.progressMap[restaurantTypes.CHECKIN_DONE]
+    checkInDone: state.ui.progressMap[restaurantTypes.CHECKIN_DONE],
+    serviceCallDone: state.ui.progressMap[serviceTypes.CALL_SERVICE_DONE]
   })
 )(SnackbarDispatcher);

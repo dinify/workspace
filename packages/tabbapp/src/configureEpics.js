@@ -8,6 +8,7 @@ import { cartEpics as cart } from 'ducks/cart';
 import { billEpics as bill } from 'ducks/bill';
 import { seatEpics as seat } from 'ducks/seat';
 import { uiEpics as ui } from 'ducks/ui';
+import { serviceEpics as service } from 'ducks/service';
 
 import { appEpics as app } from 'ducks/app';
 
@@ -21,7 +22,8 @@ const epics = [
   ...cart,
   ...bill,
   ...seat,
-  ...ui
+  ...ui,
+  ...service
 ];
 
 export default (deps = {}, platformEpics = []) => (

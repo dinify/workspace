@@ -1,0 +1,5 @@
+export default {
+  CALL_SERVICE_INIT: 'tabb/seat/CALL_SERVICE_INIT',
+  CALL_SERVICE_DONE: 'tabb/seat/CALL_SERVICE_DONE',
+  CALL_SERVICE_FAIL: 'tabb/seat/CALL_SERVICE_FAIL'
+};

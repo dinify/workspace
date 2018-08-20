@@ -2,14 +2,14 @@
 import { Get, Post } from './Network';
 
 export function GetRestaurants() {
-  return Get({ path: `restaurant/list?with=images,tags` });
+  return Get({ path: `restaurant/list?with=images,tags,services.image` });
 }
 
 type GetRestaurantById = { id: string, subdomain?: null };
 type GetRestaurantBySubdomain = { id?: null, subdomain: string };
 
 export function GetRestaurant({ subdomain }: GetRestaurantById | GetRestaurantBySubdomain) {
-  return Get({ path: `restaurant/${subdomain}?with=images,tags` });
+  return Get({ path: `restaurant/${subdomain}?with=images,tags,services.image` });
 }
 
 type GetCategoriesArgs = { subdomain: string };
@@ -109,4 +109,8 @@ export function TransferBill({ itemId, userId }) {
 
 export function InitiateTransaction({ type, gratuity }) {
   return Post({ path: `transaction/initiate` }, { type, gratuity });
+}
+
+export function CallService({ serviceId }) {
+  return Post({ path: `service/${serviceId}/call` });
 }

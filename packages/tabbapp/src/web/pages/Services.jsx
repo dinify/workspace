@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import AppBar from 'web/components/AppBar';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
@@ -9,11 +10,17 @@ import Tab from '@material-ui/core/Tab';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import Send from '@material-ui/icons/Send';
+import { callServiceInit } from 'ducks/service/actions';
 
 import * as FN from 'lib/FN';
 
-const Services = () => {
+const Services = ({
+  restaurant,
+  call
+}) => {
   const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
+
+  const services = restaurant ? restaurant.services : {};
 
   return (
     <div>
@@ -38,18 +45,21 @@ const Services = () => {
         marginTop: 16,
         width: '100%',
       }}>
-        {[0,1,2,3,4,5,6,7,8,9,10,11].map(i =>
-          <Grid key={i} item sm={6} md={4} lg={3}>
-            <ButtonBase style={{
-              borderRadius: 4,
-              display: 'flex',
-              padding: 8,
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}>
-              <Avatar>AB</Avatar>
+        {FN.MapToList(services).map((service) =>
+          <Grid key={service.id} item sm={6} md={4} lg={3}>
+            <ButtonBase
+              style={{
+                borderRadius: 4,
+                display: 'flex',
+                padding: 8,
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+              onClick={() => call({ serviceId: service.id })}
+            >
+              <Avatar src={service.image.url}></Avatar>
               <Typography style={{marginTop: 8}}>
-                Service name
+                {service.name}
               </Typography>
             </ButtonBase>
           </Grid>
@@ -78,4 +88,11 @@ const Services = () => {
   )
 };
 
-export default Services;
+export default connect(
+  state => ({
+    restaurant: state.restaurant.all[state.restaurant.checkedInRestaurant]
+  }),
+  {
+    call: callServiceInit
+  }
+)(Services);
