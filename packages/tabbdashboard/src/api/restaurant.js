@@ -1,5 +1,4 @@
-import { Get, Post, Delete, PostMultipart } from './Network';
-import R from 'ramda';
+import { Get, Post, PostMultipart } from './Network';
 
 export function RegisterUser({ name, phone, email, password }) {
   return Post(
@@ -296,7 +295,6 @@ export function DeleteChoice({ id }) {
   return Post({ path: `menu/choice/${id}/delete`, v3: true });
 }
 
-// API V2
 export function ChangeItemimage({ file, id }) {
   return PostMultipart(
     { path: `menu/item/${id}/image/upload`, v3: true },
@@ -313,49 +311,6 @@ export function ChangeImage({ file }) {
 
 export function EditImage({ id, precedence, published }) {
   return Post({ path: `image/${id}`, v3: true }, { precedence, published });
-}
-
-export function GetFoodoptions({ foodId }) {
-  return Get({ path: `api/v2/restaurant/food/${foodId}/options`, v2: true });
-}
-export function AddFoodoption({ foodId, optionName }) {
-  return Post(
-    { path: `api/v2/restaurant/food/${foodId}/option`, v2: true },
-    { optionName },
-  );
-}
-export function RmFoodoption({ foodId, optionName }) {
-  return Delete(
-    { path: `api/v2/restaurant/food/${foodId}/option`, v2: true },
-    { optionName },
-  );
-}
-
-export function GetFoodingredients({ foodId }) {
-  return Get({
-    path: `api/v2/restaurant/food/${foodId}/ingredients`,
-    v2: true,
-  });
-}
-
-export function RmFoodingredient({ foodId, ingredientName }) {
-  return Delete(
-    { path: `api/v2/restaurant/food/${foodId}/ingredient`, v2: true },
-    { ingredientName },
-  );
-}
-
-export function AddFoodaddon({ foodId, addonId }) {
-  return Post(
-    { path: `api/v2/restaurant/food/${foodId}/addon`, v2: true },
-    { addonId },
-  );
-}
-export function RmFoodaddon({ foodId, addonId }) {
-  return Delete(
-    { path: `api/v2/restaurant/food/${foodId}/addon`, v2: true },
-    { addonId },
-  );
 }
 
 export function ChangeFoodingredient({ foodId, ingredients }) {

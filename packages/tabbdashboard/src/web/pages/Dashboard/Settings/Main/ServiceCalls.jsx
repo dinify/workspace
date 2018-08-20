@@ -75,7 +75,7 @@ const ServiceCalls = ({
           onSubmit={({ name }) =>
             createService({
               name,
-              imageId: '6aa20d72-b3be-449d-8391-4e5c268b1b83',
+              imageId: '587334ad-91f4-4179-8bd8-39b0abb1390c',
             })
           }
         />
@@ -87,6 +87,7 @@ const ServiceCalls = ({
 export default connect(
   state => ({
     services: state.service.all,
+    images: state.service.images
   }),
   {
     updateName: updateNameInitAction,

@@ -27,7 +27,7 @@ const Main = ({ loggedRestaurant }) => {
     <div>
       <Column>
         <Name name={loggedRestaurant.name} />
-        <Tags />
+        {/*<Tags />*/}
         <Type type={loggedRestaurant.type} />
         <Image loggedRestaurant={loggedRestaurant} />
         <Contact contact={loggedRestaurant.contact} />
