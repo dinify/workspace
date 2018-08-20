@@ -52,15 +52,15 @@ export function GetGuests({ waiterboardId }) {
 }
 
 export function GetCalls({ waiterboardId }) {
-  return Get({ v3: true, path: `waiterboard/${waiterboardId}/calls` })
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/calls?with=service.image` })
 }
 
-export function ConfirmService({ serviceId }) {
-  return Post({ path: `api/v2/waiterboard/service_call/${serviceId}/confirm` })
+export function ConfirmCall({ callId }) {
+  return Post({ v3: true, path: `service/call/${callId}/confirm` })
 }
 
 export function GetOrders({ waiterboardId }) {
-  return Get({ v3: true, path: `waiterboard/${waiterboardId}/orders?with=items.choices,items.addons,items.excludes` })
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/orders?with=items.choices,items.addons,items.excludes&page=2` })
 }
 
 export function ConfirmOrder({ orderId }) {

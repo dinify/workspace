@@ -157,7 +157,7 @@ const Board = ({
   const acceptedBookings = bookingsList.filter((b) => b.status === 'CONFIRMED')
   const pendingBookings = bookingsList.filter((b) => b.status === 'PENDING')
 
-  const callsList = MapToList(calls)
+  const pendingCalls = calls.filter((b) => b.status === 'PENDING')
 
   const newOrders = R.filter((o) => o.status !== 'CONFIRMED')(orders)
   const newBills = R.filter((o) => o.status === "INITIATED")(bills)
@@ -189,7 +189,7 @@ const Board = ({
                   {pendingBookings.map((booking) =>
                     <Booking key={booking.id} booking={booking} />
                   )}
-                  {callsList.map((call) =>
+                  {pendingCalls.map((call) =>
                     <Call key={call.id} call={call} />
                   )}
                   {newOrders.map((order) =>
@@ -238,7 +238,7 @@ export default connect(
     bookings: state.booking.all,
     orders: state.order.list,
     bills: state.bill.list,
-    calls: state.call.all,
+    calls: state.service.list,
     tables: state.table.all,
     guestList: state.guests.list,
     events: state.restaurant.events,

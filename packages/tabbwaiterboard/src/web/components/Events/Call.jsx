@@ -11,21 +11,21 @@ import { confirmCallInit } from 'ducks/call/actions'
 
 const color = colorsByStages['s4']
 
-const Call = ({ call, confirmCall, removed, timer }) => (
+const Call = ({ call, confirmCall, removed, timer, users }) => (
 	<ActionBox className={removed ? 'vhs-zoom vhs-reverse' : ''}>
     <Header>
 
       <TableId bg={color}>
-        {call.TableObject.position}
+        1
       </TableId>
 
-			{call.UserObject ? <User user={call.UserObject} /> : ''}
+			<User user={users[call.user_id]} />
 
       <Text color={color}>
-        {call.call_call_name}
+        name
       </Text>
 
-      <CheckButton bg={color} onClick={() => confirmCall({id: call.id})}  flash={isItOutdated(call.requested, timer.sc)}>
+      <CheckButton bg={color} onClick={() => confirmCall({callId: call.id})}>
         <i className="ion-checkmark" />
       </CheckButton>
 
@@ -36,7 +36,8 @@ const Call = ({ call, confirmCall, removed, timer }) => (
 
 export default connect(
   state => ({
-		timer: state.restaurant.timer
+		timer: state.restaurant.timer,
+    users: state.user.all,
 	}),
   {
     confirmCall: confirmCallInit

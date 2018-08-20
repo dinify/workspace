@@ -259,6 +259,7 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         dispatch({type: 'LOAD_BOOKING_INIT'})
         dispatch({type: 'LOAD_CALL_INIT'})
 
+
         API.GetOrders({ waiterboardId }).then((response) => {
           const oh = R.filter((o) => o.type === 'AHEAD')(response)
           const di = R.filter((o) => o.type === 'DINE_IN')(response)
@@ -280,6 +281,12 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
           dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
           dispatch(guestsResults(occupiedSeats));
         });
+
+        API.GetCalls({ waiterboardId }).then((response) => {
+          const userIds = R.pluck('user_id', response).filter((id) => id.length === 24);
+          dispatch({ type: 'GET_CALLS_DONE', payload: response });
+          dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
+        })
 
         return { type: 'GUESTS_POLLING_DONE', payload: {} };
       }
