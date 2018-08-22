@@ -9,6 +9,9 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case 'persist/REHYDRATE': {
+      return R.assoc('bill', {})(state);
+    }
     case types.FETCH_BILL_DONE: {
       const bill = action.payload.res;
       return R.assoc('bill', bill)(state);
