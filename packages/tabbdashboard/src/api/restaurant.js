@@ -200,10 +200,10 @@ export function GetServiceimages() {
   return Get({ path: `service/images`, v3: true });
 }
 
-export function CreateService({ name, imageId }) {
+export function CreateService({ name, imageId, type }) {
   return Post(
     { path: `service/create`, v3: true },
-    { name, image_id: imageId },
+    { name, image_id: imageId, type },
   );
 }
 

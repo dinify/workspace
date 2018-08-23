@@ -6,6 +6,7 @@ import {
   FormBox,
   FormBoxHead,
   FormBoxBody,
+  Label
 } from 'web/components/styled/FormBox';
 import { updateNameInitAction } from 'ducks/restaurantLegacy';
 import { createServiceInit, removeServiceInit } from 'ducks/service/actions';
@@ -15,6 +16,10 @@ import Text from 'web/components/MaterialInputs/Text';
 import * as FN from 'lib/FN';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import R from 'ramda';
 
 let ServiceForm = ({ handleSubmit }) => {
   return (
@@ -39,50 +44,125 @@ ServiceForm = reduxForm({
   //  enableReinitialize: true
 })(ServiceForm);
 
-const ServiceCalls = ({
-  createService,
-  removeService,
-  services,
-}) => {
-  const servicesList = FN.MapToList(services).sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
-  return (
-    <FormBox>
-      <FormBoxHead>
-        <span>Service calls</span>
-        <Progress type={'UPDATE_TAGS'} />
-      </FormBoxHead>
-      <FormBoxBody material>
-        {servicesList.map(service => (
-          <Chip
-            avatar={
+class ServiceCalls extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedImage: null,
+      selectedType: 'TABLEWARE' // CONDIMENT
+    };
+  }
+  render() {
+    const {
+      createService,
+      removeService,
+      services,
+      images
+    } = this.props;
+    const servicesList = FN.MapToList(services).sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
+    const getImageUrl = (imageId) => {
+      const img = R.find(R.propEq('id', imageId))(images);
+      if (img) return img.url;
+      return '';
+    }
+    return (
+      <FormBox>
+        <FormBoxHead>
+          <span>Service calls</span>
+          <Progress type={'CREATE_SERVICE'} />
+        </FormBoxHead>
+        <FormBoxBody material>
+          <Label className="center">TABLEWARE</Label>
+          {R.filter((s) => s.type === 'TABLEWARE', servicesList).map(service => (
+            <Chip
+              avatar={
+                <Avatar
+                  src={getImageUrl(service.image_id)}
+                />
+              }
+              key={service.id}
+              label={service.name}
+              style={{ margin: '5px' }}
+              onDelete={() => removeService({ id: service.id })}
+            />
+          ))}
+          <Divider style={{ margin: 6 }}/>
+          <Label className="center">CONDIMENTS</Label>
+          {R.filter((s) => s.type === 'CONDIMENT', servicesList).map(service => (
+            <Chip
+              avatar={
+                <Avatar
+                  src={getImageUrl(service.image_id)}
+                />
+              }
+              key={service.id}
+              label={service.name}
+              style={{ margin: '5px' }}
+              onDelete={() => removeService({ id: service.id })}
+            />
+          ))}
+          <Divider style={{ margin: 8 }}/>
+          <Label className="center">SELECT SERVICE ICON</Label>
+          <div style={{marginTop: 8}}>
+            {images.map((image) =>
               <Avatar
-                src={
-                  service.image
-                    ? service.image.url.replace('https', 'http')
-                    : ''
-                }
+                style={{
+                  display: 'inline-block',
+                  margin: '5px',
+                  border: this.state.selectedImage === image.id ? '3px solid red' : 'none'
+                }}
+                onClick={() => this.setState({ selectedImage: image.id })}
+                src={image.url}
               />
+            )}
+          </div>
+          <div>
+            <center>
+            <FormControlLabel
+              control={
+                <Radio
+                  checked={this.state.selectedType === 'TABLEWARE'}
+                  onChange={() => this.setState({ selectedType: 'TABLEWARE' })}
+                  value="a"
+                  name="radio-button-demo"
+                  aria-label="A"
+                />
+              }
+              label="Tableware"
+              labelPlacement="start"
+            />
+            <FormControlLabel
+              control={
+                <Radio
+                  checked={this.state.selectedType === 'CONDIMENT'}
+                  onChange={() => this.setState({ selectedType: 'CONDIMENT' })}
+                  value="b"
+                  name="radio-button-demo"
+                  aria-label="B"
+                />
+              }
+              label="Condiment"
+              labelPlacement="end"
+            />
+          </center>
+          </div>
+          <ServiceForm
+            onSubmit={({ name }) =>
+              createService({
+                name,
+                imageId: this.state.selectedImage || '587334ad-91f4-4179-8bd8-39b0abb1390c',
+                type: this.state.selectedType
+              })
             }
-            key={service.id}
-            label={service.name}
-            style={{ margin: '5px' }}
-            onDelete={() => removeService({ id: service.id })}
           />
-        ))}
-        <ServiceForm
-          onSubmit={({ name }) =>
-            createService({
-              name,
-              imageId: '587334ad-91f4-4179-8bd8-39b0abb1390c',
-            })
-          }
-        />
-      </FormBoxBody>
-    </FormBox>
-  );
-};
+        </FormBoxBody>
+      </FormBox>
+    );
+  }
+}
+
 
 export default connect(
   state => ({
