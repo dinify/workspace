@@ -12,7 +12,11 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case types.FETCH_MENUITEMS_DONE: {
       const items = action.payload.res;
-      return R.assoc('all', items)(state);
+      let newState = R.assoc('all', {})(state);
+      FN.MapToList(items).forEach(item => {
+        if (item.published) newState = R.assocPath(['all', item.id], item)(newState);
+      });
+      return newState;
     }
     case types.FETCH_MENUITEM_DONE: {
       const item = action.payload.res;
@@ -20,11 +24,11 @@ export default function reducer(state = initialState, action) {
     }
     case menuCategoryTypes.FETCH_MENUCATEGORIES_DONE: {
       const categories = action.payload.res;
-      let newState = state;
+      let newState = R.assoc('all', {})(state);
       categories.forEach((category) => {
         if (!category.items) return;
         FN.MapToList(category.items).forEach(item => {
-          newState = R.assocPath(['all', item.id], item)(newState);
+          if (item.published) newState = R.assocPath(['all', item.id], item)(newState);
         });
       })
       return newState;
