@@ -12,7 +12,7 @@ export default function reducer(state = initialState, action) {
       return R.assoc('list', payload)(state);
     }
 
-    case 'CALL_CONFIRMATION_INIT': {
+    case 'CONFIRM_CALL_INIT': {
       const { callId } = action.payload;
       const newList = R.filter((o) => o.id !== callId, state.list);
       return R.assoc('list', newList)(state);

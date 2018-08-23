@@ -6,6 +6,7 @@ import { confirmService } from '../../../ducks/restaurant'
 import { ActionBox, Header, TableId, Text, CheckButton } from '../styled/Events'
 import User from './user'
 import { isItOutdated } from '../../../common/helpers/time'
+import { Photo, Name } from '../styled/Events'
 
 import { confirmCallInit } from 'ducks/call/actions'
 
@@ -16,14 +17,17 @@ const Call = ({ call, confirmCall, removed, timer, users }) => (
     <Header>
 
       <TableId bg={color}>
-        1
+        {call.table && call.table.number}
       </TableId>
 
 			<User user={users[call.user_id]} />
 
-      <Text color={color}>
-        name
-      </Text>
+			{call.service &&
+				<Text color={color}>
+					<Photo url={call.service.image.url}/>
+	        <Name>{call.service.name}</Name>
+	      </Text>
+			}
 
       <CheckButton bg={color} onClick={() => confirmCall({callId: call.id})}>
         <i className="ion-checkmark" />

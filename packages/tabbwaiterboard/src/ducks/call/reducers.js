@@ -14,8 +14,8 @@ export default function reducer(state = initialState, action) {
     }
 
     case 'CONFIRM_CALL_INIT': {
-      const { id } = action.payload
-      return R.assocPath(['all', id, 'status'], 'CONFIRMED')(state)
+      const { callId } = action.payload
+      return R.assocPath(['all', callId, 'status'], 'CONFIRMED')(state)
     }
 
     default:

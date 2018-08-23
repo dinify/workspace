@@ -60,7 +60,7 @@ export function ConfirmCall({ callId }) {
 }
 
 export function GetOrders({ waiterboardId }) {
-  return Get({ v3: true, path: `waiterboard/${waiterboardId}/orders?with=items.choices,items.addons,items.excludes&page=2` })
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/orders?with=items.choices,items.addons,items.excludes&status=PENDING` })
 }
 
 export function ConfirmOrder({ orderId }) {
