@@ -29,10 +29,12 @@ export default function reducer(state = initialState, action) {
     case types.FETCH_STATUS_DONE: {
       const res = action.payload.res;
       if (!res || !(res instanceof Object)) {
-        return R.assoc('checkedInRestaurant', null)(state);
+        const s = R.assoc('checkedInRestaurant', null)(state);
+        return R.assoc('status', null)(s);
       }
       const id = res.restaurant.id;
-      return R.assoc('checkedInRestaurant', id)(state);
+      const s = R.assoc('checkedInRestaurant', id)(state);
+      return R.assoc('status', res)(s);
     }
     case types.FETCH_STATUS_FAIL: {
       const payload = action.payload;
