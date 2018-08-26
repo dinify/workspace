@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
@@ -109,11 +108,12 @@ class MenuItemView extends React.PureComponent {
                   />
                 </Grid>
               </Grid>
-              <Typography style={{marginBottom: 16}} variant="body1">{menuItem.description}</Typography>
-              <NutritionFacts calories={menuItem.calories} />
+              <Typography  variant="body1">{menuItem.description}</Typography>
+              {menuItem.calories && <div style={{marginTop: 16}}>
+                <NutritionFacts calories={menuItem.calories} />
+              </div>}
             </Grid>
             <Grid item xs={12} md={6}>
-              {smallScreen && <Divider/>}
               {smallScreen && <Customizations menuItem={menuItem}/>}
               {!smallScreen && <Paper style={{padding: 16}}>
                 {<Customizations menuItem={menuItem}/>}

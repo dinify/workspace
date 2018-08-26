@@ -79,29 +79,31 @@ class ModalSwitch extends React.Component {
     return (
       <div>
         {iosInstalled && <AppBar />}
-        <Switch location={isModal ? this.previousLocation : location}>
-          <Route exact path="/" render={() => (
-            TEMP_HOMEPAGE ? (
-              <Redirect to="/restaurant/koreagrill"/>
-            ) : (
-              <Main/>
-            )
-          )}/>
+        <div style={{marginBottom: 56}}>
+          <Switch location={isModal ? this.previousLocation : location}>
+            <Route exact path="/" render={() => (
+              TEMP_HOMEPAGE ? (
+                <Redirect to="/restaurant/koreagrill"/>
+              ) : (
+                <Main/>
+              )
+            )}/>
 
-          { /* Renders if user opens a link in a new tab */ }
-          <Route path="/login" component={Main} />
-          <Route path="/signup" component={Main} />
+            { /* Renders if user opens a link in a new tab */ }
+            <Route path="/login" component={Main} />
+            <Route path="/signup" component={Main} />
 
-          <Route path="/checkin" component={Checkin} />
-          <Route path="/restaurant/:subdomain" component={RestaurantView} />
-          <Route path="/category/:id" component={CategoryView} />
-          <Route path="/menu/item/:id" component={MenuItemView} />
+            <Route path="/checkin" component={Checkin} />
+            <Route path="/restaurant/:subdomain" component={RestaurantView} />
+            <Route path="/category/:id" component={CategoryView} />
+            <Route path="/menu/item/:id" component={MenuItemView} />
 
-          <Route path="/cart" component={Cart} />
-          <Route path="/bill" component={Bill} />
-          <Route path="/receipt" component={Receipt} />
-          <Route path="/services" component={Services} />
-        </Switch>
+            <Route path="/cart" component={Cart} />
+            <Route path="/bill" component={Bill} />
+            <Route path="/receipt" component={Receipt} />
+            <Route path="/services" component={Services} />
+          </Switch>
+        </div>
         <Navigation handleChange={this.onNavigate} checkedInRestaurant={checkedInRestaurant} value={(() => {
           if (this.match('/cart')) return 1;
           if (this.match('/bill')) return 2;

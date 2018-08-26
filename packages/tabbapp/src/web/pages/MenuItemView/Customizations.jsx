@@ -84,8 +84,10 @@ let Customizations = ({
 
   return (
     <div>
+      {ingredients.length > 0 && <Divider style={{marginTop: 16}} />}
+
       {ingredients.length > 0 && <Typography
-        style={{marginTop: 16}}
+        style={{marginTop: 32}}
         color="primary"
         variant="overline">
         Ingredients
@@ -103,7 +105,23 @@ let Customizations = ({
                 excluded: !ingredient.excluded
               })
             }}>
-            <div style={{display: 'flex', alignItems: 'center', width: '100%'}}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'start',
+              width: '100%'
+            }}>
+              <Typography
+                variant="body1"
+                color={ingredient.excluded ? 'textSecondary' : 'default'}
+                style={{
+                  flex: 1,
+                  textAlign: 'start',
+                  paddingLeft: 16,
+                  textDecoration: ingredient.excluded ? 'line-through' : 'none'
+                }}>
+                {ingredient.name}
+              </Typography>
               {ingredient.pivot.excludable ?
                 <div style={{width: 40, height: 40, marginRight: 8, padding: 8}}>
                   {ingredient.excluded ?
@@ -113,14 +131,6 @@ let Customizations = ({
                 </div> :
                 <div style={{width: allNonExcludable ? 0 : 48, height: 40}}/>
               }
-              <Typography
-                variant="body1"
-                color={ingredient.excluded ? 'textSecondary' : 'default'}
-                style={{
-                  textDecoration: ingredient.excluded ? 'line-through' : 'none'
-                }}>
-                {ingredient.name}
-              </Typography>
             </div>
           </ButtonBase>
         </div>
@@ -215,7 +225,7 @@ let Customizations = ({
           addToCart({ menuItemId: menuItem.id });
           history.goBack();
         }} // add item to cart
-        style={{marginTop: 24, marginBottom: 32}}
+        style={{marginTop: 24, marginBottom: 16}}
         disabled={selectCount < options.length && options.length !== 0}
         fullWidth
         variant="extendedFab"
