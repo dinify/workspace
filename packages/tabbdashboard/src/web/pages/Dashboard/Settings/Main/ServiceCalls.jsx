@@ -67,6 +67,10 @@ class ServiceCalls extends React.Component {
       if (img) return img.url;
       return '';
     }
+    const filteredImages = R.filter((img) => {
+      if (this.state.selectedType === 'TABLEWARE') return img.item_type === `Internal\\Service\\Tableware`;
+      return img.item_type === 'Internal\\Service\\Condiments';
+    }, images);
     return (
       <FormBox>
         <FormBoxHead>
@@ -104,20 +108,6 @@ class ServiceCalls extends React.Component {
             />
           ))}
           <Divider style={{ margin: 8 }}/>
-          <Label className="center">SELECT SERVICE ICON</Label>
-          <div style={{marginTop: 8}}>
-            {images.map((image) =>
-              <Avatar
-                style={{
-                  display: 'inline-block',
-                  margin: '5px',
-                  border: this.state.selectedImage === image.id ? '3px solid red' : 'none'
-                }}
-                onClick={() => this.setState({ selectedImage: image.id })}
-                src={image.url}
-              />
-            )}
-          </div>
           <div>
             <center>
             <FormControlLabel
@@ -147,6 +137,20 @@ class ServiceCalls extends React.Component {
               labelPlacement="end"
             />
           </center>
+          </div>          
+          <Label className="center">SELECT SERVICE ICON</Label>
+          <div style={{marginTop: 8}}>
+            {filteredImages.map((image) =>
+              <Avatar
+                style={{
+                  display: 'inline-block',
+                  margin: '5px',
+                  border: this.state.selectedImage === image.id ? '3px solid red' : 'none'
+                }}
+                onClick={() => this.setState({ selectedImage: image.id })}
+                src={image.url}
+              />
+            )}
           </div>
           <ServiceForm
             onSubmit={({ name }) =>
