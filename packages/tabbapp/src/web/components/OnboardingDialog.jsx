@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import GoogleLogo from 'icons/GoogleLogo';
+// import GoogleLogo from 'icons/GoogleLogo';
 import FacebookLogo from 'icons/FacebookLogo';
 import { fbAuthInit } from 'ducks/auth/actions';
 import Login from 'web/components/Login';

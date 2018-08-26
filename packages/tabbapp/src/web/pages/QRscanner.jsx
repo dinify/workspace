@@ -1,6 +1,5 @@
 import React from "react";
 import jsQR from 'jsqr';
-import QrScanner from "lib/qr-scanner.min.js";
 
 export default class QRscanner extends React.Component {
   constructor(props) {
@@ -37,7 +36,6 @@ export default class QRscanner extends React.Component {
     const displayVideo = (stream) => {
       this.setState({ cameraAccessible: 'DONE' });
       this.video.srcObject = stream;
-      console.log(stream);
       this.video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
       this.video.setAttribute("autoplay", true);
       this.video.play();
@@ -113,10 +111,11 @@ export default class QRscanner extends React.Component {
   tickOverlay = () => {
     ['topLeftCorner', 'topRightCorner', 'bottomLeftCorner', 'bottomRightCorner'].map(prop => {
       const to = this.state.box.location[prop];
-      const curr = this.currentBox[prop];
       ['x', 'y'].map(coord => {
         this.currentBox[prop][coord] += (to[coord] - this.currentBox[prop][coord]) * 0.2;
+        return null;
       })
+      return null;
     });
     if (this.state.box.visible) this.currentBox.opacity += (1 - this.currentBox.opacity) * 0.5;
     else this.currentBox.opacity += -this.currentBox.opacity * 0.5;
@@ -246,18 +245,18 @@ export default class QRscanner extends React.Component {
     if (!file) {
         return;
     }
-    QrScanner.scanImage(file)
+    /* QrScanner.scanImage(file)
       .then(result => {
         this.props.onCode(result);
       })
       .catch(e => {
         this.setState({ status: e });
         console.log(e || 'No QR code found.')
-    });
+    }); */
   }
 
   render() {
-    const b = this.state.box;
+    // const b = this.state.box;
     return (
       <div id="container" style={{
         position: 'relative',

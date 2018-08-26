@@ -13,14 +13,12 @@ import Chip from '@material-ui/core/Chip';
 import AddCircle from 'icons/AddCircle';
 import RemoveCircle from 'icons/RemoveCircle';
 import AddShoppingCart from 'icons/AddShoppingCart';
-import { Link } from 'react-router-dom';
 import * as FN from 'lib/FN';
 import {
   excludeIngredient as excludeIngredientAction,
   incAddonQty as incAddonQtyAction,
   selectChoice as selectChoiceAction
 } from 'ducks/menuItem/actions';
-import { withStateHandlers } from 'recompose';
 import { addToCartInit } from 'ducks/cart/actions';
 import cartTypes from 'ducks/cart/types';
 
@@ -60,8 +58,7 @@ let Customizations = ({
   incAddonQty,
   selectChoice,
   addToCart,
-  onSnackClose,
-  addToCartDone,
+  // onSnackClose, addToCartDone,
   history,
 }) => {
 
@@ -74,8 +71,10 @@ let Customizations = ({
     let selected = false;
     FN.MapToList(option.choices).map((choice) => {
       selected = selected || choice.selected;
+      return null;
     });
     if (selected) selectCount += 1;
+    return null;
   });
 
   let allNonExcludable = true;

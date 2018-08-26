@@ -6,9 +6,7 @@ import Typography from 'web/components/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { Motion, spring } from 'react-motion';
-import { Link } from 'react-router-dom';
 import CheckCircle from 'icons/CheckCircle';
-import * as FN from 'lib/FN';
 
 const styles = theme => ({
   scroller: {

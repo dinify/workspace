@@ -9,6 +9,7 @@
 /test/regressions/screenshots
 /test/selenium-output
 /tmp
+./src/lib
 build
 node_modules
 package-lock.json

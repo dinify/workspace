@@ -30,7 +30,6 @@ let Receipt = ({
   status,
 }) => {
   const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
-  console.log(status);
   return (
     <div>
       {!iosInstalled && <AppBar position="static"/>}

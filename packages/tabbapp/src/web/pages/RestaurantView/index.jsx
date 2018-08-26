@@ -10,17 +10,13 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
-import Today from 'icons/Today';
-import Favorite from 'icons/Favorite';
 import AppBar from 'web/components/AppBar';
 import Typography from 'web/components/Typography';
-import OrderItemCard from 'web/components/OrderItemCard';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import { fetchRestaurantInit } from 'ducks/restaurant/actions';
 import { fetchMenucategoriesInit } from 'ducks/menuCategory/actions';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
-import orderItemSample from './orderItem';
 import BookingForm from './BookingForm';
 import InfoSection from './InfoSection';
 import MenuSection from './MenuSection';
@@ -74,7 +70,7 @@ class RestaurantView extends React.PureComponent {
       width,
       classes,
       restaurant,
-      router,
+      // router,
       match: { params },
       location: { search },
       history,
@@ -85,7 +81,6 @@ class RestaurantView extends React.PureComponent {
     if (!restaurant) {
       return <div />
     }
-    console.log(this.props);
     const query = search.match(/qr=([^&]*)/);
     if (!checkedInRestaurant && query && query[1]) {
       if (loggedUserId) {

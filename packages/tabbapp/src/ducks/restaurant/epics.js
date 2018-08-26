@@ -19,7 +19,6 @@ const checkinEpic = (action$: Observable, { getState }) =>
     .exhaustMap(({ payload }: CheckinProps) => {
       const state = getState();
       if (!state.user.loggedUserId) {
-        console.log('this happened');
         return Observable.of(checkinFail([{ status: 401 }]));
       }
       return Observable.fromPromise(API.Checkin(payload))

@@ -11,18 +11,12 @@ import Logo from 'icons/Logo';
 import Search from 'icons/Search';
 import ChevronLeft from 'icons/ChevronLeft';
 import Menu from 'icons/Menu';
-import ShoppingCart from 'icons/ShoppingCart';
-import Receipt from 'icons/Receipt';
-import QRCodeScan from 'icons/QRCodeScan';
-import Restaurant from '@material-ui/icons/Restaurant';
 
-import Badge from '@material-ui/core/Badge';
 import Divider from '@material-ui/core/Divider';
 import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Input from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
@@ -97,13 +91,11 @@ const AppBar = ({
   children,
   setAnchor,
   anchor,
-  cartItems,
   router,
-  restaurants,
-  checkedInRestaurant
+  // cartItems, restaurants, checkedInRestaurant
 }: AppBarProps) => {
 
-  const cartItemsList = FN.MapToList(cartItems);
+  // const cartItemsList = FN.MapToList(cartItems);
 
   const logoWithText = isWidthUp('md', width);
   const logo = (
@@ -113,7 +105,7 @@ const AppBar = ({
     </Link>
   );
   const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
-  const activeRestaurant = checkedInRestaurant ? restaurants[checkedInRestaurant] : null
+  // const activeRestaurant = checkedInRestaurant ? restaurants[checkedInRestaurant] : null
 
   const root = router.history.location.pathname === '/';
   // console.log(router.history.location.pathname);

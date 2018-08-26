@@ -9,7 +9,6 @@ import AppBar from 'web/components/AppBar';
 import BillItem from 'web/components/BillItem';
 import GuestList from 'web/components/GuestList';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
-import ScrollLink from 'web/components/ScrollLink';
 import Typography from 'web/components/Typography';
 import AlignBottom from 'icons/AlignBottom';
 import AlignTop from 'icons/AlignTop';
@@ -115,12 +114,12 @@ class Bill extends React.Component {
     const {
       classes, bill, seats = [],
       selecting, setGratitude, gratitude,
-      splitBill, transferBill, loggedUserId,
+      // splitBill, transferBill,
+      loggedUserId,
       initTransaction
     } = this.props;
     const { payMenuOpen, activeGuest } = this.state;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
-    const billItems = bill.items || [];
     let currency = 'KWD';
     let subtotalAmount = 0;
     if (bill.subtotal) {
@@ -129,7 +128,8 @@ class Bill extends React.Component {
     }
 
     // TODO compare seats[activeGuest].user_id with currently logged user id
-    const meSelected = seats && seats[activeGuest] && seats[activeGuest].user_id === loggedUserId || seats === null || seats.length === 0;
+    let meSelected = seats === null || seats.length === 0;
+    meSelected = meSelected || (seats && seats[activeGuest] && seats[activeGuest].user_id === loggedUserId);
 
     const gratitudeAmount = subtotalAmount * (gratitude / 100);
     const totalAmount = subtotalAmount + gratitudeAmount;

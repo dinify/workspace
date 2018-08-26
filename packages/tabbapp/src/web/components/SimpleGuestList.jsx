@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Person from 'icons/Person';
-import Typography from 'web/components/Typography';
 import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({

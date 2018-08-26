@@ -8,7 +8,6 @@ import Typography from 'web/components/Typography';
 import CheckCircle from 'icons/CheckCircle';
 import { Motion, spring } from 'react-motion';
 import * as FN from 'lib/FN';
-import uniqueId from 'lodash.uniqueid';
 
 import { selectBillItem as selectBillItemAction } from 'ducks/bill/actions';
 

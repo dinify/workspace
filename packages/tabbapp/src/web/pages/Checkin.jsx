@@ -2,10 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { checkinInit } from 'ducks/restaurant/actions';
-import QrReader from 'react-qr-reader';
 import AppBar from 'web/components/AppBar';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import * as FN from 'lib/FN';
 import QRscanner from './QRscanner';
 
@@ -19,7 +16,6 @@ class Checkin extends React.PureComponent {
   render() {
     const { checkedInRestaurant, checkin }: CheckinProps = this.props;
 
-    const isLegacy = true//['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
 
     const onData = (data) => {

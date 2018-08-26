@@ -11,7 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
-import SwipableItem from 'web/components/SwipableItem';
+// import SwipableItem from 'web/components/SwipableItem';
 import AppBar from 'web/components/AppBar';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Typography from 'web/components/Typography';

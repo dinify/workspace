@@ -1,6 +1,6 @@
 // @flow
-import R from 'ramda';
-import types from './types';
+// import R from 'ramda';
+// import types from './types';
 
 const initialState = {
   services: []
