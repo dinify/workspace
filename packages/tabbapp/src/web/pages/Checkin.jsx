@@ -18,11 +18,16 @@ class Checkin extends React.PureComponent {
 
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
 
+    let initiated = false;
+
     const onData = (data) => {
       const query = data.match(/qr=([^&]*)/);
       if (!checkedInRestaurant && query && query[1]) {
         const qr = query[1];
-        checkin({ qr });
+        if (!initiated) {
+          initiated = true;
+          checkin({ qr });
+        }
       }
     }
 
