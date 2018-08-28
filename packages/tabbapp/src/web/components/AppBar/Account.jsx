@@ -36,14 +36,14 @@ const Account = ({
   if (!user) {
     return (
       <div>
-        <Button
+        {/* <Button
           component={LoginLink}
           variant="outlined"
           color={color === 'default' ? 'primary' : 'inherit'}
           style={{ marginRight: 24 }}
         >
           Log in
-        </Button>
+        </Button> */}
         <Button
           component={SignupLink}
           variant="contained"

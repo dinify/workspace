@@ -97,7 +97,7 @@ const AppBar = ({
 
   // const cartItemsList = FN.MapToList(cartItems);
 
-  const logoWithText = isWidthUp('md', width);
+  const logoWithText = true; // isWidthUp('md', width);
   const logo = (
     <Link to="/">
       {logoWithText && <LogoText className={color === 'default' ? classes.primary : classes.contrastText} style={{width: 74}}/>}

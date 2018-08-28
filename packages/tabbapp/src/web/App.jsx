@@ -8,6 +8,7 @@ import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
 import CategoryView from 'web/pages/CategoryView';
 import MenuItemView from 'web/pages/MenuItemView';
+import Onboarding from 'web/pages/Onboarding';
 import Cart from 'web/pages/Cart';
 import Bill from 'web/pages/Bill';
 import Receipt from 'web/pages/Receipt';
@@ -19,24 +20,18 @@ import SnackbarDispatcher from 'web/components/SnackbarDispatcher';
 
 import * as FN from 'lib/FN';
 
-import OnboardingDialog from 'web/components/OnboardingDialog';
-
 import withRoot from 'withRoot.js';
 
 class ModalSwitch extends React.Component {
-
-  componentWillUpdate(nextProps) {
-    const { location } = this.props;
-    // set previousLocation if props.location is not modal
-    if (
-      nextProps.history.action !== "POP" &&
-      (!location.state || !location.state.modal)
-    ) {
-      this.previousLocation = this.props.location;
+  onNavigate = (evt, val) => {
+    if (val === 0) this.props.history.push('/');
+    else if (val === 1) this.props.history.push('/cart');
+    else if (val === 2) this.props.history.push('/bill');
+    else if (val === 3) {
+      if (this.props.checkedInRestaurant) this.props.history.push('/services');
+      else this.props.history.push('/checkin');
     }
   }
-
-  previousLocation = this.props.location;
 
   match = (...paths) => {
     let matched = false;
@@ -51,16 +46,6 @@ class ModalSwitch extends React.Component {
     this.props.history.goBack();
   }
 
-  onNavigate = (evt, val) => {
-    if (val === 0) this.props.history.push('/');
-    else if (val === 1) this.props.history.push('/cart');
-    else if (val === 2) this.props.history.push('/bill');
-    else if (val === 3) {
-      if (this.props.checkedInRestaurant) this.props.history.push('/services');
-      else this.props.history.push('/checkin');
-    }
-  }
-
   render() {
     const {
       location,
@@ -68,11 +53,6 @@ class ModalSwitch extends React.Component {
       loggedUserId,
       history
     } = this.props;
-    const isModal = !!(
-      location.state &&
-      location.state.modal &&
-      this.previousLocation !== location
-    ); // not initial render
 
     const TEMP_HOMEPAGE = true;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
@@ -80,7 +60,7 @@ class ModalSwitch extends React.Component {
       <div>
         {iosInstalled && <AppBar />}
         <div style={{marginBottom: 56}}>
-          <Switch location={isModal ? this.previousLocation : location}>
+          <Switch location={location}>
             <Route exact path="/" render={() => (
               TEMP_HOMEPAGE ? (
                 <Redirect to="/restaurant/koreagrill"/>
@@ -88,10 +68,8 @@ class ModalSwitch extends React.Component {
                 <Main/>
               )
             )}/>
-
-            { /* Renders if user opens a link in a new tab */ }
-            <Route path="/login" component={Main} />
-            <Route path="/signup" component={Main} />
+            <Route path="/login" component={Onboarding} />
+            <Route path="/signup" component={Onboarding} />
 
             <Route path="/checkin" component={Checkin} />
             <Route path="/restaurant/:subdomain" component={RestaurantView} />
@@ -112,12 +90,6 @@ class ModalSwitch extends React.Component {
         })()}/>
 
         <SnackbarDispatcher historyPush={history.push} />
-
-        <OnboardingDialog
-          open={this.match('/login', '/signup') && !loggedUserId}
-          isSignup={this.match('/signup')}
-          onClose={this.back}
-        />
       </div>
     );
   }

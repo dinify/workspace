@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -55,7 +54,7 @@ const styles = theme => ({
   },
 });
 
-class OnboardingDialog extends React.Component {
+class OnboardingForm extends React.Component {
   state = {
     selectedTab: this.props.isSignup ? 1 : 0
   };
@@ -96,11 +95,7 @@ class OnboardingDialog extends React.Component {
     const title = selectedTab ? 'Next' : 'Log in';
 
     return (
-      <Dialog
-        open={open}
-        onClose={onClose}
-        aria-labelledby={title}
-      >
+      <div>
         <Tabs
           fullWidth
           value={selectedTab}
@@ -185,16 +180,16 @@ class OnboardingDialog extends React.Component {
             />
           }
         </div>
-      </Dialog>
+      </div>
     );
   }
 }
 
-OnboardingDialog =  connect(
+OnboardingForm =  connect(
   null,
   {
     fbAuth: fbAuthInit,
   },
-)(OnboardingDialog);
+)(OnboardingForm);
 
-export default withStyles(styles, { withTheme: true })(OnboardingDialog);
+export default withStyles(styles, { withTheme: true })(OnboardingForm);
