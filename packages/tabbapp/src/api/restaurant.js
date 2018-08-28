@@ -95,6 +95,10 @@ export function GetBill() {
   return Get({ path: 'bill?with=addons,choices,excludes,menu_item.images' })
 }
 
+export function GetReceipt() {
+  return Get({ path: 'receipt' })
+}
+
 export function GetSeats() {
   return Get({ path: 'seat/list?with=addons,choices,excludes,menu_item.images'})
 }

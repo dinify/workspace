@@ -9,6 +9,15 @@ export const fetchBillFail = (e) => ({
   payload: e
 })
 
+export const fetchReceiptInit = () => ({
+  type: types.FETCH_RECEIPT_INIT,
+})
+
+export const fetchReceiptFail = (e) => ({
+  type: types.FETCH_RECEIPT_FAIL,
+  payload: e
+})
+
 export const selectBillItem = ({ index, selected }) => ({
   type: types.SELECT_BILLITEM,
   payload: { index, selected }
