@@ -16,7 +16,7 @@ const Qr = ({ match, loggedRestaurant }) => {
   return (
     <QRpage>
       <QRCode
-        value={`https://app.tabb.global/restaurant/${loggedRestaurant.subdomain}?qr=${match.params.code}`}
+        value={`https://gotabb.com/restaurant/${loggedRestaurant.subdomain}?qr=${match.params.code}`}
         size={256}
       />
     </QRpage>

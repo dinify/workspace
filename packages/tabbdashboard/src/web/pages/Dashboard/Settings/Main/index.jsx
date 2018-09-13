@@ -11,7 +11,6 @@ import Contact from './Contact';
 import Image from './Image';
 import Type from './Type';
 import Name from './Name';
-import ServiceCalls from './ServiceCalls';
 import Tags from './Tags';
 import Address from './Address';
 
@@ -43,11 +42,10 @@ const Main = ({ loggedRestaurant }) => {
         <Address address={
           loggedRestaurant.address ? loggedRestaurant.address.business : {}
         } />
-        <BusinessHours openHours={loggedRestaurant.open_hours} />
       </Column>
 
       <Column>
-        <ServiceCalls />
+        <BusinessHours openHours={loggedRestaurant.open_hours} />
       </Column>
     </div>
   );

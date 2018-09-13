@@ -10,6 +10,7 @@ import QRsSection from './QRs';
 
 import LocalizationSection from './Localization';
 import RolesSection from './Roles';
+import ServicesSection from './Services'
 
 const Settings = ({ location }) => (
   <div>
@@ -19,6 +20,11 @@ const Settings = ({ location }) => (
           l={location}
           title="Main Information"
           to="/settings/main"
+        />
+        <HorMenuLink
+          l={location}
+          title="Service calls"
+          to="/settings/services"
         />
         <HorMenuLink
           l={location}
@@ -34,6 +40,7 @@ const Settings = ({ location }) => (
       <Redirect exact from="/settings" to="/settings/main" />
       <Route path="/settings/main" component={MainSection} />
       <Route path="/settings/waiterboards" component={WaiterboardsSection} />
+      <Route path="/settings/services" component={ServicesSection} />
       <Route path="/settings/qrcodes" component={QRsSection} />
       <Route path="/settings/roles" component={RolesSection} />
       <Route path="/settings/localization" component={LocalizationSection} />
