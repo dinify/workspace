@@ -10,7 +10,7 @@
     "start-android": "react-native run-android",
     "start-web": "react-scripts start",
     "start": "serve -s build",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cp build/index.html build/200.html",
     "test": "jest --watch --env=jsdom",
     "coverage": "jest --coverage --env=jsdom",
     "lint": "eslint --ext=jsx --ext=js src/",

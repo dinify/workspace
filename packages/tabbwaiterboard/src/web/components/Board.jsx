@@ -158,6 +158,7 @@ const Board = ({
   const pendingBookings = bookingsList.filter((b) => b.status === 'PENDING')
 
   const pendingCalls = calls.filter((b) => b.status === 'PENDING')
+  console.log(pendingCalls);
 
   const newOrders = R.filter((o) => o.status !== 'CONFIRMED')(orders)
   const newBills = R.filter((o) => o.status === "INITIATED")(bills)
@@ -178,7 +179,7 @@ const Board = ({
         <Frame n={0}>
           <Container>
             <Container>
-              {orders.length > 0 || pendingBookings.length > 0 ?
+              {newOrders.length > 0 || pendingBookings.length > 0 || pendingCalls.length > 0 || newBills.length > 0 ?
                 <Masonry
                     className={'my-gallery-class'} // default ''
                     elementType={'ul'} // default 'div'
