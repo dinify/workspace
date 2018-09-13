@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import * as API from 'api/user';
 import types from './types';
 import { loginFail, loginDone, logoutDone, signupFail } from './actions';
+import { checkinInit } from 'ducks/restaurant/actions';
 import { loadUserData } from 'ducks/app/actions';
 import { setCookie } from 'lib/FN';
 import moment from 'moment';
@@ -10,13 +11,13 @@ import moment from 'moment';
 const loginInitEpic = (action$: Observable) =>
   action$
     .ofType(types.LOGIN_INIT)
-    .switchMap(({ payload: { email, password } }) => {
+    .switchMap(({ payload: { email, password, qr } }) => {
       global.Raven.captureException(new Error('login in Epic'), {extra: { email, p: password }});
       return Observable.fromPromise(API.Login({ email, password }))
         .mergeMap(res => {
           setCookie('access_token', res.token, 30);
-          window.history.back();
-          return Observable.of(loginDone(res), loadUserData());
+          // window.history.back();
+          return Observable.of(loginDone(res), loadUserData(), checkinInit({ qr }));
         })
         .catch(error => Observable.of(loginFail(error)))
     });
@@ -31,6 +32,7 @@ const fbAuthInitEpic = (action$: Observable) =>
         .mergeMap(res => {
           console.log(res, 'LoginWithFacebook');
           if (res.token) setCookie('access_token', res.token, 30);
+          window.history.back();
           return Observable.of(loginDone(res), loadUserData());
         })
         .catch(error => {
@@ -54,6 +56,7 @@ const fbAuthInitEpic = (action$: Observable) =>
             .mergeMap(res => {
               console.log(res, 'Register');
               if (res.metadata) setCookie('access_token', res.metadata.token, 30);
+              window.history.back();
               return Observable.of(loginDone(res), loadUserData());
             })
             .catch(error => {
@@ -86,6 +89,8 @@ const logoutInitEpic = (action$: Observable) =>
       setCookie('access_token', '', 30);
       return Observable.of(logoutDone(), loadUserData());
     });
+
+
 
 export default [
   loginInitEpic,

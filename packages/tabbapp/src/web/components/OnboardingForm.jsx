@@ -90,9 +90,18 @@ class OnboardingForm extends React.Component {
   };
 
   render() {
-    const { classes, open, onClose, fbAuth } = this.props;
+    const { classes, open, onClose, fbAuth, location: { search }, history, loggedUserId } = this.props;
+    if (loggedUserId) {
+      history.push('/');
+    }
     const { selectedTab } = this.state;
     const title = selectedTab ? 'Next' : 'Log in';
+
+    const query = search.match(/qr=([^&]*)/);
+    let qr = null;
+    if (query && query[1]) {
+      qr = query[1];
+    }
 
     return (
       <div>
@@ -159,6 +168,7 @@ class OnboardingForm extends React.Component {
           </div>
           {selectedTab === 0 &&
             <Login
+              qr={qr}
               submitComponent={
                 <DialogActions>
                   <Button type="submit" color="primary">
@@ -170,6 +180,7 @@ class OnboardingForm extends React.Component {
           }
           {selectedTab === 1 &&
             <Signup
+              qr={qr}
               submitComponent={
                 <DialogActions>
                   <Button type="submit" color="primary">
@@ -186,7 +197,9 @@ class OnboardingForm extends React.Component {
 }
 
 OnboardingForm =  connect(
-  null,
+  (state) => ({
+    loggedUserId: state.user.loggedUserId,
+  }),
   {
     fbAuth: fbAuthInit,
   },

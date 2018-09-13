@@ -81,15 +81,16 @@ class RestaurantView extends React.PureComponent {
     if (!restaurant) {
       return <div />
     }
+    const subdomain = params.subdomain;
     const query = search.match(/qr=([^&]*)/);
     if (!checkedInRestaurant && query && query[1]) {
+      const qr = query[1];
       if (loggedUserId) {
-        const qr = query[1];
         checkin({ qr });
-      } else history.push('/login');
+      } else history.push(`/login?qr=${qr}`);
     }
 
-    const subdomain = params.subdomain;
+
     const images = FN.MapToList(restaurant.images);
     const allTags = FN.MapToList(restaurant.tags);
     const tags = [];

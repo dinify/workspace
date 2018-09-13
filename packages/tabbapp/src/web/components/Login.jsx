@@ -54,10 +54,10 @@ LoginForm = reduxForm({
   form: 'auth/login',
 })(LoginForm);
 
-const Login = ({ login, submitComponent }) => {
+const Login = ({ login, submitComponent, qr }) => {
   return (
     <div>
-      <LoginForm onSubmit={login} submitComponent={submitComponent} />
+      <LoginForm onSubmit={({ email, password }) => login({ email, password, qr })} submitComponent={submitComponent} />
     </div>
   );
 };

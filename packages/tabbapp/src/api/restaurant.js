@@ -96,7 +96,7 @@ export function GetBill() {
 }
 
 export function GetReceipt() {
-  return Get({ path: 'receipt' })
+  return Get({ path: 'receipt/list?limit=100' })
 }
 
 export function GetSeats() {

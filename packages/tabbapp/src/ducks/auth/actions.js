@@ -1,8 +1,8 @@
 import types from './types';
 
-export const loginInit = ({ email, password }) => ({
+export const loginInit = ({ email, password, qr }) => ({
   type: types.LOGIN_INIT,
-  payload: { email, password },
+  payload: { email, password, qr },
 });
 
 export const loginDone = () => ({
@@ -14,9 +14,9 @@ export const loginFail = (e) => ({
   payload: e
 });
 
-export const signupInit = ({ name, phone, email, password }) => ({
+export const signupInit = ({ name, phone, email, password, qr }) => ({
   type: types.SIGNUP_INIT,
-  payload: { name, phone, email, password },
+  payload: { name, phone, email, password, qr },
 });
 
 export const signupDone = () => ({
