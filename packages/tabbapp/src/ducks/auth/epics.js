@@ -25,15 +25,14 @@ const loginInitEpic = (action$: Observable) =>
 const fbAuthInitEpic = (action$: Observable) =>
   action$
     .ofType(types.FBAUTH_INIT)
-    .switchMap(({ payload: { name, email, accessToken, gender, birthday } }) => {
-      return Observable.fromPromise(API.LoginWithFacebook({
-          accessToken
-        }))
+    .switchMap(({ payload: { fbRes, qr } }) => {
+      const { name, email, accessToken, gender, birthday } = fbRes;
+      return Observable.fromPromise(API.LoginWithFacebook({ accessToken }))
         .mergeMap(res => {
           console.log(res, 'LoginWithFacebook');
           if (res.token) setCookie('access_token', res.token, 30);
           window.history.back();
-          return Observable.of(loginDone(res), loadUserData());
+          return Observable.of(loginDone(res), loadUserData(), checkinInit({ qr }));
         })
         .catch(error => {
           console.log(error,'LoginWithFacebookError');
@@ -57,27 +56,26 @@ const fbAuthInitEpic = (action$: Observable) =>
               console.log(res, 'Register');
               if (res.metadata) setCookie('access_token', res.metadata.token, 30);
               window.history.back();
-              return Observable.of(loginDone(res), loadUserData());
+              return Observable.of(loginDone(res), loadUserData(), checkinInit({ qr }));
             })
             .catch(error => {
               console.log(error, 'RegisterError');
               return Observable.of(loginFail(error))
             })
-
-          //return Observable.of(loginFail(error))
+          // return Observable.of(loginFail(error))
         });
     });
 
 const signupInitEpic = (action$: Observable) =>
   action$
     .ofType(types.SIGNUP_INIT)
-    .switchMap(({ payload: { name, phone, email, password } }) =>
+    .switchMap(({ payload: { name, phone, email, password, qr } }) =>
       Observable.fromPromise(API.Register({
           name, phone, email, password, registrationType: 'LOCAL'
         }))
         .mergeMap(res => {
           if (res.metadata) setCookie('access_token', res.metadata.token, 30);
-          return Observable.of(loginDone(res), loadUserData());
+          return Observable.of(loginDone(res), loadUserData(), checkinInit({ qr }));
         })
         .catch(error => Observable.of(signupFail(error))),
     );

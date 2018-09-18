@@ -63,10 +63,13 @@ SignupForm = reduxForm({
   form: 'auth/signup',
 })(SignupForm);
 
-const Signup = ({ signup, submitComponent }) => {
+const Signup = ({ signup, submitComponent, qr }) => {
   return (
     <div>
-      <SignupForm onSubmit={signup} submitComponent={submitComponent} />
+      <SignupForm
+        onSubmit={({ name, phone, email, password }) => signup({ name, phone, email, password, qr })}
+        submitComponent={submitComponent}
+      />
     </div>
   );
 };

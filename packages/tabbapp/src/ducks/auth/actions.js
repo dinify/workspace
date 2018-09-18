@@ -28,9 +28,9 @@ export const signupFail = (e) => ({
   payload: e
 });
 
-export const fbAuthInit = (payload) => ({
+export const fbAuthInit = ({ fbRes, qr }) => ({
   type: types.FBAUTH_INIT,
-  payload
+  payload: { fbRes, qr }
 });
 
 export const fbAuthDone = () => ({

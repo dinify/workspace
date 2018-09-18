@@ -123,7 +123,7 @@ class OnboardingForm extends React.Component {
               scope="user_gender,user_birthday"
               disableMobileRedirect={true}
               callback={(res) => {
-                fbAuth(res)
+                fbAuth({ fbRes: res, qr })
               }}
               render={renderProps => (
                 <Button
