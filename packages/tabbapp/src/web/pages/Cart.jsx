@@ -93,8 +93,8 @@ const Cart = ({
           </div>
         )}
         <Divider style={{marginTop: 16, marginBottom: 16}}/>
-        {notCheckedIn && <div>
-          <Typography variant="overline" color="textSecondary">
+        {notCheckedIn && false && <div>
+          {/* <Typography variant="overline" color="textSecondary">
             Order type
           </Typography>
           <RadioGroup
@@ -105,7 +105,7 @@ const Cart = ({
             <FormControlLabel value="TAKEAWAY" control={<Radio />} label="Takeaway" />
             <FormControlLabel value="AHEAD" control={<Radio />} label="Order ahead" />
             <FormControlLabel value="DELIVERY" disabled control={<Radio />} label="Delivery (coming soon!)" />
-          </RadioGroup>
+          </RadioGroup> */}
           <div style={{display: 'flex', alignItems: 'center'}}>
             <Typography style={{flex: 1}} variant="caption">
               Subtotal
@@ -139,10 +139,22 @@ const Cart = ({
           </Typography>
         </div>
         {cartItemsList.length > 0 &&
-          <Button style={{marginTop: 16}} variant="extendedFab" color="primary" fullWidth onClick={() => order()}>
+          <Button
+            disabled={notCheckedIn}
+            style={{marginTop: 16}}
+            variant="extendedFab"
+            color="primary" fullWidth
+            onClick={() => order()}>
             <RestaurantMenu style={{marginRight: 16}} />
             Order
           </Button>
+        }
+        {notCheckedIn &&
+          <div>
+            <Typography style={{marginTop: 16}}>
+              To get started using feature, scan the QR code in a restaurant near you to check in.
+            </Typography>
+          </div>
         }
       </ResponsiveContainer>
     </div>

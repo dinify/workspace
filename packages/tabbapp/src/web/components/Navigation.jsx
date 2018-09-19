@@ -39,7 +39,7 @@ const Navigation = ({
           <BottomNavigationAction label="Cart" icon={<ShoppingCart />} />
           <BottomNavigationAction label="Bill" icon={<Receipt />} />
           {checkedInRestaurant ?
-            <BottomNavigationAction label="Service call" icon={<NotificationsActive />} /> :
+            <BottomNavigationAction label="Service" icon={<NotificationsActive />} /> :
             <BottomNavigationAction label="Check in" icon={<QRCodeScan />} />
           }
         </BottomNavigation>
