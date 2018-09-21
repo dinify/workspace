@@ -38,7 +38,7 @@ const Navigation = ({
           <BottomNavigationAction label="Explore" icon={<LocationOn />} />
           <BottomNavigationAction label="Cart" icon={<ShoppingCart />} />
           <BottomNavigationAction label="Bill" icon={<Receipt />} />
-          {checkedInRestaurant ?
+          {checkedInRestaurant || process.env.REACT_APP_CAMERA_SCANNER_ENABLED === 'false' ?
             <BottomNavigationAction label="Service" icon={<NotificationsActive />} /> :
             <BottomNavigationAction label="Check in" icon={<QRCodeScan />} />
           }

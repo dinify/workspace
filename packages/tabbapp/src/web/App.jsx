@@ -28,7 +28,7 @@ class ModalSwitch extends React.Component {
     else if (val === 1) this.props.history.push('/cart');
     else if (val === 2) this.props.history.push('/bill');
     else if (val === 3) {
-      if (this.props.checkedInRestaurant) this.props.history.push('/services');
+      if (this.props.checkedInRestaurant || process.env.REACT_APP_CAMERA_SCANNER_ENABLED === 'false') this.props.history.push('/services');
       else this.props.history.push('/checkin');
     }
   }

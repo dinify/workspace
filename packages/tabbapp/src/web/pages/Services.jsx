@@ -10,6 +10,7 @@ import Tab from '@material-ui/core/Tab';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import Send from '@material-ui/icons/Send';
+import ServiceCallGraphic from 'web/components/ServiceCallGraphic';
 import { callServiceInit } from 'ducks/service/actions';
 import R from 'ramda';
 
@@ -33,6 +34,35 @@ class Services extends React.Component {
       return false;
     }, servicesList);
 
+    if (restaurant == null) return (
+      <div style={{
+        display: 'flex',
+        height: 'calc(100vh - 56px)',
+        flexDirection: 'column',
+      }}>
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+            <div style={{maxWidth: 220}}>
+              <div style={{marginBottom: 32}}>
+                <ServiceCallGraphic/>
+              </div>
+              <Typography gutterBottom variant="subheading">
+                Call a service
+              </Typography>
+              <Typography variant="caption">
+                With this feature, you can request a any kind of condiment or tableware to your table.
+              </Typography>
+            </div>
+        </div>
+        <Typography style={{margin: 16}}>
+          To get started using feature, scan the QR code in a restaurant near you to check in.
+        </Typography>
+      </div>
+    )
     return (
       <div>
         {!iosInstalled && <AppBar position="static"/>}
