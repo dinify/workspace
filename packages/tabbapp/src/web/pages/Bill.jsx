@@ -120,20 +120,8 @@ class Bill extends React.Component {
     } = this.props;
     const { payMenuOpen, activeGuest } = this.state;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
-    let currency = 'KWD';
-    let subtotalAmount = 0;
-    if (bill.subtotal) {
-      currency = bill.subtotal.currency;
-      subtotalAmount = Number(bill.subtotal.amount);
-    }
-
-    // TODO compare seats[activeGuest].user_id with currently logged user id
-    let meSelected = seats === null || seats.length === 0;
-    meSelected = meSelected || (seats && seats[activeGuest] && seats[activeGuest].user_id === loggedUserId);
-
-    const gratitudeAmount = subtotalAmount * (gratitude / 100);
-    const totalAmount = subtotalAmount + gratitudeAmount;
     const activeBillItemCount = seats && seats[activeGuest] && seats[activeGuest].bill ? seats[activeGuest].bill.items.length : 0;
+
     return (
       <div>
         {!iosInstalled && <AppBar position="static"/>}
@@ -158,8 +146,24 @@ class Bill extends React.Component {
             </ScrollLink>
           }
         </Motion> */ }
+        <Divider style={{marginTop: 16, marginBottom: 16}}/>
         <div className={classes.scroller} onScroll={this.handleScroll}>
           {seats.map(seat => {
+            let currency = 'KWD';
+            let subtotalAmount = 0;
+            if (seat && seat.bill.subtotal) {
+              currency = seat.bill.subtotal.currency;
+              subtotalAmount = Number(seat.bill.subtotal.amount);
+            }
+
+            // TODO compare seats[activeGuest].user_id with currently logged user id
+            let meSelected = seats === null || seats.length === 0;
+            meSelected = meSelected || (seat && seat.user_id === loggedUserId);
+
+            const gratitudeAmount = subtotalAmount * (gratitude / 100);
+            const totalAmount = subtotalAmount + gratitudeAmount;
+            const activeBillItemCount = seat && seat.bill ? seat.bill.items.length : 0;
+
             return <div id={seat.id} style={{
                 display: 'inline-block',
                 verticalAlign: 'top',
@@ -167,138 +171,141 @@ class Bill extends React.Component {
               }} key={seat.id}>
                 <ResponsiveContainer>
                   {seat.bill && seat.bill.items.map((item, i) =>
-                    <BillItem key={item.order_item.id} item={item} index={i} />
+                    <div style={{marginBottom: 8}}>
+                      <BillItem key={item.order_item.id} item={item} index={i} />
+                    </div>
                   )}
-                  {!seat.bill && <Typography style={{padding: 32, width: '100%', textAlign: 'center'}} variant="caption">
+                  {!seat.bill && <Typography style={{paddingTop: 32, width: '100%', textAlign: 'center'}} variant="caption">
                     This user does not have an outstanding bill.
                   </Typography>}
+
+                  {meSelected && activeBillItemCount > 0 &&
+                    <Motion
+                      defaultStyle={{x: 1}}
+                      style={{x: spring(payMenuOpen ? 0.12 : 1, { stiffness: 260, damping: 24 })}}>
+                      {style =>
+                        <div style={{pointerEvents: payMenuOpen ? 'none' : null, opacity: style.x, transform: 'translate3d(0,0,0)'}}>
+                          <div style={{display: 'flex'}}>
+                              <Typography style={{flex: 1}}>
+                                Sub total
+                              </Typography>
+                              <Typography>
+                                {FN.formatPrice({amount: subtotalAmount, currency})}
+                              </Typography>
+                            </div>
+                            <div style={{display: 'flex', marginTop: 8}}>
+                              <Typography style={{fontWeight: 700, marginRight: 8}}>
+                                {gratitude}%
+                              </Typography>
+                              <Typography style={{flex: 1}}>
+                                Gratitude
+                              </Typography>
+                              <Typography>
+                                {FN.formatPrice({amount: gratitudeAmount, currency})}
+                              </Typography>
+                            </div>
+                            <Slider
+                              style={{marginTop: 8, marginBottom: 8}}
+                              value={gratitude} min={0} max={50} step={1}
+                              onChange={(event, val) => setGratitude({ percentage: val })}
+                            />
+                            <div style={{display: 'flex'}}>
+                              <Typography style={{flex: 1}}>
+                                Total
+                              </Typography>
+                              <Typography>
+                                {FN.formatPrice({amount: totalAmount, currency})}
+                              </Typography>
+                            </div>
+                        </div>
+                      }
+                    </Motion>
+                  }
+                  {meSelected &&
+                    <ClickAwayListener onClickAway={() => this.togglePayMenu(false)}>
+                    <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginTop: 16, marginBottom: 16,}}>
+                      <StaggeredMotion
+                        defaultStyles={[{x: 0.1}, {x: 0.1}, {x: 0.1}]}
+                        styles={prevStyles => prevStyles.map((_, i) => {
+                          return i === 0
+                            ? {x: spring(payMenuOpen ? 1 : 0.1, {stiffness: 240, damping: 14})}
+                            : {x: spring(prevStyles[i - 1].x, {stiffness: 240, damping: 22})}
+                        })}>
+                        {styles =>
+                          <div style={{position: 'relative'}}>
+                            {styles.map((style, i) =>
+                              <div key={i} style={{
+                                position: 'relative',
+                                left: -20,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                transform: `translate3d(${(i - 1) * style.x * 128}px, -${(i === 1 ? style.x * 72 : style.x * 24) + 16}px, 0) scale(${style.x}, ${style.x})`,
+                                WebkitTransform: `translate3d(${(i - 1) * style.x * 128}px, -${(i === 1 ? style.x * 72 : style.x * 24) + 16}px, 0) scale(${style.x}, ${style.x})`
+                              }}>
+                                <Button
+                                  color="default"
+                                  variant="fab"
+                                  aria-label="Pay"
+                                  disabled={i === 2}
+                                  mini
+                                  onClick={() => initTransaction({gratuity: gratitude, type: 'CASH'})}
+                                >
+                                  {i === 0 ? <Wallet /> : (i === 1 ? <CreditCard/> : <MobileScreenShare />)}
+                                </Button>
+                                <Typography style={{marginTop: 8}} variant="caption">
+                                  {i === 0 ? 'Cash' : (i === 1 ? 'Card' : 'Online')}
+                                </Typography>
+                              </div>
+                            )}
+                          </div>
+                        }
+                      </StaggeredMotion>
+                      {/*
+                        splitBill({ itemId: , userIds: })
+                        transferBill({ itemId: , userId: })
+                      */}
+                      <Button disabled={!activeBillItemCount} onClick={selecting ? () => {} : () => this.togglePayMenu()} color="primary" variant="extendedFab" aria-label="Pay">
+                        {selecting && <CreditCard style={{marginRight: 16}} />}
+                        {selecting && <CallSplit style={{marginRight: 16}} />}
+                        {selecting ? 'Split / transfer' : 'Pay my bill'}
+                      </Button>
+                    </div>
+                    </ClickAwayListener>
+                  }
+                  {!meSelected &&
+                    <ResponsiveContainer>
+                      <div style={{display: 'flex'}}>
+                        <Typography style={{flex: 1}}>
+                          Sub total
+                        </Typography>
+                        <Typography>
+                          {FN.formatPrice({amount: subtotalAmount, currency})}
+                        </Typography>
+                      </div>
+                      <Grid style={{width: '100%', justifyContent: 'center'}} container spacing={16}>
+                        <Grid item>
+                          <Button onClick={() => {}} color="primary" variant="extendedFab" aria-label="Pay">
+                            <AlignBottom style={{marginRight: 16}} className={classes.extendedIcon} />
+                            Transfer in
+                          </Button>
+                        </Grid>
+                        <Grid item>
+                          <Button onClick={() => {}} color="primary" variant="extendedFab" aria-label="Pay">
+                            <AlignTop style={{marginRight: 16}} className={classes.extendedIcon} />
+                            Transfer out
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </ResponsiveContainer>
+                  }
                 </ResponsiveContainer>
               </div>
             }
           )}
         </div>
-        <Divider style={{marginTop: 16, marginBottom: 16}}/>
-        {meSelected &&
-          <Motion
-            defaultStyle={{x: 1}}
-            style={{x: spring(payMenuOpen ? 0.12 : 1, { stiffness: 260, damping: 24 })}}>
-            {style =>
-              <div style={{pointerEvents: payMenuOpen ? 'none' : null, opacity: style.x, transform: 'translate3d(0,0,0)'}}>
-                <ResponsiveContainer>
-                  <div style={{display: 'flex'}}>
-                    <Typography style={{flex: 1}}>
-                      Sub total
-                    </Typography>
-                    <Typography>
-                      {FN.formatPrice({amount: subtotalAmount, currency})}
-                    </Typography>
-                  </div>
-                  <div style={{display: 'flex', marginTop: 8}}>
-                    <Typography style={{fontWeight: 700, marginRight: 8}}>
-                      {gratitude}%
-                    </Typography>
-                    <Typography style={{flex: 1}}>
-                      Gratitude
-                    </Typography>
-                    <Typography>
-                      {FN.formatPrice({amount: gratitudeAmount, currency})}
-                    </Typography>
-                  </div>
-                  <Slider
-                    style={{marginTop: 8, marginBottom: 8}}
-                    value={gratitude} min={0} max={50} step={1}
-                    onChange={(event, val) => setGratitude({ percentage: val })}
-                  />
-                  <div style={{display: 'flex'}}>
-                    <Typography style={{flex: 1}}>
-                      Total
-                    </Typography>
-                    <Typography>
-                      {FN.formatPrice({amount: totalAmount, currency})}
-                    </Typography>
-                  </div>
-                </ResponsiveContainer>
-              </div>
-            }
-          </Motion>
-        }
-        {meSelected &&
-          <ClickAwayListener onClickAway={() => this.togglePayMenu(false)}>
-          <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginTop: 16, marginBottom: 16,}}>
-            <StaggeredMotion
-              defaultStyles={[{x: 0.1}, {x: 0.1}, {x: 0.1}]}
-              styles={prevStyles => prevStyles.map((_, i) => {
-                return i === 0
-                  ? {x: spring(payMenuOpen ? 1 : 0.1, {stiffness: 240, damping: 14})}
-                  : {x: spring(prevStyles[i - 1].x, {stiffness: 240, damping: 22})}
-              })}>
-              {styles =>
-                <div style={{position: 'absolute'}}>
-                  {styles.map((style, i) =>
-                    <div key={i} style={{
-                      position: 'absolute',
-                      left: -20,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      transform: `translate3d(${(i - 1) * style.x * 128}px, -${(i === 1 ? style.x * 72 : style.x * 24) + 16}px, 0) scale(${style.x}, ${style.x})`,
-                      WebkitTransform: `translate3d(${(i - 1) * style.x * 128}px, -${(i === 1 ? style.x * 72 : style.x * 24) + 16}px, 0) scale(${style.x}, ${style.x})`
-                    }}>
-                      <Button
-                        color="default"
-                        variant="fab"
-                        aria-label="Pay"
-                        mini
-                        onClick={() => initTransaction({gratuity: gratitude, type: 'CASH'})}
-                      >
-                        {i === 0 ? <Wallet /> : (i === 1 ? <CreditCard/> : <MobileScreenShare />)}
-                      </Button>
-                      <Typography style={{marginTop: 8}} variant="caption">
-                        {i === 0 ? 'Cash' : (i === 1 ? 'Card' : 'Online')}
-                      </Typography>
-                    </div>
-                  )}
-                </div>
-              }
-            </StaggeredMotion>
-            {/*
-              splitBill({ itemId: , userIds: })
-              transferBill({ itemId: , userId: })
-            */}
-            <Button onClick={selecting ? () => {} : () => this.togglePayMenu()} color="primary" variant="extendedFab" aria-label="Pay">
-              {selecting && <CreditCard style={{marginRight: 16}} />}
-              {selecting && <CallSplit style={{marginRight: 16}} />}
-              {selecting ? 'Split / transfer' : 'Pay my bill'}
-            </Button>
-          </div>
-          </ClickAwayListener>
-        }
-        {!meSelected &&
-          <ResponsiveContainer>
-            <div style={{display: 'flex'}}>
-              <Typography style={{flex: 1}}>
-                Sub total
-              </Typography>
-              <Typography>
-                {FN.formatPrice({amount: subtotalAmount, currency})}
-              </Typography>
-            </div>
-            <Grid style={{width: '100%', justifyContent: 'center'}} container spacing={16}>
-              <Grid item>
-                <Button onClick={() => {}} color="primary" variant="extendedFab" aria-label="Pay">
-                  <AlignBottom style={{marginRight: 16}} className={classes.extendedIcon} />
-                  Transfer in
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button onClick={() => {}} color="primary" variant="extendedFab" aria-label="Pay">
-                  <AlignTop style={{marginRight: 16}} className={classes.extendedIcon} />
-                  Transfer out
-                </Button>
-              </Grid>
-            </Grid>
-          </ResponsiveContainer>
-        }
+
+
       </div>
     )
   }
@@ -306,7 +313,6 @@ class Bill extends React.Component {
 
 Bill = connect(
   state => ({
-    bill: state.bill.bill,
     seats: state.seat.seats,
     selecting: checkSelecting(state),
     gratitude: state.bill.gratitude,
