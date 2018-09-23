@@ -16,9 +16,9 @@ import AppBar from 'web/components/AppBar';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Typography from 'web/components/Typography';
 import CartItem from 'web/components/CartItem';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Radio from '@material-ui/core/Radio';
+// import RadioGroup from '@material-ui/core/RadioGroup';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import * as FN from 'lib/FN';
 import { rmFromCartInit, orderInit, setOrderTypeAction } from 'ducks/cart/actions';
@@ -133,7 +133,7 @@ const Cart = ({
 
           <Typography variant="subheading">
             {FN.formatPrice({
-              amount: parseFloat(subtotal.amount) + 0.15,
+              amount: parseFloat(subtotal.amount),
               currency: subtotal.currency
             })}
           </Typography>

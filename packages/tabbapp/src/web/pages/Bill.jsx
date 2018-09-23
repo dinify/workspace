@@ -112,7 +112,7 @@ class Bill extends React.Component {
 
   render() {
     const {
-      classes, bill, seats = [],
+      classes, seats = [],
       selecting, setGratitude, gratitude,
       // splitBill, transferBill,
       loggedUserId,
@@ -171,8 +171,8 @@ class Bill extends React.Component {
               }} key={seat.id}>
                 <ResponsiveContainer>
                   {seat.bill && seat.bill.items.map((item, i) =>
-                    <div style={{marginBottom: 8}}>
-                      <BillItem key={item.order_item.id} item={item} index={i} />
+                    <div key={item.order_item.id} style={{marginBottom: 8}}>
+                      <BillItem item={item} index={i} />
                     </div>
                   )}
                   {!seat.bill && <Typography style={{paddingTop: 32, width: '100%', textAlign: 'center'}} variant="caption">

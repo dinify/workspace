@@ -50,7 +50,6 @@ class ModalSwitch extends React.Component {
     const {
       location,
       checkedInRestaurant,
-      loggedUserId,
       history
     } = this.props;
 

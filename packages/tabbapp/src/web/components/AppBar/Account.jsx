@@ -1,4 +1,4 @@
-// @flow
+ // @flow
 import React from 'react';
 import { withStateHandlers } from 'recompose';
 import { Link } from 'react-router-dom';
@@ -12,11 +12,6 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { logoutInit } from 'ducks/auth/actions';
 import { getLoggedUser } from 'ducks/user/selectors';
-
-const LoginLink = props => <Link to={{
-    pathname: `/login`,
-    state: { modal: true }
-  }} {...props} />
 
 const SignupLink = props => <Link to={{
     pathname: `/signup`,

@@ -90,12 +90,12 @@ class OnboardingForm extends React.Component {
   };
 
   render() {
-    const { classes, open, onClose, fbAuth, location: { search }, history, loggedUserId } = this.props;
+    const { classes, fbAuth, location: { search }, history, loggedUserId } = this.props;
     if (loggedUserId) {
       history.push('/');
     }
     const { selectedTab } = this.state;
-    const title = selectedTab ? 'Next' : 'Log in';
+    // const title = selectedTab ? 'Next' : 'Log in';
 
     const query = search.match(/qr=([^&]*)/);
     let qr = null;
