@@ -14,7 +14,7 @@ const FavoriteToggle = ({
   // console.log(checked);
 
   return (
-    <IconButton onClick={onChange}>
+    <IconButton style={{width: 48, height: 48}} onClick={onChange}>
       <Motion
         defaultStyle={{x: 0}}
         style={{x: spring(checked ? 1 : 0, { stiffness: 480, damping: checked ? 12 : 48 })}}>
