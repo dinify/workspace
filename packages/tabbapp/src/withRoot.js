@@ -43,7 +43,7 @@ const theme = createMuiTheme({
   typography: {
     // System font stack
     fontFamily: [
-      'Poppins',
+      'Lato',
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',
