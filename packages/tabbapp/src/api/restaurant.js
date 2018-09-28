@@ -96,7 +96,7 @@ export function GetBill() {
 }
 
 export function GetReceipt() {
-  return Get({ path: 'receipt/list?limit=100' })
+  return Get({ path: 'receipt/latest?with=seat.bill.items.order_item.menu_item.images' })
 }
 
 export function GetSeats() {

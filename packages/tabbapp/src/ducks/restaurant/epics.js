@@ -23,6 +23,7 @@ const checkinEpic = (action$: Observable, { getState }) =>
       }
       return Observable.fromPromise(API.Checkin(payload))
         .mergeMap(res => {
+
           return Observable.of(checkinDone(res), fetchStatusInit());
         })
         .catch(error => Observable.of(checkinFail(error)))

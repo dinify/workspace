@@ -178,7 +178,7 @@ class Bill extends React.Component {
           seats.map(seat => {
             let currency = 'KWD';
             let subtotalAmount = 0;
-            if (seat && seat.bill.subtotal) {
+            if (seat && seat.bill && seat.bill.subtotal) {
               currency = seat.bill.subtotal.currency;
               subtotalAmount = Number(seat.bill.subtotal.amount);
             }
