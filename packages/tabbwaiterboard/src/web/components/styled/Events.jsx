@@ -149,7 +149,7 @@ export const Text = styled.span`
   margin: 0 30px;
   text-align: center;
   position: absolute;
-  top: 16px;
+  top: 24px;
   right: 90px;
 `;
 

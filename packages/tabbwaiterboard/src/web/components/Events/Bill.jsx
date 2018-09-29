@@ -8,7 +8,6 @@ import { confirmBill } from '../../../ducks/restaurant'
 import { ActionBox, Header, TableId, CheckButton, TableTag, Th, Tr, Td, Text } from '../styled/Events'
 import User from './user'
 import { isItOutdated } from '../../../common/helpers/time'
-import moment from 'moment';
 
 const TextInput = styled(FormText)`
   background-color: rgba(0,0,0,0.06);
@@ -32,7 +31,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
     <ActionBox className={removed ? 'vhs-zoom vhs-reverse Bill' : 'Bill'}>
       <Header>
         <TableId bg={color}>
-          1
+          {bill.table.number}
         </TableId>
         <User user={users[bill.initiator]} />
   			{bill.BillObject === 'DEBIT_CARD' && !noconfirm ?
@@ -57,9 +56,9 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
   					}}
   				</Form>
   			: ''}
-  			{/*<Text color={color}>
-          {datetime ? moment(bill.paid).subtract(3, 'h').format('DD/MM/YYYY HH:mm') : ''} {bill.BillObject.payment_method ? bill.BillObject.payment_method.replace('_',' ').replace('K NET','ONLINE') : ''}
-  			</Text>*/}
+  			<Text color={color}>
+          {bill.type}
+  			</Text>
         <CheckButton bg={color} onClick={() => confirmBill({billId: bill.id})} flash={!noconfirm && isItOutdated(bill.requested, timer.p)} invisible={noconfirm}>
           <i className="ion-checkmark" />
         </CheckButton>
@@ -82,7 +81,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
   	          </Tr>
   					) : ''}
   					<Tr>
-  	          <Td>Gratitude</Td>
+  	          <Td>Gratuity</Td>
   	          <Td>{bill.gratuity}%</Td>
   	          <Td>{Math.round((bill.total.amount - (bill.total.amount / (1 + bill.gratuity/100 )))*1000)/1000}KD</Td>
   	        </Tr>
