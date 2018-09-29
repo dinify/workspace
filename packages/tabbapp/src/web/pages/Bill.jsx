@@ -245,7 +245,7 @@ class Bill extends React.Component {
                         <Typography style={{
                             flex: 1
                           }}>
-                          Gratitude
+                          Gratuity
                         </Typography>
                         <Typography>
                           {FN.formatPrice({amount: gratitudeAmount, currency})}
