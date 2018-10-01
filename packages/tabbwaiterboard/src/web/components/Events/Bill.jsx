@@ -8,6 +8,7 @@ import { confirmBill } from '../../../ducks/restaurant'
 import { ActionBox, Header, TableId, CheckButton, TableTag, Th, Tr, Td, Text } from '../styled/Events'
 import User from './user'
 import { isItOutdated } from '../../../common/helpers/time'
+import N from 'numeral';
 
 const TextInput = styled(FormText)`
   background-color: rgba(0,0,0,0.06);
@@ -77,18 +78,18 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
   						<Tr key={i}>
   	            <Td>{item.order_item.menu_item.name}</Td>
   	            <Td>1</Td>
-  	            <Td>{item.subtotal.amount}KD</Td>
+  	            <Td>{N(item.subtotal.amount).format('0.000')}KD</Td>
   	          </Tr>
   					) : ''}
   					<Tr>
   	          <Td>Gratuity</Td>
   	          <Td>{bill.gratuity}%</Td>
-  	          <Td>{Math.round((bill.total.amount - (bill.total.amount / (1 + bill.gratuity/100 )))*1000)/1000}KD</Td>
+  	          <Td>{N(Math.round((bill.total.amount - (bill.total.amount / (1 + bill.gratuity/100 )))*1000)/1000).format('0.000')}KD</Td>
   	        </Tr>
   					<Tr>
   	          <Td bold color={color}>TOTAL</Td>
   	          <Td></Td>
-  	          <Td bold color={color}>{bill.total.amount}KD</Td>
+  	          <Td bold color={color}>{N(bill.total.amount).format('0.000')}KD</Td>
   	        </Tr>
           </tbody>
         </TableTag>

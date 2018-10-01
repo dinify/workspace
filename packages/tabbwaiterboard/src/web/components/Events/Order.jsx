@@ -8,6 +8,8 @@ import User from './user'
 import { isItOutdated } from '../../../common/helpers/time'
 import moment from 'moment'
 import * as FN from '../../../lib/FN'
+import N from 'numeral';
+
 const color = colorsByStages['s2']
 
 const ListOfCustomizations = ({ list }) => {
@@ -74,7 +76,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime, users
 							<Td items>
 								<ListOfCustomizations list={item.addons}></ListOfCustomizations>
 							</Td>
-							<Td>{item.subtotal.amount}</Td>
+							<Td>{N(item.subtotal.amount).format('0.000')}</Td>
 	          </Tr>
 					): ''}
 					<Tr>
@@ -82,7 +84,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime, users
 						<Td></Td>
 						<Td></Td>
 						<Td></Td>
-						<Td>{order.subtotal.amount} {order.subtotal.currency === 'KWD' ? 'KD' : order.subtotal.currency}</Td>
+						<Td>{N(order.subtotal.amount).format('0.000')} {order.subtotal.currency === 'KWD' ? 'KD' : order.subtotal.currency}</Td>
 					</Tr>
         </tbody>
       </TableTag>
