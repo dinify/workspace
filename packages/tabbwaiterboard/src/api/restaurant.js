@@ -68,7 +68,7 @@ export function ConfirmOrder({ orderId }) {
 }
 
 export function GetBills({ waiterboardId }) {
-  return Get({ v3: true, path: `waiterboard/${waiterboardId}/transactions/all` })
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/transactions` })
 }
 
 export function ConfirmBill({ billId, approvalNumber }) {

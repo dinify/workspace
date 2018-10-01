@@ -32,7 +32,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime, users
     <Header>
 
       <TableId bg={color}>
-        1
+        {order.table.number}
       </TableId>
 
       <User user={users[order.initiator]} />
@@ -76,7 +76,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime, users
 							<Td items>
 								<ListOfCustomizations list={item.addons}></ListOfCustomizations>
 							</Td>
-							<Td>{N(item.subtotal.amount).format('0.000')}</Td>
+							<Td>{N(item.subtotal.amount).format('0.000')}KD</Td>
 	          </Tr>
 					): ''}
 					<Tr>
@@ -84,7 +84,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime, users
 						<Td></Td>
 						<Td></Td>
 						<Td></Td>
-						<Td>{N(order.subtotal.amount).format('0.000')} {order.subtotal.currency === 'KWD' ? 'KD' : order.subtotal.currency}</Td>
+						<Td>{N(order.subtotal.amount).format('0.000')}{order.subtotal.currency === 'KWD' ? 'KD' : order.subtotal.currency}</Td>
 					</Tr>
         </tbody>
       </TableTag>
