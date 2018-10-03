@@ -23,6 +23,7 @@ class Services extends React.Component {
       selectedTab: 0
     };
   }
+
   render() {
     const { restaurant, call } = this.props;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
@@ -63,31 +64,40 @@ class Services extends React.Component {
         </Typography>
       </div>
     )
+
     return (
       <div>
         {!iosInstalled && <AppBar position="static"/>}
         <div style={{
-          display: 'flex',
-          justifyContent: 'center',
           width: '100%',
           marginTop: 16
         }}>
-          <Tabs
-            value={this.state.selectedTab}
-            indicatorColor="primary"
-            textColor="primary"
-            onChange={(e, val) => this.setState({ selectedTab: val })}
-          >
-            <Tab label="Tableware" />
-            <Tab label="Condiments" />
-          </Tabs>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%',
+            marginTop: 16
+          }}>
+            <Tabs
+              value={this.state.selectedTab}
+              indicatorColor="primary"
+              textColor="primary"
+              onChange={(e, val) => this.setState({ selectedTab: val })}
+            >
+              <Tab label="Tableware" />
+              <Tab label="Condiments" />
+            </Tabs>
+          </div>
         </div>
-        <Grid container spacing={16} justify="center" style={{
+        <Grid container spacing={16} style={{
           marginTop: 16,
           width: '100%',
         }}>
           {servicesList.map((service) =>
-            <Grid key={service.id} item sm={6} md={4} lg={3}>
+            <Grid key={service.id} item xs={4} md={3} lg={3} style={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}>
               <ButtonBase
                 style={{
                   borderRadius: 4,
@@ -98,7 +108,7 @@ class Services extends React.Component {
                 }}
                 onClick={() => call({ serviceId: service.id })}
               >
-                <Avatar src={service.image.url}></Avatar>
+                <Avatar style={{width: 60, height: 60}} src={service.image.url}></Avatar>
                 <Typography style={{marginTop: 8}}>
                   {service.name}
                 </Typography>
