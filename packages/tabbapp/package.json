@@ -33,7 +33,7 @@
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^1.1.4",
+    "react-scripts": "^2.0.3",
     "react-swipeable-views": "^0.12.14",
     "recompose": "^0.27.1",
     "redux": "^4.0.0",
@@ -65,5 +65,11 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
     "prettier": "^1.5.1"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

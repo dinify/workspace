@@ -50,13 +50,29 @@ const styles = theme => ({
 class Bill extends React.Component {
   state = {
     payMenuOpen: false,
-    activeGuest: 0
+    activeGuest: 0,
+    payButtonClicked: false
   }
 
   componentWillMount() {
-    const {fetchBill, fetchSeats} = this.props;
-    fetchBill();
+    const {fetchSeats} = this.props;
     fetchSeats();
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.seats !== this.props.seats) {
+      let uid = this.props.loggedUserId;
+      this.props.seats.forEach(seat => {
+        nextProps.seats.forEach(seatNext => {
+          if (seat.user_id === uid && seatNext.user_id === uid) {
+            const l1 = seat.bill ? seat.bill.items.length : 0;
+            const l2 = seatNext.bill ? seatNext.bill.items.length : 0;
+            if (l1 !== l2 || l2 === 0)
+              this.setState({payButtonClicked: false})
+          }
+        })
+      })
+    }
   }
 
   setActiveGuest = (i) => {
@@ -109,6 +125,7 @@ class Bill extends React.Component {
     this.setState({payMenuOpen: false});
     if (value) {
       const {gratitude, initTransaction} = this.props;
+      this.setState({payButtonClicked: true});
       initTransaction({gratuity: gratitude, type: value.type});
     }
   }
@@ -124,7 +141,7 @@ class Bill extends React.Component {
       loggedUserId,
       initTransaction
     } = this.props;
-    const {payMenuOpen, activeGuest} = this.state;
+    const {payMenuOpen, activeGuest, payButtonClicked} = this.state;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     const activeBillItemCount = seats && seats[activeGuest] && seats[activeGuest].bill
       ? seats[activeGuest].bill.items.length
@@ -251,7 +268,7 @@ class Bill extends React.Component {
                           {FN.formatPrice({amount: gratitudeAmount, currency})}
                         </Typography>
                       </div>
-                      <Slider style={{
+                      <Slider disabled={payButtonClicked} style={{
                           marginTop: 8,
                           marginBottom: 8
                         }} value={gratitude} min={0} max={50} step={1} onChange={(event, val) => setGratitude({percentage: val})}/>
@@ -274,7 +291,7 @@ class Bill extends React.Component {
                         marginTop: 16,
                         marginBottom: 16
                       }}>
-                      <Button fullWidth disabled={!activeBillItemCount} onClick={selecting
+                      <Button fullWidth disabled={!activeBillItemCount || payButtonClicked} onClick={selecting
                           ? () => {}
                           : () => this.togglePayMenu()} color="primary" variant="extendedFab" aria-label="Pay">
                         {
@@ -293,6 +310,11 @@ class Bill extends React.Component {
                             : 'Pay'
                         }
                       </Button>
+                      {payButtonClicked &&
+                        <Typography style={{marginTop: 16, width: '100%', textAlign: 'center'}} variant="caption">
+                          Awaiting payment confirmation...
+                        </Typography>
+                      }
                     </div>
                 }
                 {

@@ -41,7 +41,7 @@ const initTransactionEpic = (action$: Observable) =>
     .switchMap(({ payload: { type, gratuity } }) => {
       return Observable.fromPromise(API.InitiateTransaction({ type, gratuity }))
         .mergeMap(res => {
-          window.location.href = '/receipt';
+          // window.location.href = '/receipt';
           return Observable.of(initTransactionDone(res));
         })
         .catch(error => Observable.of(initTransactionFail(error)))
