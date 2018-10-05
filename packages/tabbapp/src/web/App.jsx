@@ -1,10 +1,10 @@
 // @flow
 import React from 'react';
-import * as API from 'api/user';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 
+import Messaging from 'web/firebase/Messaging';
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
 import CategoryView from 'web/pages/CategoryView';
@@ -28,50 +28,10 @@ class App extends React.Component {
   constructor() {
     super();
 
-    const getEnv = name => process.env[`REACT_APP_FIREBASE_${name.toUpperCase()}`]
-
-    // Initialize Firebase
-    const config = {
-      apiKey: getEnv('api_key'),
-      authDomain: `${getEnv('project_id')}.firebaseapp.com`,
-      databaseURL: `https://${getEnv('project_id')}.firebaseio.com`,
-      projectId: getEnv('project_id'),
-      storageBucket: `${getEnv('project_id')}.appspot.com`,
-      messagingSenderId: getEnv('sender_id')
-    };
-    const firebase = global.firebase;
-    firebase.initializeApp(config);
-    const messaging = firebase.messaging();
-
-    const getToken = overwrite => {
-      messaging.getToken().then(currentToken => {
-        if (currentToken) {
-          API.RegisterFirebaseToken({token: currentToken})
-        } else {
-          console.log('No Instance ID token available. Request permission to generate one.');
-        }
-      })
-      .catch(err => {
-        console.log('Unable to retrieve token', err);
-      });
-    };
-
-    messaging.usePublicVapidKey(getEnv('vapid_key'));
-    messaging.requestPermission().then(() => {
-      console.log('Notification permission granted.');
-      getToken(false);
-    }).catch(err => {
-      console.log('Unable to get permission to notify.', err);
-    });
-
-    // Callback fired if Instance ID token is updated.
-    messaging.onTokenRefresh(() => {
-      getToken(true);
-    });
-
-    messaging.onMessage(payload => {
-      console.log('Received message ', payload);
-    });
+    const success = Messaging.initialize();
+    if (!success) {
+      // TODO: initialize socket.io
+    }
   }
 
   onNavigate = (evt, val) => {
