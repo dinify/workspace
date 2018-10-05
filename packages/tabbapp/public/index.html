@@ -89,45 +89,56 @@
     <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-messaging.js"></script>
     <script>
       // Initialize Firebase
-      var config = {
+      const config = {
         apiKey: "AIzaSyAwKYz-JN76QWYpK60TEL1YJhV_cIh9ciM",
+        authDomain: "tabb-global.firebaseapp.com",
+        databaseURL: "https://tabb-global.firebaseio.com",
         projectId: "tabb-global",
-        storageBucket: "tabb-client-app.appspot.com",
+        storageBucket: "tabb-global.appspot.com",
         messagingSenderId: "448538111630"
       };
       firebase.initializeApp(config);
-      var messaging = firebase.messaging();
+      const messaging = firebase.messaging();
 
-      messaging.usePublicVapidKey("BITD-4Cv-rGg9cYTpcix1Q9a8WVEph6fmSDets8TImuVMtKNaXuMWvgm70jXOCwAbopwk-cnPLteitUVBA1M-MY");
-      messaging.requestPermission().then(function() {
-        console.log('Notification permission granted.');
-        // TODO(developer): Retrieve an Instance ID token for use with FCM.
-
-        messaging.getToken().then((currentToken) => {
+      const getToken = overwrite => {
+        messaging.getToken().then(currentToken => {
           if (currentToken) {
-            // we've got the token from Firebase, now let's store it in the database
-            return console.log(currentToken);
+            //TODO: store the token in the database
+            console.log(overwrite, currentToken);
+
           } else {
             console.log('No Instance ID token available. Request permission to generate one.');
           }
+        })
+        .catch(err => {
+          console.log('Unable to retrieve token', err);
         });
+      };
 
-      }).catch(function(err) {
+      messaging.usePublicVapidKey("BITD-4Cv-rGg9cYTpcix1Q9a8WVEph6fmSDets8TImuVMtKNaXuMWvgm70jXOCwAbopwk-cnPLteitUVBA1M-MY");
+      messaging.requestPermission().then(() => {
+        console.log('Notification permission granted.');
+        getToken(false);
+      }).catch(err => {
         console.log('Unable to get permission to notify.', err);
       });
 
-      messaging.onMessage(function(payload) {
-        console.log('Message received. ', payload);
-        // ...
+      // Callback fired if Instance ID token is updated.
+      messaging.onTokenRefresh(() => {
+        getToken(true);
+      });
+
+      messaging.onMessage(payload => {
+        console.log('Received message ', payload);
       });
 
     </script>
     <script>
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register('./firebase-messaging-sw.js')
-          .then(function(registration) {
+          .then(registration => {
             console.log('Registration successful, scope is:', registration.scope);
-          }).catch(function(err) {
+          }).catch(err => {
             console.log('Service worker registration failed, error:', err);
           });
         }
