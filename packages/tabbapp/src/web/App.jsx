@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import * as API from 'api/user';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
@@ -22,7 +23,57 @@ import * as FN from 'lib/FN';
 
 import withRoot from 'withRoot.js';
 
-class ModalSwitch extends React.Component {
+class App extends React.Component {
+
+  constructor() {
+    super();
+
+    const getEnv = name => process.env[`REACT_APP_FIREBASE_${name.toUpperCase()}`]
+
+    // Initialize Firebase
+    const config = {
+      apiKey: getEnv('api_key'),
+      authDomain: `${getEnv('project_id')}.firebaseapp.com`,
+      databaseURL: `https://${getEnv('project_id')}.firebaseio.com`,
+      projectId: getEnv('project_id'),
+      storageBucket: `${getEnv('project_id')}.appspot.com`,
+      messagingSenderId: getEnv('sender_id')
+    };
+    const firebase = global.firebase;
+    firebase.initializeApp(config);
+    const messaging = firebase.messaging();
+
+    const getToken = overwrite => {
+      messaging.getToken().then(currentToken => {
+        if (currentToken) {
+          API.RegisterFirebaseToken({token: currentToken})
+        } else {
+          console.log('No Instance ID token available. Request permission to generate one.');
+        }
+      })
+      .catch(err => {
+        console.log('Unable to retrieve token', err);
+      });
+    };
+
+    messaging.usePublicVapidKey(getEnv('vapid_key'));
+    messaging.requestPermission().then(() => {
+      console.log('Notification permission granted.');
+      getToken(false);
+    }).catch(err => {
+      console.log('Unable to get permission to notify.', err);
+    });
+
+    // Callback fired if Instance ID token is updated.
+    messaging.onTokenRefresh(() => {
+      getToken(true);
+    });
+
+    messaging.onMessage(payload => {
+      console.log('Received message ', payload);
+    });
+  }
+
   onNavigate = (evt, val) => {
     if (val === 0) this.props.history.push('/');
     else if (val === 1) this.props.history.push('/cart');
@@ -94,19 +145,19 @@ class ModalSwitch extends React.Component {
   }
 }
 
-ModalSwitch = connect(
+App = connect(
   (state) => ({
     loggedUserId: state.user.loggedUserId,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
   })
-)(ModalSwitch);
+)(App);
 
-const App = () => (
+const AppWrapper = () => (
   <div>
     <Router>
-      <Route component={ModalSwitch} />
+      <Route component={App} />
     </Router>
   </div>
 );
 
-export default withRoot(App);
+export default withRoot(AppWrapper);
