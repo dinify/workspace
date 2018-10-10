@@ -55,7 +55,8 @@ const Cart = ({
 
   const notCheckedIn = !checkedInRestaurant;
 
-  if (orderType === 'DINE_IN' && notCheckedIn) {
+  if (checkedInRestaurant) setOrderType({ orderType: 'DINE_IN' })
+  else if (orderType === 'DINE_IN' && notCheckedIn) {
     setOrderType({ orderType: 'AHEAD' })
   }
 

@@ -147,6 +147,15 @@ class Bill extends React.Component {
       ? seats[activeGuest].bill.items.length
       : 0;
 
+    for (let i = 0; i < seats.length; i+=1) {
+      if (seats[i].user_id === loggedUserId) {
+        const temp = seats[i];
+        seats[i] = seats[0];
+        seats[0] = temp;
+        break;
+      }
+    }
+
     return (<div>
       {!iosInstalled && <AppBar position="static"/>}
       <ResponsiveContainer>

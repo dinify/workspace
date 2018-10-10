@@ -37,14 +37,14 @@ const Account = ({
           color={color === 'default' ? 'primary' : 'inherit'}
           style={{ marginRight: 24 }}
         >
-          Log in
+          Log in / Sign up
         </Button> */}
         <Button
           component={SignupLink}
           variant="contained"
           color={color === 'default' ? 'primary' : 'inherit'}
         >
-          Sign up
+          Log in
         </Button>
       </div>
     )
