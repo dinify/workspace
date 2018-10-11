@@ -483,7 +483,12 @@ class Bill extends React.Component {
   }
 }
 
-Bill = connect(state => ({seats: state.seat.seats, selecting: checkSelecting(state), gratitude: state.bill.gratitude, loggedUserId: state.user.loggedUserId}), {
+Bill = connect(state => ({
+  seats: state.seat.seats,
+  selecting: checkSelecting(state),
+  gratitude: state.bill.gratitude,
+  loggedUserId: state.user.loggedUserId
+}), {
   fetchBill: fetchBillInit,
   fetchSeats: fetchSeatsInit,
   setGratitude: setGratitudeAction,
