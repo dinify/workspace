@@ -47,7 +47,7 @@ class MenuItemView extends React.PureComponent {
       fetchMenuitem,
       match: { params }
     } = this.props;
-    fetchMenuitem({ id: params.id });
+    if (!this.props.menuItem) fetchMenuitem({ id: params.id });
   }
   render() {
     const {

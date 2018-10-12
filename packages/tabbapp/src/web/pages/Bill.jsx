@@ -54,6 +54,13 @@ class Bill extends React.Component {
     payButtonClicked: false
   }
 
+  constructor() {
+    super();
+    this.enableScrollHandler = true;
+    this.stateIsChanging = false;
+    this.touching = false;
+  }
+
   componentWillMount() {
     const {fetchSeats} = this.props;
     fetchSeats();
@@ -76,6 +83,8 @@ class Bill extends React.Component {
   }
 
   setActiveGuest = (i) => {
+    if (this.touching) return;
+    this.enableScrollHandler = false;
     this.setState({activeGuest: i})
     const node = document.getElementById(this.props.seats[i].id);
     scrollIntoView(node, {
@@ -85,30 +94,28 @@ class Bill extends React.Component {
     });
   }
 
+  onPointerStart = e => {
+    this.touching = true;
+    this.enableScrollHandler = true;
+  }
+
+  onPointerEnd = e => {
+    this.touching = false;
+  }
+
   handleScroll = e => {
-    const ratio = e.target.scrollLeft / e.target.scrollWidth;
+    if (!this.enableScrollHandler || this.stateIsChanging) return;
+    const ratio = (e.target.scrollLeft / e.target.scrollWidth) * 2;
     const count = this.props.seats
       ? this.props.seats.length
       : 0;
     if (count > 1) {
-      const relWidth = 1 / count;
-      const proximity = relWidth / 20;
-      const last = count - 1;
-      if (ratio >= 0 && ratio < 2 * proximity) {
-        if (this.state.activeGuest !== 0)
-          this.setState({activeGuest: 0});
-        }
-      else if (ratio > last * relWidth - proximity * 2 && ratio <= last * relWidth) {
-        if (this.state.activeGuest !== last)
-          this.setState({activeGuest: last});
-        }
-      else {
-        for (let i = 1; i < last; i += 1) {
-          if (ratio > i * relWidth - proximity && ratio < i * relWidth + proximity) {
-            if (this.state.activeGuest !== i)
-              this.setState({activeGuest: i});
-            }
-          }
+      const guestIndex = Math.floor((ratio * (count - 1)) + (1/2));
+      if (this.state.activeGuest !== guestIndex) {
+        this.stateIsChanging = true;
+        this.setState({activeGuest: guestIndex}, () => {
+          this.stateIsChanging = false;
+        });
       }
     }
   };
@@ -196,10 +203,35 @@ class Bill extends React.Component {
         </Motion> */
       }
       <Divider style={{
-          marginTop: 16,
-          marginBottom: 16
-        }}/>
-      <div className={classes.scroller} onScroll={this.handleScroll}>
+        marginTop: 16,
+        marginBottom: 16
+      }}/>
+
+      {/* <Motion
+        defaultStyle={{x: 0}}
+        style={{x: spring(activeGuest, { stiffness: 260, damping: 32 })}}>
+        {style =>
+          <ScrollLink
+            scrollLeft={this.touching ? null : style.x}
+            className={classes.scroller}
+            onScroll={this.handleScroll}
+            onTouchStart={this.onPointerStart}
+            onTouchEnd={this.onPointerEnd}
+            onMouseEnter={this.onPointerStart}
+            onMouseLeave={this.onPointerEnd}
+            >
+
+          </ScrollLink>
+        }
+      </Motion>
+      */}
+      <div
+        className={classes.scroller}
+        onTouchStart={this.onPointerStart}
+        onTouchEnd={this.onPointerEnd}
+        onMouseEnter={this.onPointerStart}
+        onMouseLeave={this.onPointerEnd}
+        onScroll={this.handleScroll}>
         {
           seats.map(seat => {
             let currency = 'KWD';
@@ -234,11 +266,10 @@ class Bill extends React.Component {
                 }
                 {
                   !seat.bill && <Typography style={{
-                        paddingTop: 32,
                         width: '100%',
-                        textAlign: 'center'
+                        textAlign: meSelected ? 'center' : 'left'
                       }} variant="caption">
-                      This user does not have an outstanding bill.
+                      {meSelected ? 'You don\'t appear to have anything in your bill.'  : 'No outstanding bill.'}
                     </Typography>
                 }
 
@@ -326,130 +357,22 @@ class Bill extends React.Component {
                       }
                     </div>
                 }
-                {
-                  meSelected && false && <ClickAwayListener onClickAway={() => this.togglePayMenu(false)}>
-                      <div style={{
-                          width: '100%',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          marginTop: 16,
-                          marginBottom: 16
-                        }}>
-                        <StaggeredMotion defaultStyles={[
-                            {
-                              x: 0.1
-                            }, {
-                              x: 0.1
-                            }, {
-                              x: 0.1
-                            }
-                          ]} styles={prevStyles => prevStyles.map((_, i) => {
-                            return i === 0
-                              ? {
-                                x: spring(
-                                  payMenuOpen
-                                  ? 1
-                                  : 0.1, {
-                                  stiffness: 240,
-                                  damping: 14
-                                })
-                              }
-                              : {
-                                x: spring(prevStyles[i - 1].x, {
-                                  stiffness: 240,
-                                  damping: 22
-                                })
-                              }
-                          })}>
-                          {
-                            styles => <div style={{
-                                  position: 'absolute'
-                                }}>
-                                {
-                                  styles.map((style, i) => <div key={i} style={{
-                                      position: 'absolute',
-                                      left: -20,
-                                      display: 'flex',
-                                      flexDirection: 'column',
-                                      alignItems: 'center',
-                                      transform: `translate3d(${ (i - 1) * style.x * 128}px, -${ (
-                                        i === 1
-                                        ? style.x * 72
-                                        : style.x * 24) + 16}px, 0) scale(${style.x}, ${style.x})`,
-                                      WebkitTransform: `translate3d(${ (i - 1) * style.x * 128}px, -${ (
-                                        i === 1
-                                        ? style.x * 72
-                                        : style.x * 24) + 16}px, 0) scale(${style.x}, ${style.x})`
-                                    }}>
-                                    <Button color="default" variant="fab" aria-label="Pay" disabled={i === 2} mini="mini" onClick={() => initTransaction({gratuity: gratitude, type: 'CASH'})}>
-                                      {
-                                        i === 0
-                                          ? <Wallet/>
-                                          : (
-                                            i === 1
-                                            ? <CreditCard/>
-                                            : <MobileScreenShare/>)
-                                      }
-                                    </Button>
-                                    <Typography style={{
-                                        marginTop: 8
-                                      }} variant="caption">
-                                      {
-                                        i === 0
-                                          ? 'Cash'
-                                          : (
-                                            i === 1
-                                            ? 'Card'
-                                            : 'Online')
-                                      }
-                                    </Typography>
-                                  </div>)
-                                }
-                              </div>
-                          }
-                        </StaggeredMotion>
-                        {/*
-                        splitBill({ itemId: , userIds: })
-                        transferBill({ itemId: , userId: })
-                      */
-                        }
-                        <Button disabled={!activeBillItemCount} onClick={selecting
-                            ? () => {}
-                            : () => this.togglePayMenu()} color="primary" variant="extendedFab" aria-label="Pay">
-                          {
-                            selecting && <CreditCard style={{
-                                  marginRight: 16
-                                }}/>
-                          }
-                          {
-                            selecting && <CallSplit style={{
-                                  marginRight: 16
-                                }}/>
-                          }
-                          {
-                            selecting
-                              ? 'Split / transfer'
-                              : 'Pay my bill'
-                          }
-                        </Button>
-                      </div>
-                    </ClickAwayListener>
-                }
-                {
-                  !meSelected && <ResponsiveContainer>
-                      <div style={{
-                          display: 'flex'
-                        }}>
-                        <Typography style={{
-                            flex: 1
-                          }}>
-                          Sub total
-                        </Typography>
-                        <Typography>
-                          {FN.formatPrice({amount: subtotalAmount, currency})}
-                        </Typography>
-                      </div>
-                      <Grid style={{
+                {!meSelected && <div style={{
+                    display: 'flex',
+                    marginTop: 16
+                  }}>
+                  <Typography style={{
+                      flex: 1
+                    }}>
+                    Sub total
+                  </Typography>
+                  <Typography>
+                    {FN.formatPrice({amount: subtotalAmount, currency})}
+                  </Typography>
+                </div>
+                /* <ResponsiveContainer>
+
+                      {false && <Grid style={{
                           width: '100%',
                           justifyContent: 'center'
                         }} container spacing={16}>
@@ -469,8 +392,8 @@ class Bill extends React.Component {
                             Transfer out
                           </Button>
                         </Grid>
-                      </Grid>
-                    </ResponsiveContainer>
+                      </Grid>}
+                    </ResponsiveContainer> */
                 }
               </ResponsiveContainer>
             </div>
