@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ShoppingCart from 'icons/ShoppingCart';
 import QRCodeScan from 'icons/QRCodeScan';
 import NotificationsActive from 'icons/NotificationsActive';
-import Receipt from 'icons/Receipt';
+import RestaurantMenu from 'icons/RestaurantMenu';
 import LocationOn from 'icons/LocationOn';
 
 import Divider from '@material-ui/core/Divider';
@@ -36,8 +36,7 @@ const Navigation = ({
           showLabels
         >
           <BottomNavigationAction label="Explore" icon={<LocationOn />} />
-          <BottomNavigationAction label="Cart" icon={<ShoppingCart />} />
-          <BottomNavigationAction label="Bill" icon={<Receipt />} />
+          <BottomNavigationAction label="Eat" icon={<RestaurantMenu />} />
           {checkedInRestaurant || process.env.REACT_APP_CAMERA_SCANNER_ENABLED === 'false' ?
             <BottomNavigationAction label="Service" icon={<NotificationsActive />} /> :
             <BottomNavigationAction label="Check in" icon={<QRCodeScan />} />

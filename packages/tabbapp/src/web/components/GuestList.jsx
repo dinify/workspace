@@ -5,6 +5,7 @@ import Person from 'icons/Person';
 import Typography from 'web/components/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Tabs from '@material-ui/core/Tabs';
 import { Motion, spring } from 'react-motion';
 import CheckCircle from 'icons/CheckCircle';
 

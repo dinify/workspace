@@ -10,6 +10,7 @@ import RestaurantView from 'web/pages/RestaurantView';
 import CategoryView from 'web/pages/CategoryView';
 import MenuItemView from 'web/pages/MenuItemView';
 import Onboarding from 'web/pages/Onboarding';
+import Eat from 'web/pages/Eat';
 import Cart from 'web/pages/Cart';
 import Bill from 'web/pages/Bill';
 import Receipt from 'web/pages/Receipt';
@@ -36,9 +37,8 @@ class App extends React.Component {
 
   onNavigate = (evt, val) => {
     if (val === 0) this.props.history.push('/');
-    else if (val === 1) this.props.history.push('/cart');
-    else if (val === 2) this.props.history.push('/bill');
-    else if (val === 3) {
+    else if (val === 1) this.props.history.push('/eat');
+    else if (val === 2) {
       if (this.props.checkedInRestaurant || process.env.REACT_APP_CAMERA_SCANNER_ENABLED === 'false') this.props.history.push('/services');
       else this.props.history.push('/checkin');
     }
@@ -86,16 +86,16 @@ class App extends React.Component {
             <Route path="/category/:id" component={CategoryView} />
             <Route path="/menu/item/:id" component={MenuItemView} />
 
+            <Route path="/eat" component={Eat} />
             <Route path="/cart" component={Cart} />
-            <Route path="/bill" component={Bill} />
+            <Route path="/Bill" component={Bill} />
             <Route path="/receipt" component={Receipt} />
             <Route path="/services" component={Services} />
           </Switch>
         </div>
         <Navigation handleChange={this.onNavigate} checkedInRestaurant={checkedInRestaurant} value={(() => {
-          if (this.match('/cart')) return 1;
-          if (this.match('/bill')) return 2;
-          if (this.match('/checkin') || this.match('/services')) return 3;
+          if (this.match('/eat')) return 1;
+          if (this.match('/checkin') || this.match('/services')) return 2;
           return 0;
         })()}/>
 
