@@ -2,9 +2,7 @@
   "name": "tabb-front",
   "version": "0.0.1",
   "description": "Common codebase for TABB frontend",
-  "directories": {
-    "lib": "lib"
-  },
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +10,11 @@
     "type": "git",
     "url": "git@gitlab.com:tabb/frontend-web/common.git"
   },
+  "dependencies": {
+    "numeral": "^2.0.6",
+    "ramda": "^0.23.0"
+  },
+  "license": "UNLICENSED",
   "author": "Lukas Vanek",
   "private": true
 }
