@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Person from 'icons/Person';
 import Typography from 'web/components/Typography';
+import ScrollSnapView from 'web/components/ScrollSnapView';
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Tabs from '@material-ui/core/Tabs';
@@ -10,24 +11,7 @@ import { Motion, spring } from 'react-motion';
 import CheckCircle from 'icons/CheckCircle';
 
 const styles = theme => ({
-  scroller: {
-    overflowX: 'auto',
-    overflowY: 'hidden',
-    width: '100%',
-    WebkitScrollSnapType: 'mandatory',
-    scrollSnapType: 'x mandatory',
-    WebkitScrollSnapPointsX: 'repeat(100%)',
-    scrollSnapPointsX: 'repeat(100%)',
-    WebkitOverflowScrolling: 'touch',
-    whiteSpace: 'nowrap',
-    '&::-webkit-scrollbar': {
-      display: 'none'
-    },
-    '& > div': {
-      WebkitOverflowScrolling: 'touch',
-      scrollSnapAlign: 'start',
-    }
-  }
+
 });
 
 class GuestList extends React.Component {
@@ -52,16 +36,22 @@ class GuestList extends React.Component {
       users
     } = this.props;
     const { selectedGuests } = this.state;
-
     const rippleRadius = 40;
 
     return (
-      <div className={classes.scroller}>
+      <ScrollSnapView
+        style={{
+          width: '100%',
+          border: 'none'
+        }}
+        snap={false}
+        ref={(node => {this.root = node})}
+        selected={active}>
         {seats.map((seat, i, arr) => {
           const selected = selectedGuests[seat.id] && selecting;
           const user = users[seat.user_id];
-          return <div key={seat.id} style={{
-            borderRadius: 4,
+          return <div id={`guest-${seat.id}`} key={`guest-${seat.id}`} style={{
+            // border: '1px solid rgba(255, 0,0,0.54)',
             display: 'inline-block',
             paddingLeft: 16,
             marginRight: arr.length - 1 === i ? 16 : 0
@@ -122,7 +112,7 @@ class GuestList extends React.Component {
           </div>
         }
         )}
-      </div>
+      </ScrollSnapView>
     );
   };
 }
