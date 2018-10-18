@@ -166,7 +166,7 @@ class Eat extends React.Component {
                   }}>
                   <ResponsiveContainer>
                     <div style={{display: 'flex', marginTop: 16}}>
-                      <Typography style={{flex: 1, marginRight: 16}} variant="overline">
+                      <Typography style={{flex: 1, marginRight: 16, lineHeight: 'unset'}} variant="overline">
                         Cart
                       </Typography>
                       <Typography variant="caption">
@@ -182,8 +182,8 @@ class Eat extends React.Component {
 
                     {seatList.length > 0 &&
                       <div>
-                        <div style={{display: 'flex', alignItems: 'center', marginTop: 16, paddingLeft: 72}}>
-                          <Typography style={{flex: 1}} variant="button">
+                        <div style={{display: 'flex', alignItems: 'center', marginTop: 16}}>
+                          <Typography style={{flex: 1}} variant="subtitle1">
                             Total
                           </Typography>
 
@@ -209,7 +209,7 @@ class Eat extends React.Component {
                     <Divider style={{marginTop: 16, marginBottom: 16}}/>
 
                     <div style={{display: 'flex', marginTop: 16}}>
-                      <Typography style={{flex: 1, marginRight: 16}} variant="overline">
+                      <Typography style={{flex: 1, marginRight: 16, lineHeight: 'unset'}} variant="overline">
                         Bill
                       </Typography>
                       <Typography variant="caption">
@@ -235,11 +235,11 @@ class Eat extends React.Component {
                             transform: 'translate3d(0,0,0)'
                           }}>
                           <div style={{
-                              display: 'flex'
+                              display: 'flex',
+                              marginTop: 16
                             }}>
                             <Typography style={{
                                 flex: 1,
-                                marginTop: 16
                               }}>
                               Subtotal
                             </Typography>
@@ -249,7 +249,8 @@ class Eat extends React.Component {
                           </div>
                           <div style={{
                               display: 'flex',
-                              marginTop: 8
+                              marginTop: 8,
+                              marginBottom: 16,
                             }}>
                             <Typography style={{
                                 fontWeight: 700,
@@ -266,19 +267,18 @@ class Eat extends React.Component {
                               {FN.formatPrice({amount: gratitudeAmount, currency})}
                             </Typography>
                           </div>
-                          <Slider disabled={awaitingPaymentConfirmation} style={{
-                              marginTop: 8,
-                              marginBottom: 8
-                            }} value={gratitude} min={0} max={50} step={1} onChange={(event, val) => setGratitude({percentage: val})}/>
+                          <Slider disabled={awaitingPaymentConfirmation}
+                             value={gratitude} min={0} max={50} step={1} onChange={(event, val) => setGratitude({percentage: val})}/>
                           <div style={{
+                              marginTop: 32,
                               display: 'flex'
                             }}>
-                            <Typography style={{
+                            <Typography variant="subtitle1" style={{
                                 flex: 1
                               }}>
                               Total
                             </Typography>
-                            <Typography>
+                            <Typography variant="subtitle1">
                               {FN.formatPrice({amount: totalAmount, currency})}
                             </Typography>
                           </div>
@@ -291,7 +291,7 @@ class Eat extends React.Component {
                       <Typography style={{
                           flex: 1
                         }}>
-                        Sub total
+                        Subtotal
                       </Typography>
                       <Typography>
                         {FN.formatPrice({amount: subtotalAmount, currency})}
