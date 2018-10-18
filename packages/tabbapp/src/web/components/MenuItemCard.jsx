@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import * as FN from 'lib/FN';
 
@@ -67,14 +67,14 @@ const MenuItemCard = ({
             backgroundImage: `url(${images[0]})`
           }}/>
       </div>
-      <Typography variant="subheading">{menuItem.name}</Typography>
+      <Typography variant="subtitle1">{menuItem.name}</Typography>
       <Typography
         className={classes.price}
         variant="overline">
         {FN.formatPrice(menuItem.price)}
       </Typography>
       <div style={{width: 1000}} />
-      { /* <Typography noWrap variant="body1">{menuItem.description}</Typography> */ }
+      { /* <Typography noWrap >{menuItem.description}</Typography> */ }
     </MenuItemLink>
   );
 };

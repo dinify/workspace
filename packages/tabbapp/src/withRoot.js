@@ -41,6 +41,7 @@ const theme = createMuiTheme({
     },
   },
   typography: {
+    useNextVariants: true,
     // System font stack
     fontFamily: [
       'Lato',

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import CheckCircle from 'icons/CheckCircle';
 import { Motion, spring } from 'react-motion';
 import * as FN from 'lib/FN';
@@ -54,18 +54,20 @@ class BillItem extends React.PureComponent {
         defaultStyle={{x: 0}}
         style={{x: spring(selected ? 1 : 0, { stiffness: 260, damping: 24 })}}>
         {style1 =>
-          <div
+          <ButtonBase
+            disableRipple
+            onClick={typeof onClick === 'function' ? onClick : null}
             className={classes.bg}
             style={{
               display: 'flex',
               minWidth: '100%',
+              textAlign: 'start',
               borderRadius: 4,
               paddingLeft: padding ? 16 : 0,
               paddingRight: padding ? 16 : 0,
               backgroundColor: `rgba(0,0,0,${Math.min(1, 0.06 * style1.x)})`
             }} >
-            <ButtonBase
-              disableRipple
+            <div
               style={{
                 position: 'relative',
                 display: 'flex',
@@ -73,7 +75,6 @@ class BillItem extends React.PureComponent {
                 justifyContent: 'center',
                 overflow: 'hidden',
               }}
-              onClick={typeof onClick === 'function' ? onClick : null}
               className={classes.cartItemImage}
               ref={(divElement) => {this.divElement = divElement}}>
                 {images.length > 0 &&
@@ -95,7 +96,7 @@ class BillItem extends React.PureComponent {
                       minHeight: rippleRadius,
                       minWidth: rippleRadius,
                       opacity: Math.min(1, style.x * 2),
-                      transform: `translate3d(0,0,0) scale(${Math.max(style.x, 1/rippleRadius)}, ${Math.max(style.x, 1/rippleRadius)})`,
+                      transform: `scale(${Math.max(style.x, 1/rippleRadius)}, ${Math.max(style.x, 1/rippleRadius)})`,
                     }}/>
                   }
                 </Motion>
@@ -113,10 +114,10 @@ class BillItem extends React.PureComponent {
                     </div>
                   }
                 </Motion>
-            </ButtonBase>
+            </div>
             <div style={{flex: 1, marginLeft: 16, position: 'relative'}}>
               <div style={{display: 'flex'}}>
-                <Typography style={{flex: 1, marginRight: 32}} variant="body1">
+                <Typography style={{flex: 1, marginRight: 32}} >
                   {item.menu_item && item.menu_item.name}
                 </Typography>
                 <Typography
@@ -126,7 +127,7 @@ class BillItem extends React.PureComponent {
                 </Typography>
               </div>
             </div>
-          </div>
+          </ButtonBase>
         }
       </Motion>
     )

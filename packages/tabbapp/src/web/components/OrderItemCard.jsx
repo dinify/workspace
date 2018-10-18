@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import * as FN from 'lib/FN';
 
 const styles = theme => ({
@@ -52,9 +52,9 @@ const OrderItemCard = ({
         variant="overline">
         {FN.formatPrice(orderItem.menu_item.price)}
       </Typography>
-      <Typography variant="subheading">{orderItem.menu_item.name}</Typography>
+      <Typography variant="subtitle1">{orderItem.menu_item.name}</Typography>
       <div style={{width: 1000}} />
-      { /* <Typography noWrap variant="body1">{orderItem.menu_item.description}</Typography> */ }
+      { /* <Typography noWrap >{orderItem.menu_item.description}</Typography> */ }
     </div>
   );
 };

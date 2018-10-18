@@ -19,7 +19,7 @@ const Main = ({ restaurantsMap, theme }) => {
       <ResponsiveContainer>
         <Typography
           style={{ paddingTop: 32 }}
-          variant="headline"
+          variant="h5"
           gutterBottom
         >
           Explore local places

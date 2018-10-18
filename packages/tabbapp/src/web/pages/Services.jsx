@@ -51,7 +51,7 @@ class Services extends React.Component {
               <div style={{marginBottom: 32}}>
                 <ServiceCallGraphic/>
               </div>
-              <Typography gutterBottom variant="subheading">
+              <Typography gutterBottom variant="subtitle1">
                 Call a service
               </Typography>
               <Typography variant="caption">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   secondary: {
@@ -22,7 +22,7 @@ const NutritionFacts = ({
         Nutrition Facts
       </Typography>
       <div style={{display: 'flex'}}>
-        <Typography style={{flex: 1}} variant="body1">
+        <Typography style={{flex: 1}} >
           Fats
         </Typography>
         <Typography
@@ -32,7 +32,7 @@ const NutritionFacts = ({
         </Typography>
       </div>
       <div style={{display: 'flex'}}>
-        <Typography style={{flex: 1}} variant="body1">
+        <Typography style={{flex: 1}} >
           Carbs
         </Typography>
         <Typography
@@ -42,7 +42,7 @@ const NutritionFacts = ({
         </Typography>
       </div>
       <div style={{display: 'flex'}}>
-        <Typography style={{flex: 1}} variant="body1">
+        <Typography style={{flex: 1}} >
           Proteins
         </Typography>
         <Typography
@@ -52,7 +52,7 @@ const NutritionFacts = ({
         </Typography>
       </div>
       <div style={{display: 'flex'}}>
-        <Typography style={{flex: 1}} variant="body1">
+        <Typography style={{flex: 1}} >
           Calories
         </Typography>
         <Typography

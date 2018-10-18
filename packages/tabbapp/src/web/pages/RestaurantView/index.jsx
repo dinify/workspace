@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import AppBar from 'web/components/AppBar';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import { fetchRestaurantInit } from 'ducks/restaurant/actions';
@@ -142,10 +142,10 @@ class RestaurantView extends React.PureComponent {
                   {tags.join(' · ')}
                 </Typography>
               )}
-              <Typography gutterBottom variant="title">{restaurant.name}</Typography>
+              <Typography gutterBottom variant="h6">{restaurant.name}</Typography>
               <Nav restaurant={restaurant} />
 
-              { /* <Typography style={{marginTop: 8}} gutterBottom variant="subheading">{restaurant.description}</Typography>
+              { /* <Typography style={{marginTop: 8}} gutterBottom variant="subtitle1">{restaurant.description}</Typography>
               <Typography
                 className={classes.secondary}
                 style={{ paddingTop: mediumScreen ? 24 : 16 }}
@@ -153,14 +153,14 @@ class RestaurantView extends React.PureComponent {
                 variant="overline">
                 About
               </Typography>
-              <Typography gutterBottom variant="body1">{restaurant.about}</Typography> */ }
+              <Typography gutterBottom >{restaurant.about}</Typography> */ }
               <Divider style={{marginTop: 16, marginBottom: 16}} />
               { /* <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
                 <Grid item>
                   <Today className={classes.primary} />
                 </Grid>
                 <Grid item>
-                  <Typography variant="subheading">Recent orders</Typography>
+                  <Typography variant="subtitle1">Recent orders</Typography>
                 </Grid>
               </Grid>
               <Grid container spacing={mediumScreen ? 24 : 16}>
@@ -175,7 +175,7 @@ class RestaurantView extends React.PureComponent {
                   <Favorite className={classes.primary} />
                 </Grid>
                 <Grid item>
-                  <Typography variant="subheading">Favorited</Typography>
+                  <Typography variant="subtitle1">Favorited</Typography>
                 </Grid>
               </Grid>
               <Grid container spacing={mediumScreen ? 24 : 16}>
@@ -196,7 +196,7 @@ class RestaurantView extends React.PureComponent {
               </Card>}
               <Typography
                 style={{ paddingTop: mediumScreen ? 24 : 16 }}
-                variant="subheading"
+                variant="subtitle1"
                 align="center"
                 gutterBottom>
                 Snatch a table

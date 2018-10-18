@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -112,7 +112,7 @@ let Customizations = ({
               width: '100%'
             }}>
               <Typography
-                variant="body1"
+                
                 color={ingredient.excluded ? 'textSecondary' : 'default'}
                 style={{
                   flex: 1,
@@ -165,12 +165,12 @@ let Customizations = ({
             <Typography className={classes.secondary} variant="overline">
               {FN.formatPrice(addon.price)}
             </Typography>
-            <Typography variant="body1">
+            <Typography >
               {addon.name}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography variant="subheading">
+            <Typography variant="subtitle1">
               {addon.qty ? `× ${addon.qty}` : ''}
             </Typography>
           </Grid>

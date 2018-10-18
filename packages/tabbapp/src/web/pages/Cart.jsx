@@ -14,7 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 // import SwipableItem from 'web/components/SwipableItem';
 import AppBar from 'web/components/AppBar';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import CartItem from 'web/components/CartItem';
 // import Radio from '@material-ui/core/Radio';
 // import RadioGroup from '@material-ui/core/RadioGroup';
@@ -76,7 +76,7 @@ const Cart = ({
       <ResponsiveContainer>
         <div style={{display: 'flex', alignItems: 'center', paddingTop: 16}}>
           <div style={{flex: 1}}>
-            <Typography variant="subheading">
+            <Typography variant="subtitle1">
               Cart
             </Typography>
             <Typography variant="caption">
@@ -132,7 +132,7 @@ const Cart = ({
             Total
           </Typography>
 
-          <Typography variant="subheading">
+          <Typography variant="subtitle1">
             {FN.formatPrice({
               amount: parseFloat(subtotal.amount),
               currency: subtotal.currency

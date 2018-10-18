@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Delete from 'icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import * as FN from 'lib/FN';
 import uniqueId from 'lodash.uniqueid';
 
@@ -81,7 +81,7 @@ const CartItem = ({
         </div>
         <div style={{flex: 1, marginLeft: 16, position: 'relative'}}>
           <div style={{display: 'flex'}}>
-            <Typography style={{flex: 1, marginRight: 32}} variant="body1">
+            <Typography style={{flex: 1, marginRight: 32}} >
               {item.menu_item && item.menu_item.name}
             </Typography>
             <Typography

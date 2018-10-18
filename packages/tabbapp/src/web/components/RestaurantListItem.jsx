@@ -3,7 +3,7 @@ import React from 'react';
 import R from 'ramda';
 import * as FN from 'lib/FN';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import Carousel from './Carousel';
 import { Link } from 'react-router-dom';
 
@@ -76,8 +76,8 @@ const RestaurantListItem = ({
           </Typography>
         )}
 
-        <Typography variant="title">{restaurant.name}</Typography>
-        { /* <Typography variant="body1">{restaurant.description}</Typography> */}
+        <Typography variant="h6">{restaurant.name}</Typography>
+        { /* <Typography >{restaurant.description}</Typography> */}
       </div>
     </RestaurantLink>
   );

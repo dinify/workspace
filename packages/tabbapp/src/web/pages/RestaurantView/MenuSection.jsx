@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import RestaurantMenu from 'icons/RestaurantMenu';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import MenuItemCard from 'web/components/MenuItemCard';
 import * as FN from 'lib/FN';
 import R from 'ramda';
@@ -64,7 +64,7 @@ let MenuSection = ({
           <RestaurantMenu className={classes.primary} />
         </Grid>
         <Grid item>
-          <Typography variant="subheading">Menu</Typography>
+          <Typography variant="subtitle1">Menu</Typography>
           <Typography variant="caption">Everything you can get in {restaurant.name}</Typography>
         </Grid>
       </Grid>
@@ -75,7 +75,7 @@ let MenuSection = ({
         <div className={mobile ? classes.expand : null} style={{marginTop: i === 0 ? 32 : 0}} key={uniqueId()}>
           {i > 0 && <Divider className={mobile ? classes.margin : null} style={{marginTop: mobile ? 0 : 32, marginBottom: 32}} />}
           <Link style={{textDecoration: 'none'}} to={`/category/${category.id}`}>
-            <Typography className={mobile ? classes.margin : null} gutterBottom variant="title">
+            <Typography className={mobile ? classes.margin : null} gutterBottom variant="h6">
               {category.name}
             </Typography>
           </Link>

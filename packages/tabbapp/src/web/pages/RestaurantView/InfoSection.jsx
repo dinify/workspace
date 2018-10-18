@@ -13,7 +13,7 @@ import Phone from 'icons/Phone';
 import Place from 'icons/Place';
 import Schedule from 'icons/Schedule';
 import StaticMap from 'web/components/StaticMap';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import uniqueId from 'lodash.uniqueid';
 
 const styles = theme => ({
@@ -99,13 +99,13 @@ const InfoSection = ({
               {Object.entries(restaurant.open_hours).map(([day, values]) =>
                 <tr key={uniqueId()}>
                   <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
-                    <Typography className={classes.secondary} variant="body1">
+                    <Typography className={classes.secondary} >
                       {days[day]}
                     </Typography>
                   </td>
                   <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
                     {values.map(value =>
-                      <Typography key={uniqueId()} style={{paddingLeft: 24}} variant="body1">
+                      <Typography key={uniqueId()} style={{paddingLeft: 24}} >
                         {value.join(' - ')}
                       </Typography>
                     )}

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Person from 'icons/Person';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import ScrollSnapView from 'web/components/ScrollSnapView';
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -102,7 +102,7 @@ class GuestList extends React.Component {
                   <Typography style={{
                     paddingTop: 8,
                     transform: `translate3d(0,0,0) scale(${style.x}, ${style.x})`,
-                  }} variant="body1" color={active === i ? 'default' : 'textSecondary'}>
+                  }}  color={active === i ? 'default' : 'textSecondary'}>
                     {user ? user.name : ''}
                   </Typography>
                 }

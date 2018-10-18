@@ -118,7 +118,7 @@ export default class QRscanner extends React.Component {
 
         {this.state.cameraAccessible === 'FAIL' ?
           <div style={{margin: 32}}>
-            <Typography style={{color: 'rgba(255, 255, 255, 0.87)'}} color="inherit" variant="subheading" gutterBottom>
+            <Typography style={{color: 'rgba(255, 255, 255, 0.87)'}} color="inherit" variant="subtitle1" gutterBottom>
               Camera not available
             </Typography>
             <Typography color="inherit" variant="caption" gutterBottom>

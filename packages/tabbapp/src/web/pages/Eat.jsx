@@ -19,12 +19,12 @@ import GuestList from 'web/components/GuestList';
 import ScrollSnapView from 'web/components/ScrollSnapView';
 import CartItem from 'web/components/CartItem';
 import BillItem from 'web/components/BillItem';
-import Typography from 'web/components/Typography';
 import PaymentOptionsDialog from 'web/components/PaymentOptionsDialog';
 
 import RestaurantMenu from 'icons/RestaurantMenu';
 import CreditCard from 'icons/CreditCard';
 
+import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/lab/Slider';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
@@ -187,7 +187,7 @@ class Eat extends React.Component {
                             Total
                           </Typography>
 
-                          <Typography variant="subheading">
+                          <Typography variant="subtitle1">
                             {FN.formatPrice({
                               amount: parseFloat(userIsMe ? subtotal.amount : seat.cart.subtotal.amount),
                               currency: userIsMe ? subtotal.currency : seat.cart.subtotal.currency

@@ -51,7 +51,7 @@ let SimpleGuestList = ({
             }
             {/* <Typography style={{
               paddingTop: 8,
-            }} variant="body1" color="textSecondary">
+            }}  color="textSecondary">
               {user ? user.name : ''}
             </Typography> */}
           </div>

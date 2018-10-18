@@ -3,7 +3,7 @@ import React from 'react';
 import { withStateHandlers } from 'recompose';
 import { Link } from 'react-router-dom';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Person from 'icons/Person';
 import Popover from '@material-ui/core/Popover';
@@ -87,7 +87,7 @@ const Account = ({
             </Avatar>
           </Grid>
           <Grid item style={{paddingLeft: 16, display: 'flex', flexDirection: 'column'}}>
-            <Typography variant="body1">{user.name}</Typography>
+            <Typography >{user.name}</Typography>
             <Typography gutterBottom variant="caption">{user.email}</Typography>
             <div style={{flexGrow: 1}}/>
             <Button onClick={() => {handleAccountMenuClose(); logout()}} variant="outlined" fullWidth>Log out</Button>

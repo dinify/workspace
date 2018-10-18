@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import AppBar from 'web/components/AppBar';
 import FavoriteToggle from 'web/components/FavoriteToggle';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import * as FN from 'lib/FN';
@@ -95,8 +95,8 @@ class MenuItemView extends React.PureComponent {
             <Grid item xs={12} md={6}>
               <Grid container spacing={0}>
                 <Grid item style={{flex: 1}}>
-                  <Typography variant="title">{menuItem.name}</Typography>
-                  <Typography gutterBottom variant="subheading">{FN.formatPrice(menuItem.price)}</Typography>
+                  <Typography variant="h6">{menuItem.name}</Typography>
+                  <Typography gutterBottom variant="subtitle1">{FN.formatPrice(menuItem.price)}</Typography>
                 </Grid>
                 <Grid item>
                   <FavoriteToggle
@@ -108,7 +108,7 @@ class MenuItemView extends React.PureComponent {
                   />
                 </Grid>
               </Grid>
-              <Typography  variant="body1">{menuItem.description}</Typography>
+              <Typography  >{menuItem.description}</Typography>
               {menuItem.calories && <div style={{marginTop: 16}}>
                 <NutritionFacts calories={menuItem.calories} />
               </div>}

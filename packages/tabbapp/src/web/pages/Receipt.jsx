@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from 'web/components/AppBar';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import SimpleGuestList from 'web/components/SimpleGuestList';
 import BillItem from 'web/components/BillItem';
 import Event from 'icons/Event';
@@ -49,7 +49,7 @@ class Receipt extends React.Component {
           Receipt
         </Typography>
         <div className={classes.summary}>
-          <Typography variant="subheading" style={{marginBottom: 16}}>
+          <Typography variant="subtitle1" style={{marginBottom: 16}}>
             Korea grill
           </Typography>
           <Grid container spacing={32} style={{marginBottom: 16}}>
