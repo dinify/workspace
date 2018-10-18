@@ -8,3 +8,8 @@ export const fetchSeatsFail = (e) => ({
   type: types.FETCH_SEATS_FAIL,
   payload: e
 })
+
+export const selectBillItem = ({ selected, seatIndex, billItemIndex }) => ({
+  type: types.SELECT_BILLITEM,
+  payload: { selected, seatIndex, billItemIndex  }
+})

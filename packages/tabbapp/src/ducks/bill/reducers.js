@@ -25,11 +25,6 @@ export default function reducer(state = initialState, action) {
       const receipt = action.payload.res;
       return R.assoc('receipt', receipt)(state);
     }
-    case types.SELECT_BILLITEM: {
-      if (!state.bill.items || state.bill.items.length < 1) return state;
-      const { index, selected } = action.payload;
-      return R.assocPath(['bill', 'items', index, 'selected'], selected)(state);
-    }
     case types.SET_GRATITUDE: {
       const { percentage } = action.payload;
       return R.assoc('gratitude', percentage)(state);

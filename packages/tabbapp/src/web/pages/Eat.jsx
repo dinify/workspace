@@ -3,10 +3,15 @@ import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import * as FN from 'lib/FN';
 
-import {setGratitude as setGratitudeAction, splitBillInit, transferBillInit, initTransactionInit} from 'ducks/bill/actions';
+import {
+  setGratitude as setGratitudeAction,
+  splitBillInit,
+  transferBillInit,
+  initTransactionInit,
+} from 'ducks/bill/actions';
 import { rmFromCartInit, orderInit, setOrderTypeAction } from 'ducks/cart/actions';
 import {checkSelecting} from 'ducks/bill/selectors';
-import {fetchSeatsInit} from 'ducks/seat/actions';
+import {fetchSeatsInit, selectBillItem as selectBillItemAction} from 'ducks/seat/actions';
 
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import AppBar from 'web/components/AppBar';
@@ -76,6 +81,7 @@ class Eat extends React.Component {
       orderType,
       setOrderType,
       order,
+      selectBillItem,
       // splitBill, transferBill,
       loggedUserId,
       initTransaction,
@@ -117,7 +123,7 @@ class Eat extends React.Component {
           selected={activeGuest}
           onChange={this.setActiveGuest}>
           {
-            seats.map(seat => {
+            seats.map((seat, currentSeatIndex) => {
               const user = users[seat.user_id];
               const userIsMe = seat.user_id === loggedUserId;
 
@@ -215,7 +221,13 @@ class Eat extends React.Component {
                       <div key={item.order_item.id} style={{
                           marginTop: 16
                         }}>
-                        <BillItem item={item} index={i}/>
+                        <BillItem onClick={() => {
+                          selectBillItem({
+                            selected: !(item.selected || false),
+                            seatIndex: currentSeatIndex,
+                            billItemIndex: i
+                          });
+                        }} item={item} index={i}/>
                       </div>
                     )}
 
@@ -226,9 +238,10 @@ class Eat extends React.Component {
                               display: 'flex'
                             }}>
                             <Typography style={{
-                                flex: 1
+                                flex: 1,
+                                marginTop: 16
                               }}>
-                              Sub total
+                              Subtotal
                             </Typography>
                             <Typography>
                               {FN.formatPrice({amount: subtotalAmount, currency})}
@@ -331,6 +344,7 @@ Eat = connect(state => ({
   transferBill: transferBillInit,
   initTransaction: initTransactionInit,
   setOrderType: setOrderTypeAction,
+  selectBillItem: selectBillItemAction,
   rmFromCart: rmFromCartInit,
   order: orderInit
 })(Eat)

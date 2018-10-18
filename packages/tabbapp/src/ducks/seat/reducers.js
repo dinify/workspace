@@ -12,6 +12,10 @@ export default function reducer(state = initialState, action) {
       const seats = action.payload.res;
       return R.assoc('seats', seats)(state);
     }
+    case types.SELECT_BILLITEM: {
+      const { selected, seatIndex, billItemIndex } = action.payload;
+      return R.assocPath(['seats', seatIndex, 'bill', 'items', billItemIndex, 'selected'], selected)(state);
+    }
     default:
       return state;
   }

@@ -18,9 +18,9 @@ export const fetchReceiptFail = (e) => ({
   payload: e
 })
 
-export const selectBillItem = ({ index, selected }) => ({
+export const selectBillItem = ({ selected, seatIndex, billItemIndex }) => ({
   type: types.SELECT_BILLITEM,
-  payload: { index, selected }
+  payload: { selected, seatIndex, billItemIndex  }
 })
 
 export const setGratitude = ({ percentage }) => ({
