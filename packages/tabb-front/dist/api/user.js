@@ -1,83 +1,83 @@
-// @flow
-import { Get, Post } from './Network';
+"use strict";
 
-type RegisterLocalProps = {
-  name: string,
-  phone: string,
-  email: string,
-  password: string,
-  registrationType: 'LOCAL'
-}
-type RegisterFacebookProps = {
-  name: string,
-  phone: string,
-  email: string,
-  accessToken: string,
-  gender: string,
-  birthday: string,
-  registrationType: 'FACEBOOK'
-}
-export function Register(
-  {
-    name, phone, email, password, accessToken, gender, birthday, registrationType
-  }: RegisterLocalProps | RegisterFacebookProps
-) {
-  const body = {
-    name,
-    phone,
-    email,
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Register = Register;
+exports.Login = Login;
+exports.LoginWithFacebook = LoginWithFacebook;
+exports.GetMe = GetMe;
+exports.GetUser = GetUser;
+exports.RegisterFirebaseToken = RegisterFirebaseToken;
+
+var _Network = require("./Network");
+
+function Register(_ref) {
+  var name = _ref.name,
+      phone = _ref.phone,
+      email = _ref.email,
+      password = _ref.password,
+      accessToken = _ref.accessToken,
+      gender = _ref.gender,
+      birthday = _ref.birthday,
+      registrationType = _ref.registrationType;
+  var body = {
+    name: name,
+    phone: phone,
+    email: email,
     gender: gender || 'OTHER',
     birth_date: birthday || '1990-01-01',
     registration_type: registrationType
-  }
+  };
   if (password) body.password = password;
   if (accessToken) body.oauth_access_token = accessToken;
-  return Post({ path: 'user/register', noToken: true }, body);
+  return (0, _Network.Post)({
+    path: 'user/register',
+    noToken: true
+  }, body);
 }
 
-type LoginProps = {
-  email: string,
-  password: string,
-}
-export function Login({ email, password }: LoginProps) {
-  return Post(
-    {
-      path: 'user/login',
-      noToken: true,
-    },
-    {
-      email,
-      password,
-    },
-  );
-}
-export function LoginWithFacebook({ accessToken }) {
-  return Post(
-    {
-      path: 'user/login/facebook',
-      noToken: true,
-    },
-    {
-      oauth_access_token: accessToken
-    }
-  );
+function Login(_ref2) {
+  var email = _ref2.email,
+      password = _ref2.password;
+  return (0, _Network.Post)({
+    path: 'user/login',
+    noToken: true
+  }, {
+    email: email,
+    password: password
+  });
 }
 
-export function GetMe() {
-  return Get({ path: 'user/my' });
+function LoginWithFacebook(_ref3) {
+  var accessToken = _ref3.accessToken;
+  return (0, _Network.Post)({
+    path: 'user/login/facebook',
+    noToken: true
+  }, {
+    oauth_access_token: accessToken
+  });
 }
 
-export function GetUser({ id }) {
-  return Get({ v3: true, path: `user/${id}` })
+function GetMe() {
+  return (0, _Network.Get)({
+    path: 'user/my'
+  });
 }
 
-export function RegisterFirebaseToken({ token }) {
-  return Post(
-    {
-      path: 'token/firebase/register'
-    },
-    {
-      token
-    }
-  );
+function GetUser(_ref4) {
+  var id = _ref4.id;
+  return (0, _Network.Get)({
+    v3: true,
+    path: "user/".concat(id)
+  });
+}
+
+function RegisterFirebaseToken(_ref5) {
+  var token = _ref5.token;
+  return (0, _Network.Post)({
+    path: 'token/firebase/register'
+  }, {
+    token: token
+  });
 }

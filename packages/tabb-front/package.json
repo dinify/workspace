@@ -4,7 +4,7 @@
   "description": "Common codebase for TABB frontend",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel src -d dist"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,9 @@
   "author": "Lukas Vanek",
   "private": true,
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-flow": "^6.23.0"
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-flow": "^7.0.0"
   }
 }
