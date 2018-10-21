@@ -43,7 +43,7 @@ const CartItem = ({
       return {
         name: choice.name,
         crossover: false,
-        price: FN.formatPrice(choice.difference)
+        price: choice.difference
       }
     }));
     customizations.push(...addons.map(addon => {
@@ -85,8 +85,8 @@ const CartItem = ({
               {item.menu_item && item.menu_item.name}
             </Typography>
             <Typography
-              style={{alignSelf: 'flex-end', opacity: editing ? 0 : 1}}
-              variant="overline">
+              variant="overline"
+              style={{alignSelf: 'flex-end', opacity: editing ? 0 : 1}}>
               {item.menu_item && FN.formatPrice(item.menu_item.price)}
             </Typography>
           </div>
@@ -96,7 +96,7 @@ const CartItem = ({
                 flex: 1,
                 marginRight: 32,
                 textDecoration: customization.crossover ? 'line-through' : 'none',
-              }} variant="caption">
+              }} color="textSecondary" variant="caption">
                 {customization.name}
               </Typography>
               {customization.price && parseFloat(customization.price.amount) > 0 && <Typography
@@ -106,7 +106,7 @@ const CartItem = ({
                   opacity: editing ? 0 : 1,
                 }}
                 variant="overline">
-                {customization.price}
+                {FN.formatPrice(customization.price)}
               </Typography>}
             </div>
           ) :

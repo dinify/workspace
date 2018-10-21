@@ -17,6 +17,9 @@ export default function reducer(state = initialState, action) {
     //   const res = action.payload;
     //   return R.assocPath(['items', res.id], res)(state);
     // }
+    case types.ORDER_DONE: {
+      return R.assoc('items', {})(state);
+    }
     case types.SET_ORDERTYPE: {
       return R.assoc('orderType', action.payload.orderType)(state);
     }

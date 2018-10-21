@@ -80,6 +80,7 @@ class Eat extends React.Component {
       checkedInRestaurant,
       orderType,
       setOrderType,
+      cartItems,
       order,
       selectBillItem,
       // splitBill, transferBill,
@@ -129,8 +130,9 @@ class Eat extends React.Component {
 
 
               // BLOEAAHHHH this is pute vomit here
-              const seatList = [];
-              if (seat.cart) {
+              let seatList = [];
+              if (userIsMe) seatList = FN.MapToList(cartItems);
+              else if (seat.cart) {
                 Object.keys(seat.cart).forEach(key => {
                   if (key !== 'subtotal') {
                     FN.MapToList(seat.cart[key]).forEach(item => {
@@ -268,7 +270,7 @@ class Eat extends React.Component {
                             </Typography>
                           </div>
                           <Slider disabled={awaitingPaymentConfirmation}
-                             value={gratitude} min={0} max={50} step={1} onChange={(event, val) => setGratitude({percentage: val})}/>
+                             value={gratitude} min={0} max={50} onChange={(event, val) => setGratitude({percentage: val})}/>
                           <div style={{
                               marginTop: 32,
                               display: 'flex'
