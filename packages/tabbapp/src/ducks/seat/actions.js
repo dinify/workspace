@@ -13,3 +13,7 @@ export const selectBillItem = ({ selected, seatIndex, billItemIndex }) => ({
   type: types.SELECT_BILLITEM,
   payload: { selected, seatIndex, billItemIndex  }
 })
+
+export const clearSelectedBillItems = () => ({
+  type: types.CLEAR_SELECTED_BILLITEMS,
+})

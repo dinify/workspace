@@ -4,7 +4,11 @@ import R from 'ramda'
 
 export const checkSelecting = createSelector(
   [
-    (state) => state.bill.bill.items,
+    (state) => {
+      console.log(R.pluck('bill')(state.seat.seats));
+      //console.log(R.mergeAll(R.pluck('bill.items')(state.seat.seats)));
+      R.filter(R.propEq('selected', 'sds'));
+    },
   ],
   (billItems) => {
     if (!billItems) return false;

@@ -9,8 +9,12 @@ import {
   initTransactionInit,
 } from 'ducks/bill/actions';
 import { rmFromCartInit, orderInit, setOrderTypeAction } from 'ducks/cart/actions';
-import {checkSelecting} from 'ducks/bill/selectors';
-import {fetchSeatsInit, selectBillItem as selectBillItemAction} from 'ducks/seat/actions';
+import { checkSelecting, selectedBillItems as selectedBillItemsSelector } from 'ducks/seat/selectors';
+import {
+  fetchSeatsInit,
+  selectBillItem as selectBillItemAction,
+  clearSelectedBillItems as clearSelectedBillItemsAction
+} from 'ducks/seat/actions';
 
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import AppBar from 'web/components/AppBar';
@@ -19,6 +23,7 @@ import ScrollSnapView from 'web/components/ScrollSnapView';
 import CartItem from 'web/components/CartItem';
 import BillItem from 'web/components/BillItem';
 import PaymentOptionsDialog from 'web/components/PaymentOptionsDialog';
+import ContextMenu from 'web/components/ContextMenu';
 
 import RestaurantMenu from 'icons/RestaurantMenu';
 import CreditCard from 'icons/CreditCard';
@@ -33,6 +38,9 @@ import Button from '@material-ui/core/Button';
 const styles = theme => ({
   container: {
     width: '100%'
+  },
+  defaultBackgroundFill: {
+    backgroundColor: theme.palette.background.default
   }
 });
 
@@ -41,12 +49,25 @@ class Eat extends React.Component {
   state = {
     activeGuest: 0,
     payMenuOpen: false,
-    awaitingPaymentConfirmation: false
+    awaitingPaymentConfirmation: false,
+    splitMenuOpen: false
   }
 
   componentWillMount() {
     const {fetchSeats} = this.props;
     fetchSeats();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevProps.selecting, this.props.selecting);
+    if (prevProps.selecting !== this.props.selecting) {
+      this.setState({splitMenuOpen: this.props.selecting});
+    }
+  }
+
+  onCancelSplit = () => {
+    this.props.clearSelectedBillItems();
+    this.setState({splitMenuOpen: false});
   }
 
   setActiveGuest = i => {
@@ -83,12 +104,13 @@ class Eat extends React.Component {
       cartItems,
       order,
       selectBillItem,
+      selectedBillItems,
       // splitBill, transferBill,
       loggedUserId,
       initTransaction,
     } = this.props;
 
-    const { activeGuest, awaitingPaymentConfirmation, payMenuOpen } = this.state;
+    const { activeGuest, awaitingPaymentConfirmation, payMenuOpen, splitMenuOpen } = this.state;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     const multiparty = seats.length > 1;
     for (let i = 0; i < seats.length; i+=1) {
@@ -113,8 +135,12 @@ class Eat extends React.Component {
       <div>
         {!iosInstalled && <AppBar position="static"/>}
         {multiparty &&
-          <div>
-            <GuestList onGuestClick={this.setActiveGuest} active={activeGuest} seats={seats}/>
+          <div className={classes.defaultBackgroundFill} style={{
+            top: 0,
+            zIndex: 100,
+            position: splitMenuOpen ? 'sticky' : 'static',
+          }}>
+            <GuestList selecting={selecting} onGuestClick={this.setActiveGuest} active={activeGuest} seats={seats}/>
             <ResponsiveContainer>
               <Divider/>
             </ResponsiveContainer>
@@ -198,7 +224,7 @@ class Eat extends React.Component {
                         </div>
 
                         {userIsMe && <Button
-                          disabled={notCheckedIn}
+                          disabled={notCheckedIn || selecting}
                           style={{marginTop: 16}}
                           variant="extendedFab"
                           color="primary" fullWidth
@@ -304,7 +330,7 @@ class Eat extends React.Component {
                             marginTop: 16,
                             marginBottom: 16
                           }}>
-                          <Button fullWidth disabled={awaitingPaymentConfirmation} onClick={() => this.openPayMenu()} color="primary" variant="extendedFab" aria-label="Pay">
+                          <Button fullWidth disabled={awaitingPaymentConfirmation || selecting} onClick={() => this.openPayMenu()} color="primary" variant="extendedFab" aria-label="Pay">
                             <CreditCard style={{
                                     marginRight: 16
                                   }}/> Pay
@@ -324,6 +350,20 @@ class Eat extends React.Component {
         </ScrollSnapView>
 
         <PaymentOptionsDialog open={payMenuOpen} onClose={this.handleClose}/>
+
+        <ContextMenu open={splitMenuOpen} onClose={this.onCancelSplit}>
+          <div style={{flex: 1}}>
+            <Typography color="inherit">
+              {selectedBillItems.length} items selected
+            </Typography>
+            <Typography style={{opacity: 0.38}} color="inherit" variant="caption">
+              Splitting with nobody
+            </Typography>
+          </div>
+          <Button color="inherit">
+            Split
+          </Button>
+        </ContextMenu>
       </div>
     );
   }
@@ -333,6 +373,7 @@ Eat = connect(state => ({
   seats: state.seat.seats,
   users: state.user.all,
   selecting: checkSelecting(state),
+  selectedBillItems: selectedBillItemsSelector(state),
   gratitude: state.bill.gratitude,
   loggedUserId: state.user.loggedUserId,
   cartItems: state.cart.items,
@@ -347,6 +388,7 @@ Eat = connect(state => ({
   initTransaction: initTransactionInit,
   setOrderType: setOrderTypeAction,
   selectBillItem: selectBillItemAction,
+  clearSelectedBillItems: clearSelectedBillItemsAction,
   rmFromCart: rmFromCartInit,
   order: orderInit
 })(Eat)

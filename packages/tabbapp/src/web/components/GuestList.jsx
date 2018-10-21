@@ -42,7 +42,7 @@ class GuestList extends React.Component {
       <ScrollSnapView
         style={{
           width: '100%',
-          border: 'none'
+          border: 'none',
         }}
         snap={false}
         ref={(node => {this.root = node})}
