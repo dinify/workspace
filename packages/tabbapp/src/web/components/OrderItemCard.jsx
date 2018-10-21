@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import * as FN from 'lib/FN';
+import Typography from 'web/components/Typography';
+import * as FN from 'tabb-front/dist/lib/FN';
 
 const styles = theme => ({
   image: {

@@ -20,7 +20,7 @@ import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
 import SnackbarDispatcher from 'web/components/SnackbarDispatcher';
 
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 
 import withRoot from 'withRoot.js';
 

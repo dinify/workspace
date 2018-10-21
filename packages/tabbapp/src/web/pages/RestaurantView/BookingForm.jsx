@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import BasePicker from 'material-ui-pickers/_shared/BasePicker';
-import Calendar from 'material-ui-pickers/DatePicker/Calendar';
+import Calendar from 'material-ui-pickers/DatePicker/components/Calendar';
 import ChevronRight from 'icons/ChevronRight';
 import ChevronLeft from 'icons/ChevronLeft';
 import FormControl from '@material-ui/core/FormControl';

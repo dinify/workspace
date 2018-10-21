@@ -10,7 +10,7 @@ import {
   isMobile,
   getPlatform,
   supportsScrollSnap,
-} from 'lib/FN';
+} from 'tabb-front/dist/lib/FN';
 import { Motion, spring } from 'react-motion';
 import isFunction from 'lodash.isfunction';
 

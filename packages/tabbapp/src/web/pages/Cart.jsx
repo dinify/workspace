@@ -20,7 +20,7 @@ import CartItem from 'web/components/CartItem';
 // import RadioGroup from '@material-ui/core/RadioGroup';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 import { rmFromCartInit, orderInit, setOrderTypeAction } from 'ducks/cart/actions';
 
 const styles = theme => ({

@@ -4,8 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Delete from 'icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import * as FN from 'lib/FN';
+import Typography from 'web/components/Typography';
+import * as FN from 'tabb-front/dist/lib/FN';
 import uniqueId from 'lodash.uniqueid';
 
 const styles = theme => ({

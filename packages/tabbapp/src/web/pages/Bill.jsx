@@ -24,7 +24,7 @@ import {fetchSeatsInit} from 'ducks/seat/actions';
 import {checkSelecting} from 'ducks/bill/selectors';
 import PaymentOptionsDialog from 'web/components/PaymentOptionsDialog';
 
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 
 const styles = theme => ({
   scroller: {

@@ -1,6 +1,6 @@
 // @flow
 import { Observable } from 'rxjs';
-import * as API from 'api/restaurant';
+import * as API from 'tabb-front/dist/api/restaurant';
 import types from './types';
 import { favMenuitemDone, favMenuitemFail } from './actions';
 

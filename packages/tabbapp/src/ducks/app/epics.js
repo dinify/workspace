@@ -4,7 +4,7 @@ import { loadUserData as loadUserDataAction } from './actions';
 import { fetchRestaurantsInit, fetchStatusInit, fetchStatusFail } from 'ducks/restaurant/actions';
 import { fetchMeInit, fetchMeFail } from 'ducks/user/actions';
 import { fetchCartInit, fetchCartFail } from 'ducks/cart/actions';
-import { getCookie } from 'lib/FN';
+import { getCookie } from 'tabb-front/dist/lib/FN';
 import types from './types';
 
 const bootstrapEpic = (action$: Observable) =>

@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 import { fetchReceiptInit } from 'ducks/bill/actions';
 import moment from 'moment';
 

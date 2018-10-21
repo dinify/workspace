@@ -8,7 +8,7 @@ import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import RestaurantMenu from 'icons/RestaurantMenu';
 import Typography from '@material-ui/core/Typography';
 import MenuItemCard from 'web/components/MenuItemCard';
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 import R from 'ramda';
 import uniqueId from 'lodash.uniqueid';
 import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';

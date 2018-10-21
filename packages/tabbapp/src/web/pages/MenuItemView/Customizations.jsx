@@ -13,7 +13,7 @@ import Chip from '@material-ui/core/Chip';
 import AddCircle from 'icons/AddCircle';
 import RemoveCircle from 'icons/RemoveCircle';
 import AddShoppingCart from 'icons/AddShoppingCart';
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 import {
   excludeIngredient as excludeIngredientAction,
   incAddonQty as incAddonQtyAction,

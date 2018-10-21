@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
-import * as FN from 'lib/FN';
 
 import {
   setGratitude as setGratitudeAction,
@@ -26,9 +25,10 @@ import CreditCard from 'icons/CreditCard';
 
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/lab/Slider';
+import * as FN from 'tabb-front/dist/lib/FN';
+
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-
 
 const styles = theme => ({
   container: {

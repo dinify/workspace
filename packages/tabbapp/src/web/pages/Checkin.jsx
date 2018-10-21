@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { checkinInit } from 'ducks/restaurant/actions';
 import AppBar from 'web/components/AppBar';
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 import QRscanner from './QRscanner';
 
 type CheckinProps = {

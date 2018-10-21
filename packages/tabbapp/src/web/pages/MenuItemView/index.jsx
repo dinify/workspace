@@ -9,7 +9,7 @@ import FavoriteToggle from 'web/components/FavoriteToggle';
 import Typography from '@material-ui/core/Typography';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import Customizations from './Customizations';
 import NutritionFacts from './NutritionFacts';

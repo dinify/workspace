@@ -7,7 +7,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import CheckCircle from 'icons/CheckCircle';
 import { Motion, spring } from 'react-motion';
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 
 import { selectBillItem as selectBillItemAction } from 'ducks/bill/actions';
 

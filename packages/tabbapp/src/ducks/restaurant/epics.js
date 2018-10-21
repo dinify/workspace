@@ -1,6 +1,6 @@
 // @flow
 import { Observable } from 'rxjs';
-import * as API from 'api/restaurant';
+import * as API from 'tabb-front/dist/api/restaurant';
 import types from './types';
 import { checkinFail, checkinDone, favRestaurantDone, favRestaurantFail } from './actions';
 import { fetchStatusInit } from 'ducks/restaurant/actions';

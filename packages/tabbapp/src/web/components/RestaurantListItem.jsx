@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import R from 'ramda';
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Carousel from './Carousel';

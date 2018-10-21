@@ -1,8 +1,8 @@
 // @flow
 import { Observable } from 'rxjs';
-import * as API from 'api/restaurant';
+import * as API from 'tabb-front/dist/api/restaurant';
 // import R from 'ramda';
-// import * as FN from 'lib/FN';
+// import * as FN from 'tabb-front/dist/lib/FN';
 import types from './types';
 import {
   splitBillDone,

@@ -14,7 +14,7 @@ import ServiceCallGraphic from 'web/components/ServiceCallGraphic';
 import { callServiceInit } from 'ducks/service/actions';
 import R from 'ramda';
 
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 
 class Services extends React.Component {
   constructor(props) {

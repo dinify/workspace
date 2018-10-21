@@ -15,7 +15,7 @@
     "lodash.times": "^4.3.2",
     "lodash.uniqueid": "^4.0.1",
     "lottie-web": "^5.1.18",
-    "material-ui-pickers": "^1.0.0-rc.10",
+    "material-ui-pickers": "1.0.0-rc.17",
     "moment": "^2.22.2",
     "node-vibrant": "^3.0.0",
     "numeral": "^2.0.6",
@@ -44,7 +44,8 @@
     "reselect": "^3.0.1",
     "rxjs": "^5.5.11",
     "scroll-into-view-if-needed": "^2.2.16",
-    "serve": "9.1.0"
+    "serve": "9.1.0",
+    "tabb-front": "git+ssh://git@gitlab.com:tabb/frontend-web/common.git#master"
   },
   "scripts": {
     "start": "serve -s build",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';

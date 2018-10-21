@@ -20,7 +20,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 
 import Account from './Account';
 

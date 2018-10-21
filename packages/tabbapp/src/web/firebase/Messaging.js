@@ -1,4 +1,4 @@
-import * as API from 'api/user';
+import * as API from 'tabb-front/dist/api/user';
 
 export default class Messaging {
   static initialize() {

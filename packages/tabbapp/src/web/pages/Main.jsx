@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ChevronRight from 'icons/ChevronRight';
 import RestaurantListItem from 'web/components/RestaurantListItem';
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 
 const Main = ({ restaurantsMap, theme }) => {
   const restaurantsList = FN.MapToList(restaurantsMap);

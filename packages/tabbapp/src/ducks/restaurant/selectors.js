@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import R from 'ramda'
-import * as FN from 'lib/FN';
+import * as FN from 'tabb-front/dist/lib/FN';
 
 export const getRestaurantBySubdomain = createSelector(
   [

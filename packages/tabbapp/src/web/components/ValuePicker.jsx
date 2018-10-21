@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Day from 'material-ui-pickers/DatePicker/Day';
+import Day from 'material-ui-pickers/DatePicker/components/Day';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({

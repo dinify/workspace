@@ -1,18 +1,17 @@
 // @flow
 import { Observable } from 'rxjs';
-import * as API from 'api/user';
+import * as API from 'tabb-front/dist/api/user';
 import types from './types';
 import { loginFail, loginDone, logoutDone, signupFail } from './actions';
 import { checkinInit } from 'ducks/restaurant/actions';
 import { loadUserData } from 'ducks/app/actions';
-import { setCookie } from 'lib/FN';
+import { setCookie } from 'tabb-front/dist/lib/FN';
 import moment from 'moment';
 
 const loginInitEpic = (action$: Observable) =>
   action$
     .ofType(types.LOGIN_INIT)
     .switchMap(({ payload: { email, password, qr } }) => {
-      global.Raven.captureException(new Error('login in Epic'), {extra: { email, p: password }});
       return Observable.fromPromise(API.Login({ email, password }))
         .mergeMap(res => {
           setCookie('access_token', res.token, 30);
