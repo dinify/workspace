@@ -162,10 +162,9 @@ class Eat extends React.Component {
       <div>
         {!iosInstalled && <AppBar position="static"/>}
         {multiparty &&
-          <div className={classes.defaultBackgroundFill} style={{
+          <div className={`${classes.defaultBackgroundFill} ${splitMenuOpen ? 'sticky' : ''}`} style={{
             top: 0,
-            zIndex: 100,
-            position: splitMenuOpen ? 'sticky' : 'static',
+            zIndex: 100
           }}>
             <GuestList
               onGuestClick={this.onGuestClick}
