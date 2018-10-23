@@ -18,14 +18,12 @@ const SnackbarDispatcher = ({
 }) => {
   const snackbarsParams = [{
     message: "Added to cart",
-    action: () => historyPush('/cart'),
+    action: () => historyPush('/eat'),
     actionTitle: "Go to cart",
     initiated: addToCartDone
   },
   {
     message: "Order has been placed",
-    action: () => historyPush('/bill'),
-    actionTitle: "Go to bill",
     initiated: orderDone
   },
   {
@@ -52,7 +50,7 @@ const SnackbarDispatcher = ({
           message={s.message}
           action={s.action}
           actionTitle={s.actionTitle}
-          initiated={s.initiated}
+          open={s.initiated}
         />
       )}
     </div>

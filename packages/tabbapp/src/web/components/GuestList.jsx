@@ -1,4 +1,5 @@
 import React from 'react';
+import R from 'ramda';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Person from 'icons/Person';
@@ -6,36 +7,24 @@ import Typography from '@material-ui/core/Typography';
 import ScrollSnapView from 'web/components/ScrollSnapView';
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Tabs from '@material-ui/core/Tabs';
 import { Motion, spring } from 'react-motion';
 import CheckCircle from 'icons/CheckCircle';
+import { checkSelecting } from 'ducks/seat/selectors';
+
 
 const styles = theme => ({
 
 });
 
 class GuestList extends React.Component {
-  state = {
-    selectedGuests: []
-  }
-
-  selectGuest = (id) => {
-    if (!this.props.selecting) return;
-    const selectedGuests = this.state.selectedGuests;
-    selectedGuests[id] = !selectedGuests[id];
-    this.setState({selectedGuests});
-  }
-
   render() {
     const {
       classes,
-      selecting,
       seats,
       active,
       onGuestClick = () => {},
       users
     } = this.props;
-    const { selectedGuests } = this.state;
     const rippleRadius = 40;
 
     return (
@@ -48,8 +37,8 @@ class GuestList extends React.Component {
         ref={(node => {this.root = node})}
         selected={active}>
         {seats.map((seat, i, arr) => {
-          const selected = selectedGuests[seat.id] && selecting;
           const user = users[seat.user_id];
+          const selected = seat.selected;
           return <div id={`guest-${seat.id}`} key={`guest-${seat.id}`} style={{
             // border: '1px solid rgba(255, 0,0,0.54)',
             display: 'inline-block',
@@ -57,7 +46,7 @@ class GuestList extends React.Component {
             marginRight: arr.length - 1 === i ? 16 : 0
           }}>
             <ButtonBase
-              onClick={selecting ? () => this.selectGuest(seat.id) : () => onGuestClick(i)}
+              onClick={() => onGuestClick(i)}
               style={{borderRadius: 4, padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start'}}>
               {user && user.image && <Avatar alt={user.name} src={user.image} />}
               {user && !user.image &&
@@ -119,7 +108,8 @@ class GuestList extends React.Component {
 
 GuestList = connect(
   state => ({
-    users: state.user.all
+    users: state.user.all,
+    selecting: checkSelecting(state)
   })
 )(GuestList)
 

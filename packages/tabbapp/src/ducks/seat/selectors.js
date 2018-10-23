@@ -18,12 +18,20 @@ export const selectedBillItems = createSelector(
   },
 )
 
+export const selectedSeats = createSelector(
+  [
+    (state) => state.seat.seats,
+  ],
+  (seats) => {
+    return R.filter(o => o.selected, seats);
+  },
+)
+
 export const checkSelecting = createSelector(
   [
-    (state) => R.pluck('value')(convertGrid(R.pluck('items')(R.filter(o => o !== null, R.pluck('bill')(state.seat.seats))))),
+    selectedBillItems,
   ],
   (billItems) => {
-    if (!billItems) return false;
-    return R.any((item) => item.selected)(billItems);
+    return billItems.length > 0;
   }
 )

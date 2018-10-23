@@ -9,10 +9,15 @@ import {
   initTransactionInit,
 } from 'ducks/bill/actions';
 import { rmFromCartInit, orderInit, setOrderTypeAction } from 'ducks/cart/actions';
-import { checkSelecting, selectedBillItems as selectedBillItemsSelector } from 'ducks/seat/selectors';
+import {
+  checkSelecting,
+  selectedBillItems as selectedBillItemsSelector,
+  selectedSeats as selectedSeatsSelector,
+} from 'ducks/seat/selectors';
 import {
   fetchSeatsInit,
   selectBillItem as selectBillItemAction,
+  selectSeat as selectSeatAction,
   clearSelectedBillItems as clearSelectedBillItemsAction
 } from 'ducks/seat/actions';
 
@@ -59,7 +64,6 @@ class Eat extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps.selecting, this.props.selecting);
     if (prevProps.selecting !== this.props.selecting) {
       this.setState({splitMenuOpen: this.props.selecting});
     }
@@ -70,9 +74,18 @@ class Eat extends React.Component {
     this.setState({splitMenuOpen: false});
   }
 
-  setActiveGuest = i => {
-    if (this.state.payMenuOpen) this.setState({payMenuOpen: false});
-    this.setState({activeGuest: i})
+  onGuestClick = i => {
+    if (!this.props.selecting) {
+      if (this.state.payMenuOpen) this.setState({payMenuOpen: false});
+      this.setState({activeGuest: i});
+    }
+    else {
+      this.props.selectSeat({
+        selected: !this.props.seats[i].selected,
+        seatIndex: i
+      })
+    }
+
   }
 
   openPayMenu = () => {
@@ -105,6 +118,7 @@ class Eat extends React.Component {
       order,
       selectBillItem,
       selectedBillItems,
+      selectedSeats,
       // splitBill, transferBill,
       loggedUserId,
       initTransaction,
@@ -140,7 +154,10 @@ class Eat extends React.Component {
             zIndex: 100,
             position: splitMenuOpen ? 'sticky' : 'static',
           }}>
-            <GuestList selecting={selecting} onGuestClick={this.setActiveGuest} active={activeGuest} seats={seats}/>
+            <GuestList
+              onGuestClick={this.onGuestClick}
+              active={activeGuest}
+              seats={seats}/>
             <ResponsiveContainer>
               <Divider/>
             </ResponsiveContainer>
@@ -357,10 +374,12 @@ class Eat extends React.Component {
               {selectedBillItems.length} items selected
             </Typography>
             <Typography style={{opacity: 0.38}} color="inherit" variant="caption">
-              Splitting with nobody
+              Splitting with {
+                selectedSeats.length
+              }
             </Typography>
           </div>
-          <Button color="inherit">
+          <Button onClick={this.onCancelSplit} color="inherit">
             Split
           </Button>
         </ContextMenu>
@@ -374,6 +393,7 @@ Eat = connect(state => ({
   users: state.user.all,
   selecting: checkSelecting(state),
   selectedBillItems: selectedBillItemsSelector(state),
+  selectedSeats: selectedSeatsSelector(state),
   gratitude: state.bill.gratitude,
   loggedUserId: state.user.loggedUserId,
   cartItems: state.cart.items,
@@ -388,6 +408,7 @@ Eat = connect(state => ({
   initTransaction: initTransactionInit,
   setOrderType: setOrderTypeAction,
   selectBillItem: selectBillItemAction,
+  selectSeat: selectSeatAction,
   clearSelectedBillItems: clearSelectedBillItemsAction,
   rmFromCart: rmFromCartInit,
   order: orderInit

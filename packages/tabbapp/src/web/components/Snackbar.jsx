@@ -6,29 +6,38 @@ import IconButton from '@material-ui/core/IconButton';
 import Close from 'icons/Close';
 
 export default class Snackbar extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      closed: false
+      open: false
     };
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevProps, prevState);
+    if (prevProps.open !== this.props.open) {
+      console.log(this.props.open);
+      this.setState({open: this.props.open});
+    }
+  }
+
   render() {
     const {
       message,
       action,
       actionTitle,
     } = this.props;
-    let { initiated } = this.props;
-    if (this.state.closed) initiated = false;
+    const { open } = this.state;
     return (
       <SnackbarMUI
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
         }}
-        open={initiated}
+        open={open}
         autoHideDuration={6000}
-        onClose={() => {}}
+        onClose={() => {this.setState({ open: false })}}
         ContentProps={{
           'aria-describedby': 'message-id',
         }}
@@ -41,7 +50,7 @@ export default class Snackbar extends React.Component {
             key="close"
             aria-label="Close"
             color="inherit"
-            onClick={() => this.setState({ closed: true })}>
+            onClick={() => {this.setState({ open: false })}}>
             <Close />
           </IconButton>
         ]}
