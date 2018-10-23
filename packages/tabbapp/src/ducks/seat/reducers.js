@@ -21,10 +21,14 @@ export default function reducer(state = initialState, action) {
           newState.seats[i].selected = false;
         }
       }
+      else {
+        newState.seats[0].selected = true;
+      }
       return newState;
     }
     case types.SELECT_SEAT: {
       const { selected, seatIndex } = action.payload;
+      if (seatIndex === 0) return state;
       return R.assocPath(['seats', seatIndex, 'selected'], selected)(state);
     }
     case types.CLEAR_SELECTED_BILLITEMS: {

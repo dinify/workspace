@@ -9,7 +9,7 @@ import AppBar from 'web/components/AppBar';
 import BillItem from 'web/components/BillItem';
 import GuestList from 'web/components/GuestList';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import AlignBottom from 'icons/AlignBottom';
 import AlignTop from 'icons/AlignTop';
 import CallSplit from 'icons/CallSplit';

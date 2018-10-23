@@ -14,7 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 // import SwipableItem from 'web/components/SwipableItem';
 import AppBar from 'web/components/AppBar';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import CartItem from 'web/components/CartItem';
 // import Radio from '@material-ui/core/Radio';
 // import RadioGroup from '@material-ui/core/RadioGroup';

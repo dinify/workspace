@@ -3,7 +3,7 @@ import React from 'react';
 import R from 'ramda';
 import * as FN from 'tabb-front/dist/lib/FN';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import Carousel from './Carousel';
 import { Link } from 'react-router-dom';
 

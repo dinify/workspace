@@ -29,11 +29,12 @@ import CartItem from 'web/components/CartItem';
 import BillItem from 'web/components/BillItem';
 import PaymentOptionsDialog from 'web/components/PaymentOptionsDialog';
 import ContextMenu from 'web/components/ContextMenu';
+import PageIndicator from 'web/components/PageIndicator';
 
 import RestaurantMenu from 'icons/RestaurantMenu';
 import CreditCard from 'icons/CreditCard';
 
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import Slider from '@material-ui/lab/Slider';
 import * as FN from 'tabb-front/dist/lib/FN';
 
@@ -76,8 +77,7 @@ class Eat extends React.Component {
 
   onGuestClick = i => {
     if (!this.props.selecting) {
-      if (this.state.payMenuOpen) this.setState({payMenuOpen: false});
-      this.setState({activeGuest: i});
+      this.setActiveGuest(i);
     }
     else {
       this.props.selectSeat({
@@ -85,7 +85,11 @@ class Eat extends React.Component {
         seatIndex: i
       })
     }
+  }
 
+  setActiveGuest = i => {
+    if (this.state.payMenuOpen) this.setState({payMenuOpen: false});
+    this.setState({activeGuest: i});
   }
 
   openPayMenu = () => {
@@ -144,6 +148,15 @@ class Eat extends React.Component {
     } */
 
     const meSelected = seats[activeGuest] ? seats[activeGuest].user_id === loggedUserId : false;
+
+    let splitText = '';
+    for (let i = 0; i < selectedSeats.length; i += 1) {
+      const uid = selectedSeats[i].user_id;
+      if (uid === loggedUserId) { continue; }
+      splitText += users[uid].name;
+      if (i === selectedSeats.length - 2) splitText += ' and ';
+      else if (i !== selectedSeats.length - 1) splitText += ', ';
+    }
 
     return (
       <div>
@@ -211,7 +224,7 @@ class Eat extends React.Component {
                   }}>
                   <ResponsiveContainer>
                     <div style={{display: 'flex', marginTop: 16}}>
-                      <Typography style={{flex: 1, marginRight: 16, lineHeight: 'unset'}} variant="overline">
+                      <Typography style={{flex: 1, marginRight: 16}} variant="overline">
                         Cart
                       </Typography>
                       <Typography variant="caption">
@@ -254,7 +267,7 @@ class Eat extends React.Component {
                     <Divider style={{marginTop: 16, marginBottom: 16}}/>
 
                     <div style={{display: 'flex', marginTop: 16}}>
-                      <Typography style={{flex: 1, marginRight: 16, lineHeight: 'unset'}} variant="overline">
+                      <Typography style={{flex: 1, marginRight: 16}} variant="overline">
                         Bill
                       </Typography>
                       <Typography variant="caption">
@@ -370,19 +383,32 @@ class Eat extends React.Component {
 
         <ContextMenu open={splitMenuOpen} onClose={this.onCancelSplit}>
           <div style={{flex: 1}}>
-            <Typography color="inherit">
-              {selectedBillItems.length} items selected
-            </Typography>
-            <Typography style={{opacity: 0.38}} color="inherit" variant="caption">
-              Splitting with {
-                selectedSeats.length
+            <Typography style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }} variant="subtitle2" color="inherit">
+              {
+                selectedSeats.length <= 1 ? 'Select users to split with' : (
+                selectedSeats.length <= 2 ? `Splitting with ${splitText}` : (
+                  `Splitting between ${selectedSeats.length} people`
+                ))
               }
             </Typography>
+            <Typography style={{
+              opacity: 0.72,
+            }} color="inherit" variant="caption">
+              {selectedBillItems.length + (selectedBillItems.length === 1 ? ' item' : ' items')} selected
+            </Typography>
           </div>
-          <Button onClick={this.onCancelSplit} color="inherit">
+          <Button style={{
+            border: '1px solid rgba(255, 255, 255, 0.23)',
+            color: selectedSeats.length <= 1 ? 'rgba(255, 255, 255, 0.26)' : 'inherit',
+          }} disabled={selectedSeats.length <= 1} onClick={this.onCancelSplit} variant="outlined" color="inherit">
             Split
           </Button>
         </ContextMenu>
+
       </div>
     );
   }

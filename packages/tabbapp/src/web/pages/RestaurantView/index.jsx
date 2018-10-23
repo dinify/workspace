@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import AppBar from 'web/components/AppBar';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import { fetchRestaurantInit } from 'ducks/restaurant/actions';

@@ -4,7 +4,7 @@ import { withTheme } from '@material-ui/core/styles';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import ResponsiveGrid from 'web/components/ResponsiveGrid';
 import AppBar from 'web/components/AppBar';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import Button from '@material-ui/core/Button';
 import ChevronRight from 'icons/ChevronRight';
 import RestaurantListItem from 'web/components/RestaurantListItem';

@@ -1,28 +1,16 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import MuiTypography from '@material-ui/core/Typography'
+import MuiTypography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   overline: {
-    fontSize: theme.typography.pxToRem(12),
-    textTransform: 'uppercase',
-    fontWeight: theme.typography.fontWeightMedium,
-    fontFamily: theme.typography.fontFamily,
+    lineHeight: 'unset',
     letterSpacing: `${1 / 12}rem`,
+  },
+  subtitle2: {
+    fontWeight: '700',
   }
 })
-
-const headlineMapping = {
-  display4: 'h1',
-  display3: 'h1',
-  display2: 'h1',
-  display1: 'h1',
-  headline: 'h3',
-  title: 'h2',
-  subheading: 'h3',
-  body2: 'aside',
-  body1: 'p',
-}
 
 const Typography = props => {
   const { className, children, classes, variant, ...other } = props
@@ -30,33 +18,16 @@ const Typography = props => {
   let classNames;
   switch (variant) {
     case 'overline':
-      classNames = `${className} ${classes.overline}`;
-      break;
-    case 'subheading2':
-      classNames = `${className} ${classes.subheading2}`;
+    case 'subtitle2':
+      classNames = `${className} ${classes[variant]}`;
       break;
     default:
       classNames = className;
       break;
   }
 
-  let reducedVariant = variant;
-  if (![
-    "display4",
-    "display3",
-    "display2",
-    "display1",
-    "headline",
-    "title",
-    "subheading",
-    "body2",
-    "body1",
-    "caption",
-    "button"
-  ].includes(variant)) reducedVariant = 'body1';
-
   return (
-    <MuiTypography className={classNames} headlineMapping={headlineMapping} variant={reducedVariant} {...other}>
+    <MuiTypography className={classNames} variant={variant} {...other}>
       {children}
     </MuiTypography>
   )

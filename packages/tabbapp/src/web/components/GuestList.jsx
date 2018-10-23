@@ -3,7 +3,7 @@ import R from 'ramda';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Person from 'icons/Person';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import ScrollSnapView from 'web/components/ScrollSnapView';
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';

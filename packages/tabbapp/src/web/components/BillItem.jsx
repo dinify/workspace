@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import CheckCircle from 'icons/CheckCircle';
 import { Motion, spring } from 'react-motion';
 import * as FN from 'tabb-front/dist/lib/FN';

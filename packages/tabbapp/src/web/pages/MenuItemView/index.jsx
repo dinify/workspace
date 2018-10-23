@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import AppBar from 'web/components/AppBar';
 import FavoriteToggle from 'web/components/FavoriteToggle';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import * as FN from 'tabb-front/dist/lib/FN';

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from 'web/components/AppBar';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import SimpleGuestList from 'web/components/SimpleGuestList';
 import BillItem from 'web/components/BillItem';
 import Event from 'icons/Event';

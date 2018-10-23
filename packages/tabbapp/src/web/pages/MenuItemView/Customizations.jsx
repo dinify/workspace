@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';

@@ -42,7 +42,13 @@ class PageIndicator extends React.Component {
       });
     })();
 
-    const base = this.colorToRGBA(props.dotColor);
+    let base = [];
+    if (props.dotColor.trim().startsWith('rgba')) {
+      props.dotColor.trim().substring(5, props.dotColor.trim().length - 1).split(',').forEach(e => {
+        base.push(parseFloat(e.trim()));
+      })
+    } else base = this.colorToRGBA(props.dotColor);
+
     this.state.baseColor = `rgb(${base[0]}, ${base[1]}, ${base[2]})`;
     this.state.baseOpacity = base[3] / 255;
   }

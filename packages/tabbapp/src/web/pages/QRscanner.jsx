@@ -1,7 +1,7 @@
 import React from "react";
 import PhotoCamera from 'icons/PhotoCamera';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import QrScanner from "lib/qr-scanner.min.js";
 

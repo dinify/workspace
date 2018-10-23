@@ -13,7 +13,7 @@ import Phone from 'icons/Phone';
 import Place from 'icons/Place';
 import Schedule from 'icons/Schedule';
 import StaticMap from 'web/components/StaticMap';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import uniqueId from 'lodash.uniqueid';
 
 const styles = theme => ({

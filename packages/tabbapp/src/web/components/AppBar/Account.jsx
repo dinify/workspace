@@ -3,7 +3,7 @@ import React from 'react';
 import { withStateHandlers } from 'recompose';
 import { Link } from 'react-router-dom';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Person from 'icons/Person';
 import Popover from '@material-ui/core/Popover';
