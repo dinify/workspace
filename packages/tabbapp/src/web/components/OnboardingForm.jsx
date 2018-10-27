@@ -121,6 +121,7 @@ class OnboardingForm extends React.Component {
               appId="123605498281814"
               fields="name,email,gender,birthday"
               scope="user_gender,user_birthday"
+              isMobile={true}
               disableMobileRedirect={true}
               callback={(res) => {
                 fbAuth({ fbRes: res, qr })

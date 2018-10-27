@@ -28,7 +28,7 @@ export default class Snackbar extends React.Component {
       action,
       actionTitle,
     } = this.props;
-    const { open } = this.state;
+    const { open } = this.props;
     return (
       <SnackbarMUI
         anchorOrigin={{

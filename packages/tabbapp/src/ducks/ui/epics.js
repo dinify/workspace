@@ -1,8 +1,31 @@
 // @flow
 import { Observable } from 'rxjs';
+import io from 'socket.io-client';
+import userTypes from 'ducks/user/types';
 import types from './types';
 
-// import R from 'ramda';
+const socket = io('http://localhost:3000');
+
+socket.on('connect', () => {
+  console.log('Socket.io connected');
+  if (window.loggedUserId) socket.emit('init', window.loggedUserId);
+});
+
+const socketEpic = (action$: Observable, { getState }) =>
+  action$.ofType(userTypes.FETCH_ME_DONE)
+    .do(() => {
+      const loggedUserId = getState().user.loggedUserId;
+      if (loggedUserId) {
+        window.loggedUserId = loggedUserId;
+        socket.emit('init', loggedUserId);
+      }
+    })
+    .mergeMap(() =>
+      Observable.race(
+        Observable.fromEvent(socket, 'payment-confirmed')
+          .map((payload) => ({ type: types.CONFIRMED_PAYMENT_DONE, payload }))
+      )
+    );
 
 const progressEpic = (action$: Observable) =>
   action$
@@ -24,5 +47,6 @@ const progressEpic = (action$: Observable) =>
     });
 
 export default [
+  socketEpic,
   progressEpic,
 ];

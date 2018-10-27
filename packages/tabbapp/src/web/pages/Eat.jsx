@@ -325,7 +325,7 @@ class Eat extends React.Component {
                             </Typography>
                           </div>
                           <Slider disabled={awaitingPaymentConfirmation}
-                             value={gratitude} min={0} max={50} onChange={(event, val) => setGratitude({percentage: val})}/>
+                             value={gratitude} min={0} max={50} step={1} onChange={(event, val) => setGratitude({percentage: val})}/>
                           <div style={{
                               marginTop: 32,
                               display: 'flex'
