@@ -6,6 +6,7 @@ import cartTypes from 'ducks/cart/types';
 import restaurantTypes from 'ducks/restaurant/types';
 import billTypes from 'ducks/bill/types';
 import serviceTypes from 'ducks/service/types';
+import uiTypes from 'ducks/ui/types';
 import Snackbar from 'web/components/Snackbar';
 
 const SnackbarDispatcher = ({
@@ -14,7 +15,8 @@ const SnackbarDispatcher = ({
   checkInDone,
   orderDone,
   initiatedTransaction,
-  serviceCallDone
+  serviceCallDone,
+  paymentDone
 }) => {
   const snackbarsParams = [{
     message: "Added to cart",
@@ -29,6 +31,10 @@ const SnackbarDispatcher = ({
   {
     message: "Payment request sent",
     initiated: initiatedTransaction
+  },
+  {
+    message: "Payment confirmed",
+    initiated: paymentDone
   },
   {
     message: "You are now checked in",
@@ -64,6 +70,7 @@ export default connect(
     addToCartDone: state.ui.progressMap[cartTypes.ADD_TO_CART_DONE],
     orderDone: state.ui.progressMap[cartTypes.ORDER_DONE],
     checkInDone: state.ui.progressMap[restaurantTypes.CHECKIN_DONE],
-    serviceCallDone: state.ui.progressMap[serviceTypes.CALL_SERVICE_DONE]
+    serviceCallDone: state.ui.progressMap[serviceTypes.CALL_SERVICE_DONE],
+    paymentDone: state.ui.progressMap[uiTypes.CONFIRMED_PAYMENT_DONE]
   })
 )(SnackbarDispatcher);
