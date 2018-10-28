@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import userTypes from 'ducks/user/types';
 import types from './types';
 
-const socket = io('http://localhost:3000');
+const socket = io('https://downstream.tabb.global');
 
 socket.on('connect', () => {
   console.log('Socket.io connected');
