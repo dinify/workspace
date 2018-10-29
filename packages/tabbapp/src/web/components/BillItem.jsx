@@ -116,15 +116,29 @@ class BillItem extends React.PureComponent {
                 </Motion>
             </div>
             <div style={{flex: 1, marginLeft: 16, position: 'relative'}}>
-              <div style={{display: 'flex'}}>
-                <Typography style={{flex: 1, marginRight: 32}} >
+              <div style={{display: 'flex', justifyContent: 'start'}}>
+                <Typography style={{flex: 1,  marginRight: 32}}>
                   {item.menu_item && item.menu_item.name}
                 </Typography>
                 <Typography
+                  style={{
+                    alignSelf: 'flex-end',
+                    textDecoration: billItem.divisor > 1 ? 'line-through' : 'none',
+                  }}
+                  color={billItem.divisor > 1 ? 'textSecondary' : 'textPrimary'}
+                  variant="overline">
+                  {billItem && FN.formatPrice(billItem.subtotal)}
+                </Typography>
+              </div>
+              <div style={{display: 'flex', justifyContent: 'start'}}>
+                <Typography style={{flex: 1,  marginRight: 32}} color="textSecondary" variant="caption">
+                  {billItem.divisor > 1 ? `Split with ${billItem.divisor} people}` : 'original'}
+                </Typography>
+                {billItem.divisor > 1 && <Typography
                   style={{alignSelf: 'flex-end'}}
                   variant="overline">
-                  {item.menu_item && FN.formatPrice(item.menu_item.price)}
-                </Typography>
+                  {item && FN.formatPrice(item.subtotal)}
+                </Typography>}
               </div>
             </div>
           </ButtonBase>

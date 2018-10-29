@@ -5,10 +5,10 @@ import userTypes from 'ducks/user/types';
 import types from './types';
 
 const socket = io('https://downstream.tabb.global');
+window.socket = socket;
 
 socket.on('connect', () => {
   console.log('Socket.io connected');
-  if (window.loggedUserId) socket.emit('init', window.loggedUserId);
 });
 
 const socketEpic = (action$: Observable, { getState }) =>

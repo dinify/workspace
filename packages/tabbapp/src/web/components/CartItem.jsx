@@ -110,7 +110,7 @@ const CartItem = ({
               </Typography>}
             </div>
           ) :
-            <Typography variant="caption" style={{
+            <Typography variant="caption" color="textSecondary" style={{
               opacity: editing ? 0 : 1,
             }}>
               original

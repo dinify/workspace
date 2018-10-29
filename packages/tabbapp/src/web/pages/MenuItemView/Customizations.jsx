@@ -112,7 +112,7 @@ let Customizations = ({
               width: '100%'
             }}>
               <Typography
-                
+
                 color={ingredient.excluded ? 'textSecondary' : 'default'}
                 style={{
                   flex: 1,
@@ -183,7 +183,7 @@ let Customizations = ({
                   inc: 1
                 })
               }}  // add addon if amount < max - 1
-              disabled={addon.qty >= addon.maximum}>
+              disabled={addon.qty >= addon.maximum && addon.maximum !== null}>
               <AddCircle />
             </IconButton>
           </Grid>
