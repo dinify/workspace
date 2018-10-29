@@ -16,7 +16,8 @@ const SnackbarDispatcher = ({
   orderDone,
   initiatedTransaction,
   serviceCallDone,
-  paymentDone
+  paymentDone,
+  orderConfirmDone
 }) => {
   const snackbarsParams = [{
     message: "Added to cart",
@@ -31,6 +32,10 @@ const SnackbarDispatcher = ({
   {
     message: "Payment request sent",
     initiated: initiatedTransaction
+  },
+  {
+    message: "Order confirmed",
+    initiated: orderConfirmDone
   },
   {
     message: "Payment confirmed",
@@ -71,6 +76,7 @@ export default connect(
     orderDone: state.ui.progressMap[cartTypes.ORDER_DONE],
     checkInDone: state.ui.progressMap[restaurantTypes.CHECKIN_DONE],
     serviceCallDone: state.ui.progressMap[serviceTypes.CALL_SERVICE_DONE],
-    paymentDone: state.ui.progressMap[uiTypes.CONFIRMED_PAYMENT_DONE]
+    paymentDone: state.ui.progressMap[uiTypes.CONFIRMED_PAYMENT_DONE],
+    orderConfirmDone: state.ui.progressMap[uiTypes.CONFIRMED_ORDER_DONE]
   })
 )(SnackbarDispatcher);

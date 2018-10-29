@@ -22,8 +22,13 @@ const socketEpic = (action$: Observable, { getState }) =>
     })
     .mergeMap(() =>
       Observable.race(
+        Observable.fromEvent(socket, 'order-confirmed')
+          .map((payload) => ({ type: types.CONFIRMED_ORDER_DONE, payload })),
         Observable.fromEvent(socket, 'payment-confirmed')
-          .map((payload) => ({ type: types.CONFIRMED_PAYMENT_DONE, payload }))
+          .map((payload) => {
+            console.log('payment-confirmed', payload);
+            return { type: types.CONFIRMED_PAYMENT_DONE, payload };
+          })
       )
     );
 
