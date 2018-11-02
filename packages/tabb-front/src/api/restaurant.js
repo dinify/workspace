@@ -104,11 +104,11 @@ export function GetSeats() {
 }
 
 type SplitMultipleArgs = {
-  order_items: array,
-  with: array
+  orderItems: array,
+  withIds: array
 };
-export function SplitMultiple({ order_items, with }: SplitMultipleArgs) {
-  return Post({ path: `bill/split` }, { order_items, with });
+export function SplitMultiple({ orderItems, withIds }: SplitMultipleArgs) {
+  return Post({ path: `bill/split` }, { order_items: orderItems, with: withIds });
 }
 
 export function TransferBill({ itemId, userId }) {

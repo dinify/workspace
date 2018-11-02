@@ -19,7 +19,7 @@ exports.Order = Order;
 exports.GetBill = GetBill;
 exports.GetReceipt = GetReceipt;
 exports.GetSeats = GetSeats;
-exports.SplitBill = SplitBill;
+exports.SplitMultiple = SplitMultiple;
 exports.TransferBill = TransferBill;
 exports.InitiateTransaction = InitiateTransaction;
 exports.CallService = CallService;
@@ -154,13 +154,14 @@ function GetSeats() {
   });
 }
 
-function SplitBill(_ref11) {
-  var itemId = _ref11.itemId,
-      userIds = _ref11.userIds;
+function SplitMultiple(_ref11) {
+  var orderItems = _ref11.orderItems,
+      withIds = _ref11.withIds;
   return (0, _Network.Post)({
-    path: "order/item/".concat(itemId, "/split")
+    path: "bill/split"
   }, {
-    with: userIds
+    order_items: orderItems,
+    with: withIds
   });
 }
 
