@@ -28,9 +28,9 @@ export const setGratitude = ({ percentage }) => ({
   payload: { percentage }
 })
 
-export const splitBillInit = ({ itemId, userIds }) => ({
+export const splitBillInit = ({ orderItems, withIds }) => ({
   type: types.SPLIT_BILL_INIT,
-  payload: { itemId, userIds }
+  payload: { orderItems, withIds }
 })
 
 export const splitBillDone = (res) => ({

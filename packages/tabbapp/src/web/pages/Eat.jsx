@@ -123,7 +123,7 @@ class Eat extends React.Component {
       selectBillItem,
       selectedBillItems,
       selectedSeats,
-      // splitBill, transferBill,
+      splitBill, //transferBill,
       loggedUserId,
       initTransaction,
     } = this.props;
@@ -403,7 +403,14 @@ class Eat extends React.Component {
           <Button style={{
             border: '1px solid rgba(255, 255, 255, 0.23)',
             color: selectedSeats.length <= 1 ? 'rgba(255, 255, 255, 0.26)' : 'inherit',
-          }} disabled={selectedSeats.length <= 1} onClick={this.onCancelSplit} variant="outlined" color="inherit">
+          }}
+          disabled={selectedSeats.length <= 1}
+          onClick={() => splitBill({
+            orderItems: selectedBillItems.map((item) => ({ id: item.order_item.id })),
+            withIds: selectedSeats.map((seat) => seat.user_id)
+          })}
+          variant="outlined"
+          color="inherit">
             Split
           </Button>
         </ContextMenu>

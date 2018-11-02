@@ -16,8 +16,9 @@ import {
 const splitEpic = (action$: Observable) =>
   action$
     .ofType(types.SPLIT_BILL_INIT)
-    .switchMap(({ payload: { itemId, userIds } }) => {
-      return Observable.fromPromise(API.SplitBill({ itemId, userIds }))
+    .switchMap(({ payload: { orderItems, withIds } }) => {
+      console.log(orderItems, withIds);
+      return Observable.fromPromise(API.SplitMultiple({ orderItems, withIds }))
         .mergeMap(res => {
           return Observable.of(splitBillDone(res));
         })
