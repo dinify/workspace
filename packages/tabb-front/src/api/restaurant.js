@@ -103,8 +103,12 @@ export function GetSeats() {
   return Get({ path: 'seat/list?with=addons,choices,excludes,menu_item.images'})
 }
 
-export function SplitBill({ itemId, userIds }) {
-  return Post({ path: `order/item/${itemId}/split` }, { with: userIds });
+type SplitMultipleArgs = {
+  order_items: array,
+  with: array
+};
+export function SplitMultiple({ order_items, with }: SplitMultipleArgs) {
+  return Post({ path: `bill/split` }, { order_items, with });
 }
 
 export function TransferBill({ itemId, userId }) {
