@@ -53,7 +53,7 @@ const SnackbarDispatcher = ({
     actionTitle: "Go to restaurant menu",
     initiated: serviceCallDone
   }];
-  console.log(snackbarsParams);
+  // console.log(snackbarsParams);
   return (
     <div>
       {snackbarsParams.map((s) =>

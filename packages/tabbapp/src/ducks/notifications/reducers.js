@@ -3,7 +3,7 @@ import R from 'ramda';
 import types from './types';
 
 const initialState = {
-  list: []
+  snackbars: []
 };
 
 export default function reducer(state = initialState, action) {

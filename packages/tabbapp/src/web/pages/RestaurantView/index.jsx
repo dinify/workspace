@@ -194,7 +194,7 @@ class RestaurantView extends React.PureComponent {
               {!smallScreen && <Card>
                 {<InfoSection restaurant={restaurant}/>}
               </Card>}
-              <Typography
+              { /* <Typography
                 style={{ paddingTop: mediumScreen ? 24 : 16 }}
                 variant="subtitle1"
                 align="center"
@@ -216,7 +216,7 @@ class RestaurantView extends React.PureComponent {
                   </Card>}
                   <div style={{flex: 1}}/>
                 </Grid>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
         </ResponsiveContainer>

@@ -29,8 +29,9 @@ export const rmFromCartInit = ({ orderItemId }) => ({
   payload: { orderItemId }
 });
 
-export const orderInit = () => ({
-  type: types.ORDER_INIT
+export const orderInit = (items) => ({
+  type: types.ORDER_INIT,
+  payload: items
 });
 
 export const orderDone = (res) => ({

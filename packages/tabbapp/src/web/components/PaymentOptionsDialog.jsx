@@ -9,6 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 
 import CreditCard from 'icons/CreditCard';
+import Public from 'icons/Public';
 import Wallet from 'icons/Wallet';
 
 const options = [
@@ -19,10 +20,17 @@ const options = [
     type: 'CASH'
   },
   {
-    name: 'Card (local)',
+    name: 'Card',
     icon: <CreditCard />,
     index: 1,
     type: 'CARD'
+  },
+  {
+    name: 'Online (coming soon)',
+    icon: <Public />,
+    index: 2,
+    disabled: true,
+    type: 'ONLINE'
   }
 ];
 const styles = theme => ({
@@ -49,7 +57,7 @@ class PaymentOptionsDialog extends React.Component {
         <div>
           <List>
             {options.map(option => (
-              <ListItem button onClick={() => this.handleListItemClick(option)} key={option.index}>
+              <ListItem button disabled={option.disabled} onClick={() => this.handleListItemClick(option)} key={option.index}>
                 <ListItemAvatar>
                   <Avatar className={classes.avatar}>
                     {option.icon}

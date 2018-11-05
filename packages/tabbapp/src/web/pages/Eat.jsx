@@ -65,8 +65,16 @@ class Eat extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.selecting !== this.props.selecting) {
-      this.setState({splitMenuOpen: this.props.selecting});
+    const { selecting, seats } = this.props;
+    if (prevProps.selecting !== selecting) {
+      this.setState({splitMenuOpen: selecting});
+    }
+    if (prevProps.seats !== seats &&
+        prevProps.seats[0] !== undefined &&
+        prevProps.seats[0] !== seats[0] &&
+        prevProps.seats[0].paid !== seats[0].paid) {
+          console.log('Yeehow');
+      this.setState({awaitingPaymentConfirmation: !seats[0].paid});
     }
   }
 
@@ -157,7 +165,6 @@ class Eat extends React.Component {
       if (i === selectedSeats.length - 2) splitText += ' and ';
       else if (i !== selectedSeats.length - 1) splitText += ', ';
     }
-
     return (
       <div>
         {!iosInstalled && <AppBar position="static"/>}
@@ -257,7 +264,7 @@ class Eat extends React.Component {
                           style={{marginTop: 16}}
                           variant="extendedFab"
                           color="primary" fullWidth
-                          onClick={() => order()}>
+                          onClick={() => order(seatList)}>
                           <RestaurantMenu style={{marginRight: 16}} />
                           Order
                         </Button>}
@@ -273,6 +280,10 @@ class Eat extends React.Component {
                         {`${billList.length > 0 ? billList.length : 'no'} item${billList.length !== 1 ? 's' : ''}`}
                       </Typography>
                     </div>
+
+                    {userIsMe && <Typography variant="caption" color="textSecondary" style={{opacity: selecting ? 0 : 1}}>
+                      Select bill items to split with others
+                    </Typography>}
 
                     {billList.map((item, i) =>
                       <div key={item.order_item.id} style={{

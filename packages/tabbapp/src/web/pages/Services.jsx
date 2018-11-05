@@ -116,7 +116,7 @@ class Services extends React.Component {
             </Grid>
           )}
         </Grid>
-        <div style={{padding: 16, width: '100%', marginBottom: 56}}>
+        { /* <div style={{padding: 16, width: '100%', marginBottom: 56}}>
           <Typography variant="caption" style={{marginTop: 8}}>
             {"Can't find what you need?"}
           </Typography>
@@ -134,7 +134,7 @@ class Services extends React.Component {
               <Send />
             </IconButton>
           </div>
-        </div>
+        </div> */ }
       </div>
     )
   }

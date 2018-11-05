@@ -47,7 +47,15 @@ class GuestList extends React.Component {
           }}>
             <ButtonBase
               onClick={() => onGuestClick(i)}
-              style={{borderRadius: 4, padding: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start'}}>
+              style={{
+                maxWidth: 96,
+                borderRadius: 4,
+                padding: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'start'
+              }}>
               {user && user.image && <Avatar alt={user.name} src={user.image} />}
               {user && !user.image &&
                 <Avatar className={classes.avatar}>
@@ -90,6 +98,7 @@ class GuestList extends React.Component {
                 {style =>
                   <Typography style={{
                     paddingTop: 8,
+                    whiteSpace: 'normal',
                     transform: `translate3d(0,0,0) scale(${style.x}, ${style.x})`,
                   }}  color={active === i ? 'default' : 'textSecondary'}>
                     {user ? user.name : ''}
