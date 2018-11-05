@@ -64,4 +64,9 @@ const configureStore = (options, storage) => {
   return store;
 };
 
-export default configureStore;
+export default configureStore({
+  initialState: {},
+  platformDeps: {},
+  platformEpics: [],
+  platformReducers: {},
+});

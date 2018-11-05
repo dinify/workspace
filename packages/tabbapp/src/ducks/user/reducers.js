@@ -12,9 +12,6 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case types.FETCH_ME_DONE: {
       const user = action.payload.res;
-
-      window.socket.emit('init', user.id);
-
       return R.assoc('loggedUserId', user.id)(
         R.assocPath(['all', user.id], user)(state),
       );
