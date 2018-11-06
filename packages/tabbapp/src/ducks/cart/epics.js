@@ -1,9 +1,10 @@
 // @flow
 import { Observable } from 'rxjs';
 import * as API from 'tabb-front/dist/api/restaurant';
-// import R from 'ramda';
+import { showSnackbar } from 'ducks/notifications/actions';
 import * as FN from 'tabb-front/dist/lib/FN';
 import types from './types';
+
 import {
   addToCartDone,
   addToCartFail,
@@ -44,7 +45,15 @@ const addToCartEpic = (action$: Observable, { getState }) =>
       const apiPayload = { menuItemId, choices, excludes, addons }
       return Observable.fromPromise(API.AddToCart(apiPayload))
         .mergeMap(res => {
-          return Observable.of(addToCartDone(res), fetchCartInit());
+          return Observable.of(
+            addToCartDone(res),
+            fetchCartInit(),
+            showSnackbar({
+              message: 'Added to cart',
+              redirect: '/eat',
+              actionTitle: 'Go to cart'
+            })
+          );
         })
         .catch(error => Observable.of(addToCartFail(error)))
     });
@@ -57,7 +66,13 @@ const orderEpic = (action$: Observable, { getState }) =>
       const orderType = state.cart.orderType;
       return Observable.fromPromise(API.Order({ orderType }))
         .mergeMap(res => {
-          return Observable.of(orderDone(res), fetchCartInit());
+          return Observable.of(
+            orderDone(res),
+            fetchCartInit(),
+            showSnackbar({
+              message: 'Order has been placed'
+            })
+          );
         })
         .catch(error => Observable.of(orderFail(error)))
     });

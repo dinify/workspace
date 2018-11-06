@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import * as API from 'tabb-front/dist/api/restaurant';
 // import R from 'ramda';
 // import * as FN from 'tabb-front/dist/lib/FN';
+import { showSnackbar } from 'ducks/notifications/actions';
 import types from './types';
 import {
   splitBillDone,
@@ -43,7 +44,12 @@ const initTransactionEpic = (action$: Observable) =>
       return Observable.fromPromise(API.InitiateTransaction({ type, gratuity }))
         .mergeMap(res => {
           // window.location.href = '/receipt';
-          return Observable.of(initTransactionDone(res));
+          return Observable.of(
+            initTransactionDone(res),
+            showSnackbar({
+              message: 'Payment request sent'
+            })
+          );
         })
         .catch(error => Observable.of(initTransactionFail(error)))
     });

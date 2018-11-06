@@ -1,5 +1,6 @@
 // @flow
 import io from 'socket.io-client';
+import { showSnackbar } from 'ducks/notifications/actions';
 import types from './types';
 
 const socket = io('https://downstream.tabb.global');
@@ -20,10 +21,12 @@ const websockets = (store) => {
 
   socket.on('payment-confirmed', (data) => {
     dispatch({ type: types.CONFIRMED_PAYMENT, payload: data });
+    dispatch(showSnackbar({ message: 'Payment confirmed' }))
   })
 
   socket.on('order-status', (data) => {
     dispatch({ type: types.CONFIRMED_ORDER, payload: data });
+    dispatch(showSnackbar({ message: 'Order confirmed' }))
   })
 
 }

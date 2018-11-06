@@ -1,5 +1,6 @@
 // @flow
 import R from 'ramda';
+import moment from 'moment';
 import types from './types';
 
 const initialState = {
@@ -8,14 +9,34 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'persist/REHYDRATE': {
-      return R.assoc('errorsMap', {})(R.assoc('progressMap', {})(state));
+    case types.SHOW_SNACKBAR: {
+      const {
+        actionTitle = null,
+        message = '',
+        redirect = null
+      } = action.payload;
+      const snackbar = {
+        actionTitle,
+        message,
+        redirect,
+        open: true,
+        id: moment().valueOf()
+      };
+      return R.assoc('snackbars', [...state.snackbars, snackbar])(state);
     }
-    case types.ACTIVE_ACTION: {
-      return R.assocPath(['progressMap', action.payload], true)(state);
+    case types.HIDE_SNACKBAR: {
+      const { id } = action.payload;
+      return R.assoc('snackbars', state.snackbars.map((s) => {
+        const newS = s;
+        if (newS.id === id) {
+          newS.open = false;
+        }
+        return newS;
+      }))(state);
     }
-    case types.UNACTIVE_ACTION: {
-      return R.assocPath(['progressMap', action.payload], false)(state);
+    case types.RM_SNACKBAR: {
+      const { id } = action.payload;
+      return R.assoc('snackbars', R.filter((s) => s.id !== id, state.snackbars))(state);
     }
     default:
       return state;

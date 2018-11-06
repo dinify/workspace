@@ -1,6 +1,7 @@
 // @flow
 import { Observable } from 'rxjs';
 import * as API from 'tabb-front/dist/api/restaurant';
+import { showSnackbar } from 'ducks/notifications/actions';
 import types from './types';
 import { checkinFail, checkinDone, favRestaurantDone, favRestaurantFail } from './actions';
 import { fetchStatusInit } from 'ducks/restaurant/actions';
@@ -23,8 +24,15 @@ const checkinEpic = (action$: Observable, { getState }) =>
       }
       return Observable.fromPromise(API.Checkin(payload))
         .mergeMap(res => {
-
-          return Observable.of(checkinDone(res), fetchStatusInit());
+          return Observable.of(
+            checkinDone(res),
+            fetchStatusInit(),
+            showSnackbar({
+              message: 'You are now checked in',
+              redirect: '/',
+              actionTitle: 'Go to restaurant menu'
+            })
+          );
         })
         .catch(error => Observable.of(checkinFail(error)))
     });

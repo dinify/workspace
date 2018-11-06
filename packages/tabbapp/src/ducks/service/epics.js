@@ -1,6 +1,7 @@
 // @flow
 import { Observable } from 'rxjs';
 import * as API from 'tabb-front/dist/api/restaurant';
+import { showSnackbar } from 'ducks/notifications/actions';
 import types from './types';
 import { callServiceDone, callServiceFail } from './actions';
 
@@ -10,7 +11,14 @@ const callServiceEpic = (action$: Observable) =>
     .switchMap(({ payload: { serviceId } }) => {
       return Observable.fromPromise(API.CallService({ serviceId }))
         .mergeMap(res => {
-          return Observable.of(callServiceDone(res));
+          return Observable.of(
+            callServiceDone(res),
+            showSnackbar({
+              message: 'Service called',
+              redirect: '/',
+              actionTitle: 'Go to restaurant menu'
+            })
+          );
         })
         .catch(error => Observable.of(callServiceFail(error)))
     });

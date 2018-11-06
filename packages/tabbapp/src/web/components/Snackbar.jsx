@@ -6,51 +6,40 @@ import IconButton from '@material-ui/core/IconButton';
 import Close from 'icons/Close';
 
 export default class Snackbar extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false
-    };
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps, prevState);
-    if (prevProps.open !== this.props.open) {
-      console.log(this.props.open);
-      this.setState({open: this.props.open});
-    }
-  }
-
   render() {
     const {
-      message,
-      action,
-      actionTitle,
+      snackbarObject: {
+        id,
+        message,
+        actionTitle,
+        redirect,
+        open,
+      },
+      historyPush,
+      hideSnackbar
     } = this.props;
-    const { open } = this.props;
     return (
       <SnackbarMUI
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
         }}
-        open={open}
         autoHideDuration={6000}
-        onClose={() => {this.setState({ open: false })}}
+        open={open}
+        onClose={() => hideSnackbar({ id })}
         ContentProps={{
           'aria-describedby': 'message-id',
         }}
-        message={<span id="message-id">{message}</span>}
+        message={<span id="message-id">{message || ''}</span>}
         action={[
-          actionTitle && action ?<Button key="menu" color="inherit" size="small" onClick={action}>
+          actionTitle && redirect ?<Button key="menu" color="inherit" size="small" onClick={() => historyPush(redirect)}>
             {actionTitle}
           </Button> : null,
           <IconButton
             key="close"
             aria-label="Close"
             color="inherit"
-            onClick={() => {this.setState({ open: false })}}>
+            onClick={() => hideSnackbar({ id })}>
             <Close />
           </IconButton>
         ]}
