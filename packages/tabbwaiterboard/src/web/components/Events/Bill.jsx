@@ -28,6 +28,9 @@ const color = colorsByStages['s5']
 
 const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users }) => {
   if (!bill) return null
+  const subtotal = Number(bill.subtotal.amount);
+  const gratuityPercentage = Number(bill.gratuity/100);
+  const total = subtotal + gratuityPercentage * subtotal;
   return (
     <ActionBox className={removed ? 'vhs-zoom vhs-reverse Bill' : 'Bill'}>
       <Header>
@@ -40,7 +43,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
   					className="ssss"
   					onSubmit={({ approvalNumber }) => {
   						console.log('Success!', approvalNumber);
-  						confirmBill({ billId: bill.id, approvalNumber })
+  						confirmBill({ billId: bill.id, approvalNumber, initiator: bill.initiator })
   					}}
   					validate={({ approvalNumber }) => {
   						return {
@@ -60,7 +63,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
   			<Text color={color}>
           {bill.type}
   			</Text>
-        <CheckButton bg={color} onClick={() => confirmBill({billId: bill.id})} flash={!noconfirm && isItOutdated(bill.requested, timer.p)} invisible={noconfirm}>
+        <CheckButton bg={color} onClick={() => confirmBill({billId: bill.id, initiator: bill.initiator})} flash={!noconfirm && isItOutdated(bill.requested, timer.p)} invisible={noconfirm}>
           <i className="ion-checkmark" />
         </CheckButton>
       </Header>
@@ -84,12 +87,12 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
   					<Tr>
   	          <Td>Gratuity</Td>
   	          <Td>{bill.gratuity}%</Td>
-  	          <Td>{N(Math.round((bill.total.amount - (bill.total.amount / (1 + bill.gratuity/100 )))*1000)/1000).format('0.000')}KD</Td>
+  	          <Td>{N(bill.subtotal.amount).format('0.000')}KD</Td>
   	        </Tr>
   					<Tr>
   	          <Td bold color={color}>TOTAL</Td>
   	          <Td></Td>
-  	          <Td bold color={color}>{N(bill.total.amount).format('0.000')}KD</Td>
+  	          <Td bold color={color}>{N(total).format('0.000')}KD</Td>
   	        </Tr>
           </tbody>
         </TableTag>

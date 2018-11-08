@@ -9,6 +9,14 @@ export function Login({ email, password }) {
   })
 }
 
+export function Notify({ sendTo, type, payload }) {
+  return Post({
+    url: 'https://downstream.tabb.global/notify'
+  }, {
+    sendTo, type, payload
+  })
+}
+
 export function GetLoggedRestaurant() {
   return Get({ path: `restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices`, v3: true })
 }
@@ -68,7 +76,7 @@ export function ConfirmOrder({ orderId }) {
 }
 
 export function GetBills({ waiterboardId }) {
-  return Get({ v3: true, path: `waiterboard/${waiterboardId}/transactions` })
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/transactions?with=orders` })
 }
 
 export function ConfirmBill({ billId, approvalNumber }) {

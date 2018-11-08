@@ -63,16 +63,14 @@ export function Request(url, options = {}, noToken) {
 }
 
 const buildURL = ({
-  subdom = 'tabb-api',
-  endpoint = 'eu-central-1.elasticbeanstalk.com',
-  prefix = 'api/v1',
+  url,
   path,
   v2,
   v3
 }) => {
   if (v2) return `http://tabb-apiv2.eu-central-1.elasticbeanstalk.com/${path}`//`http://localhost:3005/${path}`//
   if (v3) return `https://api.dev.tabb.global/${path}`
-  return `http://${subdom}.${endpoint}/${prefix}/${path}`
+  return url;
 }
 //`http://localhost:3005/${path}`;//
 // urlParts = { token, ?subdom, ?endpoint, ?prefix, path }

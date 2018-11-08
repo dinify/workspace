@@ -42,7 +42,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime, users
 			</Text>
 
 			{!noconfirm ?
-				<CheckButton bg={color} onClick={() => confirmOrder({orderId: order.id})} flash={isItOutdated(order.requested, timer.o)}>
+				<CheckButton bg={color} onClick={() => confirmOrder({orderId: order.id, initiator: order.initiator})} flash={isItOutdated(order.requested, timer.o)}>
 	        <i className="ion-checkmark" />
 	      </CheckButton>
 			: ''}
