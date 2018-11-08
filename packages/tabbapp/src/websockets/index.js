@@ -20,7 +20,8 @@ const websockets = (store) => {
   });
 
   socket.on('transaction-status', (data) => {
-    if (data.status === 'PROCESSED') {
+    console.log(data);
+    if (data.transaction.status === 'PROCESSED') {
       dispatch({ type: types.CONFIRMED_PAYMENT, payload: data });
       dispatch(showSnackbar({ message: 'Payment confirmed' }))
     }
