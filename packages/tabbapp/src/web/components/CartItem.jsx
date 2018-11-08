@@ -50,7 +50,8 @@ const CartItem = ({
       return {
         name: addon.name,
         crossover: false,
-        price: FN.formatPrice(addon.price)
+        amount: addon.pivot.amount,
+        price: addon.price
       }
     }));
     customizations.push(...excludes.map(ingredient => {
@@ -99,14 +100,14 @@ const CartItem = ({
               }} color="textSecondary" variant="caption">
                 {customization.name}
               </Typography>
-              {customization.price && parseFloat(customization.price.amount) > 0 && <Typography
+              {customization.price && <Typography
                 color="textSecondary"
                 style={{
                   alignSelf: 'flex-end',
                   opacity: editing ? 0 : 1,
                 }}
                 variant="overline">
-                {FN.formatPrice(customization.price)}
+                {customization.amount && customization.amount > 1 ? `${customization.amount} × ` : ''}{FN.formatPrice(customization.price)}
               </Typography>}
             </div>
           ) :

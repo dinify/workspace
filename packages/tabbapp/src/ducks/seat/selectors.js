@@ -11,7 +11,18 @@ const convertGrid = reduceIndexed(
 
 export const selectedBillItems = createSelector(
   [
-    (state) => R.pluck('value')(convertGrid(R.pluck('items')(R.filter(o => o !== null, R.pluck('bill')(state.seat.seats))))),
+    (state) => {
+      const result = [];
+      R.map(seat => {
+        if (seat.bill) {
+          Object.values(seat.bill.orders).forEach(order => {
+            result.push(...Object.values(order.items));
+          });
+        }
+        return null;
+      }, state.seat.seats);
+      return result;
+    },
   ],
   (billItems) => {
     return R.filter(o => o.selected, billItems);

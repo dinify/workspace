@@ -37,22 +37,21 @@ class BillItem extends React.PureComponent {
       classes,
       padding,
       index,
+      item,
       selectBillItem,
       onClick,
     } = this.props;
     const rippleRadius = Math.sqrt(56**2 + 56**2);
 
-    const billItem = this.props.item;
-    const selected = billItem.selected;
-    const item = billItem.order_item;
-
     const images = item.menu_item ? FN.MapToList(item.menu_item.images) : [];
+
+    const divisor = FN.MapToList(item.owners).length;
 
     // if (item.menu_item.addons.length || item.menu_item.excludes.length)
     return (
       <Motion
         defaultStyle={{x: 0}}
-        style={{x: spring(selected ? 1 : 0, { stiffness: 260, damping: 24 })}}>
+        style={{x: spring(item.selected ? 1 : 0, { stiffness: 260, damping: 24 })}}>
         {style1 =>
           <ButtonBase
             disableRipple
@@ -87,7 +86,7 @@ class BillItem extends React.PureComponent {
                 }
                 <Motion
                   defaultStyle={{x: 0}}
-                  style={{x: spring(selected ? 1 : 0, { stiffness: 260, damping: 24 })}}>
+                  style={{x: spring(item.selected ? 1 : 0, { stiffness: 260, damping: 24 })}}>
                   {style =>
                     <div style={{
                       position: 'absolute',
@@ -102,7 +101,7 @@ class BillItem extends React.PureComponent {
                 </Motion>
                 <Motion
                   defaultStyle={{x: 0}}
-                  style={{x: spring(selected ? 1 : 0, { stiffness: 480, damping: selected ? 15 : 24 })}}>
+                  style={{x: spring(item.selected ? 1 : 0, { stiffness: 480, damping: item.selected ? 15 : 24 })}}>
                   {style =>
                     <div style={{
                       position: 'absolute',
@@ -123,18 +122,18 @@ class BillItem extends React.PureComponent {
                 <Typography
                   style={{
                     alignSelf: 'flex-end',
-                    textDecoration: billItem.divisor > 1 ? 'line-through' : 'none',
+                    textDecoration: divisor > 1 ? 'line-through' : 'none',
                   }}
-                  color={billItem.divisor > 1 ? 'textSecondary' : 'textPrimary'}
+                  color={divisor > 1 ? 'textSecondary' : 'textPrimary'}
                   variant="overline">
-                  {billItem && FN.formatPrice(billItem.subtotal)}
+                  {FN.formatPrice(divisor > 1 ? {'amount': '0.000', 'currency': 'KWD'} : item.subtotal)}
                 </Typography>
               </div>
               <div style={{display: 'flex', justifyContent: 'start'}}>
                 <Typography style={{flex: 1,  marginRight: 32}} color="textSecondary" variant="caption">
-                  {billItem.divisor > 1 ? `Split with ${billItem.divisor} people}` : 'original'}
+                  {divisor > 1 ? `Split with ${divisor} people}` : 'original'}
                 </Typography>
-                {billItem.divisor > 1 && <Typography
+                {divisor > 1 && <Typography
                   style={{alignSelf: 'flex-end'}}
                   variant="overline">
                   {item && FN.formatPrice(item.subtotal)}

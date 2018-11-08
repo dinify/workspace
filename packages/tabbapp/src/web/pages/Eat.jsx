@@ -1,4 +1,5 @@
 import React from 'react';
+import R from 'ramda';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 
@@ -73,7 +74,6 @@ class Eat extends React.Component {
         prevProps.seats[0] !== undefined &&
         prevProps.seats[0] !== seats[0] &&
         prevProps.seats[0].paid !== seats[0].paid) {
-          console.log('Yeehow');
       this.setState({awaitingPaymentConfirmation: !seats[0].paid});
     }
   }
@@ -187,28 +187,13 @@ class Eat extends React.Component {
           onChange={this.setActiveGuest}>
           {
             seats.map((seat, currentSeatIndex) => {
-              const user = users[seat.user_id];
               const userIsMe = seat.user_id === loggedUserId;
 
-
-              // BLOEAAHHHH this is pute vomit here
-              let seatList = [];
-              if (userIsMe) seatList = FN.MapToList(cartItems);
-              else if (seat.cart) {
-                Object.keys(seat.cart).forEach(key => {
-                  if (key !== 'subtotal') {
-                    FN.MapToList(seat.cart[key]).forEach(item => {
-                      if (item.id !== 'subtotal') seatList.push(item);
-                    });
-                  }
-                })
-              }
-
               let billList = [];
-              if (seat.bill) billList = seat.bill.items;
               let currency = 'KWD';
               let subtotalAmount = 0;
-              if (seat && seat.bill && seat.bill.subtotal) {
+              if (seat.bill)  {
+                billList = FN.MapToList(R.pluck('items')(FN.MapToList(seat.bill.orders)));
                 currency = seat.bill.subtotal.currency;
                 subtotalAmount = Number(seat.bill.subtotal.amount);
               }
@@ -216,7 +201,7 @@ class Eat extends React.Component {
               const gratitudeAmount = subtotalAmount * (gratitude / 100);
               const totalAmount = subtotalAmount + gratitudeAmount;
               const activeBillItemCount = seat && seat.bill
-                ? seat.bill.items.length
+                ? FN.MapToList(seat.bill.orders).length
                 : 0;
 
 
@@ -234,17 +219,19 @@ class Eat extends React.Component {
                         Cart
                       </Typography>
                       <Typography variant="caption">
-                        {`${seatList.length > 0 ? seatList.length : 'no'} item${seatList.length !== 1 ? 's' : ''}`}
+                        {`${seat.cart ? (seat.cart.count + (seat.cart.count !== 1 ? ' items' : ' item')) : 'no items'}`}
                       </Typography>
                     </div>
 
-                    {seatList.map(item =>
-                      <div key={item.id} style={{marginTop: 16}}>
-                        <CartItem rmFromCart={rmFromCart} editing={false} item={item} />
-                      </div>
+                    {seat.cart && FN.MapToList(seat.cart.restaurants).map(restaurant =>
+                      FN.MapToList(restaurant.items).map(item =>
+                        <div key={item.id} style={{marginTop: 16}}>
+                          <CartItem rmFromCart={rmFromCart} editing={false} item={item} />
+                        </div>
+                      )
                     )}
 
-                    {seatList.length > 0 &&
+                    {seat.cart &&
                       <div>
                         <div style={{display: 'flex', alignItems: 'center', marginTop: 16}}>
                           <Typography style={{flex: 1}} variant="subtitle1">
@@ -252,10 +239,7 @@ class Eat extends React.Component {
                           </Typography>
 
                           <Typography variant="subtitle1">
-                            {FN.formatPrice({
-                              amount: parseFloat(userIsMe ? subtotal.amount : seat.cart.subtotal.amount),
-                              currency: userIsMe ? subtotal.currency : seat.cart.subtotal.currency
-                            })}
+                            {FN.formatPrice(seat.cart.subtotal)}
                           </Typography>
                         </div>
 
@@ -264,7 +248,7 @@ class Eat extends React.Component {
                           style={{marginTop: 16}}
                           variant="extendedFab"
                           color="primary" fullWidth
-                          onClick={() => order(seatList)}>
+                          onClick={() => order()}>
                           <RestaurantMenu style={{marginRight: 16}} />
                           Order
                         </Button>}
@@ -277,7 +261,7 @@ class Eat extends React.Component {
                         Bill
                       </Typography>
                       <Typography variant="caption">
-                        {`${billList.length > 0 ? billList.length : 'no'} item${billList.length !== 1 ? 's' : ''}`}
+                        {`${seat.bill ? (seat.bill.count + (seat.bill.count !== 1 ? ' items' : ' item')) : 'no items'}`}
                       </Typography>
                     </div>
 
@@ -285,21 +269,23 @@ class Eat extends React.Component {
                       Select bill items to split with others
                     </Typography>}
 
-                    {billList.map((item, i) =>
-                      <div key={item.order_item.id} style={{
-                          marginTop: 16
-                        }}>
-                        <BillItem onClick={() => {
-                          selectBillItem({
-                            selected: !(item.selected || false),
-                            seatIndex: currentSeatIndex,
-                            billItemIndex: i
-                          });
-                        }} item={item} index={i}/>
-                      </div>
+                    {seat.bill && FN.MapToList(seat.bill.orders).map(order =>
+                      FN.MapToList(order.items).map((item, i) =>
+                        <div key={item.id} style={{
+                            marginTop: 16
+                          }}>
+                          <BillItem onClick={() => {
+                            selectBillItem({
+                              selected: !(item.selected || false),
+                              seatIndex: currentSeatIndex,
+                              billItemIndex: i
+                            });
+                          }} item={item} index={i}/>
+                        </div>
+                      )
                     )}
 
-                    {userIsMe && activeBillItemCount > 0 && <div style={{
+                    {userIsMe && seat.bill && <div style={{
                             transform: 'translate3d(0,0,0)'
                           }}>
                           <div style={{
@@ -352,7 +338,7 @@ class Eat extends React.Component {
                           </div>
                         </div>
                     }
-                    {!userIsMe && activeBillItemCount > 0 && <div style={{
+                    {!userIsMe && seat.bill && <div style={{
                         display: 'flex',
                         marginTop: 16
                       }}>
@@ -366,7 +352,7 @@ class Eat extends React.Component {
                       </Typography>
                     </div>}
 
-                    {userIsMe && activeBillItemCount > 0 && <div style={{
+                    {userIsMe && seat.bill && <div style={{
                             marginTop: 16,
                             marginBottom: 16
                           }}>

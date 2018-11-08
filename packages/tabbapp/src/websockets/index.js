@@ -19,13 +19,21 @@ const websockets = (store) => {
     initSocket();
   });
 
-  socket.on('payment-confirmed', (data) => {
-    dispatch({ type: types.CONFIRMED_PAYMENT, payload: data });
-    dispatch(showSnackbar({ message: 'Payment confirmed' }))
+  socket.on('transaction-status', (data) => {
+    if (data.status === 'PROCESSED') {
+      dispatch({ type: types.CONFIRMED_PAYMENT, payload: data });
+      dispatch(showSnackbar({ message: 'Payment confirmed' }))
+    }
+    else dispatch(showSnackbar({ message: 'Payment cancelled' }))
   })
 
   socket.on('order-status', (data) => {
     dispatch({ type: types.CONFIRMED_ORDER, payload: data });
+    dispatch(showSnackbar({ message: 'Order confirmed' }))
+  })
+
+  socket.on('split', (data) => {
+    dispatch({ type: types.SPLIT, payload: data });
     dispatch(showSnackbar({ message: 'Order confirmed' }))
   })
 
