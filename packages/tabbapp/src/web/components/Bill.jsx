@@ -11,7 +11,7 @@ class Bill extends React.PureComponent {
 
   render() {
     const {
-
+      
     } = this.props;
 
     return (

@@ -107,7 +107,7 @@ const CartItem = ({
                   opacity: editing ? 0 : 1,
                 }}
                 variant="overline">
-                {customization.amount && customization.amount > 1 ? `${customization.amount} × ` : ''}{FN.formatPrice(customization.price)}
+                {customization.amount && customization.amount > 1 ? `${customization.amount} × ` : ''}{parseFloat(customization.price.amount) > 0 && FN.formatPrice(customization.price)}
               </Typography>}
             </div>
           ) :

@@ -2,7 +2,7 @@
 import R from 'ramda';
 import types from './types';
 import cartTypes from '../cart/types';
-import uiTypes from '../ui/types';
+import wsTypes from '../../websockets/types';
 import { selectedBillItems } from 'ducks/seat/selectors';
 
 const initialState = {
@@ -19,33 +19,17 @@ export default function reducer(state = initialState, action) {
     case cartTypes.ORDER_DONE: {
       const order = action.payload;
       order.items = state.lastCartItems;
-      return R.assocPath(['lastOrders', action.payload.id], order)(state);
+      const newState = R.assocPath(['seats', 0, 'cart'], undefined)(state);
+      return R.assocPath(['lastOrders', action.payload.id], order)(newState);
     }
-    case uiTypes.CONFIRMED_PAYMENT_DONE: {
+    case wsTypes.CONFIRMED_PAYMENT: {
       return R.assocPath(['seats', 0, 'bill'], null)(R.assocPath(['seats', 0, 'paid'], true)(state));
     }
-    case uiTypes.CONFIRMED_ORDER_DONE: {
-      let bill = state.seats[0].bill;
-      if (bill === null) bill = { items: [], subtotal: { amount: '0.00', currency: 'KWD'} };
-      const order = state.lastOrders[action.payload.order_id];
-      if (order) {
-        let cumulative = 0;
-        order.items.forEach(item => {
-            const newItem = {
-              divisor: 1,
-              subtotal: item.subtotal,
-              order_item: item
-            };
-            bill.items.unshift(newItem);
-            cumulative += parseFloat(item.subtotal.amount);
-          }
-        );
-        bill.subtotal.amount = `${parseFloat(bill.subtotal.amount) + cumulative}`;
-      }
-      else {
-        // TODO: refresh bill
-      }
-      return R.assocPath(['seats', 0, 'bill'], bill)(state);
+    case wsTypes.CONFIRMED_ORDER: {
+      return R.assocPath(['seats', 0, 'bill'], action.payload.bill)(state);
+    }
+    case wsTypes.SPLIT: {
+      return R.assocPath(['seats'], action.payload.seats)(state);
     }
     case types.FETCH_SEATS_DONE: {
       const seats = action.payload.res;

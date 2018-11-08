@@ -13,14 +13,14 @@ export const selectedBillItems = createSelector(
   [
     (state) => {
       const result = [];
-      R.map(seat => {
+      /* R.map(seat => {
         if (seat.bill) {
           Object.values(seat.bill.orders).forEach(order => {
             result.push(...Object.values(order.items));
           });
         }
         return null;
-      }, state.seat.seats);
+      }, state.seat.seats); */
       return result;
     },
   ],

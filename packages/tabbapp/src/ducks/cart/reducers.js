@@ -4,7 +4,7 @@ import types from './types';
 
 const initialState = {
   orderType: 'DINE_IN', // AHEAD, TAKEAWAY
-  items: {},
+  restaurants: {},
   subtotal: {
     amount: 0,
     currency: "KWD",
@@ -18,7 +18,7 @@ export default function reducer(state = initialState, action) {
     //   return R.assocPath(['items', res.id], res)(state);
     // }
     case types.ORDER_DONE: {
-      return R.assoc('items', {})(state);
+      return R.assoc('restaurants', {})(state);
     }
     case types.SET_ORDERTYPE: {
       return R.assoc('orderType', action.payload.orderType)(state);
