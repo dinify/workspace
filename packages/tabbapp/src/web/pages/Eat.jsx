@@ -403,7 +403,7 @@ class Eat extends React.Component {
           disabled={selectedSeats.length <= 1}
           onClick={() => splitBill({
             orderItems: selectedBillItems.map((item) => ({ id: item.id })),
-            withIds: selectedSeats.map((seat) => seat.user_id)
+            withIds: selectedSeats.filter(seat => seat.user_id !== loggedUserId).map((seat) => seat.user_id)
           })}
           variant="outlined"
           color="inherit">

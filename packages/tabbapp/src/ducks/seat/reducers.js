@@ -2,6 +2,7 @@
 import R from 'ramda';
 import * as FN from 'tabb-front/dist/lib/FN';
 import types from './types';
+import billTypes from '../bill/types';
 import cartTypes from '../cart/types';
 import wsTypes from '../../websockets/types';
 import { selectedBillItems } from 'ducks/seat/selectors';
@@ -53,6 +54,9 @@ export default function reducer(state = initialState, action) {
       const { selected, seatIndex } = action.payload;
       if (seatIndex === 0) return state;
       return R.assocPath(['seats', seatIndex, 'selected'], selected)(state);
+    }
+    case billTypes.SPLIT_BILL_DONE: {
+      return R.assocPath(['seats'], action.payload.seats)(state);
     }
     case types.CLEAR_SELECTED_BILLITEMS: {
       // TODO: ramda impl

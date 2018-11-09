@@ -131,7 +131,7 @@ class BillItem extends React.PureComponent {
               </div>
               <div style={{display: 'flex', justifyContent: 'start'}}>
                 <Typography style={{flex: 1,  marginRight: 32}} color="textSecondary" variant="caption">
-                  {divisor > 1 ? `Split with ${divisor} people}` : 'original'}
+                  {divisor > 1 ? `Split between ${divisor} people` : 'original'}
                 </Typography>
                 {divisor > 1 && <Typography
                   style={{alignSelf: 'flex-end'}}
