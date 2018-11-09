@@ -9,6 +9,7 @@ import { ActionBox, Header, TableId, CheckButton, TableTag, Th, Tr, Td, Text } f
 import User from './user'
 import { isItOutdated } from '../../../common/helpers/time'
 import N from 'numeral';
+import * as FN from '../../../lib/FN'
 
 const TextInput = styled(FormText)`
   background-color: rgba(0,0,0,0.06);
@@ -31,6 +32,8 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
   const subtotal = Number(bill.subtotal.amount);
   const gratuityPercentage = Number(bill.gratuity/100);
   const total = subtotal + gratuityPercentage * subtotal;
+  let orderItems = [];
+  orderItems = FN.MapToList(bill.orders).map((order) => order.items)
   return (
     <ActionBox className={removed ? 'vhs-zoom vhs-reverse Bill' : 'Bill'}>
       <Header>
@@ -77,13 +80,15 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
             </tr>
           </thead>
           <tbody>
-  					{bill.bill && bill.bill.items ? bill.bill.items.map((item, i) =>
-  						<Tr key={i}>
-  	            <Td>{item.order_item.menu_item.name}</Td>
-  	            <Td>1</Td>
-  	            <Td>{N(item.subtotal.amount).format('0.000')}KD</Td>
-  	          </Tr>
-  					) : ''}
+  					{orderItems.map((order) =>
+              FN.MapToList(order).map((item) =>
+                <Tr key={item.id}>
+    	            <Td>{item.menu_item.name}</Td>
+    	            <Td>1</Td>
+    	            <Td>{N(item.subtotal.amount).format('0.000')}KD</Td>
+    	          </Tr>
+              )
+  					)}
   					<Tr>
   	          <Td>Gratuity</Td>
   	          <Td>{bill.gratuity}%</Td>
