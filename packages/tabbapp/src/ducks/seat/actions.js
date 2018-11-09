@@ -9,9 +9,9 @@ export const fetchSeatsFail = (e) => ({
   payload: e
 })
 
-export const selectBillItem = ({ selected, seatIndex, billItemIndex }) => ({
+export const selectBillItem = ({ selected, path }) => ({
   type: types.SELECT_BILLITEM,
-  payload: { selected, seatIndex, billItemIndex  }
+  payload: { selected, path  }
 })
 
 export const selectSeat = ({ selected, seatIndex }) => ({

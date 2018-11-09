@@ -3,24 +3,19 @@ import R from 'ramda';
 
 const mapIndexed = R.addIndex( R.map );
 const reduceIndexed = R.addIndex( R.reduce );
-const convertGrid = reduceIndexed(
-  ( acc, array, i ) => [...acc, ...mapIndexed( ( value, j ) => ( { row: i, column: j, value } ), array ) ],
-  [ ]
-);
 // import * as FN from 'tabb-front/dist/lib/FN';
 
 export const selectedBillItems = createSelector(
   [
     (state) => {
       const result = [];
-      /* R.map(seat => {
-        if (seat.bill) {
-          Object.values(seat.bill.orders).forEach(order => {
-            result.push(...Object.values(order.items));
-          });
-        }
-        return null;
-      }, state.seat.seats); */
+      if (state.seat.seats) R.forEach(seat => {
+        if (seat.bill) R.forEach(order => {
+          R.forEach(item => {
+            result.push(item);
+          }, Object.values(order.items))
+        }, Object.values(seat.bill.orders))
+      }, state.seat.seats);
       return result;
     },
   ],

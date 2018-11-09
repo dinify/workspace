@@ -1,5 +1,6 @@
 // @flow
 import R from 'ramda';
+import * as FN from 'tabb-front/dist/lib/FN';
 import types from './types';
 import cartTypes from '../cart/types';
 import wsTypes from '../../websockets/types';
@@ -36,8 +37,8 @@ export default function reducer(state = initialState, action) {
       return R.assoc('seats', seats)(state);
     }
     case types.SELECT_BILLITEM: {
-      const { selected, seatIndex, billItemIndex } = action.payload;
-      const newState =  R.assocPath(['seats', seatIndex, 'bill', 'items', billItemIndex, 'selected'], selected)(state);
+      const { selected, path } = action.payload;
+      const newState =  R.assocPath(path, selected)(state);
       if (selectedBillItems({seat: newState}).length <= 0) {
         for (let i = 0; i < newState.seats.length; i += 1) {
           newState.seats[i].selected = false;
@@ -55,15 +56,14 @@ export default function reducer(state = initialState, action) {
     }
     case types.CLEAR_SELECTED_BILLITEMS: {
       // TODO: ramda impl
-      const newState = Object.assign({}, state);
-      for (let i = 0; i < state.seats.length; i += 1) {
-        newState.seats[i].selected = false;
-        if (state.seats[i].bill && state.seats[i].bill.items) {
-          for (let j = 0; j < state.seats[i].bill.items.length; j += 1) {
-            newState.seats[i].bill.items[j].selected = false;
-          }
-        }
-      }
+      let newState = state;
+      R.forEach((seat, seatIndex) => {
+        R.forEach(order => {
+          R.forEach(item => {
+            newState = R.assocPath(['seats', seatIndex, 'bill', 'orders', order.id, 'items', item.id, 'selected'], false)(newState)
+          }, Object.values(order.items))
+        }, Object.values(seat.bill.orders))
+      }, state.seats);
       return newState;
     }
     default:

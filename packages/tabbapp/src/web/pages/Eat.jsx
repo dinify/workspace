@@ -277,8 +277,7 @@ class Eat extends React.Component {
                           <BillItem onClick={() => {
                             selectBillItem({
                               selected: !(item.selected || false),
-                              seatIndex: currentSeatIndex,
-                              billItemIndex: i
+                              path: ['seats', currentSeatIndex, 'bill', 'orders', order.id, 'items', item.id, 'selected']
                             });
                           }} item={item} index={i}/>
                         </div>
@@ -403,7 +402,7 @@ class Eat extends React.Component {
           }}
           disabled={selectedSeats.length <= 1}
           onClick={() => splitBill({
-            orderItems: selectedBillItems.map((item) => ({ id: item.order_item.id })),
+            orderItems: selectedBillItems.map((item) => ({ id: item.id })),
             withIds: selectedSeats.map((seat) => seat.user_id)
           })}
           variant="outlined"
