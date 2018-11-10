@@ -31,7 +31,8 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
   if (!bill) return null
   const subtotal = Number(bill.subtotal.amount);
   const gratuityPercentage = Number(bill.gratuity/100);
-  const total = subtotal + gratuityPercentage * subtotal;
+  const gratuityAmount = gratuityPercentage * subtotal;
+  const total = subtotal + gratuityAmount;
   let orderItems = [];
   orderItems = FN.MapToList(bill.orders).map((order) => order.items)
   return (
@@ -92,7 +93,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
   					<Tr>
   	          <Td>Gratuity</Td>
   	          <Td>{bill.gratuity}%</Td>
-  	          <Td>{N(bill.subtotal.amount).format('0.000')}KD</Td>
+  	          <Td>{N(gratuityAmount).format('0.000')}KD</Td>
   	        </Tr>
   					<Tr>
   	          <Td bold color={color}>TOTAL</Td>
