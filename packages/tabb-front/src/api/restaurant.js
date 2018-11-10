@@ -20,7 +20,7 @@ const populateCategoriesWith = [
   'categories.items.options.choices',
 ].join(',');
 export function GetMenucategories({ subdomain }: GetCategoriesArgs) {
-  return Get({ path: `restaurant/${subdomain}/categories?with=${populateCategoriesWith}` });
+  return Get({ path: `restaurant/${subdomain}/categories?with=${populateCategoriesWith}&limit=100` });
 }
 
 type GetMenuitemsArgs = { categoryId: string };
