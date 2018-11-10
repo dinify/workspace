@@ -26,13 +26,8 @@ export default function reducer(state = initialState, action) {
     }
     case cartTypes.REMOVE_ORDERITEM_DONE: {
       // TODO replace cart with cart in respose
-      const { orderItemId } = action.payload;
-      const amount = state.subtotal.amount;
-      const rid = 'ac2de299-f8b6-4d86-a7d9-be1be17692f1';
-      const itemAmount = state.seats[0].restaurants[rid].items[orderItemId].subtotal.amount;
-      return R.assocPath(['seats', 0, 'cart', 'subtotal', 'amount'], amount - itemAmount)(
-        R.dissocPath(['seats', 0, 'cart', 'restaurants', rid, 'items', orderItemId])(state)
-      );
+      console.log(action.payload);
+      return state;
     }
     case wsTypes.CONFIRMED_PAYMENT: {
       return R.assocPath(['seats', 0, 'bill'], null)(R.assocPath(['seats', 0, 'paid'], true)(state));

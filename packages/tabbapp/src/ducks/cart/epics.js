@@ -3,15 +3,16 @@ import { Observable } from 'rxjs';
 import * as API from 'tabb-front/dist/api/restaurant';
 import { showSnackbar } from 'ducks/notifications/actions';
 import * as FN from 'tabb-front/dist/lib/FN';
+import { fetchSeatsInit } from 'ducks/seat/actions';
 import types from './types';
-
 import {
   addToCartDone,
   addToCartFail,
   fetchCartInit,
   orderDone,
-  orderFail,
+  orderFail
 } from './actions';
+
 
 
 type addToCartProps = {
@@ -77,7 +78,15 @@ const orderEpic = (action$: Observable, { getState }) =>
         .catch(error => Observable.of(orderFail(error)))
     });
 
+const updateAfterEditEpic = (action$: Observable) =>
+  action$
+    .ofType(types.REMOVE_ORDERITEM_DONE)
+    .switchMap(() => {
+      return Observable.of(fetchSeatsInit());
+    });
+
 export default [
   addToCartEpic,
   orderEpic,
+  updateAfterEditEpic
 ];
