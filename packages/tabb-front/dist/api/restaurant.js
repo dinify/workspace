@@ -44,7 +44,7 @@ var populateCategoriesWith = ['categories.items.images', 'categories.items.addon
 function GetMenucategories(_ref2) {
   var subdomain = _ref2.subdomain;
   return (0, _Network.Get)({
-    path: "restaurant/".concat(subdomain, "/categories?with=").concat(populateCategoriesWith)
+    path: "restaurant/".concat(subdomain, "/categories?with=").concat(populateCategoriesWith, "&limit=100")
   });
 }
 
