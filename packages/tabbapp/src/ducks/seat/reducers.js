@@ -39,6 +39,10 @@ export default function reducer(state = initialState, action) {
     }
     case types.SELECT_BILLITEM: {
       const { selected, path } = action.payload;
+      const seat = state.seats[path[1]];
+      const billItem = seat.bill.orders[path[4]].items[path[6]];
+      const selectable = path[1] === 0 && billItem.initiator === seat.user_id;
+      if (!selectable) return state;
       const newState =  R.assocPath(path, selected)(state);
       if (selectedBillItems({seat: newState}).length <= 0) {
         for (let i = 0; i < newState.seats.length; i += 1) {
@@ -46,6 +50,11 @@ export default function reducer(state = initialState, action) {
         }
       }
       else {
+        Object.keys(billItem.owners).forEach(uid => {
+          newState.seats.forEach((seat, index) => {
+            if (uid === seat.user_id) newState.seats[index].selected = true;
+          })
+        });
         newState.seats[0].selected = true;
       }
       return newState;
@@ -55,14 +64,20 @@ export default function reducer(state = initialState, action) {
       if (seatIndex === 0) return state;
       return R.assocPath(['seats', seatIndex, 'selected'], selected)(state);
     }
+    case billTypes.SPLIT_BILL_INIT: {
+      return R.assocPath(['splitLoading'], true)(state);
+    }
     case billTypes.SPLIT_BILL_DONE: {
-      return R.assocPath(['seats'], action.payload.seats)(state);
+      return R.assocPath(['seats'], action.payload.seats)(R.assocPath(['splitLoading'], false)(state));
+    }
+    case billTypes.SPLIT_BILL_FAIL: {
+      return R.assocPath(['splitLoading'], false)(state);
     }
     case types.CLEAR_SELECTED_BILLITEMS: {
       // TODO: ramda impl
       let newState = state;
       R.forEach((seat, seatIndex) => {
-        R.forEach(order => {
+        if (seat.bill) R.forEach(order => {
           R.forEach(item => {
             newState = R.assocPath(['seats', seatIndex, 'bill', 'orders', order.id, 'items', item.id, 'selected'], false)(newState)
           }, Object.values(order.items))

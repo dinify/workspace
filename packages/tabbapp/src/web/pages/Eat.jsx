@@ -134,6 +134,7 @@ class Eat extends React.Component {
       splitBill, //transferBill,
       loggedUserId,
       initTransaction,
+      splitLoading,
     } = this.props;
 
     const { activeGuest, awaitingPaymentConfirmation, payMenuOpen, splitMenuOpen } = this.state;
@@ -279,7 +280,7 @@ class Eat extends React.Component {
                               selected: !(item.selected || false),
                               path: ['seats', currentSeatIndex, 'bill', 'orders', order.id, 'items', item.id, 'selected']
                             });
-                          }} item={item} index={i}/>
+                          }} seat={seat} item={item} index={i}/>
                         </div>
                       )
                     )}
@@ -396,7 +397,7 @@ class Eat extends React.Component {
               {selectedBillItems.length + (selectedBillItems.length === 1 ? ' item' : ' items')} selected
             </Typography>
           </div>
-          <Button style={{
+          {!splitLoading && <Button style={{
             border: '1px solid rgba(255, 255, 255, 0.23)',
             color: selectedSeats.length <= 1 ? 'rgba(255, 255, 255, 0.26)' : 'inherit',
           }}
@@ -408,7 +409,10 @@ class Eat extends React.Component {
           variant="outlined"
           color="inherit">
             Split
-          </Button>
+          </Button>}
+          {splitLoading && <Typography color="inherit" style={{opacity: 0.54}} variant="caption">
+            Loading...
+          </Typography>}
         </ContextMenu>
 
       </div>
@@ -418,6 +422,7 @@ class Eat extends React.Component {
 
 Eat = connect(state => ({
   seats: state.seat.seats,
+  splitLoading: state.seat.splitLoading,
   users: state.user.all,
   selecting: checkSelecting(state),
   selectedBillItems: selectedBillItemsSelector(state),

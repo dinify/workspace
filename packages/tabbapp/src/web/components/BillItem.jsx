@@ -19,9 +19,19 @@ const styles = theme => ({
     backgroundColor: theme.palette.divider,
     overflow: 'hidden'
   },
+  foreignItem: {
+    width: 64,
+    height: 64,
+    marginLeft: -4,
+    marginTop: -4,
+    borderRadius: 8,
+    border: `2px solid ${theme.palette.primary.main}`,
+    padding: 2
+  },
   imageSrc: {
     width: 56,
     height: 56,
+    borderRadius: 4,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
@@ -40,12 +50,14 @@ class BillItem extends React.PureComponent {
       item,
       selectBillItem,
       onClick,
+      seat
     } = this.props;
     const rippleRadius = Math.sqrt(56**2 + 56**2);
 
     const images = item.menu_item ? FN.MapToList(item.menu_item.images) : [];
 
     const divisor = FN.MapToList(item.owners).length;
+    const foreign = item.initiator !== seat.user_id;
 
     // if (item.menu_item.addons.length || item.menu_item.excludes.length)
     return (
@@ -74,7 +86,7 @@ class BillItem extends React.PureComponent {
                 justifyContent: 'center',
                 overflow: 'hidden',
               }}
-              className={classes.cartItemImage}
+              className={`${classes.cartItemImage} ${foreign ? classes.foreignItem : ''}`}
               ref={(divElement) => {this.divElement = divElement}}>
                 {images.length > 0 &&
                   <div
@@ -126,12 +138,12 @@ class BillItem extends React.PureComponent {
                   }}
                   color={divisor > 1 ? 'textSecondary' : 'textPrimary'}
                   variant="overline">
-                  {FN.formatPrice(divisor > 1 ? {'amount': '0.000', 'currency': 'KWD'} : item.subtotal)}
+                  {FN.formatPrice(divisor > 1 ? item.orgsubtotal : item.subtotal)}
                 </Typography>
               </div>
               <div style={{display: 'flex', justifyContent: 'start'}}>
                 <Typography style={{flex: 1,  marginRight: 32}} color="textSecondary" variant="caption">
-                  {divisor > 1 ? `Split between ${divisor} people` : 'original'}
+                  {divisor > 1 ? `Split between ${divisor} people` : ''}
                 </Typography>
                 {divisor > 1 && <Typography
                   style={{alignSelf: 'flex-end'}}
@@ -147,9 +159,9 @@ class BillItem extends React.PureComponent {
   }
 }
 
-BillItem = connect(
-  null,
-  {
+BillItem = connect(state => ({
+
+  }), {
     selectBillItem: selectBillItemAction,
   }
 )(BillItem)

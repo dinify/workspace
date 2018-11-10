@@ -35,7 +35,7 @@ const websockets = (store) => {
 
   socket.on('split', (data) => {
     dispatch({ type: types.SPLIT, payload: data });
-    dispatch(showSnackbar({ message: 'Order confirmed' }))
+    dispatch(showSnackbar({ message: 'Bill received split items' }))
   })
 
 }
