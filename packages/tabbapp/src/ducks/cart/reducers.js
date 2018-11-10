@@ -17,20 +17,6 @@ export default function reducer(state = initialState, action) {
     //   const res = action.payload;
     //   return R.assocPath(['items', res.id], res)(state);
     // }
-    case types.ORDER_DONE: {
-      return R.assoc('restaurants', {})(state);
-    }
-    case types.SET_ORDERTYPE: {
-      return R.assoc('orderType', action.payload.orderType)(state);
-    }
-    case types.REMOVE_ORDERITEM_INIT: {
-      const { orderItemId } = action.payload;
-      const amount = state.subtotal.amount;
-      const itemAmount = state.items[orderItemId].subtotal.amount;
-      return R.assocPath(['subtotal','amount'], amount - itemAmount)(
-        R.dissocPath(['items', orderItemId])(state)
-      );
-    }
     case types.FETCH_CART_DONE: {
       const res = action.payload.res;
       if (res.status && res.status === 'successful') {

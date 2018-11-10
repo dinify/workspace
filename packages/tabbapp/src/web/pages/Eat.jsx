@@ -34,11 +34,14 @@ import PageIndicator from 'web/components/PageIndicator';
 
 import RestaurantMenu from 'icons/RestaurantMenu';
 import CreditCard from 'icons/CreditCard';
+import Delete from 'icons/Delete';
+import Done from 'icons/Done';
 
 import Typography from 'web/components/Typography';
 import Slider from '@material-ui/lab/Slider';
 import * as FN from 'tabb-front/dist/lib/FN';
 
+import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 
@@ -57,7 +60,8 @@ class Eat extends React.Component {
     activeGuest: 0,
     payMenuOpen: false,
     awaitingPaymentConfirmation: false,
-    splitMenuOpen: false
+    splitMenuOpen: false,
+    editingCart: false
   }
 
   componentWillMount() {
@@ -137,7 +141,7 @@ class Eat extends React.Component {
       splitLoading,
     } = this.props;
 
-    const { activeGuest, awaitingPaymentConfirmation, payMenuOpen, splitMenuOpen } = this.state;
+    const { activeGuest, editingCart, awaitingPaymentConfirmation, payMenuOpen, splitMenuOpen } = this.state;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     const multiparty = seats.length > 1;
     for (let i = 0; i < seats.length; i+=1) {
@@ -215,25 +219,31 @@ class Eat extends React.Component {
                     minHeight: 'calc(100vh - 214px)'
                   }}>
                   <ResponsiveContainer>
-                    <div style={{display: 'flex', marginTop: 16}}>
-                      <Typography style={{flex: 1, marginRight: 16}} variant="overline">
-                        Cart
-                      </Typography>
-                      <Typography variant="caption">
-                        {`${seat.cart ? (seat.cart.count + (seat.cart.count !== 1 ? ' items' : ' item')) : 'no items'}`}
-                      </Typography>
+                    <div style={{display: 'flex'}}>
+                      <div style={{flex: 1, display: 'flex', marginTop: 16}}>
+                        <Typography style={{flex: 1, marginRight: 16}} variant="overline">
+                          Cart
+                        </Typography>
+                        <Typography variant="caption">
+                          {editingCart && userIsMe ? 'editing' : `${seat.cart ? (seat.cart.count + (seat.cart.count !== 1 ? ' items' : ' item')) : 'no items'}`}
+                        </Typography>
+
+                      </div>
+                      {userIsMe && seat.cart && <IconButton onClick={() => this.setState({editingCart: !editingCart})}>
+                        {editingCart ? <Done /> : <Delete />}
+                      </IconButton>}
                     </div>
 
                     {seat.cart && FN.MapToList(seat.cart.restaurants).map(restaurant =>
                       FN.MapToList(restaurant.items).map(item =>
                         <div key={item.id} style={{marginTop: 16}}>
-                          <CartItem rmFromCart={rmFromCart} editing={false} item={item} />
+                          <CartItem rmFromCart={rmFromCart} editing={userIsMe && editingCart} item={item} />
                         </div>
                       )
                     )}
 
                     {seat.cart &&
-                      <div>
+                      <div style={{marginBottom: userIsMe && seat.cart ? 16: 0}}>
                         <div style={{display: 'flex', alignItems: 'center', marginTop: 16}}>
                           <Typography style={{flex: 1}} variant="subtitle1">
                             Total
@@ -255,7 +265,7 @@ class Eat extends React.Component {
                         </Button>}
                       </div>
                     }
-                    <Divider style={{marginTop: 16, marginBottom: 16}}/>
+                    <Divider style={{marginTop: userIsMe && seat.cart ? 0 : 16, marginBottom: 16}}/>
 
                     <div style={{display: 'flex', marginTop: 16}}>
                       <Typography style={{flex: 1, marginRight: 16}} variant="overline">
