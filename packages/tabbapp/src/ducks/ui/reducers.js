@@ -28,8 +28,12 @@ function findNested(obj, key, memo) {
 export default function reducer(state = initialState, action) {
   if (action.type.includes('_FAIL')) {
     const theMessage = findNested(action.payload, 'message');
+    const theCode = findNested(action.payload, 'code');
     if (theMessage) {
-      state = R.assocPath(['errorsMap', action.type], theMessage)(state);
+      state = R.assocPath(['errorsMap', action.type], {
+        message: theMessage,
+        code: theCode,
+      })(state);
     }
   }
   switch (action.type) {

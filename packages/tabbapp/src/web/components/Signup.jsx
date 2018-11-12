@@ -3,13 +3,26 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import Text from 'web/components/Inputs/Text';
 import { signupInit } from 'ducks/auth/actions';
+import authTypes from 'ducks/auth/types';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
+import FormControl from '@material-ui/core/FormControl';
+import ErrorMessage from 'web/components/ErrorMessage';
 
 const gridItemStyle = {
   width: '100%',
 };
 
+const errorTranslations = {
+  'E002011': 'Account with this e-mail or phone number already exists',
+  'E010203': 'Your password must be at least 8 characters and include 1 capital letter and 1 numeral',
+  'E010201': 'Please enter your full name'
+}
+
 let SignupForm = ({ handleSubmit, submitComponent }) => {
+  const ErrorComponent = () => (
+    <ErrorMessage actionType={authTypes.SIGNUP_FAIL} translations={errorTranslations} />
+  );
   return (
     <form onSubmit={handleSubmit}>
       <Grid container alignItems="center" direction="column">
@@ -53,6 +66,11 @@ let SignupForm = ({ handleSubmit, submitComponent }) => {
               fullWidth: true,
             }}
           />
+          <FormControl error>
+            <FormHelperText>
+              <ErrorComponent />
+            </FormHelperText>
+          </FormControl>
         </Grid>
       </Grid>
       {submitComponent}
