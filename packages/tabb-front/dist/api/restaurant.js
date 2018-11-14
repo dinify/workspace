@@ -75,7 +75,7 @@ function Checkin(_ref5) {
 
 function GetStatus() {
   return (0, _Network.Get)({
-    path: "status?with=table,restaurant"
+    path: "table/status"
   });
 }
 
