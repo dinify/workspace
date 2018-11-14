@@ -1,17 +1,37 @@
 // @flow
 import io from 'socket.io-client';
 import { showSnackbar } from 'ducks/notifications/actions';
+import Fingerprint2 from 'fingerprintjs2';
 import types from './types';
 
-const socket = io('https://downstream.tabb.global');
+const socket = io(process.env.REACT_APP_DOWNSTREAM_URL);
 
 const websockets = (store) => {
   const { dispatch, getState } = store;
 
   const initSocket = () => {
     const loggedUserId = getState().user.loggedUserId;
-    if (loggedUserId) socket.emit('init', loggedUserId);
+    if (loggedUserId) {
+      const callback = () => {
+        new Fingerprint2().get(fingerprint => {
+          const data = {
+            user_id: loggedUserId,
+            fingerprint
+          };
+          console.log(data);
+          socket.emit('init', data);
+        });
+      };
+      if (window.requestIdleCallback) requestIdleCallback(callback);
+      else setTimeout(callback, 500);
+    }
   }
+
+  const joinSocketRoom = (type, id) => {
+    socket.emit('join', {type, id});
+  }
+
+  window.joinSocketRoom = joinSocketRoom;
   window.initSocket = initSocket;
 
   socket.on('connect', () => {
