@@ -46,7 +46,7 @@ export function Checkin({ qr, code }: CheckinWithQr | CheckinWithCode) {
 }
 
 export function GetStatus() {
-  return Get({ path: `status?with=table,restaurant` });
+  return Get({ path: `table/status` });
 }
 
 type FavRestaurantArgs = { id: string, fav: boolean  };
