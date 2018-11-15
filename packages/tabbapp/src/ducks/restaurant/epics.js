@@ -5,6 +5,7 @@ import { showSnackbar } from 'ducks/notifications/actions';
 import types from './types';
 import { checkinFail, checkinDone, favRestaurantDone, favRestaurantFail } from './actions';
 import { fetchStatusInit } from 'ducks/restaurant/actions';
+import { getCookie } from 'tabb-front/dist/lib/FN';
 
 type CheckinProps = {
   payload: {
@@ -18,8 +19,7 @@ const checkinEpic = (action$: Observable, { getState }) =>
     .ofType(types.CHECKIN_INIT)
     .debounceTime(500)
     .exhaustMap(({ payload }: CheckinProps) => {
-      const state = getState();
-      if (!state.user.loggedUserId) {
+      if (getCookie('access_token') === '') {
         return Observable.of(checkinFail([{ status: 401 }]));
       }
       return Observable.fromPromise(API.Checkin(payload))
