@@ -10,6 +10,7 @@ import User from './user'
 import { isItOutdated } from '../../../common/helpers/time'
 import N from 'numeral';
 import * as FN from '../../../lib/FN'
+import moment from 'moment';
 
 const TextInput = styled(FormText)`
   background-color: rgba(0,0,0,0.06);
@@ -25,16 +26,25 @@ const TextInput = styled(FormText)`
   }
 `;
 
+const orderTypes = {
+  'DINE_IN': 'Dine in',
+  'AHEAD': 'Ahead'
+}
+
 const color = colorsByStages['s5']
 
 const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users }) => {
-  if (!bill) return null
+  if (!bill || !bill.subtotal) return null
   const subtotal = Number(bill.subtotal.amount);
   const gratuityPercentage = Number(bill.gratuity/100);
   const gratuityAmount = gratuityPercentage * subtotal;
   const total = subtotal + gratuityAmount;
   let orderItems = [];
-  orderItems = FN.MapToList(bill.orders).map((order) => order.items)
+  orderItems = FN.MapToList(bill.orders).map((order) => {
+    const newOrder = order;
+    newOrder.items = FN.MapToList(order.items)
+    return newOrder;
+  })
   return (
     <ActionBox className={removed ? 'vhs-zoom vhs-reverse Bill' : 'Bill'}>
       <Header>
@@ -82,15 +92,20 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
           </thead>
           <tbody>
   					{orderItems.map((order) =>
-              FN.MapToList(order).map((item) =>
+              [<Tr key={order.id} className="headline">
+                <Td>{orderTypes[order.type]} order from {moment().format('HH:mm')}</Td>
+                <Td>{order.items.length}</Td>
+                <Td>{N(order.subtotal.amount).format('0.000')}KD</Td>
+              </Tr>,
+              order.items.map((item) =>
                 <Tr key={item.id}>
     	            <Td>{item.menu_item.name}</Td>
     	            <Td>1</Td>
     	            <Td>{N(item.subtotal.amount).format('0.000')}KD</Td>
     	          </Tr>
-              )
+              )]
   					)}
-  					<Tr>
+  					<Tr className="boldline">
   	          <Td>Gratuity</Td>
   	          <Td>{bill.gratuity}%</Td>
   	          <Td>{N(gratuityAmount).format('0.000')}KD</Td>

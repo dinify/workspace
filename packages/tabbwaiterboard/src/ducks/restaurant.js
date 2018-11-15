@@ -213,6 +213,7 @@ export const getOrdersOfUser = (payload) => ({ type: 'GET_ORDERSOFUSER_INIT', pa
 export const setWBidAction = (id) => {
   const path = window.location.pathname
   if (path.includes('/board/') && path.length > 20) id = path.replace('/board/','').replace('/','')
+  window.initSocket(id);
   return {
     type: 'SET_WBID',
     payload: { id }
@@ -251,23 +252,23 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
   action$
     .ofType('GUESTS_POLLING_INIT')
     .mergeMap(() => {
+      let waiterboardId = getState().restaurant.selectedWBId;
+
+      API.GetOrders({ waiterboardId }).then((response) => {
+        // const oh = R.filter((o) => o.type === 'AHEAD')(response)
+        const di = R.filter((o) => o.type === 'DINE_IN')(response)
+        dispatch({ type: 'GET_ORDERS_DONE', payload: di });
+        const userIds = R.pluck('initiator', di).filter((id) => id.length === 24)
+        dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
+        // dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: oh });
+      })
+
       const loadInitData = () => {
         console.log('start');
-        const state = getState()
-        const waiterboardId = state.restaurant.selectedWBId
+        waiterboardId = getState().restaurant.selectedWBId
 
         dispatch({type: 'LOAD_BOOKING_INIT'})
         dispatch({type: 'LOAD_CALL_INIT'})
-
-
-        API.GetOrders({ waiterboardId }).then((response) => {
-          const oh = R.filter((o) => o.type === 'AHEAD')(response)
-          const di = R.filter((o) => o.type === 'DINE_IN')(response)
-          dispatch({ type: 'GET_ORDERS_DONE', payload: di });
-          const userIds = R.pluck('initiator', di).filter((id) => id.length === 24)
-          dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
-          //dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: oh });
-        })
 
         API.GetBills({ waiterboardId }).then((response) => {
           const userIds = R.pluck('initiator', response).filter((id) => id.length === 24)

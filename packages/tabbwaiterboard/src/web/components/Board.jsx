@@ -213,7 +213,7 @@ const Board = ({
           <Container>
             <Grid container spacing={8} justify="flex-start" alignItems="flex-start">
               {FN.MapToList(tables).sort((a,b) => a.number - b.number).map((table) =>
-                <Grid item>
+                <Grid item key={table.id}>
                   <Table openModal={openModal} table={table} key={table.id} />
                 </Grid>
               )}

@@ -131,6 +131,19 @@ export const Tr = styled.tr`
   td {
     border-bottom: 1px dashed rgba(0,0,0,0.1);
   }
+  &.headline {
+    td {
+      font-size: 11px;
+      font-weight: 800;
+      color: rgb(202, 116, 7);
+    }
+  }
+  &.boldline {
+    td {
+      font-size: 11px;
+      font-weight: 800;
+    }    
+  }
   &:last-child {
     td {
       padding-bottom: 20px;

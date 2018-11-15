@@ -1,15 +1,19 @@
 // @flow
 import io from 'socket.io-client';
 import types from './types';
+import orderTypes from 'ducks/order/types';
+import billTypes from 'ducks/bill/types';
 
 const socket = io('https://downstream.tabb.global');
 
 const websockets = (store) => {
   const { dispatch, getState } = store;
 
-  const initSocket = () => {
-    const loggedUserId = getState().user.loggedUserId;
-    if (loggedUserId) socket.emit('init', loggedUserId);
+  const initSocket = (selectedId) => {
+    let wbId = null;
+    if (selectedId) wbId = selectedId;
+    else wbId = getState().restaurant.selectedWBId;
+    if (wbId) socket.emit('init', `waiterboard/${wbId}`);
   }
   window.initSocket = initSocket;
 
@@ -19,34 +23,37 @@ const websockets = (store) => {
   });
 
   socket.on('seats', (data) => {
-    console.log('incoming event');
+    console.log('seats', data);
   })
 
-  socket.on('order-incoming', (data) => {
-    console.log(data);
-    if (data.transaction.status === 'PROCESSED') {
-      dispatch({ type: types.CONFIRMED_PAYMENT, payload: data });
-    }
+  socket.on('order-incoming', (payload) => {
+    dispatch({ type: orderTypes.ORDER_RECEIVED, payload });
   })
 
-  socket.on('transaction-incoming', (data) => {
-    dispatch({ type: types.CONFIRMED_ORDER, payload: data });
+  socket.on('transaction-incoming', (payload) => {
+    console.log('transaction-incoming', payload);
+    dispatch({
+      type: billTypes.PAYMENT_RECEIVED,
+      payload: {
+        payment: payload.trasaction
+      }
+    });
   })
 
   socket.on('booking-incoming', (data) => {
-    console.log('incoming event');
+    console.log('booking-incoming', data);
   })
 
   socket.on('call-incoming', (data) => {
-    console.log('incoming event');
+    console.log('call-incoming', data);
   })
 
   socket.on('order-status', (data) => {
-    console.log('incoming event');
+    console.log('order-incoming', data);
   })
 
   socket.on('transaction-status', (data) => {
-    console.log('incoming event');
+    console.log('transaction-status', data);
   })
 }
 

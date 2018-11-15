@@ -3,17 +3,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import App from './web/components/App'
-import configureStore from './configureStore'
+import store from './configureStore'
 import './index.css'
+import websockets from './websockets';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-
-const store = configureStore({
-  initialState: {},
-  platformDeps: {},
-  platformEpics: [],
-  platformReducers: {},
-})
 
 const theme = createMuiTheme({
   palette: {
@@ -26,6 +20,8 @@ const AppWithTheme = () => (
     <App />
   </MuiThemeProvider>
 )
+
+websockets(store);
 
 ReactDOM.render(
   <Provider store={store}>
