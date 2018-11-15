@@ -161,7 +161,6 @@ const Board = ({
   console.log(pendingCalls);
 
   const newOrders = R.filter((o) => o.status !== 'CONFIRMED')(orders)
-  const newBills = R.filter((o) => o.status === "INITIATED")(bills)
 //
   return (<div>
 
@@ -179,7 +178,7 @@ const Board = ({
         <Frame n={0}>
           <Container>
             <Container>
-              {newOrders.length > 0 || pendingBookings.length > 0 || pendingCalls.length > 0 || newBills.length > 0 ?
+              {newOrders.length > 0 || pendingBookings.length > 0 || pendingCalls.length > 0 || bills.length > 0 ?
                 <Masonry
                     className={'my-gallery-class'} // default ''
                     elementType={'ul'} // default 'div'
@@ -196,7 +195,7 @@ const Board = ({
                   {newOrders.map((order) =>
                     <Order key={order.id} order={order} />
                   )}
-                  {newBills.map((bill) =>
+                  {bills.map((bill) =>
                     <Bill key={bill.id} bill={bill} />
                   )}
                   {/*R.values(events).sort((a,b) => a.content.id - b.content.id).map((event, i) =>

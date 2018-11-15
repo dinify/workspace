@@ -13,10 +13,12 @@ export default function reducer(state = initialState, action) {
       const payload = action.payload;
       return R.assoc('list', payload)(state);
     }
-    
+
     case types.PAYMENT_RECEIVED: {
       const { payment } = action.payload;
+      console.log('111');
       if (R.find(R.propEq('id', payment.id))(state.list)) return state;
+      console.log('222');
       return R.assoc('list', [...state.list, payment])(state);
     }
 

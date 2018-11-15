@@ -27,11 +27,15 @@ const websockets = (store) => {
   })
 
   socket.on('order-incoming', (payload) => {
+    const userId = payload.order.initiator;
+    dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
     dispatch({ type: orderTypes.ORDER_RECEIVED, payload });
   })
 
   socket.on('transaction-incoming', (payload) => {
     console.log('transaction-incoming', payload);
+    const userId = payload.trasaction.initiator;
+    dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
     dispatch({
       type: billTypes.PAYMENT_RECEIVED,
       payload: {

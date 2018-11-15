@@ -263,18 +263,18 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         // dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: oh });
       })
 
+      API.GetBills({ waiterboardId }).then((response) => {
+        const userIds = R.pluck('initiator', response).filter((id) => id.length === 24)
+        dispatch({ type: 'GET_BILLS_DONE', payload: response });
+        dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
+      })
+
       const loadInitData = () => {
         console.log('start');
         waiterboardId = getState().restaurant.selectedWBId
 
         dispatch({type: 'LOAD_BOOKING_INIT'})
         dispatch({type: 'LOAD_CALL_INIT'})
-
-        API.GetBills({ waiterboardId }).then((response) => {
-          const userIds = R.pluck('initiator', response).filter((id) => id.length === 24)
-          dispatch({ type: 'GET_BILLS_DONE', payload: response });
-          dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
-        })
 
         API.GetSeats({ waiterboardId }).then((seats) => {
           const occupiedSeats = seats.filter((seat) => seat.occupied)
