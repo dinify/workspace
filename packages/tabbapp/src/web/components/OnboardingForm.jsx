@@ -116,31 +116,33 @@ class OnboardingForm extends React.Component {
           <Tab label="Sign up" />
         </Tabs>
         <div style={{ padding: 24, paddingBottom: 0 }}>
-          <div style={{ paddingBottom: 16 }}>
-            <FacebookLogin
-              appId="123605498281814"
-              fields="name,email,gender,birthday"
-              scope="user_gender,user_birthday"
-              isMobile={true}
-              disableMobileRedirect={true}
-              callback={(res) => {
-                fbAuth({ fbRes: res, qr })
-              }}
-              render={renderProps => (
-                <Button
-                  fullWidth
-                  className={classes.facebookButton}
-                  classes={{ label: classes.uncapitalized }}
-                  variant="contained"
-                  onClick={() => renderProps.onClick()}
-                >
-                  <FacebookLogo />
-                  <span className={classes.leftGutter}>Continue with Facebook</span>
-                </Button>
-              )}
-            />
 
-          </div>
+            {/*<div style={{ paddingBottom: 16 }}>
+              <FacebookLogin
+                appId="123605498281814"
+                fields="name,email,gender,birthday"
+                scope="user_gender,user_birthday"
+                isMobile={true}
+                disableMobileRedirect={true}
+                callback={(res) => {
+                  fbAuth({ fbRes: res, qr })
+                }}
+                render={renderProps => (
+                  <Button
+                    fullWidth
+                    className={classes.facebookButton}
+                    classes={{ label: classes.uncapitalized }}
+                    variant="contained"
+                    onClick={() => renderProps.onClick()}
+                  >
+                    <FacebookLogo />
+                    <span className={classes.leftGutter}>Continue with Facebook</span>
+                  </Button>
+                )}
+              /></div>
+            */}
+
+
           {/*
           <div style={{ paddingBottom: 16 }}>
             <Button
