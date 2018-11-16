@@ -258,23 +258,24 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         // const oh = R.filter((o) => o.type === 'AHEAD')(response)
         const di = R.filter((o) => o.type === 'DINE_IN')(response)
         dispatch({ type: 'GET_ORDERS_DONE', payload: di });
-        const userIds = R.pluck('initiator', di).filter((id) => id.length === 24)
+        const userIds = R.pluck('initiator', di);
         dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
         // dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: oh });
       })
 
       API.GetBills({ waiterboardId }).then((response) => {
-        const userIds = R.pluck('initiator', response).filter((id) => id.length === 24)
+        const userIds = R.pluck('initiator', response);
         dispatch({ type: 'GET_BILLS_DONE', payload: response });
         dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
       })
+
+      dispatch({type: 'LOAD_CALL_INIT'});
 
       const loadInitData = () => {
         console.log('start');
         waiterboardId = getState().restaurant.selectedWBId
 
-        dispatch({type: 'LOAD_BOOKING_INIT'})
-        dispatch({type: 'LOAD_CALL_INIT'})
+        dispatch({type: 'LOAD_BOOKING_INIT'});
 
         API.GetSeats({ waiterboardId }).then((seats) => {
           const occupiedSeats = seats.filter((seat) => seat.occupied)
@@ -282,12 +283,6 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
           dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
           dispatch(guestsResults(occupiedSeats));
         });
-
-        API.GetCalls({ waiterboardId }).then((response) => {
-          const userIds = R.pluck('user_id', response).filter((id) => id.length === 24);
-          dispatch({ type: 'GET_CALLS_DONE', payload: response });
-          dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
-        })
 
         return { type: 'GUESTS_POLLING_DONE', payload: {} };
       }

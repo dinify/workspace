@@ -1,7 +1,7 @@
+// @flow
 import { Observable } from 'rxjs'
 import R from 'ramda'
 import * as API from 'api/restaurant'
-import { ListToMap } from 'lib/FN'
 
 const loadCallEpic = (action$: Observable, { getState }) =>
   action$
@@ -18,11 +18,11 @@ const loadCallEpic = (action$: Observable, { getState }) =>
           },
           {
             type: 'LOAD_CALL_DONE',
-            payload: {res: ListToMap(calls) }
+            payload: {res: calls }
           }
         ]
       })
-      .catch(error => Observable.of({ type: 'ERROR' }))
+      .catch(error => Observable.of({ type: 'ERROR', payload: error }))
   })
 
 export default [

@@ -3,6 +3,8 @@ import io from 'socket.io-client';
 import types from './types';
 import orderTypes from 'ducks/order/types';
 import billTypes from 'ducks/bill/types';
+import callTypes from 'ducks/call/types';
+import R from 'ramda';
 
 const socket = io('https://downstream.tabb.global');
 
@@ -18,7 +20,7 @@ const websockets = (store) => {
   window.initSocket = initSocket;
 
   socket.on('connect', () => {
-    console.log('Socket.io connected');
+    console.log('ws connected');
     initSocket();
   });
 
@@ -33,7 +35,7 @@ const websockets = (store) => {
   })
 
   socket.on('transaction-incoming', (payload) => {
-    console.log('transaction-incoming', payload);
+    // console.log('transaction-incoming', payload);
     const userId = payload.trasaction.initiator;
     dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
     dispatch({
@@ -44,12 +46,15 @@ const websockets = (store) => {
     });
   })
 
-  socket.on('booking-incoming', (data) => {
-    console.log('booking-incoming', data);
+  socket.on('call-incoming', (payload) => {
+    // console.log('call-incoming', data);
+    dispatch({ type: callTypes.CALL_RECEIVED, payload });
+    const userId = payload.call.user_id;
+    dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
   })
 
-  socket.on('call-incoming', (data) => {
-    console.log('call-incoming', data);
+  socket.on('booking-incoming', (data) => {
+    console.log('booking-incoming', data);
   })
 
   socket.on('order-status', (data) => {

@@ -238,7 +238,7 @@ export default connect(
     bookings: state.booking.all,
     orders: state.order.list,
     bills: state.bill.list,
-    calls: state.service.list,
+    calls: state.call.list,
     tables: state.table.all,
     guestList: state.guests.list,
     events: state.restaurant.events,
