@@ -202,7 +202,6 @@ class ModalUser extends React.Component {
 
 export default connect(
   state => ({
-    guests: state.guests.all,
     users: state.user.all,
   }),
   {

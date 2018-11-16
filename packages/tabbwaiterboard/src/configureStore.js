@@ -4,7 +4,6 @@ import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import configureEpics from './configureEpics';
 import table from './ducks/table'
-import guests from './ducks/guests'
 import ui from './ducks/ui'
 import restaurant from './ducks/restaurant'
 import user from './ducks/user'
@@ -13,10 +12,11 @@ import call from './ducks/call'
 import order from 'ducks/order'
 import bill from 'ducks/bill'
 import service from 'ducks/service'
+import seat from 'ducks/seat'
+
 
 const commonReducers = {
   table,
-  guests,
   ui,
   restaurant,
   user,
@@ -24,7 +24,8 @@ const commonReducers = {
   call,
   order,
   bill,
-  service
+  service,
+  seat
 }
 
 const configureStore = (options, storage) => {

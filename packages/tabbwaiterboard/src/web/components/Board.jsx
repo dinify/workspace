@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import R from 'ramda'
 import Swipeable from 'react-swipeable'
 import Masonry from 'react-masonry-component'
-import { colorsByStages } from '../colors'
 import { MapToList } from 'lib/FN'
 
 import Table from './Table'
@@ -15,23 +14,15 @@ import Modal from './/Modal'
 import ModalUser from './ModalUser'
 import ModalListOfBills from './ModalListOfBills'
 import ModalListOfBookings from './ModalListOfBookings'
-import Event from './Events'
 import Booking from './Events/Booking'
 import Call from './Events/Call'
 import Order from './Events/Order'
 import Bill from './Events/Bill'
 
 import { toggleFrames, toggleModal } from 'ducks/ui'
-import { setOHEnabled, logoutInitAction } from 'ducks/restaurant'
+import { setOHEnabled } from 'ducks/restaurant'
 
-import { PermContactCalendar } from '@material-ui/icons'
-import { IconButton, Badge } from '@material-ui/core'
-
-import * as FN from 'lib/FN'
-
-import { Typography, Button, Grid } from '@material-ui/core';
-
-import MenuIcon from '@material-ui/icons/Menu';
+import { Grid } from '@material-ui/core';
 
 const OneBoard = styled.div`
   position: fixed;
@@ -62,45 +53,6 @@ const EventsPlaceholder = styled.div`
   height: calc(100vh - 120px);
 `
 
-const Menu = styled.ul`
-  list-style-type: none;
-  float: left;
-  margin: 0 20px;
-`
-
-const MenuItem = styled.li`
-  position: relative;
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(255,255,255,0.4);
-  border-radius: 50%;
-  line-height: 32px;
-  text-align: center;
-  cursor: pointer;
-  margin-right: 10px;
-  &:hover {
-    border-color: white;
-  }
-`
-const MenuItemSign = styled.div`
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  min-width: 14px;
-  height: 14px;
-  font-size: 12px;
-  border-radius: 50%;
-  line-height: 14px;
-  text-align: center;
-  background: ${p => p.bg ? p.bg : 'red'};
-`
-
-type BoardProps = {
-  tables: Object,
-  guests: Object,
-};
-
 const masonryOptions = {
   isAnimated: true,
   animationOptions: {
@@ -112,7 +64,7 @@ const masonryOptions = {
 
 const Board = ({
   sales,
-  tables,
+  tablesList,
   guestList,
   frameIndex,
   modalOpen,
@@ -120,20 +72,11 @@ const Board = ({
   modalPayload,
   toggleFrames,
   toggleModal,
-  events,
-  guestsCount,
-  setOHEnabled,
-  order_ahead_enabled,
-  bookings,
+  bookingsList,
   calls,
-  logout,
-  selectedWBId,
-  loggedUser,
   orders,
   bills
-}: BoardProps) => {
-
-  const frames = ['actions','tables']
+}) => {
 
   const openModal = (userId) => {
     toggleModal({ open: true, userId });
@@ -147,25 +90,11 @@ const Board = ({
     toggleFrames(i)
   }
 
-  let waiterboardName = null
-
-  if (loggedUser.waiterboards && loggedUser.waiterboards[selectedWBId]) {
-    waiterboardName = loggedUser.waiterboards[selectedWBId].name
-  }
-
-  const bookingsList = MapToList(bookings)
-  const acceptedBookings = bookingsList.filter((b) => b.status === 'CONFIRMED')
-  const pendingBookings = bookingsList.filter((b) => b.status === 'PENDING')
-
-  const pendingCalls = calls.filter((b) => b.status === 'PENDING')
-  console.log(pendingCalls);
-
-  const newOrders = R.filter((o) => o.status !== 'CONFIRMED')(orders)
 //
   return (<div>
 
     <Header
-      tablesCount={R.values(tables).length}
+      tablesCount={tablesList.length}
       guestsCount={guestList.length}
       salesVolume={sales}
     />
@@ -178,29 +107,26 @@ const Board = ({
         <Frame n={0}>
           <Container>
             <Container>
-              {newOrders.length > 0 || pendingBookings.length > 0 || pendingCalls.length > 0 || bills.length > 0 ?
+              {orders.length > 0 || bookingsList.length > 0 || calls.length > 0 || bills.length > 0 ?
                 <Masonry
-                    className={'my-gallery-class'} // default ''
-                    elementType={'ul'} // default 'div'
+                    className='my-gallery-class' // default ''
+                    elementType='ul' // default 'div'
                     options={masonryOptions} // default {}
                     disableImagesLoaded={false} // default false
                     updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
                 >
-                  {pendingBookings.map((booking) =>
+                  {bookingsList.map((booking) =>
                     <Booking key={booking.id} booking={booking} />
                   )}
-                  {pendingCalls.map((call) =>
+                  {calls.map((call) =>
                     <Call key={call.id} call={call} />
                   )}
-                  {newOrders.map((order) =>
+                  {orders.map((order) =>
                     <Order key={order.id} order={order} />
                   )}
                   {bills.map((bill) =>
                     <Bill key={bill.id} bill={bill} />
                   )}
-                  {/*R.values(events).sort((a,b) => a.content.id - b.content.id).map((event, i) =>
-                    <Event key={i} event={event} />
-                  )*/}
                 </Masonry>
                 :
                 <EventsPlaceholder>Everything is done.</EventsPlaceholder>
@@ -211,7 +137,7 @@ const Board = ({
         <Frame n={1}>
           <Container>
             <Grid container spacing={8} justify="flex-start" alignItems="flex-start">
-              {FN.MapToList(tables).sort((a,b) => a.number - b.number).map((table) =>
+              {tablesList.map((table) =>
                 <Grid item key={table.id}>
                   <Table openModal={openModal} table={table} key={table.id} />
                 </Grid>
@@ -235,12 +161,12 @@ const Board = ({
 
 export default connect(
   state => ({
-    bookings: state.booking.all,
-    orders: state.order.list,
+    bookingsList: MapToList(state.booking.all).filter((b) => b.status === 'PENDING'),
+    orders: R.filter((o) => o.status !== 'CONFIRMED')(state.order.list),
     bills: state.bill.list,
-    calls: state.call.list,
-    tables: state.table.all,
-    guestList: state.guests.list,
+    calls: state.call.list.filter((b) => b.status === 'PENDING'),
+    tablesList: MapToList(state.table.all).sort((a,b) => a.number - b.number),
+    guestList: state.seat.list,
     events: state.restaurant.events,
     guestsCount: state.table.guestsCount,
     sales: state.restaurant.sales,

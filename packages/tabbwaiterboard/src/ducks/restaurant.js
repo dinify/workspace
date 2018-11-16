@@ -180,13 +180,11 @@ export function appBootstrap() {
   return { type: BOOTSTRAP };
 }
 
-export function guestsPollingInit() {
-  return { type: 'GUESTS_POLLING_INIT' };
+export function loadStateInit() {
+  return { type: 'LOAD_STATE_INIT' };
 }
 
-export function guestsResults(payload) {
-  return { type: 'GUESTS_POLLING_RESULTS', payload };
-}
+
 
 export const confirmService = (payload) => ({ type: 'SERVICE_CONFIRMATION_INIT', payload })
 
@@ -231,7 +229,7 @@ const bootstrapEpic = (action$: Observable, { getState, dispatch }: EpicDependen
         //  dispatch({ type: 'GET_OHENABLED_DONE', payload });
         //})
 
-        return Observable.of(setWBidAction(), loggedFetchedAction(loggedUser), appBootstrap(), guestsPollingInit()) // getTablesInit()
+        return Observable.of(setWBidAction(), loggedFetchedAction(loggedUser), appBootstrap(), loadStateInit()) // getTablesInit()
       })
       .catch(error => {
         if (window.location.pathname !== '/' && window.location.pathname !== '/signup') window.location.replace("/");
@@ -250,7 +248,7 @@ const getTablesEpic = (action$: Observable) =>
 
 const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
   action$
-    .ofType('GUESTS_POLLING_INIT')
+    .ofType('LOAD_STATE_INIT')
     .mergeMap(() => {
       let waiterboardId = getState().restaurant.selectedWBId;
 
@@ -262,31 +260,21 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
         // dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: oh });
       })
-
       API.GetBills({ waiterboardId }).then((response) => {
         const userIds = R.pluck('initiator', response);
         dispatch({ type: 'GET_BILLS_DONE', payload: response });
         dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
       })
-
       dispatch({type: 'LOAD_CALL_INIT'});
+      dispatch({type: 'LOAD_SEATS_INIT'});
+
 
       const loadInitData = () => {
         console.log('start');
-        waiterboardId = getState().restaurant.selectedWBId
-
         dispatch({type: 'LOAD_BOOKING_INIT'});
-
-        API.GetSeats({ waiterboardId }).then((seats) => {
-          const occupiedSeats = seats.filter((seat) => seat.occupied)
-          const userIds = R.pluck('user_id', occupiedSeats).filter((id) => id.length === 24)
-          dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
-          dispatch(guestsResults(occupiedSeats));
-        });
-
-        return { type: 'GUESTS_POLLING_DONE', payload: {} };
+        return { type: 'LOAD_STATE_DONE', payload: {} };
       }
-      return Observable.interval(8000).startWith(0).map(loadInitData);
+      return Observable.interval(10000).startWith(0).map(loadInitData);
     });
 
 const loginEpic = (action$: Observable) =>

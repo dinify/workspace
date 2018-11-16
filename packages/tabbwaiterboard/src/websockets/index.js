@@ -28,6 +28,18 @@ const websockets = (store) => {
     console.log('seats', data);
   })
 
+  socket.on('checkin', (payload) => {
+    console.log('checkin', payload);
+    const userId = payload.seat.user_id;
+    dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
+    dispatch({ type: 'SEAT_RECEIVED', payload });
+  })
+
+  socket.on('checkout', (data) => {
+    console.log('checkout', data);
+    dispatch({ type: 'LOAD_SEATS_INIT'});
+  })
+
   socket.on('order-incoming', (payload) => {
     const userId = payload.order.initiator;
     dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
@@ -57,13 +69,6 @@ const websockets = (store) => {
     console.log('booking-incoming', data);
   })
 
-  socket.on('order-status', (data) => {
-    console.log('order-incoming', data);
-  })
-
-  socket.on('transaction-status', (data) => {
-    console.log('transaction-status', data);
-  })
 }
 
 export default websockets;

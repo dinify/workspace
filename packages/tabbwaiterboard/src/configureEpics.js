@@ -5,6 +5,8 @@ import { epics as wild } from './ducks/wildEpics'
 import { bookingEpics } from './ducks/booking'
 import { callEpics } from './ducks/call'
 import { orderEpics } from './ducks/order'
+import { seatEpics } from './ducks/seat'
+
 
 const epics = [
   ...restaurant,
@@ -12,7 +14,8 @@ const epics = [
   ...bookingEpics,
   ...callEpics,
   ...tableEpics,
-  ...orderEpics
+  ...orderEpics,
+  ...seatEpics
 ]
 
 export default (deps = {}, platformEpics = []) => (action$, { getState, dispatch }) =>

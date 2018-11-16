@@ -211,7 +211,7 @@ const Table = ({
 
 export default connect(
   state => ({
-    guestList: state.guests.list,
+    guestList: state.seat.list,
     users: state.user.all,
     loggedRestaurant: state.restaurant.loggedRestaurant,
     timer: state.restaurant.timer
