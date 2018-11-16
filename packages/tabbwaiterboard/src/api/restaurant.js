@@ -32,7 +32,7 @@ export function ChangeTable(payload) {
 }
 
 export function GetSeats({ waiterboardId }) {
-  return Get({ v3: true, path: `waiterboard/${waiterboardId}/seats/all` })
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/seats&limit=1000` })
 }
 
 export function CheckOut({ tableId }) {
