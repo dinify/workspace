@@ -156,7 +156,7 @@ class OnboardingForm extends React.Component {
               <span className={classes.leftGutter}>Continue with Google</span>
             </Button>
           </div>
-            */}
+
 
           <div className={classes.flex}>
             <Divider className={classes.grow} />
@@ -169,6 +169,7 @@ class OnboardingForm extends React.Component {
             </Typography>
             <Divider className={classes.grow} />
           </div>
+          */}
           {selectedTab === 0 &&
             <Login
               qr={qr}
