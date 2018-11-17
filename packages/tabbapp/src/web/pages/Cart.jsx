@@ -40,17 +40,16 @@ const styles = theme => ({
 });
 
 const Cart = ({
-  cartItems,
-  subtotal,
+  cart,
   rmFromCart,
   editing,
   setEditing,
   order,
   checkedInRestaurant,
   orderType,
+  appbar = true,
   setOrderType
 }) => {
-  const cartItemsList = FN.MapToList(cartItems);
   const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
 
   const notCheckedIn = !checkedInRestaurant;
@@ -62,7 +61,7 @@ const Cart = ({
 
   return (
     <div style={{paddingBottom: 64}}>
-      {!iosInstalled && <AppBar position="static"/>}
+      {!iosInstalled && appbar && <AppBar position="static"/>}
       {/* cartItemsList.map(item =>
         <div key={item.id} style={{paddingTop: 16}}>
           <SwipableItem
@@ -80,18 +79,20 @@ const Cart = ({
               Cart
             </Typography>
             <Typography variant="caption">
-              {`${cartItemsList.length > 0 ? cartItemsList.length : 'no'} item${cartItemsList.length !== 1 ? 's' : ''}`}
+              {`${cart.count > 0 ? cart.count : 'no'} item${cart.count !== 1 ? 's' : ''}`}
             </Typography>
           </div>
 
-          <IconButton onClick={() => setEditing(!editing)}>
+          <IconButton disabled={cart.count === 0} onClick={() => setEditing(!editing)}>
             {editing ? <Done /> : <Delete />}
           </IconButton>
         </div>
-        {cartItemsList.map(item =>
-          <div key={item.id} style={{paddingTop: 16}}>
-            <CartItem rmFromCart={rmFromCart} editing={editing} item={item} />
-          </div>
+        {cart && FN.MapToList(cart.restaurants).map(restaurant =>
+          FN.MapToList(restaurant.items).map(item =>
+            <div key={item.id} style={{marginTop: 16}}>
+              <CartItem rmFromCart={rmFromCart} editing={editing} item={item} />
+            </div>
+          )
         )}
         <Divider style={{marginTop: 16, marginBottom: 16}}/>
         {notCheckedIn && false && <div>
@@ -113,7 +114,7 @@ const Cart = ({
             </Typography>
 
             <Typography variant="overline">
-              {FN.formatPrice(subtotal)}
+              {FN.formatPrice(cart.subtotal)}
             </Typography>
           </div>
           <div style={{display: 'flex', alignItems: 'center'}}>
@@ -126,7 +127,7 @@ const Cart = ({
             </Typography>
           </div>
         </div>}
-        <div style={{display: 'flex', alignItems: 'center', paddingLeft: notCheckedIn ? 0 : 72}}>
+        {cart.count > 0 && <div style={{display: 'flex', alignItems: 'center', paddingLeft: notCheckedIn ? 0 : 72}}>
 
           <Typography style={{flex: 1}} variant="button">
             Total
@@ -134,26 +135,24 @@ const Cart = ({
 
           <Typography variant="subtitle1">
             {FN.formatPrice({
-              amount: parseFloat(subtotal.amount),
-              currency: subtotal.currency
+              amount: parseFloat(cart.subtotal.amount),
+              currency: cart.subtotal.currency
             })}
           </Typography>
-        </div>
-        {cartItemsList.length > 0 &&
-          <Button
-            disabled={notCheckedIn}
-            style={{marginTop: 16}}
-            variant="extendedFab"
-            color="primary" fullWidth
-            onClick={() => order()}>
-            <RestaurantMenu style={{marginRight: 16}} />
-            Order
-          </Button>
-        }
+        </div>}
+        <Button
+          disabled={notCheckedIn || cart.count === 0 || cart === null }
+          style={{marginTop: 16}}
+          variant="extendedFab"
+          color="primary" fullWidth
+          onClick={() => order()}>
+          <RestaurantMenu style={{marginRight: 16}} />
+          Order
+        </Button>
         {notCheckedIn &&
           <div>
             <Typography style={{marginTop: 16}}>
-              To get started using feature, scan the QR code in a restaurant near you to check in.
+              Check in by scanning the QR code in a restaurant near you to get started.
             </Typography>
           </div>
         }
@@ -164,8 +163,7 @@ const Cart = ({
 
 export default connect(
   state => ({
-    cartItems: state.cart.items,
-    subtotal: state.cart.subtotal,
+    cart: state.cart.cart,
     orderType: state.cart.orderType,
     checkedInRestaurant: state.restaurant.checkedInRestaurant
   }),

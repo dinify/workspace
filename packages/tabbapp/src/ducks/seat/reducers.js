@@ -1,16 +1,14 @@
 // @flow
 import R from 'ramda';
-import * as FN from 'tabb-front/dist/lib/FN';
+import { selectedBillItems } from 'ducks/seat/selectors';
 import types from './types';
 import billTypes from '../bill/types';
 import cartTypes from '../cart/types';
 import wsTypes from '../../websockets/types';
-import { selectedBillItems } from 'ducks/seat/selectors';
 
 const initialState = {
   seats: [],
-  lastCartItems: [],
-  lastOrders: [],
+  checkedin: false,
 };
 
 export default function reducer(state = initialState, action) {
@@ -19,35 +17,37 @@ export default function reducer(state = initialState, action) {
       return R.assoc('lastCartItems', action.payload)(state);
     }
     case cartTypes.ORDER_DONE: {
-      const order = action.payload;
-      order.items = state.lastCartItems;
-      const newState = R.assocPath(['seats', 0, 'cart'], undefined)(state);
-      return R.assocPath(['lastOrders', action.payload.id], order)(newState);
-    }
-    case cartTypes.REMOVE_ORDERITEM_DONE: {
-      // TODO replace cart with cart in respose
-      console.log(action.payload);
+      // return R.dissocPath(['seats', '0', 'cart'])(state);
       return state;
     }
+    case cartTypes.REMOVE_ORDERITEM_DONE: {
+      return R.assocPath(['seats', '0', 'cart'], action.payload)(state);
+    }
+    case wsTypes.SEATS:
+    case wsTypes.SPLIT:
+    case wsTypes.CONFIRMED_ORDER:
     case wsTypes.CONFIRMED_PAYMENT: {
-      return R.assocPath(['seats', 0, 'bill'], null)(R.assocPath(['seats', 0, 'paid'], true)(state));
-    }
-    case wsTypes.CONFIRMED_ORDER: {
-      return R.assocPath(['seats', 0, 'bill'], action.payload.bill)(state);
-    }
-    case wsTypes.SPLIT: {
       return R.assocPath(['seats'], action.payload.seats)(state);
+    }
+    case wsTypes.CHECKIN: {
+      const seat = action.payload.seat;
+      return R.assocPath(['seats'], R.append(seat, state.seats))(state);
+    }
+    case wsTypes.CHECKOUT: {
+      const seat = action.payload.seat;
+      return R.assoc('seats', R.remove(R.findIndex(R.propEq('id', seat.id))(state.seats), 1, state.seats))(state);
     }
     case types.FETCH_SEATS_DONE: {
       const seats = action.payload.res;
-      return R.assoc('seats', seats)(state);
+      return R.assoc('seats', seats)(R.assoc('checkedin', true)(state));
+    }
+    case types.FETCH_SEATS_FAIL: {
+      return R.assoc('checkedin', false)(state);
     }
     case types.SELECT_BILLITEM: {
       const { selected, path } = action.payload;
       const seat = state.seats[path[1]];
       const billItem = seat.bill.orders[path[4]].items[path[6]];
-      const selectable = path[1] === 0 && billItem.initiator === seat.user_id;
-      if (!selectable) return state;
       const newState =  R.assocPath(path, selected)(state);
       if (selectedBillItems({seat: newState}).length <= 0) {
         for (let i = 0; i < newState.seats.length; i += 1) {

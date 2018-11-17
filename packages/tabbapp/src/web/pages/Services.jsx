@@ -60,7 +60,7 @@ class Services extends React.Component {
             </div>
         </div>
         <Typography style={{margin: 16}}>
-          To get started using feature, scan the QR code in a restaurant near you to check in.
+          Check in by scanning the QR code in a restaurant near you to get started.
         </Typography>
       </div>
     )

@@ -26,7 +26,18 @@ const styles = theme => ({
     marginTop: -4,
     borderRadius: 8,
     border: `2px solid ${theme.palette.primary.main}`,
+    backgroundColor: 'transparent',
     padding: 2
+  },
+  lockedItem: {
+    width: 64,
+    height: 64,
+    marginLeft: -4,
+    marginTop: -4,
+    borderRadius: 8,
+    border: `1px solid ${theme.palette.divider}`,
+    backgroundColor: 'transparent',
+    padding: 3
   },
   imageSrc: {
     width: 56,
@@ -49,6 +60,7 @@ class BillItem extends React.PureComponent {
       index,
       item,
       selectBillItem,
+      loggedUserId,
       onClick,
       seat
     } = this.props;
@@ -86,7 +98,7 @@ class BillItem extends React.PureComponent {
                 justifyContent: 'center',
                 overflow: 'hidden',
               }}
-              className={`${classes.cartItemImage} ${foreign ? classes.foreignItem : ''}`}
+              className={`${classes.cartItemImage} ${foreign ? classes.foreignItem : (item.locked ? classes.lockedItem : '')}`}
               ref={(divElement) => {this.divElement = divElement}}>
                 {images.length > 0 &&
                   <div
@@ -143,7 +155,10 @@ class BillItem extends React.PureComponent {
               </div>
               <div style={{display: 'flex', justifyContent: 'start'}}>
                 <Typography style={{flex: 1,  marginRight: 32}} color="textSecondary" variant="caption">
-                  {divisor > 1 ? `Split between ${divisor} people` : ''}
+                  {(() => {
+                    if (item.locked) return 'Partially paid by others';
+                    return divisor > 1 ? `Split between ${divisor} people` : '';
+                  })()}
                 </Typography>
                 {divisor > 1 && <Typography
                   style={{alignSelf: 'flex-end'}}
@@ -160,7 +175,7 @@ class BillItem extends React.PureComponent {
 }
 
 BillItem = connect(state => ({
-
+    loggedUserId: state.user.loggedUserId,
   }), {
     selectBillItem: selectBillItemAction,
   }

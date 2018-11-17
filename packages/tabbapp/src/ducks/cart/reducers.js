@@ -4,10 +4,8 @@ import types from './types';
 
 const initialState = {
   orderType: 'DINE_IN', // AHEAD, TAKEAWAY
-  restaurants: {},
-  subtotal: {
-    amount: 0,
-    currency: "KWD",
+  cart: {
+    count: 0
   }
 };
 
@@ -37,6 +35,9 @@ export default function reducer(state = initialState, action) {
     //  })
     //  return newState;
     //}
+    case types.FETCH_CART_DONE: {
+      return R.assocPath(['cart'], action.payload)(state);
+    }
     case types.FETCH_CART_FAIL: {
       const payload = action.payload;
       if (payload instanceof Array && payload[0].status === 401) {
