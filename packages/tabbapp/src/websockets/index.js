@@ -36,8 +36,10 @@ const websockets = (store) => {
   });
 
   socket.on('checkin', (data) => {
+    const me = data.seat.user_id === getState().user.loggedUserId;
+    data.me = me;
     dispatch({ type: types.CHECKIN, payload: data });
-    dispatch(showSnackbar({ message: 'New guest joined table' }))
+    if (!me) dispatch(showSnackbar({ message: 'New guest joined table' }))
   });
 
   socket.on('checkout', (data) => {

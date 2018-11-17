@@ -1,5 +1,4 @@
 import React from 'react';
-import R from 'ramda';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Person from 'icons/Person';

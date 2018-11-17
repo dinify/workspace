@@ -193,7 +193,7 @@ class ScrollSnapView extends React.Component {
   handleScroll = e => {
     // ßßreturn;
     if (this.stateIsChanging || this.state.animating) return;
-    const { children, onChange, selected, align = 'start' } = this.props;
+    const { children, onChange, align = 'start' } = this.props;
 
     const count = children.length;
     if (count > 1) {
@@ -272,7 +272,7 @@ class ScrollSnapView extends React.Component {
     }
     return (
       <div
-        {...R.omit(['scrollTop', 'scrollLeft', 'classes', 'style', 'align'], this.props)}
+        {...R.omit(['scrollTop', 'scrollLeft', 'classes', 'style', 'align', 'snap'], this.props)}
         style={Object.assign({
 
         }, style)}

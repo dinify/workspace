@@ -77,6 +77,7 @@ class Eat extends React.Component {
       this.setState({splitMenuOpen: selecting});
     }
     if (prevProps.seats !== seats &&
+        seats[0] !== undefined &&
         prevProps.seats[0] !== undefined &&
         prevProps.seats[0] !== seats[0] &&
         prevProps.seats[0].paid !== seats[0].paid) {

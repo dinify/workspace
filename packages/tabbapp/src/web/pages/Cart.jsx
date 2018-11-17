@@ -44,6 +44,7 @@ const Cart = ({
   rmFromCart,
   editing,
   setEditing,
+  checkedin,
   order,
   checkedInRestaurant,
   orderType,
@@ -52,7 +53,7 @@ const Cart = ({
 }) => {
   const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
 
-  const notCheckedIn = !checkedInRestaurant;
+  const notCheckedIn = !checkedin; // !checkedInRestaurant;
 
   if (checkedInRestaurant) setOrderType({ orderType: 'DINE_IN' })
   else if (orderType === 'DINE_IN' && notCheckedIn) {
@@ -164,6 +165,7 @@ const Cart = ({
 export default connect(
   state => ({
     cart: state.cart.cart,
+    checkedin: state.seat.checkedin,
     orderType: state.cart.orderType,
     checkedInRestaurant: state.restaurant.checkedInRestaurant
   }),

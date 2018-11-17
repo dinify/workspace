@@ -31,11 +31,19 @@ export default function reducer(state = initialState, action) {
     }
     case wsTypes.CHECKIN: {
       const seat = action.payload.seat;
-      return R.assocPath(['seats'], R.append(seat, state.seats))(state);
+      let newState = state;
+      if (R.findIndex(R.propEq('id', seat.id))(state.seats) < 0) {
+          newState = R.assocPath(['seats'], R.append(seat, state.seats))(state);
+      }
+      if (action.payload.me) newState = R.assocPath(['checkedin'], true)(newState);
+      return newState;
     }
     case wsTypes.CHECKOUT: {
       const seat = action.payload.seat;
       return R.assoc('seats', R.remove(R.findIndex(R.propEq('id', seat.id))(state.seats), 1, state.seats))(state);
+    }
+    case wsTypes.CHECKOUT_ALL: {
+      return R.assoc('seats', [])(R.assoc('checkedin', false)(state));
     }
     case types.FETCH_SEATS_DONE: {
       const seats = action.payload.res;

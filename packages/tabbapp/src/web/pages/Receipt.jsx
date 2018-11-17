@@ -7,7 +7,6 @@ import SimpleGuestList from 'web/components/SimpleGuestList';
 import BillItem from 'web/components/BillItem';
 import Event from 'icons/Event';
 import Wallet from 'icons/Wallet';
-import Schedule from 'icons/Schedule';
 import RestaurantMenu from 'icons/RestaurantMenu';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
