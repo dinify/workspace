@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Typography from 'web/components/Typography';
 import Divider from '@material-ui/core/Divider';
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
@@ -33,6 +34,15 @@ const styles = theme => ({
   chip: {
     marginTop: theme.spacing.unit,
     marginRight: theme.spacing.unit,
+  },
+  chipDifference: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    width: 'auto',
+    backgroundColor: theme.palette.divider,
+    paddingLeft: 12,
+    paddingRight: 12,
+    borderRadius: 16,
   },
   selected: {
     backgroundColor: fade(theme.palette.primary.main, 0.12),
@@ -202,20 +212,31 @@ let Customizations = ({
               {option.name}
             </Typography>
             <div className={classes.chipContainer}>
-              {FN.MapToList(option.choices).map((choice) =>
-                <Chip
-                  key={choice.id}
-                  classes={{root: choice.selected ? classes.selected : null}} // add class if selected
-                  onClick={() => {
-                    selectChoice({
-                      menuItemId: menuItem.id,
-                      optionId: option.id,
-                      choiceId: choice.id,
-                    })
-                  }} // select choice
-                  className={classes.chip}
-                  label={choice.name}/>
-              )}
+              {FN.MapToList(option.choices).map((choice) => {
+                const parsedAmt = choice.difference ? parseFloat(choice.difference.amount) : 0;
+                return (
+                  <Chip
+                    variant="outlined"
+                    key={choice.id}
+                    avatar={parsedAmt !== 0 ? (
+                      <div className={classes.chipDifference}>
+                        <Typography variant="caption">
+                          {FN.formatPrice(choice.difference)}
+                        </Typography>
+                      </div>
+                    ) : null}
+                    classes={{root: choice.selected ? classes.selected : null}} // add class if selected
+                    onClick={() => {
+                      selectChoice({
+                        menuItemId: menuItem.id,
+                        optionId: option.id,
+                        choiceId: choice.id,
+                      })
+                    }} // select choice
+                    className={classes.chip}
+                    label={choice.name}/>
+                );
+              })}
             </div>
           </div>
         )
