@@ -1,6 +1,7 @@
 // @flow
 import R from 'ramda';
 import types from './types';
+import wsTypes from '../../websockets/types';
 import authTypes from 'ducks/auth/types';
 
 const initialState = {
@@ -26,6 +27,10 @@ export default function reducer(state = initialState, action) {
     //  const id = action.payload.table.restaurant.id;
     //  return R.assoc('checkedInRestaurant', id)(state);
     //}
+    case wsTypes.CHECKOUT_ALL: {
+      const s = R.assoc('checkedInRestaurant', null)(state);
+      return R.assoc('status', null)(s);
+    }
     case types.FETCH_STATUS_DONE: {
       const res = action.payload.res;
       if (!res || !(res instanceof Object)) {
