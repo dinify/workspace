@@ -4,11 +4,13 @@ import { selectedBillItems } from 'ducks/seat/selectors';
 import types from './types';
 import billTypes from '../bill/types';
 import cartTypes from '../cart/types';
+import serviceTypes from '../service/types';
 import wsTypes from '../../websockets/types';
 
 const initialState = {
   seats: [],
   checkedin: false,
+  services: {}
 };
 
 export default function reducer(state = initialState, action) {
@@ -17,8 +19,23 @@ export default function reducer(state = initialState, action) {
       return R.assoc('lastCartItems', action.payload)(state);
     }
     case cartTypes.ORDER_DONE: {
+      // the cart gets cleared by SEATS action (downstream websocket)
       // return R.dissocPath(['seats', '0', 'cart'])(state);
       return state;
+    }
+    case serviceTypes.CALL_SERVICE_INIT: {
+      const serviceId = action.payload.serviceId;
+      return R.assocPath(['services', serviceId], {id: serviceId, status: 'LOADING', calls: {}})(state);
+    }
+    case serviceTypes.CALL_SERVICE_DONE: {
+      const call = action.payload;
+      const newState = R.assocPath(['services', call.service_id, 'calls', call.id], call)(state);
+      return R.assocPath(['services', call.service_id, 'status'], 'SENT')(newState);
+    }
+    case wsTypes.CONFIRMED_CALL: {
+      const call = action.payload.call;
+      const newState = R.assocPath(['services', call.service_id, 'calls', call.id], call)(state);
+      return R.assocPath(['services', call.service_id, 'status'], 'READY')(newState);
     }
     case cartTypes.REMOVE_ORDERITEM_DONE: {
       return R.assocPath(['seats', '0', 'cart'], action.payload)(state);

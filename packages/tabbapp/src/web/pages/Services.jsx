@@ -7,11 +7,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from 'web/components/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import Send from '@material-ui/icons/Send';
 import ServiceCallGraphic from 'web/components/ServiceCallGraphic';
 import { callServiceInit } from 'ducks/service/actions';
+import { Motion, spring } from 'react-motion';
 import R from 'ramda';
 
 import * as FN from 'tabb-front/dist/lib/FN';
@@ -25,7 +27,7 @@ class Services extends React.Component {
   }
 
   render() {
-    const { restaurant, call } = this.props;
+    const { restaurant, call, services } = this.props;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
 
     let servicesList = restaurant ? FN.MapToList(restaurant.services) : [];
@@ -89,33 +91,64 @@ class Services extends React.Component {
             </Tabs>
           </div>
         </div>
-        <Grid container spacing={16} style={{
-          marginTop: 16,
-          width: '100%',
-        }}>
-          {servicesList.map((service) =>
-            <Grid key={service.id} item xs={4} md={3} lg={3} style={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}>
-              <ButtonBase
-                style={{
-                  borderRadius: 4,
+        <div style={{marginTop: 16,
+        width: '100%',}}>
+          <Grid container spacing={16}>
+            {servicesList.map((service) => {
+              const status = services[service.id] ? services[service.id].status : 'READY';
+              return (
+                <Grid key={service.id} item xs={4} md={3} lg={3} style={{
                   display: 'flex',
-                  padding: 8,
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-                onClick={() => call({ serviceId: service.id })}
-              >
-                <Avatar style={{width: 60, height: 60}} src={service.image.url}></Avatar>
-                <Typography style={{marginTop: 8}}>
-                  {service.name}
-                </Typography>
-              </ButtonBase>
-            </Grid>
-          )}
-        </Grid>
+                  justifyContent: 'center',
+                }}>
+                  <ButtonBase
+                    disabled={status === 'SENT'}
+                    style={{
+                      borderRadius: 4,
+                      display: 'flex',
+                      padding: 8,
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                    onClick={() => {
+                      if (status === 'READY') call({ serviceId: service.id })
+                    }}
+                  >
+                    <div style={{
+                      width: 64,
+                      height: 64,
+                      color: 'rgba(255, 255, 255, 0.87)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                      <Avatar style={{position: 'absolute', width: 64, height: 64}} src={service.image.url}></Avatar>
+                      <Motion
+                        defaultStyle={{x: 0}}
+                        style={{x: spring(status === 'SENT' ? 1 : 0, { stiffness: 260, damping: 24 })}}>
+                        {style =>
+                          <div style={{
+                            position: 'absolute',
+                            backgroundColor: '#c13939',
+                            borderRadius: '50%',
+                            minHeight: 64,
+                            minWidth: 64,
+                            opacity: Math.min(1, style.x * 2),
+                            transform: `scale(${Math.max(style.x, 1/64)}, ${Math.max(style.x, 1/64)})`,
+                          }}/>
+                        }
+                      </Motion>
+                      {status === 'SENT' && <CircularProgress style={{position: 'absolute'}} color="inherit"/>}
+                    </div>
+                    <Typography style={{marginTop: 8}}>
+                      {service.name}
+                    </Typography>
+                  </ButtonBase>
+                </Grid>
+              );
+            })}
+          </Grid>
+        </div>
         { /* <div style={{padding: 16, width: '100%', marginBottom: 56}}>
           <Typography variant="caption" style={{marginTop: 8}}>
             {"Can't find what you need?"}
@@ -142,7 +175,8 @@ class Services extends React.Component {
 
 export default connect(
   state => ({
-    restaurant: state.restaurant.all[state.restaurant.checkedInRestaurant]
+    restaurant: state.restaurant.all[state.restaurant.checkedInRestaurant],
+    services: state.seat.services,
   }),
   {
     call: callServiceInit
