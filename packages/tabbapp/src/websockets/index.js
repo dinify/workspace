@@ -29,9 +29,25 @@ const websockets = (store) => {
   });
 
   socket.on('order-status', (data) => {
-    dispatch({ type: types.CONFIRMED_ORDER, payload: data });
-    if (data.order.initiator === getState().user.loggedUserId) {
-      dispatch(showSnackbar({ message: 'Order confirmed' }))
+    if (data.order.status === 'CONFIRMED') {
+      dispatch({ type: types.CONFIRMED_ORDER, payload: data });
+      if (data.order.initiator === getState().user.loggedUserId) {
+        dispatch(showSnackbar({ message: 'Order confirmed' }))
+      }
+    }
+    else if (data.order.status === 'CANCELLED') {
+      if (data.order.initiator === getState().user.loggedUserId)
+        dispatch(showSnackbar({ message: 'Your order was cancelled' }))
+    }
+  });
+
+  socket.on('call-status', (data) => {
+    if (data.call.status === 'CONFIRMED') {
+      dispatch({ type: types.CONFIRMED_CALL, payload: data });
+      dispatch(showSnackbar({ message: `${data.call.service.name} is on its way!` }))
+    }
+    else if (data.call.status === 'CANCELLED') {
+      dispatch(showSnackbar({ message: `${data.call.service.name} cannot make it to your table` }))
     }
   });
 

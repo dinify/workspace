@@ -16,7 +16,7 @@ const callServiceEpic = (action$: Observable) =>
             showSnackbar({
               message: 'Service called',
               redirect: '/',
-              actionTitle: 'Go to restaurant menu'
+              actionTitle: 'See menu'
             })
           );
         })

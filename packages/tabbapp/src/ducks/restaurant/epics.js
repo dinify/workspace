@@ -30,7 +30,7 @@ const checkinEpic = (action$: Observable, { getState }) =>
             showSnackbar({
               message: 'You are now checked in',
               redirect: '/',
-              actionTitle: 'Go to restaurant menu'
+              actionTitle: 'See menu'
             })
           );
         })
