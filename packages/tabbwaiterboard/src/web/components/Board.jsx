@@ -2,7 +2,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import R from 'ramda'
+
+import filter from 'ramda/src/filter'
+import groupBy from 'ramda/src/groupBy'
+
 import Swipeable from 'react-swipeable'
 import Masonry from 'react-masonry-component'
 import { MapToList } from 'lib/FN'
@@ -63,7 +66,6 @@ const masonryOptions = {
 }
 
 const Board = ({
-  sales,
   tablesList,
   guestList,
   frameIndex,
@@ -90,13 +92,13 @@ const Board = ({
     toggleFrames(i)
   }
 
-//
+  const billsInitiated = bills.INITIATED || [];
+  const billsProcessed = bills.PROCESSED || [];
   return (<div>
 
     <Header
       tablesCount={tablesList.length}
-      guestsCount={guestList.length}
-      salesVolume={sales}
+      processedBillsCount={billsProcessed.length}
     />
 
     <Swipeable
@@ -107,7 +109,7 @@ const Board = ({
         <Frame n={0}>
           <Container>
             <Container>
-              {orders.length > 0 || bookingsList.length > 0 || calls.length > 0 || bills.length > 0 ?
+              {orders.length > 0 || bookingsList.length > 0 || calls.length > 0 || billsInitiated.length > 0 ?
                 <Masonry
                     className='my-gallery-class' // default ''
                     elementType='ul' // default 'div'
@@ -124,7 +126,7 @@ const Board = ({
                   {orders.map((order) =>
                     <Order key={order.id} order={order} />
                   )}
-                  {bills.map((bill) =>
+                  {billsInitiated.map((bill) =>
                     <Bill key={bill.id} bill={bill} />
                   )}
                 </Masonry>
@@ -151,7 +153,7 @@ const Board = ({
 
     <Modal shown={modalOpen} closeModal={closeModal}>
       {modalType === 'User' ? <ModalUser payload={modalPayload} /> : '' }
-      {modalType === 'ListOfBills' ? <ModalListOfBills payload={modalPayload} /> : '' }
+      {modalType === 'ListOfBills' ? <ModalListOfBills payload={modalPayload} bills={billsProcessed} /> : '' }
       {modalType === 'ListOfBookings' ? <ModalListOfBookings payload={modalPayload} /> : '' }
     </Modal>
 
@@ -162,17 +164,12 @@ const Board = ({
 export default connect(
   state => ({
     bookingsList: MapToList(state.booking.all).filter((b) => b.status === 'PENDING'),
-    orders: R.filter((o) => o.status !== 'CONFIRMED')(state.order.list),
-    bills: state.bill.list,
+    orders: filter((o) => o.status !== 'CONFIRMED')(state.order.list),
+    bills: groupBy((b) => b.status === 'PROCESSED' ? 'PROCESSED' : 'INITIATED')(MapToList(state.bill.all)),
     calls: state.call.list.filter((b) => b.status === 'PENDING'),
     tablesList: MapToList(state.table.all).sort((a,b) => a.number - b.number),
-    guestList: state.seat.list,
-    events: state.restaurant.events,
-    guestsCount: state.table.guestsCount,
-    sales: state.restaurant.sales,
     order_ahead_enabled: state.restaurant.order_ahead_enabled,
     selectedWBId: state.restaurant.selectedWBId,
-    loggedUser: state.restaurant.loggedUser,
     ...state.ui, // frameIndex, modalOpen, modalUserId
   }),
   {

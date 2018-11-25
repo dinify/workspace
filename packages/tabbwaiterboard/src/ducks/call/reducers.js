@@ -1,4 +1,8 @@
-import R from 'ramda'
+import assoc from 'ramda/src/assoc'
+import find from 'ramda/src/find'
+import findIndex from 'ramda/src/findIndex'
+import propEq from 'ramda/src/propEq'
+import assocPath from 'ramda/src/assocPath'
 import types from './types';
 
 const initialState = {
@@ -10,19 +14,19 @@ export default function reducer(state = initialState, action) {
 
     case 'LOAD_CALL_DONE': {
       const calls = action.payload.res;
-      return R.assoc('list', calls)(state);
+      return assoc('list', calls)(state);
     }
 
     case types.CALL_RECEIVED: {
       const { call } = action.payload;
-      if (R.find(R.propEq('id', call.id))(state.list)) return state;
-      return R.assoc('list', [...state.list, call])(state);
+      if (find(propEq('id', call.id))(state.list)) return state;
+      return assoc('list', [...state.list, call])(state);
     }
 
     case 'CONFIRM_CALL_INIT': {
       const { callId } = action.payload;
-      const index = R.findIndex(R.propEq('id', callId))(state.list);
-      return R.assocPath(['list', index, 'status'], 'CONFIRMED')(state);
+      const index = findIndex(propEq('id', callId))(state.list);
+      return assocPath(['list', index, 'status'], 'CONFIRMED')(state);
     }
 
     default:

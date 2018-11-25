@@ -1,4 +1,5 @@
-import R from 'ramda'
+import assoc from 'ramda/src/assoc'
+import filter from 'ramda/src/filter'
 
 const initialState = {
   list: []
@@ -9,13 +10,13 @@ export default function reducer(state = initialState, action) {
 
     case 'GET_CALLS_DONE': {
       const payload = action.payload;
-      return R.assoc('list', payload)(state);
+      return assoc('list', payload)(state);
     }
 
     case 'CONFIRM_CALL_INIT': {
       const { callId } = action.payload;
-      const newList = R.filter((o) => o.id !== callId, state.list);
-      return R.assoc('list', newList)(state);
+      const newList = filter((o) => o.id !== callId, state.list);
+      return assoc('list', newList)(state);
     }
 
     default:

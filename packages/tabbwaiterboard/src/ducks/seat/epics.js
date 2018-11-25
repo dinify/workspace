@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs'
-import R from 'ramda'
+import pluck from 'ramda/src/pluck'
+import filter from 'ramda/src/filter'
 import * as API from 'api/restaurant'
 
 const loadSeatEpic = (action$, { getState }) =>
@@ -9,8 +10,8 @@ const loadSeatEpic = (action$, { getState }) =>
     const waiterboardId = getState().restaurant.selectedWBId
     return Observable.fromPromise(API.GetSeats({ waiterboardId }))
       .mergeMap((allSeats) => {
-        const seats = R.filter((seat) => seat.occupied, allSeats);
-        const userIds = R.pluck('user_id', seats)
+        const seats = filter((seat) => seat.occupied, allSeats);
+        const userIds = pluck('user_id', seats)
         console.log(userIds);
         return [
           {

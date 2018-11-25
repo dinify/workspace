@@ -16,7 +16,8 @@ import {
   Grid
 } from '@material-ui/core'
 
-import { ExitToApp } from '@material-ui/icons'
+import ExitToApp from '@material-ui/icons/ExitToApp'
+import Payment from '@material-ui/icons/Payment'
 
 import { logoutInitAction } from 'ducks/restaurant'
 import { toggleFrames, toggleModal } from 'ducks/ui'
@@ -96,7 +97,8 @@ const Header = ({
   toggleFrames,
   toggleModal,
   frameIndex,
-  bookings
+  bookings,
+  processedBillsCount
 }) => {
   const frames = ['actions','tables']
   let waiterboardName = ''
@@ -114,14 +116,19 @@ const Header = ({
             <Grid item xs={2}>
               <SwipeButton onClick={() => toggleFrames(frameIndex ? 0 : 1)}>Slide to {frames[frameIndex]}</SwipeButton>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={2}>
               <IconButton onClick={() => toggleModal({ open: true, type: 'ListOfBookings' })}>
                 <Badge badgeContent={acceptedBookings.length} color="primary">
                   <i className="ion-ios-calendar" />
                 </Badge>
               </IconButton>
+              <IconButton onClick={() => toggleModal({ open: true, type: 'ListOfBills' })}>
+                <Badge badgeContent={processedBillsCount} color="primary">
+                  <Payment />
+                </Badge>
+              </IconButton>
             </Grid>
-            <Grid item xs={9} style={{textAlign: 'right'}}>
+            <Grid item xs={8} style={{textAlign: 'right'}}>
               <Link to="/board/">
                 <Label>Section</Label><Value>{waiterboardName}</Value>
               </Link>
@@ -146,7 +153,9 @@ export default connect(
     loggedUser: state.restaurant.loggedUser,
     selectedWBId: state.restaurant.selectedWBId,
     frameIndex: state.ui.frameIndex,
-    bookings: state.booking.all
+    bookings: state.booking.all,
+    salesVolume: state.restaurant.sales,
+    guestsCount: state.seat.list.lenght,
   }),
   {
     logout: logoutInitAction,

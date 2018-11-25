@@ -1,6 +1,6 @@
 // @flow
 import { Observable } from 'rxjs'
-import R from 'ramda'
+import pluck from 'ramda/src/pluck'
 import * as API from 'api/restaurant'
 
 const loadCallEpic = (action$: Observable, { getState }) =>
@@ -10,7 +10,7 @@ const loadCallEpic = (action$: Observable, { getState }) =>
     const waiterboardId = getState().restaurant.selectedWBId
     return Observable.fromPromise(API.GetCalls({ waiterboardId }))
       .mergeMap((calls) => {
-        const userIds = R.pluck('initiator', calls).filter((id) => id.length === 24)
+        const userIds = pluck('initiator', calls).filter((id) => id.length === 24)
         return [
           {
             type: 'FETCHALL_USER_INIT',

@@ -2,7 +2,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { getTodayBillsOfTable } from '../../ducks/restaurant';
+import { fetchTodayBills as fetchTodayBillsAction } from 'ducks/bill/actions';
 import Bill from './Events/Bill'
 
 const Body = styled.div`
@@ -20,22 +20,20 @@ const Body = styled.div`
 
 class ModalListOfBills extends React.Component {
 
-  //componentWillReceiveProps() {
-  //  console.log('//////////');
-  //  const { payload: { tableId }, getTodayBillsOfTable, billsOfTable } = this.props;
-  //}
+  componentDidMount() {
+    const { fetchTodayBills, waiterboardId } = this.props;
+    fetchTodayBills({ waiterboardId });
+  }
 
   render(){
 
-    const { payload: { tableId }, billsOfTable, getTodayBillsOfTable } = this.props;
-
-    if (billsOfTable.length < 1 ) getTodayBillsOfTable({ tableId });
+    const { bills } = this.props;
 
     return (
     	<div>
         <Body>
-          {billsOfTable.map((bill, i) =>
-            <Bill key={i} bill={bill} noconfirm />
+          {bills.map((bill) =>
+            <Bill key={bill.id} bill={bill} noconfirm />
           )}
         </Body>
       </div>
@@ -45,9 +43,9 @@ class ModalListOfBills extends React.Component {
 
 export default connect(
   state => ({
-    billsOfTable: state.ui.billsOfTable
+    waiterboardId: state.restaurant.selectedWBId
   }),
   {
-    getTodayBillsOfTable
+    fetchTodayBills: fetchTodayBillsAction
   },
 )(ModalListOfBills);

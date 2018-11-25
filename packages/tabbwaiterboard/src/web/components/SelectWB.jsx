@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
-import R from 'ramda'
+import values from 'ramda/src/values'
+import keys from 'ramda/src/keys'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxChoice } from './styled/FormBox'
@@ -33,8 +34,8 @@ const SelectWB = ({ lastError, logged, setWBid }) =>
           Select waiterboard
         </FormBoxHead>
         <FormBoxBody className="modry">
-          {R.values(logged.waiterboards).map((wb, i) =>
-            <Link to={`/board/${R.keys(logged.waiterboards)[i]}`} onClick={() => setWBid(R.keys(logged.waiterboards)[i])} key={i}>
+          {values(logged.waiterboards).map((wb, i) =>
+            <Link to={`/board/${keys(logged.waiterboards)[i]}`} onClick={() => setWBid(keys(logged.waiterboards)[i])} key={i}>
               <FormBoxChoice>
                 {wb.name}
               </FormBoxChoice>

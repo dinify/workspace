@@ -1,4 +1,4 @@
-import R from 'ramda'
+import assocPath from 'ramda/src/assocPath'
 
 const initialState = {
   all: {}
@@ -9,7 +9,7 @@ export default function reducer(state = initialState, action) {
 
     case 'FETCH_USER_DONE': {
       const payload = action.payload.res
-      return R.assocPath(['all', payload.id], payload)(state);
+      return assocPath(['all', payload.id], payload)(state);
     }
 
     default:

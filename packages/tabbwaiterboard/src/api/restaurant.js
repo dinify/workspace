@@ -32,7 +32,7 @@ export function ChangeTable(payload) {
 }
 
 export function GetSeats({ waiterboardId }) {
-  return Get({ v3: true, path: `waiterboard/${waiterboardId}/seats&limit=1000` })
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/seats/all` })
 }
 
 export function CheckOut({ tableId }) {
@@ -79,30 +79,10 @@ export function GetBills({ waiterboardId }) {
   return Get({ v3: true, path: `waiterboard/${waiterboardId}/transactions?with=orders` })
 }
 
+export function GetTodaybills({ waiterboardId }) {
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/transactions/all?with=orders&limit=100` })
+}
+
 export function ConfirmBill({ billId, approvalNumber }) {
   return Post({ v3: true, path: `transaction/${billId}/process`}, { approvalNumber })
-}
-
-export function GetSales() {
-  return Get({ path: `api/v2/waiterboard/sales` })
-}
-
-export function GetTodayBillsOfTable({ tableId }) {
-  return Get({ path: `api/v2/waiterboard/bills/table/${tableId}` })
-}
-
-export function GetBillsOfUserInRestaurant({ userId }) {
-  return Get({ path: `api/v2/waiterboard/bills/user/${userId}` })
-}
-
-export function GetOrdersOfUserInRestaurant({ userId }) {
-  return Get({ path: `api/v2/waiterboard/orders/user/${userId}` })
-}
-
-export function SetOrderAheadEnabled({ restaurantId, enabled }) {
-  return Put({ path: `api/v2/restaurant/${restaurantId}/order_ahead_enabled`}, { enabled })
-}
-
-export function GetOrderAheadEnabled({ restaurantId }) {
-  return Get({ path: `api/v2/restaurant/${restaurantId}/order_ahead_enabled`})
 }

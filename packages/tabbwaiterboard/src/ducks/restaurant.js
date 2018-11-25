@@ -1,8 +1,15 @@
 // @flow
 import { Observable } from 'rxjs';
-import R from 'ramda';
 import * as API from '../api/restaurant';
 import type { Error, Action } from '../flow';
+
+import assoc from 'ramda/src/assoc'
+import assocPath from 'ramda/src/assocPath'
+import dissocPath from 'ramda/src/dissocPath'
+import reject from 'ramda/src/reject'
+import keys from 'ramda/src/keys'
+import filter from 'ramda/src/filter'
+import pluck from 'ramda/src/pluck'
 
 export const BOOTSTRAP = 'BOOTSTRAP';
 export const LOGIN_INIT = 'LOGIN_INIT';
@@ -75,7 +82,7 @@ const makeUpdatedEvents = (action, state, eventType) => {
     existingIds.push(o.eventId)
     eventsCopy[o.eventId] = makeNewEvent(eventType, o)
   })
-  return R.reject((ev) => {
+  return reject((ev) => {
     if (ev.id.split('_')[0] !== eventType) return false;
     if (existingIds.includes(ev.id)) return false;
     return true;
@@ -86,57 +93,57 @@ const makeUpdatedEvents = (action, state, eventType) => {
 export default function reducer(state: State = initialState, action: Action) {
   if(action.type.includes('UPDATE') && action.type.includes('INIT')) {
     // update init
-    state = R.assoc('updateDone', 'updating')(state);
+    state = assoc('updateDone', 'updating')(state);
   }
   if(action.type.includes('CONFIRMATION') && action.type.includes('INIT')) {
     const type = action.type.split('_')[0]
-    const key = R.keys(action.payload)[0]
+    const key = keys(action.payload)[0]
     const id = action.payload[key]
     const eventId = `${type}_${id}`
-    return R.assocPath(['events', eventId, 'removed'], true)(state);
+    return assocPath(['events', eventId, 'removed'], true)(state);
   }
   switch (action.type) {
     case LOGIN_DONE:
       return state;
     case 'SET_WBID':
-      return R.assoc('selectedWBId', action.payload.id)(state);
+      return assoc('selectedWBId', action.payload.id)(state);
     case BOOTSTRAP:
-      return R.assoc('appRun', true)(state);
+      return assoc('appRun', true)(state);
     case 'GET_OHENABLED_DONE':
-      return R.assoc('order_ahead_enabled', action.payload.order_ahead_enabled)(state);
+      return assoc('order_ahead_enabled', action.payload.order_ahead_enabled)(state);
     case 'SET_OHENABLED_DONE':
-      return R.assoc('order_ahead_enabled', action.payload.enabled)(state);
+      return assoc('order_ahead_enabled', action.payload.enabled)(state);
     case 'LOGGED_FETCHED_DONE':
-      return R.assoc('loggedUser', action.payload)(state);
+      return assoc('loggedUser', action.payload)(state);
     case 'GET_BOOKINGS_DONE': {
-      return R.assoc('events', makeUpdatedEvents(action, state, 'BOOKING'))(state);
+      return assoc('events', makeUpdatedEvents(action, state, 'BOOKING'))(state);
     }
     case 'GET_SERVICES_DONE':
-      return R.assoc('events', makeUpdatedEvents(action, state, 'SERVICE'))(state);
+      return assoc('events', makeUpdatedEvents(action, state, 'SERVICE'))(state);
     //case 'GET_ORDERS_DONE':
-    //  return R.assoc('events', makeUpdatedEvents(action, state, 'ORDER'))(state);
+    //  return assoc('events', makeUpdatedEvents(action, state, 'ORDER'))(state);
     case 'GET_ORDERAHEADS_DONE':
-      return R.assoc('events', makeUpdatedEvents(action, state, 'ORDERAHEAD'))(state);
+      return assoc('events', makeUpdatedEvents(action, state, 'ORDERAHEAD'))(state);
     case 'GET_ACCEPTED_BOOKING_DONE':
-      return R.assoc('acceptedBookings', action.payload)(state);
+      return assoc('acceptedBookings', action.payload)(state);
     case 'GET_SALES_DONE':
-      return R.assoc('sales', action.payload.sales)(state);
+      return assoc('sales', action.payload.sales)(state);
     case 'SET_TIMER': {
       setCookie('timer-'+action.payload.key, action.payload.val, 30);
-      return R.assocPath(['timer', action.payload.key], action.payload.val)(state);
+      return assocPath(['timer', action.payload.key], action.payload.val)(state);
     }
     case 'CONFIRMATION_DONE': {
       switch (action.payload.type) {
         case 'Order':
-          return R.dissocPath(['events', makeEventId('ORDER', action.payload.orderId)])(state);
+          return dissocPath(['events', makeEventId('ORDER', action.payload.orderId)])(state);
         case 'Orderahead':
-          return R.dissocPath(['events', makeEventId('ORDERAHEAD', action.payload.orderId)])(state);
+          return dissocPath(['events', makeEventId('ORDERAHEAD', action.payload.orderId)])(state);
         case 'Service':
-          return R.dissocPath(['events', makeEventId('SERVICE', action.payload.serviceId)])(state);
+          return dissocPath(['events', makeEventId('SERVICE', action.payload.serviceId)])(state);
         case 'Booking':
-          return R.dissocPath(['events', makeEventId('BOOKING', action.payload.bookingId)])(state);
+          return dissocPath(['events', makeEventId('BOOKING', action.payload.bookingId)])(state);
         case 'Bill':
-          return R.dissocPath(['events', makeEventId('BILL', action.payload.billId)])(state);
+          return dissocPath(['events', makeEventId('BILL', action.payload.billId)])(state);
         default:
           return state;
       }
@@ -202,8 +209,6 @@ export const setTimer = (payload) => ({ type: 'SET_TIMER', payload })
 export const setOHEnabled = () => ({ type: 'SET_OHENABLED_INIT' })
 
 
-export const getTodayBillsOfTable = (payload) => ({ type: 'GET_BILLSOFTABLE_INIT', payload })
-
 export const getBillsOfUser = (payload) => ({ type: 'GET_BILLSOFUSER_INIT', payload })
 export const getOrdersOfUser = (payload) => ({ type: 'GET_ORDERSOFUSER_INIT', payload })
 
@@ -253,15 +258,15 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
       let waiterboardId = getState().restaurant.selectedWBId;
 
       API.GetOrders({ waiterboardId }).then((response) => {
-        // const oh = R.filter((o) => o.type === 'AHEAD')(response)
-        const di = R.filter((o) => o.type === 'DINE_IN')(response)
+        // const oh = filter((o) => o.type === 'AHEAD')(response)
+        const di = filter((o) => o.type === 'DINE_IN')(response)
         dispatch({ type: 'GET_ORDERS_DONE', payload: di });
-        const userIds = R.pluck('initiator', di);
+        const userIds = pluck('initiator', di);
         dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
         // dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: oh });
       })
       API.GetBills({ waiterboardId }).then((response) => {
-        const userIds = R.pluck('initiator', response);
+        const userIds = pluck('initiator', response);
         dispatch({ type: 'GET_BILLS_DONE', payload: response });
         dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
       })
@@ -309,44 +314,6 @@ const confirmationEpic = (action$: Observable, { getState }) =>
         .catch(error => Observable.of(confirmationFail(error)))
     });
 
-const getBillsOfTableEpic = (action$: Observable) =>
-  action$
-    .ofType('GET_BILLSOFTABLE_INIT')
-    .switchMap(({ payload: { tableId } }) =>
-      Observable.fromPromise(API.GetTodayBillsOfTable({ tableId }))
-        .map((payload) => ({ type: 'GET_BILLSOFTABLE_DONE', payload }))
-        .catch(error => Observable.of({ type: 'GET_BILLSOFTABLE_FAIL' }))
-    );
-
-
-const getBillsOfUserEpic = (action$: Observable) =>
-  action$
-    .ofType('GET_BILLSOFUSER_INIT')
-    .switchMap(({ payload: { userId } }) =>
-      Observable.fromPromise(API.GetBillsOfUserInRestaurant({ userId }))
-        .map((payload) => ({ type: 'GET_BILLSOFUSER_DONE', payload: { bills: payload, userId } }))
-        .catch(error => Observable.of({ type: 'GET_BILLSOFUSER_FAIL' }))
-    );
-const getOrdersOfUserEpic = (action$: Observable) =>
-  action$
-    .ofType('GET_ORDERSOFUSER_INIT')
-    .switchMap(({ payload: { userId } }) =>
-      Observable.fromPromise(API.GetOrdersOfUserInRestaurant({ userId }))
-        .map((payload) => ({ type: 'GET_ORDERSOFUSER_DONE', payload: { orders: payload, userId } }))
-        .catch(error => Observable.of({ type: 'GET_ORDERSOFUSER_FAIL' }))
-    );
-const setOHEnabledEpic = (action$: Observable, { getState, dispatch }) =>
-  action$
-    .ofType('SET_OHENABLED_INIT')
-    .switchMap(() => {
-      const state = getState()
-      const restaurantId = state.restaurant.loggedUser.restaurant
-      const enabled = !state.restaurant.order_ahead_enabled
-
-      return Observable.fromPromise(API.SetOrderAheadEnabled({ restaurantId, enabled }))
-        .map(() => ({ type: 'SET_OHENABLED_DONE', payload: { enabled } }))
-        .catch(error => Observable.of(({ type: 'SET_OHENABLED_FAIL' })))
-    });
 
 export const epics = [
   bootstrapEpic,
@@ -355,8 +322,4 @@ export const epics = [
   logoutEpic,
   confirmationEpic,
   getTablesEpic,
-  getBillsOfTableEpic,
-  getBillsOfUserEpic,
-  getOrdersOfUserEpic,
-  setOHEnabledEpic
 ];

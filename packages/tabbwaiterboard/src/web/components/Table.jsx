@@ -4,7 +4,9 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { colorsByStages } from '../colors'
 import { clearTable, updateTableInit } from 'ducks/table/actions'
-import R from 'ramda'
+import pluck from 'ramda/src/pluck'
+import sort from 'ramda/src/sort'
+
 import S from 'string'
 import { toggleModal } from 'ducks/ui'
 
@@ -147,7 +149,7 @@ const Table = ({
     return g
   })
 
-  const guestsStatuses = R.sort((a,b) => b.localeCompare(a), R.pluck('status')(presentGuests))
+  const guestsStatuses = sort((a,b) => b.localeCompare(a), pluck('status')(presentGuests))
 
   const tableStatus = guestsStatuses[0]
 

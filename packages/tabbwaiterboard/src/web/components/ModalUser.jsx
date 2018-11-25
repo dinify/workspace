@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { clearUser } from 'ducks/table/actions'
 import { getBillsOfUser, getOrdersOfUser } from '../../ducks/restaurant'
-import R from 'ramda'
 import numeral from 'numeral'
 
 import Bill from './Events/Bill'
@@ -113,20 +112,6 @@ class ModalUser extends React.Component {
 
     if (user.orders === undefined) getOrdersOfUser({ userId })
     if (user.bills === undefined) getBillsOfUser({ userId })
-    else if (user.bills.length > 0) {
-      const totals = R.pluck('total')(R.pluck('BillObject')(user.bills))
-      const foods = R.pluck('food_name')(R.flatten(R.pluck('BillItems')(user.bills)))
-      const freqObject = R.countBy(R.identity)(foods)
-      favs = R.take(5, R.keys(freqObject).map((key) => {
-        const freq = freqObject[key]
-        return {food: key, count: freq}
-      }).sort((a,b) => b.count - a.count) )
-      //console.log(favs);
-      //console.log(BillObjects);
-      totalSpend = totals.reduce((a, b) => Number(a) + Number(b), 0)
-      visitsCount = totals.length
-      aveTicket = totalSpend/visitsCount
-    }
 
     // TODO check-out kick him out
 

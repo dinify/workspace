@@ -77,9 +77,11 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
   			<Text color={color}>
           {bill.type}
   			</Text>
-        <CheckButton bg={color} onClick={() => confirmBill({billId: bill.id, initiator: bill.initiator})} flash={!noconfirm && isItOutdated(bill.requested, timer.p)} invisible={noconfirm}>
-          <i className="ion-checkmark" />
-        </CheckButton>
+        {!noconfirm ?
+          <CheckButton bg={color} onClick={() => confirmBill({billId: bill.id, initiator: bill.initiator})} flash={!noconfirm && isItOutdated(bill.requested, timer.p)} invisible={noconfirm}>
+            <i className="ion-checkmark" />
+          </CheckButton>
+        : ''}
       </Header>
 
         <TableTag>

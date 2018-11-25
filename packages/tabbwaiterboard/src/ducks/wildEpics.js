@@ -1,12 +1,12 @@
 // @flow
 import { Observable } from 'rxjs'
 import API from 'api'
-import R from 'ramda'
+import filter from 'ramda/src/filter'
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 const camel = (str) => capitalize(str.toLowerCase())
 
-const createEpic = (action$: Observable, { getState }: EpicDependencies) =>
+const createEpic = (action$: Observable) =>
   action$
   .filter(action => action.type.startsWith('CREATE_') && action.type.endsWith('_INIT'))
   .switchMap(({ payload, type }) => {
@@ -20,7 +20,7 @@ const createEpic = (action$: Observable, { getState }: EpicDependencies) =>
     .catch(error => Observable.of({ type: `CREATE_${subject}_FAIL`, payload: error }))
   })
 
-const fetchEpic = (action$: Observable, { getState }: EpicDependencies) =>
+const fetchEpic = (action$: Observable) =>
   action$
   .filter(action => action.type.startsWith('FETCH_') && action.type.endsWith('_INIT'))
   .switchMap(({ payload, type }) => {
@@ -46,7 +46,7 @@ const fetchAllEpic = (action$: Observable, { getState }: EpicDependencies) =>
     if (payload.cache) {
       const storeKey = middle.toLowerCase()
       const all = getState()[storeKey].all
-      ids = R.filter((id) => !all[id], ids)
+      ids = filter((id) => !all[id], ids)
     }
 
     return ids.map((id) => ({
@@ -59,7 +59,7 @@ const fetchAllEpic = (action$: Observable, { getState }: EpicDependencies) =>
     })
   })
 
-const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
+const updateEpic = (action$: Observable) =>
   action$
   .filter(action => action.type.startsWith('UPDATE_') && action.type.endsWith('_INIT'))
   .switchMap(({ payload, type }) => {
@@ -73,7 +73,7 @@ const updateEpic = (action$: Observable, { getState }: EpicDependencies) =>
     .catch(error => Observable.of({ type: `UPDATE_${subject}_FAIL`, payload: error }))
   })
 
-const removeEpic = (action$: Observable, { getState }: EpicDependencies) =>
+const removeEpic = (action$: Observable) =>
   action$
   .filter(action => action.type.startsWith('REMOVE_') && action.type.endsWith('_INIT'))
   .switchMap(({ payload, type }) => {
@@ -91,7 +91,7 @@ const removeEpic = (action$: Observable, { getState }: EpicDependencies) =>
   })
 
 
-const confirmEpic = (action$: Observable, { getState }: EpicDependencies) =>
+const confirmEpic = (action$: Observable) =>
   action$
   .filter(action => action.type.startsWith('CONFIRM_') && action.type.endsWith('_INIT'))
   .switchMap(({ payload, type }) => {
@@ -105,7 +105,7 @@ const confirmEpic = (action$: Observable, { getState }: EpicDependencies) =>
     .catch(error => Observable.of({ type: `CONFIRM_${subject}_FAIL`, payload: error }))
   })
 
-const cancelEpic = (action$: Observable, { getState }: EpicDependencies) =>
+const cancelEpic = (action$: Observable) =>
   action$
   .filter(action => action.type.startsWith('CANCEL_') && action.type.endsWith('_INIT'))
   .switchMap(({ payload, type }) => {
@@ -120,7 +120,7 @@ const cancelEpic = (action$: Observable, { getState }: EpicDependencies) =>
   })
 
 
-  export const epics = [
+  export default [
     createEpic,
     fetchEpic,
     updateEpic,

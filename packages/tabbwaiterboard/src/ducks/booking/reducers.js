@@ -1,4 +1,5 @@
-import R from 'ramda'
+import assoc from 'ramda/src/assoc'
+import assocPath from 'ramda/src/assocPath'
 import { UpdateOriginal } from 'lib/FN'
 
 const initialState = {
@@ -10,17 +11,17 @@ export default function reducer(state = initialState, action) {
 
     case 'LOAD_BOOKING_DONE': {
       const payload = action.payload.res
-      return R.assoc('all', UpdateOriginal(state.all, payload))(state)
+      return assoc('all', UpdateOriginal(state.all, payload))(state)
     }
 
     case 'CONFIRM_BOOKING_INIT': {
       const { id } = action.payload
-      return R.assocPath(['all', id, 'status'], 'CONFIRMED')(state)
+      return assocPath(['all', id, 'status'], 'CONFIRMED')(state)
     }
 
     case 'CANCEL_BOOKING_INIT': {
       const { id } = action.payload
-      return R.assocPath(['all', id, 'status'], 'CANCELLED')(state)
+      return assocPath(['all', id, 'status'], 'CANCELLED')(state)
     }
 
     default:
