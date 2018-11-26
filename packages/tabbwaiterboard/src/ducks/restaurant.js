@@ -270,16 +270,12 @@ const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
         dispatch({ type: 'GET_BILLS_DONE', payload: response });
         dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
       })
-      dispatch({type: 'LOAD_CALL_INIT'});
-      dispatch({type: 'LOAD_SEATS_INIT'});
 
-
-      const loadInitData = () => {
-        console.log('start');
-        dispatch({type: 'LOAD_BOOKING_INIT'});
-        return { type: 'LOAD_STATE_DONE', payload: {} };
-      }
-      return Observable.interval(10000).startWith(0).map(loadInitData);
+      return Observable.of(
+        {type: 'LOAD_CALL_INIT'},
+        {type: 'LOAD_SEATS_INIT'},
+        {type: 'LOAD_BOOKING_INIT'}
+      );
     });
 
 const loginEpic = (action$: Observable) =>

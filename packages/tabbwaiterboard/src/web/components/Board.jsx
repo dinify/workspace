@@ -7,7 +7,6 @@ import filter from 'ramda/src/filter'
 import groupBy from 'ramda/src/groupBy'
 
 import Swipeable from 'react-swipeable'
-import Masonry from 'react-masonry-component'
 import { MapToList } from 'lib/FN'
 
 import Table from './Table'
@@ -66,30 +65,21 @@ const masonryOptions = {
 }
 
 const Board = ({
+  bookingsList,
+  calls,
+  orders,
+  bills,
   tablesList,
-  guestList,
   frameIndex,
   modalOpen,
   modalType,
   modalPayload,
   toggleFrames,
-  toggleModal,
-  bookingsList,
-  calls,
-  orders,
-  bills
+  toggleModal
 }) => {
-
-  const openModal = (userId) => {
-    toggleModal({ open: true, userId });
-  }
 
   const closeModal = (e) => {
     if (e.target.className.indexOf('modal-area') > -1) toggleModal({ open: false });
-  }
-
-  const swiped = (i) => {
-    toggleFrames(i)
   }
 
   const billsInitiated = bills.INITIATED || [];
@@ -102,21 +92,15 @@ const Board = ({
     />
 
     <Swipeable
-      onSwipedRight={() => swiped(1)}
-      onSwipedLeft={() => swiped(0)}
+      onSwipedRight={() => toggleFrames(1)}
+      onSwipedLeft={() => toggleFrames(2)}
     >
       <OneBoard n={frameIndex}>
         <Frame n={0}>
           <Container>
             <Container>
               {orders.length > 0 || bookingsList.length > 0 || calls.length > 0 || billsInitiated.length > 0 ?
-                <Masonry
-                    className='my-gallery-class' // default ''
-                    elementType='ul' // default 'div'
-                    options={masonryOptions} // default {}
-                    disableImagesLoaded={false} // default false
-                    updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
-                >
+                <div>
                   {bookingsList.map((booking) =>
                     <Booking key={booking.id} booking={booking} />
                   )}
@@ -129,7 +113,7 @@ const Board = ({
                   {billsInitiated.map((bill) =>
                     <Bill key={bill.id} bill={bill} />
                   )}
-                </Masonry>
+                </div>
                 :
                 <EventsPlaceholder>Everything is done.</EventsPlaceholder>
               }
@@ -141,7 +125,7 @@ const Board = ({
             <Grid container spacing={8} justify="flex-start" alignItems="flex-start">
               {tablesList.map((table) =>
                 <Grid item key={table.id}>
-                  <Table openModal={openModal} table={table} key={table.id} />
+                  <Table openModal={(userId) => toggleModal({ open: true, userId })} table={table} key={table.id} />
                 </Grid>
               )}
             </Grid>
@@ -167,10 +151,13 @@ export default connect(
     orders: filter((o) => o.status !== 'CONFIRMED')(state.order.list),
     bills: groupBy((b) => b.status === 'PROCESSED' ? 'PROCESSED' : 'INITIATED')(MapToList(state.bill.all)),
     calls: state.call.list.filter((b) => b.status === 'PENDING'),
+
     tablesList: MapToList(state.table.all).sort((a,b) => a.number - b.number),
-    order_ahead_enabled: state.restaurant.order_ahead_enabled,
-    selectedWBId: state.restaurant.selectedWBId,
-    ...state.ui, // frameIndex, modalOpen, modalUserId
+
+    frameIndex: state.ui.frameIndex,
+    modalOpen: state.ui.modalOpen,
+    modalType: state.ui.modalType,
+    modalPayload: state.ui.modalPayload,
   }),
   {
     toggleFrames,

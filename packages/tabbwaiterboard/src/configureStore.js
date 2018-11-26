@@ -53,7 +53,7 @@ const configureStore = (options, storage) => {
   const store = createStore(reducers, initialState, enhancers);
 
   // let the magic happen :–)
-  persistStore(store, { blacklist: ['guests', 'tables', 'restaurant'], storage }); // .purge() // in case you want to purge the store
+  persistStore(store, { blacklist: ['guests', 'tables', 'restaurant', 'seat'], storage }); // .purge() // in case you want to purge the store
 
   return store;
 };
