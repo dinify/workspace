@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import Person from 'icons/Person';
+import Person from '@material-ui/icons/PersonRounded';
 import Typography from 'web/components/Typography';
 import ScrollSnapView from 'web/components/ScrollSnapView';
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { Motion, spring } from 'react-motion';
-import CheckCircle from 'icons/CheckCircle';
+import CheckCircle from '@material-ui/icons/CheckCircleRounded';
 import { checkSelecting } from 'ducks/seat/selectors';
 
 

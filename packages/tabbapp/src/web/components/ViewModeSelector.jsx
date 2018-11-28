@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ToggleButton from './ToggleButton';
-import VerticalSplit from 'icons/VerticalSplit';
-import Public from 'icons/Public';
-import ViewList from 'icons/ViewList';
+import VerticalSplit from '@material-ui/icons/VerticalSplitRounded';
+import Public from '@material-ui/icons/PublicRounded';
+import ViewList from '@material-ui/icons/ViewListRounded';
 
 const styles = theme => ({
   left: {

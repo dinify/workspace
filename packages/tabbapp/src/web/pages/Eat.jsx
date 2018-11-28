@@ -33,10 +33,10 @@ import ContextMenu from 'web/components/ContextMenu';
 import PageIndicator from 'web/components/PageIndicator';
 import Cart from 'web/pages/Cart';
 
-import RestaurantMenu from 'icons/RestaurantMenu';
-import CreditCard from 'icons/CreditCard';
-import Delete from 'icons/Delete';
-import Done from 'icons/Done';
+import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
+import CreditCard from '@material-ui/icons/CreditCardRounded';
+import Delete from '@material-ui/icons/DeleteRounded';
+import Done from '@material-ui/icons/DoneRounded';
 import QRCodeScan from 'icons/QRCodeScan';
 
 import Typography from 'web/components/Typography';

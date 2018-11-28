@@ -2,8 +2,8 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import PageIndicator from './PageIndicator';
-import ChevronRight from 'icons/ChevronRight';
-import ChevronLeft from 'icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRightRounded';
+import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 import SwipeableViews from 'react-swipeable-views';
 import {
   isTouchMobile,

@@ -1,7 +1,7 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import Favorite from 'icons/Favorite';
-import FavoriteBorder from 'icons/FavoriteBorder';
+import Favorite from '@material-ui/icons/FavoriteRounded';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorderRounded';
 import { withTheme } from '@material-ui/core/styles';
 import { Motion, spring } from 'react-motion';
 

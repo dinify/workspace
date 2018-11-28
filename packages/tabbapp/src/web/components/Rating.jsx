@@ -1,8 +1,8 @@
 import React from 'react';
 import times from 'lodash.times';
 import amber from '@material-ui/core/colors/amber';
-import Star from 'icons/Star';
-import StarBorder from 'icons/StarBorder';
+import Star from '@material-ui/icons/StarRounded';
+import StarBorder from '@material-ui/icons/StarBorderRounded';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({

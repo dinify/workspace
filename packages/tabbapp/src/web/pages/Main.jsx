@@ -6,7 +6,7 @@ import ResponsiveGrid from 'web/components/ResponsiveGrid';
 import AppBar from 'web/components/AppBar';
 import Typography from 'web/components/Typography';
 import Button from '@material-ui/core/Button';
-import ChevronRight from 'icons/ChevronRight';
+import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import RestaurantListItem from 'web/components/RestaurantListItem';
 import * as FN from 'tabb-front/dist/lib/FN';
 

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { withStateHandlers } from 'recompose';
 
-import Delete from 'icons/Delete';
-import Done from 'icons/Done';
-import RestaurantMenu from 'icons/RestaurantMenu';
+import Delete from '@material-ui/icons/DeleteRounded';
+import Done from '@material-ui/icons/DoneRounded';
+import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';

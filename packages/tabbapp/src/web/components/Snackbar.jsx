@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import SnackbarMUI from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import Close from 'icons/Close';
+import Close from '@material-ui/icons/CloseRounded';
 
 const styles = theme => ({
   avoidBotomNav: {

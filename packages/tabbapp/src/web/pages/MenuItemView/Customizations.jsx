@@ -11,9 +11,9 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Chip from '@material-ui/core/Chip';
-import AddCircle from 'icons/AddCircle';
-import RemoveCircle from 'icons/RemoveCircle';
-import AddShoppingCart from 'icons/AddShoppingCart';
+import AddCircle from '@material-ui/icons/AddCircleRounded';
+import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
+import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
 import * as FN from 'tabb-front/dist/lib/FN';
 import {
   excludeIngredient as excludeIngredientAction,

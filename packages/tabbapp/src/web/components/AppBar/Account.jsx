@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from 'web/components/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import Person from 'icons/Person';
+import Person from '@material-ui/icons/PersonRounded';
 import Popover from '@material-ui/core/Popover';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';

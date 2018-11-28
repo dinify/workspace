@@ -1,5 +1,5 @@
 import React from "react";
-import PhotoCamera from 'icons/PhotoCamera';
+import PhotoCamera from '@material-ui/icons/PhotoCameraRounded';
 import Button from '@material-ui/core/Button';
 import Typography from 'web/components/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';

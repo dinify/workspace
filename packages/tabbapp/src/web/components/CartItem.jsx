@@ -2,7 +2,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
-import Delete from 'icons/Delete';
+import Delete from '@material-ui/icons/DeleteRounded';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from 'web/components/Typography';
 import * as FN from 'tabb-front/dist/lib/FN';

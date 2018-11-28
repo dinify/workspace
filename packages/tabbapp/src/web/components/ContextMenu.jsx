@@ -8,11 +8,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
-import MenuIcon from '@material-ui/icons/Menu';
-import AddIcon from '@material-ui/icons/Add';
-import SearchIcon from '@material-ui/icons/Search';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import Close from 'icons/Close';
+import MenuIcon from '@material-ui/icons/MenuRounded';
+import AddIcon from '@material-ui/icons/AddRounded';
+import SearchIcon from '@material-ui/icons/SearchRounded';
+import MoreIcon from '@material-ui/icons/MoreVertRounded';
+import Close from '@material-ui/icons/CloseRounded';
 
 const styles = theme => ({
   toolbar: {

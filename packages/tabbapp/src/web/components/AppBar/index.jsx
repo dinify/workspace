@@ -8,9 +8,9 @@ import { withStateHandlers, getContext } from 'recompose';
 
 import LogoText from 'icons/LogoText';
 import Logo from 'icons/Logo';
-import Search from 'icons/Search';
-import ChevronLeft from 'icons/ChevronLeft';
-import Menu from 'icons/Menu';
+import Search from '@material-ui/icons/SearchRounded';
+import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
+import Menu from '@material-ui/icons/MenuRounded';
 
 import Divider from '@material-ui/core/Divider';
 import MuiAppBar from '@material-ui/core/AppBar';

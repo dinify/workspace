@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import FacebookBox from 'icons/FacebookBox';
 import Instagram from 'icons/Instagram';
 import CalendarClock from 'icons/CalendarClock';
-import Place from 'icons/Place';
+import Place from '@material-ui/icons/PlaceRounded';
 import FavoriteToggle from 'web/components/FavoriteToggle';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { favRestaurantInit } from 'ducks/restaurant/actions';

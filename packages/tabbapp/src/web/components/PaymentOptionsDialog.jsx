@@ -8,9 +8,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 
-import CreditCard from 'icons/CreditCard';
-import Public from 'icons/Public';
-import Wallet from 'icons/Wallet';
+import CreditCard from '@material-ui/icons/CreditCardRounded';
+import Public from '@material-ui/icons/PublicRounded';
+import Wallet from '@material-ui/icons/AccountBalanceWalletRounded';
 
 const options = [
   {
