@@ -156,8 +156,9 @@ class BillItem extends React.PureComponent {
               <div style={{display: 'flex', justifyContent: 'start'}}>
                 <Typography style={{flex: 1,  marginRight: 32}} color="textSecondary" variant="caption">
                   {(() => {
+                    if (divisor === 1) return '';
                     if (item.locked) return 'Partially paid by others';
-                    return divisor > 1 ? `Split between ${divisor} people` : '';
+                    return `Split between ${divisor} people`;
                   })()}
                 </Typography>
                 {divisor > 1 && <Typography

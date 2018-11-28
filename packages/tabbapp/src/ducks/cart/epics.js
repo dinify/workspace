@@ -1,7 +1,7 @@
 // @flow
 import { Observable } from 'rxjs';
 import * as API from 'tabb-front/dist/api/restaurant';
-import { showSnackbar } from 'ducks/notifications/actions';
+import { dispatchSnackbar } from 'ducks/notifications/actions';
 import * as FN from 'tabb-front/dist/lib/FN';
 import { fetchSeatsInit } from 'ducks/seat/actions';
 import types from './types';
@@ -49,7 +49,7 @@ const addToCartEpic = (action$: Observable, { getState }) =>
           return Observable.of(
             addToCartDone(res),
             fetchCartInit(),
-            showSnackbar({
+            dispatchSnackbar({
               message: 'Added to cart',
               redirect: '/eat',
               actionTitle: 'Go to cart'
@@ -70,7 +70,7 @@ const orderEpic = (action$: Observable, { getState }) =>
           return Observable.of(
             orderDone(res),
             fetchCartInit(),
-            showSnackbar({
+            dispatchSnackbar({
               message: 'Order has been placed'
             })
           );
