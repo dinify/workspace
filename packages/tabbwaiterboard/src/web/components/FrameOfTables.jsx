@@ -2,7 +2,7 @@
 import React from 'react'
 import Table from './Table'
 import Container from './Container'
-import { Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 
 const FrameOfTables = ({
   tableList,

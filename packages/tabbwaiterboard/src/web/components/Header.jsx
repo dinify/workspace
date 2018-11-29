@@ -6,15 +6,11 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { MapToList } from 'lib/FN'
 
-import {
-  AppBar,
-  IconButton,
-  Toolbar,
-  Typography,
-  Button,
-  Badge,
-  Grid
-} from '@material-ui/core'
+import AppBar from '@material-ui/core/AppBar'
+import IconButton from '@material-ui/core/IconButton'
+import Toolbar from '@material-ui/core/Toolbar'
+import Badge from '@material-ui/core/Badge'
+import Grid from '@material-ui/core/Grid'
 
 import ExitToApp from '@material-ui/icons/ExitToApp'
 import Payment from '@material-ui/icons/Payment'
@@ -89,7 +85,7 @@ const styles = {
 
 const Header = ({
   tablesCount = 0,
-  guestsCount = 0,
+  guestCount,
   salesVolume = 0,
   loggedUser,
   selectedWBId,
@@ -133,7 +129,7 @@ const Header = ({
                 <Label>Section</Label><Value>{waiterboardName}</Value>
               </Link>
               <Label>Tables</Label><Value>{tablesCount}</Value>
-              <Label>Guests</Label><Value>{guestsCount}</Value>
+              <Label>Guests</Label><Value>{guestCount}</Value>
               <Label>Sales</Label><Value>{numeral(salesVolume).format('0.000')}KD</Value>
 
               <IconButton onClick={logout}>
@@ -155,7 +151,7 @@ export default connect(
     frameIndex: state.ui.frameIndex,
     bookings: state.booking.all,
     salesVolume: state.restaurant.sales,
-    guestsCount: state.seat.list.lenght,
+    guestCount: state.seat.list.length,
   }),
   {
     logout: logoutInitAction,

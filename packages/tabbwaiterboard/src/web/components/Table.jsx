@@ -10,8 +10,12 @@ import sort from 'ramda/src/sort'
 import S from 'string'
 import { toggleModal } from 'ducks/ui'
 
-import { Block, ExitToApp } from '@material-ui/icons'
-import { IconButton, Grid, Tooltip, Chip } from '@material-ui/core'
+import Block from '@material-ui/icons/Block'
+import ExitToApp from '@material-ui/icons/ExitToApp'
+import Grid from '@material-ui/core/Grid'
+import Tooltip from '@material-ui/core/Tooltip'
+import Chip from '@material-ui/core/Chip'
+import IconButton from '@material-ui/core/IconButton'
 
 const TableBox = styled.div`
   display: inline-block;
