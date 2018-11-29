@@ -75,7 +75,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
   				</Form>
   			: ''}
   			<Text color={color}>
-          {bill.type}
+          {moment(bill.updated_at).format('DD/MM/YYYY h:mm A')} by {bill.type}
   			</Text>
         {!noconfirm ?
           <CheckButton bg={color} onClick={() => confirmBill({billId: bill.id, initiator: bill.initiator})} flash={!noconfirm && isItOutdated(bill.requested, timer.p)} invisible={noconfirm}>
@@ -95,7 +95,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
           <tbody>
   					{orderItems.map((order) =>
               [<Tr key={order.id} className="headline">
-                <Td>{orderTypes[order.type]} order from {moment().format('HH:mm')}</Td>
+                <Td>{orderTypes[order.type]} order</Td>
                 <Td>{order.items.length}</Td>
                 <Td>{N(order.subtotal.amount).format('0.000')}KD</Td>
               </Tr>,

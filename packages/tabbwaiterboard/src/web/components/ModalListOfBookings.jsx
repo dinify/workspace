@@ -7,8 +7,8 @@ import { MapToList } from 'lib/FN'
 
 import { Head, Body, BodyPlaceholder } from './styled/Modal'
 
-const ModalListOfBookings = ({ bookings }) => {
-
+const ModalListOfBookings = ({ bookings, shown }) => {
+  if (!shown) return (<div />)
   const accepted = MapToList(bookings).filter((b) => b.status === 'CONFIRMED')
 
   return (

@@ -1,0 +1,12 @@
+import { createSelector } from 'reselect'
+import { MapToList } from 'tabb-front/dist/lib/FN';
+import filter from 'ramda/src/filter'
+
+export const getCallList = createSelector(
+  [
+    (state) => state.call.all,
+  ],
+  (all) => {
+    return filter((c) => c.status === 'PENDING')(MapToList(all));
+  }
+)

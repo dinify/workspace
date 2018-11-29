@@ -23,7 +23,7 @@ const createEpic = (action$: Observable) =>
 const fetchEpic = (action$: Observable) =>
   action$
   .filter(action => action.type.startsWith('FETCH_') && action.type.endsWith('_INIT'))
-  .switchMap(({ payload, type }) => {
+  .mergeMap(({ payload, type }) => {
     const subject = type.replace('FETCH_','').replace('_INIT','')
     const apiFnName = `Get${camel(subject)}`
     return Observable

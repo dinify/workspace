@@ -1,32 +1,29 @@
 import assoc from 'ramda/src/assoc'
-import find from 'ramda/src/find'
-import filter from 'ramda/src/filter'
-import propEq from 'ramda/src/propEq'
-import { UpdateOriginal } from 'lib/FN'
+import assocPath from 'ramda/src/assocPath'
 import types from './types';
+import mergeDeepRight from 'ramda/src/mergeDeepRight'
+import { ListToMap } from 'lib/FN'
 
 const initialState = {
-  list: []
+  all: {}
 }
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
 
     case 'GET_ORDERS_DONE': {
-      const payload = action.payload;
-      return assoc('list', payload)(state);
+      const list = action.payload;
+      return assoc('all', mergeDeepRight(state.all, ListToMap(list)))(state);
     }
 
     case types.ORDER_RECEIVED: {
       const { order } = action.payload;
-      if (find(propEq('id', order.id))(state.list)) return state;
-      return assoc('list', [...state.list, order])(state);
+      return assocPath(['all', order.id], order)(state);
     }
 
     case 'ORDER_CONFIRMATION_INIT': {
       const { orderId } = action.payload;
-      const newList = filter((o) => o.id !== orderId, state.list);
-      return assoc('list', newList)(state);
+      return assocPath(['all', orderId, 'status'], 'CONFIRMED')(state);
     }
 
     default:

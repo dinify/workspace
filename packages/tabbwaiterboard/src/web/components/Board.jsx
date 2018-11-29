@@ -3,9 +3,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import filter from 'ramda/src/filter'
-import groupBy from 'ramda/src/groupBy'
-
 import Swipeable from 'react-swipeable'
 import { MapToList } from 'lib/FN'
 
@@ -26,6 +23,12 @@ import { setOHEnabled } from 'ducks/restaurant'
 
 import { Grid } from '@material-ui/core';
 
+import { getBookingList } from 'ducks/booking/selectors';
+import { getGroupedBills } from 'ducks/bill/selectors';
+import { getOrderList } from 'ducks/order/selectors';
+import { getCallList } from 'ducks/call/selectors';
+import { getTableList } from 'ducks/table/selectors';
+
 const OneBoard = styled.div`
   position: fixed;
   top: 50px;
@@ -43,7 +46,6 @@ const Frame = styled.div`
   padding-top: 10px;
 `
 
-
 const EventsPlaceholder = styled.div`
   font-size: 32px;
   text-align: center;
@@ -55,21 +57,12 @@ const EventsPlaceholder = styled.div`
   height: calc(100vh - 120px);
 `
 
-const masonryOptions = {
-  isAnimated: true,
-  animationOptions: {
-    duration: 750,
-    easing: 'linear',
-    queue: false
-  }
-}
-
 const Board = ({
-  bookingsList,
-  calls,
-  orders,
-  bills,
-  tablesList,
+  bookingList,
+  callList,
+  orderList,
+  billsGroupedLists,
+  tableList,
   frameIndex,
   modalOpen,
   modalType,
@@ -82,12 +75,13 @@ const Board = ({
     if (e.target.className.indexOf('modal-area') > -1) toggleModal({ open: false });
   }
 
-  const billsInitiated = bills.INITIATED || [];
-  const billsProcessed = bills.PROCESSED || [];
+  const billsInitiated = billsGroupedLists.INITIATED || [];
+  const billsProcessed = billsGroupedLists.PROCESSED || [];
+
   return (<div>
 
     <Header
-      tablesCount={tablesList.length}
+      tablesCount={tableList.length}
       processedBillsCount={billsProcessed.length}
     />
 
@@ -99,15 +93,15 @@ const Board = ({
         <Frame n={0}>
           <Container>
             <Container>
-              {orders.length > 0 || bookingsList.length > 0 || calls.length > 0 || billsInitiated.length > 0 ?
+              {orderList.length > 0 || bookingList.length > 0 || callList.length > 0 || billsInitiated.length > 0 ?
                 <div>
-                  {bookingsList.map((booking) =>
+                  {bookingList.map((booking) =>
                     <Booking key={booking.id} booking={booking} />
                   )}
-                  {calls.map((call) =>
+                  {callList.map((call) =>
                     <Call key={call.id} call={call} />
                   )}
-                  {orders.map((order) =>
+                  {orderList.map((order) =>
                     <Order key={order.id} order={order} />
                   )}
                   {billsInitiated.map((bill) =>
@@ -123,7 +117,7 @@ const Board = ({
         <Frame n={1}>
           <Container>
             <Grid container spacing={8} justify="flex-start" alignItems="flex-start">
-              {tablesList.map((table) =>
+              {tableList.map((table) =>
                 <Grid item key={table.id}>
                   <Table openModal={(userId) => toggleModal({ open: true, userId })} table={table} key={table.id} />
                 </Grid>
@@ -134,11 +128,10 @@ const Board = ({
       </OneBoard>
     </Swipeable>
 
-
     <Modal shown={modalOpen} closeModal={closeModal}>
-      {modalType === 'User' ? <ModalUser payload={modalPayload} /> : '' }
-      {modalType === 'ListOfBills' ? <ModalListOfBills payload={modalPayload} bills={billsProcessed} /> : '' }
-      {modalType === 'ListOfBookings' ? <ModalListOfBookings payload={modalPayload} /> : '' }
+      <ModalUser shown={modalType === 'User'} payload={modalPayload} />
+      <ModalListOfBills shown={modalType === 'ListOfBills'} payload={modalPayload} bills={billsProcessed} />
+      <ModalListOfBookings shown={modalType === 'ListOfBookings'} payload={modalPayload} />
     </Modal>
 
   </div>)
@@ -147,13 +140,11 @@ const Board = ({
 
 export default connect(
   state => ({
-    bookingsList: MapToList(state.booking.all).filter((b) => b.status === 'PENDING'),
-    orders: filter((o) => o.status !== 'CONFIRMED')(state.order.list),
-    bills: groupBy((b) => b.status === 'PROCESSED' ? 'PROCESSED' : 'INITIATED')(MapToList(state.bill.all)),
-    calls: state.call.list.filter((b) => b.status === 'PENDING'),
-
-    tablesList: MapToList(state.table.all).sort((a,b) => a.number - b.number),
-
+    bookingList: getBookingList(state),
+    billsGroupedLists: getGroupedBills(state),
+    orderList: getOrderList(state),
+    callList: getCallList(state),
+    tableList: getTableList(state),
     frameIndex: state.ui.frameIndex,
     modalOpen: state.ui.modalOpen,
     modalType: state.ui.modalType,

@@ -27,22 +27,14 @@ const ModalBox = styled.div`
   text-align: left;
 `;
 
-
-class Modal extends React.Component {
-
-
-  render(){
-
-    const { shown, closeModal, children } = this.props;
-
-    return (
-    	<ModalArea shown={shown} onClick={closeModal} className="modal-area">
-        <ModalBox>
-          {children}
-        </ModalBox>
-    	</ModalArea>
-    )
-  }
+const Modal = ({ shown, closeModal, children }) => {
+  return (
+    <ModalArea shown={shown} onClick={closeModal} className="modal-area">
+      <ModalBox>
+        {children}
+      </ModalBox>
+    </ModalArea>
+  )
 }
 
 export default Modal

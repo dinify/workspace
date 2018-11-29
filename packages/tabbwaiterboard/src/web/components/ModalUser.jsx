@@ -99,10 +99,10 @@ class ModalUser extends React.Component {
 
   render(){
 
-    const { payload: { userId }, users, clearUser, getBillsOfUser, getOrdersOfUser } = this.props;
+    const { payload: { userId }, users, clearUser, getBillsOfUser, getOrdersOfUser, shown } = this.props;
 
     const user = users[userId]
-
+    if (!shown) return (<div />)
     if (!user) return (<div />)
 
     let totalSpend = 0

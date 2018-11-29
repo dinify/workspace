@@ -13,7 +13,6 @@ export default function reducer(state = initialState, action) {
 
     case 'GET_BILLS_DONE': {
       const list = action.payload;
-      console.log(list);
       return assoc('all', mergeDeepRight(state.all, ListToMap(list)))(state);
     }
 

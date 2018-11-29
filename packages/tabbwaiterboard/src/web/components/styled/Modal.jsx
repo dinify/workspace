@@ -5,6 +5,7 @@ export const Head = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1000;
   width: 100%;
   height: 40px;
   line-height: 40px;
@@ -27,7 +28,7 @@ export const Body = styled.div`
   height: 100%;
   box-sizing: border-box;
   overflow: auto;
-  .Booking {
+  .Booking, .Bill {
     width: 100%
   }
 `;

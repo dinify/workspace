@@ -6,6 +6,7 @@ import { bookingEpics } from './ducks/booking'
 import { callEpics } from './ducks/call'
 import { orderEpics } from './ducks/order'
 import { seatEpics } from './ducks/seat'
+import { billEpics } from './ducks/bill'
 
 
 const epics = [
@@ -15,7 +16,8 @@ const epics = [
   ...callEpics,
   ...tableEpics,
   ...orderEpics,
-  ...seatEpics
+  ...seatEpics,
+  ...billEpics
 ]
 
 export default (deps = {}, platformEpics = []) => (action$, { getState, dispatch }) =>

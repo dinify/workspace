@@ -4,34 +4,33 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { fetchTodayBills as fetchTodayBillsAction } from 'ducks/bill/actions';
 import Bill from './Events/Bill'
+import { colorsByStages } from '../colors'
 
-const Body = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  overflow: auto;
-  .Bill {
-    width: 100%
-  }
-`;
+import { Head, Body, BodyPlaceholder } from './styled/Modal'
+
 
 class ModalListOfBills extends React.Component {
 
-  componentDidMount() {
-    const { fetchTodayBills, waiterboardId } = this.props;
-    fetchTodayBills({ waiterboardId });
+  componentDidUpdate(prevProps) {
+    if (this.props.shown && !prevProps.shown) {
+      const { fetchTodayBills, waiterboardId } = this.props;
+      fetchTodayBills({ waiterboardId });
+    }
   }
 
   render(){
 
-    const { bills } = this.props;
+
+    const { bills, shown } = this.props;
+    if (!shown) return (<div />)
 
     return (
     	<div>
+        <Head bg={colorsByStages['s5']}>
+          Accepted Reservations
+        </Head>
         <Body>
+          {bills.length < 1 ? <BodyPlaceholder>No confirmed payments</BodyPlaceholder> : ''}
           {bills.map((bill) =>
             <Bill key={bill.id} bill={bill} noconfirm />
           )}
