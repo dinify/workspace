@@ -36,7 +36,7 @@ const ContextMenu = ({
           bottom: 0,
           height: 56,
           width: '100%',
-          zIndex: 100,
+          zIndex: 1260,
           transform: `translate3d(0, ${style.x * 56}px, 0)`
         }}>
           <AppBar position="static" color="primary">
