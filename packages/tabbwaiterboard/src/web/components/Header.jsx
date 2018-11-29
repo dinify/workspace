@@ -14,9 +14,11 @@ import Grid from '@material-ui/core/Grid'
 
 import ExitToApp from '@material-ui/icons/ExitToApp'
 import Payment from '@material-ui/icons/Payment'
+import Event from '@material-ui/icons/Event'
 
 import { logoutInitAction } from 'ducks/restaurant'
 import { toggleFrames, toggleModal } from 'ducks/ui'
+import { colorsByStages } from '../colors'
 
 const Label = styled.span`
   color: rgb(180, 185, 190);
@@ -58,6 +60,7 @@ const Container = styled.div`
   }
 `;
 
+
 const SwipeButton = styled.button`
   height: 50px;
   min-width: 130px;
@@ -70,6 +73,40 @@ const SwipeButton = styled.button`
   font-weight: 300;
   cursor: pointer;
   outline: none;
+  @keyframes color {
+    0% {
+      background-color: rgb(231,76,60);
+    }
+    25% {
+      background-color: rgb(255,143,0);
+    }
+    50% {
+      background-color: rgb(144,19,254);
+    }
+    75% {
+      background-color: rgb(33,150,243);
+    }
+    0% {
+      background-color: rgb(231,76,60);
+    }
+  }
+  &.warn {
+    background-color: rgb(231,76,60);
+    animation-name: color;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+  }
+`
+
+const BookingBadge = styled.span`
+  span span {
+    background-color: ${colorsByStages.booking};
+  }
+`
+const BillsBadge = styled.span`
+  span span {
+    background-color: ${colorsByStages.s5};
+  }
 `
 
 const styles = {
@@ -94,7 +131,8 @@ const Header = ({
   toggleModal,
   frameIndex,
   bookings,
-  processedBillsCount
+  processedBillsCount,
+  anyAction
 }) => {
   const frames = ['actions','tables']
   let waiterboardName = ''
@@ -110,19 +148,31 @@ const Header = ({
 
           <Grid container spacing={8} alignItems="center">
             <Grid item xs={2}>
-              <SwipeButton onClick={() => toggleFrames(frameIndex ? 0 : 1)}>Slide to {frames[frameIndex]}</SwipeButton>
+              <SwipeButton
+                onClick={() => toggleFrames(frameIndex ? 0 : 1)}
+                className={frameIndex === 0 && anyAction ? 'warn' : ''}
+              >
+                Slide to {frames[frameIndex]}
+              </SwipeButton>
             </Grid>
             <Grid item xs={2}>
+
               <IconButton onClick={() => toggleModal({ open: true, type: 'ListOfBookings' })}>
-                <Badge badgeContent={acceptedBookings.length} color="primary">
-                  <i className="ion-ios-calendar" />
-                </Badge>
+                <BookingBadge>
+                  <Badge badgeContent={acceptedBookings.length}>
+                    <Event />
+                  </Badge>
+                </BookingBadge>
               </IconButton>
+
               <IconButton onClick={() => toggleModal({ open: true, type: 'ListOfBills' })}>
-                <Badge badgeContent={processedBillsCount} color="primary">
-                  <Payment />
-                </Badge>
+                <BillsBadge>
+                  <Badge badgeContent={processedBillsCount}>
+                    <Payment />
+                  </Badge>
+                </BillsBadge>
               </IconButton>
+
             </Grid>
             <Grid item xs={8} style={{textAlign: 'right'}}>
               <Link to="/board/">

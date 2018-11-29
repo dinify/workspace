@@ -27,7 +27,7 @@ class ModalListOfBills extends React.Component {
     return (
     	<div>
         <Head bg={colorsByStages['s5']}>
-          Accepted Reservations
+          Confirmed payments
         </Head>
         <Body>
           {bills.length < 1 ? <BodyPlaceholder>No confirmed payments</BodyPlaceholder> : ''}

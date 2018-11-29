@@ -4,9 +4,10 @@ import types from './types';
 import orderTypes from 'ducks/order/types';
 import billTypes from 'ducks/bill/types';
 import callTypes from 'ducks/call/types';
-import R from 'ramda';
 
 const socket = io('https://downstream.tabb.global');
+
+const chime = new Audio('/static/GLASS.wav');
 
 const websockets = (store) => {
   const { dispatch, getState } = store;
@@ -44,6 +45,7 @@ const websockets = (store) => {
     const userId = payload.order.initiator;
     dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
     dispatch({ type: orderTypes.ORDER_RECEIVED, payload });
+    chime.play();
   })
 
   socket.on('transaction-incoming', (payload) => {
@@ -56,6 +58,7 @@ const websockets = (store) => {
         payment: payload.trasaction
       }
     });
+    chime.play();
   })
 
   socket.on('call-incoming', (payload) => {
@@ -63,10 +66,12 @@ const websockets = (store) => {
     dispatch({ type: callTypes.CALL_RECEIVED, payload });
     const userId = payload.call.user_id;
     dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
+    chime.play();
   })
 
   socket.on('booking-incoming', (data) => {
     console.log('booking-incoming', data);
+    chime.play();
   })
 
 }
