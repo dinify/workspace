@@ -25,16 +25,6 @@ import * as FN from 'tabb-front/dist/lib/FN';
 import withRoot from 'withRoot.js';
 
 class App extends React.Component {
-
-  constructor() {
-    super();
-
-    const success = Messaging.initialize();
-    if (!success) {
-      // TODO: initialize socket.io
-    }
-  }
-
   onNavigate = (evt, val) => {
     if (val === 0) this.props.history.push('/');
     else if (val === 1) this.props.history.push('/eat');
