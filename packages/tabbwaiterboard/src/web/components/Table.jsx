@@ -1,21 +1,19 @@
 // @flow
-import React from 'react'
-import styled from 'styled-components'
-import { connect } from 'react-redux'
-import { colorsByStages } from '../colors'
-import { clearTable, updateTableInit } from 'ducks/table/actions'
-import pluck from 'ramda/src/pluck'
-import sort from 'ramda/src/sort'
+import React from 'react';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { colorsByStages } from '../colors';
+import { clearTable, updateTableInit } from 'ducks/table/actions';
 
-import S from 'string'
-import { toggleModal } from 'ducks/ui'
+import S from 'string';
+import { toggleModal } from 'ducks/ui';
 
-import Block from '@material-ui/icons/Block'
-import ExitToApp from '@material-ui/icons/ExitToApp'
-import Grid from '@material-ui/core/Grid'
-import Tooltip from '@material-ui/core/Tooltip'
-import Chip from '@material-ui/core/Chip'
-import IconButton from '@material-ui/core/IconButton'
+import Block from '@material-ui/icons/Block';
+import ExitToApp from '@material-ui/icons/ExitToApp';
+import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
+import Chip from '@material-ui/core/Chip';
+import IconButton from '@material-ui/core/IconButton';
 
 const TableBox = styled.div`
   display: inline-block;
@@ -40,6 +38,7 @@ const Thumbnail = styled.div`
 `;
 const Id = styled.div`
   font-size: 22px;
+  background: rgba(0,0,0,0.13);
   font-weight: 700;
   height: 50px;
   line-height: 50px;
@@ -141,19 +140,21 @@ const Sign = ({ guest, timer }) => {
 
 
 const Table = ({
-  table, clearTable, toggleModal, guestList, users, timer, updateTable
+  table,
+  clearTable,
+  toggleModal,
+  seats = [],
+  users,
+  timer,
+  updateTable
 }) => {
 
-  const presentGuests = guestList.filter((g) => {
-    return g.table_id === table.id
-  })
-  .sort((a,b) => b.id.localeCompare(a.id))
-  .map((g) => {
-    g.user = users[g.user_id]
-    return g
+  const presentGuests = seats.map((s) => {
+    s.user = users[s.user_id]
+    return s
   })
 
-  const guestsStatuses = sort((a,b) => b.localeCompare(a), pluck('status')(presentGuests))
+  const guestsStatuses = []
 
   const tableStatus = guestsStatuses[0]
 
@@ -162,7 +163,7 @@ const Table = ({
       <Thumbnail color={tableStatus === 's1' ? 'black' : 'white'} bg={presentGuests && presentGuests.length > 0 ? colorsByStages[tableStatus] : ''}>
         <Grid container direction="column" justify="center" alignItems="center" spacing={16}>
           <Grid item>
-            <Id onClick={() => toggleModal({ open: true, type: 'ListOfBills', tableId: table.id })}>
+            <Id onClick={() => toggleModal({ open: true, type: 'Table', tableId: table.id })}>
               {table.number}
             </Id>
           </Grid>
@@ -217,7 +218,6 @@ const Table = ({
 
 export default connect(
   state => ({
-    guestList: state.seat.list,
     users: state.user.all,
     loggedRestaurant: state.restaurant.loggedRestaurant,
     timer: state.restaurant.timer

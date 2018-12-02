@@ -28,9 +28,9 @@ const Call = ({ call, confirmCall, removed, timer, users, services }) => {
 				<User user={users[call.user_id]} />
 
 				{service &&
-					<Text color={color}>
+					<Text color={color} style={{top: 16}}>
+		        <span>{service.name}</span>
 						<Photo url={service.image.url}/>
-		        <Name>{service.name}</Name>
 		      </Text>
 				}
 

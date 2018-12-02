@@ -68,7 +68,7 @@ export function ConfirmCall({ callId }) {
 }
 
 export function GetOrders({ waiterboardId }) {
-  return Get({ v3: true, path: `waiterboard/${waiterboardId}/orders?with=items.choices,items.addons,items.excludes&status=DISPATCHED` })
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/orders/today?with=items.choices,items.addons,items.excludes` })
 }
 
 export function ConfirmOrder({ orderId }) {
@@ -80,7 +80,7 @@ export function GetBills({ waiterboardId }) {
 }
 
 export function GetTodaybills({ waiterboardId }) {
-  return Get({ v3: true, path: `waiterboard/${waiterboardId}/transactions/all?with=orders&limit=100` })
+  return Get({ v3: true, path: `waiterboard/${waiterboardId}/transactions/all?limit=100` })
 }
 
 export function ConfirmBill({ billId, approvalNumber }) {

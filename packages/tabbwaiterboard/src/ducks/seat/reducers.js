@@ -1,13 +1,12 @@
 import assoc from 'ramda/src/assoc'
 import filter from 'ramda/src/filter'
-import findIndex from 'ramda/src/findIndex'
-import propEq from 'ramda/src/propEq'
 import assocPath from 'ramda/src/assocPath'
+import { ListToMap } from 'lib/FN'
 
 import types from './types';
 
 const initialState = {
-  list: []
+  all: {}
 }
 
 export default function reducer(state = initialState, action) {
@@ -15,20 +14,18 @@ export default function reducer(state = initialState, action) {
 
     case 'LOAD_SEATS_DONE': {
       const list = action.payload.res;
-      return assoc('list', list)(state);
+      return assoc('all', ListToMap(list))(state);
     }
 
     case 'SEAT_RECEIVED': {
       const { seat } = action.payload;
-      const seatIndex = findIndex(propEq('id', seat.id))(state.list);
-      if (seatIndex > -1) return assocPath(['list', seatIndex], seat)(state);
-      return assoc('list', [...state.list, seat])(state);
+      return assocPath(['all', seat.id], seat)(state);
     }
 
     case 'CLEAR_TABLE_DONE': {
       const tableId = action.payload.table.id;
-      const filteredGuests = filter((guest) => guest.table_id !== tableId, state.list);
-      return assoc('list', filteredGuests)(state);
+      const filteredGuests = filter((guest) => guest.table_id !== tableId, state.all);
+      return assoc('all', filteredGuests)(state);
     }
 
     default:

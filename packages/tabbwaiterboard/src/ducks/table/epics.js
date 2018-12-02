@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs'
-import R from 'ramda'
 import * as API from 'api/restaurant'
 
 const clearTableEpic = (action$: Observable) =>

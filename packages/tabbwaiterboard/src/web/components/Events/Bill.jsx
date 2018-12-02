@@ -10,6 +10,7 @@ import User from './user'
 import { isItOutdated } from '../../../common/helpers/time'
 import N from 'numeral';
 import * as FN from '../../../lib/FN'
+import Elapsed from './Elapsed';
 import moment from 'moment';
 
 const TextInput = styled(FormText)`
@@ -31,9 +32,9 @@ const orderTypes = {
   'AHEAD': 'Ahead'
 }
 
-const color = colorsByStages['s5']
+const color = colorsByStages.s5
 
-const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users }) => {
+const Bill = ({ bill, confirmBill, removed, noconfirm, timer, users }) => {
   if (!bill || !bill.subtotal) return null
   const subtotal = Number(bill.subtotal.amount);
   const gratuityPercentage = Number(bill.gratuity/100);
@@ -45,6 +46,10 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
     newOrder.items = FN.MapToList(order.items)
     return newOrder;
   })
+  let updatedAtDate = false;
+  if (noconfirm) {
+    updatedAtDate = moment.utc(bill.updated_at).local().format('DD/MM/YYYY h:mm A');
+  }
   return (
     <ActionBox className={removed ? 'vhs-zoom vhs-reverse Bill' : 'Bill'}>
       <Header>
@@ -75,10 +80,14 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, datetime, users })
   				</Form>
   			: ''}
   			<Text color={color}>
-          {moment(bill.updated_at).format('DD/MM/YYYY h:mm A')} by {bill.type}
+          {updatedAtDate ?
+            <span>{updatedAtDate}</span>
+            :
+            <Elapsed startAt={bill.updated_at} />
+          } by {bill.type}
   			</Text>
         {!noconfirm ?
-          <CheckButton bg={color} onClick={() => confirmBill({billId: bill.id, initiator: bill.initiator})} flash={!noconfirm && isItOutdated(bill.requested, timer.p)} invisible={noconfirm}>
+          <CheckButton bg={color} onClick={() => confirmBill({billId: bill.id, initiator: bill.initiator})} invisible={noconfirm}>
             <i className="ion-checkmark" />
           </CheckButton>
         : ''}

@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import Swipeable from 'react-swipeable'
+import { MapToList } from 'lib/FN'
 
 import Header from './Header'
 import FrameOfTables from './FrameOfTables'
@@ -10,6 +11,7 @@ import Modal from './Modal'
 import ModalUser from './ModalUser'
 import ModalListOfBills from './ModalListOfBills'
 import ModalListOfBookings from './ModalListOfBookings'
+import ModalTable from './ModalTable'
 
 import { toggleFrames, toggleModal } from 'ducks/ui'
 import { setOHEnabled } from 'ducks/restaurant'
@@ -24,6 +26,7 @@ import Bill from './Events/Bill'
 import { getBookingList } from 'ducks/booking/selectors';
 import { getOrderList } from 'ducks/order/selectors';
 import { getCallList } from 'ducks/call/selectors';
+import { getSeatList } from 'ducks/seat/selectors';
 
 const EventsPlaceholder = styled.div`
   font-size: 32px;
@@ -58,12 +61,14 @@ const Board = ({
   callList,
   billsGroupedLists,
   tableList,
+  seatList,
   frameIndex,
   modalOpen,
   modalType,
   modalPayload,
   toggleFrames,
-  toggleModal
+  toggleModal,
+  orders
 }) => {
 
   const closeModal = (e) => {
@@ -84,8 +89,9 @@ const Board = ({
 
     <Header
       tablesCount={tableList.length}
-      processedBillsCount={billsProcessed.length}
+      processedBillsCount={MapToList(orders).filter((o) => o.status === 'CONFIRMED').length}
       anyAction={anyAction}
+      guestCount={seatList.length}
     />
 
     <Swipeable
@@ -116,15 +122,16 @@ const Board = ({
           </Container>
         </Frame>
         <Frame n={1}>
-          <FrameOfTables tableList={tableList} toggleModal={toggleModal} />
+          <FrameOfTables tableList={tableList} seatList={seatList} toggleModal={toggleModal} />
         </Frame>
       </OneBoard>
     </Swipeable>
 
     <Modal shown={modalOpen} closeModal={closeModal}>
       <ModalUser shown={modalType === 'User'} payload={modalPayload} />
-      <ModalListOfBills shown={modalType === 'ListOfBills'} payload={modalPayload} bills={billsProcessed} />
+      <ModalListOfBills shown={modalType === 'ListOfBills'} payload={modalPayload} />
       <ModalListOfBookings shown={modalType === 'ListOfBookings'} payload={modalPayload} />
+      <ModalTable shown={modalType === 'Table'} payload={modalPayload} seatList={seatList} />
     </Modal>
 
   </div>)
@@ -138,10 +145,12 @@ export default connect(
     callList: getCallList(state),
     billsGroupedLists: getGroupedBills(state),
     tableList: getTableList(state),
+    seatList: getSeatList(state),
     frameIndex: state.ui.frameIndex,
     modalOpen: state.ui.modalOpen,
     modalType: state.ui.modalType,
     modalPayload: state.ui.modalPayload,
+    orders: state.order.all
   }),
   {
     toggleFrames,

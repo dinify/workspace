@@ -9,6 +9,12 @@ const socket = io('https://downstream.tabb.global');
 
 const chime = new Audio('/static/GLASS.wav');
 
+const playChime = () => {
+  chime.pause();
+  chime.currentTime = 0;
+  chime.play();
+}
+
 const websockets = (store) => {
   const { dispatch, getState } = store;
 
@@ -34,6 +40,7 @@ const websockets = (store) => {
     const userId = payload.seat.user_id;
     dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
     dispatch({ type: 'SEAT_RECEIVED', payload });
+    playChime();
   })
 
   socket.on('checkout', (data) => {
@@ -45,7 +52,7 @@ const websockets = (store) => {
     const userId = payload.order.initiator;
     dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
     dispatch({ type: orderTypes.ORDER_RECEIVED, payload });
-    chime.play();
+    playChime();
   })
 
   socket.on('transaction-incoming', (payload) => {
@@ -58,7 +65,7 @@ const websockets = (store) => {
         payment: payload.trasaction
       }
     });
-    chime.play();
+    playChime();
   })
 
   socket.on('call-incoming', (payload) => {
@@ -66,12 +73,12 @@ const websockets = (store) => {
     dispatch({ type: callTypes.CALL_RECEIVED, payload });
     const userId = payload.call.user_id;
     dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
-    chime.play();
+    playChime();
   })
 
   socket.on('booking-incoming', (data) => {
     console.log('booking-incoming', data);
-    chime.play();
+    playChime();
   })
 
 }

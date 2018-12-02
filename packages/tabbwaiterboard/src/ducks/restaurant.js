@@ -20,7 +20,6 @@ const initialState = {
   selectedWBId: null,
   appRun: false,
   loggedUser: null,
-  events: {},
   sales: 0,
   timer: {
     o: 200
@@ -92,7 +91,6 @@ export const confirmOrder = (payload) => ({ type: 'ORDER_CONFIRMATION_INIT', pay
 export const confirmOrderAhead = (payload) => ({ type: 'ORDERAHEAD_CONFIRMATION_INIT', payload })
 export const confirmBill = (payload) => ({ type: 'BILL_CONFIRMATION_INIT', payload })
 export const confirmationFail = () => ({ type: 'CONFIRMATION_FAIL' })
-export const getTablesInit = () => ({ type: 'GET_TABLES_INIT' })
 export const setTimer = (payload) => ({ type: 'SET_TIMER', payload })
 export const setOHEnabled = () => ({ type: 'SET_OHENABLED_INIT' })
 export const getBillsOfUser = (payload) => ({ type: 'GET_BILLSOFUSER_INIT', payload })
@@ -101,19 +99,33 @@ export const getOrdersOfUser = (payload) => ({ type: 'GET_ORDERSOFUSER_INIT', pa
 export const setWBidAction = (id) => {
   const path = window.location.pathname
   if (path.includes('/board/') && path.length > 20) id = path.replace('/board/','').replace('/','')
-  window.initSocket(id);
+  if (id) window.initSocket(id);
   return {
     type: 'SET_WBID',
     payload: { id }
   }
 }
 
+const setWBEpic = (action$: Observable) =>
+  action$
+  .ofType('SET_WBID')
+  .mergeMap(({ payload: { id } }) => {
+    return Observable.of({
+      type: 'LOAD_STATE_INIT',
+      payload: {
+        waiterboardId: id
+      }
+    });
+  })
+
+
 // Epics
 const bootstrapEpic = (action$: Observable, { getState, dispatch }: EpicDependencies) =>
   action$.ofType('persist/REHYDRATE').mergeMap(() => {
     return Observable.fromPromise(API.GetLoggedRestaurant())
-      .mergeMap((loggedUser) => {
-        return Observable.of(setWBidAction(), loggedFetchedAction(loggedUser), appBootstrap(), loadStateInit()) // getTablesInit()
+      .concatMap((loggedUser) => {
+        console.log(loggedUser);
+        return Observable.of(setWBidAction(), loggedFetchedAction(loggedUser), appBootstrap(), loadStateInit())
       })
       .catch(error => {
         if (window.location.pathname !== '/' && window.location.pathname !== '/signup') window.location.replace("/");
@@ -121,19 +133,11 @@ const bootstrapEpic = (action$: Observable, { getState, dispatch }: EpicDependen
       });
   });
 
-const getTablesEpic = (action$: Observable) =>
-  action$
-    .ofType('GET_TABLES_INIT')
-    .switchMap(() =>
-      Observable.fromPromise(API.GetTables())
-        .map((payload) => ({ type: 'GET_TABLES_DONE', payload }))
-        .catch(error => Observable.of({ type: 'GET_TABLES_FAIL' }))
-    );
-
 const guestsPollingEpic = (action$: Observable, { dispatch, getState }) =>
   action$
     .ofType('LOAD_STATE_INIT')
     .mergeMap(() => {
+
       const waiterboardId = getState().restaurant.selectedWBId;
 
       API.GetOrders({ waiterboardId }).then((response) => {
@@ -194,5 +198,5 @@ export const epics = [
   loginEpic,
   logoutEpic,
   confirmationEpic,
-  getTablesEpic,
+  setWBEpic
 ];

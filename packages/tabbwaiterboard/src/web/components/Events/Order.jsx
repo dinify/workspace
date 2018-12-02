@@ -27,27 +27,29 @@ const ListOfCustomizations = ({ list }) => {
 	return null
 }
 
-const Order = ({ order, confirmOrder, removed, timer, noconfirm, datetime, users }) => (
+const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime, users }) => (
 	<ActionBox className={removed ? 'vhs-zoom vhs-reverse Order' : 'Order'}>
-    <Header>
+		{!raw ?
+			<Header>
+				<TableId bg={color}>
+	        {order.table.number}
+	      </TableId>
 
-      <TableId bg={color}>
-        {order.table.number}
-      </TableId>
+	      <User user={users[order.initiator]} />
 
-      <User user={users[order.initiator]} />
+				<Text color={color}>
+					{datetime ? moment(order.processed).format('DD/MM/YYYY HH:mm') : ''}
+				</Text>
 
-			<Text color={color}>
-				{datetime ? moment(order.processed).format('DD/MM/YYYY HH:mm') : ''}
-			</Text>
-
-			{!noconfirm ?
-				<CheckButton bg={color} onClick={() => confirmOrder({orderId: order.id, initiator: order.initiator})} flash={isItOutdated(order.requested, timer.o)}>
-	        <i className="ion-checkmark" />
-	      </CheckButton>
-			: ''}
-
-    </Header>
+				{!noconfirm ?
+					<CheckButton bg={color} onClick={() => confirmOrder({orderId: order.id, initiator: order.initiator})}>
+		        <i className="ion-checkmark" />
+		      </CheckButton>
+				: ''}
+	    </Header>
+			:
+			''
+		}
 
       <TableTag>
         <thead>

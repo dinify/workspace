@@ -11,6 +11,8 @@ export const ActionBox = styled.div`
 `;
 
 export const Header = styled.div`
+  height: 70px;
+  vertical-align: middle;
   form {
     display: inline-block;
   }
@@ -44,7 +46,6 @@ export const CheckButton = styled.button`
 
 export const TableId = styled.div`
   display: inline-block;
-  vertical-align: middle;
   text-align: center;
   height: 70px;
   line-height: 70px;
@@ -142,7 +143,7 @@ export const Tr = styled.tr`
     td {
       font-size: 11px;
       font-weight: 800;
-    }    
+    }
   }
   &:last-child {
     td {
@@ -156,7 +157,8 @@ export const Color = styled.span`
   color: ${p => p.color}
 `
 
-export const Text = styled.span`
+export const Text = styled.div`
+  display: inline-block;
   color: ${(p) => p.color};
   font-weight: 500;
   margin: 0 30px;

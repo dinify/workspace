@@ -28,7 +28,7 @@ export const Body = styled.div`
   height: 100%;
   box-sizing: border-box;
   overflow: auto;
-  .Booking, .Bill {
+  .Booking, .Bill, .FullWidth, .Order {
     width: 100%
   }
 `;

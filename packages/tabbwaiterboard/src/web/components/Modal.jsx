@@ -12,7 +12,7 @@ const ModalArea = styled.div`
   z-index: 9999;
   opacity:  ${props => props.shown ? '1' : '0'};
   visibility: ${props => props.shown ? 'visible' : 'hidden'};
-  transition: all 200ms ease-in-out;
+  transition: all 160ms ease-in-out;
   text-align: center;
 `;
 

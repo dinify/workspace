@@ -13,7 +13,7 @@ import Badge from '@material-ui/core/Badge'
 import Grid from '@material-ui/core/Grid'
 
 import ExitToApp from '@material-ui/icons/ExitToApp'
-import Payment from '@material-ui/icons/Payment'
+import RestaurantMenu from '@material-ui/icons/RestaurantMenu'
 import Event from '@material-ui/icons/Event'
 
 import { logoutInitAction } from 'ducks/restaurant'
@@ -105,7 +105,7 @@ const BookingBadge = styled.span`
 `
 const BillsBadge = styled.span`
   span span {
-    background-color: ${colorsByStages.s5};
+    background-color: ${colorsByStages.s2};
   }
 `
 
@@ -168,7 +168,7 @@ const Header = ({
               <IconButton onClick={() => toggleModal({ open: true, type: 'ListOfBills' })}>
                 <BillsBadge>
                   <Badge badgeContent={processedBillsCount}>
-                    <Payment />
+                    <RestaurantMenu />
                   </Badge>
                 </BillsBadge>
               </IconButton>
@@ -201,7 +201,6 @@ export default connect(
     frameIndex: state.ui.frameIndex,
     bookings: state.booking.all,
     salesVolume: state.restaurant.sales,
-    guestCount: state.seat.list.length,
   }),
   {
     logout: logoutInitAction,
