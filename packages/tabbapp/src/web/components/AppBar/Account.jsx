@@ -13,8 +13,8 @@ import { connect } from 'react-redux';
 import { logoutInit } from 'ducks/auth/actions';
 import { getLoggedUser } from 'ducks/user/selectors';
 
-const SignupLink = props => <Link to={{
-    pathname: `/signup`,
+const SigninLink = props => <Link to={{
+    pathname: `/signin`,
     state: { modal: true }
   }} {...props} />
 
@@ -40,11 +40,11 @@ const Account = ({
           Log in / Sign up
         </Button> */}
         <Button
-          component={SignupLink}
+          component={SigninLink}
           variant="contained"
           color={color === 'default' ? 'primary' : 'inherit'}
         >
-          Log in
+          Sign in
         </Button>
       </div>
     )

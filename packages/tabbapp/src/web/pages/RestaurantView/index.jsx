@@ -65,6 +65,7 @@ class RestaurantView extends React.PureComponent {
     fetchRestaurant({ subdomain: params.subdomain });
     fetchMenucategories({ subdomain: params.subdomain });
   }
+  
   render() {
     const {
       width,

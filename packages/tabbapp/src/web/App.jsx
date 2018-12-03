@@ -9,7 +9,7 @@ import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
 import CategoryView from 'web/pages/CategoryView';
 import MenuItemView from 'web/pages/MenuItemView';
-import Onboarding from 'web/pages/Onboarding';
+import SignIn from 'web/pages/SignIn';
 import Eat from 'web/pages/Eat';
 import Cart from 'web/pages/Cart';
 import Bill from 'web/pages/Bill';
@@ -68,8 +68,7 @@ class App extends React.Component {
                 <Main/>
               )
             )}/>
-            <Route path="/login" component={Onboarding} />
-            <Route path="/signup" component={Onboarding} />
+            <Route path="/signin" component={SignIn} />
 
             <Route path="/checkin" component={Checkin} />
             <Route path="/restaurant/:subdomain" component={RestaurantView} />

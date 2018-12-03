@@ -15,7 +15,7 @@ export default function reducer(state = initialState, action) {
     //   const res = action.payload;
     //   return R.assocPath(['items', res.id], res)(state);
     // }
-    //case types.FETCH_CART_DONE: {
+    // case types.FETCH_CART_DONE: {
     //  const res = action.payload.res;
     //  if (res.status && res.status === 'successful') {
     //    return initialState;
@@ -34,7 +34,7 @@ export default function reducer(state = initialState, action) {
     //    }
     //  })
     //  return newState;
-    //}
+    // }
     case types.FETCH_CART_DONE: {
       return R.assocPath(['cart'], action.payload)(state);
     }

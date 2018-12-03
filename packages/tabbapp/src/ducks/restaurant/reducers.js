@@ -23,10 +23,10 @@ export default function reducer(state = initialState, action) {
       const restaurant = action.payload.res;
       return R.assocPath(['all', restaurant.id], restaurant)(state);
     }
-    //case types.CHECKIN_DONE: {
+    // case types.CHECKIN_DONE: {
     //  const id = action.payload.table.restaurant.id;
     //  return R.assoc('checkedInRestaurant', id)(state);
-    //}
+    // }
     case wsTypes.CHECKOUT_ALL: {
       const s = R.assoc('checkedInRestaurant', null)(state);
       return R.assoc('status', null)(s);
