@@ -25,10 +25,11 @@ const Navigation = ({
   classes,
   handleChange,
   value,
+  style,
   checkedInRestaurant
 }) => {
     return (
-      <div className={classes.root}>
+      <div style={style} className={classes.root}>
         <Divider/>
         <BottomNavigation
           color="primary"

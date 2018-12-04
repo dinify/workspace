@@ -32,9 +32,10 @@ const styles = theme => ({
   },
 });
 
-const ResponsiveContainer = ({ classes, children, fixedAppBar, narrow }) => {
+const ResponsiveContainer = ({ classes, children, fixedAppBar, narrow, style }) => {
   return (
     <div
+      style={style}
       className={classNames(
         narrow ? classes.paddedNarrow : classes.padded,
         fixedAppBar ? classes.paddedAppbar : null,

@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
+import { Motion, spring } from 'react-motion';
 
 import Messaging from 'web/firebase/Messaging';
 import Checkin from 'web/pages/Checkin';
@@ -82,11 +83,23 @@ class App extends React.Component {
             <Route path="/services" component={Services} />
           </Switch>
         </div>
-        <Navigation handleChange={this.onNavigate} checkedInRestaurant={checkedInRestaurant} value={(() => {
-          if (this.match('/eat')) return 1;
-          if (this.match('/checkin') || this.match('/services')) return 2;
-          return 0;
-        })()}/>
+        <Motion
+          defaultStyle={{x: 0}}
+          style={{x: spring(this.match('/signin') ? 1 : 0)}}>
+          {style =>
+            <Navigation
+              style={{
+                transform: `translate3d(0, ${style.x * 56}px, 0)`
+              }}
+              handleChange={this.onNavigate}
+              checkedInRestaurant={checkedInRestaurant}
+              value={(() => {
+                if (this.match('/eat')) return 1;
+                if (this.match('/checkin') || this.match('/services')) return 2;
+                return 0;
+              })()}/>
+          }
+        </Motion>
 
         <SnackbarDispatcher historyPush={history.push} />
       </div>
