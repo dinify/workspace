@@ -34,7 +34,7 @@ const orderTypes = {
 
 const color = colorsByStages.s5
 
-const Bill = ({ bill, confirmBill, removed, noconfirm, timer, users }) => {
+const Bill = ({ bill, confirmBill, removed, noconfirm, timer }) => {
   if (!bill || !bill.subtotal) return null
   const subtotal = Number(bill.subtotal.amount);
   const gratuityPercentage = Number(bill.gratuity/100);
@@ -56,7 +56,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, users }) => {
         <TableId bg={color}>
           {bill.table.number}
         </TableId>
-        <User user={users[bill.initiator]} />
+        <User userId={bill.initiator} />
   			{bill.BillObject === 'DEBIT_CARD' && !noconfirm ?
   				<Form
   					className="ssss"
@@ -137,7 +137,6 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer, users }) => {
 export default connect(
   state => ({
     timer: state.restaurant.timer,
-    users: state.user.all,
   }),
   {
     confirmBill

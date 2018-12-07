@@ -72,13 +72,26 @@ export const Photo = styled.div`
 `;
 
 export const Name = styled.div`
-  display: inline-block;
   vertical-align: middle;
   font-size: 16px;
-  text-align: center;
+  text-align: left;
   margin: 5px 0;
   color: #666;
   font-weight: 300;
+`;
+
+export const Time = styled.div`
+  vertical-align: middle;
+  font-size: 12px;
+  text-align: left;
+  margin: 5px 0;
+  color: #999;
+  font-weight: 300;
+`;
+
+export const UserDetails = styled.div`
+  display: inline-block;
+  vertical-align: middle;
 `;
 
 export const TableTag = styled.table`

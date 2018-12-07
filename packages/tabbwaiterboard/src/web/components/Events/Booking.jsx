@@ -23,7 +23,7 @@ const Booking = ({ booking, confirmBooking, cancelBooking, removed, noconfirm, u
 	        <i className="ion-ios-calendar" />
 	      </TableId>
 
-	      <User user={booking.initiator} />
+	      <User userId={booking.initiator} />
 
 	      <Text color={color}>
 	        {moment(booking.appointment).format('DD/MM/YYYY HH:mm')}
@@ -45,9 +45,7 @@ const Booking = ({ booking, confirmBooking, cancelBooking, removed, noconfirm, u
 }
 
 export default connect(
-  state => ({
-		users: state.user.all
-	}),
+  null,
   {
     confirmBooking: confirmBookingInit,
 		cancelBooking: cancelBookingInit

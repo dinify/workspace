@@ -27,7 +27,7 @@ const ListOfCustomizations = ({ list }) => {
 	return null
 }
 
-const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime, users }) => (
+const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }) => (
 	<ActionBox className={removed ? 'vhs-zoom vhs-reverse Order' : 'Order'}>
 		{!raw ?
 			<Header>
@@ -35,7 +35,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime, 
 	        {order.table.number}
 	      </TableId>
 
-	      <User user={users[order.initiator]} />
+	      <User userId={order.initiator} />
 
 				<Text color={color}>
 					{datetime ? moment(order.processed).format('DD/MM/YYYY HH:mm') : ''}
@@ -62,12 +62,12 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime, 
           </tr>
         </thead>
         <tbody>
-					{order.items ? FN.MapToList(order.items).map((item, i) =>
-						<Tr key={i}>
+					{order.items ? FN.MapToList(order.items).map((item) =>
+						<Tr key={item.id}>
 	            <Td>{item.menu_item.name}</Td>
 							<Td items>
 								{item.choices ? FN.MapToList(item.choices).map((choice) =>
-									<FoodItem bgIndex={0}>
+									<FoodItem bgIndex={0} key={choice.id}>
 										<span style={{whiteSpace: 'nowrap'}}>{choice.name}</span>
 									</FoodItem>
 								) : ''}
@@ -97,7 +97,6 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime, 
 export default connect(
   state => ({
 		timer: state.restaurant.timer,
-		users: state.user.all,
 	}),
   {
     confirmOrder

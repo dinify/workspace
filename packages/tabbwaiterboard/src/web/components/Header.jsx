@@ -122,7 +122,6 @@ const styles = {
 
 const Header = ({
   tablesCount = 0,
-  guestCount,
   salesVolume = 0,
   loggedUser,
   selectedWBId,
@@ -131,8 +130,8 @@ const Header = ({
   toggleModal,
   frameIndex,
   bookings,
-  processedBillsCount,
-  anyAction
+  anyAction,
+  orders
 }) => {
   const frames = ['actions','tables']
   let waiterboardName = ''
@@ -141,6 +140,9 @@ const Header = ({
   }
   const bookingsList = MapToList(bookings)
   const acceptedBookings = bookingsList.filter((b) => b.status === 'CONFIRMED')
+
+  const ordersList = MapToList(orders)
+  const confirmedOrdersCount = ordersList.filter((o) => o.status === 'CONFIRMED').length
   return (
     <AppBar position="static" style={styles.appbar}>
       <Container>
@@ -165,9 +167,9 @@ const Header = ({
                 </BookingBadge>
               </IconButton>
 
-              <IconButton onClick={() => toggleModal({ open: true, type: 'ListOfBills' })}>
+              <IconButton onClick={() => toggleModal({ open: true, type: 'ListOfOrders' })}>
                 <BillsBadge>
-                  <Badge badgeContent={processedBillsCount}>
+                  <Badge badgeContent={confirmedOrdersCount}>
                     <RestaurantMenu />
                   </Badge>
                 </BillsBadge>
@@ -179,7 +181,7 @@ const Header = ({
                 <Label>Section</Label><Value>{waiterboardName}</Value>
               </Link>
               <Label>Tables</Label><Value>{tablesCount}</Value>
-              <Label>Guests</Label><Value>{guestCount}</Value>
+              <Label>Orders</Label><Value>{ordersList.length}</Value>
               <Label>Sales</Label><Value>{numeral(salesVolume).format('0.000')}KD</Value>
 
               <IconButton onClick={logout}>
@@ -201,6 +203,7 @@ export default connect(
     frameIndex: state.ui.frameIndex,
     bookings: state.booking.all,
     salesVolume: state.restaurant.sales,
+    orders: state.order.all
   }),
   {
     logout: logoutInitAction,

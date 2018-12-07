@@ -1,11 +1,25 @@
 // @flow
 import React from 'react'
 import { connect } from 'react-redux';
-import { Photo, Name } from '../styled/Events'
+import { Photo, Name, Time, UserDetails } from '../styled/Events'
 import { toggleModal } from '../../../ducks/ui';
+import moment from 'moment';
 
-const User = ({ user, toggleModal}) => {
-	if (!user) return (<span />)
+const User = ({
+	seat,
+	userId,
+	toggleModal,
+	users
+}) => {
+	if (!seat && !userId) return (<span />);
+	let user = null;
+	if (seat) user = users[seat.user_id];
+	else if (userId) user = users[userId];
+	if (!user) return (<span />);
+	let checkinTime = null;
+	if (seat && seat.checkin) {
+		checkinTime = moment.utc(seat.checkin).local().format('DD/MM/YYYY h:mm A');
+	}
 	return (
 		<div
 			onClick={() => toggleModal({ open: true, type: 'User', userId: user.id })}
@@ -15,9 +29,17 @@ const User = ({ user, toggleModal}) => {
 			}}
 		>
 	    <Photo url={`https://picsum.photos/50/50/?image=12`}/>
-	    <Name>{user.name}</Name>
+			<UserDetails>
+		    <Name>{user.name}</Name>
+				{checkinTime ? <Time>{checkinTime}</Time> : ''}
+			</UserDetails>
 		</div>
 	)
 }
 
-export default connect(null, { toggleModal })(User);
+export default connect(
+	state => ({
+    users: state.user.all
+  }),
+	{ toggleModal }
+)(User);

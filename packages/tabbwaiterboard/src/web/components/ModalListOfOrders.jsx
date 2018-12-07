@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import { connect } from 'react-redux';
-import { fetchTodayBills as fetchTodayBillsAction } from 'ducks/bill/actions';
 import Order from './Events/Order'
 import { colorsByStages } from '../colors'
 import { MapToList } from 'lib/FN'
@@ -9,7 +8,7 @@ import { MapToList } from 'lib/FN'
 import { Head, Body, BodyPlaceholder } from './styled/Modal'
 
 
-class ModalListOfBills extends React.Component {
+class ModalListOfOrders extends React.Component {
 
 
   render(){
@@ -38,4 +37,4 @@ export default connect(
   state => ({
     orders: state.order.all
   })
-)(ModalListOfBills);
+)(ModalListOfOrders);

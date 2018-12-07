@@ -15,16 +15,25 @@ class SeatSummary extends React.Component {
     if (!seat) return (<div />)
 
     console.log(seat.bill,'dd');
-    const orders = seat.bill.orders || {};
+    let orders = {};
+    let subtotal = null;
+    if (seat.bill && seat.bill.orders) {
+      orders = seat.bill.orders;
+      subtotal = seat.bill.subtotal.amount;
+    }
 
     return (<ActionBox className='FullWidth'>
       <Header>
 
-	      <User user={seat.user} />
+	      <User seat={seat} />
 
-				<Text>
-					{seat.bill.subtotal && seat.bill.subtotal.amount}KD
-				</Text>
+        {subtotal ?
+          <Text>
+  					{subtotal}KD
+  				</Text>
+          :
+          ''
+        }
 
 	    </Header>
       {MapToList(orders).map((order) =>

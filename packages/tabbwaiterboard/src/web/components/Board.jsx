@@ -9,7 +9,7 @@ import Header from './Header'
 import FrameOfTables from './FrameOfTables'
 import Modal from './Modal'
 import ModalUser from './ModalUser'
-import ModalListOfBills from './ModalListOfBills'
+import ModalListOfOrders from './ModalListOfOrders'
 import ModalListOfBookings from './ModalListOfBookings'
 import ModalTable from './ModalTable'
 
@@ -68,14 +68,13 @@ const Board = ({
   modalPayload,
   toggleFrames,
   toggleModal,
-  orders
 }) => {
 
   const closeModal = (e) => {
     if (e.target.className.indexOf('modal-area') > -1) toggleModal({ open: false });
   }
 
-  const billsProcessed = billsGroupedLists.PROCESSED || [];
+  // const billsProcessed = billsGroupedLists.PROCESSED || [];
   const billsInitiated = billsGroupedLists.INITIATED || [];
 
   const anyAction = (
@@ -89,7 +88,6 @@ const Board = ({
 
     <Header
       tablesCount={tableList.length}
-      processedBillsCount={MapToList(orders).filter((o) => o.status === 'CONFIRMED').length}
       anyAction={anyAction}
       guestCount={seatList.length}
     />
@@ -129,7 +127,7 @@ const Board = ({
 
     <Modal shown={modalOpen} closeModal={closeModal}>
       <ModalUser shown={modalType === 'User'} payload={modalPayload} />
-      <ModalListOfBills shown={modalType === 'ListOfBills'} payload={modalPayload} />
+      <ModalListOfOrders shown={modalType === 'ListOfOrders'} payload={modalPayload} />
       <ModalListOfBookings shown={modalType === 'ListOfBookings'} payload={modalPayload} />
       <ModalTable shown={modalType === 'Table'} payload={modalPayload} seatList={seatList} />
     </Modal>
@@ -150,7 +148,6 @@ export default connect(
     modalOpen: state.ui.modalOpen,
     modalType: state.ui.modalType,
     modalPayload: state.ui.modalPayload,
-    orders: state.order.all
   }),
   {
     toggleFrames,

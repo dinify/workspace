@@ -39,7 +39,7 @@ const OrderAhead = ({ order, confirmOrderAhead, removed, timer }) => (
         OH
       </TableId>
 
-      <User user={order.initiator} />
+      <User userId={order.initiator} />
 
 			<Text color={'#999'}>
 				<Color color={color}>{order.is_take_away ? 'TAKE AWAY' : 'DINE-IN'}</Color> | {moment(order.status_updated).add(order.meta.eta,'s').format('hh:mm')} {order.note ? <span>| {order.note}</span> : ''}

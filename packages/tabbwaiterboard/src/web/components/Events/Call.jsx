@@ -12,7 +12,7 @@ import { confirmCallInit } from 'ducks/call/actions'
 
 const color = colorsByStages['s4']
 
-const Call = ({ call, confirmCall, removed, timer, users, services }) => {
+const Call = ({ call, confirmCall, removed, timer, services }) => {
 	let service = null;
 	if (call.service_id && services[call.service_id]) {
 		service = services[call.service_id];
@@ -25,7 +25,7 @@ const Call = ({ call, confirmCall, removed, timer, users, services }) => {
 	        {call.table && call.table.number}
 	      </TableId>
 
-				<User user={users[call.user_id]} />
+				<User userId={call.user_id} />
 
 				{service &&
 					<Text color={color} style={{top: 16}}>
@@ -47,7 +47,6 @@ const Call = ({ call, confirmCall, removed, timer, users, services }) => {
 export default connect(
   state => ({
 		timer: state.restaurant.timer,
-    users: state.user.all,
 		services: state.restaurant.loggedUser.services
 	}),
   {
