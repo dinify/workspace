@@ -1,9 +1,9 @@
 // @flow
 import { Observable } from 'rxjs';
 import * as API from 'tabb-front/dist/api/restaurant';
-import { dispatchSnackbar } from 'ducks/notifications/actions';
 import types from './types';
 import { callServiceDone, callServiceFail } from './actions';
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 
 const callServiceEpic = (action$: Observable) =>
   action$
@@ -13,10 +13,10 @@ const callServiceEpic = (action$: Observable) =>
         .mergeMap(res => {
           return Observable.of(
             callServiceDone(res),
-            dispatchSnackbar({
+            snackbar.show({
               message: 'Service called',
-              redirect: '/',
-              actionTitle: 'See menu'
+              action: 'See menu',
+              handleAction: () => window.location.assign('/')
             })
           );
         })

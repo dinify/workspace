@@ -19,7 +19,6 @@ import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
 import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
-import SnackbarDispatcher from 'web/components/SnackbarDispatcher';
 
 import * as FN from 'tabb-front/dist/lib/FN';
 

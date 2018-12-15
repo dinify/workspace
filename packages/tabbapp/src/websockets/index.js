@@ -1,6 +1,6 @@
 // @flow
 import io from 'socket.io-client';
-import { dispatchSnackbar } from 'ducks/notifications/actions';
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import types from './types';
 
 const socket = io('https://downstream.tabb.global');
@@ -23,31 +23,31 @@ const websockets = (store) => {
     const me = data.transaction.initiator === getState().user.loggedUserId;
     if (data.transaction.status === 'PROCESSED') {
       dispatch({ type: types.CONFIRMED_PAYMENT, payload: data });
-      if (me) dispatch(dispatchSnackbar({ message: 'Payment confirmed' }))
+      if (me) dispatch(snackbar.show({ message: 'Payment confirmed' }))
     }
-    else if (me) dispatch(dispatchSnackbar({ message: 'Payment cancelled' }))
+    else if (me) dispatch(snackbar.show({ message: 'Payment cancelled' }))
   });
 
   socket.on('order-status', (data) => {
     if (data.order.status === 'CONFIRMED') {
       dispatch({ type: types.CONFIRMED_ORDER, payload: data });
       if (data.order.initiator === getState().user.loggedUserId) {
-        dispatch(dispatchSnackbar({ message: 'Order confirmed' }))
+        dispatch(snackbar.show({ message: 'Order confirmed' }))
       }
     }
     else if (data.order.status === 'CANCELLED') {
       if (data.order.initiator === getState().user.loggedUserId)
-        dispatch(dispatchSnackbar({ message: 'Your order was cancelled' }))
+        dispatch(snackbar.show({ message: 'Your order was cancelled' }))
     }
   });
 
   socket.on('call-status', (data) => {
     if (data.call.status === 'CONFIRMED') {
       dispatch({ type: types.CONFIRMED_CALL, payload: data });
-      dispatch(dispatchSnackbar({ message: `${data.call.service.name} is on its way!` }))
+      dispatch(snackbar.show({ message: `${data.call.service.name} is on its way!` }))
     }
     else if (data.call.status === 'CANCELLED') {
-      dispatch(dispatchSnackbar({ message: `${data.call.service.name} cannot make it to your table` }))
+      dispatch(snackbar.show({ message: `${data.call.service.name} cannot make it to your table` }))
     }
   });
 
@@ -55,23 +55,23 @@ const websockets = (store) => {
     const me = data.seat.user_id === getState().user.loggedUserId;
     data.me = me;
     dispatch({ type: types.CHECKIN, payload: data });
-    if (!me) dispatch(dispatchSnackbar({ message: 'New guest joined table' }))
+    if (!me) dispatch(snackbar.show({ message: 'New guest joined table' }))
   });
 
   socket.on('checkout', (data) => {
     if (data.seat.user_id === getState().user.loggedUserId) {
       dispatch({ type: types.CHECKOUT_ALL, payload: data });
-      dispatch(dispatchSnackbar({ message: 'You have been checked out from the table.' }));
+      dispatch(snackbar.show({ message: 'You have been checked out from the table.' }));
     }
     else {
       dispatch({ type: types.CHECKOUT, payload: data });
-      dispatch(dispatchSnackbar({ message: 'Guest left table' }));
+      dispatch(snackbar.show({ message: 'Guest left table' }));
     }
   });
 
   socket.on('checkout-all', (data) => {
     dispatch({ type: types.CHECKOUT_ALL, payload: data });
-    dispatch(dispatchSnackbar({ message: 'You have been checked out from the table.' }));
+    dispatch(snackbar.show({ message: 'You have been checked out from the table.' }));
   });
 
   socket.on('seats', (data) => {
@@ -80,7 +80,7 @@ const websockets = (store) => {
 
   socket.on('split', (data) => {
     dispatch({ type: types.SPLIT, payload: data });
-    dispatch(dispatchSnackbar({ message: 'Bill received split items' }))
+    dispatch(snackbar.show({ message: 'Bill received split items' }))
   });
 
 }

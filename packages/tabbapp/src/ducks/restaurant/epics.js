@@ -1,7 +1,7 @@
 // @flow
 import { Observable } from 'rxjs';
 import * as API from 'tabb-front/dist/api/restaurant';
-import { dispatchSnackbar } from 'ducks/notifications/actions';
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import types from './types';
 import { checkinFail, checkinDone, favRestaurantDone, favRestaurantFail } from './actions';
 import { fetchStatusInit } from 'ducks/restaurant/actions';
@@ -27,10 +27,10 @@ const checkinEpic = (action$: Observable, { getState }) =>
           return Observable.of(
             checkinDone(res),
             fetchStatusInit(),
-            dispatchSnackbar({
+            snackbar.show({
               message: 'You are now checked in',
-              redirect: '/',
-              actionTitle: 'See menu'
+              handleAction: () => window.location.assign('/'),
+              action: 'See menu'
             })
           );
         })

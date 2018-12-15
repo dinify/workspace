@@ -4,6 +4,7 @@ import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import configureEpics from './configureEpics';
 import { reducer as formReducer } from 'redux-form';
+import { snackbarReducer } from 'material-ui-snackbar-redux'
 
 import ui from 'ducks/ui';
 import user from 'ducks/user';
@@ -14,7 +15,6 @@ import booking from 'ducks/booking';
 import cart from 'ducks/cart';
 import bill from 'ducks/bill';
 import seat from 'ducks/seat';
-import notifications from 'ducks/notifications';
 
 const commonReducers = {
   ui,
@@ -26,7 +26,7 @@ const commonReducers = {
   cart,
   bill,
   seat,
-  notifications
+  snackbar: snackbarReducer
 };
 
 const configureStore = (options, storage) => {

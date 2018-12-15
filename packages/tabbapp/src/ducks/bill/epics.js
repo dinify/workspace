@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import * as API from 'tabb-front/dist/api/restaurant';
 // import R from 'ramda';
 // import * as FN from 'tabb-front/dist/lib/FN';
-import { dispatchSnackbar } from 'ducks/notifications/actions';
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import types from './types';
 import {
   splitBillDone,
@@ -46,7 +46,7 @@ const initTransactionEpic = (action$: Observable) =>
           // window.location.href = '/receipt';
           return Observable.of(
             initTransactionDone(res),
-            dispatchSnackbar({
+            snackbar.show({
               message: 'Payment request sent'
             })
           );
