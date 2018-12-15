@@ -99,8 +99,6 @@ class App extends React.Component {
               })()}/>
           }
         </Motion>
-
-        <SnackbarDispatcher historyPush={history.push} />
       </div>
     );
   }
