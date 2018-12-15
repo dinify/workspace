@@ -4,11 +4,17 @@ import { withStyles } from '@material-ui/core/styles';
 import { fbAuthInit } from 'ducks/auth/actions';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
+import { Motion, spring } from 'react-motion';
+import ToggleIcon from 'material-ui-toggle-icon';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import LogoText from 'icons/LogoText';
 import FacebookLogo from 'icons/FacebookLogo';
 import GoogleLogo from 'icons/GoogleLogo';
+import Visibility from '@material-ui/icons/VisibilityRounded';
+import VisibilityOff from '@material-ui/icons/VisibilityOffRounded';
 
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
@@ -55,6 +61,11 @@ const styles = theme => ({
 });
 
 class SignInForm extends React.Component {
+  state = {
+    signingUp: false,
+    showPassword: false
+  }
+
   submit = (params) => {
     console.log(params);
   }
@@ -65,6 +76,11 @@ class SignInForm extends React.Component {
       loggedUserId,
       fbAuth,
     } = this.props;
+    const {
+      signingUp,
+      showPassword
+    } = this.state;
+    const animConfig = { stiffness: 480, damping: 48 };
 
     return (
       <form onSubmit={this.submit} style={{height: '100vh'}}>
@@ -103,76 +119,180 @@ class SignInForm extends React.Component {
                 to access more features, like dining history, reviews and saving your favorites
               </Typography>
             </div>
+            <div style={{maxHeight: 213, overflow: 'hidden'}}>
+              <Motion
+                defaultStyle={{x: 1}}
+                style={{x: spring(signingUp ? 0 : 1, animConfig)}}>
+                {style =>
+                  <div ref={node => {this.socialSection = node}} style={{
+                    willChange: 'transform',
+                    overflow: 'hidden',
+                    opacity: style.x**(1/3),
+                    transformOrigin: 'top center',
+                    transform: `scale(1, ${style.x}) translate3d(0, 0, 0)`
+                  }}>
+                    <div ref={node => {this.socialSection = node}} style={{
+                      transformOrigin: 'top center',
+                      transform: `scale(1, ${1 / style.x}) translate3d(0, 0, 0)`
+                    }}>
+                      <div style={{ paddingBottom: 16 }}>
+                        <Button
+                          fullWidth
+                          className={classes.googleButton}
+                          classes={{ label: classes.uncapitalized }}
+                          variant="outlined"
+                          onClick={() => {}}>
+                          <GoogleLogo />
+                          <span className={classes.leftGutter}>Continue with Google</span>
+                        </Button>
+                      </div>
+                      <div style={{ paddingBottom: 16 }}>
+                        <FacebookLogin
+                          appId="123605498281814"
+                          fields="name,email,gender,birthday"
+                          scope="user_gender,user_birthday"
+                          isMobile
+                          disableMobileRedirect
+                          callback={(res) => {
+                            fbAuth({ fbRes: res })
+                          }}
+                          render={renderProps => (
+                            <Button
+                              fullWidth
+                              className={classes.facebookButton}
+                              classes={{ label: classes.uncapitalized }}
+                              variant="contained"
+                              onClick={() => renderProps.onClick()}>
+                              <FacebookLogo />
+                              <span className={classes.leftGutter}>Continue with Facebook</span>
+                            </Button>
+                          )}
+                        /></div>
+                      <div style={{marginBottom: 16}} className={classes.flex}>
+                        <Divider className={classes.grow} />
+                        <Typography
+                          variant="caption"
+                          component="span"
+                          color="textSecondary"
+                          style={{ paddingLeft: 8, paddingRight: 8 }}>
+                          or
+                        </Typography>
+                        <Divider className={classes.grow} />
+                      </div>
+                    </div>
+                  </div>
+                }
+              </Motion>
+              <Motion
+                defaultStyle={{x: 0}}
+                style={{x: spring(signingUp ? 1 : 0, animConfig)}}>
+                {style => {
+                  const baseScale = (56 + 8) / 192;
+                  const currentScale = baseScale + (style.x * (1 - baseScale));
+                  return (
+                    <div ref={node => {this.signupSection = node}} style={{
+                      willChange: 'transform',
+                      transformOrigin: 'top center',
+                      overflow: 'hidden',
+                      transform: `scale(1, ${currentScale}) translate3d(0, ${-style.x * 152}px, 0)`
+                    }}>
+                      <div ref={node => {this.socialSection = node}} style={{
+                        transformOrigin: 'top center',
+                        transform: `scale(1, ${1 / currentScale}) translate3d(0, 0, 0)`
+                      }}>
+                        <Field
+                          name="email"
+                          component={Text}
+                          componentProps={{
+                            style: {marginTop: 8},
+                            label: 'Continue with email',
+                            type: 'email',
+                            fullWidth: true,
+                            variant: 'outlined',
+                            name: 'email',
+                            autocapitalization: 'none',
+                            autoComplete: 'email',
+                            /* spellcheck: false,
+                            tabindex: '0',
+                            autocapitalize: 'none' */
+                          }}
+                        />
 
-            <div style={{ paddingBottom: 16 }}>
-              <Button
-                fullWidth
-                className={classes.googleButton}
-                classes={{ label: classes.uncapitalized }}
-                variant="outlined"
-                onClick={() => {}}>
-                <GoogleLogo />
-                <span className={classes.leftGutter}>Continue with Google</span>
-              </Button>
-            </div>
-            <div style={{ paddingBottom: 16 }}>
-              <FacebookLogin
-                appId="123605498281814"
-                fields="name,email,gender,birthday"
-                scope="user_gender,user_birthday"
-                isMobile
-                disableMobileRedirect
-                callback={(res) => {
-                  fbAuth({ fbRes: res })
+                        <div style={{
+                          display: 'flex',
+                          marginTop: 8,
+                          marginBottom: 8,
+                        }}>
+                          <Field
+                            name="first_name"
+                            component={Text}
+                            componentProps={{
+                              label: 'First name',
+                              disabled: !signingUp,
+                              type: 'text',
+                              variant: 'outlined',
+                              name: 'fname',
+                              autoComplete: 'given-name',
+                              autocapitalization: 'words',
+                              style: {marginRight: 4}
+                            }}
+                          />
+                          <Field
+                            name="last_name"
+                            component={Text}
+                            componentProps={{
+                              label: 'Last name',
+                              disabled: !signingUp,
+                              type: 'text',
+                              variant: 'outlined',
+                              name: 'lname',
+                              autoComplete: 'family-name',
+                              autocapitalization: 'words',
+                              style: {marginLeft: 4}
+                            }}
+                          />
+                        </div>
+                        <Field
+                          name="password"
+                          component={Text}
+                          componentProps={{
+                            label: 'Password',
+                            disabled: !signingUp,
+                            type: showPassword ? 'text' : 'password',
+                            fullWidth: true,
+                            variant: 'outlined',
+                            name: 'password',
+                            autoComplete: 'new-password',
+                            InputProps: {
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    disabled={!signingUp}
+                                    aria-label="Toggle password visibility"
+                                    onClick={() => {this.setState({showPassword: !showPassword})}}>
+                                    <ToggleIcon
+                                      on={!showPassword}
+                                      onIcon={<Visibility />}
+                                      offIcon={<VisibilityOff />}/>
+                                  </IconButton>
+                                </InputAdornment>
+                              ),
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  );
                 }}
-                render={renderProps => (
-                  <Button
-                    fullWidth
-                    className={classes.facebookButton}
-                    classes={{ label: classes.uncapitalized }}
-                    variant="contained"
-                    onClick={() => renderProps.onClick()}>
-                    <FacebookLogo />
-                    <span className={classes.leftGutter}>Continue with Facebook</span>
-                  </Button>
-                )}
-              /></div>
-
-
-            <div style={{marginBottom: 16}} className={classes.flex}>
-              <Divider className={classes.grow} />
-              <Typography
-                variant="caption"
-                component="span"
-                color="textSecondary"
-                style={{ paddingLeft: 8, paddingRight: 8 }}>
-                or
-              </Typography>
-              <Divider className={classes.grow} />
+              </Motion>
             </div>
 
-
-            <Field
-              name="email"
-              component={Text}
-              componentProps={{
-                label: 'Continue with email',
-                type: 'email',
-                fullWidth: true,
-                variant: 'outlined',
-                name: 'email',
-                /* autocomplete: 'username',
-                spellcheck: false,
-                tabindex: '0',
-                autocapitalize: 'none' */
-              }}
-            />
             <div style={{
               display: 'flex',
               marginTop: 16
             }}>
-              <Button variant="text" className={classes.uncapitalized}>
-                Create account
+              <Button onClick={() => this.setState({signingUp: !signingUp})} variant="text" className={classes.uncapitalized}>
+                {signingUp ? 'Back' : 'Create account'}
               </Button>
               <div style={{flex: 1}}/>
               <Button variant="outlined" color="primary" className={classes.uncapitalized}>

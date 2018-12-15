@@ -17,6 +17,7 @@
     "lodash.uniqueid": "^4.0.1",
     "lottie-web": "^5.1.18",
     "material-ui-pickers": "1.0.0-rc.17",
+    "material-ui-toggle-icon": "^1.0.2",
     "moment": "^2.22.2",
     "node-vibrant": "^3.0.0",
     "numeral": "^2.0.6",

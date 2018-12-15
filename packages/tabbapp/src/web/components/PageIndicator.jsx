@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import times from 'lodash.times';
-import uniqueId from 'lodash.uniqueid';
 import { StaggeredMotion, spring, presets } from 'react-motion';
 
 class PageIndicator extends React.Component {
@@ -12,9 +11,9 @@ class PageIndicator extends React.Component {
     this.state = {
       to: 0,
       from: 0,
-      baseColor: '',
-      baseOpacity: 0,
-      selectorContainer: null,
+      baseColor: 'rgb(0, 0, 0)',
+      baseOpacity: 0.12,
+      selectorContainer: null
     };
 
     const memoize = (factory, ctx) => {
@@ -50,16 +49,11 @@ class PageIndicator extends React.Component {
     } else base = this.colorToRGBA(props.dotColor);
 
     this.state.baseColor = `rgb(${base[0]}, ${base[1]}, ${base[2]})`;
-    this.state.baseOpacity = base[3] / 255;
+    this.state.baseOpacity = base[3];
   }
 
-  componentWillMount() {
-    this.id = uniqueId();
-  }
-
-  componentDidMount() {
-    const container = document.getElementById(this.id);
-    this.setState({ selectorContainer: container });
+  componentDidMount = () => {
+    this.setState({selectorContainer: this.selectorContainer})
   }
 
   componentWillReceiveProps(nextProps) {
@@ -87,15 +81,25 @@ class PageIndicator extends React.Component {
 
   updateDotColor = dotColor => {
     const base = this.colorToRGBA(dotColor);
+
     this.setState({
       baseColor: `rgb(${base[0]}, ${base[1]}, ${base[2]})`,
-      baseOpacity: base[3] / 255,
+      baseOpacity: base[3],
     });
   };
 
   render() {
-    const { gap, size, selectedDotColor } = this.props;
-    let { count } = this.props;
+    let {
+      count
+    } = this.props;
+    const {
+      gap,
+      size,
+      selectedDotColor,
+      variant = 'filled',
+      dotChildren = index => {return []},
+      selectedDotChildren = []
+     } = this.props;
     const { from, to, baseColor, baseOpacity, selectorContainer } = this.state;
 
     // clip count to be bigger than 1
@@ -183,22 +187,36 @@ class PageIndicator extends React.Component {
                 >
                   {interpolatingStyles => (
                     <div style={{ height: size, width: '100%' }}>
-                      {interpolatingStyles.map((style, i) => (
-                        <div
-                          key={uniqueId()}
-                          style={{
-                            display: 'inline-block',
-                            position: 'absolute',
-                            width: size,
-                            height: size,
-                            left: (gap + size) * i,
-                            borderRadius: size / 2,
-                            WebkitTransform: `scale(${style.x}, ${style.x})`,
-                            transform: `scale(${style.x}, ${style.x})`,
-                            backgroundColor: baseColor,
-                          }}
-                        />
-                      ))}
+                      {interpolatingStyles.map((style, i) => {
+                        const child = dotChildren(i, style.x);
+                        return (
+                          <div
+                            key={`188${i}`}
+                            style={{
+                              display: 'inline-block',
+                              position: 'absolute',
+                              border: variant === 'outlined' ? `1px solid ${baseColor}` : 'none',
+                              backgroundColor: variant === 'filled' ? baseColor : 'transparent',
+                              width: size,
+                              height: size,
+                              left: (gap + size) * i,
+                              borderRadius: size / 2,
+                              WebkitTransform: `scale(${style.x}, ${style.x})`,
+                              transform: `scale(${style.x}, ${style.x})`,
+                            }}>
+                            {child && selectorContainer ?
+                              ReactDOM.createPortal(
+                                <div style={{
+                                  minWidth: size,
+                                  minHeight: size,
+                                  marginRight: gap
+                                }}>
+                                  {child}
+                                </div>, selectorContainer) : null
+                            }
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </StaggeredMotion>
@@ -210,14 +228,16 @@ class PageIndicator extends React.Component {
                     height: size,
                     WebkitTransform: `translateX(${translate}px)`,
                     transform: `translateX(${translate}px)`,
-                    backgroundColor: baseColor,
+                    borderTop: variant === 'outlined' ? `1px solid ${baseColor}` : 'none',
+                    borderBottom: variant === 'outlined' ? `1px solid ${baseColor}` : 'none',
+                    backgroundColor: variant === 'filled' ? baseColor : 'transparent',
                   }}
                 />
                 {stylesParent.map((style, i) => {
                   const selector = i === 1;
                   const currentDiv = (
                     <div
-                      key={uniqueId()}
+                      key={`220${i}`}
                       style={{
                         display: 'inline-block', // inline-block
                         position: 'absolute',
@@ -228,14 +248,20 @@ class PageIndicator extends React.Component {
                         transform: `translateX(${style.x}px)`,
                         borderRadius: size / 2,
                         zIndex: selector ? 1 : 'inherit',
+                        // borderTop: variant === 'outlined' ? `1px solid ${baseColor}` : 'none',
+                        // borderBottom: variant === 'outlined' ? `1px solid ${baseColor}` : 'none',
+                        borderLeft: (to >= from ? i === 2 : i === 0) && variant === 'outlined' ? `1px solid ${baseColor}` : 'none',
+                        borderRight: (to >= from ? i === 0 : i === 2) && variant === 'outlined' ? `1px solid ${baseColor}` : 'none',
                         backgroundColor: selector
                           ? selectedDotColor
-                          : baseColor,
+                          : (variant === 'filled' ? baseColor : 'transparent'),
                       }}
-                    />
+                    >
+                      {selector && selectedDotChildren}
+                    </div>
                   );
 
-                  return selector && selectorContainer !== null
+                  return selector && selectorContainer
                     ? ReactDOM.createPortal(currentDiv, selectorContainer)
                     : currentDiv;
                 })}
@@ -244,7 +270,7 @@ class PageIndicator extends React.Component {
           }}
         </StaggeredMotion>
         <div
-          id={this.id}
+          ref={node => {this.selectorContainer = node}}
           style={{
             position: 'absolute',
             height: '100%',
