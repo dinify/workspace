@@ -8,6 +8,9 @@ export default {
   FBAUTH_INIT: 'tabb/auth/FBAUTH_INIT',
   FBAUTH_DONE: 'tabb/auth/FBAUTH_DONE',
   FBAUTH_FAIL: 'tabb/auth/FBAUTH_FAIL',
+  GOOGLE_AUTH_INIT: 'tabb/auth/GOOGLE_AUTH_INIT',
+  GOOGLE_AUTH_DONE: 'tabb/auth/GOOGLE_AUTH_DONE',
+  GOOGLE_AUTH_FAIL: 'tabb/auth/GOOGLE_AUTH_FAIL',
   LOGOUT_INIT: 'tabb/auth/LOGOUT_INIT',
   LOGOUT_DONE: 'tabb/auth/LOGOUT_DONE',
 };

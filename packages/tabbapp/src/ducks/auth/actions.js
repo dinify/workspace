@@ -42,6 +42,20 @@ export const fbAuthFail = (e) => ({
   payload: e
 });
 
+export const googleAuthInit = ({ googleRes }) => ({
+  type: types.GOOGLE_AUTH_INIT,
+  payload: { googleRes }
+});
+
+export const googleAuthDone = () => ({
+  type: types.GOOGLE_AUTH_DONE,
+});
+
+export const googleAuthFail = (e) => ({
+  type: types.GOOGLE_AUTH_FAIL,
+  payload: e
+});
+
 export const logoutInit = () => ({
   type: types.LOGOUT_INIT,
 });

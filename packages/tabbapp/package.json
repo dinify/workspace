@@ -31,6 +31,7 @@
     "react-dom": "^16.4.1",
     "react-draggable": "^3.0.5",
     "react-facebook-login": "^4.1.1",
+    "react-google-login": "^4.0.1",
     "react-motion": "^0.5.2",
     "react-qr-reader": "^2.1.0",
     "react-redux": "^5.0.7",

@@ -65,6 +65,43 @@ const fbAuthInitEpic = (action$: Observable) =>
         });
     });
 
+const googleAuthInitEpic = (action$: Observable) =>
+  action$
+    .ofType(types.GOOGLE_AUTH_INIT)
+    .switchMap(({ payload: { googleRes, qr } }) => {
+      const { profileObj, accessToken } = googleRes;
+      const { name, email } = profileObj;
+      return Observable.fromPromise(API.LoginWithGoogle({ accessToken }))
+        .mergeMap(res => {
+          console.log(res, 'LoginWithGoogle');
+          if (res.token) setCookie('access_token', res.token, 30);
+          window.history.back();
+          return Observable.of(loginDone(res), loadUserData(), checkinInit({ qr }));
+        })
+        .catch(error => {
+          console.log(error,'LoginWithGoogleError');
+
+          return Observable.fromPromise(API.Register({
+              name,
+              phone: String(Math.floor(Math.random() * 9283899800) + 22838998),
+              email,
+              accessToken,
+              registrationType: 'GOOGLE',
+            }))
+            .mergeMap(res => {
+              console.log(res, 'Register');
+              if (res.metadata) setCookie('access_token', res.metadata.token, 30);
+              window.history.back();
+              return Observable.of(loginDone(res), loadUserData(), checkinInit({ qr }));
+            })
+            .catch(error => {
+              console.log(error, 'RegisterError');
+              return Observable.of(loginFail(error))
+            })
+          // return Observable.of(loginFail(error))
+        });
+    });
+
 const signupInitEpic = (action$: Observable) =>
   action$
     .ofType(types.SIGNUP_INIT)
@@ -92,6 +129,7 @@ const logoutInitEpic = (action$: Observable) =>
 export default [
   loginInitEpic,
   fbAuthInitEpic,
+  googleAuthInitEpic,
   signupInitEpic,
   logoutInitEpic,
 ];

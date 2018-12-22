@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { fbAuthInit } from 'ducks/auth/actions';
+import { fbAuthInit, googleAuthInit } from 'ducks/auth/actions';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
 import ToggleIcon from 'material-ui-toggle-icon';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import GoogleLogin from 'react-google-login';
 import LogoText from 'icons/LogoText';
 import FacebookLogo from 'icons/FacebookLogo';
 import GoogleLogo from 'icons/GoogleLogo';
@@ -75,6 +76,7 @@ class SignInForm extends React.Component {
       classes,
       loggedUserId,
       fbAuth,
+      googleAuth,
     } = this.props;
     const {
       signingUp,
@@ -136,15 +138,23 @@ class SignInForm extends React.Component {
                       transform: `scale(1, ${1 / style.x}) translate3d(0, 0, 0)`
                     }}>
                       <div style={{ paddingBottom: 16 }}>
-                        <Button
-                          fullWidth
-                          className={classes.googleButton}
-                          classes={{ label: classes.uncapitalized }}
-                          variant="outlined"
-                          onClick={() => {}}>
-                          <GoogleLogo />
-                          <span className={classes.leftGutter}>Continue with Google</span>
-                        </Button>
+                        <GoogleLogin
+                          clientId="448538111630-pq8957r4h4i5pgecvf136jpougurshjh.apps.googleusercontent.com"
+                          onSuccess={response => {
+                            googleAuth({googleRes: response});
+                          }}
+                          onFaliure={response => {console.log(response)}}
+                          render={renderProps => (
+                            <Button
+                              fullWidth
+                              className={classes.googleButton}
+                              classes={{ label: classes.uncapitalized }}
+                              variant="outlined"
+                              onClick={renderProps.onClick}>
+                              <GoogleLogo />
+                              <span className={classes.leftGutter}>Continue with Google</span>
+                            </Button>
+                          )}/>
                       </div>
                       <div style={{ paddingBottom: 16 }}>
                         <FacebookLogin
@@ -315,6 +325,7 @@ const SignIn = withStyles(styles)(reduxForm({
   }),
   {
     fbAuth: fbAuthInit,
+    googleAuth: googleAuthInit,
   }
 )(SignInForm)));
 
