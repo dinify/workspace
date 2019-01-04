@@ -49,6 +49,7 @@ class MenuItemView extends React.PureComponent {
     } = this.props;
     if (!this.props.menuItem) fetchMenuitem({ id: params.id });
   }
+
   render() {
     const {
       width,
@@ -67,10 +68,8 @@ class MenuItemView extends React.PureComponent {
     const md = !sm && isWidthDown('md', width);
     const lg = !md && isWidthDown('lg', width);
 
-    const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     return (
       <div>
-        {!iosInstalled && <AppBar position="static"/>}
         {extraSmallScreen &&
           <Carousel images={images.map(image => image.url)}/>
         }

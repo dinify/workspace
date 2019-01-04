@@ -175,7 +175,6 @@ class Eat extends React.Component {
     }
     return (
       <div>
-        {!iosInstalled && <AppBar position="static"/>}
         {checkedin && <div>
             {multiparty &&
               <div className={`${classes.defaultBackgroundFill} ${splitMenuOpen ? 'sticky' : ''}`} style={{

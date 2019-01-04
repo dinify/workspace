@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 //  import registerServiceWorker from './registerServiceWorker'
 import App from 'web/App';
+import { SnackbarProvider } from 'material-ui-snackbar-redux';
 import store from './configureStore';
 import websockets from './websockets';
-import { SnackbarProvider } from 'material-ui-snackbar-redux'
 
 //  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 //  import HTML5Backend from 'react-dnd-html5-backend'

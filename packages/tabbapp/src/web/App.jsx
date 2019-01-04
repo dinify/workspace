@@ -1,11 +1,12 @@
 // @flow
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { openDialog, closeDialog } from 'ducks/ui/actions';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 import { Motion, spring } from 'react-motion';
+import Auth from 'auth';
 
-import Messaging from 'web/firebase/Messaging';
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
 import CategoryView from 'web/pages/CategoryView';
@@ -17,14 +18,44 @@ import Bill from 'web/pages/Bill';
 import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
+
+import Button from '@material-ui/core/Button';
+import Account from 'web/components/AppBar/Account';
 import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
+import AccountExistsDialog from 'web/components/AccountExistsDialog';
 
 import * as FN from 'tabb-front/dist/lib/FN';
 
 import withRoot from 'withRoot.js';
 
 class App extends React.Component {
+  auth = new Auth();
+
+  state = { user: null }
+
+  componentWillMount = () => {
+    const { openDialog } = this.props;
+    this.auth.subscribeState(user => {
+      this.setState({ user });
+    })
+    this.auth.updateUser = user => {
+      this.setState({ user });
+    }
+    this.auth.prompt = (type, pProps) => {
+      switch (type) {
+        case 'account-exists':
+          openDialog({
+            id: type,
+            component: (props) => <AccountExistsDialog {...pProps} {...props}/>
+          });
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
   onNavigate = (evt, val) => {
     if (val === 0) this.props.history.push('/');
     else if (val === 1) this.props.history.push('/eat');
@@ -51,24 +82,43 @@ class App extends React.Component {
     const {
       location,
       checkedInRestaurant,
+      dialogs,
+      closeDialog,
       history
     } = this.props;
+    const { user } = this.state;
+    this.auth.user = user;
 
-    const TEMP_HOMEPAGE = true;
+    const HOMEPAGE = '/restaurant/koreagrill';
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     return (
       <div>
-        {iosInstalled && <AppBar />}
+        <AppBar>
+          {!user ? <Button
+            onClick={() => {history.push('/signin')}}
+            variant="contained"
+            color="primary">
+            Sign in
+          </Button> :
+          <Account auth={this.auth} />}
+        </AppBar>
         <div style={{marginBottom: 56}}>
           <Switch location={location}>
             <Route exact path="/" render={() => (
-              TEMP_HOMEPAGE ? (
+              HOMEPAGE !== '/' ? (
                 <Redirect to="/restaurant/koreagrill"/>
               ) : (
                 <Main/>
               )
             )}/>
-            <Route path="/signin" component={SignIn} />
+            <Route exact path="/callback" render={() => {
+              this.auth.handleAuthentication();
+              return <Redirect to="/"/>;
+            }}/>
+            <Route path="/signin" component={() => {
+              return user ? <Redirect to={HOMEPAGE}/> :
+              <SignIn auth={this.auth}/>
+            }} />
 
             <Route path="/checkin" component={Checkin} />
             <Route path="/restaurant/:subdomain" component={RestaurantView} />
@@ -99,6 +149,12 @@ class App extends React.Component {
               })()}/>
           }
         </Motion>
+        {FN.MapToList(dialogs).map(dialog => {
+          return dialog.component({
+            open: dialog.open,
+            onClose: () => { closeDialog(dialog.id) }
+          });
+        })}
       </div>
     );
   }
@@ -108,7 +164,12 @@ App = connect(
   (state) => ({
     loggedUserId: state.user.loggedUserId,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
-  })
+    dialogs: state.ui.dialogs
+  }),
+  {
+    openDialog,
+    closeDialog,
+  }
 )(App);
 
 const AppWrapper = () => (

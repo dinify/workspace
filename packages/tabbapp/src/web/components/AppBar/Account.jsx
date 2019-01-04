@@ -1,73 +1,52 @@
  // @flow
 import React from 'react';
 import { withStateHandlers } from 'recompose';
-import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Typography from 'web/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Person from '@material-ui/icons/PersonRounded';
-import Popover from '@material-ui/core/Popover';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import { connect } from 'react-redux';
-import { logoutInit } from 'ducks/auth/actions';
-import { getLoggedUser } from 'ducks/user/selectors';
+import Image from 'web/components/Image';
 
-const SigninLink = props => <Link to={{
-    pathname: `/signin`,
-    state: { modal: true }
-  }} {...props} />
+import AccountDialog from 'web/components/AccountDialog';
+
+const styles = theme => ({
+  rounded: {
+    borderRadius: 20,
+    border: `1px solid ${theme.palette.divider}`
+  }
+});
 
 const Account = ({
   anchor,
   handleAccountMenuToggle,
   classes,
-  user,
-  color = 'default',
+  auth,
   accountMenuOpen,
   handleAccountMenuClose,
-  logout
 }) => {
-  if (!user) {
-    return (
-      <div>
-        {/* <Button
-          component={LoginLink}
-          variant="outlined"
-          color={color === 'default' ? 'primary' : 'inherit'}
-          style={{ marginRight: 24 }}
-        >
-          Log in / Sign up
-        </Button> */}
-        <Button
-          component={SigninLink}
-          variant="contained"
-          color={color === 'default' ? 'primary' : 'inherit'}
-        >
-          Sign in
-        </Button>
-      </div>
-    )
-  }
+  const { user } = auth;
+  if (!user) return null;
   return (
     <div>
       <ButtonBase
-
         aria-owns={anchor ? 'simple-menu' : null}
         aria-haspopup="true"
         onClick={handleAccountMenuToggle}
         style={{marginRight: -16}}
         className={classes.rounded}>
         <Avatar className={classes.avatar}>
-          <Person />
+          {user.photoURL ? <Image aspect={1} image={user.photoURL} title={user.displayName} /> : <Person />}
         </Avatar>
         <Typography
           color='inherit'
           style={{marginLeft: 16, marginRight: 16}}>
-          {user.name}
+          {user.displayName}
         </Typography>
       </ButtonBase>
-      <Popover
+      <AccountDialog auth={auth} open={accountMenuOpen} onClose={handleAccountMenuClose}/>
+      {/* <Popover
         classes={{paper: classes.popover}}
         open={accountMenuOpen}
         anchorEl={anchor}
@@ -93,18 +72,12 @@ const Account = ({
             <Button onClick={() => {handleAccountMenuClose(); logout()}} variant="outlined" fullWidth>Log out</Button>
           </Grid>
         </Grid>
-      </Popover>
+      </Popover> */}
     </div>
   )
 }
 
-export default connect(
-  state => ({
-    user: getLoggedUser(state)
-  }), {
-    logout: logoutInit
-  }
-)(withStateHandlers(
+export default withStateHandlers(
   {
     accountMenuOpen: false,
   },
@@ -114,4 +87,4 @@ export default connect(
     }),
     handleAccountMenuClose: () => () => ({ accountMenuOpen: false }),
   }
-)(Account));
+)(withStyles(styles)(Account));

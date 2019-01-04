@@ -2,15 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { fbAuthInit, googleAuthInit } from 'ducks/auth/actions';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, SubmissionError } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
 import ToggleIcon from 'material-ui-toggle-icon';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import GoogleLogin from 'react-google-login';
 import LogoText from 'icons/LogoText';
-import FacebookLogo from 'icons/FacebookLogo';
-import GoogleLogo from 'icons/GoogleLogo';
 import Visibility from '@material-ui/icons/VisibilityRounded';
 import VisibilityOff from '@material-ui/icons/VisibilityOffRounded';
 
@@ -21,6 +17,19 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/Inputs/Text';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
+import GoogleButton from 'web/components/GoogleButton';
+import FacebookButton from 'web/components/FacebookButton';
+
+const NextButton = ({classes, disabled, loading}) => {
+  return <Button
+    type="submit"
+    disabled={disabled}
+    variant="outlined"
+    color="primary"
+    className={classes.uncapitalized}>
+    {!loading ? 'Next' : 'loading...'}
+  </Button>
+}
 
 const styles = theme => ({
   grow: {
@@ -34,28 +43,6 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
   },
-  leftGutter: {
-    marginLeft: theme.spacing.unit * 2,
-  },
-  googleButton: {
-    justifyContent: 'start',
-  },
-  facebookButton: {
-    justifyContent: 'start',
-    color: 'rgba(255, 255, 255, 0.87)',
-    backgroundColor: '#3b5998',
-    boxShadow: 'none',
-    '&:hover': {
-      boxShadow: 'none',
-      backgroundColor: '#546ca5', // #3b5998 + 0.12 white
-    },
-    '&:active': {
-      boxShadow: 'none',
-    },
-    '&:focus': {
-      boxShadow: 'none',
-    },
-  },
   uncapitalized: {
     textTransform: 'none',
   },
@@ -63,12 +50,109 @@ const styles = theme => ({
 
 class SignInForm extends React.Component {
   state = {
-    signingUp: false,
-    showPassword: false
+    page: 'default',
+    showPassword: false,
   }
 
-  submit = (params) => {
-    console.log(params);
+  submit = params => {
+    const { auth } = this.props;
+    const { page } = this.state;
+    const { email, password, first_name, last_name } = params;
+    const errors = {};
+    if (!email) {
+      errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      errors.email = 'Invalid email address';
+    }
+    if (page === 'signUp') {
+      if (!password) errors.password = 'Required';
+      if (!first_name) errors.first_name = 'Required';
+      if (!last_name) errors.last_name = 'Required';
+      if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
+      return auth.createUser(email, password).then(result => {
+        let user = result.user;
+        user.updateProfile({displayName: `${first_name} ${last_name}`}).then(() => {
+          auth.updateUser(user);
+        });
+        // TODO: store the rest of the form values (first name, last name, etc)
+        // in our own database linked with uid
+      }).catch(error => {
+        switch (error.code) {
+          case 'auth/invalid-email':
+            errors.email = 'The email address is invalid';
+            break;
+          case 'auth/email-already-in-use':
+            errors.email = 'The email address is already in use';
+            break;
+          case 'auth/weak-password':
+            errors.password = 'The password is too weak';
+            break;
+          default:
+            console.log(error);
+            break;
+        }
+        if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
+      });
+    }
+
+    if (page === 'signIn') {
+      if (!password) errors.password = 'Required';
+      if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
+
+      return auth.loginUser(email, password).then(credential => {
+        console.log(credential);
+        // TODO: store the rest of the form values (first name, last name, etc)
+        // in our own database linked with uid
+      }).catch(error => {
+        switch (error.code) {
+          case 'auth/invalid-email':
+            errors.email = 'The email address is invalid';
+            break;
+          case 'auth/user-disabled':
+            errors.email = 'This account has been disabled';
+            break;
+          case 'auth/user-not-found':
+            errors.email = 'No account found with this email';
+            break;
+          case 'auth/wrong-password':
+            errors.password = 'The passoword is incorrect';
+            break;
+          default:
+            console.log(error);
+            break;
+        }
+        if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
+      });
+    }
+
+    if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
+    return auth.fetchMethods(email).then(methods => {
+      console.log(methods);
+      if (methods.length === 0) {
+        this.setState({page: 'signUp'});
+      }
+      else {
+        let found = false;
+        for (let i = 0; i < methods.length; i += 1) {
+          const method = methods[i];
+          if (method === 'password') {
+            this.setState({page: 'signIn'});
+            found = true;
+          }
+        }
+        // present user with dialog with options
+        if (!found) {
+          auth.prompt('account-exists', {
+            attempt: 'password',
+            method: methods[0],
+            email,
+            action: () => {
+              return auth.loginSocial(methods[0]);
+            }
+          });
+        }
+      }
+    });
   }
 
   render() {
@@ -77,15 +161,20 @@ class SignInForm extends React.Component {
       loggedUserId,
       fbAuth,
       googleAuth,
+      handleSubmit,
+      pristine,
+      submitting,
+      auth
     } = this.props;
     const {
-      signingUp,
-      showPassword
+      showPassword,
+      page,
     } = this.state;
     const animConfig = { stiffness: 480, damping: 48 };
 
+    const formOpen = page !== 'default';
     return (
-      <form onSubmit={this.submit} style={{height: '100vh'}}>
+      <form onSubmit={handleSubmit(this.submit)} style={{height: 'calc(100vh - 112px)'}}>
         <ResponsiveContainer style={{
           height: '100%',
           display: 'flex',
@@ -115,7 +204,12 @@ class SignInForm extends React.Component {
                 </div>
               </Link>
               <Typography style={{marginTop: 16, marginBottom: 8}} variant="h6">
-                Sign in
+                {(() => {
+                  if (page === 'default') return 'Sign in';
+                  if (page === 'signUp') return 'Create account';
+                  if (page === 'signIn') return 'Sign in with password';
+                  return '';
+                })()}
               </Typography>
               <Typography align="center" variant="caption">
                 to access more features, like dining history, reviews and saving your favorites
@@ -124,7 +218,7 @@ class SignInForm extends React.Component {
             <div style={{maxHeight: 213, overflow: 'hidden'}}>
               <Motion
                 defaultStyle={{x: 1}}
-                style={{x: spring(signingUp ? 0 : 1, animConfig)}}>
+                style={{x: spring(formOpen ? 0 : 1, animConfig)}}>
                 {style =>
                   <div ref={node => {this.socialSection = node}} style={{
                     willChange: 'transform',
@@ -138,46 +232,11 @@ class SignInForm extends React.Component {
                       transform: `scale(1, ${1 / style.x}) translate3d(0, 0, 0)`
                     }}>
                       <div style={{ paddingBottom: 16 }}>
-                        <GoogleLogin
-                          clientId="448538111630-pq8957r4h4i5pgecvf136jpougurshjh.apps.googleusercontent.com"
-                          onSuccess={response => {
-                            googleAuth({googleRes: response});
-                          }}
-                          onFaliure={response => {console.log(response)}}
-                          render={renderProps => (
-                            <Button
-                              fullWidth
-                              className={classes.googleButton}
-                              classes={{ label: classes.uncapitalized }}
-                              variant="outlined"
-                              onClick={renderProps.onClick}>
-                              <GoogleLogo />
-                              <span className={classes.leftGutter}>Continue with Google</span>
-                            </Button>
-                          )}/>
+                        <GoogleButton onClick={() => {auth.loginSocial('google.com')}} />
                       </div>
                       <div style={{ paddingBottom: 16 }}>
-                        <FacebookLogin
-                          appId="123605498281814"
-                          fields="name,email,gender,birthday"
-                          scope="user_gender,user_birthday"
-                          isMobile
-                          disableMobileRedirect
-                          callback={(res) => {
-                            fbAuth({ fbRes: res })
-                          }}
-                          render={renderProps => (
-                            <Button
-                              fullWidth
-                              className={classes.facebookButton}
-                              classes={{ label: classes.uncapitalized }}
-                              variant="contained"
-                              onClick={() => renderProps.onClick()}>
-                              <FacebookLogo />
-                              <span className={classes.leftGutter}>Continue with Facebook</span>
-                            </Button>
-                          )}
-                        /></div>
+                        <FacebookButton onClick={() => {auth.loginSocial('facebook.com')}} />
+                      </div>
                       <div style={{marginBottom: 16}} className={classes.flex}>
                         <Divider className={classes.grow} />
                         <Typography
@@ -195,7 +254,7 @@ class SignInForm extends React.Component {
               </Motion>
               <Motion
                 defaultStyle={{x: 0}}
-                style={{x: spring(signingUp ? 1 : 0, animConfig)}}>
+                style={{x: spring(formOpen ? 1 : 0, animConfig)}}>
                 {style => {
                   const baseScale = (56 + 8) / 192;
                   const currentScale = baseScale + (style.x * (1 - baseScale));
@@ -228,17 +287,17 @@ class SignInForm extends React.Component {
                           }}
                         />
 
-                        <div style={{
+                        {page !== 'signIn' && <div style={{
                           display: 'flex',
                           marginTop: 8,
-                          marginBottom: 8,
+
                         }}>
                           <Field
                             name="first_name"
                             component={Text}
                             componentProps={{
                               label: 'First name',
-                              disabled: !signingUp,
+                              disabled: !formOpen,
                               type: 'text',
                               variant: 'outlined',
                               name: 'fname',
@@ -252,7 +311,7 @@ class SignInForm extends React.Component {
                             component={Text}
                             componentProps={{
                               label: 'Last name',
-                              disabled: !signingUp,
+                              disabled: !formOpen,
                               type: 'text',
                               variant: 'outlined',
                               name: 'lname',
@@ -261,13 +320,14 @@ class SignInForm extends React.Component {
                               style: {marginLeft: 4}
                             }}
                           />
-                        </div>
+                        </div>}
                         <Field
                           name="password"
                           component={Text}
                           componentProps={{
                             label: 'Password',
-                            disabled: !signingUp,
+                            style: {marginTop: 8},
+                            disabled: !formOpen,
                             type: showPassword ? 'text' : 'password',
                             fullWidth: true,
                             variant: 'outlined',
@@ -277,7 +337,7 @@ class SignInForm extends React.Component {
                               endAdornment: (
                                 <InputAdornment position="end">
                                   <IconButton
-                                    disabled={!signingUp}
+                                    disabled={!formOpen}
                                     aria-label="Toggle password visibility"
                                     onClick={() => {this.setState({showPassword: !showPassword})}}>
                                     <ToggleIcon
@@ -301,13 +361,11 @@ class SignInForm extends React.Component {
               display: 'flex',
               marginTop: 16
             }}>
-              <Button onClick={() => this.setState({signingUp: !signingUp})} variant="text" className={classes.uncapitalized}>
-                {signingUp ? 'Back' : 'Create account'}
+              <Button onClick={() => this.setState({page: formOpen ? 'default' : 'signUp'})} variant="text" className={classes.uncapitalized}>
+                {formOpen ? 'Back' : 'Create account'}
               </Button>
               <div style={{flex: 1}}/>
-              <Button variant="outlined" color="primary" className={classes.uncapitalized}>
-                Next
-              </Button>
+              <NextButton classes={classes} disabled={pristine || submitting} loading={submitting} />
             </div>
 
           </div>
@@ -321,7 +379,7 @@ const SignIn = withStyles(styles)(reduxForm({
   form: 'auth/signin',
 })(connect(
   state => ({
-    loggedUserId: state.user.loggedUserId,
+    loggedUserId: state.user.loggedUserId
   }),
   {
     fbAuth: fbAuthInit,

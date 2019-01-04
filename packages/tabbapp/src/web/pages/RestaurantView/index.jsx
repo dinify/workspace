@@ -65,7 +65,7 @@ class RestaurantView extends React.PureComponent {
     fetchRestaurant({ subdomain: params.subdomain });
     fetchMenucategories({ subdomain: params.subdomain });
   }
-  
+
   render() {
     const {
       width,
@@ -109,10 +109,8 @@ class RestaurantView extends React.PureComponent {
     const md = !sm && isWidthDown('md', width);
     const lg = !md && isWidthDown('lg', width);
 
-    const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     return (
       <div>
-        {!iosInstalled && <AppBar position="static"/>}
         {extraSmallScreen &&
           <Carousel images={images.map(image => image.url)}/>
         }

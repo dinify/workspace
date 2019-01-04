@@ -70,6 +70,7 @@ const googleAuthInitEpic = (action$: Observable) =>
     .ofType(types.GOOGLE_AUTH_INIT)
     .switchMap(({ payload: { googleRes, qr } }) => {
       const { profileObj, accessToken } = googleRes;
+      console.log(googleRes);
       const { name, email } = profileObj;
       return Observable.fromPromise(API.LoginWithGoogle({ accessToken }))
         .mergeMap(res => {

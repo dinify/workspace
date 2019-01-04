@@ -5,6 +5,7 @@ import types from './types';
 const initialState = {
   progressMap: {},
   errorsMap: {},
+  dialogs: {}
 };
 
 function findNested(obj, key, memo) {
@@ -37,6 +38,19 @@ export default function reducer(state = initialState, action) {
     }
   }
   switch (action.type) {
+    case types.DIALOG_OPEN: {
+      // TODO: close other dialogs
+      return R.assocPath(['dialogs', action.payload.id], {
+        ...action.payload,
+        open: true,
+      })(state);
+    }
+    case types.DIALOG_CLOSE: {
+      return R.assocPath(['dialogs', action.payload], {
+        ...state.dialogs[action.payload],
+        open: false,
+      })(state);
+    }
     case 'persist/REHYDRATE': {
       return R.assoc('errorsMap', {})(R.assoc('progressMap', {})(state));
     }
