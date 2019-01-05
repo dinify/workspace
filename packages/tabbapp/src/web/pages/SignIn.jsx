@@ -47,9 +47,8 @@ class SignInForm extends React.Component {
     showPassword: false,
   }
 
-  submit = params => {
+  signIn = params => {
     const { auth } = this.props;
-    const { page } = this.state;
     const { email, password, first_name, last_name } = params;
     const errors = {};
     if (!email) {
@@ -57,67 +56,83 @@ class SignInForm extends React.Component {
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
       errors.email = 'Invalid email address';
     }
-    if (page === 'signUp') {
-      if (!password) errors.password = 'Required';
-      if (!first_name) errors.first_name = 'Required';
-      if (!last_name) errors.last_name = 'Required';
+
+    if (!password) errors.password = 'Required';
+    if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
+    return auth.loginUser(email, password).then(credential => {
+      console.log(credential);
+      // TODO: store the rest of the form values (first name, last name, etc)
+      // in our own database linked with uid
+    }).catch(error => {
+      switch (error.code) {
+        case 'auth/invalid-email':
+          errors.email = 'The email address is invalid';
+          break;
+        case 'auth/user-disabled':
+          errors.email = 'This account has been disabled';
+          break;
+        case 'auth/user-not-found':
+          errors.email = 'No account found with this email';
+          break;
+        case 'auth/wrong-password':
+          errors.password = 'The passoword is incorrect';
+          break;
+        default:
+          console.log(error);
+          break;
+      }
       if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
-      return auth.createUser(email, password).then(result => {
-        let user = result.user;
-        user.updateProfile({displayName: `${first_name} ${last_name}`}).then(() => {
-          auth.updateUser(user);
-        });
-        // TODO: store the rest of the form values (first name, last name, etc)
-        // in our own database linked with uid
-      }).catch(error => {
-        switch (error.code) {
-          case 'auth/invalid-email':
-            errors.email = 'The email address is invalid';
-            break;
-          case 'auth/email-already-in-use':
-            errors.email = 'The email address is already in use';
-            break;
-          case 'auth/weak-password':
-            errors.password = 'The password is too weak';
-            break;
-          default:
-            console.log(error);
-            break;
-        }
-        if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
-      });
-    }
+    });
+  }
 
-    if (page === 'signIn') {
-      if (!password) errors.password = 'Required';
+  signUp = params => {
+    const { auth } = this.props;
+    const { email, password, first_name, last_name } = params;
+    const errors = {};
+    if (!email) {
+      errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      errors.email = 'Invalid email address';
+    }
+    if (!password) errors.password = 'Required';
+    if (!first_name) errors.first_name = 'Required';
+    if (!last_name) errors.last_name = 'Required';
+    if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
+    return auth.createUser(email, password).then(result => {
+      const user = result.user;
+      user.updateProfile({displayName: `${first_name} ${last_name}`}).then(() => {
+        auth.updateUser(user);
+      });
+      // TODO: store the rest of the form values (first name, last name, etc)
+      // in our own database linked with uid
+    }).catch(error => {
+      switch (error.code) {
+        case 'auth/invalid-email':
+          errors.email = 'The email address is invalid';
+          break;
+        case 'auth/email-already-in-use':
+          errors.email = 'The email address is already in use';
+          break;
+        case 'auth/weak-password':
+          errors.password = 'The password is too weak';
+          break;
+        default:
+          console.log(error);
+          break;
+      }
       if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
+    });
+  }
 
-      return auth.loginUser(email, password).then(credential => {
-        console.log(credential);
-        // TODO: store the rest of the form values (first name, last name, etc)
-        // in our own database linked with uid
-      }).catch(error => {
-        switch (error.code) {
-          case 'auth/invalid-email':
-            errors.email = 'The email address is invalid';
-            break;
-          case 'auth/user-disabled':
-            errors.email = 'This account has been disabled';
-            break;
-          case 'auth/user-not-found':
-            errors.email = 'No account found with this email';
-            break;
-          case 'auth/wrong-password':
-            errors.password = 'The passoword is incorrect';
-            break;
-          default:
-            console.log(error);
-            break;
-        }
-        if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
-      });
+  decide = params => {
+    const { auth } = this.props;
+    const { email } = params;
+    const errors = {};
+    if (!email) {
+      errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      errors.email = 'Invalid email address';
     }
-
     if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
     return auth.fetchMethods(email).then(methods => {
       console.log(methods);
@@ -166,8 +181,14 @@ class SignInForm extends React.Component {
     const animConfig = { stiffness: 480, damping: 48 };
 
     const formOpen = page !== 'default';
+    let submitFc = this.decide;
+    if (page === 'signUp') submitFc = this.signUp;
+    if (page === 'signIn') submitFc = this.signIn;
     return (
-      <form onSubmit={handleSubmit(this.submit)} style={{height: 'calc(100vh - 112px)'}}>
+      <form
+        onSubmit={handleSubmit(submitFc)}
+        style={{height: 'calc(100vh - 112px)'}}
+      >
         <ResponsiveContainer style={{
           height: '100%',
           display: 'flex',
@@ -379,7 +400,7 @@ class SignInForm extends React.Component {
                   }
                 </Motion>
                 {submitting && <CircularProgress className={classes.colorTextSecondary} style={{
-                  position: 'absolute'
+                    position: 'absolute'
                 }} size={16} thickness={6}/>}
               </Button>
             </div>

@@ -2,10 +2,11 @@
 import { Observable } from 'rxjs';
 import * as API from 'tabb-front/dist/api/restaurant';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
-import types from './types';
-import { checkinFail, checkinDone, favRestaurantDone, favRestaurantFail } from './actions';
 import { fetchStatusInit } from 'ducks/restaurant/actions';
 import { getCookie } from 'tabb-front/dist/lib/FN';
+import types from './types';
+import { checkinFail, checkinDone, favRestaurantDone, favRestaurantFail } from './actions';
+
 
 type CheckinProps = {
   payload: {
