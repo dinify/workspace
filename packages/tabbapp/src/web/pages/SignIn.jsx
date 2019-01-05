@@ -9,6 +9,7 @@ import ToggleIcon from 'material-ui-toggle-icon';
 import LogoText from 'icons/LogoText';
 import Visibility from '@material-ui/icons/VisibilityRounded';
 import VisibilityOff from '@material-ui/icons/VisibilityOffRounded';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -19,17 +20,6 @@ import Text from 'web/components/Inputs/Text';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import GoogleButton from 'web/components/GoogleButton';
 import FacebookButton from 'web/components/FacebookButton';
-
-const NextButton = ({classes, disabled, loading}) => {
-  return <Button
-    type="submit"
-    disabled={disabled}
-    variant="outlined"
-    color="primary"
-    className={classes.uncapitalized}>
-    {!loading ? 'Next' : 'loading...'}
-  </Button>
-}
 
 const styles = theme => ({
   grow: {
@@ -46,6 +36,9 @@ const styles = theme => ({
   uncapitalized: {
     textTransform: 'none',
   },
+  colorTextSecondary: {
+    color: theme.palette.text.secondary
+  }
 });
 
 class SignInForm extends React.Component {
@@ -332,7 +325,7 @@ class SignInForm extends React.Component {
                             fullWidth: true,
                             variant: 'outlined',
                             name: 'password',
-                            autoComplete: 'new-password',
+                            autoComplete: page === 'signUp' ? 'new-password' : 'current-password',
                             InputProps: {
                               endAdornment: (
                                 <InputAdornment position="end">
@@ -362,12 +355,34 @@ class SignInForm extends React.Component {
               marginTop: 16
             }}>
               <Button onClick={() => this.setState({page: formOpen ? 'default' : 'signUp'})} variant="text" className={classes.uncapitalized}>
-                {formOpen ? 'Back' : 'Create account'}
+                {formOpen ? 'Back' : 'New account'}
               </Button>
               <div style={{flex: 1}}/>
-              <NextButton classes={classes} disabled={pristine || submitting} loading={submitting} />
+              <Button
+                type="submit"
+                disabled={pristine || submitting}
+                variant="outlined"
+                color="primary"
+                className={classes.uncapitalized}>
+                <Motion
+                  defaultStyle={{x: 1}}
+                  style={{x: spring(submitting ? 0 : 1, animConfig)}}>
+                  {style =>
+                    <div style={{ opacity: style.x }}>
+                      {(() => {
+                        if (page === 'default') return 'Next';
+                        if (page === 'signIn') return 'Sign in';
+                        if (page === 'signUp') return 'Create account';
+                        return '';
+                      })()}
+                    </div>
+                  }
+                </Motion>
+                {submitting && <CircularProgress className={classes.colorTextSecondary} style={{
+                  position: 'absolute'
+                }} size={16} thickness={6}/>}
+              </Button>
             </div>
-
           </div>
         </ResponsiveContainer>
       </form>
