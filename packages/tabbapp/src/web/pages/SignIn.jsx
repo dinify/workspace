@@ -181,9 +181,21 @@ class SignInForm extends React.Component {
     const animConfig = { stiffness: 480, damping: 48 };
 
     const formOpen = page !== 'default';
+
+    let submitButtonText = 'Next';
     let submitFc = this.decide;
-    if (page === 'signUp') submitFc = this.signUp;
-    if (page === 'signIn') submitFc = this.signIn;
+    let formTitle = 'Sign in';
+    if (page === 'signIn') {
+      submitButtonText = 'Sign in';
+      formTitle = 'Sign in with password'
+      submitFc = this.signIn;
+    }
+    if (page === 'signUp') {
+      submitButtonText = 'Create account';
+      formTitle = 'Create account';
+      submitFc = this.signUp;
+    }
+
     return (
       <form
         onSubmit={handleSubmit(submitFc)}
@@ -218,12 +230,7 @@ class SignInForm extends React.Component {
                 </div>
               </Link>
               <Typography style={{marginTop: 16, marginBottom: 8}} variant="h6">
-                {(() => {
-                  if (page === 'default') return 'Sign in';
-                  if (page === 'signUp') return 'Create account';
-                  if (page === 'signIn') return 'Sign in with password';
-                  return '';
-                })()}
+                {formTitle}
               </Typography>
               <Typography align="center" variant="caption">
                 to access more features, like dining history, reviews and saving your favorites
@@ -389,14 +396,7 @@ class SignInForm extends React.Component {
                   defaultStyle={{x: 1}}
                   style={{x: spring(submitting ? 0 : 1, animConfig)}}>
                   {style =>
-                    <div style={{ opacity: style.x }}>
-                      {(() => {
-                        if (page === 'default') return 'Next';
-                        if (page === 'signIn') return 'Sign in';
-                        if (page === 'signUp') return 'Create account';
-                        return '';
-                      })()}
-                    </div>
+                    <div style={{ opacity: style.x }}>{submitButtonText}</div>
                   }
                 </Motion>
                 {submitting && <CircularProgress className={classes.colorTextSecondary} style={{
