@@ -5,6 +5,7 @@ import { openDialog, closeDialog } from 'ducks/ui/actions';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 import { Motion, spring } from 'react-motion';
+import { setCookie } from 'tabb-front/dist/lib/FN';
 import Auth from 'auth';
 
 import Checkin from 'web/pages/Checkin';
@@ -37,8 +38,14 @@ class App extends React.Component {
   componentWillMount = () => {
     const { openDialog } = this.props;
     this.auth.subscribeState(user => {
+      if (user) {
+        this.auth.getIdToken(token => {
+          console.log('idToken', token);
+          setCookie('access_token', token, 30);
+        })
+      }
       this.setState({ user });
-    })
+    });
     this.auth.updateUser = user => {
       this.setState({ user });
     }

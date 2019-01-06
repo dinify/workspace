@@ -1,6 +1,5 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { showDialog } from 'ducks/ui/actions';
 
 export default class Auth {
   availableProviders = {
@@ -22,6 +21,15 @@ export default class Auth {
       });;
     }).catch(error => {
       console.log('Reauthentication error', error);
+    });
+  }
+
+  getIdToken = (cb) => {
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ false).then(idToken => {
+      this.idToken = idToken;
+      cb(idToken);
+    }).catch(error => {
+      console.log(error);
     });
   }
 

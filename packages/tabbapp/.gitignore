@@ -21,7 +21,7 @@ node_modules
 package-lock.json
 
 # Firebase Files
-./firebase/*
+.firebase/*
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
