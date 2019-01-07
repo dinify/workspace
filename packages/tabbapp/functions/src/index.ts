@@ -18,7 +18,8 @@ const auth = (req, res, next) => {
     if (err || !user) {
       return res.status(401).json({
         code: "unauthorized",
-        message: "The token is invalid"
+        message: "The token is invalid",
+        error: err
       });
     }
     if (user && user.uid) {
@@ -56,19 +57,41 @@ app.get("/user/:uid",
   },
   (request: AuthedRequest, response) => {
     if (!request.params.uid) response.sendStatus(400);
-    admin.auth().getUser(request.params.uid)
+    let uid = request.params.uid === 'me' ? request.locals.user.uid : request.params.uid;
+    admin.auth().getUser(uid)
       .then(userRecord => {
-        if (request.locals.user.uid === request.params.uid) response.json(userRecord);
-        else response.json({
-          email: userRecord.email,
-          displayName: userRecord.displayName,
-          photoURL: userRecord.photoURL,
-          providerData: userRecord.providerData,
+        db.collection('profiles').doc(uid).get().then(snapshot => {
+          let data;
+          if (snapshot.exists) data = snapshot.data();
+          if (request.locals.user.uid === request.params.uid) response.json({
+            profile: data,
+            ...userRecord
+          });
+          else response.json({
+            profile: data,
+            email: userRecord.email,
+            displayName: userRecord.displayName,
+            photoURL: userRecord.photoURL,
+            providerData: userRecord.providerData,
+          });
         });
       })
       .catch(error => {
         response.status(400).json(error);
       });
+  }
+)
+app.post("/user/me",
+  (req, res, next) => {
+    auth(req, res, next);
+  },
+  (request: AuthedRequest, response) => {
+    const uid = request.locals.user.uid;
+    db.collection('profiles').doc(uid).set(request.body).then(writeResult => {
+      response.sendStatus(200);
+    }).catch(error => {
+      response.status(400).json(error);
+    });
   }
 )
 app.use((request, response) => {
