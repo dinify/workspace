@@ -5,6 +5,8 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 import configureEpics from './configureEpics';
 import { reducer as formReducer } from 'redux-form';
 import { snackbarReducer } from 'material-ui-snackbar-redux'
+import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase'
+import firebase from 'firebase'
 
 import ui from 'ducks/ui';
 import user from 'ducks/user';
@@ -26,8 +28,25 @@ const commonReducers = {
   cart,
   bill,
   seat,
-  snackbar: snackbarReducer
+  snackbar: snackbarReducer,
+  firebaseReducer
 };
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAwKYz-JN76QWYpK60TEL1YJhV_cIh9ciM",
+  authDomain: "tabb-global.firebaseapp.com",
+  databaseURL: "https://tabb-global.firebaseio.com",
+  projectId: "tabb-global",
+  storageBucket: "tabb-global.appspot.com",
+  messagingSenderId: "448538111630"
+}
+
+// react-redux-firebase config
+const rrfConfig = {
+  userProfile: 'users'
+}
+firebase.initializeApp(firebaseConfig)
+
 
 const configureStore = (options, storage) => {
   const {
@@ -53,12 +72,13 @@ const configureStore = (options, storage) => {
     middlewares.push(createLogger({ diff: true, collapsed: true }));
   }
 
-  const enhancers = compose(
+  const createStoreWithFirebase = compose(
+    reactReduxFirebase(firebase, rrfConfig), // firebase instance as first argument
     applyMiddleware(...middlewares),
     autoRehydrate(),
-  ); // , autoRehydrate()
+  )(createStore)
 
-  const store = createStore(reducers, initialState, enhancers);
+  const store = createStoreWithFirebase(reducers, initialState);
 
   // let the magic happen :–)
   persistStore(store, { blacklist: ['progress', 'routing', 'notifications'], storage }); // .purge() // in case you want to purge the store

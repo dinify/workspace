@@ -37,17 +37,6 @@ export default class Auth {
     return new this.availableProviders[id];
   }
 
-  constructor() {
-    firebase.initializeApp({
-      apiKey: "AIzaSyAwKYz-JN76QWYpK60TEL1YJhV_cIh9ciM",
-      authDomain: "tabb-global.firebaseapp.com",
-      databaseURL: "https://tabb-global.firebaseio.com",
-      projectId: "tabb-global",
-      storageBucket: "tabb-global.appspot.com",
-      messagingSenderId: "448538111630"
-    });
-  }
-
   subscribeState = (cb) => {
     firebase.auth().onAuthStateChanged(cb);
   }

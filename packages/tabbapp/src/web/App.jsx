@@ -6,7 +6,7 @@ import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 import { Motion, spring } from 'react-motion';
 import { setCookie } from 'tabb-front/dist/lib/FN';
-import Auth from 'auth';
+// import Auth from 'auth';
 
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
@@ -31,37 +31,37 @@ import * as FN from 'tabb-front/dist/lib/FN';
 import withRoot from 'withRoot.js';
 
 class App extends React.Component {
-  auth = new Auth();
+  // auth = new Auth();
 
   state = { user: null }
 
-  componentWillMount = () => {
-    const { openDialog } = this.props;
-    this.auth.subscribeState(user => {
-      if (user) {
-        this.auth.getIdToken(token => {
-          console.log('idToken', token);
-          setCookie('access_token', token, 30);
-        })
-      }
-      this.setState({ user });
-    });
-    this.auth.updateUser = user => {
-      this.setState({ user });
-    }
-    this.auth.prompt = (type, pProps) => {
-      switch (type) {
-        case 'account-exists':
-          openDialog({
-            id: type,
-            component: (props) => <AccountExistsDialog {...pProps} {...props}/>
-          });
-          break;
-        default:
-          break;
-      }
-    }
-  }
+  //componentWillMount = () => {
+  //  const { openDialog } = this.props;
+  //  this.auth.subscribeState(user => {
+  //    if (user) {
+  //      this.auth.getIdToken(token => {
+  //        console.log('idToken', token);
+  //        setCookie('access_token', token, 30);
+  //      })
+  //    }
+  //    this.setState({ user });
+  //  });
+  //  this.auth.updateUser = user => {
+  //    this.setState({ user });
+  //  }
+  //  this.auth.prompt = (type, pProps) => {
+  //    switch (type) {
+  //      case 'account-exists':
+  //        openDialog({
+  //          id: type,
+  //          component: (props) => <AccountExistsDialog {...pProps} {...props}/>
+  //        });
+  //        break;
+  //      default:
+  //        break;
+  //    }
+  //  }
+  //}
 
   onNavigate = (evt, val) => {
     if (val === 0) this.props.history.push('/');
@@ -94,6 +94,7 @@ class App extends React.Component {
       history
     } = this.props;
     const { user } = this.state;
+    this.auth = {};
     this.auth.user = user;
 
     const HOMEPAGE = '/restaurant/koreagrill';
