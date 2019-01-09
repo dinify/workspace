@@ -39,9 +39,14 @@ class App extends React.Component {
   //  const { openDialog } = this.props;
   //  this.auth.subscribeState(user => {
   //    if (user) {
-  //      this.auth.getIdToken(token => {
-  //        console.log('idToken', token);
-  //        setCookie('access_token', token, 30);
+  //      this.auth.getIdTokenResult(result => {
+  //        console.log('idToken', result.token);
+  //        setCookie('access_token', result.token, 30);
+  //        this.setState({ user: {
+  //          claims: result.claims,
+  //          id_token: result.token,
+  //          ...user
+  //        }});
   //      })
   //    }
   //    this.setState({ user });
@@ -96,6 +101,7 @@ class App extends React.Component {
     const { user } = this.state;
     this.auth = {};
     this.auth.user = user;
+    console.log(user);
 
     const HOMEPAGE = '/restaurant/koreagrill';
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';

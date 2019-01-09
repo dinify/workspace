@@ -33,6 +33,15 @@ export default class Auth {
     });
   }
 
+  getIdTokenResult = (cb) => {
+    firebase.auth().currentUser.getIdTokenResult(/* forceRefresh */ false).then(result => {
+      this.idToken = result.token;
+      cb(result);
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
   getProvider = (id) => {
     return new this.availableProviders[id];
   }

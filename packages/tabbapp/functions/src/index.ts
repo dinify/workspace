@@ -38,8 +38,6 @@ passport.use(new BearerStrategy(
   (token, done) => {
     admin.auth().verifyIdToken(token)
       .then(decodedToken => {
-        let uid = decodedToken.uid;
-        // TODO: fetch user profile from database
         return done(null, decodedToken, { scope: "all" });
       }).catch(err => {
         return done(err);
@@ -63,7 +61,8 @@ app.get("/user/:uid",
         db.collection('profiles').doc(uid).get().then(snapshot => {
           let data;
           if (snapshot.exists) data = snapshot.data();
-          if (request.locals.user.uid === request.params.uid) response.json({
+          if (request.locals.user.uid === request.params.uid ||
+              request.params.uid === 'me') response.json({
             profile: data,
             ...userRecord
           });
