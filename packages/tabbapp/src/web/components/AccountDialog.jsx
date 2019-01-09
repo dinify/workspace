@@ -1,4 +1,6 @@
 import React from 'react';
+import { compose } from 'redux'
+import { withFirebase } from 'react-redux-firebase'
 import { withStyles } from '@material-ui/core/styles';
 import Person from '@material-ui/icons/PersonRounded';
 import Divider from '@material-ui/core/Divider';
@@ -39,10 +41,10 @@ const localizedType = {
 const AccountDialog = ({
   classes,
   onClose,
-  auth,
+  user,
+  firebase,
   ...other
 }) => {
-  const { user } = auth;
   return (
     <Dialog onClose={onClose} aria-labelledby="account-dialog" {...other}>
       <DialogContent>
@@ -52,8 +54,8 @@ const AccountDialog = ({
           alignItems: 'center'
         }}>
           <Avatar style={{width: 96, height: 96}}>
-            {user.photoURL ?
-              <Image aspect={1} image={user.photoURL} title={user.displayName} /> :
+            {user.avatarUrl ?
+              <Image aspect={1} image={user.avatarUrl} title={user.displayName} /> :
               <Person style={{width: 56, height: 56}} />
             }
           </Avatar>
@@ -84,7 +86,7 @@ const AccountDialog = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={() => {
-          auth.logout();
+          firebase.logout();
           onClose();
         }} color="primary">
           Log out
@@ -99,4 +101,9 @@ const AccountDialog = ({
   );
 }
 
-export default withStyles(styles)(AccountDialog);
+const enhance = compose(
+  withFirebase,
+  withStyles(styles)
+)
+
+export default enhance(AccountDialog);

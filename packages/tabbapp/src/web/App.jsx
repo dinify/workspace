@@ -33,8 +33,6 @@ import withRoot from 'withRoot.js';
 class App extends React.Component {
   // auth = new Auth();
 
-  state = { user: null }
-
   //componentWillMount = () => {
   //  const { openDialog } = this.props;
   //  this.auth.subscribeState(user => {
@@ -96,25 +94,24 @@ class App extends React.Component {
       checkedInRestaurant,
       dialogs,
       closeDialog,
-      history
+      history,
+      user
     } = this.props;
-    const { user } = this.state;
     this.auth = {};
-    this.auth.user = user;
-    console.log(user);
+    this.auth.user = null;
 
     const HOMEPAGE = '/restaurant/koreagrill';
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     return (
       <div>
         <AppBar>
-          {!user ? <Button
+          {user.isEmpty ? <Button
             onClick={() => {history.push('/signin')}}
             variant="contained"
             color="primary">
             Sign in
           </Button> :
-          <Account auth={this.auth} />}
+          <Account user={user} />}
         </AppBar>
         <div style={{marginBottom: 56}}>
           <Switch location={location}>
@@ -130,8 +127,8 @@ class App extends React.Component {
               return <Redirect to="/"/>;
             }}/>
             <Route path="/signin" component={() => {
-              return user ? <Redirect to={HOMEPAGE}/> :
-              <SignIn auth={this.auth}/>
+              return user.isEmpty ? <SignIn auth={this.auth}/> :
+              <Redirect to={HOMEPAGE}/>
             }} />
 
             <Route path="/checkin" component={Checkin} />
@@ -176,6 +173,7 @@ class App extends React.Component {
 
 App = connect(
   (state) => ({
+    user: state.firebase.profile,
     loggedUserId: state.user.loggedUserId,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
     dialogs: state.ui.dialogs

@@ -29,7 +29,7 @@ const commonReducers = {
   bill,
   seat,
   snackbar: snackbarReducer,
-  firebaseReducer
+  firebase: firebaseReducer
 };
 
 const firebaseConfig = {

@@ -17,8 +17,6 @@ import IconButton from '@material-ui/core/IconButton';
 
 import * as FN from 'tabb-front/dist/lib/FN';
 
-import Account from './Account';
-
 const styles = theme => ({
   appBarDefault: {
     boxShadow: 'none',

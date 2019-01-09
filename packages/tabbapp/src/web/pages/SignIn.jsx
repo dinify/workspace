@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux'
+import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
 import { withStyles } from '@material-ui/core/styles';
 import { fbAuthInit, googleAuthInit } from 'ducks/auth/actions';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
@@ -172,6 +174,7 @@ class SignInForm extends React.Component {
       handleSubmit,
       pristine,
       submitting,
+      firebase,
       auth
     } = this.props;
     const {
@@ -253,10 +256,10 @@ class SignInForm extends React.Component {
                       transform: `scale(1, ${1 / style.x}) translate3d(0, 0, 0)`
                     }}>
                       <div style={{ paddingBottom: 16 }}>
-                        <GoogleButton onClick={() => {auth.loginSocial('google.com')}} />
+                        <GoogleButton onClick={() => firebase.login({ provider: 'google', type: 'popup' })} />
                       </div>
                       <div style={{ paddingBottom: 16 }}>
-                        <FacebookButton onClick={() => {auth.loginSocial('facebook.com')}} />
+                        <FacebookButton onClick={() => firebase.login({ provider: 'facebook', type: 'popup' })} />
                       </div>
                       <div style={{marginBottom: 16}} className={classes.flex}>
                         <Divider className={classes.grow} />
@@ -413,14 +416,14 @@ class SignInForm extends React.Component {
 
 const SignIn = withStyles(styles)(reduxForm({
   form: 'auth/signin',
-})(connect(
-  state => ({
-    loggedUserId: state.user.loggedUserId
-  }),
-  {
-    fbAuth: fbAuthInit,
-    googleAuth: googleAuthInit,
-  }
-)(SignInForm)));
+})(SignInForm));
 
-export default SignIn;
+export default compose(
+  withFirebase,
+  connect(
+    state => ({
+      auth: state.firebase.auth,
+      loggedUserId: state.user.loggedUserId
+    })
+  )
+)(SignIn)

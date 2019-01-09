@@ -22,12 +22,11 @@ const Account = ({
   anchor,
   handleAccountMenuToggle,
   classes,
-  auth,
+  user,
   accountMenuOpen,
   handleAccountMenuClose,
 }) => {
-  const { user } = auth;
-  if (!user) return null;
+  if (user.isEmpty) return null;
   return (
     <div>
       <ButtonBase
@@ -37,7 +36,7 @@ const Account = ({
         style={{marginRight: -16}}
         className={classes.rounded}>
         <Avatar className={classes.avatar}>
-          {user.photoURL ? <Image aspect={1} image={user.photoURL} title={user.displayName} /> : <Person />}
+          {user.avatarUrl ? <Image aspect={1} image={user.avatarUrl} title={user.displayName} /> : <Person />}
         </Avatar>
         <Typography
           color='inherit'
@@ -45,7 +44,7 @@ const Account = ({
           {user.displayName}
         </Typography>
       </ButtonBase>
-      <AccountDialog auth={auth} open={accountMenuOpen} onClose={handleAccountMenuClose}/>
+      <AccountDialog user={user} open={accountMenuOpen} onClose={handleAccountMenuClose}/>
       {/* <Popover
         classes={{paper: classes.popover}}
         open={accountMenuOpen}

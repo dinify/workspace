@@ -88,7 +88,7 @@ class RestaurantView extends React.PureComponent {
       const qr = query[1];
       if (loggedUserId) {
         checkin({ qr });
-      } else history.push(`/login?qr=${qr}`);
+      } // else history.push(`/login?qr=${qr}`);
     }
 
 
