@@ -9,6 +9,7 @@ import { billEpics as bill } from 'ducks/bill';
 import { seatEpics as seat } from 'ducks/seat';
 import { uiEpics as ui } from 'ducks/ui';
 import { serviceEpics as service } from 'ducks/service';
+import { getFirebase } from 'react-redux-firebase'
 
 import { appEpics as app } from 'ducks/app';
 
@@ -34,4 +35,5 @@ export default (deps = {}, platformEpics = []) => (
     ...deps,
     getState,
     dispatch,
+    getFirebase
   });

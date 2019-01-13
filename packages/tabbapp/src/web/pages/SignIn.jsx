@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux'
-import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
+import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import { withStyles } from '@material-ui/core/styles';
 import { fbAuthInit, googleAuthInit } from 'ducks/auth/actions';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
@@ -49,118 +49,112 @@ class SignInForm extends React.Component {
     showPassword: false,
   }
 
-  signIn = params => {
-    const { auth } = this.props;
-    const { email, password, first_name, last_name } = params;
+  validateEmail = (email) => {
     const errors = {};
     if (!email) {
       errors.email = 'Required';
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
       errors.email = 'Invalid email address';
     }
-
-    if (!password) errors.password = 'Required';
     if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
-    return auth.loginUser(email, password).then(credential => {
-      console.log(credential);
-      // TODO: store the rest of the form values (first name, last name, etc)
-      // in our own database linked with uid
-    }).catch(error => {
-      switch (error.code) {
-        case 'auth/invalid-email':
-          errors.email = 'The email address is invalid';
-          break;
-        case 'auth/user-disabled':
-          errors.email = 'This account has been disabled';
-          break;
-        case 'auth/user-not-found':
-          errors.email = 'No account found with this email';
-          break;
-        case 'auth/wrong-password':
-          errors.password = 'The passoword is incorrect';
-          break;
-        default:
-          console.log(error);
-          break;
-      }
-      if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
-    });
   }
 
-  signUp = params => {
-    const { auth } = this.props;
-    const { email, password, first_name, last_name } = params;
+  signIn = ({ email, password }) => {
+    this.validateEmail(email);
     const errors = {};
-    if (!email) {
-      errors.email = 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      errors.email = 'Invalid email address';
-    }
     if (!password) errors.password = 'Required';
-    if (!first_name) errors.first_name = 'Required';
-    if (!last_name) errors.last_name = 'Required';
     if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
-    return auth.createUser(email, password).then(result => {
-      const user = result.user;
-      user.updateProfile({displayName: `${first_name} ${last_name}`}).then(() => {
-        auth.updateUser(user);
-      });
-      // TODO: store the rest of the form values (first name, last name, etc)
-      // in our own database linked with uid
-    }).catch(error => {
-      switch (error.code) {
-        case 'auth/invalid-email':
-          errors.email = 'The email address is invalid';
-          break;
-        case 'auth/email-already-in-use':
-          errors.email = 'The email address is already in use';
-          break;
-        case 'auth/weak-password':
-          errors.password = 'The password is too weak';
-          break;
-        default:
-          console.log(error);
-          break;
-      }
-      if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
-    });
+    const { firebase } = this.props;
+    firebase.login({ email, password });
+    // return auth.loginUser(email, password).then(credential => {
+    //   console.log(credential);
+    //   // TODO: store the rest of the form values (first name, last name, etc)
+    //   // in our own database linked with uid
+    // }).catch(error => {
+    //   switch (error.code) {
+    //     case 'auth/invalid-email':
+    //       errors.email = 'The email address is invalid';
+    //       break;
+    //     case 'auth/user-disabled':
+    //       errors.email = 'This account has been disabled';
+    //       break;
+    //     case 'auth/user-not-found':
+    //       errors.email = 'No account found with this email';
+    //       break;
+    //     case 'auth/wrong-password':
+    //       errors.password = 'The passoword is incorrect';
+    //       break;
+    //     default:
+    //       console.log(error);
+    //       break;
+    //   }
+    //   if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
+    // });
   }
 
-  decide = params => {
-    const { auth } = this.props;
-    const { email } = params;
+  signUp = ({ email, password, firstName, lastName }) => {
+    this.validateEmail(email);
     const errors = {};
-    if (!email) {
-      errors.email = 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      errors.email = 'Invalid email address';
-    }
+    if (!password) errors.password = 'Required';
+    if (!firstName) errors.firstName = 'Required';
+    if (!lastName) errors.lastName = 'Required';
     if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
-    return auth.fetchMethods(email).then(methods => {
-      console.log(methods);
+    const { firebase } = this.props;
+    firebase.createUser(
+      { email, password },
+      {
+        displayName: `${firstName} ${lastName}`,
+        email
+      }
+    )
+    // return auth.createUser(email, password).then(result => {
+    //   const user = result.user;
+    //   user.updateProfile({displayName: `${first_name} ${last_name}`}).then(() => {
+    //     auth.updateUser(user);
+    //   });
+    //   // TODO: store the rest of the form values (first name, last name, etc)
+    //   // in our own database linked with uid
+    // }).catch(error => {
+    //   switch (error.code) {
+    //     case 'auth/invalid-email':
+    //       errors.email = 'The email address is invalid';
+    //       break;
+    //     case 'auth/email-already-in-use':
+    //       errors.email = 'The email address is already in use';
+    //       break;
+    //     case 'auth/weak-password':
+    //       errors.password = 'The password is too weak';
+    //       break;
+    //     default:
+    //       console.log(error);
+    //       break;
+    //   }
+    //   if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
+    // });
+  }
+
+
+  decide = ({ email }) => {
+    this.validateEmail(email);
+    const { firebase } = this.props;
+    const auth = firebase.auth();
+    return auth.fetchSignInMethodsForEmail(email).then(methods => {
       if (methods.length === 0) {
-        this.setState({page: 'signUp'});
+        this.setState({ page: 'signUp' });
       }
-      else {
-        let found = false;
-        for (let i = 0; i < methods.length; i += 1) {
-          const method = methods[i];
-          if (method === 'password') {
-            this.setState({page: 'signIn'});
-            found = true;
+      else if (methods.includes('password')) {
+        this.setState({ page: 'signIn' });
+      }
+      // present user with dialog with options
+      else { // TODO
+        auth.prompt('account-exists', {
+          attempt: 'password',
+          method: methods[0],
+          email,
+          action: () => {
+            return auth.loginSocial(methods[0]);
           }
-        }
-        // present user with dialog with options
-        if (!found) {
-          auth.prompt('account-exists', {
-            attempt: 'password',
-            method: methods[0],
-            email,
-            action: () => {
-              return auth.loginSocial(methods[0]);
-            }
-          });
-        }
+        });
       }
     });
   }
@@ -168,14 +162,10 @@ class SignInForm extends React.Component {
   render() {
     const {
       classes,
-      loggedUserId,
-      fbAuth,
-      googleAuth,
       handleSubmit,
       pristine,
       submitting,
       firebase,
-      auth
     } = this.props;
     const {
       showPassword,
@@ -317,7 +307,7 @@ class SignInForm extends React.Component {
 
                         }}>
                           <Field
-                            name="first_name"
+                            name="firstName"
                             component={Text}
                             componentProps={{
                               label: 'First name',
@@ -331,7 +321,7 @@ class SignInForm extends React.Component {
                             }}
                           />
                           <Field
-                            name="last_name"
+                            name="lastName"
                             component={Text}
                             componentProps={{
                               label: 'Last name',
@@ -414,16 +404,16 @@ class SignInForm extends React.Component {
   }
 }
 
-const SignIn = withStyles(styles)(reduxForm({
-  form: 'auth/signin',
-})(SignInForm));
 
 export default compose(
-  withFirebase,
+  withStyles(styles),
+  reduxForm({
+    form: 'auth/signin',
+  }),
+  firebaseConnect(),
   connect(
     state => ({
-      auth: state.firebase.auth,
       loggedUserId: state.user.loggedUserId
     })
   )
-)(SignIn)
+)(SignInForm)
