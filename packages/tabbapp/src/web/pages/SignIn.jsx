@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux'
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import { withStyles } from '@material-ui/core/styles';
-import { fbAuthInit, googleAuthInit } from 'ducks/auth/actions';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
@@ -47,6 +46,36 @@ class SignInForm extends React.Component {
   state = {
     page: 'default',
     showPassword: false,
+    errors: {}
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    const { authError } = nextProps;
+    const errors = {};
+    if (!authError) return;
+    switch (authError.code) {
+      case 'auth/invalid-email':
+        errors.email = 'The email address is invalid';
+        break;
+      case 'auth/email-already-in-use':
+        errors.email = 'The email address is already in use';
+        break;
+      case 'auth/weak-password':
+        errors.password = 'The password is too weak';
+        break;
+      case 'auth/user-disabled':
+        errors.email = 'This account has been disabled';
+        break;
+      case 'auth/user-not-found':
+        errors.email = 'No account found with this email';
+        break;
+      case 'auth/wrong-password':
+        errors.password = 'The passoword is incorrect';
+        break;
+      default:
+        break;
+    }
+    this.setState({ errors });
   }
 
   validateEmail = (email) => {
@@ -66,30 +95,6 @@ class SignInForm extends React.Component {
     if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
     const { firebase } = this.props;
     firebase.login({ email, password });
-    // return auth.loginUser(email, password).then(credential => {
-    //   console.log(credential);
-    //   // TODO: store the rest of the form values (first name, last name, etc)
-    //   // in our own database linked with uid
-    // }).catch(error => {
-    //   switch (error.code) {
-    //     case 'auth/invalid-email':
-    //       errors.email = 'The email address is invalid';
-    //       break;
-    //     case 'auth/user-disabled':
-    //       errors.email = 'This account has been disabled';
-    //       break;
-    //     case 'auth/user-not-found':
-    //       errors.email = 'No account found with this email';
-    //       break;
-    //     case 'auth/wrong-password':
-    //       errors.password = 'The passoword is incorrect';
-    //       break;
-    //     default:
-    //       console.log(error);
-    //       break;
-    //   }
-    //   if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
-    // });
   }
 
   signUp = ({ email, password, firstName, lastName }) => {
@@ -107,32 +112,7 @@ class SignInForm extends React.Component {
         email
       }
     )
-    // return auth.createUser(email, password).then(result => {
-    //   const user = result.user;
-    //   user.updateProfile({displayName: `${first_name} ${last_name}`}).then(() => {
-    //     auth.updateUser(user);
-    //   });
-    //   // TODO: store the rest of the form values (first name, last name, etc)
-    //   // in our own database linked with uid
-    // }).catch(error => {
-    //   switch (error.code) {
-    //     case 'auth/invalid-email':
-    //       errors.email = 'The email address is invalid';
-    //       break;
-    //     case 'auth/email-already-in-use':
-    //       errors.email = 'The email address is already in use';
-    //       break;
-    //     case 'auth/weak-password':
-    //       errors.password = 'The password is too weak';
-    //       break;
-    //     default:
-    //       console.log(error);
-    //       break;
-    //   }
-    //   if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
-    // });
   }
-
 
   decide = ({ email }) => {
     this.validateEmail(email);
@@ -170,6 +150,7 @@ class SignInForm extends React.Component {
     const {
       showPassword,
       page,
+      errors
     } = this.state;
     const animConfig = { stiffness: 480, damping: 48 };
 
@@ -300,7 +281,7 @@ class SignInForm extends React.Component {
                             autocapitalize: 'none' */
                           }}
                         />
-
+                        {errors.email && <strong>{errors.email}</strong>}
                         {page !== 'signIn' && <div style={{
                           display: 'flex',
                           marginTop: 8,
@@ -364,6 +345,7 @@ class SignInForm extends React.Component {
                             }
                           }}
                         />
+                        {errors.password && <strong>{errors.password}</strong>}
                       </div>
                     </div>
                   );
@@ -413,7 +395,7 @@ export default compose(
   firebaseConnect(),
   connect(
     state => ({
-      loggedUserId: state.user.loggedUserId
+      authError: state.firebase.authError,
     })
   )
 )(SignInForm)
