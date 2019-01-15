@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -19,50 +20,54 @@ primary_700    #CE3F40
 primary_800    #C13939
 primary_900    #B1312F
 */
-// const t = createMuiTheme().typography;
 
-const dark = false;
-const theme = createMuiTheme({
-  palette: {
-    type: dark ? 'dark' : 'light',
-    primary: {
-      light: '#E14846', // primary_600
-      main: '#C13939', // primary_800
-      dark: '#B1312F', // primary_900
+const getTheme = dark => createMuiTheme(
+  {
+    palette: {
+      type: dark ? 'dark' : 'light',
+      primary: {
+        light: '#E14846', // primary_600
+        main: '#C13939', // primary_800
+        dark: '#B1312F', // primary_900
+      },
+      secondary: {
+        light: blueGrey[300],
+        main: blueGrey[500],
+        dark: blueGrey[700],
+      },
+      text: {
+        primary: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
+        secondary: dark ? 'rgba(255, 255, 255, 0.54)' : 'rgba(0, 0, 0, 0.38)',
+      },
     },
-    secondary: {
-      light: blueGrey[300],
-      main: blueGrey[500],
-      dark: blueGrey[700],
+    typography: {
+      useNextVariants: true,
+      // System font stack
+      fontFamily: [
+        'Lato',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
     },
-    text: {
-      primary: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
-      secondary: dark ? 'rgba(255, 255, 255, 0.54)' : 'rgba(0, 0, 0, 0.38)',
-    },
-  },
-  typography: {
-    useNextVariants: true,
-    // System font stack
-    fontFamily: [
-      'Lato',
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-  },
-});
+  }
+);
 
 function withRoot(Component) {
+  const lightTheme = getTheme(false);
+  const darkTheme = getTheme(true);
   function WithRoot(props) {
     // MuiThemeProvider makes the theme available down the React tree
     // thanks to React context.
+    // eslint-disable-next-line react/destructuring-assignment
+    const theme = props.theme === 'light' ? lightTheme : darkTheme;
     return (
       <MuiThemeProvider theme={theme}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -73,8 +78,10 @@ function withRoot(Component) {
       </MuiThemeProvider>
     );
   }
-
-  return WithRoot;
+  return connect(state => ({
+      theme: state.ui.theme,
+    }), { }
+  )(WithRoot);
 }
 
 export default withRoot;

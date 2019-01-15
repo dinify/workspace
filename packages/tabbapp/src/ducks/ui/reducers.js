@@ -5,7 +5,8 @@ import types from './types';
 const initialState = {
   progressMap: {},
   errorsMap: {},
-  dialogs: {}
+  dialogs: {},
+  theme: 'light'
 };
 
 function findNested(obj, key, memo) {
@@ -50,6 +51,9 @@ export default function reducer(state = initialState, action) {
         ...state.dialogs[action.payload],
         open: false,
       })(state);
+    }
+    case types.TOGGLE_THEME: {
+      return R.assoc('theme', state.theme === 'dark' ? 'light' : 'dark')(state);
     }
     case 'persist/REHYDRATE': {
       return R.assoc('errorsMap', {})(R.assoc('progressMap', {})(state));

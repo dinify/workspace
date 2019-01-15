@@ -1,12 +1,15 @@
 // @flow
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getContext } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
+import { toggleTheme as toggleThemeAction } from 'ducks/ui/actions';
 
 import LogoText from 'icons/LogoText';
 import Logo from 'icons/Logo';
+import LightbulbToggle from 'web/components/LightbulbToggle';
 import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 import Menu from '@material-ui/icons/MenuRounded';
 
@@ -32,9 +35,14 @@ const styles = theme => ({
   contrastText: {
     color: theme.palette.primary.contrastText
   },
-  secondary: {
-    color: theme.palette.text.secondary
-  },
+  themeButton: {
+    color: theme.palette.text.secondary,
+    backgroundColor: 'transparent',
+    transition: 'background-color 0.1s linear',
+    '&:active': {
+      backgroundColor: theme.palette.divider
+    }
+  }
 });
 
 const AppBar = ({
@@ -43,6 +51,8 @@ const AppBar = ({
   color = 'default',
   children,
   setAnchor,
+  toggleTheme,
+  theme,
   router,
 }) => {
   const logoWithText = true;
@@ -70,6 +80,7 @@ const AppBar = ({
         }
         {!iosInstalled && logo}
         <div style={{flex: 1}} />
+        <LightbulbToggle style={{marginRight: 16}} onChange={toggleTheme} checked={theme === 'light'} theme={theme}/>
         {children}
       </Toolbar>
       {color === 'default' ?
@@ -80,6 +91,11 @@ const AppBar = ({
   );
 };
 
-export default withStyles(styles)(getContext({
+export default connect(state => ({
+    theme: state.ui.theme,
+  }), {
+    toggleTheme: toggleThemeAction,
+  }
+)(withStyles(styles)(getContext({
   router: PropTypes.object
-})(AppBar));
+})(AppBar)));

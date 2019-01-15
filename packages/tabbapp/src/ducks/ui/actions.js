@@ -9,3 +9,8 @@ export const closeDialog = (e) => ({
   type: types.DIALOG_CLOSE,
   payload: e
 })
+
+export const toggleTheme = (e) => ({
+  type: types.TOGGLE_THEME,
+  payload: e
+})
