@@ -11,6 +11,7 @@ export const getClaims = createSelector(
     (state) => state.firebase.auth,
   ],
   (auth) => {
+    if (!auth.stsTokenManager || !auth.stsTokenManager.accessToken) return null;
     const token = auth.stsTokenManager.accessToken;
     return parseJwt(token);
   }
