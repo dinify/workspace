@@ -39,8 +39,6 @@ function Request(url) {
       });
     }).then(function (res) {
       //  console.log(res.status);
-      if (res.status === 401 && window.location.pathname !== '/login') window.location.replace('/login');
-
       try {
         var txt = res.text; //  .replace('/**/','')
 

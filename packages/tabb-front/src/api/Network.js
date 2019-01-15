@@ -24,7 +24,6 @@ export function Request(url, options = {}, noToken) {
       )
       .then(res => {
         //  console.log(res.status);
-        if (res.status === 401 && window.location.pathname !== '/login') window.location.replace('/login')
         try {
           const txt = res.text; //  .replace('/**/','')
           if (txt.length < 5) return { status: res.status, json: null };
