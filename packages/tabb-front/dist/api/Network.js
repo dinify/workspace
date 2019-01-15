@@ -39,6 +39,10 @@ function Request(url) {
       });
     }).then(function (res) {
       //  console.log(res.status);
+<<<<<<< HEAD
+=======
+      // if (res.status === 401 && window.location.pathname !== '/login') window.location.replace('/login')
+>>>>>>> 50ad0fa2d9303dfa73719dfab8cbda6c3e2aec95
       try {
         var txt = res.text; //  .replace('/**/','')
 

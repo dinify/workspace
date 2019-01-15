@@ -63,6 +63,18 @@ export function LoginWithFacebook({ accessToken }) {
   );
 }
 
+export function LoginWithGoogle({ accessToken }) {
+  return Post(
+    {
+      path: 'user/login/google',
+      noToken: true,
+    },
+    {
+      oauth_access_token: accessToken
+    }
+  );
+}
+
 export function GetMe() {
   return Get({ path: 'user/my' });
 }

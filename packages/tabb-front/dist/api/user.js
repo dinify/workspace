@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.Register = Register;
 exports.Login = Login;
 exports.LoginWithFacebook = LoginWithFacebook;
+exports.LoginWithGoogle = LoginWithGoogle;
 exports.GetMe = GetMe;
 exports.GetUser = GetUser;
 exports.RegisterFirebaseToken = RegisterFirebaseToken;
@@ -59,22 +60,32 @@ function LoginWithFacebook(_ref3) {
   });
 }
 
+function LoginWithGoogle(_ref4) {
+  var accessToken = _ref4.accessToken;
+  return (0, _Network.Post)({
+    path: 'user/login/google',
+    noToken: true
+  }, {
+    oauth_access_token: accessToken
+  });
+}
+
 function GetMe() {
   return (0, _Network.Get)({
     path: 'user/my'
   });
 }
 
-function GetUser(_ref4) {
-  var id = _ref4.id;
+function GetUser(_ref5) {
+  var id = _ref5.id;
   return (0, _Network.Get)({
     v3: true,
     path: "user/".concat(id)
   });
 }
 
-function RegisterFirebaseToken(_ref5) {
-  var token = _ref5.token;
+function RegisterFirebaseToken(_ref6) {
+  var token = _ref6.token;
   return (0, _Network.Post)({
     path: 'token/firebase/register'
   }, {
