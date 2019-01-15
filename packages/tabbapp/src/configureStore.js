@@ -7,6 +7,8 @@ import { reducer as formReducer } from 'redux-form';
 import { snackbarReducer } from 'material-ui-snackbar-redux'
 import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase'
 import firebase from 'firebase'
+import { reduxFirestore, firestoreReducer } from 'redux-firestore' // <- needed if using firestore
+import 'firebase/firestore' // <- needed if using firestore
 
 import ui from 'ducks/ui';
 import user from 'ducks/user';
@@ -29,7 +31,8 @@ const commonReducers = {
   bill,
   seat,
   snackbar: snackbarReducer,
-  firebase: firebaseReducer
+  firebase: firebaseReducer,
+  firestore: firestoreReducer
 };
 
 const firebaseConfig = {
@@ -43,12 +46,13 @@ const firebaseConfig = {
 
 // react-redux-firebase config
 const rrfConfig = {
-  userProfile: 'users', // firebase root where user profiles are stored
+  userProfile: 'profiles', // firebase root where user profiles are stored
+  useFirestoreForProfile: true, // Firestore for Profile instead of Realtime DB
   attachAuthIsReady: true, // attaches auth is ready promise to store
   firebaseStateName: 'firebase' // should match the reducer name ('firebase' is default)
 }
 firebase.initializeApp(firebaseConfig)
-
+firebase.firestore()
 
 const configureStore = (options, storage) => {
   const {
@@ -76,6 +80,7 @@ const configureStore = (options, storage) => {
 
   const createStoreWithFirebase = compose(
     reactReduxFirebase(firebase, rrfConfig), // firebase instance as first argument
+    reduxFirestore(firebase),
     applyMiddleware(...middlewares),
     autoRehydrate(),
   )(createStore)
