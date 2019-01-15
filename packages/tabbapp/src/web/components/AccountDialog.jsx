@@ -1,5 +1,6 @@
 import React from 'react';
 import { compose } from 'redux'
+import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase'
 import { withStyles } from '@material-ui/core/styles';
 import Person from '@material-ui/icons/PersonRounded';
@@ -13,6 +14,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Image from 'web/components/Image';
+import { getClaims } from 'ducks/auth/selectors';
 
 const styles = theme => ({
   typeChip: {
@@ -43,8 +45,12 @@ const AccountDialog = ({
   onClose,
   user,
   firebase,
+  claims,
   ...other
 }) => {
+
+  // claims = parsed accessToken
+  
   return (
     <Dialog onClose={onClose} aria-labelledby="account-dialog" {...other}>
       <DialogContent>
@@ -103,7 +109,12 @@ const AccountDialog = ({
 
 const enhance = compose(
   withFirebase,
-  withStyles(styles)
+  withStyles(styles),
+  connect(
+    state => ({
+      claims: getClaims(state),
+    })
+  )
 )
 
 export default enhance(AccountDialog);
