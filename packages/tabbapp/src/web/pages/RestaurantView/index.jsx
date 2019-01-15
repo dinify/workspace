@@ -83,13 +83,13 @@ class RestaurantView extends React.PureComponent {
       return <div />
     }
     const subdomain = params.subdomain;
-    const query = search.match(/qr=([^&]*)/);
-    if (!checkedInRestaurant && query && query[1]) {
-      const qr = query[1];
-      if (loggedUserId) {
-        checkin({ qr });
-      } // else history.push(`/login?qr=${qr}`);
-    }
+    // const query = search.match(/qr=([^&]*)/);
+    // if (!checkedInRestaurant && query && query[1]) {
+    //   const qr = query[1];
+    //   if (loggedUserId) {
+    //     checkin({ qr });
+    //   } // else history.push(`/login?qr=${qr}`);
+    // }
 
 
     const images = FN.MapToList(restaurant.images);

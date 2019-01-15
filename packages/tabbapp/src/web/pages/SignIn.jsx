@@ -48,7 +48,7 @@ class SignInForm extends React.Component {
     showPassword: false,
     errors: {}
   }
-  
+
   componentWillReceiveProps(nextProps) {
     const { authError } = nextProps;
     const errors = {};

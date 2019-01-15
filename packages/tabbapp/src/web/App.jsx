@@ -173,7 +173,7 @@ class App extends React.Component {
 
 App = connect(
   (state) => ({
-    user: state.firebase.profile,
+    user: state.firebase.auth,
     loggedUserId: state.user.loggedUserId,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
     dialogs: state.ui.dialogs

@@ -54,8 +54,8 @@ const AccountDialog = ({
           alignItems: 'center'
         }}>
           <Avatar style={{width: 96, height: 96}}>
-            {user.avatarUrl ?
-              <Image aspect={1} image={user.avatarUrl} title={user.displayName} /> :
+            {user.photoURL ?
+              <Image aspect={1} image={user.photoURL} title={user.displayName} /> :
               <Person style={{width: 56, height: 56}} />
             }
           </Avatar>

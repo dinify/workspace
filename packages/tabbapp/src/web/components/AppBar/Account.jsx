@@ -36,7 +36,7 @@ const Account = ({
         style={{marginRight: -16}}
         className={classes.rounded}>
         <Avatar className={classes.avatar}>
-          {user.avatarUrl ? <Image aspect={1} image={user.avatarUrl} title={user.displayName} /> : <Person />}
+          {user.photoURL ? <Image aspect={1} image={user.photoURL} title={user.displayName} /> : <Person />}
         </Avatar>
         <Typography
           color='inherit'
