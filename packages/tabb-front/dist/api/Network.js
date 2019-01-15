@@ -83,8 +83,10 @@ function Request(url) {
 }
 
 var buildURL = function buildURL(_ref2) {
-  var path = _ref2.path;
-  return "https://api.dev.tabb.global/".concat(path);
+  var path = _ref2.path,
+      _ref2$endpoint = _ref2.endpoint,
+      endpoint = _ref2$endpoint === void 0 ? 'https://api.dev.tabb.global/' : _ref2$endpoint;
+  return "".concat(endpoint).concat(path);
 };
 
 function Get(urlParts, cookie) {

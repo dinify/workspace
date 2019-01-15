@@ -57,8 +57,11 @@ export function Request(url, options = {}, noToken) {
   });
 }
 
-const buildURL = ({ path }) => {
-  return `https://api.dev.tabb.global/${path}`;
+const buildURL = ({
+  path,
+  endpoint = 'https://api.dev.tabb.global/'
+}) => {
+  return `${endpoint}${path}`;
 };
 
 export function Get(urlParts, cookie) {
