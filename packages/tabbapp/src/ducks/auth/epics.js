@@ -6,6 +6,20 @@ import { loadUserData } from 'ducks/app/actions';
 import { setCookie } from 'tabb-front/dist/lib/FN';
 import { actionTypes } from 'react-redux-firebase'
 
+const accessTokenEpic = (action$: Observable, { getState }) =>
+  action$
+    .filter(action => {
+      const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE];
+      return triggerOn.includes(action.type);
+    })
+    .mergeMap(() => {
+      const auth = getState().firebase.auth;
+      if (auth.stsTokenManager && auth.stsTokenManager.accessToken) {
+        setCookie('access_token', auth.stsTokenManager.accessToken, 90);
+      } else setCookie('access_token', '', 1);
+      return Observable.of({ type: 'ACCESSTOKEN_HANDLED' });
+    });
+
 
 const loginErrorEpic = (action$: Observable, { getFirebase }) =>
   action$
@@ -59,5 +73,6 @@ const loginErrorEpic = (action$: Observable, { getFirebase }) =>
 
 
 export default [
+  accessTokenEpic,
   loginErrorEpic,
 ];
