@@ -46,10 +46,9 @@ const AccountDialog = ({
   user,
   firebase,
   claims,
+  dispatch,
   ...other
 }) => {
-
-  // claims = parsed accessToken
   
   return (
     <Dialog onClose={onClose} aria-labelledby="account-dialog" {...other}>
@@ -72,19 +71,19 @@ const AccountDialog = ({
             {user.email}
           </Typography>
         </div>
-        {user.claims && user.claims.roles && (
+        {claims && claims.roles && (
           <div>
             <Divider style={{marginTop: 16}}/>
             <Typography variant="overline" color="textSecondary">
               Roles
             </Typography>
 
-            {user.claims.roles.restaurant && (
+            {claims.roles.restaurant && (
               <ListItem style={{padding: 0}}>
-                <Avatar className={classes[user.claims.roles.restaurant.type]}>
+                <Avatar className={classes[claims.roles.restaurant.type]}>
                   <Person />
                 </Avatar>
-                <ListItemText primary={localizedType[user.claims.roles.restaurant.type]} secondary="at Korea Grill" />
+                <ListItemText primary={localizedType[claims.roles.restaurant.type]} secondary="at Korea Grill" />
               </ListItem>
             )}
           </div>
