@@ -13,4 +13,7 @@ export default {
   GOOGLE_AUTH_FAIL: 'tabb/auth/GOOGLE_AUTH_FAIL',
   LOGOUT_INIT: 'tabb/auth/LOGOUT_INIT',
   LOGOUT_DONE: 'tabb/auth/LOGOUT_DONE',
+  SET_PAGE: 'tabb/auth/SET_PAGE',
+  SET_SHOWPASSWORD: 'tabb/auth/SET_SHOWPASSWORD',
+  SET_LINKPROVIDERS: 'tabb/auth/SET_LINKPROVIDERS',
 };

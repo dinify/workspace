@@ -8,6 +8,7 @@ import { snackbarReducer } from 'material-ui-snackbar-redux'
 import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase'
 import firebase from 'firebase'
 
+import auth from 'ducks/auth';
 import ui from 'ducks/ui';
 import user from 'ducks/user';
 import restaurant from 'ducks/restaurant';
@@ -19,6 +20,7 @@ import bill from 'ducks/bill';
 import seat from 'ducks/seat';
 
 const commonReducers = {
+  auth,
   ui,
   user,
   restaurant,
@@ -78,7 +80,7 @@ const configureStore = (options, storage) => {
   const store = createStoreWithFirebase(reducers, initialState);
 
   // let the magic happen :–)
-  persistStore(store, { blacklist: ['progress', 'routing', 'notifications', 'firebase'], storage }); // .purge() // in case you want to purge the store
+  persistStore(store, { blacklist: ['progress', 'routing', 'notifications', 'firebase', 'auth'], storage }); // .purge() // in case you want to purge the store
 
   return store;
 };

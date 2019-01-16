@@ -1,5 +1,20 @@
 import types from './types';
 
+export const setPage = (page) => ({
+  type: types.SET_PAGE,
+  payload: page
+});
+
+export const setShowPassword = (showPassword) => ({
+  type: types.SET_SHOWPASSWORD,
+  payload: showPassword
+});
+
+export const setLinkProviders = (payload) => ({
+  type: types.SET_LINKPROVIDERS,
+  payload
+});
+
 export const loginInit = ({ email, password, qr }) => ({
   type: types.LOGIN_INIT,
   payload: { email, password, qr },

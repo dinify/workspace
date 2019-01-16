@@ -21,6 +21,7 @@ import Text from 'web/components/Inputs/Text';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import GoogleButton from 'web/components/GoogleButton';
 import FacebookButton from 'web/components/FacebookButton';
+import { setPage, setShowPassword } from 'ducks/auth/actions';
 
 const styles = theme => ({
   grow: {
@@ -44,7 +45,6 @@ const styles = theme => ({
 
 class SignInForm extends React.Component {
   state = {
-    page: 'default',
     showPassword: false,
     errors: {}
   }
@@ -116,14 +116,14 @@ class SignInForm extends React.Component {
 
   decide = ({ email }) => {
     this.validateEmail(email);
-    const { firebase } = this.props;
+    const { firebase, setPage } = this.props;
     const auth = firebase.auth();
     return auth.fetchSignInMethodsForEmail(email).then(methods => {
       if (methods.length === 0) {
-        this.setState({ page: 'signUp' });
+        setPage('signUp');
       }
       else if (methods.includes('password')) {
-        this.setState({ page: 'signIn' });
+        setPage('signIn');
       }
       // present user with dialog with options
       else { // TODO
@@ -146,10 +146,12 @@ class SignInForm extends React.Component {
       pristine,
       submitting,
       firebase,
+      page,
+      showPassword,
+      setPage,
+      setShowPassword,
     } = this.props;
     const {
-      showPassword,
-      page,
       errors
     } = this.state;
     const animConfig = { stiffness: 480, damping: 48 };
@@ -334,7 +336,7 @@ class SignInForm extends React.Component {
                                   <IconButton
                                     disabled={!formOpen}
                                     aria-label="Toggle password visibility"
-                                    onClick={() => {this.setState({showPassword: !showPassword})}}>
+                                    onClick={() => {setShowPassword(!showPassword)}}>
                                     <ToggleIcon
                                       on={!showPassword}
                                       onIcon={<Visibility />}
@@ -357,7 +359,7 @@ class SignInForm extends React.Component {
               display: 'flex',
               marginTop: 16
             }}>
-              <Button onClick={() => this.setState({page: formOpen ? 'default' : 'signUp'})} variant="text" className={classes.uncapitalized}>
+              <Button onClick={() => setPage(formOpen ? 'default' : 'signUp')} variant="text" className={classes.uncapitalized}>
                 {formOpen ? 'Back' : 'New account'}
               </Button>
               <div style={{flex: 1}}/>
@@ -396,6 +398,9 @@ export default compose(
   connect(
     state => ({
       authError: state.firebase.authError,
-    })
+      page: state.auth.page,
+      showPassword: state.auth.showPassword
+    }),
+    { setPage, setShowPassword }
   )
 )(SignInForm)
