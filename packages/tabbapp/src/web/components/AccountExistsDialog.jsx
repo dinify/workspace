@@ -1,6 +1,11 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { compose } from 'redux';
+import { firebaseConnect } from 'react-redux-firebase';
+import FacebookLogo from 'icons/FacebookLogo';
+import GoogleLogo from 'icons/GoogleLogo';
+import Email from '@material-ui/icons/EmailRounded';
 import Visibility from '@material-ui/icons/VisibilityRounded';
 import VisibilityOff from '@material-ui/icons/VisibilityOffRounded';
 import Typography from '@material-ui/core/Typography';
@@ -14,11 +19,11 @@ import GoogleButton from 'web/components/GoogleButton';
 import FacebookButton from 'web/components/FacebookButton';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Avatar from '@material-ui/core/Avatar';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 import ToggleIcon from 'material-ui-toggle-icon';
-
-const styles = theme => ({
-
-});
 
 class PasswordForm extends React.Component {
   state = {
@@ -57,7 +62,6 @@ class PasswordForm extends React.Component {
             type: 'email',
             disabled: true,
             fullWidth: true,
-            variant: 'outlined',
             name: 'email',
             autocapitalization: 'none',
             autoComplete: 'email',
@@ -73,9 +77,8 @@ class PasswordForm extends React.Component {
             label: 'Password',
             type: showPassword ? 'text' : 'password',
             fullWidth: true,
-            variant: 'outlined',
             name: 'password',
-            autoComplete: 'new-password',
+            autoComplete: 'current-password',
             InputProps: {
               endAdornment: (
                 <InputAdornment position="end">
@@ -93,7 +96,7 @@ class PasswordForm extends React.Component {
           }}
         />
         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-          <Button disabled={submitting} style={{marginTop: 8}} type="submit" color="primary">
+          <Button disabled={submitting} style={{marginTop: 24, marginRight: -16}} type="submit" color="primary">
             Sign in
           </Button>
         </div>
@@ -106,51 +109,86 @@ PasswordForm = reduxForm({
   form: 'auth/password',
 })(PasswordForm);
 
-const methods = {
-  'password': {
-    name: 'this email',
-    component: ({callback, email}) => <PasswordForm onSubmit={callback} email={email} />
+const providers = {
+  'google.com': {
+    name: 'Google account',
+    className: 'google',
+    icon: () => <GoogleLogo />,
+    component: ({firebase, callback}) => <GoogleButton onClick={() => {
+      firebase.login({ provider: 'google', type: 'popup' }).then(callback);
+    }} />
   },
   'facebook.com': {
-    name: 'Facebook',
-    component: ({callback}) => <FacebookButton onClick={callback} />
+    name: 'Facebook account',
+    className: 'facebook',
+    icon: () => <FacebookLogo />,
+    component: ({firebase, callback}) => <FacebookButton onClick={() => {
+      firebase.login({ provider: 'facebook', type: 'popup' }).then(callback);
+    }} />
   },
-  'google.com': {
-    name: 'Google',
-    component: ({callback}) => <GoogleButton onClick={callback} />
-  }
+  'password': {
+    name: 'Email address',
+    icon: () => <Email />,
+    component: ({firebase, email, callback}) => <PasswordForm onSubmit={params => {
+      const { email, password } = params;
+      firebase.login({ email, password }).then(callback);
+    }} email={email} />
+  },
 }
+
+const styles = theme => ({
+  google: theme.palette.type === 'light' ? {
+    backgroundColor: 'transparent',
+    border: '1px solid rgba(0, 0, 0, 0.23)'
+  } : {
+    backgroundColor: 'rgba(255, 255, 255, 0.87)',
+  },
+  facebook: {
+    backgroundColor: '#3b5998',
+    color: '#fff'
+  }
+});
 
 const AccountExistsDialog = ({
   classes,
   onClose,
-  method,
-  attempt,
+  firebase,
+  methods,
+  providerName,
   email,
   action,
   ...other
 }) => {
-  const current = methods[method];
-  const attempted = methods[attempt];
   return (
     <Dialog onClose={onClose} {...other}>
-      <DialogTitle>
-        Signin failed
-      </DialogTitle>
+      {providerName && <DialogContent style={{paddingBottom: 0}}>
+        <ListItem style={{padding: 0}}>
+          <Avatar className={classes[providers[providerName].className]}>
+            {providers[providerName].icon()}
+          </Avatar>
+          <ListItemText primary={email} primaryTypographyProps={{noWrap: true}} secondary={providers[providerName].name}/>
+        </ListItem>
+      </DialogContent>}
+      {providerName && <Divider style={{marginTop: 16, marginBottom: 16}}/>}
       <DialogContent>
-        <Typography style={{marginBottom: 16}} variant="body1">
-          {`An account already exists with ${attempted.name}, continue with ${current.name} to sign in.`}
+        <Typography style={{marginBottom: 8}} variant="caption" color="textSecondary">
+          {`Your account already exists with this email address, continue with one of the providers below to sign in.`}
         </Typography>
-        <current.component email={email} callback={(params) => {
-          action(params).then(() => {
-            onClose();
-          }).catch(error => {
-            params.onError(error);
-          });
-        }}/>
+        {methods.map(method => {
+          const provider = providers[method];
+          return <div key={method} style={{paddingTop: 8}}>
+            <provider.component
+              firebase={firebase}
+              email={email}
+              callback={onClose}/>
+          </div>;
+        })}
       </DialogContent>
     </Dialog>
   );
 }
 
-export default withStyles(styles)(AccountExistsDialog);
+export default compose(
+  firebaseConnect(),
+  withStyles(styles)
+)(AccountExistsDialog);

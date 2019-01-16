@@ -1,13 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux'
-import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
+import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { withStyles } from '@material-ui/core/styles';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
+import { openDialog as openDialogAction } from 'ducks/ui/actions';
 import ToggleIcon from 'material-ui-toggle-icon';
 import LogoText from 'icons/LogoText';
+import ChevronRight from '@material-ui/icons/ChevronRightRounded';
+import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 import Visibility from '@material-ui/icons/VisibilityRounded';
 import VisibilityOff from '@material-ui/icons/VisibilityOffRounded';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -17,6 +20,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import AccountExistsDialog from 'web/components/AccountExistsDialog';
 import Text from 'web/components/Inputs/Text';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import GoogleButton from 'web/components/GoogleButton';
@@ -45,7 +49,6 @@ const styles = theme => ({
 
 class SignInForm extends React.Component {
   state = {
-    showPassword: false,
     errors: {}
   }
 
@@ -117,7 +120,7 @@ class SignInForm extends React.Component {
 
   decide = ({ email }) => {
     this.validateEmail(email);
-    const { firebase, setPage } = this.props;
+    const { firebase, openDialog, setPage } = this.props;
     const auth = firebase.auth();
     return auth.fetchSignInMethodsForEmail(email).then(methods => {
       if (methods.length === 0) {
@@ -127,16 +130,15 @@ class SignInForm extends React.Component {
         setPage('signIn');
       }
       // present user with dialog with options
-      else { // TODO
-        firebase.login({ provider: methods[0].replace('.com',''), type: 'popup' });
-        // auth.prompt('account-exists', {
-        //   attempt: 'password',
-        //   method: methods[0],
-        //   email,
-        //   action: () => {
-        //     return auth.loginSocial(methods[0]);
-        //   }
-        // });
+      else {
+        openDialog({
+          id: 'account-exists',
+          component: (props) => <AccountExistsDialog
+            providerName="password"
+            email={email}
+            methods={methods}
+            {...props}/>
+        });
       }
     });
   }
@@ -321,6 +323,7 @@ class SignInForm extends React.Component {
                           />
                         </div>}
                         <Field
+                          key={page} // Force rerender with react so browser thinks it's a different element
                           name="password"
                           component={Text}
                           componentProps={{
@@ -362,6 +365,7 @@ class SignInForm extends React.Component {
               marginTop: 16
             }}>
               <Button onClick={() => setPage(formOpen ? 'default' : 'signUp')} variant="text" className={classes.uncapitalized}>
+                {formOpen && <ChevronLeft style={{fontSize: '1.3125rem', marginLeft: -12}} />}
                 {formOpen ? 'Back' : 'New account'}
               </Button>
               <div style={{flex: 1}}/>
@@ -375,7 +379,10 @@ class SignInForm extends React.Component {
                   defaultStyle={{x: 1}}
                   style={{x: spring(submitting ? 0 : 1, animConfig)}}>
                   {style =>
-                    <div style={{ opacity: style.x }}>{submitButtonText}</div>
+                    <div style={{ display: 'flex', opacity: style.x }}>
+                      {submitButtonText}
+                      {page === 'default' && <ChevronRight style={{fontSize: '1.3125rem', marginRight: -12}} />}
+                    </div>
                   }
                 </Motion>
                 {submitting && <CircularProgress className={classes.colorTextSecondary} style={{
@@ -403,6 +410,10 @@ export default compose(
       page: state.auth.page,
       showPassword: state.auth.showPassword
     }),
-    { setPage, setShowPassword }
+    {
+      setPage,
+      setShowPassword,
+      openDialog: openDialogAction
+    }
   )
 )(SignInForm)
