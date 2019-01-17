@@ -79,7 +79,6 @@ const getTheme = dark => createMuiTheme(
 function withRoot(Component) {
   const lightTheme = getTheme(false);
   const darkTheme = getTheme(true);
-  console.log(lightTheme);
   function WithRoot(props) {
     // MuiThemeProvider makes the theme available down the React tree
     // thanks to React context.

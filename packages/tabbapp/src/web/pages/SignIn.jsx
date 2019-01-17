@@ -63,7 +63,8 @@ class SignInForm extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { authError } = nextProps;
-    const errors = {};
+    const { page } = this.props;
+    let errors = {};
     if (!authError) return;
     switch (authError.code) {
       case 'auth/invalid-email':
@@ -87,7 +88,9 @@ class SignInForm extends React.Component {
       default:
         break;
     }
-    console.log(nextProps, errors);
+
+    // Clear form errors on page change
+    if (nextProps.page !== page) errors = {};
     this.setState({ errors });
   }
 
@@ -154,7 +157,8 @@ class SignInForm extends React.Component {
   }
 
   forgotPassword = ({ email }) => {
-    console.log('Forgot password for', email);
+    const { firebase } = this.props;
+    return firebase.auth().sendPasswordResetEmail(email);
   }
 
   render() {
