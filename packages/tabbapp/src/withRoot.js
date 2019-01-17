@@ -57,19 +57,38 @@ const getTheme = dark => createMuiTheme(
         '"Segoe UI Symbol"',
       ].join(','),
     },
-  }
+    overrides: {
+      MuiFilledInput: {
+        root: {
+          borderRadius: 4,
+          overflow: 'hidden'
+        },
+        underline: {
+          '&:before': {
+            borderBottom: 'none',
+          },
+          '&:hover:not($disabled):not($focused):not($error):before': {
+            borderBottom: 'none',
+          },
+        }
+      }
+    }
+  },
 );
 
 function withRoot(Component) {
   const lightTheme = getTheme(false);
   const darkTheme = getTheme(true);
+  console.log(lightTheme);
   function WithRoot(props) {
     // MuiThemeProvider makes the theme available down the React tree
     // thanks to React context.
     // eslint-disable-next-line react/destructuring-assignment
     const theme = props.theme === 'light' ? lightTheme : darkTheme;
+    const stylePath = `/autofill-${props.theme}.css`;
     return (
       <MuiThemeProvider theme={theme}>
+        <link rel="stylesheet" type="text/css" href={stylePath} />
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />

@@ -8,7 +8,7 @@ import GoogleLogo from 'icons/GoogleLogo';
 import Email from '@material-ui/icons/EmailRounded';
 import Visibility from '@material-ui/icons/VisibilityRounded';
 import VisibilityOff from '@material-ui/icons/VisibilityOffRounded';
-import Typography from '@material-ui/core/Typography';
+import Typography from 'web/components/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -162,6 +162,9 @@ const AccountExistsDialog = ({
   return (
     <Dialog onClose={onClose} {...other}>
       {providerName && <DialogContent style={{paddingBottom: 0}}>
+        <Typography style={{marginBottom: 8}} variant="overline" color="textSecondary">
+          Login attempt
+        </Typography>
         <ListItem style={{padding: 0}}>
           <Avatar className={classes[providers[providerName].className]}>
             {providers[providerName].icon()}

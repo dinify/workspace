@@ -8,6 +8,7 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 2,
   },
   facebookButton: {
+    height: 40,
     justifyContent: 'start',
     color: 'rgba(255, 255, 255, 0.87)',
     backgroundColor: '#3b5998',

@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { compose } from 'redux'
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { withStyles } from '@material-ui/core/styles';
-import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { Field, reduxForm, change, SubmissionError } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
 import { openDialog as openDialogAction } from 'ducks/ui/actions';
 import ToggleIcon from 'material-ui-toggle-icon';
 import LogoText from 'icons/LogoText';
+import Cancel from '@material-ui/icons/CancelRounded';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 import Visibility from '@material-ui/icons/VisibilityRounded';
@@ -44,6 +45,14 @@ const styles = theme => ({
   },
   colorTextSecondary: {
     color: theme.palette.text.secondary
+  },
+  transitionOpacity: {
+    transition: theme.transitions.create('opacity', {
+      duration: theme.transitions.duration.shorter,
+    }),
+  },
+  background: {
+    backgroundColor: theme.palette.background.default
   }
 });
 
@@ -78,6 +87,7 @@ class SignInForm extends React.Component {
       default:
         break;
     }
+    console.log(nextProps, errors);
     this.setState({ errors });
   }
 
@@ -143,6 +153,10 @@ class SignInForm extends React.Component {
     });
   }
 
+  forgotPassword = ({ email }) => {
+    console.log('Forgot password for', email);
+  }
+
   render() {
     const {
       classes,
@@ -154,6 +168,7 @@ class SignInForm extends React.Component {
       showPassword,
       setPage,
       setShowPassword,
+      change,
     } = this.props;
     const {
       errors
@@ -165,6 +180,13 @@ class SignInForm extends React.Component {
     let submitButtonText = 'Next';
     let submitFc = this.decide;
     let formTitle = 'Sign in';
+    let formSubtitle = 'to access more features, like dining history, reviews and saving your favorites';
+    let leftButtonAction = () => setPage(formOpen ? 'default' : 'signUp');
+    let emailLabel = 'Email address';
+
+    if (page === 'default') {
+      emailLabel = 'Continue with email';
+    }
     if (page === 'signIn') {
       submitButtonText = 'Sign in';
       formTitle = 'Sign in with password'
@@ -174,6 +196,13 @@ class SignInForm extends React.Component {
       submitButtonText = 'Create account';
       formTitle = 'Create account';
       submitFc = this.signUp;
+    }
+    if (page === 'forgotPassword') {
+      submitButtonText = 'Send email';
+      formTitle = 'Forgot password';
+      submitFc = this.forgotPassword;
+      leftButtonAction = () => setPage('signIn');
+      formSubtitle = 'enter the email address you use to sign in to get a password reset email'
     }
 
     return (
@@ -213,82 +242,67 @@ class SignInForm extends React.Component {
                 {formTitle}
               </Typography>
               <Typography align="center" variant="caption">
-                to access more features, like dining history, reviews and saving your favorites
+                {formSubtitle}
               </Typography>
             </div>
-            <div style={{maxHeight: 213, overflow: 'hidden'}}>
+            <div style={{height: 185, overflow: 'hidden'}}>
               <Motion
                 defaultStyle={{x: 1}}
                 style={{x: spring(formOpen ? 0 : 1, animConfig)}}>
-                {style =>
-                  <div ref={node => {this.socialSection = node}} style={{
-                    willChange: 'transform',
-                    overflow: 'hidden',
-                    opacity: style.x**(1/3),
-                    transformOrigin: 'top center',
-                    transform: `scale(1, ${style.x}) translate3d(0, 0, 0)`
-                  }}>
-                    <div ref={node => {this.socialSection = node}} style={{
-                      transformOrigin: 'top center',
-                      transform: `scale(1, ${1 / style.x}) translate3d(0, 0, 0)`
-                    }}>
-                      <div style={{ paddingBottom: 16 }}>
-                        <GoogleButton onClick={() => firebase.login({ provider: 'google', type: 'popup' })} />
-                      </div>
-                      <div style={{ paddingBottom: 16 }}>
-                        <FacebookButton onClick={() => firebase.login({ provider: 'facebook', type: 'popup' })} />
-                      </div>
-                      <div style={{marginBottom: 16}} className={classes.flex}>
-                        <Divider className={classes.grow} />
-                        <Typography
-                          variant="caption"
-                          component="span"
-                          color="textSecondary"
-                          style={{ paddingLeft: 8, paddingRight: 8 }}>
-                          or
-                        </Typography>
-                        <Divider className={classes.grow} />
-                      </div>
-                    </div>
-                  </div>
-                }
-              </Motion>
-              <Motion
-                defaultStyle={{x: 0}}
-                style={{x: spring(formOpen ? 1 : 0, animConfig)}}>
                 {style => {
-                  const baseScale = (56 + 8) / 192;
-                  const currentScale = baseScale + (style.x * (1 - baseScale));
                   return (
-                    <div ref={node => {this.signupSection = node}} style={{
-                      willChange: 'transform',
-                      transformOrigin: 'top center',
-                      overflow: 'hidden',
-                      transform: `scale(1, ${currentScale}) translate3d(0, ${-style.x * 152}px, 0)`
+                    <div style={{
+                      position: 'relative'
                     }}>
-                      <div ref={node => {this.socialSection = node}} style={{
-                        transformOrigin: 'top center',
-                        transform: `scale(1, ${1 / currentScale}) translate3d(0, 0, 0)`
+                      <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        opacity: style.x,
+                      }}>
+                        <div style={{ paddingBottom: 16 }}>
+                          <GoogleButton onClick={() => firebase.login({ provider: 'google', type: 'popup' })} />
+                        </div>
+                        <div style={{ paddingBottom: 16 }}>
+                          <FacebookButton onClick={() => firebase.login({ provider: 'facebook', type: 'popup' })} />
+                        </div>
+                        <div style={{marginBottom: 16}} className={classes.flex}>
+                          <Divider className={classes.grow} />
+                          <div style={{height: 0, display: 'flex', alignItems: 'center'}}>
+                            <Typography
+                              variant="caption"
+                              component="span"
+                              color="textSecondary"
+                              style={{ paddingLeft: 8, paddingRight: 8 }}>
+                              or
+                            </Typography>
+                          </div>
+                          <Divider className={classes.grow} />
+                        </div>
+                      </div>
+                      <div className={classes.background} style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        transform: `translate3d(0, ${style.x * 129}px, 0)`
                       }}>
                         <Field
                           name="email"
                           component={Text}
                           componentProps={{
-                            style: {marginTop: 8},
-                            label: 'Continue with email',
+                            label: emailLabel,
+                            error: errors.email,
                             type: 'email',
                             fullWidth: true,
-                            variant: 'outlined',
+                            variant: 'filled',
                             name: 'email',
                             autocapitalization: 'none',
                             autoComplete: 'email',
-                            /* spellcheck: false,
-                            tabindex: '0',
-                            autocapitalize: 'none' */
                           }}
                         />
-                        {errors.email && <strong>{errors.email}</strong>}
-                        {page !== 'signIn' && <div style={{
+                        {['default', 'signUp'].includes(page) && <div style={{
                           display: 'flex',
                           marginTop: 8,
 
@@ -300,11 +314,12 @@ class SignInForm extends React.Component {
                               label: 'First name',
                               disabled: !formOpen,
                               type: 'text',
-                              variant: 'outlined',
+                              variant: 'filled',
                               name: 'fname',
+                              autoFocus: true,
                               autoComplete: 'given-name',
                               autocapitalization: 'words',
-                              style: {marginRight: 4}
+                              style: {marginRight: 4, flex: 1}
                             }}
                           />
                           <Field
@@ -314,45 +329,77 @@ class SignInForm extends React.Component {
                               label: 'Last name',
                               disabled: !formOpen,
                               type: 'text',
-                              variant: 'outlined',
+                              variant: 'filled',
                               name: 'lname',
                               autoComplete: 'family-name',
                               autocapitalization: 'words',
-                              style: {marginLeft: 4}
+                              style: {marginLeft: 4, flex: 1}
                             }}
                           />
                         </div>}
-                        <Field
-                          key={page} // Force rerender with react so browser thinks it's a different element
-                          name="password"
-                          component={Text}
-                          componentProps={{
-                            label: 'Password',
-                            style: {marginTop: 8},
-                            disabled: !formOpen,
-                            type: showPassword ? 'text' : 'password',
-                            fullWidth: true,
-                            variant: 'outlined',
-                            name: 'password',
-                            autoComplete: page === 'signUp' ? 'new-password' : 'current-password',
-                            InputProps: {
-                              endAdornment: (
-                                <InputAdornment position="end">
-                                  <IconButton
-                                    disabled={!formOpen}
-                                    aria-label="Toggle password visibility"
-                                    onClick={() => {setShowPassword(!showPassword)}}>
-                                    <ToggleIcon
-                                      on={!showPassword}
-                                      onIcon={<Visibility />}
-                                      offIcon={<VisibilityOff />}/>
-                                  </IconButton>
-                                </InputAdornment>
-                              ),
-                            }
-                          }}
-                        />
-                        {errors.password && <strong>{errors.password}</strong>}
+                        <Motion
+                          defaultStyle={{x: 1}}
+                          style={{x: spring(page === 'forgotPassword' ? 0 : 1, animConfig)}}>
+                          {style =>
+                            <div>
+                            <div ref={node => {this.socialSection = node}} style={{
+                              willChange: 'transform',
+                              overflow: 'hidden',
+                              opacity: style.x**(1/3),
+                              transformOrigin: 'top center',
+                              transform: `scale(1, ${style.x}) translate3d(0, 0, 0)`
+                            }}>
+                              <div ref={node => {this.socialSection = node}} style={{
+                                transformOrigin: 'top center',
+                                transform: `scale(1, ${1 / style.x}) translate3d(0, 0, 0)`
+                              }}>
+                                <Field
+                                  name="password"
+                                  component={Text}
+                                  meta={{error: errors.password}}
+                                  componentProps={{
+                                    label: 'Password',
+                                    style: {marginTop: 8},
+                                    disabled: !formOpen,
+                                    type: showPassword ? 'text' : 'password',
+                                    fullWidth: true,
+                                    variant: 'filled',
+                                    name: 'password',
+                                    autoComplete: page === 'signUp' ? 'new-password' : 'current-password',
+                                    InputProps: {
+                                      endAdornment: (
+                                        <InputAdornment position="end">
+                                          <IconButton
+                                            disabled={!formOpen}
+                                            aria-label="Toggle password visibility"
+                                            onClick={() => {setShowPassword(!showPassword)}}>
+                                            <ToggleIcon
+                                              on={!showPassword}
+                                              onIcon={<Visibility />}
+                                              offIcon={<VisibilityOff />}/>
+                                          </IconButton>
+                                        </InputAdornment>
+                                      ),
+                                    }
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          }
+                        </Motion>
+                        {['forgotPassword', 'signIn'].includes(page) &&
+                          <Button
+                            variant="outlined"
+                            className={`${classes.uncapitalized} ${classes.transitionOpacity}`}
+                            onClick={() => setPage('forgotPassword')}
+                            style={{
+                              marginTop: 8,
+                              opacity: page === 'forgotPassword' ? 0 : 1
+                            }}>
+                            Forgot password
+                          </Button>
+                        }
                       </div>
                     </div>
                   );
@@ -364,7 +411,7 @@ class SignInForm extends React.Component {
               display: 'flex',
               marginTop: 16
             }}>
-              <Button onClick={() => setPage(formOpen ? 'default' : 'signUp')} variant="text" className={classes.uncapitalized}>
+              <Button onClick={leftButtonAction} variant="text" className={classes.uncapitalized}>
                 {formOpen && <ChevronLeft style={{fontSize: '1.3125rem', marginLeft: -12}} />}
                 {formOpen ? 'Back' : 'New account'}
               </Button>
@@ -411,6 +458,7 @@ export default compose(
       showPassword: state.auth.showPassword
     }),
     {
+      change,
       setPage,
       setShowPassword,
       openDialog: openDialogAction

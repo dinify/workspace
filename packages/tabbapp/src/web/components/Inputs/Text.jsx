@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { withTheme } from '@material-ui/core/styles';
 import ReactDOM from 'react-dom';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
@@ -12,19 +13,24 @@ import Typography from '@material-ui/core/Typography';
 let labelRef;
 const Text = props => {
   const {
+    theme,
     componentProps,
     input: { value, onChange, name },
     meta: { touched, error }
   } = props;
   const isEmpty = (str) => (!str || str.length === 0);
+
+  let other = componentProps;
+  if (typeof componentProps === 'function') other = componentProps({value, error});
   return (
     <TextField
+      key={theme.palette.type} // Rerender on theme change
       name={name}
       error={!isEmpty(error)}
       onChange={onChange}
       value={value}
       helperText={error}
-      {...componentProps}
+      {...other}
     />
   );
 };
@@ -68,4 +74,4 @@ meta: { touched, error }}) => {
   </FormControl>;
 }
 
-export default Text;
+export default withTheme()(Text);
