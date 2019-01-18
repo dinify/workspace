@@ -3,6 +3,8 @@ import { compose } from 'redux'
 import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase'
 import { withStyles } from '@material-ui/core/styles';
+import { getClaims } from 'ducks/auth/selectors';
+import Language from '@material-ui/icons/LanguageRounded';
 import Person from '@material-ui/icons/PersonRounded';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
@@ -13,8 +15,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Image from 'web/components/Image';
-import { getClaims } from 'ducks/auth/selectors';
+import Flag from 'web/components/Flag';
+import languages from 'lib/languages';
+import countries from 'lib/countries';
 
 const styles = theme => ({
   typeChip: {
@@ -44,12 +49,26 @@ const AccountDialog = ({
   classes,
   onClose,
   user,
+  profile,
   firebase,
   claims,
   dispatch,
   ...other
 }) => {
-  
+
+  let lang;
+  if (profile && profile.languages) {
+    const l = profile.languages.primary;
+    languages.forEach(curr => {
+      curr[3].forEach(reg => {
+        if (reg[0] === l) {
+          const arr = reg[0].split('-');
+          const code = arr[arr.length - 1];
+          lang = [curr[0], curr[1], curr[2], reg[0], reg[1], code, countries[code]]
+        }
+      });
+    });
+  }
   return (
     <Dialog onClose={onClose} aria-labelledby="account-dialog" {...other}>
       <DialogContent>
@@ -71,6 +90,22 @@ const AccountDialog = ({
             {user.email}
           </Typography>
         </div>
+        {profile && (
+          <div>
+            <Divider style={{marginTop: 16}}/>
+            <Typography variant="overline" color="textSecondary">
+              Profile
+            </Typography>
+            {lang && (
+              <ListItem style={{padding: 0}}>
+                <ListItemIcon>
+                  <Flag country={lang[5]}/>
+                </ListItemIcon>
+                <ListItemText primary={lang[1]} secondary={lang[6]} />
+              </ListItem>
+            )}
+          </div>
+        )}
         {claims && claims.roles && (
           <div>
             <Divider style={{marginTop: 16}}/>
@@ -111,6 +146,7 @@ const enhance = compose(
   withStyles(styles),
   connect(
     state => ({
+      profile: state.firebase.profile,
       claims: getClaims(state),
     })
   )

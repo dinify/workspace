@@ -44,7 +44,10 @@ const firebaseConfig = {
 }
 
 // react-redux-firebase config
-const rrfConfig = {}
+const rrfConfig = {
+  userProfile: 'profiles',
+  useFirestoreForProfile: true,
+}
 firebase.initializeApp(firebaseConfig)
 
 const configureStore = (options, storage) => {
