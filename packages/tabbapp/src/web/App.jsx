@@ -5,14 +5,13 @@ import { openDialog, closeDialog } from 'ducks/ui/actions';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 import { Motion, spring } from 'react-motion';
-import { setCookie } from 'tabb-front/dist/lib/FN';
-// import Auth from 'auth';
 
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
 import CategoryView from 'web/pages/CategoryView';
 import MenuItemView from 'web/pages/MenuItemView';
 import SignIn from 'web/pages/SignIn';
+import Account from 'web/pages/Account';
 import Eat from 'web/pages/Eat';
 import Cart from 'web/pages/Cart';
 import Bill from 'web/pages/Bill';
@@ -20,72 +19,40 @@ import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
 
-import Button from '@material-ui/core/Button';
-import Account from 'web/components/AppBar/Account';
+import AccountSignIn from 'web/components/AccountSignIn';
 import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
-import AccountExistsDialog from 'web/components/AccountExistsDialog';
 
 import * as FN from 'tabb-front/dist/lib/FN';
 
 import withRoot from 'withRoot.js';
 
+const HOMEPAGE = '/restaurant/koreagrill';
+
 class App extends React.Component {
-  // auth = new Auth();
-
-  //componentWillMount = () => {
-  //  const { openDialog } = this.props;
-  //  this.auth.subscribeState(user => {
-  //    if (user) {
-  //      this.auth.getIdTokenResult(result => {
-  //        console.log('idToken', result.token);
-  //        setCookie('access_token', result.token, 30);
-  //        this.setState({ user: {
-  //          claims: result.claims,
-  //          id_token: result.token,
-  //          ...user
-  //        }});
-  //      })
-  //    }
-  //    this.setState({ user });
-  //  });
-  //  this.auth.updateUser = user => {
-  //    this.setState({ user });
-  //  }
-  //  this.auth.prompt = (type, pProps) => {
-  //    switch (type) {
-  //      case 'account-exists':
-  //        openDialog({
-  //          id: type,
-  //          component: (props) => <AccountExistsDialog {...pProps} {...props}/>
-  //        });
-  //        break;
-  //      default:
-  //        break;
-  //    }
-  //  }
-  //}
-
   onNavigate = (evt, val) => {
-    if (val === 0) this.props.history.push('/');
-    else if (val === 1) this.props.history.push('/eat');
+    const { history, checkedInRestaurant } = this.props;
+    if (val === 0) history.push('/');
+    else if (val === 1) history.push('/eat');
     else if (val === 2) {
-      if (this.props.checkedInRestaurant || process.env.REACT_APP_CAMERA_SCANNER_ENABLED === 'false') this.props.history.push('/services');
-      else this.props.history.push('/checkin');
+      if (checkedInRestaurant || process.env.REACT_APP_CAMERA_SCANNER_ENABLED === 'false') history.push('/services');
+      else history.push('/checkin');
     }
   }
 
   match = (...paths) => {
+    const { location } = this.props;
     let matched = false;
     paths.forEach(path => {
-      matched = matched || matchPath(this.props.location.pathname, { path }) != null;
+      matched = matched || matchPath(location.pathname, { path }) != null;
     });
     return matched;
   }
 
   back = e => {
+    const { history } = this.props;
     e.stopPropagation();
-    this.props.history.goBack();
+    history.goBack();
   }
 
   render() {
@@ -97,21 +64,11 @@ class App extends React.Component {
       history,
       user
     } = this.props;
-    this.auth = {};
-    this.auth.user = null;
 
-    const HOMEPAGE = '/restaurant/koreagrill';
-    const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     return (
       <div>
         <AppBar>
-          {user.isEmpty ? <Button
-            onClick={() => {history.push('/signin')}}
-            variant="contained"
-            color="primary">
-            Sign in
-          </Button> :
-          <Account user={user} />}
+          <AccountSignIn visible={!this.match(['/signin', '/account'])} history={history}/>
         </AppBar>
         <div style={{marginBottom: 56}}>
           <Switch location={location}>
@@ -122,13 +79,13 @@ class App extends React.Component {
                 <Main/>
               )
             )}/>
-            <Route exact path="/callback" render={() => {
-              this.auth.handleAuthentication();
-              return <Redirect to="/"/>;
-            }}/>
             <Route path="/signin" component={() => {
-              return user.isEmpty ? <SignIn auth={this.auth}/> :
+              return user.isEmpty ? <SignIn user={user}/> :
               <Redirect to={HOMEPAGE}/>
+            }} />
+            <Route path="/account" component={() => {
+              return (!user.isEmpty || !user.isLoaded) ? <Account history={history}/> :
+              <Redirect to="/signin"/>
             }} />
 
             <Route path="/checkin" component={Checkin} />
@@ -145,7 +102,7 @@ class App extends React.Component {
         </div>
         <Motion
           defaultStyle={{x: 0}}
-          style={{x: spring(this.match('/signin') ? 1 : 0)}}>
+          style={{x: spring(this.match(['/signin', '/account']) ? 1 : 0)}}>
           {style =>
             <Navigation
               style={{
@@ -176,7 +133,6 @@ class App extends React.Component {
 App = connect(
   (state) => ({
     user: state.firebase.auth,
-    loggedUserId: state.user.loggedUserId,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
     dialogs: state.ui.dialogs
   }),
