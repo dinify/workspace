@@ -28,7 +28,7 @@ import GuestList from 'web/components/GuestList';
 import ScrollSnapView from 'web/components/ScrollSnapView';
 import CartItem from 'web/components/CartItem';
 import BillItem from 'web/components/BillItem';
-import PaymentOptionsDialog from 'web/components/PaymentOptionsDialog';
+import PaymentOptionsDialog from 'web/components/dialogs/PaymentOptionsDialog';
 import ContextMenu from 'web/components/ContextMenu';
 import PageIndicator from 'web/components/PageIndicator';
 import Cart from 'web/pages/Cart';

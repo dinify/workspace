@@ -21,7 +21,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import AccountExistsDialog from 'web/components/AccountExistsDialog';
+import AccountExistsDialog from 'web/components/dialogs/AccountExistsDialog';
 import Text from 'web/components/Inputs/Text';
 import ResponsiveContainer from 'web/components/ResponsiveContainer';
 import GoogleButton from 'web/components/GoogleButton';

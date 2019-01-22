@@ -14,7 +14,6 @@ import SignIn from 'web/pages/SignIn';
 import Account from 'web/pages/Account';
 import Eat from 'web/pages/Eat';
 import Cart from 'web/pages/Cart';
-import Bill from 'web/pages/Bill';
 import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
@@ -95,7 +94,6 @@ class App extends React.Component {
 
             <Route path="/eat" component={Eat} />
             <Route path="/cart" component={Cart} />
-            <Route path="/Bill" component={Bill} />
             <Route path="/receipt" component={Receipt} />
             <Route path="/services" component={Services} />
           </Switch>
