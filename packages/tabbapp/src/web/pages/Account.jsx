@@ -1,9 +1,10 @@
 import React from 'react';
-import { compose } from 'redux'
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase'
 import { withStyles } from '@material-ui/core/styles';
 import { getClaims } from 'ducks/auth/selectors';
+import { withState } from 'recompose';
 import Language from '@material-ui/icons/LanguageRounded';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import OpenInNew from '@material-ui/icons/OpenInNewRounded';
@@ -19,7 +20,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
-import ResponsiveContainer from 'web/components/ResponsiveContainer';
+import LanguagePickerDialog from 'web/components/dialogs/LanguagePickerDialog';
 import Image from 'web/components/Image';
 import Flag from 'web/components/Flag';
 import Card from 'web/components/Card';
@@ -76,11 +77,10 @@ const Account = ({
   firebase,
   claims,
   dispatch,
+  langDialogOpen,
+  setLangDialogOpen,
   ...other
 }) => {
-
-
-
 
   if (user.isEmpty || !user.isLoaded) return (
     <div style={{
@@ -133,7 +133,7 @@ const Account = ({
             <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
               Default language
             </Typography>
-            <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={() => {/* TODO: open language chooser dialog */}}>
+            <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={() => {setLangDialogOpen(true)}}>
               <ListItemIcon>
                 <Flag country={primaryLang[5]}/>
               </ListItemIcon>
@@ -160,7 +160,7 @@ const Account = ({
               </ListItem>;
             })}
             <div style={{padding: '16px 24px'}}>
-              <Button variant="text" color="primary">
+              <Button onClick={() => {setLangDialogOpen(true)}} variant="text" color="primary">
                 Add another language
               </Button>
             </div>
@@ -200,6 +200,8 @@ const Account = ({
           Log out
         </Button>
       </div>
+
+      <LanguagePickerDialog open={langDialogOpen} onClose={() => {setLangDialogOpen(false)}}/>
     </div>
   );
 };
@@ -207,6 +209,7 @@ const Account = ({
 const enhance = compose(
   withFirebase,
   withStyles(styles),
+  withState('langDialogOpen', 'setLangDialogOpen'),
   connect(
     state => ({
       user: state.firebase.auth,
