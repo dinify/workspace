@@ -1,0 +1,44 @@
+import mongoose from 'mongoose';
+
+const RestaurantsSchema = new mongoose.Schema({
+  location_id: Number,
+  name: String,
+  latitude: Number,
+  longitude: Number,
+  num_reviews: Number,
+  timezone: String,
+  location_string: String,
+  photo: Object,
+  api_detail_url: String,
+  awards: Array,
+  raw_ranking: Number,
+  ranking_geo: String,
+  ranking_geo_id: String,
+  ranking_position: Number,
+  ranking_denominator: Number,
+  ranking: String,
+  rating: Number,
+  price_level: String,
+  price: String,
+  ride_providers: Array,
+  description: String,
+  web_url: String,
+  ancestors: Array,
+  category: Object,
+  subcategory: Array,
+  parent_display_name: String,
+  nearest_metro_station: Array,
+  phone: String,
+  website: String,
+  email: String,
+  address_obj: Object,
+  address: String,
+  hours: Object,
+  is_candidate_for_contact_info_suppression: Boolean,
+  cuisine: Array,
+  dietary_restrictions: Array,
+  establishment_types: Array
+});
+const Restaurants = mongoose.model('restaurants', RestaurantsSchema);
+
+export default Restaurants;

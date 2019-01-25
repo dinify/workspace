@@ -8,6 +8,13 @@ import UserProfile from "views/UserProfile.jsx";
 
 var routes = [
   {
+    path: "/restaurants",
+    name: "Restaurants",
+    icon: "tim-icons icon-email-85",
+    component: TableList,
+    layout: "/admin"
+  },
+  {
     path: "/dashboard",
     name: "Dashboard",
     icon: "tim-icons icon-chart-pie-36",
@@ -40,13 +47,6 @@ var routes = [
     name: "User Profile",
     icon: "tim-icons icon-single-02",
     component: UserProfile,
-    layout: "/admin"
-  },
-  {
-    path: "/tables",
-    name: "Table List",
-    icon: "tim-icons icon-puzzle-10",
-    component: TableList,
     layout: "/admin"
   },
   {

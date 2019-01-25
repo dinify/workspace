@@ -1,0 +1,133 @@
+GET /api/internal/1.14/location/49.19771078712778,16.60986686644717/geos?
+currency=CZK
+&debug_info=currency%3DCZK%2Chas_dates%3Dfalse%2Cscreen_name%3D%28null%29%2Cplacement_name%3D%28null%29%2Clod%3D0
+&distance=25
+&lang=en_GB
+&limit=1
+&lunit=km
+&map=49.197711%2C16.609867
+&show_review_highlights=true
+&sort=distance
+{
+	"data": [{
+		"location_id": "274714",
+		"name": "Brno",
+		"latitude": "49.19731",
+		"longitude": "16.60368",
+		"num_reviews": "39813",
+		"timezone": "Europe/Prague",
+		"location_string": "Brno, South Moravian Region, Moravia",
+		"photo": {
+			"images": {
+				"small": {
+					"width": "150",
+					"url": "https://media-cdn.tripadvisor.com/media/photo-l/15/33/fa/be/brno.jpg",
+					"height": "150"
+				},
+				"thumbnail": {
+					"width": "50",
+					"url": "https://media-cdn.tripadvisor.com/media/photo-t/15/33/fa/be/brno.jpg",
+					"height": "50"
+				},
+				"original": {
+					"width": "4113",
+					"url": "https://media-cdn.tripadvisor.com/media/photo-o/15/33/fa/be/brno.jpg",
+					"height": "729"
+				},
+				"large": {
+					"width": "550",
+					"url": "https://media-cdn.tripadvisor.com/media/photo-s/15/33/fa/be/brno.jpg",
+					"height": "97"
+				},
+				"medium": {
+					"width": "250",
+					"url": "https://media-cdn.tripadvisor.com/media/photo-f/15/33/fa/be/brno.jpg",
+					"height": "44"
+				}
+			},
+			"is_blessed": false,
+			"uploaded_date": "2018-10-30T14:15:00-0400",
+			"caption": "",
+			"id": "355728062",
+			"helpful_votes": "0",
+			"published_date": "2018-10-30T14:15:00-0400",
+			"user": null
+		},
+		"awards": [],
+		"doubleclick_zone": "eu.czech_republic.south_moravian_region.brno",
+		"preferred_map_engine": "citymaps",
+		"geo_type": "narrow",
+		"category_counts": {
+			"attractions": {
+				"activities": "101",
+				"attractions": "94",
+				"nightlife": "45",
+				"shopping": "18",
+				"total": "258"
+			},
+			"restaurants": {
+				"total": "1056"
+			},
+			"accommodations": {
+				"hotels": "56",
+				"bbs_inns": "77",
+				"others": "83",
+				"total": "216"
+			},
+			"neighborhoods": "0",
+			"airports": "0",
+			"attraction_products": "19"
+		},
+		"nearby_attractions": [],
+		"description": "The charms of the Czech Republic's second-largest city may not be immediate, but spend a few days in this Moravian town and Brno's vibrant, authentic Czech ambiance will win you over. It's a fine way to experience Czech life without the teeming herds of tourists that visit Prague. Art Nouveau, Empire and Neoclassical buildings stand in the bar- and restaurant-packed old city center. Leafy parks abound. Be sure to get a photo with a local landmark, the suspiciously crocodilian Brno Dragon statue.",
+		"web_url": "https://www.tripadvisor.co.uk/Tourism-g274714-Brno_South_Moravian_Region_Moravia-Vacations.html",
+		"write_review": "https://www.tripadvisor.co.uk/UserReview-g274714-Brno_South_Moravian_Region_Moravia.html",
+		"ancestors": [{
+			"subcategory": [{
+				"key": "region",
+				"name": "Region"
+			}],
+			"name": "South Moravian Region",
+			"abbrv": null,
+			"location_id": "2423267"
+		}, {
+			"subcategory": [{
+				"key": "region",
+				"name": "Region"
+			}],
+			"name": "Moravia",
+			"abbrv": null,
+			"location_id": "274712"
+		}, {
+			"subcategory": [{
+				"key": "country",
+				"name": "Country"
+			}],
+			"name": "Czech Republic",
+			"abbrv": null,
+			"location_id": "274684"
+		}],
+		"category": {
+			"key": "geographic",
+			"name": "Geographic"
+		},
+		"subcategory": [{
+			"key": "city",
+			"name": "City"
+		}],
+		"parent_display_name": "Czech Republic",
+		"is_jfy_enabled": false,
+		"nearest_metro_station": [],
+		"geo_description": "The charms of the Czech Republic's second-largest city may not be immediate, but spend a few days in this Moravian town and Brno's vibrant, authentic Czech ambiance will win you over. It's a fine way to experience Czech life without the teeming herds of tourists that visit Prague. Art Nouveau, Empire and Neoclassical buildings stand in the bar- and restaurant-packed old city center. Leafy parks abound. Be sure to get a photo with a local landmark, the suspiciously crocodilian Brno Dragon statue.",
+		"has_restaurant_coverpage": false,
+		"has_attraction_coverpage": true,
+		"has_curated_shopping_list": false
+	}],
+	"paging": {
+		"previous": null,
+		"next": "https://api.tripadvisor.com/api/internal/1.14/en_GB/location/49.19771078712778,16.60986686644717/geos?currency=CZK&debug_info=currency%3DCZK%2Chas_dates%3Dfalse%2Cscreen_name%3D%28null%29%2Cplacement_name%3D%28null%29%2Clod%3D0&distance=25&lang=en_GB&limit=1&lunit=km&map=49.197711%2C16.609867&offset=1&show_review_highlights=true&sort=distance",
+		"skipped": "0",
+		"results": "1",
+		"total_results": "71"
+	}
+}
