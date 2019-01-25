@@ -45,6 +45,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //});
 
 if (process.env.NODE_ENV === 'production') {
+  console.log('Production');
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
 

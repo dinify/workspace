@@ -8,7 +8,9 @@
     "server": "nodemon --exec babel-node server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "dev:server": "cd client && yarn build && cd .. && yarn start",
-    "start": "node server.js",
+    "start": "NODE_ENV=production babel-node server.js",
+    "build": "cd client && yarn build",
+    "install-both": "yarn install && cd client && yarn install",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
