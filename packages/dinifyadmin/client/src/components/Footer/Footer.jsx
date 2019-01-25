@@ -13,13 +13,7 @@ class Footer extends React.Component {
         <Container fluid>
           <Nav>
             <NavItem>
-              <NavLink href="javascript:void(0)">Creative Tim</NavLink>
-            </NavItem>
-            <NavItem>
               <NavLink href="javascript:void(0)">About Us</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="javascript:void(0)">Blog</NavLink>
             </NavItem>
           </Nav>
           <div className="copyright">
@@ -30,9 +24,8 @@ class Footer extends React.Component {
               rel="noopener noreferrer"
               target="_blank"
             >
-              Creative Tim
-            </a>{" "}
-            for a better web.
+              TABB
+            </a>
           </div>
         </Container>
       </footer>
