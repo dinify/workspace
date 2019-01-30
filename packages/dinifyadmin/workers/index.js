@@ -1,10 +1,7 @@
 import * as taAPI from '../api/ta';
 import Restaurants from '../models/Restaurants';
 import async from 'async';
-import mongoose from 'mongoose';
-
-const mongoURL = 'mongodb://piquerg:KsVN4896bYdGLDBJ@35.204.100.96:27017/main';
-mongoose.connect(mongoURL, { useNewUrlParser: true });
+import mongoconnect from '../mongoconnect';
 
 
 taAPI.getRestaurants({ locID: 274707, limit: 50, offset: 10*50 }).then((res) => {

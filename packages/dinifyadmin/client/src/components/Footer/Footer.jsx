@@ -1,30 +1,31 @@
 /*eslint-disable*/
 import React from "react";
+import { Container, Row } from "reactstrap";
 // used for making the prop types of this component
 import PropTypes from "prop-types";
-
-// reactstrap components
-import { Container, Row, Nav, NavItem, NavLink } from "reactstrap";
 
 class Footer extends React.Component {
   render() {
     return (
-      <footer className="footer">
-        <Container fluid>
-          <Nav>
-            <NavItem>
-              <NavLink href="javascript:void(0)">About Us</NavLink>
-            </NavItem>
-          </Nav>
+      <footer
+        className={"footer" + (this.props.default ? " footer-default" : "")}
+      >
+        <Container fluid={this.props.fluid ? true : false}>
+          <ul className="nav">
+            <li className="nav-item">
+              <a
+                className="nav-link"
+                href="https://www.creative-tim.com/presentation"
+              >
+                About us
+              </a>
+            </li>
+          </ul>
           <div className="copyright">
             © {new Date().getFullYear()} made with{" "}
             <i className="tim-icons icon-heart-2" /> by{" "}
-            <a
-              href="javascript:void(0)"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              TABB
+            <a href="javascript:void(0)" target="_blank">
+              Dinify
             </a>
           </div>
         </Container>
@@ -32,5 +33,10 @@ class Footer extends React.Component {
     );
   }
 }
+
+Footer.propTypes = {
+  default: PropTypes.bool,
+  fluid: PropTypes.bool
+};
 
 export default Footer;

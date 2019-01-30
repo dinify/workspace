@@ -1,89 +1,129 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+// react plugin used to create switch buttons
+import Switch from "react-bootstrap-switch";
 
-// reactstrap components
 import { Button } from "reactstrap";
 
 class FixedPlugin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      classes: "dropdown show-dropdown"
+      classes: "dropdown",
+      darkMode: true
     };
   }
   handleClick = () => {
-    if (this.state.classes === "dropdown show-dropdown") {
-      this.setState({ classes: "dropdown show-dropdown show" });
+    if (this.state.classes === "dropdown") {
+      this.setState({ classes: "dropdown show" });
     } else {
-      this.setState({ classes: "dropdown show-dropdown" });
+      this.setState({ classes: "dropdown" });
     }
   };
-  activateMode = mode => {
-    switch (mode) {
-      case "light":
-        document.body.classList.add("white-content");
-        break;
-      default:
-        document.body.classList.remove("white-content");
-        break;
-    }
+  handleActiveMode = () => {
+    this.setState({
+      darkMode: !this.state.darkMode
+    });
+    document.body.classList.toggle("white-content");
   };
   render() {
     return (
       <div className="fixed-plugin">
         <div className={this.state.classes}>
-          <div onClick={this.handleClick}>
+          <a
+            href="#pablo"
+            onClick={e => {
+              e.preventDefault();
+              this.handleClick();
+            }}
+          >
             <i className="fa fa-cog fa-2x" />
-          </div>
+          </a>
           <ul className="dropdown-menu show">
             <li className="header-title">SIDEBAR BACKGROUND</li>
             <li className="adjustments-line">
               <div className="badge-colors text-center">
                 <span
                   className={
-                    this.props.bgColor === "primary"
+                    this.props.activeColor === "primary"
                       ? "badge filter badge-primary active"
                       : "badge filter badge-primary"
                   }
                   data-color="primary"
                   onClick={() => {
-                    this.props.handleBgClick("primary");
+                    this.props.handleActiveClick("primary");
                   }}
-                />{" "}
+                />
                 <span
                   className={
-                    this.props.bgColor === "blue"
+                    this.props.activeColor === "blue"
                       ? "badge filter badge-info active"
                       : "badge filter badge-info"
                   }
-                  data-color="blue"
+                  data-color="info"
                   onClick={() => {
-                    this.props.handleBgClick("blue");
+                    this.props.handleActiveClick("blue");
                   }}
-                />{" "}
+                />
                 <span
                   className={
-                    this.props.bgColor === "green"
+                    this.props.activeColor === "green"
                       ? "badge filter badge-success active"
                       : "badge filter badge-success"
                   }
-                  data-color="green"
+                  data-color="success"
                   onClick={() => {
-                    this.props.handleBgClick("green");
+                    this.props.handleActiveClick("green");
                   }}
-                />{" "}
+                />
+                <span
+                  className={
+                    this.props.activeColor === "orange"
+                      ? "badge filter badge-warning active"
+                      : "badge filter badge-warning"
+                  }
+                  data-color="warning"
+                  onClick={() => {
+                    this.props.handleActiveClick("orange");
+                  }}
+                />
+                <span
+                  className={
+                    this.props.activeColor === "red"
+                      ? "badge filter badge-danger active"
+                      : "badge filter badge-danger"
+                  }
+                  data-color="danger"
+                  onClick={() => {
+                    this.props.handleActiveClick("red");
+                  }}
+                />
               </div>
             </li>
-            <li className="adjustments-line text-center color-change">
-              <span className="color-label">LIGHT MODE</span>{" "}
-              <span
-                className="badge light-badge mr-2"
-                onClick={() => this.activateMode("light")}
-              />{" "}
-              <span
-                className="badge dark-badge ml-2"
-                onClick={() => this.activateMode("dark")}
-              />{" "}
-              <span className="color-label">DARK MODE</span>{" "}
+            <li className="header-title">SIDEBAR MINI</li>
+            <li className="adjustments-line">
+              <div className="togglebutton switch-sidebar-mini">
+                <span className="label-switch">OFF</span>
+                <Switch
+                  onChange={this.props.handleMiniClick}
+                  value={this.props.sidebarMini}
+                  onText=""
+                  offText=""
+                />
+                <span className="label-switch">ON</span>
+              </div>
+            </li>
+            <li className="adjustments-line">
+              <div className="togglebutton switch-change-color mt-3">
+                <span className="label-switch">LIGHT MODE</span>
+                <Switch
+                  onChange={this.handleActiveMode}
+                  value={this.state.darkMode}
+                  onText=""
+                  offText=""
+                />
+                <span className="label-switch">DARK MODE</span>
+              </div>
             </li>
           </ul>
         </div>

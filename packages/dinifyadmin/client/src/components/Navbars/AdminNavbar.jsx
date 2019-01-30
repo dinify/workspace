@@ -17,7 +17,8 @@ import {
   NavLink,
   Nav,
   Container,
-  Modal
+  Modal,
+  UncontrolledTooltip
 } from "reactstrap";
 
 class AdminNavbar extends React.Component {
@@ -72,11 +73,32 @@ class AdminNavbar extends React.Component {
     return (
       <>
         <Navbar
-          className={classNames("navbar-absolute", this.state.color)}
+          className={classNames("navbar-absolute", {
+            [this.state.color]:
+              this.props.location.pathname.indexOf("full-screen-map") === -1
+          })}
           expand="lg"
         >
           <Container fluid>
             <div className="navbar-wrapper">
+              <div className="navbar-minimize d-inline">
+                <Button
+                  className="minimize-sidebar btn-just-icon"
+                  color="link"
+                  id="tooltip209599"
+                  onClick={this.props.handleMiniClick}
+                >
+                  <i className="tim-icons icon-align-center visible-on-sidebar-regular" />
+                  <i className="tim-icons icon-bullet-list-67 visible-on-sidebar-mini" />
+                </Button>
+                <UncontrolledTooltip
+                  delay={0}
+                  target="tooltip209599"
+                  placement="right"
+                >
+                  Sidebar toggle
+                </UncontrolledTooltip>
+              </div>
               <div
                 className={classNames("navbar-toggle d-inline", {
                   toggled: this.props.sidebarOpened
@@ -97,13 +119,12 @@ class AdminNavbar extends React.Component {
               </NavbarBrand>
             </div>
             <button
-              aria-expanded={false}
-              aria-label="Toggle navigation"
               className="navbar-toggler"
-              data-target="#navigation"
-              data-toggle="collapse"
-              id="navigation"
               type="button"
+              data-toggle="collapse"
+              data-target="#navigation"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
               onClick={this.toggleCollapse}
             >
               <span className="navbar-toggler-bar navbar-kebab" />
@@ -112,7 +133,7 @@ class AdminNavbar extends React.Component {
             </button>
             <Collapse navbar isOpen={this.state.collapseOpen}>
               <Nav className="ml-auto" navbar>
-                <InputGroup className="search-bar">
+                <InputGroup className="search-bar" tag="li">
                   <Button
                     color="link"
                     data-target="#searchModal"
@@ -172,7 +193,7 @@ class AdminNavbar extends React.Component {
                     onClick={e => e.preventDefault()}
                   >
                     <div className="photo">
-                      <img alt="..." src={require("assets/img/anime3.png")} />
+                      <img alt="..." src={require("assets/img/mike.jpg")} />
                     </div>
                     <b className="caret d-none d-lg-block d-xl-block" />
                     <p className="d-lg-none">Log out</p>

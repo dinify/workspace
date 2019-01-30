@@ -1,11 +1,9 @@
-import mongoose from 'mongoose';
 import Restaurants from './models/Restaurants';
 import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
+import mongoconnect from './mongoconnect';
 
-const mongoURL = 'mongodb://piquerg:KsVN4896bYdGLDBJ@35.204.100.96:27017/main';
-mongoose.connect(mongoURL, { useNewUrlParser: true });
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -18,9 +16,10 @@ app.post('/api/db/find', (req, res) => {
   const {
     query = {},
     skip = 0,
-    limit = 100
+    limit = 100,
+    sort = {}
   } = req.body;
-  Restaurants.find(query).skip(skip).limit(limit).exec((e, result) => {
+  Restaurants.find(query).sort(sort).skip(skip).limit(limit).exec((e, result) => {
     if (e) {
       res.json({ error: e })
     } else {
