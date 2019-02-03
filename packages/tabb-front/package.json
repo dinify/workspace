@@ -5,12 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src -d dist",
-    "test": "react-scripts test --env=jsdom"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test && npm build"
-    }
+    "test": "CI=true react-scripts test --env=jsdom",
+    "preversion": "npm test",
+    "version": "npm run build && git add -A dist",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
