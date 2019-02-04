@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.AccountExistsDialog = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -25,7 +25,7 @@ var _VisibilityRounded = _interopRequireDefault(require("@material-ui/icons/Visi
 
 var _VisibilityOffRounded = _interopRequireDefault(require("@material-ui/icons/VisibilityOffRounded"));
 
-var _Typography = _interopRequireDefault(require("web/components/Typography"));
+var _Typography = _interopRequireDefault(require("components/Typography"));
 
 var _Dialog = _interopRequireDefault(require("@material-ui/core/Dialog"));
 
@@ -37,11 +37,11 @@ var _DialogActions = _interopRequireDefault(require("@material-ui/core/DialogAct
 
 var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
 
-var _Text = _interopRequireDefault(require("web/components/Inputs/Text"));
+var _Text = _interopRequireDefault(require("components/Inputs/Text"));
 
-var _GoogleButton = _interopRequireDefault(require("web/components/GoogleButton"));
+var _GoogleButton = _interopRequireDefault(require("components/GoogleButton"));
 
-var _FacebookButton = _interopRequireDefault(require("web/components/FacebookButton"));
+var _FacebookButton = _interopRequireDefault(require("components/FacebookButton"));
 
 var _IconButton = _interopRequireDefault(require("@material-ui/core/IconButton"));
 
@@ -279,18 +279,21 @@ var styles = function styles(theme) {
   };
 };
 
-var AccountExistsDialog = function AccountExistsDialog(_ref4) {
-  var classes = _ref4.classes,
-      onClose = _ref4.onClose,
-      firebase = _ref4.firebase,
-      methods = _ref4.methods,
-      providerName = _ref4.providerName,
-      email = _ref4.email,
-      action = _ref4.action,
-      other = _objectWithoutProperties(_ref4, ["classes", "onClose", "firebase", "methods", "providerName", "email", "action"]);
+var AccountExistsDialog = function AccountExistsDialog(props) {
+  var classes = props.classes,
+      onClose = props.onClose,
+      firebase = props.firebase,
+      methods = props.methods,
+      providerName = props.providerName,
+      email = props.email,
+      action = props.action,
+      _props$open = props.open,
+      open = _props$open === void 0 ? false : _props$open,
+      other = _objectWithoutProperties(props, ["classes", "onClose", "firebase", "methods", "providerName", "email", "action", "open"]);
 
   return _react.default.createElement(_Dialog.default, _extends({
-    onClose: onClose
+    onClose: onClose,
+    open: open
   }, other), providerName && _react.default.createElement(_DialogContent.default, {
     style: {
       paddingBottom: 0
@@ -324,7 +327,7 @@ var AccountExistsDialog = function AccountExistsDialog(_ref4) {
     },
     variant: "caption",
     color: "textSecondary"
-  }, "Your account already exists with this email address, continue with one of the providers below to sign in."), methods.map(function (method) {
+  }, "Your account already exists with this email address, continue with one of the providers below to sign in."), methods && methods.map(function (method) {
     var provider = providers[method];
     return _react.default.createElement("div", {
       key: method,
@@ -338,6 +341,8 @@ var AccountExistsDialog = function AccountExistsDialog(_ref4) {
     }));
   })));
 };
+
+exports.AccountExistsDialog = AccountExistsDialog;
 
 var _default = (0, _redux.compose)((0, _reactReduxFirebase.firebaseConnect)(), (0, _styles.withStyles)(styles))(AccountExistsDialog);
 

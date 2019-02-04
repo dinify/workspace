@@ -9,11 +9,9 @@ var _react = _interopRequireDefault(require("react"));
 
 var _redux = require("redux");
 
-var _styles = require("@material-ui/core/styles");
-
 var _recompose = require("recompose");
 
-var _ChevronRightRounded = _interopRequireDefault(require("@material-ui/icons/ChevronRightRounded"));
+var _styles = require("@material-ui/core/styles");
 
 var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
 
@@ -33,13 +31,17 @@ var _ListItem = _interopRequireDefault(require("@material-ui/core/ListItem"));
 
 var _ListItemText = _interopRequireDefault(require("@material-ui/core/ListItemText"));
 
-var _Flag = _interopRequireDefault(require("web/components/Flag"));
+var _ChevronRightRounded = _interopRequireDefault(require("@material-ui/icons/ChevronRightRounded"));
+
+var _Flag = _interopRequireDefault(require("components/Flag"));
 
 var _languages = _interopRequireDefault(require("lib/languages"));
 
 var _countries = _interopRequireDefault(require("lib/countries"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
@@ -49,15 +51,19 @@ var styles = function styles(theme) {
   return {};
 };
 
-var LanguagePickerDialog = function LanguagePickerDialog(_ref) {
-  var classes = _ref.classes,
-      filter = _ref.filter,
-      setFilter = _ref.setFilter,
-      selectedLang = _ref.selectedLang,
-      setSelectedLang = _ref.setSelectedLang,
-      other = _objectWithoutProperties(_ref, ["classes", "filter", "setFilter", "selectedLang", "setSelectedLang"]);
+var LanguagePickerDialog = function LanguagePickerDialog(props) {
+  var classes = props.classes,
+      filter = props.filter,
+      setFilter = props.setFilter,
+      selectedLang = props.selectedLang,
+      setSelectedLang = props.setSelectedLang,
+      _props$open = props.open,
+      open = _props$open === void 0 ? false : _props$open,
+      other = _objectWithoutProperties(props, ["classes", "filter", "setFilter", "selectedLang", "setSelectedLang", "open"]);
 
-  return _react.default.createElement(_Dialog.default, other, _react.default.createElement(_DialogTitle.default, null, "Select language"), _react.default.createElement("div", {
+  return _react.default.createElement(_Dialog.default, _extends({
+    open: open
+  }, other), _react.default.createElement(_DialogTitle.default, null, "Select language"), _react.default.createElement("div", {
     style: {
       padding: '0px 24px'
     }
@@ -83,9 +89,10 @@ var LanguagePickerDialog = function LanguagePickerDialog(_ref) {
       paddingTop: 8,
       paddingBottom: 8
     }
-  }, _languages.default.map(function (lang) {
+  }, _languages.default.map(function (lang, i) {
     var solo = lang[3].length === 1;
     return _react.default.createElement(_ListItem.default, {
+      key: i,
       dense: true,
       button: true,
       style: {

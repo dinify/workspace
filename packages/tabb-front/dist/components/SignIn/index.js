@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.SignInForm = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -33,9 +33,9 @@ var _Typography = _interopRequireDefault(require("@material-ui/core/Typography")
 
 var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
 
-var _AccountExistsDialog = _interopRequireDefault(require("web/components/dialogs/AccountExistsDialog"));
+var _AccountExistsDialog = _interopRequireDefault(require("components/dialogs/AccountExistsDialog"));
 
-var _ResponsiveContainer = _interopRequireDefault(require("web/components/ResponsiveContainer"));
+var _ResponsiveContainer = _interopRequireDefault(require("components/ResponsiveContainer"));
 
 var _actions = require("ducks/auth/actions");
 
@@ -192,7 +192,8 @@ function (_React$Component) {
     value: function render() {
       var _this$props2 = this.props,
           classes = _this$props2.classes,
-          handleSubmit = _this$props2.handleSubmit,
+          _this$props2$handleSu = _this$props2.handleSubmit,
+          handleSubmit = _this$props2$handleSu === void 0 ? function () {} : _this$props2$handleSu,
           pristine = _this$props2.pristine,
           submitting = _this$props2.submitting,
           page = _this$props2.page,
@@ -297,7 +298,7 @@ function (_React$Component) {
       }, _react.default.createElement(_Button.default, {
         onClick: leftButtonAction,
         variant: "text",
-        className: classes.uncapitalized
+        className: classes && classes.uncapitalized
       }, formOpen && _react.default.createElement(_ChevronLeftRounded.default, {
         style: {
           fontSize: '1.3125rem',
@@ -312,7 +313,7 @@ function (_React$Component) {
         disabled: pristine || submitting,
         variant: "outlined",
         color: "primary",
-        className: classes.uncapitalized
+        className: classes && classes.uncapitalized
       }, _react.default.createElement(_reactMotion.Motion, {
         defaultStyle: {
           x: 1
@@ -333,7 +334,7 @@ function (_React$Component) {
           }
         }));
       }), submitting && _react.default.createElement(_CircularProgress.default, {
-        className: classes.colorTextSecondary,
+        className: classes && classes.colorTextSecondary,
         style: {
           position: 'absolute'
         },
@@ -345,6 +346,8 @@ function (_React$Component) {
 
   return SignInForm;
 }(_react.default.Component);
+
+exports.SignInForm = SignInForm;
 
 var _default = (0, _redux.compose)((0, _styles.withStyles)(styles), (0, _reduxForm.reduxForm)({
   form: 'auth/signin'

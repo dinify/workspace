@@ -37,11 +37,11 @@ var _Divider = _interopRequireDefault(require("@material-ui/core/Divider"));
 
 var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
 
-var _Text = _interopRequireDefault(require("web/components/Inputs/Text"));
+var _Text = _interopRequireDefault(require("components/Inputs/Text"));
 
-var _GoogleButton = _interopRequireDefault(require("web/components/GoogleButton"));
+var _GoogleButton = _interopRequireDefault(require("components/GoogleButton"));
 
-var _FacebookButton = _interopRequireDefault(require("web/components/FacebookButton"));
+var _FacebookButton = _interopRequireDefault(require("components/FacebookButton"));
 
 var _actions2 = require("ducks/auth/actions");
 
@@ -228,9 +228,9 @@ function (_React$Component) {
           style: {
             marginBottom: 16
           },
-          className: classes.flex
+          className: classes && classes.flex
         }, _react.default.createElement(_Divider.default, {
-          className: classes.grow
+          className: classes && classes.grow
         }), _react.default.createElement("div", {
           style: {
             height: 0,
@@ -246,9 +246,9 @@ function (_React$Component) {
             paddingRight: 8
           }
         }, "or")), _react.default.createElement(_Divider.default, {
-          className: classes.grow
+          className: classes && classes.grow
         }))), _react.default.createElement("div", {
-          className: classes.background,
+          className: classes && classes.background,
           style: {
             position: 'absolute',
             top: 0,

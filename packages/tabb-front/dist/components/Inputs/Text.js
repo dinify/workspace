@@ -33,14 +33,16 @@ var labelRef;
 
 var Text = function Text(props) {
   var theme = props.theme,
-      componentProps = props.componentProps,
-      _props$input = props.input,
-      value = _props$input.value,
-      onChange = _props$input.onChange,
-      name = _props$input.name,
-      _props$meta = props.meta,
-      touched = _props$meta.touched,
-      error = _props$meta.error;
+      componentProps = props.componentProps;
+
+  var _ref = props.input || {},
+      value = _ref.value,
+      onChange = _ref.onChange,
+      name = _ref.name;
+
+  var _ref2 = props.meta || {},
+      touched = _ref2.touched,
+      error = _ref2.error;
 
   var isEmpty = function isEmpty(str) {
     return !str || str.length === 0;
@@ -62,15 +64,15 @@ var Text = function Text(props) {
   }, other));
 };
 
-var NewText = function NewText(_ref) {
-  var componentProps = _ref.componentProps,
-      _ref$input = _ref.input,
-      value = _ref$input.value,
-      onChange = _ref$input.onChange,
-      name = _ref$input.name,
-      _ref$meta = _ref.meta,
-      touched = _ref$meta.touched,
-      error = _ref$meta.error;
+var NewText = function NewText(_ref3) {
+  var componentProps = _ref3.componentProps,
+      _ref3$input = _ref3.input,
+      value = _ref3$input.value,
+      onChange = _ref3$input.onChange,
+      name = _ref3$input.name,
+      _ref3$meta = _ref3.meta,
+      touched = _ref3$meta.touched,
+      error = _ref3$meta.error;
   var variant = componentProps.variant,
       label = componentProps.label;
   return variant !== 'outlined' ? _react.default.createElement(_FormControl.default, {

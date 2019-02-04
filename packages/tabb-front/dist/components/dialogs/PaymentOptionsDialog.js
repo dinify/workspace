@@ -120,9 +120,12 @@ function (_React$Component) {
       var _this$props = this.props,
           classes = _this$props.classes,
           onClose = _this$props.onClose,
-          other = _objectWithoutProperties(_this$props, ["classes", "onClose"]);
+          _this$props$open = _this$props.open,
+          open = _this$props$open === void 0 ? false : _this$props$open,
+          other = _objectWithoutProperties(_this$props, ["classes", "onClose", "open"]);
 
       return _react.default.createElement(_Dialog.default, _extends({
+        open: open,
         onClose: this.handleClose,
         "aria-labelledby": "payment-options-dialog"
       }, other), _react.default.createElement(_DialogTitle.default, {

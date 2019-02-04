@@ -16,17 +16,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 var Select = function Select(props) {
-  var _props$input = props.input,
-      value = _props$input.value,
-      _onChange = _props$input.onChange,
-      name = _props$input.name;
+  var _ref = props.input || {},
+      _ref$value = _ref.value,
+      value = _ref$value === void 0 ? '' : _ref$value,
+      _onChange = _ref.onChange,
+      name = _ref.name;
+
   return _react.default.createElement(_Select.default, _extends({
     name: name,
     value: value,
     onChange: function onChange(newValue) {
       _onChange(newValue);
     }
-  }, props.componentProps), props.options.map(function (option, i) {
+  }, props.componentProps), props.options && props.options.map(function (option, i) {
     return _react.default.createElement(_Menu.MenuItem, {
       key: i,
       value: option.value
