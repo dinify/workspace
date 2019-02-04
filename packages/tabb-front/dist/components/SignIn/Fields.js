@@ -19,8 +19,6 @@ var _reduxForm = require("redux-form");
 
 var _reactMotion = require("react-motion");
 
-var _actions = require("ducks/ui/actions");
-
 var _materialUiToggleIcon = _interopRequireDefault(require("material-ui-toggle-icon"));
 
 var _VisibilityRounded = _interopRequireDefault(require("@material-ui/icons/VisibilityRounded"));
@@ -37,13 +35,15 @@ var _Divider = _interopRequireDefault(require("@material-ui/core/Divider"));
 
 var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
 
-var _Text = _interopRequireDefault(require("components/Inputs/Text"));
+var _Text = _interopRequireDefault(require("../Inputs/Text"));
 
-var _GoogleButton = _interopRequireDefault(require("components/GoogleButton"));
+var _GoogleButton = _interopRequireDefault(require("../GoogleButton"));
 
-var _FacebookButton = _interopRequireDefault(require("components/FacebookButton"));
+var _FacebookButton = _interopRequireDefault(require("../FacebookButton"));
 
-var _actions2 = require("ducks/auth/actions");
+var _actions = require("../../ducks/auth/actions");
+
+var _actions2 = require("../../ducks/ui/actions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -393,9 +393,9 @@ var _default = (0, _redux.compose)((0, _styles.withStyles)(styles), (0, _reactRe
     showPassword: state.auth.showPassword
   };
 }, {
-  setPage: _actions2.setPage,
-  setShowPassword: _actions2.setShowPassword,
-  openDialog: _actions.openDialog
+  setPage: _actions.setPage,
+  setShowPassword: _actions.setShowPassword,
+  openDialog: _actions2.openDialog
 }))(Fields);
 
 exports.default = _default;

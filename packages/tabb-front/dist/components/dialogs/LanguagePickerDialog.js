@@ -33,11 +33,11 @@ var _ListItemText = _interopRequireDefault(require("@material-ui/core/ListItemTe
 
 var _ChevronRightRounded = _interopRequireDefault(require("@material-ui/icons/ChevronRightRounded"));
 
-var _Flag = _interopRequireDefault(require("components/Flag"));
+var _Flag = _interopRequireDefault(require("../Flag"));
 
-var _languages = _interopRequireDefault(require("lib/languages"));
+var _languages = _interopRequireDefault(require("../../lib/languages"));
 
-var _countries = _interopRequireDefault(require("lib/countries"));
+var _countries = _interopRequireDefault(require("../../lib/countries"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

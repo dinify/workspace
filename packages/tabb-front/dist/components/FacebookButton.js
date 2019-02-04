@@ -11,7 +11,7 @@ var _styles = require("@material-ui/core/styles");
 
 var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
 
-var _FacebookLogo = _interopRequireDefault(require("icons/FacebookLogo"));
+var _FacebookLogo = _interopRequireDefault(require("../icons/FacebookLogo"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

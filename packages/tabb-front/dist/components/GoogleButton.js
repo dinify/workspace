@@ -11,7 +11,7 @@ var _styles = require("@material-ui/core/styles");
 
 var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
 
-var _GoogleLogo = _interopRequireDefault(require("icons/GoogleLogo"));
+var _GoogleLogo = _interopRequireDefault(require("../icons/GoogleLogo"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

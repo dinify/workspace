@@ -15,17 +15,11 @@ var _redux = require("redux");
 
 var _reactReduxFirebase = require("react-redux-firebase");
 
-var _FacebookLogo = _interopRequireDefault(require("icons/FacebookLogo"));
-
-var _GoogleLogo = _interopRequireDefault(require("icons/GoogleLogo"));
-
 var _EmailRounded = _interopRequireDefault(require("@material-ui/icons/EmailRounded"));
 
 var _VisibilityRounded = _interopRequireDefault(require("@material-ui/icons/VisibilityRounded"));
 
 var _VisibilityOffRounded = _interopRequireDefault(require("@material-ui/icons/VisibilityOffRounded"));
-
-var _Typography = _interopRequireDefault(require("components/Typography"));
 
 var _Dialog = _interopRequireDefault(require("@material-ui/core/Dialog"));
 
@@ -37,11 +31,17 @@ var _DialogActions = _interopRequireDefault(require("@material-ui/core/DialogAct
 
 var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
 
-var _Text = _interopRequireDefault(require("components/Inputs/Text"));
+var _Typography = _interopRequireDefault(require("../Typography"));
 
-var _GoogleButton = _interopRequireDefault(require("components/GoogleButton"));
+var _Text = _interopRequireDefault(require("../Inputs/Text"));
 
-var _FacebookButton = _interopRequireDefault(require("components/FacebookButton"));
+var _GoogleButton = _interopRequireDefault(require("../GoogleButton"));
+
+var _FacebookButton = _interopRequireDefault(require("../FacebookButton"));
+
+var _FacebookLogo = _interopRequireDefault(require("../../icons/FacebookLogo"));
+
+var _GoogleLogo = _interopRequireDefault(require("../../icons/GoogleLogo"));
 
 var _IconButton = _interopRequireDefault(require("@material-ui/core/IconButton"));
 

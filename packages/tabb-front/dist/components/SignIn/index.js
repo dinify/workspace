@@ -21,7 +21,7 @@ var _reactRouterDom = require("react-router-dom");
 
 var _reactMotion = require("react-motion");
 
-var _LogoText = _interopRequireDefault(require("icons/LogoText"));
+var _LogoText = _interopRequireDefault(require("../../icons/LogoText"));
 
 var _ChevronRightRounded = _interopRequireDefault(require("@material-ui/icons/ChevronRightRounded"));
 
@@ -33,13 +33,13 @@ var _Typography = _interopRequireDefault(require("@material-ui/core/Typography")
 
 var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
 
-var _AccountExistsDialog = _interopRequireDefault(require("components/dialogs/AccountExistsDialog"));
+var _AccountExistsDialog = _interopRequireDefault(require("../dialogs/AccountExistsDialog"));
 
-var _ResponsiveContainer = _interopRequireDefault(require("components/ResponsiveContainer"));
+var _ResponsiveContainer = _interopRequireDefault(require("../ResponsiveContainer"));
 
-var _actions = require("ducks/auth/actions");
+var _actions = require("../../ducks/auth/actions");
 
-var _actions2 = require("ducks/ui/actions");
+var _actions2 = require("../../ducks/ui/actions");
 
 var _Fields = _interopRequireDefault(require("./Fields"));
 
