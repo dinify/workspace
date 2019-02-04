@@ -1,4 +1,4 @@
-import GoogleButton from 'components/GoogleButton';
+import GoogleButton from '../GoogleButton';
 import React from 'react';
 import ReactDOM from 'react-dom';
 

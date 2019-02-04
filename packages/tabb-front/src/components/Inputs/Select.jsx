@@ -4,7 +4,7 @@ import SelectField from '@material-ui/core/Select';
 import { MenuItem } from '@material-ui/core/Menu';
 
 const Select = props => {
-  const { value, onChange, name } = props.input;
+  const { value = '', onChange, name } = props.input || {};
   return (
     <SelectField
       name={name}
@@ -14,7 +14,7 @@ const Select = props => {
       }}
       {...props.componentProps}
     >
-      {props.options.map((option, i) => (
+      {props.options && props.options.map((option, i) => (
         <MenuItem key={i} value={option.value}>
           {option.label}
         </MenuItem>

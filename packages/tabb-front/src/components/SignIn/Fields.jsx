@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux'
@@ -16,9 +17,9 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 
-import Text from 'web/components/Inputs/Text';
-import GoogleButton from 'web/components/GoogleButton';
-import FacebookButton from 'web/components/FacebookButton';
+import Text from 'components/Inputs/Text';
+import GoogleButton from 'components/GoogleButton';
+import FacebookButton from 'components/FacebookButton';
 
 import { setPage, setShowPassword } from 'ducks/auth/actions';
 
@@ -126,8 +127,8 @@ class Fields extends React.Component {
                 <div style={{ paddingBottom: 16 }}>
                   <FacebookButton onClick={() => firebase.login({ provider: 'facebook', type: 'popup' })} />
                 </div>
-                <div style={{marginBottom: 16}} className={classes.flex}>
-                  <Divider className={classes.grow} />
+                <div style={{marginBottom: 16}} className={classes && classes.flex}>
+                  <Divider className={classes && classes.grow} />
                   <div style={{height: 0, display: 'flex', alignItems: 'center'}}>
                     <Typography
                       variant="caption"
@@ -137,10 +138,10 @@ class Fields extends React.Component {
                       or
                     </Typography>
                   </div>
-                  <Divider className={classes.grow} />
+                  <Divider className={classes && classes.grow} />
                 </div>
               </div>
-              <div className={classes.background} style={{
+              <div className={classes && classes.background} style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,

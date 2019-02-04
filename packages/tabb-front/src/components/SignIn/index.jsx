@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux'
@@ -15,8 +16,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import AccountExistsDialog from 'web/components/dialogs/AccountExistsDialog';
-import ResponsiveContainer from 'web/components/ResponsiveContainer';
+import AccountExistsDialog from 'components/dialogs/AccountExistsDialog';
+import ResponsiveContainer from 'components/ResponsiveContainer';
 
 import { setPage } from 'ducks/auth/actions';
 import { openDialog as openDialogAction } from 'ducks/ui/actions';
@@ -32,7 +33,7 @@ const styles = theme => ({
   },
 });
 
-class SignInForm extends React.Component {
+export class SignInForm extends React.Component {
 
   validateEmail = (email) => {
     const errors = {};
@@ -104,7 +105,7 @@ class SignInForm extends React.Component {
   render() {
     const {
       classes,
-      handleSubmit,
+      handleSubmit = () => {},
       pristine,
       submitting,
       page,
@@ -187,7 +188,7 @@ class SignInForm extends React.Component {
               display: 'flex',
               marginTop: 16
             }}>
-              <Button onClick={leftButtonAction} variant="text" className={classes.uncapitalized}>
+              <Button onClick={leftButtonAction} variant="text" className={classes && classes.uncapitalized}>
                 {formOpen && <ChevronLeft style={{fontSize: '1.3125rem', marginLeft: -12}} />}
                 {formOpen ? 'Back' : 'New account'}
               </Button>
@@ -197,7 +198,7 @@ class SignInForm extends React.Component {
                 disabled={pristine || submitting}
                 variant="outlined"
                 color="primary"
-                className={classes.uncapitalized}>
+                className={classes && classes.uncapitalized}>
                 <Motion
                   defaultStyle={{x: 1}}
                   style={{x: spring(submitting ? 0 : 1, animConfig)}}>
@@ -208,7 +209,7 @@ class SignInForm extends React.Component {
                     </div>
                   }
                 </Motion>
-                {submitting && <CircularProgress className={classes.colorTextSecondary} style={{
+                {submitting && <CircularProgress className={classes && classes.colorTextSecondary} style={{
                     position: 'absolute'
                 }} size={16} thickness={6}/>}
               </Button>
@@ -219,7 +220,6 @@ class SignInForm extends React.Component {
     );
   }
 }
-
 
 export default compose(
   withStyles(styles),

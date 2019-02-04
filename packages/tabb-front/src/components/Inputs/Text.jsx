@@ -14,10 +14,10 @@ let labelRef;
 const Text = props => {
   const {
     theme,
-    componentProps,
-    input: { value, onChange, name },
-    meta: { touched, error }
+    componentProps
   } = props;
+  const { value, onChange, name } = props.input || {};
+  const { touched, error } = props.meta || {};
   const isEmpty = (str) => (!str || str.length === 0);
 
   let other = componentProps;

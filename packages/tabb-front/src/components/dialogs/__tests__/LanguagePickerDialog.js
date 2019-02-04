@@ -1,8 +1,8 @@
-import ResponsiveContainer from '../ResponsiveContainer';
+import LanguagePickerDialog from '../LanguagePickerDialog';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<ResponsiveContainer />, div);
+  ReactDOM.render(<LanguagePickerDialog />, div);
 });

@@ -8,15 +8,15 @@ import GoogleLogo from 'icons/GoogleLogo';
 import Email from '@material-ui/icons/EmailRounded';
 import Visibility from '@material-ui/icons/VisibilityRounded';
 import VisibilityOff from '@material-ui/icons/VisibilityOffRounded';
-import Typography from 'web/components/Typography';
+import Typography from 'components/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
-import Text from 'web/components/Inputs/Text';
-import GoogleButton from 'web/components/GoogleButton';
-import FacebookButton from 'web/components/FacebookButton';
+import Text from 'components/Inputs/Text';
+import GoogleButton from 'components/GoogleButton';
+import FacebookButton from 'components/FacebookButton';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Avatar from '@material-ui/core/Avatar';
@@ -149,18 +149,20 @@ const styles = theme => ({
   }
 });
 
-const AccountExistsDialog = ({
-  classes,
-  onClose,
-  firebase,
-  methods,
-  providerName,
-  email,
-  action,
-  ...other
-}) => {
+export const AccountExistsDialog = (props) => {
+  const {
+    classes,
+    onClose,
+    firebase,
+    methods,
+    providerName,
+    email,
+    action,
+    open = false,
+    ...other
+  } = props;
   return (
-    <Dialog onClose={onClose} {...other}>
+    <Dialog onClose={onClose} open={open} {...other}>
       {providerName && <DialogContent style={{paddingBottom: 0}}>
         <Typography style={{marginBottom: 8}} variant="overline" color="textSecondary">
           Login attempt
@@ -177,7 +179,7 @@ const AccountExistsDialog = ({
         <Typography style={{marginBottom: 8}} variant="caption" color="textSecondary">
           {`Your account already exists with this email address, continue with one of the providers below to sign in.`}
         </Typography>
-        {methods.map(method => {
+        {methods && methods.map(method => {
           const provider = providers[method];
           return <div key={method} style={{paddingTop: 8}}>
             <provider.component

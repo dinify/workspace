@@ -49,10 +49,15 @@ class PaymentOptionsDialog extends React.Component {
   };
 
   render() {
-    const { classes, onClose, ...other } = this.props;
+    const {
+      classes,
+      onClose,
+      open = false,
+      ...other
+    } = this.props;
 
     return (
-      <Dialog onClose={this.handleClose} aria-labelledby="payment-options-dialog" {...other}>
+      <Dialog open={open} onClose={this.handleClose} aria-labelledby="payment-options-dialog" {...other}>
         <DialogTitle id="payment-options-dialog">Select payment option</DialogTitle>
         <div>
           <List>

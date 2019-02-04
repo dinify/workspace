@@ -1,4 +1,4 @@
-import FacebookButton from 'components/FacebookButton';
+import FacebookButton from '../FacebookButton';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
