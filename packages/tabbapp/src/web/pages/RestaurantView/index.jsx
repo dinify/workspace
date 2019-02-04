@@ -71,20 +71,20 @@ class RestaurantView extends React.PureComponent {
       location: { search },
       history,
       checkin,
-      loggedUserId,
+      user,
       checkedInRestaurant
     } = this.props;
     if (!restaurant) {
       return <div />
     }
     const subdomain = params.subdomain;
-    // const query = search.match(/qr=([^&]*)/);
-    // if (!checkedInRestaurant && query && query[1]) {
-    //   const qr = query[1];
-    //   if (loggedUserId) {
-    //     checkin({ qr });
-    //   } // else history.push(`/login?qr=${qr}`);
-    // }
+    const query = search.match(/qr=([^&]*)/);
+    if (!checkedInRestaurant && query && query[1]) {
+      const qr = query[1];
+      if (!user.isEmpty) {
+        checkin({ qr });
+      } // else history.push(`/login?qr=${qr}`);
+    }
 
 
     const images = FN.MapToList(restaurant.images);
@@ -221,7 +221,7 @@ class RestaurantView extends React.PureComponent {
 
 RestaurantView = connect(
   (state, { match }) => ({
-    loggedUserId: state.user.loggedUserId,
+    user: state.firebase.auth,
     restaurant: getRestaurantBySubdomain(state, match.params.subdomain),
     checkedInRestaurant: state.restaurant.checkedInRestaurant
   }),

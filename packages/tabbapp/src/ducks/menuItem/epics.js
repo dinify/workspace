@@ -1,5 +1,7 @@
 // @flow
-import { Observable } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
+import { mergeMap, exhaustMap, map, catchError, filter, ignoreElements, tap, debounceTime } from 'rxjs/operators';
+import { ofType } from 'redux-observable';
 import * as API from 'tabb-front/dist/api/restaurant';
 import types from './types';
 import { favMenuitemDone, favMenuitemFail } from './actions';
@@ -12,14 +14,16 @@ type FavProps = {
   }
 }
 const favEpic = (action$: Observable) =>
-  action$
-    .ofType(types.FAV_MENUITEM_INIT)
-    .debounceTime(500)
-    .exhaustMap(({ payload }: FavProps) => {
-      return Observable.fromPromise(API.FavMenuitem(payload))
-        .map(res => favMenuitemDone({res, prePayload: payload }))
-        .catch(error => Observable.of(favMenuitemFail({error, prePayload: payload })))
-    });
+  action$.pipe(
+    ofType(types.FAV_MENUITEM_INIT),
+    debounceTime(500),
+    exhaustMap(({ payload }: FavProps) => {
+      return from(API.FavMenuitem(payload)).pipe(
+        map(res => favMenuitemDone({res, prePayload: payload })),
+        catchError(error => of(favMenuitemFail({error, prePayload: payload })))
+      )
+    })
+  );
 
 
 export default [

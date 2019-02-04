@@ -1,27 +1,24 @@
 // @flow
-import { Observable } from 'rxjs';
-import { loadUserData as loadUserDataAction } from './actions';
+import { of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { ofType } from 'redux-observable';
 import { fetchRestaurantsInit, fetchStatusInit, fetchStatusFail } from 'ducks/restaurant/actions';
 import { fetchMeInit, fetchMeFail } from 'ducks/user/actions';
 import { fetchCartInit, fetchCartFail } from 'ducks/cart/actions';
 import { getCookie } from 'tabb-front/dist/lib/FN';
+import { loadUserData as loadUserDataAction } from './actions';
 import types from './types';
 
-const bootstrapEpic = (action$: Observable) =>
-  action$
-    .ofType('persist/REHYDRATE')
-    .mergeMap(() => {
-      const callActions = [
-        fetchRestaurantsInit(),
-        loadUserDataAction()
-      ]
-      return callActions;
-    });
+const bootstrapEpic = (action$) =>
+  action$.pipe(
+    ofType('persist/REHYDRATE'),
+    mergeMap(() => of(fetchRestaurantsInit(),loadUserDataAction()))
+  );
 
-const loadUserData = (action$: Observable) =>
-  action$
-    .ofType(types.LOAD_USER_DATA)
-    .mergeMap(() => {
+const loadUserData = (action$) =>
+  action$.pipe(
+    ofType(types.LOAD_USER_DATA),
+    mergeMap(() => {
       const callActions = []
       const token = getCookie('access_token');
       if (token && token.length > 1) {
@@ -36,7 +33,8 @@ const loadUserData = (action$: Observable) =>
         callActions.push(fetchCartFail([{ status: 401 }]));
       }
       return callActions;
-    });
+    })
+  );
 
 export default [
   bootstrapEpic,

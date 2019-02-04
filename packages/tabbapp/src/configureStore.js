@@ -2,7 +2,6 @@ import { createEpicMiddleware } from 'redux-observable';
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
-import configureEpics from './configureEpics';
 import { reducer as formReducer } from 'redux-form';
 import { snackbarReducer } from 'material-ui-snackbar-redux'
 import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase'
@@ -18,6 +17,8 @@ import booking from 'ducks/booking';
 import cart from 'ducks/cart';
 import bill from 'ducks/bill';
 import seat from 'ducks/seat';
+import rootEpic from './configureEpics';
+
 
 const commonReducers = {
   auth,
@@ -53,12 +54,8 @@ firebase.initializeApp(firebaseConfig)
 const configureStore = (options, storage) => {
   const {
     initialState,
-    platformDeps = {},
-    platformEpics = [],
     platformReducers = {},
   } = options;
-
-  const rootEpic = configureEpics({ ...platformDeps }, platformEpics);
 
   const reducers = combineReducers({
     form: formReducer,
@@ -66,8 +63,10 @@ const configureStore = (options, storage) => {
     ...platformReducers,
   });
 
+  const epicMiddleware = createEpicMiddleware();
+
   const middlewares = [
-    createEpicMiddleware(rootEpic)
+    epicMiddleware
   ];
 
   if (process.env.NODE_ENV === 'development') {
@@ -81,6 +80,8 @@ const configureStore = (options, storage) => {
   )(createStore)
 
   const store = createStoreWithFirebase(reducers, initialState);
+
+  epicMiddleware.run(rootEpic);
 
   // let the magic happen :–)
   persistStore(store, { blacklist: ['progress', 'routing', 'notifications', 'firebase', 'auth'], storage }); // .purge() // in case you want to purge the store

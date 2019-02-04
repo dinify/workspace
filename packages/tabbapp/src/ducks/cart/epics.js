@@ -1,5 +1,7 @@
 // @flow
-import { Observable } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
+import { mergeMap, switchMap, catchError } from 'rxjs/operators';
+import { ofType } from 'redux-observable';
 import * as API from 'tabb-front/dist/api/restaurant';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import * as FN from 'tabb-front/dist/lib/FN';
@@ -20,12 +22,11 @@ type addToCartProps = {
     menuItemId: string,
   }
 }
-const addToCartEpic = (action$: Observable, { getState }) =>
-  action$
-    .ofType(types.ADD_TO_CART_INIT)
-    .switchMap(({ payload: { menuItemId } }: addToCartProps) => {
-      const state = getState();
-      const menuItem = state.menuItem.all[menuItemId];
+const addToCartEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(types.ADD_TO_CART_INIT),
+    switchMap(({ payload: { menuItemId } }: addToCartProps) => {
+      const menuItem = state$.value.menuItem.all[menuItemId];
       const choices = [];
       FN.MapToList(menuItem.options).forEach((option) => {
         FN.MapToList(option.choices).forEach((choice) => {
@@ -44,46 +45,44 @@ const addToCartEpic = (action$: Observable, { getState }) =>
         });
       })
       const apiPayload = { menuItemId, choices, excludes, addons }
-      return Observable.fromPromise(API.AddToCart(apiPayload))
-        .mergeMap(res => {
-          return Observable.of(
-            addToCartDone(res),
-            fetchCartInit(),
-            snackbar.show({
-              message: 'Added to cart',
-              handleAction: () => window.location.assign('/eat'),
-              action: 'Go to cart'
-            })
-          );
-        })
-        .catch(error => Observable.of(addToCartFail(error)))
-    });
+      return from(API.AddToCart(apiPayload)).pipe(
+        mergeMap(res => of(
+          addToCartDone(res),
+          fetchCartInit(),
+          snackbar.show({
+            message: 'Added to cart',
+            handleAction: () => window.location.assign('/eat'),
+            action: 'Go to cart'
+          })
+        )),
+        catchError(error => of(addToCartFail(error)))
+      );
+    })
+  );
 
-const orderEpic = (action$: Observable, { getState }) =>
-  action$
-    .ofType(types.ORDER_INIT)
-    .switchMap(() => {
-      const state = getState();
-      const orderType = state.cart.orderType;
-      return Observable.fromPromise(API.Order({ orderType }))
-        .mergeMap(res => {
-          return Observable.of(
-            orderDone(res),
-            fetchCartInit(),
-            snackbar.show({
-              message: 'Order has been placed'
-            })
-          );
-        })
-        .catch(error => Observable.of(orderFail(error)))
-    });
+const orderEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(types.ORDER_INIT),
+    switchMap(() => {
+      const orderType = state$.value.cart.orderType;
+      return from(API.Order({ orderType })).pipe(
+        mergeMap(res => of(
+          orderDone(res),
+          fetchCartInit(),
+          snackbar.show({
+            message: 'Order has been placed'
+          })
+        )),
+        catchError(error => of(orderFail(error)))
+      );
+    })
+  );
 
 const updateAfterEditEpic = (action$: Observable) =>
-  action$
-    .ofType(types.REMOVE_ORDERITEM_DONE)
-    .switchMap(() => {
-      return Observable.of(fetchSeatsInit());
-    });
+  action$.pipe(
+    ofType(types.REMOVE_ORDERITEM_DONE),
+    switchMap(() => of(fetchSeatsInit()))
+  );
 
 export default [
   addToCartEpic,

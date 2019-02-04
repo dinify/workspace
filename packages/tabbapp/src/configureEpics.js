@@ -1,4 +1,7 @@
+import * as most from 'most';
+import { from } from 'rxjs';
 import { combineEpics } from 'redux-observable';
+
 import { epics as crud } from 'ducks/crudEpics';
 import { authEpics as auth } from 'ducks/auth';
 import { restaurantEpics as restaurant } from 'ducks/restaurant';
@@ -13,27 +16,35 @@ import { getFirebase } from 'react-redux-firebase'
 
 import { appEpics as app } from 'ducks/app';
 
-const epics = [
-  ...app,
-  ...crud,
-  ...auth,
-  ...user,
-  ...restaurant,
-  ...menuItem,
-  ...cart,
-  ...bill,
-  ...seat,
-  ...ui,
-  ...service
-];
+//const combineEpics = (...epics) => (...args) =>
+//  most.merge(
+//    ...epics.map(epic => epic(...args))
+//  );
 
-export default (deps = {}, platformEpics = []) => (
-  action$,
-  { getState, dispatch },
-) =>
-  combineEpics(...epics, ...platformEpics)(action$, {
-    ...deps,
-    getState,
-    dispatch,
-    getFirebase
-  });
+const rootEpic = (action$, state$, ...rest) => {
+  const epic = combineEpics(
+    ...app,
+    ...crud,
+    ...auth,
+    ...user,
+    ...restaurant,
+    ...menuItem,
+    ...cart,
+    ...bill,
+    ...seat,
+    ...ui,
+    ...service
+  );
+  // action$ and state$ are converted from Observables to Most.js streams
+  const output = epic(
+    action$,
+    state$,
+    { getFirebase },
+    ...rest
+  );
+
+  // convert Most.js stream back to Observable
+  return output;
+};
+
+export default rootEpic;

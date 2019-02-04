@@ -1,15 +1,19 @@
 // @flow
-// import { Observable } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
+import { mergeMap, map, catchError, filter, ignoreElements, tap } from 'rxjs/operators';
+import { ofType } from 'redux-observable';
+
 import types from './types';
 // import { logoutInit } from 'ducks/auth/actions';
 
 const meFetchedEpic = (action$: Observable) =>
-  action$
-    .ofType(types.FETCH_ME_DONE)
-    .do(() => {
+  action$.pipe(
+    ofType(types.FETCH_ME_DONE),
+    tap(() => {
       window.initSocket();
-    })
-    .ignoreElements();
+    }),
+    ignoreElements()
+  );
 
 export default [
   meFetchedEpic

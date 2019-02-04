@@ -1,5 +1,7 @@
 // @flow
-import { Observable } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
+import { mergeMap, exhaustMap, map, catchError, filter, ignoreElements, tap, debounceTime } from 'rxjs/operators';
+import { ofType } from 'redux-observable';
 import * as API from 'tabb-front/dist/api/restaurant';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import { fetchStatusInit } from 'ducks/restaurant/actions';
@@ -15,28 +17,29 @@ type CheckinProps = {
   }
 }
 
-const checkinEpic = (action$: Observable, { getState }) =>
-  action$
-    .ofType(types.CHECKIN_INIT)
-    .debounceTime(500)
-    .exhaustMap(({ payload }: CheckinProps) => {
+const checkinEpic = (action$: Observable) =>
+  action$.pipe(
+    ofType(types.CHECKIN_INIT),
+    debounceTime(500),
+    exhaustMap(({ payload }: CheckinProps) => {
+      console.log('fire');
       if (getCookie('access_token') === '') {
-        return Observable.of(checkinFail([{ status: 401 }]));
+        return of(checkinFail([{ status: 401 }]));
       }
-      return Observable.fromPromise(API.Checkin(payload))
-        .mergeMap(res => {
-          return Observable.of(
-            checkinDone(res),
-            fetchStatusInit(),
-            snackbar.show({
-              message: 'You are now checked in',
-              handleAction: () => window.location.assign('/'),
-              action: 'See menu'
-            })
-          );
-        })
-        .catch(error => Observable.of(checkinFail(error)))
-    });
+      return from(API.Checkin(payload)).pipe(
+        mergeMap(res => of(
+          checkinDone(res),
+          fetchStatusInit(),
+          snackbar.show({
+            message: 'You are now checked in',
+            handleAction: () => window.location.assign('/'),
+            action: 'See menu'
+          })
+        )),
+        catchError(error => of(checkinFail(error)))
+      );
+    })
+  );
 
 type FavProps = {
   payload: {
@@ -45,14 +48,16 @@ type FavProps = {
   }
 }
 const favEpic = (action$: Observable) =>
-  action$
-    .ofType(types.FAV_RESTAURANT_INIT)
-    .debounceTime(500)
-    .exhaustMap(({ payload }: FavProps) => {
-      return Observable.fromPromise(API.FavRestaurant(payload))
-        .map(res => favRestaurantDone({res, prePayload: payload }))
-        .catch(error => Observable.of(favRestaurantFail({error, prePayload: payload })))
-    });
+  action$.pipe(
+    ofType(types.FAV_RESTAURANT_INIT),
+    debounceTime(500),
+    exhaustMap(({ payload }: FavProps) => {
+      return from(API.FavRestaurant(payload)).pipe(
+        map((res) => favRestaurantDone({res, prePayload: payload })),
+        catchError(error => of(favRestaurantFail({error, prePayload: payload })))
+      )
+    })
+  );
 
 
 export default [

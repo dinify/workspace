@@ -1,5 +1,6 @@
 // @flow
-import { Observable } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
+import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import API from 'tabb-front/dist/api';
 import R from 'ramda';
 
@@ -19,120 +20,108 @@ const filterAction = (type, kind, stage) => {
 };
 
 const createEpic = (action$: Observable) =>
-  action$
-    .filter(action => filterAction(action.type, 'CREATE', 'INIT'))
-    .mergeMap(({ payload, type }) => {
+  action$.pipe(
+    filter(action => filterAction(action.type, 'CREATE', 'INIT')),
+    mergeMap(({ payload, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'CREATE', 'INIT');
       const apiFnName = `Create${camel(subject)}`;
-      return Observable.fromPromise(
-        API[apiFnName]({
-          ...payload,
-        }),
-      )
-        .map(res => ({
+      return from(API[apiFnName](payload)).pipe(
+        map(res => ({
           type: `${path}CREATE_${subject}_DONE`,
           payload: { res, prePayload: payload },
+        })),
+        catchError(error => of({
+          type: `${path}CREATE_${subject}_FAIL`,
+          payload: error,
+          error: true
         }))
-        .catch(error =>
-          Observable.of({
-            type: `${path}CREATE_${subject}_FAIL`,
-            payload: error,
-          }),
-        );
-    });
+      )
+    })
+  );
+
 
 const fetchEpic = (action$: Observable) =>
-  action$
-    .filter(action => filterAction(action.type, 'FETCH', 'INIT'))
-    .mergeMap(({ payload, type }) => {
+  action$.pipe(
+    filter(action => filterAction(action.type, 'FETCH', 'INIT')),
+    mergeMap(({ payload, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'FETCH', 'INIT');
       const apiFnName = `Get${camel(subject)}`;
-      return Observable.fromPromise(
-        API[apiFnName]({
-          ...payload,
-        }),
-      )
-        .map(res => ({
+      return from(API[apiFnName](payload)).pipe(
+        map(res => ({
           type: `${path}FETCH_${subject}_DONE`,
           payload: { res, prePayload: payload },
+        })),
+        catchError(error => of({
+          type: `${path}FETCH_${subject}_FAIL`,
+          payload: error,
+          error: true
         }))
-        .catch(error =>
-          Observable.of({
-            type: `${path}FETCH_${subject}_FAIL`,
-            payload: error,
-          }),
-        );
-    });
-
-const fetchAllEpic = (action$: Observable, { getState }: EpicDependencies) =>
-  action$
-  .filter(action => filterAction(action.type, 'FETCHALL', 'INIT'))
-  .mergeMap(({ payload, type }) => {
-    const { subject, path } = getSubjectAndPath(type, 'FETCHALL', 'INIT');
-
-    let ids = payload.ids
-
-    if (payload.cache) {
-      const storeKey = subject.toLowerCase()
-      const all = getState()[storeKey].all
-      ids = R.filter((id) => !all[id], ids)
-    }
-
-    return ids.map((id) => ({
-      type: `${path}FETCH_${subject}_INIT`,
-      payload: {
-        id
-      }
-    })).concat({
-      type: `${path}FETCHALL_${subject}_DONE`
+      )
     })
-  })
+  );
+
+
+const fetchAllEpic = (action$, state$) =>
+  action$.pipe(
+    filter(action => filterAction(action.type, 'FETCHALL', 'INIT')),
+    mergeMap(({ payload, type }) => {
+      const { subject, path } = getSubjectAndPath(type, 'FETCHALL', 'INIT');
+      let ids = payload.ids;
+      if (payload.cache) {
+        const storeKey = subject.toLowerCase();
+        const all = state$.value[storeKey].all;
+        ids = R.filter((id) => !all[id], ids);
+      }
+      return of(ids.map((id) => ({
+        type: `${path}FETCH_${subject}_INIT`,
+        payload: {
+          id
+        }
+      })).concat({
+        type: `${path}FETCHALL_${subject}_DONE`
+      }))
+    })
+  );
 
 const updateEpic = (action$: Observable) =>
-  action$
-    .filter(action => filterAction(action.type, 'UPDATE', 'INIT'))
-    .mergeMap(({ payload, type }) => {
+  action$.pipe(
+    filter(action => filterAction(action.type, 'UPDATE', 'INIT')),
+    mergeMap(({ payload, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'UPDATE', 'INIT');
       const apiFnName = `Change${camel(subject)}`;
-      return Observable.fromPromise(
-        API[apiFnName]({
-          ...payload,
-        }),
-      )
-        .map(res => ({
+      return from(API[apiFnName](payload)).pipe(
+        map(res => ({
           type: `${path}UPDATE_${subject}_DONE`,
           payload: { res, prePayload: payload },
+        })),
+        catchError(error => of({
+          type: `${path}UPDATE_${subject}_FAIL`,
+          payload: error,
+          error: true
         }))
-        .catch(error =>
-          Observable.of({
-            type: `${path}UPDATE_${subject}_FAIL`,
-            payload: error,
-          }),
-        );
-    });
+      )
+    })
+  );
 
 const removeEpic = (action$: Observable) =>
-  action$
-    .filter(action => filterAction(action.type, 'REMOVE', 'INIT'))
-    .mergeMap(({ payload, type }) => {
+  action$.pipe(
+    filter(action => filterAction(action.type, 'REMOVE', 'INIT')),
+    mergeMap(({ payload, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'REMOVE', 'INIT');
       const apiFnName = `Remove${camel(subject)}`;
-      return Observable.fromPromise(
-        API[apiFnName]({
-          ...payload,
-        }),
+      return from(API[apiFnName](payload)).pipe(
+        map(res => ({
+          type: `${path}REMOVE_${subject}_DONE`,
+          payload: { res, prePayload: payload },
+        })),
+        catchError(error => of({
+          type: `${path}REMOVE_${subject}_FAIL`,
+          payload: error,
+          error: true
+        }))
       )
-        .map(() => ({ type: `${path}REMOVE_${subject}_DONE`, payload }))
-        .catch(error =>
-          Observable.of({
-            type: `${path}REMOVE_${subject}_FAIL`,
-            payload: {
-              prePayload: payload,
-              error,
-            },
-          }),
-        );
-    });
+    })
+  );
 
 export const epics = [
   createEpic,

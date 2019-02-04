@@ -1,5 +1,7 @@
 // @flow
-import { Observable } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
+import { mergeMap, switchMap, exhaustMap, map, catchError, filter, ignoreElements, tap, debounceTime } from 'rxjs/operators';
+import { ofType } from 'redux-observable';
 import * as API from 'tabb-front/dist/api/restaurant';
 // import R from 'ramda';
 // import * as FN from 'tabb-front/dist/lib/FN';
@@ -15,44 +17,44 @@ import {
 } from './actions';
 
 const splitEpic = (action$: Observable) =>
-  action$
-    .ofType(types.SPLIT_BILL_INIT)
-    .switchMap(({ payload: { orderItems, withIds } }) => {
+  action$.pipe(
+    ofType(types.SPLIT_BILL_INIT),
+    switchMap(({ payload: { orderItems, withIds } }) => {
       console.log(orderItems, withIds);
-      return Observable.fromPromise(API.SplitMultiple({ orderItems, withIds }))
-        .mergeMap(res => {
-          return Observable.of(splitBillDone(res));
-        })
-        .catch(error => Observable.of(splitBillFail(error)))
-    });
+      return from(API.SplitMultiple({ orderItems, withIds })).pipe(
+        mergeMap(res => of(splitBillDone(res))),
+        catchError(error => of(splitBillFail(error)))
+      )
+    })
+  );
 
 const transferEpic = (action$: Observable) =>
-  action$
-    .ofType(types.TRANSFER_BILL_INIT)
-    .switchMap(({ payload: { itemId, userId } }) => {
-      return Observable.fromPromise(API.TransferBill({ itemId, userId }))
-        .mergeMap(res => {
-          return Observable.of(transferBillDone(res));
-        })
-        .catch(error => Observable.of(transferBillFail(error)))
-    });
+  action$.pipe(
+    ofType(types.TRANSFER_BILL_INIT),
+    switchMap(({ payload: { itemId, userId } }) => {
+      return from(API.TransferBill({ itemId, userId })).pipe(
+        mergeMap(res => of(transferBillDone(res))),
+        catchError(error => of(transferBillFail(error)))
+      )
+    })
+  )
+
 
 const initTransactionEpic = (action$: Observable) =>
-  action$
-    .ofType(types.INIT_TRANSACTION_INIT)
-    .switchMap(({ payload: { type, gratuity } }) => {
-      return Observable.fromPromise(API.InitiateTransaction({ type, gratuity }))
-        .mergeMap(res => {
-          // window.location.href = '/receipt';
-          return Observable.of(
-            initTransactionDone(res),
-            snackbar.show({
-              message: 'Payment request sent'
-            })
-          );
-        })
-        .catch(error => Observable.of(initTransactionFail(error)))
-    });
+  action$.pipe(
+    ofType(types.INIT_TRANSACTION_INIT),
+    switchMap(({ payload: { type, gratuity } }) => {
+      return from(API.InitiateTransaction({ type, gratuity })).pipe(
+        mergeMap(res => of(
+          initTransactionDone(res),
+          snackbar.show({
+            message: 'Payment request sent'
+          })
+        )),
+        catchError(error => of(initTransactionFail(error)))
+      );
+    })
+  );
 
 export default [
   splitEpic,
