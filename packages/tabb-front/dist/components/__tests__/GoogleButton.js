@@ -1,15 +1,8 @@
-"use strict";
+import GoogleButton from '../GoogleButton';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-var _GoogleButton = _interopRequireDefault(require("components/GoogleButton"));
-
-var _react = _interopRequireDefault(require("react"));
-
-var _reactDom = _interopRequireDefault(require("react-dom"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-it('renders without crashing', function () {
-  var div = document.createElement('div');
-
-  _reactDom.default.render(_react.default.createElement(_GoogleButton.default, null), div);
+it('renders without crashing', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(<GoogleButton />, div);
 });

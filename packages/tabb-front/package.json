@@ -4,7 +4,7 @@
   "description": "Common codebase for Dinify frontend",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src -d dist",
+    "build": "babel src -d dist --copy-files",
     "test": "CI=true react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "preversion": "npm test",
