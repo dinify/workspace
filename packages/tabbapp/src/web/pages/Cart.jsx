@@ -13,8 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 
 // import SwipableItem from 'web/components/SwipableItem';
 import AppBar from 'web/components/AppBar';
-import ResponsiveContainer from 'web/components/ResponsiveContainer';
-import Typography from 'web/components/Typography';
+import ResponsiveContainer from 'tabb-front/dist/components/ResponsiveContainer';
+import Typography from 'tabb-front/dist/components/Typography';
 import CartItem from 'web/components/CartItem';
 // import Radio from '@material-ui/core/Radio';
 // import RadioGroup from '@material-ui/core/RadioGroup';

@@ -7,9 +7,7 @@ import { withState } from 'recompose';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Person from '@material-ui/icons/PersonRounded';
-import Account from 'web/components/AppBar/Account';
 import Image from 'web/components/Image';
 
 const styles = theme => ({

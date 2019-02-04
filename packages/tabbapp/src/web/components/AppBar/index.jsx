@@ -7,8 +7,8 @@ import { getContext } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import { toggleTheme as toggleThemeAction } from 'ducks/ui/actions';
 
-import LogoText from 'icons/LogoText';
-import Logo from 'icons/Logo';
+import LogoText from 'tabb-front/dist/icons/LogoText';
+import Logo from 'tabb-front/dist/icons/Logo';
 import LightbulbToggle from 'web/components/LightbulbToggle';
 import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 import Menu from '@material-ui/icons/MenuRounded';

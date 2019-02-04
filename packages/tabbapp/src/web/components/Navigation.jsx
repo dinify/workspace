@@ -2,8 +2,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
-import ShoppingCart from '@material-ui/icons/ShoppingCartRounded';
-import QRCodeScan from 'icons/QRCodeScan';
+import QRCodeScan from 'tabb-front/dist/icons/QRCodeScan';
 import NotificationsActive from '@material-ui/icons/NotificationsActiveRounded';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import LocationOn from '@material-ui/icons/LocationOnRounded';

@@ -13,7 +13,7 @@ import Phone from '@material-ui/icons/PhoneRounded';
 import Place from '@material-ui/icons/PlaceRounded';
 import Schedule from '@material-ui/icons/ScheduleRounded';
 import StaticMap from 'web/components/StaticMap';
-import Typography from 'web/components/Typography';
+import Typography from 'tabb-front/dist/components/Typography';
 import uniqueId from 'lodash.uniqueid';
 
 const styles = theme => ({

@@ -1,7 +1,7 @@
 import React from "react";
 import PhotoCamera from '@material-ui/icons/PhotoCameraRounded';
 import Button from '@material-ui/core/Button';
-import Typography from 'web/components/Typography';
+import Typography from 'tabb-front/dist/components/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import QrScanner from "lib/qr-scanner.min.js";
 

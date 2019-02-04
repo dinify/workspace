@@ -5,7 +5,6 @@ import { withFirebase } from 'react-redux-firebase'
 import { withStyles } from '@material-ui/core/styles';
 import { getClaims } from 'ducks/auth/selectors';
 import { withState } from 'recompose';
-import Language from '@material-ui/icons/LanguageRounded';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import OpenInNew from '@material-ui/icons/OpenInNewRounded';
 import ArrowUpward from '@material-ui/icons/ArrowUpwardRounded';
@@ -20,12 +19,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
-import LanguagePickerDialog from 'web/components/dialogs/LanguagePickerDialog';
+import LanguagePickerDialog from 'tabb-front/dist/components/dialogs/LanguagePickerDialog';
 import Image from 'web/components/Image';
-import Flag from 'web/components/Flag';
+import Flag from 'tabb-front/dist/components/Flag';
 import Card from 'web/components/Card';
-import languages from 'lib/languages';
-import countries from 'lib/countries';
+import languages from 'tabb-front/dist/lib/languages';
+import countries from 'tabb-front/dist/lib/countries';
 
 const styles = theme => ({
   typeChip: {

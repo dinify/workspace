@@ -1,7 +1,6 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import Lightbulb from 'icons/Lightbulb';
-import LightbulbOutlined from 'icons/LightbulbOutlined';
+import LightbulbOutlined from 'tabb-front/dist/icons/LightbulbOutlined';
 import times from 'lodash.times';
 import { StaggeredMotion, Motion, spring } from 'react-motion';
 

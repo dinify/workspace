@@ -10,7 +10,7 @@ import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
 import CategoryView from 'web/pages/CategoryView';
 import MenuItemView from 'web/pages/MenuItemView';
-import SignIn from 'web/pages/SignIn/SignIn';
+import SignIn from 'tabb-front/dist/components/SignIn';
 import Account from 'web/pages/Account';
 import Eat from 'web/pages/Eat';
 import Cart from 'web/pages/Cart';

@@ -1,5 +1,4 @@
 import React from 'react';
-import R from 'ramda';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 
@@ -22,24 +21,21 @@ import {
   clearSelectedBillItems as clearSelectedBillItemsAction
 } from 'ducks/seat/actions';
 
-import ResponsiveContainer from 'web/components/ResponsiveContainer';
-import AppBar from 'web/components/AppBar';
+import ResponsiveContainer from 'tabb-front/dist/components/ResponsiveContainer';
 import GuestList from 'web/components/GuestList';
 import ScrollSnapView from 'web/components/ScrollSnapView';
 import CartItem from 'web/components/CartItem';
 import BillItem from 'web/components/BillItem';
-import PaymentOptionsDialog from 'web/components/dialogs/PaymentOptionsDialog';
+import PaymentOptionsDialog from 'tabb-front/dist/components/dialogs/PaymentOptionsDialog';
 import ContextMenu from 'web/components/ContextMenu';
-import PageIndicator from 'web/components/PageIndicator';
 import Cart from 'web/pages/Cart';
 
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import CreditCard from '@material-ui/icons/CreditCardRounded';
 import Delete from '@material-ui/icons/DeleteRounded';
 import Done from '@material-ui/icons/DoneRounded';
-import QRCodeScan from 'icons/QRCodeScan';
 
-import Typography from 'web/components/Typography';
+import Typography from 'tabb-front/dist/components/Typography';
 import Slider from '@material-ui/lab/Slider';
 import * as FN from 'tabb-front/dist/lib/FN';
 

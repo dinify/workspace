@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
-import Typography from 'web/components/Typography';
+import Typography from 'tabb-front/dist/components/Typography';
 import MenuItemCard from 'web/components/MenuItemCard';
 import * as FN from 'tabb-front/dist/lib/FN';
 import R from 'ramda';

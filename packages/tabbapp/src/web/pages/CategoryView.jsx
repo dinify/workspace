@@ -1,6 +1,6 @@
 import React from 'react';
 import AppBar from 'web/components/AppBar';
-import ResponsiveContainer from 'web/components/ResponsiveContainer';
+import ResponsiveContainer from 'tabb-front/dist/components/ResponsiveContainer';
 import { connect } from 'react-redux';
 import { fetchMenuitemsInit } from 'ducks/menuItem/actions';
 import { getItemsOfCategory } from 'ducks/menuItem/selectors';
@@ -17,7 +17,7 @@ class CategoryView extends React.PureComponent {
     const {
       menuItemsList
     } = this.props;
-    
+
     return (
       <div>
         <AppBar position="static" />

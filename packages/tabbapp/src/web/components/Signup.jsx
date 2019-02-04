@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import Text from 'web/components/Inputs/Text';
+import Text from 'tabb-front/dist/components/Inputs/Text';
 import { signupInit } from 'ducks/auth/actions';
 import authTypes from 'ducks/auth/types';
 import FormHelperText from '@material-ui/core/FormHelperText';

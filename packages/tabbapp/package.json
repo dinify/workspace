@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.9.0",
+    "@material-ui/core": "^3.9.1",
     "@material-ui/icons": "^3.0.2",
     "@material-ui/lab": "^3.0.0-alpha.28",
     "auth0-js": "^9.8.2",
@@ -55,7 +55,7 @@
     "scroll-into-view-if-needed": "^2.2.16",
     "serve": "9.1.0",
     "socket.io-client": "^2.1.1",
-    "tabb-front": "git+ssh://git@gitlab.com:tabb/frontend-web/common.git#master"
+    "tabb-front": "git+ssh://git@gitlab.com:tabb/frontend-web/common.git#v0.0.5"
   },
   "scripts": {
     "start": "serve -s build",

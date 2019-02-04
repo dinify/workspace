@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withTheme } from '@material-ui/core/styles';
-import ResponsiveContainer from 'web/components/ResponsiveContainer';
+import ResponsiveContainer from 'tabb-front/dist/components/ResponsiveContainer';
 import ResponsiveGrid from 'web/components/ResponsiveGrid';
 import AppBar from 'web/components/AppBar';
-import Typography from 'web/components/Typography';
+import Typography from 'tabb-front/dist/components/Typography';
 import Button from '@material-ui/core/Button';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import RestaurantListItem from 'web/components/RestaurantListItem';
