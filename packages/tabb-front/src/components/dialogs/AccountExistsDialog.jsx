@@ -3,20 +3,24 @@ import { withStyles } from '@material-ui/core/styles';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 import { compose } from 'redux';
 import { firebaseConnect } from 'react-redux-firebase';
-import FacebookLogo from 'icons/FacebookLogo';
-import GoogleLogo from 'icons/GoogleLogo';
+
 import Email from '@material-ui/icons/EmailRounded';
 import Visibility from '@material-ui/icons/VisibilityRounded';
 import VisibilityOff from '@material-ui/icons/VisibilityOffRounded';
-import Typography from 'components/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
-import Text from 'components/Inputs/Text';
-import GoogleButton from 'components/GoogleButton';
-import FacebookButton from 'components/FacebookButton';
+
+import Typography from '../Typography';
+import Text from '../Inputs/Text';
+import GoogleButton from '../GoogleButton';
+import FacebookButton from '../FacebookButton';
+
+import FacebookLogo from '../../icons/FacebookLogo';
+import GoogleLogo from '../../icons/GoogleLogo';
+
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Avatar from '@material-ui/core/Avatar';

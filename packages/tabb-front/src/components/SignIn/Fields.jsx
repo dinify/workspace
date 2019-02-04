@@ -6,7 +6,6 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { withStyles } from '@material-ui/core/styles';
 import { Field } from 'redux-form';
 import { Motion, spring } from 'react-motion';
-import { openDialog as openDialogAction } from 'ducks/ui/actions';
 import ToggleIcon from 'material-ui-toggle-icon';
 
 import Visibility from '@material-ui/icons/VisibilityRounded';
@@ -17,11 +16,12 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 
-import Text from 'components/Inputs/Text';
-import GoogleButton from 'components/GoogleButton';
-import FacebookButton from 'components/FacebookButton';
+import Text from '../Inputs/Text';
+import GoogleButton from '../GoogleButton';
+import FacebookButton from '../FacebookButton';
 
-import { setPage, setShowPassword } from 'ducks/auth/actions';
+import { setPage, setShowPassword } from '../../ducks/auth/actions';
+import { openDialog as openDialogAction } from '../../ducks/ui/actions';
 
 const styles = theme => ({
   grow: {

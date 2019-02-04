@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import flags from 'icons/flags';
+import flags from '../icons/flags';
 
 const styles = theme => ({
   root: {

@@ -8,7 +8,7 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
 
-import LogoText from 'icons/LogoText';
+import LogoText from '../../icons/LogoText';
 
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
@@ -16,11 +16,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import AccountExistsDialog from 'components/dialogs/AccountExistsDialog';
-import ResponsiveContainer from 'components/ResponsiveContainer';
+import AccountExistsDialog from '../dialogs/AccountExistsDialog';
+import ResponsiveContainer from '../ResponsiveContainer';
 
-import { setPage } from 'ducks/auth/actions';
-import { openDialog as openDialogAction } from 'ducks/ui/actions';
+import { setPage } from '../../ducks/auth/actions';
+import { openDialog as openDialogAction } from '../../ducks/ui/actions';
 
 import Fields from './Fields';
 

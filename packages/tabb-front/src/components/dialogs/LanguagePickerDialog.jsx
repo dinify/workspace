@@ -13,9 +13,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 
-import Flag from 'components/Flag';
-import languages from 'lib/languages';
-import countries from 'lib/countries';
+import Flag from '../Flag';
+import languages from '../../lib/languages';
+import countries from '../../lib/countries';
 
 const styles = theme => ({
 
