@@ -13,20 +13,18 @@ var _reduxObservable = require("redux-observable");
 
 var API = _interopRequireWildcard(require("tabb-front/dist/api/user"));
 
-var _actions = require("ducks/restaurant/actions");
-
-var _actions2 = require("ducks/app/actions");
-
-var _FN = require("tabb-front/dist/lib/FN");
+var _FN = require("../../lib/FN");
 
 var _reactReduxFirebase = require("react-redux-firebase");
 
 var _reduxForm = require("redux-form");
 
-var _actions3 = require("./actions");
+var _actions = require("./actions");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
+// import { checkinInit } from 'ducks/restaurant/actions';
+// import { loadUserData } from 'ducks/app/actions';
 var accessTokenEpic = function accessTokenEpic(action$, state$) {
   return action$.pipe((0, _operators.filter)(function (action) {
     var triggerOn = [_reactReduxFirebase.actionTypes.LOGIN, _reactReduxFirebase.actionTypes.AUTH_EMPTY_CHANGE];
@@ -67,7 +65,7 @@ var loginLinkEpic = function loginLinkEpic(action$, state$) {
       var cred = state$.value.auth.credential;
       var promise = auth.linkAndRetrieveDataWithCredential(cred);
       return (0, _rxjs.from)(promise).pipe((0, _operators.map)(function () {
-        return (0, _rxjs.of)((0, _actions3.setLinkProviders)({
+        return (0, _rxjs.of)((0, _actions.setLinkProviders)({
           linkProviders: false,
           credential: {}
         }));
@@ -91,7 +89,7 @@ var loginErrorEpic = function loginErrorEpic(action$, _ref2) {
       var promise = firebase.auth().fetchSignInMethodsForEmail(authError.email);
       return (0, _rxjs.from)(promise).pipe((0, _operators.map)(function (methods) {
         if (methods.includes('password')) {
-          return (0, _rxjs.of)((0, _actions3.setPage)('signIn'), (0, _reduxForm.change)('auth/signin', 'email', authError.email), (0, _actions3.setLinkProviders)({
+          return (0, _rxjs.of)((0, _actions.setPage)('signIn'), (0, _reduxForm.change)('auth/signin', 'email', authError.email), (0, _actions.setLinkProviders)({
             linkProviders: true,
             credential: authError.credential
           }));
