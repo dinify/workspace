@@ -1,16 +1,37 @@
-import types from './types';
+"use strict";
 
-export const openDialog = (e) => ({
-  type: types.DIALOG_OPEN,
-  payload: e
-})
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.toggleTheme = exports.closeDialog = exports.openDialog = void 0;
 
-export const closeDialog = (e) => ({
-  type: types.DIALOG_CLOSE,
-  payload: e
-})
+var _types = _interopRequireDefault(require("./types"));
 
-export const toggleTheme = (e) => ({
-  type: types.TOGGLE_THEME,
-  payload: e
-})
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var openDialog = function openDialog(e) {
+  return {
+    type: _types.default.DIALOG_OPEN,
+    payload: e
+  };
+};
+
+exports.openDialog = openDialog;
+
+var closeDialog = function closeDialog(e) {
+  return {
+    type: _types.default.DIALOG_CLOSE,
+    payload: e
+  };
+};
+
+exports.closeDialog = closeDialog;
+
+var toggleTheme = function toggleTheme(e) {
+  return {
+    type: _types.default.TOGGLE_THEME,
+    payload: e
+  };
+};
+
+exports.toggleTheme = toggleTheme;
