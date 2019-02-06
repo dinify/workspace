@@ -1,10 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
+export default {
   LOGIN_INIT: 'tabb/auth/LOGIN_INIT',
   LOGIN_DONE: 'tabb/auth/LOGIN_DONE',
   LOGIN_FAIL: 'tabb/auth/LOGIN_FAIL',
@@ -21,6 +15,5 @@ var _default = {
   LOGOUT_DONE: 'tabb/auth/LOGOUT_DONE',
   SET_PAGE: 'tabb/auth/SET_PAGE',
   SET_SHOWPASSWORD: 'tabb/auth/SET_SHOWPASSWORD',
-  SET_LINKPROVIDERS: 'tabb/auth/SET_LINKPROVIDERS'
+  SET_LINKPROVIDERS: 'tabb/auth/SET_LINKPROVIDERS',
 };
-exports.default = _default;
