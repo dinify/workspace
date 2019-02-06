@@ -1,5 +1,8 @@
 // @flow
-import { Observable } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
+import { mergeMap, map, catchError, filter } from 'rxjs/operators';
+import { ofType } from 'redux-observable';
+
 import * as API from 'tabb-front/dist/api/user';
 import { checkinInit } from 'ducks/restaurant/actions';
 import { loadUserData } from 'ducks/app/actions';
@@ -8,19 +11,20 @@ import { actionTypes } from 'react-redux-firebase';
 import { change as changeForm } from 'redux-form';
 import { setPage, setLinkProviders } from './actions';
 
-const accessTokenEpic = (action$: Observable, { getState }) =>
-  action$
-    .filter(action => {
+const accessTokenEpic = (action$, state$) =>
+  action$.pipe(
+    filter(action => {
       const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE];
       return triggerOn.includes(action.type);
-    })
-    .mergeMap(() => {
-      const auth = getState().firebase.auth;
+    }),
+    mergeMap(() => {
+      const auth = state$.value.firebase.auth;
       if (auth.stsTokenManager && auth.stsTokenManager.accessToken) {
         setCookie('access_token', auth.stsTokenManager.accessToken, 90);
       } else setCookie('access_token', '', 1);
-      return Observable.of({ type: 'ACCESSTOKEN_HANDLED' });
-    });
+      return of({ type: 'ACCESSTOKEN_HANDLED' });
+    })
+  );
 
 
 // return this.loginUser(error.email, params.password).then(result => {
@@ -32,45 +36,44 @@ const accessTokenEpic = (action$: Observable, { getState }) =>
 //   });
 // });
 
-const loginErrorHandled = (error) => Observable.of(
+const loginErrorHandled = (error) => of(
   { type: 'LOGIN_ERROR_HANDLED', error }
 )
 
-const loginLinkEpic = (action$: Observable, { getState }) =>
-  action$
-    .ofType(actionTypes.LOGIN)
-    .mergeMap(({ auth }) => {
-      const state = getState();
-      if (state.auth.linkProviders) {
-        const cred = state.auth.credential;
+const loginLinkEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(actionTypes.LOGIN),
+    mergeMap(({ auth }) => {
+      if (state$.value.auth.linkProviders) {
+        const cred = state$.value.auth.credential;
         const promise = auth.linkAndRetrieveDataWithCredential(cred);
-        return Observable.fromPromise(promise)
-          .mergeMap(() => {
-            return Observable.of(
-              setLinkProviders({
-                linkProviders: false,
-                credential: {}
-              })
-            );
-          })
-          .catch(error => loginErrorHandled(error))
+        return from(promise).pipe(
+          map(() => of(
+            setLinkProviders({
+              linkProviders: false,
+              credential: {}
+            })
+          )),
+          catchError(error => loginErrorHandled(error))
+        )
       }
       return loginErrorHandled();
-    });
+    })
+  );
 
 
 const loginErrorEpic = (action$: Observable, { getFirebase }) =>
-  action$
-    .ofType(actionTypes.LOGIN_ERROR)
-    .mergeMap(({ authError }) => {
+  action$.pipe(
+    ofType(actionTypes.LOGIN_ERROR),
+    mergeMap(({ authError }) => {
       if (!authError) return loginErrorHandled();
       if (authError.code === 'auth/account-exists-with-different-credential') {
         const firebase = getFirebase();
         const promise = firebase.auth().fetchSignInMethodsForEmail(authError.email);
-        return Observable.fromPromise(promise)
-          .mergeMap(methods => {
+        return from(promise).pipe(
+          map((methods) => {
             if (methods.includes('password')) {
-              return Observable.of(
+              return of(
                 setPage('signIn'),
                 changeForm('auth/signin', 'email', authError.email),
                 setLinkProviders({
@@ -80,11 +83,14 @@ const loginErrorEpic = (action$: Observable, { getFirebase }) =>
               );
             }
             return loginErrorHandled();
-          })
-          .catch(error => loginErrorHandled(error))
+          }),
+          catchError(error => loginErrorHandled(error))
+        )
       }
       return loginErrorHandled();
-    });
+    })
+  );
+
 
 
 export default [
