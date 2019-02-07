@@ -435,7 +435,7 @@ class Waiterboards extends React.Component {
           <WB key={wb.id}>
             <WBheader>
               <Link
-                to={`https://waiterboard.gotabb.com/board/${wb.id}`}
+                to={`https://waiterboard.dinify.com/board/${wb.id}`}
                 target="_blank"
               >
                 <WBtitle>

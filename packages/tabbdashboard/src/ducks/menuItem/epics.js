@@ -1,15 +1,16 @@
 // @flow
-import { Observable } from 'rxjs';
+import { Observable, of} from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { ofType } from 'redux-observable';
 import R from 'ramda';
 import * as FN from 'lib/FN';
-import * as API from 'api/restaurant';
 
-const updateCusomizationsEpic = (action$: Observable, { getState }) =>
-  action$
-    .ofType('UPDATECUSOMIZATIONS_INIT')
-    .switchMap(({ payload: { menuItemId, actionKind, custKey, custId, cust, updateObj } }) => {
+const updateCusomizationsEpic = (action$: Observable, state$) =>
+  action$.pipe(
+    ofType('UPDATECUSOMIZATIONS_INIT'),
+    switchMap(({ payload: { menuItemId, actionKind, custKey, custId, cust, updateObj } }) => {
 
-      const menuItem = getState().menuItem.all[menuItemId];
+      const menuItem = state$.value.menuItem.all[menuItemId];
       if (!menuItem) return { type: 'UPDATECUSOMIZATIONS_FAIL' };
 
       const custs = menuItem[custKey]; // ingredietns, addons or options
@@ -34,7 +35,7 @@ const updateCusomizationsEpic = (action$: Observable, { getState }) =>
       updatePayload.id = menuItemId;
       updatePayload[custKey] = FN.MapToList(updatedCusts);
 
-      return Observable.of(
+      return of(
         {
           type: `UPDATECUSOMIZATIONS_UPDATING`,
           payload: {
@@ -48,7 +49,8 @@ const updateCusomizationsEpic = (action$: Observable, { getState }) =>
           payload: updatePayload,
         }
       );
-    });
+    })
+  );
 
 export default [
   updateCusomizationsEpic

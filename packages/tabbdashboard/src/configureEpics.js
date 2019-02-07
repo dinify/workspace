@@ -3,21 +3,22 @@ import { restaurantEpics } from './ducks/restaurant';
 import { menuItemEpics } from './ducks/menuItem';
 
 import { epics as crud } from './ducks/crudEpics';
+import { getFirebase } from 'react-redux-firebase';
 
-console.log(restaurantEpics);
 
-const epics = [
-  ...restaurantEpics,
-  ...menuItemEpics,
-  ...crud
-];
+const rootEpic = (action$, state$, ...rest) => {
+  const epic = combineEpics(
+    ...restaurantEpics,
+    ...menuItemEpics,
+    ...crud
+  );
+  const output = epic(
+    action$,
+    state$,
+    { getFirebase },
+    ...rest
+  );
+  return output;
+};
 
-export default (deps = {}, platformEpics = []) => (
-  action$,
-  { getState, dispatch },
-) =>
-  combineEpics(...epics, ...platformEpics)(action$, {
-    ...deps,
-    getState,
-    dispatch,
-  });
+export default rootEpic;

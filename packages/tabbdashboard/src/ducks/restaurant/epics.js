@@ -1,7 +1,10 @@
 // @flow
-import { Observable } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
+import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
+import { ofType } from 'redux-observable';
 import R from 'ramda';
 import * as FN from 'lib/FN';
+import { actionTypes } from 'react-redux-firebase';
 
 import * as API from 'api/restaurant';
 
@@ -23,37 +26,72 @@ export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
 
 // Epic
 const bootstrapEpic = (action$: Observable) =>
-  action$.ofType('persist/REHYDRATE').mergeMap(() => {
-    return Observable.fromPromise(API.GetLoggedRestaurant())
-      .mergeMap(loggedUser => {
-        return Observable.of(loggedFetchedAction(loggedUser), appBootstrap(), {
-          type: 'FETCH_SERVICEIMAGES_INIT',
-        });
-      })
-      .catch(error => {
-        console.log(error);
-        if (
-          window.location.pathname !== '/login' &&
-          window.location.pathname !== '/signup'
-        )
-          window.location.replace('/login');
-        return Observable.of(loggedFetchedAction(null), appBootstrap());
-      });
-  });
+  action$.pipe(
+    ofType('persist/REHYDRATE'),
+    mergeMap(() => {
+      return of(appBootstrap());
+    })
+  );
 
-const getLoggedEpic = (action$: Observable) =>
-  action$.ofType('GET_LOGGED_INIT').switchMap(() =>
-    Observable.fromPromise(API.GetLoggedRestaurant())
-      .map(loggedUser => loggedFetchedAction(loggedUser))
-      .catch(error => {
-        console.log(error);
-        if (
-          window.location.pathname !== '/login' &&
-          window.location.pathname !== '/signup'
-        )
-          window.location.replace('/login');
-        return Observable.of(appBootstrap());
-      }),
+function parseJwt (token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace('-', '+').replace('_', '/');
+  return JSON.parse(window.atob(base64));
+};
+
+const getLoggedEpic = (action$: Observable, state$) =>
+  action$.pipe(
+    filter(action => {
+      const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE];
+      return triggerOn.includes(action.type);
+    }),
+    mergeMap(() => {
+      const auth = state$.value.firebase.auth;
+      const isTokenPresent = auth.stsTokenManager && auth.stsTokenManager.accessToken;
+      if (isTokenPresent) {
+        const tokenObj = parseJwt(auth.stsTokenManager.accessToken);
+        console.log(tokenObj);
+        if (tokenObj.roles && tokenObj.roles.restaurant) {
+          const restaurantId = tokenObj.roles.restaurant.id;
+          return of(
+            {type: 'LOAD_RESTAURANT', payload: {restaurantId}}
+          );
+        }
+        return of(appBootstrap());
+      }
+      return of(appBootstrap());
+    })
+  );
+
+const loadRestaurant = (action$) =>
+  action$.pipe(
+    ofType('LOAD_RESTAURANT'),
+    mergeMap(({ payload: { restaurantId } }) => {
+      return from(API.GetLoggedRestaurant({id: restaurantId})).pipe(
+        map(loggedUser => loggedFetchedAction(loggedUser)),
+        catchError(error => {
+          console.log(error);
+          return of(appBootstrap());
+        })
+      );
+    })
+  );
+
+const loadTranslations = (action$) =>
+  action$.pipe(
+    ofType('LOAD_RESTAURANT'),
+    mergeMap(() => {
+      return from(API.GetTranslations()).pipe(
+        map(translations => {
+          console.log(translations);
+          return {type: 'NOTIHG'}
+        }),
+        catchError(error => {
+          console.log(error);
+          return of(appBootstrap());
+        })
+      );
+    })
   );
 
 export const signupDoneAction = (payload: object) => {
@@ -67,27 +105,24 @@ export const signupFailAction = (err: Error) => ({
   payload: err,
 });
 
-const registrationEpic = (action$: Observable, { getState }) =>
-  action$
-    .ofType('SIGNUP_INIT')
-    .switchMap(
-      ({
-        payload: { name, phone, email, password, restaurantName, subdomain },
-      }) => {
-        const logged = getState().restaurant.loggedRestaurant;
-        if (!logged) {
-          // register new user, log in, create new restaurant
-          return Observable.fromPromise(
-            API.RegisterUser({ name, phone, email, password }),
-          )
-            .map(() => signupDoneAction({ name, phone, email, password, restaurantName, subdomain }))
-            .catch(error => Observable.of(signupFailAction(error)));
-        } else {
-          // create restaurant
-          console.log('logggggggged');
-        }
-      },
-    );
+const registrationEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('SIGNUP_INIT'),
+    switchMap(({ payload }) => {
+      const { name, phone, email, password, restaurantName, subdomain } = payload;
+      const logged = state$.value.restaurant.loggedRestaurant;
+      if (!logged) {
+        // register new user, log in, create new restaurant
+        return from(API.RegisterUser({ name, phone, email, password })).pipe(
+          map(() => signupDoneAction({ name, phone, email, password, restaurantName, subdomain })),
+          catchError(error => of(signupFailAction(error)))
+        )
+      }
+      // create restaurant
+      console.log('logggggggged');
+      return of(signupFailAction());
+    })
+  );
 
 export const loginFailAction = (err: Error) => ({
   type: 'LOGIN_FAIL',
@@ -101,46 +136,49 @@ export const loginDoneAction = (res: object) => {
   return { type: 'LOGIN_DONE', payload: res };
 };
 
-const loginEpic = (action$: Observable, { getState }) =>
-  action$
-    .ofType('LOGIN_INIT')
-    .switchMap(({ payload: { email, password, crRest, restaurantName, subdomain } }) => {
-      return Observable.fromPromise(API.LoginUser({ email, password }))
-        .map(res => {
+const loginEpic = (action$) =>
+  action$.pipe(
+    ofType('LOGIN_INIT'),
+    switchMap(({ payload: { email, password, crRest, restaurantName, subdomain } }) => {
+      return from(API.LoginUser({ email, password })).pipe(
+        map(res => {
           setCookie('access_token', res.token, 30);
           if (crRest) {
             return {
               type: 'REGISTER_RESTAURANT_INIT',
               payload: { restaurantName, subdomain, email, password },
             };
-          } else {
-            return loginDoneAction(res);
           }
-        })
-        .catch(error => Observable.of(loginFailAction(error)));
-    });
+          return loginDoneAction(res);
+        }),
+        catchError(error => of(loginFailAction(error)))
+      );
+    })
+  );
 
 export const createRestaurantDoneAction = ({ email, password }) => {
   return { type: 'LOGIN_INIT', payload: { email, password } };
   //return { type: 'CREATE_RESTAURANT_DONE', payload: res }
 };
 
-const registerRestaurantEpic = (action$: Observable, { getState }) =>
-  action$
-    .ofType('REGISTER_RESTAURANT_INIT')
-    .switchMap(({ payload: { restaurantName, subdomain, email, password } }) => {
-      return Observable.fromPromise(API.CreateRestaurant({ restaurantName, subdomain }))
-        .map(() => createRestaurantDoneAction({ email, password }))
-        .catch(error => Observable.of(loginFailAction(error)));
-    });
+const registerRestaurantEpic = (action$: Observable) =>
+  action$.pipe(
+    ofType('REGISTER_RESTAURANT_INIT'),
+    switchMap(({ payload: { restaurantName, subdomain, email, password } }) => {
+      return from(API.CreateRestaurant({ restaurantName, subdomain })).pipe(
+        map(() => createRestaurantDoneAction({ email, password })),
+        catchError(error => of(loginFailAction(error)))
+      );
+    })
+  );
 
 const reorderEpic = (action$: Observable) =>
-  action$
-    .filter(
+  action$.pipe(
+    filter(
       action =>
         action.type.startsWith('REORDER_') && action.type.endsWith('_INIT'),
-    )
-    .mergeMap(({ payload, type }) => {
+    ),
+    mergeMap(({ payload, type }) => {
       const middle = type.split('_')[1]; // 'CATEGORY'
 
       const changed = [];
@@ -159,24 +197,28 @@ const reorderEpic = (action$: Observable) =>
         .concat({
           type: `REORDER_${middle}_DONE`,
         });
-    });
+    })
+  );
 
-const editImageEpic = (action$: Observable, { getState }) =>
-  action$.ofType('UPDATE_IMAGE_DONE').switchMap(({ payload: { id } }) => {
-    const images = getState().restaurant.loggedRestaurant.images;
-    const maxPrecedence = R.sort((a, b) => b.precedence - a.precedence)(
-      R.values(images),
-    )[0].precedence;
-    return Observable.fromPromise(
-      API.EditImage({ id, precedence: maxPrecedence + 1 }),
-    )
-      .map(res => ({ type: `EDIT_IMAGE_DONE`, payload: res }))
-      .catch(error =>
-        Observable.of({ type: `EDIT_IMAGE_FAIL`, payload: error }),
+const editImageEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('UPDATE_IMAGE_DONE'),
+    switchMap(({ payload: { id } }) => {
+      const images = state$.value.restaurant.loggedRestaurant.images;
+      const maxPrecedence = R.sort((a, b) => b.precedence - a.precedence)(
+        R.values(images),
+      )[0].precedence;
+      return from(API.EditImage({ id, precedence: maxPrecedence + 1 })).pipe(
+        map(res => ({ type: `EDIT_IMAGE_DONE`, payload: res })),
+        catchError(error => of({ type: `EDIT_IMAGE_FAIL`, payload: error }))
       );
-  });
+    })
+  )
+
 
 export default [
+  loadTranslations,
+  loadRestaurant,
   bootstrapEpic,
   getLoggedEpic,
   loginEpic,

@@ -127,7 +127,7 @@ const Login = ({ doLogin, progressMap, errorsMap }) => (
                   )}
                 </ErrorMessage>
                 <HorizontalLine mt={20} mb={20} />
-                <Link to="/signup">Not using TABB yet? Sign Up here!</Link>
+                <Link to="/signup">Not using Dinify yet? Sign Up here!</Link>
               </form>
             );
           }}

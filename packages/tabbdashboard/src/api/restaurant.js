@@ -44,8 +44,8 @@ export function CreateRestaurant({ restaurantName, subdomain }) {
   );
 }
 
-export function GetLoggedRestaurant() {
-  return Get({ path: `restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices.difference`, v3: true });
+export function GetLoggedRestaurant({id}) {
+  return Get({ path: `restaurant/${id}/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices.difference`, v3: true });
 }
 
 export function ChangeCategory({ category }) {
@@ -317,6 +317,15 @@ export function ChangeFoodingredient({ foodId, ingredients }) {
   return Post({ path: `menu/item/${foodId}`, v3: true }, { ingredients });
 }
 
-//export function RemoveTablet({ restaurantId, login_id }) {
-//  return Delete({ path: `restaurant/${restaurantId}/shop` }, { login_id })
-//}
+export function GetTranslations({ locale } = {}) {
+  if (locale) return Get({ path: `translation/list/${locale}`, v3: true });
+  return Get({ path: 'translation/list', v3: true });
+}
+
+export function AddTranslation({ type, id, locale, name, description }) {
+  return Post({ path: 'translation/add', v3: true }, { type, id, locale, name, description });
+}
+
+export function RmTranslation({ type, id, locale }) {
+  return Post({ path: 'translation/remove', v3: true }, { type, id, locale });
+}

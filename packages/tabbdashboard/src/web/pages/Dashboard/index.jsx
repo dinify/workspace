@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { logoutInitAction } from 'ducks/restaurantLegacy';
 import { Link } from 'react-router-dom';
+import { withFirebase } from 'react-redux-firebase'
 
 import SettingsSection from './Settings';
 import MenuSection from './Menu';
@@ -106,7 +107,7 @@ const theme = createMuiTheme({
   }
 });
 
-const Dashboard = ({ location, logout }) => (
+const Dashboard = ({ location, firebase }) => (
   <div>
     <Sidebar>
 
@@ -115,9 +116,9 @@ const Dashboard = ({ location, logout }) => (
           component="nav"
         >
           <Link to="/">
-            <ListItem button style={{padding: '14px 24px'}} divider>
+            <ListItem button divider>
               <ListItemIcon>
-                <img src={require('assets/img/logo.svg')} width={26} alt="" />
+                <img src={require('assets/img/logo.svg')} width={26} height={28} alt="" />
               </ListItemIcon>
               <ListItemText inset primary="Dashboard" />
             </ListItem>
@@ -150,7 +151,7 @@ const Dashboard = ({ location, logout }) => (
             </ListItem>
           </Link>
 
-          <ListItem button onClick={logout}>
+          <ListItem button onClick={() => firebase.logout()}>
             <ListItemIcon>
               <ExitToApp />
             </ListItemIcon>
@@ -177,6 +178,4 @@ const Dashboard = ({ location, logout }) => (
   </div>
 );
 
-export default connect(state => ({}), {
-  logout: logoutInitAction,
-})(Dashboard);
+export default withFirebase(Dashboard);

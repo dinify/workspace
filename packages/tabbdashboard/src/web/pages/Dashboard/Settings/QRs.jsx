@@ -51,7 +51,7 @@ class QRs extends React.Component {
         {waiterboards.map(wb => (
           <WB key={wb.id}>
             <Link
-              to={`https://waiterboard.gotabb.com/board/${wb.id}`}
+              to={`https://waiterboard.dinify.app/board/${wb.id}`}
               target="_blank"
             >
               <h2>{wb.name}</h2>
@@ -61,7 +61,7 @@ class QRs extends React.Component {
                 <Link to={`/qr/${table.qr}`} target="_blank">
                   <Table fixedWidth key={table.id}>
                     <div># {table.number}</div>
-                    <QRCode value={`https://gotabb.com/restaurant/${loggedRestaurant.subdomain}?qr=${table.qr}`} />
+                    <QRCode value={`https://dinify.app/restaurant/${loggedRestaurant.subdomain}?qr=${table.qr}`} />
                     <div>CODE: {table.code}</div>
                   </Table>
                 </Link>

@@ -1,14 +1,17 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { appIsRunning } from 'selectors/restaurant';
 
-import Login from 'web/pages/Login';
-import Signup from 'web/pages/Signup';
+import SignIn from 'tabb-front/dist/components/SignIn';
+
 import Dashboard from 'web/pages/Dashboard';
 import Qr from 'web/pages/Qr';
+
+import withRoot from 'withRoot.js';
+
 
 const Content = styled.div`
   background-color: rgb(27, 36, 49);
@@ -28,22 +31,31 @@ type AppProps = {
   appLoading: boolean,
 };
 
-const App = ({ appLoading }: AppProps) => (
-  <Router>
-    <Content>
-      {appLoading && <AppLoader>Dashboard is loading...</AppLoader>}
-      {!appLoading && (
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/qr/:code" component={Qr} />
-          <Route path="/" component={Dashboard} />
-        </Switch>
-      )}
-    </Content>
-  </Router>
-);
+const App = ({ appLoading, user, history }: AppProps) => {
+  return (
+    <Router>
+      <Content>
+        {appLoading && <AppLoader>Dashboard is loading...</AppLoader>}
+        {!appLoading && (
+          <Switch>
+            <Route path="/signin" component={() => {
+              return user.isEmpty ? <SignIn user={user}/> :
+              <Redirect to="/"/>
+            }} />
+            <Route path="/" component={() => {
+              return (!user.isEmpty || !user.isLoaded) ? <Dashboard history={history} /> :
+              <Redirect to="/signin"/>
+            }} />
 
-export default connect(state => ({
+            <Route path="/qr/:code" component={Qr} />
+          </Switch>
+        )}
+      </Content>
+    </Router>
+  );
+}
+
+export default withRoot(connect(state => ({
+  user: state.firebase.auth,
   appLoading: !appIsRunning(state),
-}))(App);
+}))(App));
