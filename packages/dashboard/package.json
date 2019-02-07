@@ -1,6 +1,6 @@
 {
   "name": "@dinify/dashboard",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Universal React solution based on React Native and Create React App.",
   "author": "Lukas Vanek",
   "scripts": {
