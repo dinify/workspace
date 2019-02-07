@@ -1,0 +1,14 @@
+{
+  "repository": "git@gitlab.com:tabb/frontend-web/dinify.git",
+  "author": "Dinify",
+  "license": "UNLICENSED",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": []
+  },
+  "devDependencies": {
+    "lerna": "^3.10.7"
+  }
+}
