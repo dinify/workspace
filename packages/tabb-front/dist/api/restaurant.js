@@ -23,6 +23,9 @@ exports.SplitMultiple = SplitMultiple;
 exports.TransferBill = TransferBill;
 exports.InitiateTransaction = InitiateTransaction;
 exports.CallService = CallService;
+exports.GetTranslations = GetTranslations;
+exports.AddTranslation = AddTranslation;
+exports.RmTranslation = RmTranslation;
 
 var _Network = require("./Network");
 
@@ -190,5 +193,45 @@ function CallService(_ref14) {
   var serviceId = _ref14.serviceId;
   return (0, _Network.Post)({
     path: "service/".concat(serviceId, "/call")
+  });
+}
+
+function GetTranslations(_ref15) {
+  var locale = _ref15.locale;
+  if (locale) return (0, _Network.Get)({
+    path: "translation/list/".concat(locale)
+  });
+  return (0, _Network.Get)({
+    path: 'translation/list'
+  });
+}
+
+function AddTranslation(_ref16) {
+  var type = _ref16.type,
+      id = _ref16.id,
+      locale = _ref16.locale,
+      name = _ref16.name,
+      description = _ref16.description;
+  return (0, _Network.Post)({
+    path: 'translation/add'
+  }, {
+    type: type,
+    id: id,
+    locale: locale,
+    name: name,
+    description: description
+  });
+}
+
+function RmTranslation(_ref17) {
+  var type = _ref17.type,
+      id = _ref17.id,
+      locale = _ref17.locale;
+  return (0, _Network.Post)({
+    path: 'translation/remove'
+  }, {
+    type: type,
+    id: id,
+    locale: locale
   });
 }
