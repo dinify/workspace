@@ -2,6 +2,7 @@
   "repository": "git@gitlab.com:tabb/frontend-web/dinify.git",
   "author": "Dinify",
   "license": "UNLICENSED",
+  "private": true,
   "workspaces": {
     "packages": [
       "packages/*"

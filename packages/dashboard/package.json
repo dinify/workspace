@@ -71,7 +71,6 @@
     "serve": "6.5.5",
     "string": "^3.3.3",
     "styled-components": "2.0.1",
-    "tabb-front": "git+ssh://git@gitlab.com:tabb/frontend-web/common.git#v0.0.9",
     "validator": "8.2.0"
   },
   "devDependencies": {

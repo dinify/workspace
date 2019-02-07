@@ -55,8 +55,7 @@
     "rxjs": "^6.4.0",
     "scroll-into-view-if-needed": "^2.2.16",
     "serve": "9.1.0",
-    "socket.io-client": "^2.1.1",
-    "tabb-front": "git+ssh://git@gitlab.com:tabb/frontend-web/common.git#v0.0.5"
+    "socket.io-client": "^2.1.1"
   },
   "scripts": {
     "start": "serve -s build",
