@@ -1,0 +1,126 @@
+<mj-style inline="inline">
+  .white {
+    color: #fff;
+    opacity: 0.54;
+  }
+  .small {
+    font-size: 10px;
+  }
+  .big {
+    font-size: 32px;
+  }
+  .black {
+    color: #000;
+    opacity: 0.38;
+  }
+	.light {
+  	color: rgba(0, 0, 0, 0.72);
+  }
+  .dark {
+    color: rgba(255, 255, 255, 0.87);
+  }
+  .red {
+		background-color: #c13939;
+  }
+  .blue {
+		background-color: #3f51b5;
+  }
+  .button > table a {
+    padding: 0px 16px 0px 16px;
+    display: block;
+    height: 100%;
+  }
+  .button > table tr {
+    background-color: rgba(0, 0, 0, 0.06);
+    transition: all 0.1s linear;
+  }
+  .button > table tr:hover {
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+  .button.dark > table tr {
+    background-color: rgba(255, 255, 255, 0);
+    transition: all 0.1s linear;
+  }
+  .button.dark > table tr:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+  .horizontal {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  @media only screen and (min-width: 0px)  {
+    .horizontal {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+  @media only screen and (min-width: 180px)  {
+    .horizontal {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+  @media only screen and (min-width: 360px)  {
+    .horizontal {
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+  }
+  @media only screen and (min-width: 480px)  {
+    .horizontal {
+      padding-left: 64px;
+      padding-right: 64px;
+    }
+  }
+  .card {
+  	background-color: #fafafa;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+  }
+  .nopad {
+    margin: 0;
+    padding: 0;
+  }
+  h1, h2 {
+    height: auto;
+    display: block;
+    padding: 0;
+    margin: 0px 0px 16px 0px;
+  }
+  h3, h4, h5, h6 {
+    height: auto;
+    display: block;
+    padding: 0;
+    margin: 0px 0px 8px 0px;
+  }
+  p {
+    padding: 0;
+    height: auto;
+    display: block;
+    margin: 0px 0px 0px 0px;
+  }
+  .social > div {
+    padding: 0;
+    margin: 0;
+  }
+  .social > div i {
+    display: inline-block;
+    border-radius: 50%;
+    behavior: url(PIE.htc);
+    /* remove if you don't care about IE8 */
+    min-height: 40px;
+    max-width: 40px;
+    width: 40px;
+    height: 40px;
+    margin-top: 16px;
+    padding: 0px;
+    color: rgba(0, 0, 0, 0.12);
+    text-align: center;
+    vertical-align: middle;
+    transition: all 0.1s linear;
+  }
+  .social > div i:hover {
+    color: rgba(0, 0, 0, 0.38);
+  }
+</mj-style>

@@ -1,0 +1,29 @@
+<mj-section padding="16px 0px 0px 0px">
+  <!--mj-group-->
+  <mj-column width="10%" padding="0px 16px 8px 16px">
+    <mj-text align="left">
+      <img width="24px"
+           height="24px"
+           style="opacity: 0.38" src="http://images.tabb.global/icons/security.png"/>
+    </mj-text>
+  </mj-column>
+  <mj-column width="90%">
+    <mj-text>
+      <h3>Verify your information</h3>
+      Consider connecting your social networks and quickly verify your phone number to help burst trust in the community.
+    </mj-text>
+  </mj-column>
+  <!--/mj-group-->
+</mj-section>
+<mj-section>
+  <!--mj-group-->
+  <mj-column width="10%">
+    <mj-spacer></mj-spacer>
+  </mj-column>
+  <mj-column width="90%">
+    <mj-button href="#" padding align="left">
+      <img style="opacity: 0.54" width="134px" src="http://images.tabb.global/brand/text-add-verifications.png"/>
+    </mj-button>
+  </mj-column>
+  <!--/mj-group-->
+</mj-section>

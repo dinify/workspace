@@ -1,0 +1,36 @@
+<mj-font name="Lato" href="https://fonts.googleapis.com/css?family=Lato:400,700" />
+<mj-attributes>
+	<mj-all font-family="Lato, Ubuntu, Helvetica, Arial, sans-serif" />
+  <mj-text line-height="22px" padding align="left" color="rgba(0, 0, 0, 0.72)"/>
+  <mj-divider padding border-width="2px" border-color="rgba(0, 0, 0, 0.12)"/>
+	<mj-wrapper padding="0px"/>
+  <mj-column padding="0px 16px" />
+  <mj-section padding="8px 0px" />
+  <mj-button padding="8px 16px"
+             border-radius="4px"
+             background-color="transparent"
+             font-size="14px"
+             color="rgba(0, 0, 0, 0.87)"
+             css-class="button"
+             inner-padding="0px"
+             height="40px"/>
+  <mj-class name="logo-text"
+            letter-spacing="2px"
+            font-size="16px"/>
+  <mj-class name="social"
+            css-class="social"
+            color="rgba(0, 0, 0, 0.12)"
+            letter-spacing="4px"
+            align="center"
+            font-size="24px"/>
+  <mj-class name="caption"
+            color="rgba(0, 0, 0, 0.54)"
+            font-size="12px"/>
+  <mj-class name="cta"
+            css-class="button dark"
+            background-color="transparent"
+            container-background-color="transparent"
+            border="2px solid rgba(255, 255, 255, 0.38)"
+            color="rgba(255, 255, 255, 0.87)" />
+</mj-attributes>
+<mj-title>${subject}</mj-title>

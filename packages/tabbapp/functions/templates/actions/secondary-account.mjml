@@ -1,0 +1,26 @@
+<mjml>
+  <mj-body>
+    <mj-section padding>
+      <mj-column>
+        <mj-text align="center">
+          <span style="border-radius: 2px; display: inline-block;height: 4px; width: 48px; background: rgba(0, 0, 0, 0.12);"></span>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-text align="center">
+          <p class="nopad" style="opacity: 0.72; font-size: 24px; font-weight: 400">${user.displayName}</p>
+          <p class="nopad"><a href="#" style="text-decoration: none; color: rgba(0, 0, 0, 0.54);">${user.email}</a></p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding>
+      <mj-column>
+        <mj-button align="center" href="https://gotabb.com/account?id=${user.id}" padding align="left">
+          <img style="opacity: 0.54" width="94px" src="http://images.tabb.global/brand/text-account.png" />
+        </mj-button>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

@@ -1,0 +1,43 @@
+<mjml>
+  <mj-head>
+    <mj-include path="./components/head.mjml" />
+    <mj-include path="./styles/main.mjml" />
+    <mj-preview>${preview}</mj-preview>
+  </mj-head>
+
+  <mj-body width="480px" background-color="transparent">
+
+    <mj-wrapper css-class="card">
+      <mj-wrapper background-color="#3F51B5">
+
+        <mj-include path="./components/header.mjml" />
+        <mj-include path="./actions/invitation-cta.mjml" />
+
+      </mj-wrapper>
+      <mj-wrapper background-color="#fafafa">
+        <mj-include path="./actions/secondary.mjml" />
+        <mj-raw>
+          <script type="application/ld+json">
+            ${microdata}
+          </script>
+        </mj-raw>
+        <mj-section padding="32px 0px 0px 0px">
+          <mj-column>
+            <mj-text align="left">
+              <h2 class="nopad">More information</h2>
+            </mj-text>
+          </mj-column>
+        </mj-section>
+        <mj-section>
+          <mj-column>
+            <mj-text align="left">
+              This email was sent to you because somebody had your email address in their contacts. To stop receiving these emails, see <a href="#" style="color: rgba(0, 0, 0, 0.87)">email preferences</a>.
+            </mj-text>
+          </mj-column>
+        </mj-section>
+
+        <mj-include path="./components/footer.mjml" />
+      </mj-wrapper>
+      </mj-wrapper>
+  </mj-body>
+</mjml>

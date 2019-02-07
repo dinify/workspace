@@ -1,101 +1,18 @@
-import { Strategy as BearerStrategy } from "passport-http-bearer";
-import { AuthedRequest } from "./request";
-import * as passport from "passport";
-import * as cors from "cors";
-import * as bodyParser from "body-parser";
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import * as express from "express";
+import * as path from "path";
+import { readFileSync } from "fs";
+import createApp from "./api";
+
+// Standard commonJS imports required
+const mjml2html = require("mjml");
+const sendgrid = require("@sendgrid/mail");
 
 admin.initializeApp(functions.config().firebase);
+sendgrid.setApiKey(functions.config().sendgrid.key);
 
+const app = createApp(admin);
 const db = admin.firestore();
-
-const app: express.Application = express();
-
-const auth = (req, res, next) => {
-  passport.authenticate("bearer", {session: false}, (err, user, info) => {
-    if (err || !user) {
-      return res.status(401).json({
-        code: "unauthorized",
-        message: "The token is invalid",
-        error: err
-      });
-    }
-    if (user && user.uid) {
-      req.locals = { user };
-      next();
-    }
-  })(req, res, next);
-}
-
-app.use(cors())
-app.use(bodyParser.urlencoded({ extended: true, limit:"50mb" }))
-app.use(bodyParser.json({ limit: "50mb"}))
-app.use(passport.initialize())
-
-passport.use(new BearerStrategy(
-  (token, done) => {
-    admin.auth().verifyIdToken(token)
-      .then(decodedToken => {
-        return done(null, decodedToken, { scope: "all" });
-      }).catch(err => {
-        return done(err);
-      });
-  }
-));
-
-app.get("/", (request, response) => {
-  response.sendStatus(200);
-})
-
-app.get("/user/:uid",
-  (req, res, next) => {
-    auth(req, res, next);
-  },
-  (request: AuthedRequest, response) => {
-    if (!request.params.uid) response.sendStatus(400);
-    let uid = request.params.uid === 'me' ? request.locals.user.uid : request.params.uid;
-    admin.auth().getUser(uid)
-      .then(userRecord => {
-        db.collection('profiles').doc(uid).get().then(snapshot => {
-          let data;
-          if (snapshot.exists) data = snapshot.data();
-          if (request.locals.user.uid === request.params.uid ||
-              request.params.uid === 'me') response.json({
-            profile: data,
-            ...userRecord
-          });
-          else response.json({
-            profile: data,
-            email: userRecord.email,
-            displayName: userRecord.displayName,
-            photoURL: userRecord.photoURL,
-            providerData: userRecord.providerData,
-          });
-        });
-      })
-      .catch(error => {
-        response.status(400).json(error);
-      });
-  }
-)
-app.post("/user/me",
-  (req, res, next) => {
-    auth(req, res, next);
-  },
-  (request: AuthedRequest, response) => {
-    const uid = request.locals.user.uid;
-    db.collection('profiles').doc(uid).set(request.body).then(writeResult => {
-      response.sendStatus(200);
-    }).catch(error => {
-      response.status(400).json(error);
-    });
-  }
-)
-app.use((request, response) => {
-  response.status(404).json({code: "not-found", message: "Endpoint not found", path: request.path});
-})
 
 /**
 * API cloud function
@@ -103,14 +20,56 @@ app.use((request, response) => {
 * In this case: /api
 */
 export const api = functions.https.onRequest((req, res) => {
-	// https://tabb-global.cloudfunctions.net/api
-	// without trailing "/" will have req.path = null, req.url = null
-	// which won"t match to your app.get("/", ...) route
+    // https://tabb-global.cloudfunctions.net/api
+    // without trailing "/" will have req.path = null, req.url = null
+    // which won"t match to your app.get("/", ...) route
 
-	if (!req.path) {
-		// prepending "/" keeps query params, path params intact
-		req.url = `/${req.url}`
-	}
-  if (req.path.startsWith("/api")) req.url = req.url.slice(4)
-	return app(req, res)
+    if (!req.path) {
+        // prepending "/" keeps query params, path params intact
+        req.url = `/${req.url}`
+    }
+    if (req.path.startsWith("/api")) req.url = req.url.slice(4)
+    return app(req, res)
+});
+
+export const sendWelcomeEmail = functions.auth.user().onCreate(async (user) => {
+
+    // TODO: post message to slack webhook
+    console.log("New user joined", user);
+
+    const link = await admin.auth().generateEmailVerificationLink(user.email, {
+        url: `https://www.dinify.app/verified?email=${user.email}`
+    });
+
+    const msg = {
+        to: {
+            email: user.email,
+            name: user.displayName
+        },
+        from: {
+            email: "hello@dinify.app",
+            name: "Dinify"
+        },
+        subject: "Verify your email"
+    };
+    const variables = {
+        user,
+        verification_link: link,
+        ...msg
+    };
+
+    const templatePath = path.resolve("templates", "Verification.mjml");
+    const template = readFileSync(templatePath).toString();
+
+    const html = mjml2html(template, {
+        filePath: templatePath
+    }).html;
+
+    // Use ES6 template literals
+    const substituted = new Function("return `" + html.split("${").join("${this.") + "`;").call(variables);
+
+    return sendgrid.send({
+        html: substituted,
+        ...msg
+    });
 });

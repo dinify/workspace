@@ -1,0 +1,81 @@
+<mj-section>
+  <mj-column>
+    <mj-text letter-spacing="0.5px" align="center" font-weight="700" font-size="32px" color="rgba(255, 255, 255, 0.87)">Invitation</mj-text>
+  </mj-column>
+</mj-section>
+<mj-section padding-top="8px">
+  <mj-group>
+  <mj-column width="10%">
+    <mj-text align="left" color="rgba(255, 255, 255, 0.87)">
+      <img style="opacity: 0.54;" width="24px" src="http://images.tabb.global/icons/group-white.png"></img>
+    </mj-text>
+  </mj-column>
+  <mj-column vertical-align="middle" width="90%">
+    <mj-text padding-top="4px" align="left" color="rgba(255, 255, 255, 0.87)">
+      ${group}
+    </mj-text>
+  </mj-column>
+  </mj-group>
+</mj-section>
+<mj-section>
+  <mj-group>
+  <mj-column width="10%">
+    <mj-text align="left" color="rgba(255, 255, 255, 0.87)">
+      <img style="opacity: 0.54;" width="24px" src="http://images.tabb.global/icons/restaurant-menu-white.png"></img>
+    </mj-text>
+  </mj-column>
+  <mj-column vertical-align="middle" width="90%">
+    <mj-text padding-top="4px" align="left" color="rgba(255, 255, 255, 0.87)">
+      ${restaurant.name}
+    </mj-text>
+  </mj-column>
+  </mj-group>
+</mj-section>
+<mj-section>
+  <mj-group>
+  <mj-column width="10%">
+    <mj-text align="left" color="rgba(255, 255, 255, 0.87)">
+      <img style="opacity: 0.54;" width="24px" src="http://images.tabb.global/icons/place-white.png"></img>
+    </mj-text>
+  </mj-column>
+  <mj-column vertical-align="middle" width="90%">
+    <mj-text padding-top="4px" align="left" color="rgba(255, 255, 255, 0.87)">
+      <a style="display: inline-block; text-decoration: none; color: rgba(255,255, 255, 0.87)" href="#"><span style="color: rgba(255,255, 255, 0.87)">${restaurant.address}</span></a>
+    </mj-text>
+  </mj-column>
+  </mj-group>
+</mj-section>
+<mj-section padding-bottom="8px">
+  <mj-group>
+  <mj-column width="10%">
+    <mj-text align="left" color="rgba(255, 255, 255, 0.87)">
+      <img style="opacity: 0.54;" width="24px" src="http://images.tabb.global/icons/event-white.png"></img>
+    </mj-text>
+  </mj-column>
+  <mj-column width="90%">
+    <mj-text padding-top="4px" align="left" color="rgba(255, 255, 255, 0.87)">
+      ${appointment}
+    </mj-text>
+  </mj-column>
+  </mj-group>
+</mj-section>
+<mj-section>
+  <mj-column>
+    <mj-text align="left" color="rgba(255, 255, 255, 0.87)">
+      To accept the invitation, make sure to click the button below. If you don't happen to be free at the moment then you can propose a new time by replying to this email.</mj-text>
+  </mj-column>
+</mj-section>
+<mj-section>
+  <mj-column padding="0px" vertical-align="middle">
+    <mj-button mj-class="cta"
+               href="${accept_url}">
+      <img width="64px" src="http://images.tabb.global/brand/text-accept.png"/>
+    </mj-button>
+  </mj-column>
+  <mj-column padding="0px" vertical-align="middle">
+    <mj-button css-class="button dark"
+               href="${decline_url}">
+      <img style="opacity: 0.87;" width="70px" src="http://images.tabb.global/brand/text-decline.png"/>
+    </mj-button>
+  </mj-column>
+</mj-section>

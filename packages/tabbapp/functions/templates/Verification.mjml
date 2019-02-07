@@ -1,0 +1,41 @@
+<mjml>
+  <mj-head>
+    <mj-include path="./components/head.mjml" />
+    <mj-include path="./styles/main.mjml" />
+    <mj-preview>Thanks for signing up, we're excited you're here! Make sure to confirm that this is the email address you'd like to use for your account in order to verify it.</mj-preview>
+  </mj-head>
+  <mj-body width="480px" background-color="transparent">
+		<mj-wrapper css-class="card">
+      <mj-include path="./components/header-red.mjml" />
+      <mj-section css-class="red">
+        <mj-column>
+          <mj-text letter-spacing="0.5px" align="center" font-weight="700" font-size="32px" line-height="52px" color="rgba(255, 255, 255, 0.87)">Verify your email</mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section css-class="red">
+        <mj-column css-class="dark">
+          <mj-text css-class="dark" align="center" color="rgba(255, 255, 255, 0.87)">Thanks for signing up, we're excited you're here! Make sure to confirm that this is the email address you'd like to use for your account in order to verify it.</mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section css-class="red">
+        <mj-column padding="0px" vertical-align="middle">
+          <mj-button mj-class="cta"
+                     href="${verification_link}">
+            <img width="59px" src="http://images.tabb.global/brand/text-verify.png"/>
+          </mj-button>
+        </mj-column>
+      </mj-section>
+      <mj-section padding="16px 0px 0px 0px">
+        <mj-column>
+          <mj-text align="center">
+            <h2 class="nopad">Before getting started</h2>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-include path="./actions/complete-profile.mjml" />
+      <mj-include path="./actions/add-verifications.mjml" />
+      <mj-include path="./actions/start-exploring.mjml" />
+      <mj-include path="./components/footer.mjml" />
+    </mj-wrapper>
+  </mj-body>
+</mjml>

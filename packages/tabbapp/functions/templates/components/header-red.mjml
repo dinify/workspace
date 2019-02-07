@@ -1,0 +1,11 @@
+<mj-section padding css-class="red">
+  <mj-column>
+    <mj-image width="88px" src="https://storage.googleapis.com/images.tabb.global/brand/logo-text.png"></mj-image>
+  </mj-column>
+</mj-section>
+<mj-section css-class="red">
+  <mj-column>
+    <mj-divider border-color="rgba(255, 255, 255, 0.3)">
+    </mj-divider>
+  </mj-column>
+</mj-section>
