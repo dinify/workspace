@@ -1,6 +1,7 @@
 {
   "name": "@dinify/waiterboard",
   "version": "0.0.1",
+  "private": true,
   "description": "Universal React solution based on React Native and Create React App.",
   "author": "Lukas Vanek",
   "main": "node_modules/expo/AppEntry.js",
