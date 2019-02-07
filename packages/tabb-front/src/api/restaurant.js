@@ -122,3 +122,16 @@ export function InitiateTransaction({ type, gratuity }) {
 export function CallService({ serviceId }) {
   return Post({ path: `service/${serviceId}/call` });
 }
+
+export function GetTranslations({ locale }) {
+  if (locale) return Get({ path: `translation/list/${locale}` });
+  return Get({ path: 'translation/list' });
+}
+
+export function AddTranslation({ type, id, locale, name, description }) {
+  return Post({ path: 'translation/add' }, { type, id, locale, name, description });
+}
+
+export function RmTranslation({ type, id, locale }) {
+  return Post({ path: 'translation/remove' }, { type, id, locale });
+}
