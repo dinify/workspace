@@ -5,7 +5,9 @@ export function Request(url, options = {}, noToken) {
   return new Promise((resolve, reject) => {
     if (!url) reject(new Error('URL parameter required'));
     const token = getCookie('access_token');
-    const defaultOptions = {};
+    const defaultOptions = {
+    //  mode: 'no-cors'
+    };
     if (!options.headers) {
       defaultOptions.headers = { 'Content-Type': 'application/json' };
     } else {
@@ -14,7 +16,6 @@ export function Request(url, options = {}, noToken) {
     if (token.length > 0 && !noToken)
       defaultOptions.headers.Authorization = `Bearer ${token}`;
     const allOptions = Object.assign(options, defaultOptions);
-    console.log(allOptions);
     fetch(url, allOptions)
       .then(res =>
         res.text().then(text => ({

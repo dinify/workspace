@@ -25,59 +25,24 @@ const bootstrapEpic = (action$: Observable) =>
     })
   );
 
-function parseJwt (token) {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace('-', '+').replace('_', '/');
-  return JSON.parse(window.atob(base64));
-};
-
-const getLoggedEpic = (action$: Observable, state$) =>
+const getLoggedEpic = (action$: Observable) =>
   action$.pipe(
     filter(action => {
       const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE];
       return triggerOn.includes(action.type);
     }),
-    mergeMap(() => {
-      const auth = state$.value.firebase.auth;
-      const isTokenPresent = auth.stsTokenManager && auth.stsTokenManager.accessToken;
-      if (isTokenPresent) {
-        const tokenObj = parseJwt(auth.stsTokenManager.accessToken);
-        console.log(tokenObj);
-        if (tokenObj.roles && tokenObj.roles.restaurant) {
-          const restaurantId = tokenObj.roles.restaurant.id;
-          return of(
-            {type: 'LOAD_RESTAURANT', payload: {restaurantId}}
-          );
-        }
-        return of(appBootstrap());
-      }
-      return of(appBootstrap());
-    })
+    mergeMap(() => of(
+      {type: 'LOAD_RESTAURANT'},
+      {type: 'FETCH_TRANSLATIONS_INIT'}
+    ))
   );
 
 const loadRestaurant = (action$) =>
   action$.pipe(
     ofType('LOAD_RESTAURANT'),
-    mergeMap(({ payload: { restaurantId } }) => {
-      return from(API.GetLoggedRestaurant({id: restaurantId})).pipe(
-        map(loggedUser => loggedFetchedAction(loggedUser)),
-        catchError(error => {
-          console.log(error);
-          return of(appBootstrap());
-        })
-      );
-    })
-  );
-
-const loadTranslations = (action$) =>
-  action$.pipe(
-    ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
-      return from(API.GetTranslations()).pipe(
-        map(translations => {
-          console.log(translations);
-          return {type: 'NOTIHG'}
-        }),
+      return from(API.GetLoggedRestaurant()).pipe(
+        map(loggedUser => loggedFetchedAction(loggedUser)),
         catchError(error => {
           console.log(error);
           return of(appBootstrap());
@@ -209,7 +174,6 @@ const editImageEpic = (action$, state$) =>
 
 
 export default [
-  loadTranslations,
   loadRestaurant,
   bootstrapEpic,
   getLoggedEpic,

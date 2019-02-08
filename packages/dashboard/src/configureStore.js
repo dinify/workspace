@@ -16,6 +16,8 @@ import option from 'ducks/option';
 import ingredient from 'ducks/ingredient';
 import addon from 'ducks/addon';
 import service from 'ducks/service';
+import translation from 'ducks/translation';
+
 
 import { reducer as formReducer } from 'redux-form';
 
@@ -33,6 +35,7 @@ const commonReducers = {
   ingredient,
   addon,
   service,
+  translation,
   firebase: firebaseReducer
 };
 

@@ -18,7 +18,8 @@ function Request(url) {
   return new Promise(function (resolve, reject) {
     if (!url) reject(new Error('URL parameter required'));
     var token = (0, _FN.getCookie)('access_token');
-    var defaultOptions = {};
+    var defaultOptions = {//  mode: 'no-cors'
+    };
 
     if (!options.headers) {
       defaultOptions.headers = {

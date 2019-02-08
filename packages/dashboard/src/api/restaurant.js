@@ -41,8 +41,8 @@ export function CreateRestaurant({ restaurantName, subdomain }) {
   );
 }
 
-export function GetLoggedRestaurant({id}) {
-  return Get({ path: `restaurant/${id}/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices.difference` });
+export function GetLoggedRestaurant() {
+  return Get({ path: `restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices.difference` });
 }
 
 export function ChangeCategory({ category }) {

@@ -2,7 +2,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
-
+import { MapToList } from 'lib/FN';
+import { connect } from 'react-redux';
 
 const SolidContainer = styled.div`
   min-width: 800px;
@@ -20,7 +21,10 @@ const H = styled.div`
   margin-right: 20px;
 `;
 
-const Translations = () => {
+const Translations = ({
+  translations
+}) => {
+  const locales = Object.keys(translations);
   return (
     <div>
       <SolidContainer>
@@ -40,13 +44,22 @@ const Translations = () => {
 
         <Grid container spacing={8} alignItems="flex-start" justify="center">
           <Grid item xs={4}>
-            da
+            {locales.map((locale) =>
+              MapToList(translations[locale]).map((t) =>
+                <div>
+                  {t.name} {t.type}
+                  <p>
+                    {t.description}
+                  </p>
+                </div>
+              )
+            )}
           </Grid>
           <Grid item xs={4}>
-            da
+
           </Grid>
           <Grid item xs={4}>
-            da
+            
           </Grid>
         </Grid>
       </SolidContainer>
@@ -54,4 +67,8 @@ const Translations = () => {
   );
 };
 
-export default Translations;
+export default  connect(
+  state => ({
+    translations: state.translation.all
+  })
+)(Translations);
