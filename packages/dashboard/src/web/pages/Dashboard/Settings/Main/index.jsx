@@ -11,7 +11,7 @@ import Contact from './Contact';
 import Image from './Image';
 import Type from './Type';
 import Name from './Name';
-import Tags from './Tags';
+// import Tags from './Tags';
 import Address from './Address';
 
 const Column = styled.div`

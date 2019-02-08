@@ -3,7 +3,6 @@ import { Observable, of, from } from 'rxjs';
 import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import R from 'ramda';
-import * as FN from 'lib/FN';
 import { actionTypes } from 'react-redux-firebase';
 
 import * as API from 'api/restaurant';
@@ -14,13 +13,6 @@ export const loggedFetchedAction = payload => {
   }
   return { type: 'LOGGED_FETCHED_DONE', payload };
 };
-
-function setCookie(cname, cvalue, exdays) {
-  let d = new Date();
-  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-  const expires = 'expires=' + d.toUTCString();
-  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
-}
 
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
 
@@ -142,7 +134,7 @@ const loginEpic = (action$) =>
     switchMap(({ payload: { email, password, crRest, restaurantName, subdomain } }) => {
       return from(API.LoginUser({ email, password })).pipe(
         map(res => {
-          setCookie('access_token', res.token, 30);
+          //setCookie('access_token', res.token, 30);
           if (crRest) {
             return {
               type: 'REGISTER_RESTAURANT_INIT',

@@ -3,14 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import {
-  FormBox,
-  FormBoxHead,
-  FormBoxBody,
   Label
 } from 'web/components/styled/FormBox';
 import { updateNameInitAction } from 'ducks/restaurantLegacy';
 import { createServiceInit, removeServiceInit } from 'ducks/service/actions';
-import Progress from 'web/components/Progress';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 import * as FN from 'lib/FN';

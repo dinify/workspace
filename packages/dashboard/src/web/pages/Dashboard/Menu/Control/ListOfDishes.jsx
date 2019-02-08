@@ -60,31 +60,7 @@ const FoodItem = styled.div`
     }
   }
 `;
-const NewFood = styled.div`
-  position: relative;
-  background: black;
-  color: white;
-  cursor: pointer;
-  padding: 10px 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  font-weight: 300;
-  background-color: ${p => (p.selected ? 'rgb(70, 0, 0)' : 'rgb(169, 77, 72)')};
-  font-size: 12px;
-  .ItemInput {
-    background: transparent;
-    width: 100%;
-    padding: 5px;
-    color: white;
-    border: none;
-    outline: none;
-  }
-  &:hover {
-    i {
-      color: white;
-    }
-  }
-`;
+
 const ToggleContainer = styled.div`
   position: absolute;
   right: 0;
@@ -100,18 +76,6 @@ const BinContainer = styled.div`
   * {
     fill: white !important;
   }
-`;
-
-const NewFoodButton = styled.button`
-  position: absolute;
-  top: 0px;
-  right: 5px;
-  background: rgba(0, 0, 0, 0);
-  border: none;
-  color: white;
-  font-size: 20px;
-  padding: 10px;
-  cursor: pointer;
 `;
 
 let CreateItemForm = ({ handleSubmit, categoryName, progress, errorMessage }) => {

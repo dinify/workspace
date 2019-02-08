@@ -20,14 +20,6 @@ const H = styled.div`
   margin-right: 20px;
 `;
 
-const styles = {
-  ListItem: {
-    paddingTop: 0,
-    paddingBottom: 0,
-    borderBottom: '1px solid rgba(0,0,0,.05)',
-  },
-};
-
 const Translations = () => {
   return (
     <div>

@@ -12,7 +12,7 @@
   "scripts": {
     "app:dev": "cd packages/app && yarn start-dev",
     "app:deploy": "cd packages/app && yarn deploy",
-    "dash:dev": "cd packages/dashboard && yarn start-web",
+    "dash:dev": "cd packages/dashboard && yarn start-dev",
     "dash:deploy": "cd packages/dashboard && yarn deploy",
     "jest": "jest --coverage --verbose --color"
   },

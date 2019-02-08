@@ -1,9 +1,7 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { logoutInitAction } from 'ducks/restaurantLegacy';
 import { Link } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase'
 
@@ -22,10 +20,6 @@ import Settings from '@material-ui/icons/Settings';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenu';
 import AttachMoney from '@material-ui/icons/AttachMoney';
 
-//import GuestsSection from './Guests'
-//import SalesSection from './Sales'
-//import EngagementSection from './Engagement'
-
 const Sidebar = styled.div`
   position: fixed;
   left: 0;
@@ -34,27 +28,6 @@ const Sidebar = styled.div`
   width: 240px;
   @media print {
     display: none;
-  }
-`;
-
-const Logo = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 60px;
-  line-height: 60px;
-  width: 240px;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.15);
-  img {
-    width: 40px;
-    vertical-align: middle;
-    margin-right: 10px;
-  }
-  span {
-    font-size: 22px;
-    font-weight: 100;
-    vertical-align: middle;
   }
 `;
 
@@ -69,32 +42,6 @@ const Content = styled.div`
   padding: 70px 20px 0 20px;
 `;
 
-const MenuItem = styled.li`
-  list-style: none;
-  margin: 16px 0;
-  font-size: 14px;
-  text-transform: uppercase;
-  font-weight: 300;
-  letter-spacing: 2px;
-  vertical-align: middle;
-  a {
-    text-decoration: none;
-    color: ${({ active }) => (active ? 'white' : 'rgba(255,255,255,0.6)')};
-    cursor: pointer;
-    vertical-align: middle;
-    &:hover {
-      color: white;
-    }
-  }
-  i {
-    font-size: 24px;
-    vertical-align: middle;
-    margin-right: 10px;
-    width: 26px;
-    display: inline-block;
-  }
-`;
-
 const theme = createMuiTheme({
   palette: {
     type: 'dark',
@@ -107,7 +54,7 @@ const theme = createMuiTheme({
   }
 });
 
-const Dashboard = ({ location, firebase }) => (
+const Dashboard = ({ firebase }) => (
   <div>
     <Sidebar>
 
