@@ -42,7 +42,7 @@ const ToggleContainer = styled.div`
   right: 0;
   top: -7px;
   * {
-    fill: white !important;
+    color: white !important;
   }
 `;
 const BinContainer = styled.div`
@@ -50,7 +50,7 @@ const BinContainer = styled.div`
   right: 30px;
   top: -7px;
   * {
-    fill: white !important;
+    color: white !important;
   }
 `;
 

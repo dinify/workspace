@@ -3,7 +3,7 @@ import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 
-import * as API from 'tabb-front/dist/api/user';
+import * as API from '../../api/user';
 // import { checkinInit } from 'ducks/restaurant/actions';
 // import { loadUserData } from 'ducks/app/actions';
 import { setCookie } from '../../lib/FN';

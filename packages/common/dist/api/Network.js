@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.Request = Request;
 exports.Get = Get;
 exports.Post = Post;
+exports.PostMultipart = PostMultipart;
 exports.Put = Put;
 exports.Delete = Delete;
 
@@ -28,8 +29,8 @@ function Request(url) {
     }
 
     if (token.length > 0 && !noToken) defaultOptions.headers.Authorization = "Bearer ".concat(token);
-    var allOptions = Object.assign(options, defaultOptions); //  console.log(options);
-
+    var allOptions = Object.assign(options, defaultOptions);
+    console.log(allOptions);
     fetch(url, allOptions).then(function (res) {
       return res.text().then(function (text) {
         return {
@@ -85,7 +86,7 @@ function Request(url) {
 var buildURL = function buildURL(_ref2) {
   var path = _ref2.path,
       _ref2$endpoint = _ref2.endpoint,
-      endpoint = _ref2$endpoint === void 0 ? 'https://api.dev.tabb.global/' : _ref2$endpoint;
+      endpoint = _ref2$endpoint === void 0 ? 'https://api.dinify.app/' : _ref2$endpoint;
   return "".concat(endpoint).concat(path);
 };
 
@@ -104,6 +105,21 @@ function Post(urlParts) {
   return Request(buildURL(urlParts), {
     method: 'POST',
     body: JSON.stringify(body)
+  }, urlParts.noToken);
+}
+
+function PostMultipart(urlParts) {
+  var body = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var formData = new FormData();
+
+  for (var key in body) {
+    formData.append(key, body[key]);
+  }
+
+  return Request(buildURL(urlParts), {
+    method: 'POST',
+    headers: {},
+    body: formData
   }, urlParts.noToken);
 }
 

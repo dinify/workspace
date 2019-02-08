@@ -14,7 +14,7 @@ export function Request(url, options = {}, noToken) {
     if (token.length > 0 && !noToken)
       defaultOptions.headers.Authorization = `Bearer ${token}`;
     const allOptions = Object.assign(options, defaultOptions);
-    //  console.log(options);
+    console.log(allOptions);
     fetch(url, allOptions)
       .then(res =>
         res.text().then(text => ({
@@ -59,7 +59,7 @@ export function Request(url, options = {}, noToken) {
 
 const buildURL = ({
   path,
-  endpoint = 'https://api.dev.tabb.global/'
+  endpoint = 'https://api.dinify.app/'
 }) => {
   return `${endpoint}${path}`;
 };
@@ -75,6 +75,21 @@ export function Post(urlParts, body = {}) {
     {
       method: 'POST',
       body: JSON.stringify(body),
+    },
+    urlParts.noToken,
+  );
+}
+export function PostMultipart(urlParts, body = {}) {
+  const formData = new FormData();
+  for (let key in body) {
+    formData.append(key, body[key]);
+  }
+  return Request(
+    buildURL(urlParts),
+    {
+      method: 'POST',
+      headers: {},
+      body: formData,
     },
     urlParts.noToken,
   );

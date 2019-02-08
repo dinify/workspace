@@ -11,7 +11,7 @@ var _operators = require("rxjs/operators");
 
 var _reduxObservable = require("redux-observable");
 
-var API = _interopRequireWildcard(require("tabb-front/dist/api/user"));
+var API = _interopRequireWildcard(require("../../api/user"));
 
 var _FN = require("../../lib/FN");
 
