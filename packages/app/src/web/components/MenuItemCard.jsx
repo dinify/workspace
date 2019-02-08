@@ -1,8 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from 'tabb-front/dist/components/Typography';
+import Typography from '@dinify/common/dist/components/Typography';
 import { Link } from 'react-router-dom';
-import * as FN from 'tabb-front/dist/lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 
 const styles = theme => ({
   image: {

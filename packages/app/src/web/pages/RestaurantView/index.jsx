@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as FN from 'tabb-front/dist/lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
-import Typography from 'tabb-front/dist/components/Typography';
-import ResponsiveContainer from 'tabb-front/dist/components/ResponsiveContainer';
+import Typography from '@dinify/common/dist/components/Typography';
+import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import { fetchRestaurantInit } from 'ducks/restaurant/actions';
 import { fetchMenucategoriesInit } from 'ducks/menuCategory/actions';

@@ -3,10 +3,10 @@ import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 
-import * as API from 'tabb-front/dist/api/user';
+import * as API from '@dinify/common/dist/api/user';
 import { checkinInit } from 'ducks/restaurant/actions';
 import { loadUserData } from 'ducks/app/actions';
-import { setCookie } from 'tabb-front/dist/lib/FN';
+import { setCookie } from '@dinify/common/dist/lib/FN';
 import { actionTypes } from 'react-redux-firebase';
 import { change as changeForm } from 'redux-form';
 import { setPage, setLinkProviders } from './actions';

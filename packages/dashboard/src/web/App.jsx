@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import styled from 'styled-components';
 import { appIsRunning } from 'selectors/restaurant';
 
-import SignIn from 'tabb-front/dist/components/SignIn';
+import SignIn from '@dinify/common/dist/components/SignIn';
 
 import Dashboard from 'web/pages/Dashboard';
 import Qr from 'web/pages/Qr';

@@ -13,14 +13,14 @@ import IconButton from '@material-ui/core/IconButton';
 
 // import SwipableItem from 'web/components/SwipableItem';
 import AppBar from 'web/components/AppBar';
-import ResponsiveContainer from 'tabb-front/dist/components/ResponsiveContainer';
-import Typography from 'tabb-front/dist/components/Typography';
+import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
+import Typography from '@dinify/common/dist/components/Typography';
 import CartItem from 'web/components/CartItem';
 // import Radio from '@material-ui/core/Radio';
 // import RadioGroup from '@material-ui/core/RadioGroup';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import * as FN from 'tabb-front/dist/lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 import { rmFromCartInit, orderInit, setOrderTypeAction } from 'ducks/cart/actions';
 
 const styles = theme => ({

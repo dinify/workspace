@@ -1,6 +1,6 @@
 import React from 'react';
 import AppBar from 'web/components/AppBar';
-import ResponsiveContainer from 'tabb-front/dist/components/ResponsiveContainer';
+import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
 import { connect } from 'react-redux';
 import { fetchMenuitemsInit } from 'ducks/menuItem/actions';
 import { getItemsOfCategory } from 'ducks/menuItem/selectors';

@@ -9,6 +9,11 @@
     ],
     "nohoist": []
   },
+  "scripts": {
+    "app:dev": "cd packages/app && yarn start-dev",
+    "dash:dev": "cd packages/dashboard && yarn start-web",
+    "jest": "jest --coverage --verbose --color"
+  },
   "devDependencies": {
     "lerna": "^3.10.7"
   }

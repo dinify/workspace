@@ -2,9 +2,9 @@
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, switchMap, exhaustMap, map, catchError, filter, ignoreElements, tap, debounceTime } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import * as API from 'tabb-front/dist/api/restaurant';
+import * as API from '@dinify/common/dist/api/restaurant';
 // import R from 'ramda';
-// import * as FN from 'tabb-front/dist/lib/FN';
+// import * as FN from '@dinify/common/dist/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import types from './types';
 import {

@@ -7,7 +7,7 @@ import Raven from 'raven-js';
 import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase';
 import firebase from 'firebase';
 
-import auth from 'tabb-front/dist/ducks/auth';
+import auth from '@dinify/common/dist/ducks/auth';
 import restaurant from 'ducks/restaurant';
 import ui from 'ducks/ui';
 import menuCategory from 'ducks/menuCategory';

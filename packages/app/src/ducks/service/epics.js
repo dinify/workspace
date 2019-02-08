@@ -2,7 +2,7 @@
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import * as API from 'tabb-front/dist/api/restaurant';
+import * as API from '@dinify/common/dist/api/restaurant';
 import types from './types';
 import { callServiceDone, callServiceFail } from './actions';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'

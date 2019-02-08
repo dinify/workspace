@@ -5,7 +5,7 @@ import { ofType } from 'redux-observable';
 import { fetchRestaurantsInit, fetchStatusInit, fetchStatusFail } from 'ducks/restaurant/actions';
 import { fetchMeInit, fetchMeFail } from 'ducks/user/actions';
 import { fetchCartInit, fetchCartFail } from 'ducks/cart/actions';
-import { getCookie } from 'tabb-front/dist/lib/FN';
+import { getCookie } from '@dinify/common/dist/lib/FN';
 import { loadUserData as loadUserDataAction } from './actions';
 import types from './types';
 

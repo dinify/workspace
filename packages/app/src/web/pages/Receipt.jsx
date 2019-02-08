@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from 'web/components/AppBar';
-import Typography from 'tabb-front/dist/components/Typography';
+import Typography from '@dinify/common/dist/components/Typography';
 import SimpleGuestList from 'web/components/SimpleGuestList';
 import BillItem from 'web/components/BillItem';
 import Event from '@material-ui/icons/EventRounded';
@@ -13,7 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import * as FN from 'tabb-front/dist/lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 import { fetchReceiptInit } from 'ducks/bill/actions';
 import moment from 'moment';
 

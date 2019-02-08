@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import types from './types';
-import * as FN from 'tabb-front/dist/lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 
 const initialState = {
   all: {},

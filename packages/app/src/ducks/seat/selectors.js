@@ -3,7 +3,7 @@ import * as R from 'ramda';
 
 const mapIndexed = R.addIndex( R.map );
 const reduceIndexed = R.addIndex( R.reduce );
-// import * as FN from 'tabb-front/dist/lib/FN';
+// import * as FN from '@dinify/common/dist/lib/FN';
 
 export const selectedBillItems = createSelector(
   [

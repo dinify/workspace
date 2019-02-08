@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from 'tabb-front/dist/components/Typography';
+import Typography from '@dinify/common/dist/components/Typography';
 
 const styles = theme => ({
   secondary: {

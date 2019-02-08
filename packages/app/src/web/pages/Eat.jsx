@@ -21,12 +21,12 @@ import {
   clearSelectedBillItems as clearSelectedBillItemsAction
 } from 'ducks/seat/actions';
 
-import ResponsiveContainer from 'tabb-front/dist/components/ResponsiveContainer';
+import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
 import GuestList from 'web/components/GuestList';
 import ScrollSnapView from 'web/components/ScrollSnapView';
 import CartItem from 'web/components/CartItem';
 import BillItem from 'web/components/BillItem';
-import PaymentOptionsDialog from 'tabb-front/dist/components/dialogs/PaymentOptionsDialog';
+import PaymentOptionsDialog from '@dinify/common/dist/components/dialogs/PaymentOptionsDialog';
 import ContextMenu from 'web/components/ContextMenu';
 import Cart from 'web/pages/Cart';
 
@@ -35,9 +35,9 @@ import CreditCard from '@material-ui/icons/CreditCardRounded';
 import Delete from '@material-ui/icons/DeleteRounded';
 import Done from '@material-ui/icons/DoneRounded';
 
-import Typography from 'tabb-front/dist/components/Typography';
+import Typography from '@dinify/common/dist/components/Typography';
 import Slider from '@material-ui/lab/Slider';
-import * as FN from 'tabb-front/dist/lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';

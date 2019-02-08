@@ -2,10 +2,10 @@
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, exhaustMap, map, catchError, filter, ignoreElements, tap, debounceTime } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import * as API from 'tabb-front/dist/api/restaurant';
+import * as API from '@dinify/common/dist/api/restaurant';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import { fetchStatusInit } from 'ducks/restaurant/actions';
-import { getCookie } from 'tabb-front/dist/lib/FN';
+import { getCookie } from '@dinify/common/dist/lib/FN';
 import types from './types';
 import { checkinFail, checkinDone, favRestaurantDone, favRestaurantFail } from './actions';
 

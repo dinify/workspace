@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { checkinInit } from 'ducks/restaurant/actions';
-import * as FN from 'tabb-front/dist/lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 import QRscanner from './QRscanner';
 
 type CheckinProps = {

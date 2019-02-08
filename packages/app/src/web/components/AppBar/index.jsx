@@ -7,8 +7,8 @@ import { getContext } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import { toggleTheme as toggleThemeAction } from 'ducks/ui/actions';
 
-import LogoText from 'tabb-front/dist/icons/LogoText';
-import Logo from 'tabb-front/dist/icons/Logo';
+import LogoText from '@dinify/common/dist/icons/LogoText';
+import Logo from '@dinify/common/dist/icons/Logo';
 import LightbulbToggle from 'web/components/LightbulbToggle';
 import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 import Menu from '@material-ui/icons/MenuRounded';
@@ -18,7 +18,7 @@ import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 
-import * as FN from 'tabb-front/dist/lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 
 const styles = theme => ({
   appBarDefault: {

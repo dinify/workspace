@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import Typography from 'tabb-front/dist/components/Typography';
+import Typography from '@dinify/common/dist/components/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -13,7 +13,7 @@ import Chip from '@material-ui/core/Chip';
 import AddCircle from '@material-ui/icons/AddCircleRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
-import * as FN from 'tabb-front/dist/lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 import {
   excludeIngredient as excludeIngredientAction,
   incAddonQty as incAddonQtyAction,

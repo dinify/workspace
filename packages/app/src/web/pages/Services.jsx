@@ -4,7 +4,7 @@ import AppBar from 'web/components/AppBar';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from 'tabb-front/dist/components/Typography';
+import Typography from '@dinify/common/dist/components/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -13,7 +13,7 @@ import { callServiceInit } from 'ducks/service/actions';
 import { Motion, spring } from 'react-motion';
 import R from 'ramda';
 
-import * as FN from 'tabb-front/dist/lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 
 class Services extends React.Component {
   constructor(props) {

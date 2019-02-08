@@ -10,7 +10,7 @@ import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
 import CategoryView from 'web/pages/CategoryView';
 import MenuItemView from 'web/pages/MenuItemView';
-import SignIn from 'tabb-front/dist/components/SignIn';
+import SignIn from '@dinify/common/dist/components/SignIn';
 import Account from 'web/pages/Account';
 import Eat from 'web/pages/Eat';
 import Cart from 'web/pages/Cart';
@@ -22,7 +22,7 @@ import AccountSignIn from 'web/components/AccountSignIn';
 import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
 
-import * as FN from 'tabb-front/dist/lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 
 import withRoot from 'withRoot.js';
 
