@@ -1,6 +1,6 @@
 {
   "name": "@dinify/common",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Common codebase for Dinify frontend",
   "main": "dist/index.js",
   "scripts": {
