@@ -8,6 +8,8 @@ yarn global lerna
 lerna bootstrap
 ```
 
+`lerna bootstrap` will install and link dependencies of all packages
+
 ## How to push changes
 
 ```bash
