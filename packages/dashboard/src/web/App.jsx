@@ -31,6 +31,8 @@ type AppProps = {
   appLoading: boolean,
 };
 
+const SignInWithRoot = withRoot(SignIn);
+
 const App = ({ appLoading, user, history }: AppProps) => {
   return (
     <Router>
@@ -39,7 +41,7 @@ const App = ({ appLoading, user, history }: AppProps) => {
         {!appLoading && (
           <Switch>
             <Route path="/signin" component={() => {
-              return user.isEmpty ? <SignIn user={user}/> :
+              return user.isEmpty ? <SignInWithRoot user={user}/> :
               <Redirect to="/"/>
             }} />
             <Route path="/" component={() => {
@@ -55,7 +57,7 @@ const App = ({ appLoading, user, history }: AppProps) => {
   );
 }
 
-export default withRoot(connect(state => ({
+export default connect(state => ({
   user: state.firebase.auth,
   appLoading: !appIsRunning(state),
-}))(App));
+}))(App);

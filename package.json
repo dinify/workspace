@@ -11,7 +11,9 @@
   },
   "scripts": {
     "app:dev": "cd packages/app && yarn start-dev",
+    "app:deploy": "cd packages/app && yarn deploy",
     "dash:dev": "cd packages/dashboard && yarn start-web",
+    "dash:deploy": "cd packages/dashboard && yarn deploy",
     "jest": "jest --coverage --verbose --color"
   },
   "devDependencies": {
