@@ -1,6 +1,7 @@
 import { combineEpics } from 'redux-observable';
 import { restaurantEpics } from './ducks/restaurant';
 import { menuItemEpics } from './ducks/menuItem';
+import { translationEpics } from './ducks/translation';
 
 import { epics as crud } from './ducks/crudEpics';
 import { getFirebase } from 'react-redux-firebase';
@@ -12,6 +13,7 @@ const rootEpic = (action$, state$, ...rest) => {
     ...auth,
     ...restaurantEpics,
     ...menuItemEpics,
+    ...translationEpics,
     ...crud
   );
   const output = epic(

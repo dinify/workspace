@@ -25,6 +25,7 @@ const bootstrapEpic = (action$: Observable) =>
     })
   );
 
+
 const getLoggedEpic = (action$: Observable) =>
   action$.pipe(
     filter(action => {
@@ -33,7 +34,8 @@ const getLoggedEpic = (action$: Observable) =>
     }),
     mergeMap(() => of(
       {type: 'LOAD_RESTAURANT'},
-      {type: 'FETCH_TRANSLATIONS_INIT'}
+      {type: 'FETCH_TRANSLATIONS_INIT'},
+      {type: 'FETCH_SERVICEIMAGES_INIT'}
     ))
   );
 

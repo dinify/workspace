@@ -58,10 +58,10 @@ class ServiceCalls extends React.Component {
     const servicesList = FN.MapToList(services).sort((a, b) =>
       a.name.localeCompare(b.name),
     );
-    const getImageUrl = (imageId) => {
-      const img = R.find(R.propEq('id', imageId))(images);
+    const getImageUrl = (service) => {
+      const img = R.find(R.propEq('id', service.image_id))(images);
       if (img) return img.url;
-      return '';
+      return service.image.url;
     }
     const filteredImages = R.filter((img) => {
       if (this.state.selectedType === 'TABLEWARE') return img.item_type === `Internal\\Service\\Tableware`;
@@ -74,7 +74,7 @@ class ServiceCalls extends React.Component {
             <Chip
               avatar={
                 <Avatar
-                  src={getImageUrl(service.image_id)}
+                  src={getImageUrl(service)}
                 />
               }
               key={service.id}
@@ -89,7 +89,7 @@ class ServiceCalls extends React.Component {
             <Chip
               avatar={
                 <Avatar
-                  src={getImageUrl(service.image_id)}
+                  src={getImageUrl(service)}
                 />
               }
               key={service.id}

@@ -320,7 +320,9 @@ export function GetTranslations({ locale } = {}) {
 }
 
 export function AddTranslation({ type, id, locale, name, description }) {
-  return Post({ path: 'translation/add' }, { type, id, locale, name, description });
+  const body = { type, id, locale, name };
+  if (description) body.description = description;
+  return Post({ path: 'translation/add' }, body);
 }
 
 export function RmTranslation({ type, id, locale }) {

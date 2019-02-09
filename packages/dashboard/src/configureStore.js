@@ -88,7 +88,7 @@ const configureStore = (options, storage) => {
   epicMiddleware.run(rootEpic);
 
   // let the magic happen :–)
-  persistStore(store, { blacklist: ['progress'], storage }); // .purge() // in case you want to purge the store
+  persistStore(store, { blacklist: ['progress', 'translation'], storage }); // .purge() // in case you want to purge the store
 
   return store;
 };
