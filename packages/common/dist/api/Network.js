@@ -31,7 +31,6 @@ function Request(url) {
 
     if (token.length > 0 && !noToken) defaultOptions.headers.Authorization = "Bearer ".concat(token);
     var allOptions = Object.assign(options, defaultOptions);
-    console.log(allOptions);
     fetch(url, allOptions).then(function (res) {
       return res.text().then(function (text) {
         return {
