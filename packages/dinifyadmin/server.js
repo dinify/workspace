@@ -1,15 +1,19 @@
+require('dotenv').config()
 import Restaurants from './models/Restaurants';
 import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
 import mongoconnect from './mongoconnect';
-
+import { Translate } from '@google-cloud/translate';
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const projectId = 'tabb-global';
+const translateClient = new Translate({ projectId });
 
 // API calls
 app.post('/api/db/find', (req, res) => {
@@ -26,6 +30,23 @@ app.post('/api/db/find', (req, res) => {
       res.json({ error: null, result: result })
     }
   });
+});
+
+app.post('/api/translate', (req, res) => {
+  const {
+    text = '',
+    from = 'cs',
+    to = 'en'
+  } = req.body;
+  translateClient
+    .translate(text, {from, to})
+    .then(results => {
+      const translation = results[0];
+      res.json({ error: null, result: translation })
+    })
+    .catch(e => {
+      res.json({ error: e })
+    });
 });
 
 app.post('/api/db/count', (req, res) => {
