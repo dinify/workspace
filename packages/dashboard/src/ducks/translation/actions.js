@@ -13,3 +13,8 @@ export const pushTranslation = payload => ({
   type: 'PUSH_TRANSLATION_INIT',
   payload,
 });
+
+export const suggestTranslation = payload => ({
+  type: 'SUGGEST_TRANSLATION_INIT',
+  payload,
+});

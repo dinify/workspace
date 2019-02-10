@@ -36,7 +36,9 @@ export default function reducer(state = initialState, action) {
     action.type.includes('UPDATE') ||
     action.type.includes('REMOVE') ||
     action.type.includes('LOGIN') ||
-    action.type.includes('SIGNUP')
+    action.type.includes('SIGNUP') ||
+    action.type.includes('SAVE') ||
+    action.type.includes('PUSH')
   ) {
     let stage = '';
     let key = action.type;

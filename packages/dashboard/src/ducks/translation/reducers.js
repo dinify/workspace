@@ -25,6 +25,14 @@ export default function reducer(state = initialState, action) {
       const selectedLocale = action.payload.selectedLocale;
       return R.assoc('selectedLocale', selectedLocale)(state);
     }
+    case 'SAVE_TRANSLATION_DONE': {
+      const { id, locale, type, description, name } = action.payload.prePayload;
+      const updObj = { id, type };
+      if (description) updObj.description = description;
+      if (name) updObj.name = name;
+      const newTranslation = R.merge(state.all[locale][id], updObj);
+      return R.assocPath(['all', locale, id], newTranslation)(state);
+    }
     default:
       return state;
   }

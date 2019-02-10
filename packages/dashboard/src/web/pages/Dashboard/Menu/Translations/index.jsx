@@ -75,6 +75,13 @@ const makeInitalValues = (translationsMap) => {
   return R.merge(names, descriptions);
 }
 
+const getCoverage = (t, o) => {
+  const oCount = o ? o.length : 0;
+  const tCount = t ? t.length : 0;
+  if (!oCount) return '';
+  return `(${tCount}/${oCount})`;
+}
+
 class Translations extends React.Component {
   constructor(props) {
     super(props);
@@ -101,8 +108,8 @@ class Translations extends React.Component {
     return (
       <SolidContainer>
         <Paper>
-          <Card style={{overflow: 'visible'}}>
-            <CardContent>
+          <CardContent>
+
               <Typography color="textSecondary" gutterBottom>
                 Select one of defined languages
               </Typography>
@@ -126,47 +133,62 @@ class Translations extends React.Component {
                 <AutoComplete
                   dataSource={autocompleteData}
                   placeholder="Select language"
+                  outlined
                   onChange={locale =>
-                    addLocale({locale})
+                    locale && addLocale({locale})
                   }
                 />
               </div>
             </CardContent>
-          </Card>
-          <Tabs
-            value={tabIndex}
-            onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-          >
-            {types.map((type) =>
-              <Tab label={type.name} />
-            )}
-          </Tabs>
-          {types.map((type, i) => {
-            const translationsMap = ListToMap(byType[type.type] || []);
-            const initialValues = makeInitalValues(translationsMap);
-            //console.log(initialValues,'ss');
-            return (tabIndex === i &&
-              <Typography component="div" style={{ padding: 8 * 3 }} key={`${selectedLocale}-${type.type}`}>
-                <Editor
-                  originalsList={defaultByType[type.type] || []}
-                  initialValues={initialValues}
-                  onSubmit={(submitValues, dispatch, props) => {
-                    const { initialValues } = props
-                    const changedValues = diff(initialValues, submitValues)
-                    pushTranslation({
-                      changes: changedValues,
-                      locale: selectedLocale,
-                      type: type.type,
-                    });
-                  }}
-                  type={type.type}
-                  selectedLocale={selectedLocale}
-                />
-              </Typography>)
-          })}
+            <Divider style={{marginBottom: '10px'}} />
+          {defaultLocale !== selectedLocale ?
+            <div>
+              <Tabs
+                value={tabIndex}
+                onChange={this.handleChange}
+                indicatorColor="primary"
+                textColor="primary"
+                centered
+              >
+                {types.map((type) =>
+                  <Tab label={`${type.name} ${ getCoverage(byType[type.type],defaultByType[type.type])}`} />
+                )}
+              </Tabs>
+              {types.map((type, i) => {
+                const translationsMap = ListToMap(byType[type.type] || []);
+                const initialValues = makeInitalValues(translationsMap);
+                //console.log(initialValues,'ss');
+                return (tabIndex === i &&
+                    <Editor
+                      key={`${selectedLocale}-${type.type}`}
+                      originalsList={defaultByType[type.type] || []}
+                      initialValues={initialValues}
+                      onSubmit={(submitValues, dispatch, props) => {
+                        const { initialValues } = props
+                        const changedValues = diff(initialValues, submitValues)
+                        pushTranslation({
+                          changes: changedValues,
+                          locale: selectedLocale,
+                          type: type.type,
+                        });
+                      }}
+                      type={type.type}
+                      selectedLocale={selectedLocale}
+                      defaultLocale={defaultLocale}
+                    />
+                  )
+              })}
+            </div>
+          :
+          <div>
+            <Typography variant="h6" align="center">
+              {languages[selectedLocale].langLoc} is your default language
+            </Typography>
+            <Typography variant="subtitle1" align="center">
+              Select any other language above
+            </Typography>
+          </div>
+        }
         </Paper>
       </SolidContainer>
     );
@@ -179,7 +201,7 @@ const translationsSelector = createSelector(
     (state) => state.translation.selectedLocale
   ],
   (translations, selectedLocale) => {
-    const locales = Object.keys(translations);
+    const locales = Object.keys(translations).filter((l) => l !== defaultLocale);
 
     const ofLocale = MapToList(translations[selectedLocale]);
     const ofDefaultLocale = MapToList(translations[defaultLocale]);

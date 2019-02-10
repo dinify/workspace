@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Input from '@material-ui/core/Input';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -214,12 +215,15 @@ class IntegrationReactSelect extends React.Component {
       label,
       multi,
       onChange,
+      outlined
     } = this.props;
+
+    const InputComponent = outlined ? OutlinedInput : Input;
 
     return (
       <div className={classes.root}>
         {!multi ? (
-          <Input
+          <InputComponent
             fullWidth
             inputComponent={SelectWrapped}
             value={this.state.single}
@@ -229,6 +233,9 @@ class IntegrationReactSelect extends React.Component {
             }}
             placeholder={placeholder}
             id="react-select-single"
+            InputProps={{
+              style: { padding: '14px' }
+            }}
             inputProps={{
               classes,
               name: 'react-select-single',
