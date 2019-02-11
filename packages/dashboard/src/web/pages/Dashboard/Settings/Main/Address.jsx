@@ -57,6 +57,7 @@ let AddressForm = ({ handleSubmit }) => {
 AddressForm = reduxForm({
   form: 'settings/address',
   enableReinitialize: true,
+  destroyOnUnmount: false
 })(AddressForm);
 
 const Address = ({ updateAddress, address }) => {

@@ -4,6 +4,7 @@ import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import R from 'ramda';
 import { actionTypes } from 'react-redux-firebase';
+import { setCookie } from '@dinify/common/dist/lib/FN';
 
 import * as API from 'api/restaurant';
 
@@ -21,6 +22,7 @@ const bootstrapEpic = (action$: Observable) =>
   action$.pipe(
     ofType('persist/REHYDRATE'),
     mergeMap(() => {
+      setCookie('lang', 'en', 30);
       return of(appBootstrap());
     })
   );

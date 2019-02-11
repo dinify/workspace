@@ -194,7 +194,7 @@ export function DeleteMenuitem({ id }) {
 }
 
 export function GetServiceimages() {
-  return Get({ path: `service/images?limit=200` });
+  return Get({ path: `service/images` });
 }
 
 export function CreateService({ name, imageId, type }) {

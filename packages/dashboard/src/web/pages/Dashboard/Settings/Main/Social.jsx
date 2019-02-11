@@ -42,6 +42,7 @@ let SocialForm = ({ handleSubmit }) => {
 SocialForm = reduxForm({
   form: 'settings/social',
   enableReinitialize: true,
+  destroyOnUnmount: false
 })(SocialForm);
 
 const Social = ({ updateSocial, social }) => {

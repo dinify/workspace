@@ -40,9 +40,6 @@ const styles = theme => ({
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
   },
-  fab: {
-
-  },
   fabProgress: {
     color: theme.palette.primary,
     position: 'absolute',
@@ -53,6 +50,15 @@ const styles = theme => ({
   table: {
     minWidth: 300,
   },
+  cell: {
+    padding: 10
+  },
+  firstCell: {
+    padding: '10px 10px 10px 24px'
+  },
+  lastCell: {
+    padding: '10px 24px 10px 10px'
+  }
 });
 
 
@@ -68,44 +74,52 @@ class Editor extends React.Component {
       progressMap,
       selectedLocale,
       defaultLocale,
-      suggestTranslation
+      suggestTranslation,
+      languageName
     } = this.props;
 
     const loading = progressMap['SAVE_TRANSLATION'] === 'PENDING';
 
     return (
       <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-        <Table className={classes.table}>
+        <Table className={classes.table} padding="none">
           <TableHead>
             <TableRow>
-              <TableCell>Original Name</TableCell>
-              <TableCell>Translation</TableCell>
-              {type === 'MenuItem' && <TableCell>Description</TableCell>}
-              {type === 'MenuItem' && <TableCell>Translation</TableCell>}
+              <TableCell className={classes.firstCell}>Original Name</TableCell>
+              <TableCell></TableCell>
+              <TableCell className={classes.cell}>{languageName}</TableCell>
+              {type === 'MenuItem' && <TableCell className={classes.cell}>Description</TableCell>}
+              {type === 'MenuItem' && <TableCell></TableCell>}
+              {type === 'MenuItem' && <TableCell className={classes.cell}>{languageName}</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
             {originalsList.map(original => (
               <TableRow key={original.id}>
-                <TableCell component="th" scope="row">
+                <TableCell className={classes.firstCell} style={{fontSize: 14}} scope="row">
                   {original.name}
                 </TableCell>
-                <TableCell>
-                  <Tooltip title="Suggest Translation" aria-label="Save">
-                    <IconButton
-                      component="span"
-                      type="button"
-                      onClick={() => suggestTranslation({
-                        form: `translations/editor/${selectedLocale}/${type}`,
-                        field: original.id,
-                        text: original.name,
-                        from: defaultLocale,
-                        to: selectedLocale
-                      })}
-                    >
-                      <GTranslate />
-                    </IconButton>
-                  </Tooltip>
+                <TableCell style={{width: '50px'}}>
+                  {original.name && original.name.length > 0 ?
+                    <Tooltip title="Suggest Translation" aria-label="Save">
+                      <IconButton
+                        component="span"
+                        type="button"
+                        onClick={() => original.name && suggestTranslation({
+                          form: `translations/editor/${selectedLocale}/${type}`,
+                          field: original.id,
+                          text: original.name,
+                          from: defaultLocale,
+                          to: selectedLocale
+                        })}
+                      >
+                        <GTranslate />
+                      </IconButton>
+                    </Tooltip>
+                    : ''
+                  }
+                </TableCell>
+                <TableCell className={classes.cell}>
                   <Field
                     name={original.id}
                     component={Text}
@@ -115,21 +129,23 @@ class Editor extends React.Component {
                       placeholder: '',
                       style: {
                         minWidth: '150px',
-                        maxWidth: '500px'
+                        maxWidth: '500px',
+                        width: '100%'
                       },
                       inputProps: {
-                        style: { padding: '14px' }
+                        style: { padding: '10px' }
                       }
                     }}
                   />
                 </TableCell>
                 {type === 'MenuItem' &&
-                  <TableCell>
+                  <TableCell className={classes.cell}>
                     {original.description}
                   </TableCell>
                 }
                 {type === 'MenuItem' &&
-                  <TableCell>
+                <TableCell style={{width: '50px'}}>
+                  {original.description && original.description.length > 0 ?
                     <Tooltip title="Suggest Translation" aria-label="Save">
                       <IconButton
                         component="span"
@@ -145,16 +161,22 @@ class Editor extends React.Component {
                         <GTranslate />
                       </IconButton>
                     </Tooltip>
+                    : ''
+                  }
+                </TableCell>
+                }
+                {type === 'MenuItem' &&
+                  <TableCell className={classes.lastCell}>
                     <Field
                       name={original.id+'_description'}
                       component={Text}
                       componentProps={{
                         multiline: true,
-                        rows: 4,
+                        rows: 6,
                         variant: 'outlined',
                         //fullWidth: true,
                         placeholder: '',
-                        style: {minWidth: '300px'},
+                        style: {minWidth: '300px', margin: '10px'},
                         InputProps: {
                           style: { padding: '14px' }
                         }

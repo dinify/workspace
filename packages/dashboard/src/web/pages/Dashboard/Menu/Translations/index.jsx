@@ -175,6 +175,7 @@ class Translations extends React.Component {
                       type={type.type}
                       selectedLocale={selectedLocale}
                       defaultLocale={defaultLocale}
+                      languageName={languages[selectedLocale] && languages[selectedLocale].langLoc}
                     />
                   )
               })}

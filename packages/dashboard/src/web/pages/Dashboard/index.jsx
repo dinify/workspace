@@ -53,6 +53,14 @@ const theme = createMuiTheme({
     }
   }
 });
+const contentTheme = createMuiTheme({
+  typography: {
+    fontFamily: 'Montserrat',
+    subheading: {
+      fontWeight: 100
+    }
+  }
+});
 
 const Dashboard = ({ firebase }) => (
   <div>
@@ -110,17 +118,19 @@ const Dashboard = ({ firebase }) => (
 
     </Sidebar>
     <Content>
-      <Switch>
-        <Redirect exact from="/" to="/settings" />
-        <Route path="/settings" component={SettingsSection} />
-        <Route path="/menu" component={MenuSection} />
-        <Route path="/billing" component={BillingSection} />
-        {
-          //  <Route path="/guests" component={GuestsSection} />
-          //  <Route path="/sales" component={SalesSection} />
-          //  <Route path="/engagement" component={EngagementSection} />
-        }
-      </Switch>
+      <MuiThemeProvider theme={contentTheme}>
+        <Switch>
+          <Redirect exact from="/" to="/settings" />
+          <Route path="/settings" component={SettingsSection} />
+          <Route path="/menu" component={MenuSection} />
+          <Route path="/billing" component={BillingSection} />
+          {
+            //  <Route path="/guests" component={GuestsSection} />
+            //  <Route path="/sales" component={SalesSection} />
+            //  <Route path="/engagement" component={EngagementSection} />
+          }
+        </Switch>
+      </MuiThemeProvider>
     </Content>
   </div>
 );

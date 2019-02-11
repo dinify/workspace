@@ -29,6 +29,7 @@ let NameForm = ({ handleSubmit }) => {
 NameForm = reduxForm({
   form: 'settings/name',
   enableReinitialize: true,
+  destroyOnUnmount: false
 })(NameForm);
 
 const Name = ({ updateName, name }) => {

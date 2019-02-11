@@ -68,6 +68,7 @@ let AddDayForm = ({ undefinedDays, handleSubmit }) => {
 AddDayForm = reduxForm({
   form: 'settings/businessHoursAddDay',
   enableReinitialize: true,
+  destroyOnUnmount: false
 })(AddDayForm);
 
 const TimeField = props => {
@@ -141,6 +142,7 @@ let BusinessHoursForm = props => {
 BusinessHoursForm = reduxForm({
   form: 'settings/businessHours',
   enableReinitialize: true,
+  destroyOnUnmount: false
 })(BusinessHoursForm);
 
 const BusinessHours = ({ updateHours, openHours, addDay, addRange }) => {

@@ -18,8 +18,8 @@ function Request(url) {
   return new Promise(function (resolve, reject) {
     if (!url) reject(new Error('URL parameter required'));
     var token = (0, _FN.getCookie)('access_token');
-    var defaultOptions = {//  mode: 'no-cors'
-    };
+    var lang = (0, _FN.getCookie)('lang');
+    var defaultOptions = {};
 
     if (!options.headers) {
       defaultOptions.headers = {
@@ -30,6 +30,7 @@ function Request(url) {
     }
 
     if (token.length > 0 && !noToken) defaultOptions.headers.Authorization = "Bearer ".concat(token);
+    if (lang) defaultOptions.headers['Accept-Language'] = lang;
     var allOptions = Object.assign(options, defaultOptions);
     fetch(url, allOptions).then(function (res) {
       return res.text().then(function (text) {
