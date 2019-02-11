@@ -49,7 +49,7 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: 'Montserrat',
     subheading: {
-      fontWeight: 100
+      fontWeight: 300
     }
   }
 });
@@ -57,11 +57,19 @@ const contentTheme = createMuiTheme({
   typography: {
     fontFamily: 'Montserrat',
     subheading: {
-      fontWeight: 100
+      fontWeight: 300
     }
   }
 });
-
+const listItemStyle = {
+  paddingLeft: 36
+}
+const listTextStyle = {
+  textTransform: 'uppercase',
+  fontSize: '12px',
+  letterSpacing: '1.5px',
+  color: 'white'
+}
 const Dashboard = ({ firebase }) => (
   <div>
     <Sidebar>
@@ -69,49 +77,51 @@ const Dashboard = ({ firebase }) => (
       <MuiThemeProvider theme={theme}>
         <List
           component="nav"
+          style={{paddingTop: 0}}
         >
           <Link to="/">
-            <ListItem button divider>
+            <ListItem button divider style={{paddingLeft: 34}}>
               <ListItemIcon>
-                <img src={require('assets/img/logo.svg')} width={26} height={28} alt="" />
+                <img src={require('assets/img/logo.svg')} width={26} height={36} alt="" />
               </ListItemIcon>
-              <ListItemText inset primary="Dashboard" />
+              <ListItemText disableTypography inset primary="Dashboard" style={listTextStyle} />
             </ListItem>
           </Link>
 
           <Link to="/settings">
-            <ListItem button>
+            <ListItem button style={listItemStyle}>
               <ListItemIcon>
                 <Settings />
               </ListItemIcon>
-              <ListItemText inset primary="Settings" />
+              <ListItemText disableTypography inset primary="Settings" style={listTextStyle} />
             </ListItem>
           </Link>
 
           <Link to="/menu">
-            <ListItem button>
+            <ListItem button style={listItemStyle}>
               <ListItemIcon>
                 <RestaurantMenu />
               </ListItemIcon>
-              <ListItemText inset primary="Menu" />
+              <ListItemText disableTypography inset primary="Menu" style={listTextStyle} />
             </ListItem>
           </Link>
 
           <Link to="/billing">
-            <ListItem button divider>
+            <ListItem button divider style={listItemStyle}>
               <ListItemIcon>
                 <AttachMoney />
               </ListItemIcon>
-              <ListItemText inset primary="Billing" />
+              <ListItemText disableTypography inset primary="Billing" style={listTextStyle} />
             </ListItem>
           </Link>
 
           <ListItem button onClick={() => firebase.logout()}>
-            <ListItemIcon>
+            <ListItemIcon style={{paddingLeft: 22}}>
               <ExitToApp />
             </ListItemIcon>
-            <ListItemText inset primary="Log out" />
+            <ListItemText disableTypography inset primary="Log out" style={listTextStyle} />
           </ListItem>
+
         </List>
       </MuiThemeProvider>
 

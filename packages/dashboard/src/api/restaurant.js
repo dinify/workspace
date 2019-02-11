@@ -41,8 +41,21 @@ export function CreateRestaurant({ restaurantName, subdomain }) {
   );
 }
 
+
+const loggedRestaurantWith = [
+  'images',
+  'services.image',
+  'waiterboards.tables',
+  'categories.items.images',
+  'categories.items.addons',
+  'categories.items.ingredients',
+  'categories.items.options',
+  'addons.price',
+  'ingredients',
+  'options.choices.difference'
+].join(',')
 export function GetLoggedRestaurant() {
-  return Get({ path: `restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices.difference` });
+  return Get({ path: `restaurant/my/all?with=${loggedRestaurantWith}` });
 }
 
 export function ChangeCategory({ category }) {

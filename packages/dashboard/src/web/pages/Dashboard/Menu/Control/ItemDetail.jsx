@@ -74,6 +74,7 @@ let DetailForm = ({ handleSubmit }) => {
 DetailForm = reduxForm({
   form: 'menu/detail',
   enableReinitialize: true,
+  destroyOnUnmount: false
 })(DetailForm);
 
 const styles = {

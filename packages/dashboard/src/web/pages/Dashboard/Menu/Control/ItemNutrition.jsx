@@ -79,6 +79,7 @@ let NutritionForm = ({ handleSubmit }) => {
 NutritionForm = reduxForm({
   form: 'menu/nutritions',
   enableReinitialize: true,
+  destroyOnUnmount: false
 })(NutritionForm);
 
 const NutritionContainer = styled.div`
@@ -117,6 +118,7 @@ const NutritionContainer = styled.div`
 
 const ItemNutrition = ({ selectedFoodId, menuItems, updateFoodNutrition }) => {
   const selectedFood = menuItems[selectedFoodId];
+  console.log(selectedFood.calories, 'cals');
   return (
     <NutritionContainer>
       <NutritionForm

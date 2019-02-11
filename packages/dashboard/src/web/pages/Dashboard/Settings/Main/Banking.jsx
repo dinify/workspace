@@ -60,6 +60,7 @@ let BankingForm = ({ handleSubmit }) => {
 BankingForm = reduxForm({
   form: 'settings/banking',
   enableReinitialize: true,
+  destroyOnUnmount: false
 })(BankingForm);
 
 const Banking = ({ updateBank, payout }) => {

@@ -1,12 +1,5 @@
 // @flow
 
-function setCookie(cname, cvalue, exdays) {
-  let d = new Date();
-  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-  const expires = 'expires=' + d.toUTCString();
-  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
-}
-
 // Action Creators
 export const selectCategoryAction = payload => ({
   type: 'SELECT_CATEGORY',
@@ -49,12 +42,7 @@ export const updateHoursInitAction = payload => ({
   type: 'UPDATE_HOURS_INIT',
   payload,
 });
-export const loginInitAction = payload => ({ type: 'LOGIN_INIT', payload });
-export const logoutInitAction = () => {
-  setCookie('access_token', '', 1);
-  window.location.replace('/login');
-  return { type: 'LOGOUT_DONE' };
-};
+
 export const loggedFetchedAction = payload => ({
   type: 'LOGGED_FETCHED_DONE',
   payload,
