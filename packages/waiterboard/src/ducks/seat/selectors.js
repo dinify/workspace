@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { MapToList } from 'tabb-front/dist/lib/FN';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 
 export const getSeatList = createSelector(
   [

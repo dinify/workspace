@@ -9,10 +9,10 @@
     "start-native-cli": "node node_modules/react-native/local-cli/cli.js start",
     "start-ios": "react-native run-ios --simulator=\"iPhone 7\"",
     "start-android": "react-native run-android",
-    "start-web": "react-scripts start",
+    "start-dev": "react-scripts start",
     "start": "serve -s build",
     "build": "react-scripts build && cp build/index.html build/200.html",
-    "deploy": "react-scripts build && mv ./build/index.html ./build/200.html && surge ./build --domain=https://waiterboard.gotabb.com",
+    "deploy": "react-scripts build && mv ./build/index.html ./build/200.html && surge ./build --domain=https://waiterboard.dinify.app",
     "test": "jest --watch --env=jsdom",
     "coverage": "jest --coverage --env=jsdom",
     "lint": "eslint --ext=jsx --ext=js src/",
@@ -99,5 +99,11 @@
       "./setupJest.js"
     ],
     "preset": "react-native"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

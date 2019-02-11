@@ -1,7 +1,7 @@
 // @flow
 import { Observable } from 'rxjs';
 import * as API from '../api/restaurant';
-import { setCookie} from 'tabb-front/dist/lib/FN';
+import { setCookie} from '@dinify/common/dist/lib/FN';
 
 import assoc from 'ramda/src/assoc'
 import assocPath from 'ramda/src/assocPath'

@@ -14,6 +14,8 @@
     "app:deploy": "cd packages/app && yarn deploy",
     "dash:dev": "cd packages/dashboard && yarn start-dev",
     "dash:deploy": "cd packages/dashboard && yarn deploy",
+    "waiter:dev": "cd packages/waiterboard && yarn start-dev",
+    "waiter:deploy": "cd packages/waiterboard && yarn deploy",
     "jest": "jest --coverage --verbose --color"
   },
   "devDependencies": {
