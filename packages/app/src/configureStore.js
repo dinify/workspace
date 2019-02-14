@@ -3,9 +3,9 @@ import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import { reducer as formReducer } from 'redux-form';
-import { snackbarReducer } from 'material-ui-snackbar-redux'
-import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase'
-import firebase from 'firebase'
+import { snackbarReducer } from 'material-ui-snackbar-redux';
+import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase';
+import firebase from 'firebase';
 
 import auth from 'ducks/auth';
 import ui from 'ducks/ui';
@@ -47,7 +47,19 @@ const firebaseConfig = {
 // react-redux-firebase config
 const rrfConfig = {
   userProfile: 'profiles',
+  updateProfileOnLogin: true,
   useFirestoreForProfile: true,
+  profileFactory: (userData, profileData) => {
+    // make sure default profile values are populated
+    return {
+      ...profileData,
+      language: {
+        primary: navigator.language,
+        other: [],
+        ...profileData.language
+      }
+    };
+  }
 }
 firebase.initializeApp(firebaseConfig)
 
