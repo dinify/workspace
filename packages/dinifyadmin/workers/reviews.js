@@ -42,7 +42,7 @@ const saveReviews = (locID, limit, page, done) => {
 
 const doIt = (limit, page) => {
   Restaurants
-  .find({ num_reviews: {$gte: 1}})
+  .find({ targetLang: {$lt: 1}})
   .sort({ num_reviews: -1, _id: 1 })
   .skip(limit*page)
   .limit(limit)
@@ -67,6 +67,6 @@ const doIt = (limit, page) => {
 
 
 const run = () => {
-  doIt(9, 1);
+  doIt(100, 0);
 }
 export default run;
