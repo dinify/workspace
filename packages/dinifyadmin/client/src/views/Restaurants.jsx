@@ -140,6 +140,31 @@ const useFields = [
     filterable: false
   },
   {
+    Header: "RU",
+    accessor: "langDist.ru.count",
+    filterable: false
+  },
+  {
+    Header: "IT",
+    accessor: "langDist.it.count",
+    filterable: false
+  },
+  {
+    Header: "ES",
+    accessor: "langDist.es.count",
+    filterable: false
+  },
+  {
+    Header: "FR",
+    accessor: "langDist.fr.count",
+    filterable: false
+  },
+  {
+    Header: "TR",
+    accessor: "langDist.tr.count",
+    filterable: false
+  },
+  {
     Header: "Rating",
     accessor: "rating",
     filterable: false
@@ -148,10 +173,10 @@ const useFields = [
 //    Header: "Price Level",
 //    accessor: "price_level"
 //  },
-  {
-    Header: "Email",
-    accessor: "email"
-  },
+//  {
+//    Header: "Email",
+//    accessor: "email"
+//  },
 //  {
 //    Header: "Phone",
 //    accessor: "phone"

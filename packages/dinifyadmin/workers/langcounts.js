@@ -32,7 +32,7 @@ const doIt = (limit, page) => {
           const langs = _.map(langDist, '_id');
           const counts = _.map(langDist, 'count');
           const total = _.sum(counts);
-          const targetLangDist = _.filter(langDist, (o) => o._id !== 'cs' && o._id !== 'en');
+          const targetLangDist = _.filter(langDist, (o) => o._id !== 'en');
           const targetLangs = _.map(targetLangDist, 'count');
           const targetLang = _.sum(targetLangs);
           const targetLangRel = total ? targetLang/total : 0;
