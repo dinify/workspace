@@ -54,7 +54,10 @@ const request = ({ params = {}, method = 'get', path, body = null }) => {
       if (res.data) resolve(res.data);
       else resolve(null);
     })
-    .catch(reject)
+    .catch((error) => {
+      // console.log(error);
+      return reject(error);
+    })
   })
 }
 
@@ -123,7 +126,23 @@ export const getRestaurants = ({ locID, limit, offset }) => {
       restaurant_tagcategory_standalone: 10591,
       show_filters: 'true',
       show_review_highlights: 'true',
-      show_seo_terms: 'true',
+      show_seo_terms: 'true'
+    }
+  })
+}
+
+export const getReviews = ({ locID, limit, offset }) => {
+  return authedRequest({
+    path: `/api/internal/1.14/location/${locID}/reviews`,
+    params: {
+      currency: 'CZK',
+      debug_info: 'currency%3DCZK%2Chas_dates%3Dtrue%2Cscreen_name%3D%28null%29%2Cplacement_name%3D%28null%29%2Clod%3D0',
+      include_activity_reviews: true,
+      lang: 'en_GB',
+      limit,
+      offset,
+      mt: true,
+      show_owners_fav: 1
     }
   })
 }

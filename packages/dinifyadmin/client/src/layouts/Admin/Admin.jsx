@@ -38,6 +38,7 @@ class Admin extends React.Component {
       }
     }
     window.addEventListener("scroll", this.showNavbarButton);
+    document.body.classList.toggle("sidebar-mini");
   }
   componentWillUnmount() {
     if (navigator.platform.indexOf("Win") > -1) {
@@ -125,15 +126,6 @@ class Admin extends React.Component {
       this.setState({ sidebarMini: true });
       notifyMessage += "activated...";
     }
-    let options = {};
-    options = {
-      place: "tr",
-      message: notifyMessage,
-      type: "primary",
-      icon: "tim-icons icon-bell-55",
-      autoDismiss: 7
-    };
-    this.refs.notificationAlert.notificationAlert(options);
     document.body.classList.toggle("sidebar-mini");
   };
   toggleSidebar = () => {

@@ -12,51 +12,86 @@ import {
   Col,
   Button
 } from "reactstrap";
+import { Bar } from "react-chartjs-2";
+import ISO6391 from 'iso-639-1';
 
-const makeTableData = (data, useFields) => {
-  return data.map((prop, key) => {
-    const values = _.pick(prop, _.map(useFields,'accessor'));
-    const obj = {
-      id: prop._id || key,
-      actions: (
-        // we've added some custom button actions
-        <div className="actions-right">
-          <a href={prop.website} target="_blank">
-          <Button
-            color="info"
-            size="sm"
-            className={classNames("btn-icon btn-link like", {
-              "btn-neutral": key === -12
-            })}
-          >
-            <i className="tim-icons icon-link-72" />
-          </Button></a>{" "}
-          {/* use this button to add a like kind of action */}
-          <Button
-            color="info"
-            size="sm"
-            className={classNames("btn-icon btn-link like", {
-              "btn-neutral": key === -12
-            })}
-          >
-            <i className="tim-icons icon-heart-2" />
-          </Button>{" "}
-          {/* use this button to add a edit kind of action */}
-          <Button
-            color="warning"
-            size="sm"
-            className={classNames("btn-icon btn-link like", {
-              "btn-neutral": key === -12
-            })}
-          >
-            <i className="tim-icons icon-pencil" />
-          </Button>{" "}
-        </div>
-      )
-    };
-    const row = _.assign(obj, values);
-    return row;
-  })
+let makeChartData = ({labels, data}) => {
+  return {
+    data: canvas => {
+      let ctx = canvas.getContext("2d");
+
+      let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+      gradientStroke.addColorStop(1, "rgba(72,72,176,0.1)");
+      gradientStroke.addColorStop(0.4, "rgba(72,72,176,0.0)");
+      gradientStroke.addColorStop(0, "rgba(119,52,169,0)"); //purple colors
+
+      return {
+        labels,
+        datasets: [
+          {
+            label: "Countries",
+            fill: true,
+            backgroundColor: gradientStroke,
+            hoverBackgroundColor: gradientStroke,
+            borderColor: "#d048b6",
+            borderWidth: 2,
+            borderDash: [],
+            borderDashOffset: 0.0,
+            data
+          }
+        ]
+      };
+    },
+    options: {
+      maintainAspectRatio: false,
+      legend: {
+        display: false
+      },
+      tooltips: {
+        backgroundColor: "#f5f5f5",
+        titleFontColor: "#333",
+        bodyFontColor: "#666",
+        bodySpacing: 4,
+        xPadding: 12,
+        mode: "nearest",
+        intersect: 0,
+        position: "nearest"
+      },
+      responsive: true,
+      scales: {
+        yAxes: [
+          {
+            gridLines: {
+              drawBorder: false,
+              color: "rgba(225,78,202,0.1)",
+              zeroLineColor: "transparent"
+            },
+            ticks: {
+              suggestedMin: 60,
+              //suggestedMax: 120,
+              padding: 20,
+              fontColor: "#9e9e9e"
+            }
+          }
+        ],
+        xAxes: [
+          {
+            gridLines: {
+              drawBorder: false,
+              color: "rgba(225,78,202,0.1)",
+              zeroLineColor: "transparent"
+            },
+            ticks: {
+              padding: 20,
+              fontColor: "#9e9e9e",
+              autoSkip: false
+            }
+          }
+        ]
+      }
+    }
+  };
 }
 
 const useFields = [
@@ -74,26 +109,68 @@ const useFields = [
     filterable: false
   },
   {
+    Header: "Target",
+    accessor: "targetLang",
+    filterable: false
+  },
+  {
+    Header: "T.Rel.",
+    Cell: props => props.value ? (props.value*100).toFixed(2)+'%' : 0,
+    accessor: "targetLangRel",
+    filterable: false
+  },
+  {
+    Header: "Jap",
+    accessor: "langDist.ja.count",
+    filterable: false
+  },
+  {
+    Header: "Ko",
+    accessor: "langDist.ko.count",
+    filterable: false
+  },
+  {
+    Header: "CN",
+    accessor: "langDist.zhCN.count",
+    filterable: false
+  },
+  {
+    Header: "TW",
+    accessor: "langDist.zhTW.count",
+    filterable: false
+  },
+  {
     Header: "Rating",
     accessor: "rating",
     filterable: false
   },
-  {
-    Header: "Price Level",
-    accessor: "price_level"
-  },
+//  {
+//    Header: "Price Level",
+//    accessor: "price_level"
+//  },
   {
     Header: "Email",
     accessor: "email"
   },
-  {
-    Header: "Phone",
-    accessor: "phone"
-  }
+//  {
+//    Header: "Phone",
+//    accessor: "phone"
+//  }
 ];
 
 const getData = async (props) => {
   const response = await fetch('/api/db/find', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(props)
+  });
+  const body = await response.json();
+  return body;
+}
+const getAggregation = async (props) => {
+  const response = await fetch('/api/db/aggregate', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -117,8 +194,6 @@ const getCount = async (query) => {
   return body;
 }
 const requestData = (pageSize, page, sorted, filtered) => {
-  console.log(sorted);
-  console.log(filtered);
   return new Promise((resolve, reject) => {
     // You can retrieve your data however you want, in this case, we will just use some local data.
     let query = {};
@@ -179,7 +254,10 @@ class ReactTables extends Component {
       cTotal: 0,
       cEmails: 0,
       cPrague: 0,
-      cBrno: 0
+      cBrno: 0,
+      chart1title: null,
+      chart1labels: [],
+      chart1values: [],
     };
   }
   fetchData = (state, instance) => {
@@ -201,7 +279,36 @@ class ReactTables extends Component {
       });
     });
   }
+  loadAgg(location_id) {
+    const matchObj = {
+      lang: {$ne: 'en'}
+    };
+    if (location_id) matchObj['location_id'] = location_id;
+    getAggregation({query: [
+      { $match: matchObj},
+      { "$unwind": "$lang" },
+      { "$group": {
+          "_id": "$lang",
+          "count": { "$sum": 1 }
+      }},
+      { $sort : { count : -1 } }
+    ]}).then(res => {
+      const arr = res.result;
+      this.setState({chart1values: _.map(arr, 'count')})
+      let labels = _.map(arr, '_id');
+      labels = _.map(labels, (l) => {
+        if (l.length > 2) {
+          const lang = (_.take(l,2)+'').split(",").join("");
+          const loc = (_.takeRight(l,2)+'').split(",").join("");
+          return ISO6391.getName(lang)+' '+loc;
+        }
+        return ISO6391.getName(l) !== '' ? ISO6391.getName(l) : l
+      });
+      this.setState({chart1labels: labels})
+    }).catch(err => console.log(err));
+  }
   loadData(page = 0) {
+    this.loadAgg();
     getCount({})
       .then(res => this.setState({ cTotal: res.result }))
       .catch(err => console.log(err));
@@ -221,11 +328,74 @@ class ReactTables extends Component {
     this.loadData();
   }
 
+  makeTableData = (data, useFields) => {
+    return data.map((prop, key) => {
+      const values = _.pick(prop, _.map(useFields,'accessor'));
+      const obj = {
+        id: prop._id || key,
+        actions: (
+          // we've added some custom button actions
+          <div className="actions-right">
+            <a href={prop.website} target="_blank">
+            <Button
+              color="info"
+              size="sm"
+              className={classNames("btn-icon btn-link like", {
+                "btn-neutral": key === -12
+              })}
+            >
+              <i className="tim-icons icon-link-72" />
+            </Button></a>{" "}
+            {/* use this button to add a like kind of action */}
+            <Button
+              color="info"
+              size="sm"
+              onClick={() => {
+                this.loadAgg(prop.location_id)
+                this.setState({chart1title: prop.name})
+              }}
+              className={classNames("btn-icon btn-link like", {
+                "btn-neutral": key === -12
+              })}
+            >
+              <i className="tim-icons icon-chart-bar-32" />
+            </Button>{" "}
+          </div>
+        )
+      };
+      const row = _.assign(obj, values);
+      return row;
+    })
+  }
+
   render() {
-    const { data, pages, loading } = this.state;
+    const { data, pages, loading, chart1title } = this.state;
+    console.log(this.state.chart1labels,  this.state.chart1values);
+    const chartData = makeChartData({ labels: this.state.chart1labels, data: this.state.chart1values})
     return (
       <>
         <div className="content">
+          <Row>
+            <Col className="ml-auto mr-auto" lg="12">
+              <Card className="card-chart">
+                <CardHeader>
+                  <h5 className="card-category">Languages distribution</h5>
+                  <CardTitle tag="h3">
+                    <i className="tim-icons icon-world text-info" />{" "}
+                    {_.sum(this.state.chart1values)} Non-English Reviews {chart1title && `in ${chart1title}`}
+                  </CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <div className="chart-area" style={{height: '400px'}}>
+                    <Bar
+                      data={chartData.data}
+                      options={chartData.options}
+                    />
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
           <Row>
             <Col xs={12} md={12}>
               <Card>
@@ -249,7 +419,7 @@ class ReactTables extends Component {
                       }
                     ]}
                     manual // Forces table not to paginate or sort automatically, so we can handle it server-side
-                    data={makeTableData(data, useFields)}
+                    data={this.makeTableData(data, useFields)}
                     pages={pages} // Display the total number of pages
                     loading={loading} // Display the loading overlay when we need it
                     onFetchData={this.fetchData} // Request new data when things change

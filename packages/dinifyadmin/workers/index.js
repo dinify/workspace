@@ -1,37 +1,22 @@
-import * as taAPI from '../api/ta';
-import Restaurants from '../models/Restaurants';
-import async from 'async';
+import reviews from './reviews';
+import restaurants from './restaurants';
+import langcounts from './langcounts';
 import mongoconnect from '../mongoconnect';
 
+import Reviews from '../models/Reviews';
 
-const doIt = (limit, page) => {
-  taAPI.getRestaurants({ locID: 274707, limit, offset: page*limit }).then((res) => {
+//Reviews.aggregate([
+//  { $match: { location_id: 783504 } },
+//  { "$unwind": "$lang" },
+//  { "$group": {
+//      "_id": "$lang",
+//      "count": { "$sum": 1 }
+//  }}
+//]).exec((err, locations) => {
+//    if (err) throw err;
+//    console.log(locations);
+//})
 
-    res.data.forEach((restaurant) => {
-      console.log(restaurant.email);
-      console.log(restaurant.website);
-      console.log(restaurant.phone);
-
-      Restaurants.update(
-        {location_id: restaurant.location_id},
-        restaurant,
-        {upsert: true, setDefaultsOnInsert: true},
-        (e) => {
-          if (e) console.log(e);
-          else console.log('saved');
-        }
-      );
-
-    });
-    if (res.data.length) {
-      setTimeout(() => doIt(limit, page + 1), 2000);
-    } else {
-      console.log('done');
-    }
-  })
-}
-
-doIt(50, 0);
-
-// brno 274714
-// prague 274707
+// restaurants();
+//reviews();
+langcounts();

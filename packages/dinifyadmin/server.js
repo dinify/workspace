@@ -1,5 +1,7 @@
 require('dotenv').config()
 import Restaurants from './models/Restaurants';
+import Reviews from './models/Reviews';
+
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -34,6 +36,34 @@ app.post('/api/db/find', (req, res) => {
   });
 });
 
+app.post('/api/db/count', (req, res) => {
+  const {
+    query = {}
+  } = req.body;
+  Restaurants.count(query).exec((e, result) => {
+    console.log(e);
+    console.log(result);
+    if (e) {
+      res.json({ error: e })
+    } else {
+      res.json({ error: null, result: result })
+    }
+  });
+});
+
+app.post('/api/db/aggregate', (req, res) => {
+  const {
+    query = []
+  } = req.body;
+  Reviews.aggregate(query).exec((e, result) => {
+    if (e) {
+      res.json({ error: e })
+    } else {
+      res.json({ error: null, result })
+    }
+  })
+});
+
 app.post('/api/translate', (req, res) => {
   const {
     text = '',
@@ -49,21 +79,6 @@ app.post('/api/translate', (req, res) => {
     .catch(e => {
       res.json({ error: e })
     });
-});
-
-app.post('/api/db/count', (req, res) => {
-  const {
-    query = {}
-  } = req.body;
-  Restaurants.count(query).exec((e, result) => {
-    console.log(e);
-    console.log(result);
-    if (e) {
-      res.json({ error: e })
-    } else {
-      res.json({ error: null, result: result })
-    }
-  });
 });
 
 if (process.env.NODE_ENV === 'production') {

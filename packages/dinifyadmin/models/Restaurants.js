@@ -37,7 +37,10 @@ const RestaurantsSchema = new mongoose.Schema({
   is_candidate_for_contact_info_suppression: Boolean,
   cuisine: Array,
   dietary_restrictions: Array,
-  establishment_types: Array
+  establishment_types: Array,
+  langDist: Object,
+  targetLang: Number,
+  targetLangRel: Number
 });
 const Restaurants = mongoose.model('restaurants', RestaurantsSchema);
 
