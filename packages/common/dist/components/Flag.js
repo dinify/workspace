@@ -11,6 +11,8 @@ var _styles = require("@material-ui/core/styles");
 
 var _flags = _interopRequireDefault(require("../icons/flags"));
 
+var _PublicRounded = _interopRequireDefault(require("@material-ui/icons/PublicRounded"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var styles = function styles(theme) {
@@ -28,10 +30,16 @@ var Flag = function Flag(_ref) {
   var classes = _ref.classes,
       _ref$country = _ref.country,
       country = _ref$country === void 0 ? 'us' : _ref$country;
+  var flag = _flags.default[country];
+  if (!flag) return _react.default.createElement(_PublicRounded.default, {
+    style: {
+      opacity: 0.54
+    }
+  });
   return _react.default.createElement("img", {
     alt: country,
     className: classes.root,
-    src: _flags.default[country]
+    src: flag
   });
 };
 

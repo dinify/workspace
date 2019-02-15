@@ -7,11 +7,21 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _ramda = _interopRequireDefault(require("ramda"));
+
 var _redux = require("redux");
 
 var _recompose = require("recompose");
 
+var _reactMotion = require("react-motion");
+
 var _styles = require("@material-ui/core/styles");
+
+var _FN = require("../../lib/FN");
+
+var _match = _interopRequireDefault(require("autosuggest-highlight/umd/match"));
+
+var _parse = _interopRequireDefault(require("autosuggest-highlight/umd/parse"));
 
 var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
 
@@ -33,6 +43,8 @@ var _ListItemText = _interopRequireDefault(require("@material-ui/core/ListItemTe
 
 var _ChevronRightRounded = _interopRequireDefault(require("@material-ui/icons/ChevronRightRounded"));
 
+var _ChevronLeftRounded = _interopRequireDefault(require("@material-ui/icons/ChevronLeftRounded"));
+
 var _Flag = _interopRequireDefault(require("../Flag"));
 
 var _languages = _interopRequireDefault(require("../../lib/languages"));
@@ -47,8 +59,16 @@ function _objectWithoutProperties(source, excluded) { if (source == null) return
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
+var languages = (0, _FN.parseLanguages)(_languages.default);
+
 var styles = function styles(theme) {
-  return {};
+  return {
+    scrollingList: {
+      overflowY: 'scroll',
+      paddingTop: 8,
+      paddingBottom: 8
+    }
+  };
 };
 
 var LanguagePickerDialog = function LanguagePickerDialog(props) {
@@ -57,70 +77,246 @@ var LanguagePickerDialog = function LanguagePickerDialog(props) {
       setFilter = props.setFilter,
       selectedLang = props.selectedLang,
       setSelectedLang = props.setSelectedLang,
+      page = props.page,
+      prevPage = props.prevPage,
+      setPage = props.setPage,
       _props$open = props.open,
       open = _props$open === void 0 ? false : _props$open,
-      other = _objectWithoutProperties(props, ["classes", "filter", "setFilter", "selectedLang", "setSelectedLang", "open"]);
+      _onClose = props.onClose,
+      resetState = props.resetState,
+      initialSelectedLanguage = props.initialSelectedLanguage,
+      other = _objectWithoutProperties(props, ["classes", "filter", "setFilter", "selectedLang", "setSelectedLang", "page", "prevPage", "setPage", "open", "onClose", "resetState", "initialSelectedLanguage"]);
 
-  return _react.default.createElement(_Dialog.default, _extends({
-    open: open
-  }, other), _react.default.createElement(_DialogTitle.default, null, "Select language"), _react.default.createElement("div", {
+  var filtered = _ramda.default.filter(function (lang) {
+    if (!filter) return true;
+    return (0, _match.default)(lang.name, filter).length + (0, _match.default)(lang.nameNative, filter).length > 0;
+  }, languages);
+
+  var languageClickHandler = function languageClickHandler(lang) {
+    var solo = lang.countries.length === 1;
+    if (solo) setSelectedLang(lang.countries[0].langtag);else setPage(lang);
+  };
+
+  var countryClickHandler = function countryClickHandler(country) {
+    setSelectedLang(country.langtag);
+  };
+
+  var highlightBold = function highlightBold(text) {
+    if (!filter) return text;
+    return _react.default.createElement("span", null, (0, _parse.default)(text, (0, _match.default)(text, filter)).map(function (part, i) {
+      return part.highlight ? _react.default.createElement("b", {
+        key: i
+      }, part.text) : part.text;
+    }));
+  };
+
+  var animConfig = {
+    stiffness: 480,
+    damping: 48
+  };
+
+  var mainPage = _react.default.createElement("div", {
+    style: {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column'
+    }
+  }, _react.default.createElement("div", {
     style: {
       padding: '0px 24px'
     }
   }, _react.default.createElement(_TextField.default, {
     fullWidth: true,
-    dense: true,
     name: "Search",
     label: "Search",
     hint: "Search",
     variant: "filled",
-    value: filter,
-    onChange: function onChange(evt) {
-      setFilter(evt.target.text);
+    value: filter || '',
+    onChange: function onChange(event) {
+      return setFilter(event.target.value);
     }
   })), _react.default.createElement(_Divider.default, {
     style: {
       marginTop: 16
     }
   }), _react.default.createElement("div", {
+    className: classes.scrollingList,
     style: {
-      maxHeight: 240,
-      overflowY: 'scroll',
-      paddingTop: 8,
-      paddingBottom: 8
+      flex: 1
     }
-  }, _languages.default.map(function (lang, i) {
-    var solo = lang[3].length === 1;
+  }, filtered.map(function (lang, i) {
+    var solo = lang.countries.length === 1;
+    var secondary = highlightBold(lang.nameNative);
+
+    if (lang.name.toLowerCase() === lang.nameNative.toLowerCase()) {
+      if (solo) secondary = _react.default.createElement("i", null, lang.countries[0].nameNative);else secondary = '';
+    }
+
+    var selected = false;
+    if (selectedLang) selected = selectedLang.split('-')[0] === lang.code;
     return _react.default.createElement(_ListItem.default, {
       key: i,
       dense: true,
       button: true,
+      selected: selected,
       style: {
         paddingLeft: 24,
         paddingRight: 24
       },
       onClick: function onClick() {
-        /* TODO: display available regions for language */
+        return languageClickHandler(lang);
       }
     }, _react.default.createElement(_ListItemText.default, {
-      primary: lang[1],
-      secondary: lang[2]
+      primary: highlightBold(lang.name),
+      secondary: secondary
     }), solo ? _react.default.createElement(_Flag.default, {
-      country: lang[3][0][0].split('-')[1]
+      country: lang.countries[0].regionCode
     }) : _react.default.createElement(_ChevronRightRounded.default, {
       style: {
         opacity: 0.54
       }
     }));
+  })));
+
+  var dialogContent;
+  var currentPage = page || prevPage;
+
+  if (currentPage) {
+    dialogContent = _react.default.createElement("div", {
+      style: {
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column'
+      }
+    }, _react.default.createElement("div", null, _react.default.createElement(_Button.default, {
+      style: {
+        margin: '0px 24px'
+      },
+      onClick: function onClick() {
+        return setPage(null);
+      }
+    }, _react.default.createElement(_ChevronLeftRounded.default, null), "Back")), _react.default.createElement(_Divider.default, {
+      style: {
+        marginTop: 16
+      }
+    }), _react.default.createElement("div", {
+      className: classes.scrollingList,
+      style: {
+        flex: 1
+      }
+    }, currentPage.countries.map(function (country, i) {
+      var name = _countries.default[country.regionCode];
+      return _react.default.createElement(_ListItem.default, {
+        key: i,
+        dense: true,
+        button: true,
+        selected: country.langtag === selectedLang,
+        style: {
+          paddingLeft: 24,
+          paddingRight: 24
+        },
+        onClick: function onClick() {
+          return countryClickHandler(country);
+        }
+      }, _react.default.createElement(_ListItemText.default, {
+        primary: name,
+        secondary: country.nameNative
+      }), _react.default.createElement(_Flag.default, {
+        country: country.regionCode
+      }));
+    })));
+  }
+
+  return _react.default.createElement(_Dialog.default, _extends({
+    open: open,
+    onClose: function onClose() {
+      resetState();
+
+      _onClose(null);
+    }
+  }, other), _react.default.createElement(_DialogTitle.default, null, page ? 'Select country' : 'Select language'), _react.default.createElement("div", {
+    style: {
+      height: 312,
+      width: 240,
+      overflow: 'hidden'
+    }
+  }, _react.default.createElement(_reactMotion.Motion, {
+    defaultStyle: {
+      x: 0
+    },
+    style: {
+      x: (0, _reactMotion.spring)(page ? 1 : 0, animConfig)
+    }
+  }, function (style) {
+    return _react.default.createElement("div", {
+      style: {
+        height: '100%',
+        display: 'flex',
+        transform: "translate3d(".concat(-240 * style.x, "px, 0, 0)")
+      }
+    }, _react.default.createElement("div", {
+      style: {
+        minWidth: 240
+      }
+    }, mainPage), _react.default.createElement("div", {
+      style: {
+        minWidth: 240
+      }
+    }, dialogContent));
   })), _react.default.createElement(_Divider.default, null), _react.default.createElement(_DialogActions.default, null, _react.default.createElement(_Button.default, {
     color: "primary",
+    disabled: !selectedLang,
     onClick: function onClick() {
-      /* TODO: return selected language */
+      resetState();
+
+      _onClose(selectedLang);
     }
   }, "Select")));
 };
 
-var enhance = (0, _redux.compose)((0, _recompose.withState)('filter', 'setFilter'), (0, _recompose.withState)('selectedLang', 'setSelectedLang'), (0, _styles.withStyles)(styles));
+var enhance = (0, _redux.compose)((0, _recompose.withStateHandlers)(function (_ref) {
+  var initialSelectedLanguage = _ref.initialSelectedLanguage;
+  return {
+    selectedLang: initialSelectedLanguage,
+    page: null,
+    prevPage: null,
+    filter: ''
+  };
+}, {
+  setFilter: function setFilter() {
+    return function (value) {
+      return {
+        filter: value
+      };
+    };
+  },
+  setPage: function setPage() {
+    return function (value) {
+      if (value == null) return {
+        page: value
+      };else return {
+        page: value,
+        prevPage: value
+      };
+    };
+  },
+  setSelectedLang: function setSelectedLang() {
+    return function (value) {
+      return {
+        selectedLang: value
+      };
+    };
+  },
+  resetState: function resetState() {
+    return function (value) {
+      return {
+        selectedLang: null,
+        page: null,
+        filter: ''
+      };
+    };
+  }
+}), (0, _styles.withStyles)(styles));
 
 var _default = enhance(LanguagePickerDialog);
 
