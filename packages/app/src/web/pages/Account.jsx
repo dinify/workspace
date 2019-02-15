@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase'
 import { withStyles } from '@material-ui/core/styles';
 import { getClaims } from 'ducks/auth/selectors';
-import { withState } from 'recompose';
+import { withStateHandlers } from 'recompose';
+import { parseLanguages } from '@dinify/common/dist/lib/FN';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import OpenInNew from '@material-ui/icons/OpenInNewRounded';
 import ArrowUpward from '@material-ui/icons/ArrowUpwardRounded';
@@ -23,7 +24,7 @@ import LanguagePickerDialog from '@dinify/common/dist/components/dialogs/Languag
 import Image from 'web/components/Image';
 import Flag from '@dinify/common/dist/components/Flag';
 import Card from 'web/components/Card';
-import languages from '@dinify/common/dist/lib/languages';
+import languagesRaw from '@dinify/common/dist/lib/languages';
 import countries from '@dinify/common/dist/lib/countries';
 
 const styles = theme => ({
@@ -50,18 +51,24 @@ const localizedType = {
   waiter: 'Waiter'
 }
 
-const getLang = l => {
-  let lang = null;
-  languages.forEach(curr => {
-    curr[3].forEach(reg => {
-      if (reg[0] === l) {
-        const arr = reg[0].split('-');
-        const code = arr[arr.length - 1];
-        lang = [curr[0], curr[1], curr[2], reg[0], reg[1], code, countries[code]]
+const languages = parseLanguages(languagesRaw);
+
+const getLang = langtag => {
+  let result = null;
+  languages.forEach(lang => {
+    lang.countries.forEach(country => {
+      if (country.langtag === langtag) {
+        result = {
+          ...lang,
+          country: {
+            ...country,
+            name: countries[country.regionCode]
+          }
+        };
       }
     });
   });
-  return lang;
+  return result;
 }
 
 const openInNewTab = (url) => {
@@ -78,6 +85,7 @@ const Account = ({
   dispatch,
   langDialogOpen,
   setLangDialogOpen,
+  initialSelectedLanguage,
   ...other
 }) => {
 
@@ -134,13 +142,13 @@ const Account = ({
         </Typography>
         {primaryLang && <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={() => {setLangDialogOpen(true)}}>
           <ListItemIcon>
-            <Flag country={primaryLang[5]}/>
+            <Flag country={primaryLang.country.regionCode}/>
           </ListItemIcon>
-          <ListItemText primary={primaryLang[1]} secondary={primaryLang[6]} />
+          <ListItemText primary={primaryLang.name} secondary={primaryLang.country.nameNative} />
           <ChevronRight />
         </ListItem>}
         {!primaryLang && <div style={{padding: '16px 24px'}}>
-          <Button onClick={() => {setLangDialogOpen(true)}} variant="text" color="primary">
+          <Button onClick={() => {setLangDialogOpen(true, primaryLang.code)}} variant="text" color="primary">
             Set primary language
           </Button>
         </div>}
@@ -152,13 +160,13 @@ const Account = ({
           const language = getLang(lang);
           return <ListItem style={{paddingLeft: 24, paddingRight: 24}}>
             <ListItemIcon>
-              <Flag country={language[5]}/>
+              <Flag country={language.country.regionCode}/>
             </ListItemIcon>
-            <ListItemText primary={language[1]} secondary={language[6]} />
-            <IconButton>
+            <ListItemText primary={primaryLang.name} secondary={primaryLang.country.nameNative} />
+            <IconButton onClick={() => {/* TODO: Remove this language from user's profile */}}>
               <Delete />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={() => {/* TODO: Swap this language with the primary one */}}>
               <ArrowUpward />
             </IconButton>
           </ListItem>;
@@ -203,7 +211,13 @@ const Account = ({
         </Button>
       </div>
 
-      <LanguagePickerDialog open={langDialogOpen} onClose={() => {setLangDialogOpen(false)}}/>
+      <LanguagePickerDialog
+        open={langDialogOpen}
+        initialSelectedLanguage={initialSelectedLanguage}
+        onClose={(langtag) => {
+          // TODO: persist langtag in firebase for appropriate key (primary or add to other)
+          setLangDialogOpen(false)
+        }}/>
     </div>
   );
 };
@@ -211,7 +225,18 @@ const Account = ({
 const enhance = compose(
   withFirebase,
   withStyles(styles),
-  withState('langDialogOpen', 'setLangDialogOpen'),
+  withStateHandlers(
+    () => ({
+      langDialogOpen: false,
+      initialSelectedLanguage: null
+    }),
+    {
+      setLangDialogOpen: () => (value, initialSelectedLanguage) => ({
+        langDialogOpen: value,
+        initialSelectedLanguage
+      }),
+    }
+  ),
   connect(
     state => ({
       user: state.firebase.auth,
