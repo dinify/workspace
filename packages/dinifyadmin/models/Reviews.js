@@ -16,6 +16,10 @@ const ReviewsSchema = new mongoose.Schema({
   machine_translated: Boolean,
   machine_translatable: Boolean
 });
+ReviewsSchema.index({ id: 1 }, { unique: true });
+ReviewsSchema.index({ location_id: 1 });
+ReviewsSchema.index({ text: 'text' });
+ReviewsSchema.index({ title: 'text' });
 const Reviews = mongoose.model('reviews', ReviewsSchema);
 
 export default Reviews;

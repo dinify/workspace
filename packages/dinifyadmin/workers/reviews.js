@@ -5,6 +5,7 @@ import async from 'async';
 import eachOfSeries from 'async/eachOfSeries';
 import eachOf from 'async/eachOf';
 
+import { langDistForRestaurant } from './langcounts';
 
 const saveReviews = (locID, limit, page, done) => {
   taAPI.getReviews({ locID, limit, offset: page*limit }).then((res) => {
@@ -42,7 +43,7 @@ const saveReviews = (locID, limit, page, done) => {
 
 const doIt = (limit, page) => {
   Restaurants
-  .find({ targetLang: {$lt: 1}})
+  .find()
   .sort({ num_reviews: -1, _id: 1 })
   .skip(limit*page)
   .limit(limit)
@@ -52,7 +53,9 @@ const doIt = (limit, page) => {
       (restaurant, key, cb) => {
         console.log('//////////////////////////');
         console.log(restaurant.name);
-        saveReviews(restaurant.location_id, 50, 0, cb);
+        saveReviews(restaurant.location_id, 50, 0, () => {
+          langDistForRestaurant(restaurant, cb);
+        });
       },
       (e) => {
         if (restaurants.length) {

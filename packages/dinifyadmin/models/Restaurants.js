@@ -42,6 +42,23 @@ const RestaurantsSchema = new mongoose.Schema({
   targetLang: Number,
   targetLangRel: Number
 });
+RestaurantsSchema.index({ location_id: 1 }, { unique: true });
+RestaurantsSchema.index({ name: 'text' });
+RestaurantsSchema.index({ num_reviews: -1 });
+RestaurantsSchema.index({ num_reviews: -1, _id: 1 });
+RestaurantsSchema.index({ targetLang: -1 });
+RestaurantsSchema.index({ targetLangRel: -1 });
+RestaurantsSchema.index({ 'langDist.ja.count': -1 });
+RestaurantsSchema.index({ 'langDist.ko.count': -1 });
+RestaurantsSchema.index({ 'langDist.zhCN.count': -1 });
+RestaurantsSchema.index({ 'langDist.zhTW.count': -1 });
+RestaurantsSchema.index({ 'langDist.ru.count': -1 });
+RestaurantsSchema.index({ 'langDist.it.count': -1 });
+RestaurantsSchema.index({ 'langDist.es.count': -1 });
+RestaurantsSchema.index({ 'langDist.fr.count': -1 });
+RestaurantsSchema.index({ 'langDist.tr.count': -1 });
+
 const Restaurants = mongoose.model('restaurants', RestaurantsSchema);
+
 
 export default Restaurants;
