@@ -1,4 +1,5 @@
 import React from 'react';
+import R from 'ramda';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase'
@@ -83,8 +84,10 @@ const Account = ({
   firebase,
   claims,
   dispatch,
+  dialogType,
   langDialogOpen,
-  setLangDialogOpen,
+  openDialog,
+  closeDialog,
   initialSelectedLanguage,
   ...other
 }) => {
@@ -140,7 +143,7 @@ const Account = ({
         <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
           Default language
         </Typography>
-        {primaryLang && <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={() => {setLangDialogOpen(true)}}>
+        {primaryLang && <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={() => {openDialog('primary', primaryLang.code)}}>
           <ListItemIcon>
             <Flag country={primaryLang.country.regionCode}/>
           </ListItemIcon>
@@ -148,7 +151,7 @@ const Account = ({
           <ChevronRight />
         </ListItem>}
         {!primaryLang && <div style={{padding: '16px 24px'}}>
-          <Button onClick={() => {setLangDialogOpen(true, primaryLang.code)}} variant="text" color="primary">
+          <Button onClick={() => {openDialog('primary')}} variant="text" color="primary">
             Set primary language
           </Button>
         </div>}
@@ -156,23 +159,41 @@ const Account = ({
         <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
           Other languages
         </Typography>
-        {profile.language && profile.language.other.map(lang => {
+        {profile.language && profile.language.other.map((lang, i) => {
           const language = getLang(lang);
-          return <ListItem style={{paddingLeft: 24, paddingRight: 24}}>
+          return <ListItem key={language.country.langtag} style={{paddingLeft: 24, paddingRight: 24}}>
             <ListItemIcon>
               <Flag country={language.country.regionCode}/>
             </ListItemIcon>
-            <ListItemText primary={primaryLang.name} secondary={primaryLang.country.nameNative} />
-            <IconButton onClick={() => {/* TODO: Remove this language from user's profile */}}>
+            <ListItemText primary={language.name} secondary={language.country.nameNative} />
+            <IconButton onClick={() => {
+              const other = R.remove(i, 1, profile.language.other);
+              firebase.updateProfile({
+                language: {
+                  ...profile.language,
+                  other
+                }
+              });
+            }}>
               <Delete />
             </IconButton>
-            <IconButton onClick={() => {/* TODO: Swap this language with the primary one */}}>
+            <IconButton onClick={() => {
+              const other = profile.language.other;
+              const tmp = other[i];
+              other[i] = profile.language.primary;
+              firebase.updateProfile({
+                language: {
+                  primary: tmp,
+                  other
+                }
+              });
+            }}>
               <ArrowUpward />
             </IconButton>
           </ListItem>;
         })}
         <div style={{padding: '16px 24px'}}>
-          <Button onClick={() => {setLangDialogOpen(true)}} variant="text" color="primary">
+          <Button onClick={() => {openDialog('other')}} variant="text" color="primary">
             Add another language
           </Button>
         </div>
@@ -215,8 +236,27 @@ const Account = ({
         open={langDialogOpen}
         initialSelectedLanguage={initialSelectedLanguage}
         onClose={(langtag) => {
-          // TODO: persist langtag in firebase for appropriate key (primary or add to other)
-          setLangDialogOpen(false)
+          if (langtag) {
+            if (dialogType === 'primary') {
+              firebase.updateProfile({
+                language: {
+                  ...profile.language,
+                  primary: langtag,
+                }
+              });
+            }
+            else if (dialogType === 'other') {
+              const other = profile.language.other;
+              other.push(langtag);
+              firebase.updateProfile({
+                language: {
+                  ...profile.language,
+                  other
+                }
+              });
+            }
+          }
+          closeDialog()
         }}/>
     </div>
   );
@@ -228,12 +268,19 @@ const enhance = compose(
   withStateHandlers(
     () => ({
       langDialogOpen: false,
+      dialogType: null,
       initialSelectedLanguage: null
     }),
     {
-      setLangDialogOpen: () => (value, initialSelectedLanguage) => ({
-        langDialogOpen: value,
+      openDialog: () => (type, initialSelectedLanguage) => ({
+        langDialogOpen: true,
+        dialogType: type,
         initialSelectedLanguage
+      }),
+      closeDialog: () => () => ({
+        langDialogOpen: false,
+        dialogType: null,
+        initialSelectedLanguage: null
       }),
     }
   ),
