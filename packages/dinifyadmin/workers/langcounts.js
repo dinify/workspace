@@ -16,6 +16,21 @@ const getLangDist = (location_id, cb) => {
   ]).exec(cb);
 }
 
+const langGroupFromLangDist = (langDist, langs) => {
+  let countSum = 0;
+  let countRelSum = 0;
+  langs.forEach((lang) => {
+    if (langDist[lang]) {
+      countSum += langDist[lang].count;
+      countRelSum += langDist[lang].countRel;
+    }
+  })
+  return {
+    count: countSum,
+    countRel: countRelSum
+  }
+}
+
 export const langDistForRestaurant = (restaurant, cb) => {
   console.log("langDist for "+restaurant.name);
   getLangDist(restaurant.location_id, (e, langDist) => {
@@ -36,10 +51,12 @@ export const langDistForRestaurant = (restaurant, cb) => {
     const updObj = {
       num_reviews: total,
       langDist: langDistWithRel,
+      langGroups: {
+        eastAsia: langGroupFromLangDist(langDistWithRel, ['ja', 'ko', 'zhCN', 'zhTW'])
+      },
       targetLang,
       targetLangRel
     };
-    console.log(updObj.targetLangRel);
     Restaurants.update(
       {location_id: restaurant.location_id},
       updObj,
@@ -54,7 +71,7 @@ export const langDistForRestaurant = (restaurant, cb) => {
 
 const doIt = (limit, page) => {
   Restaurants
-  .find({ num_reviews: 0 })
+  .find()
   .sort({ num_reviews: -1, _id: 1 })
   .skip(limit*page)
   .limit(limit)

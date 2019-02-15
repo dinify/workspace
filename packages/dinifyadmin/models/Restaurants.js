@@ -39,6 +39,7 @@ const RestaurantsSchema = new mongoose.Schema({
   dietary_restrictions: Array,
   establishment_types: Array,
   langDist: Object,
+  langGroups: Object,
   targetLang: Number,
   targetLangRel: Number
 });
@@ -57,6 +58,8 @@ RestaurantsSchema.index({ 'langDist.it.count': -1 });
 RestaurantsSchema.index({ 'langDist.es.count': -1 });
 RestaurantsSchema.index({ 'langDist.fr.count': -1 });
 RestaurantsSchema.index({ 'langDist.tr.count': -1 });
+
+RestaurantsSchema.index({ 'langGroups.eastAsia.countRel': -1 });
 
 const Restaurants = mongoose.model('restaurants', RestaurantsSchema);
 

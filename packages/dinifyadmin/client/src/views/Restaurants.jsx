@@ -30,7 +30,7 @@ let makeChartData = ({labels, data}) => {
         labels,
         datasets: [
           {
-            label: "Countries",
+            label: "Reviews",
             fill: true,
             backgroundColor: gradientStroke,
             hoverBackgroundColor: gradientStroke,
@@ -105,8 +105,7 @@ const useFields = [
   },
   {
     Header: "Reviews",
-    accessor: "num_reviews",
-    filterable: false
+    accessor: "num_reviews"
   },
   {
     Header: "Target",
@@ -117,6 +116,12 @@ const useFields = [
     Header: "T.Rel.",
     Cell: props => props.value ? (props.value*100).toFixed(2)+'%' : 0,
     accessor: "targetLangRel",
+    filterable: false
+  },
+  {
+    Header: "E.Asia",
+    Cell: props => props.value ? (props.value*100).toFixed(2)+'%' : 0,
+    accessor: "langGroups.eastAsia.countRel",
     filterable: false
   },
   {
@@ -222,7 +227,10 @@ const requestData = (pageSize, page, sorted, filtered) => {
   return new Promise((resolve, reject) => {
     // You can retrieve your data however you want, in this case, we will just use some local data.
     let query = {};
-    filtered.forEach((f) => query[f.id] = f.value);
+    filtered.forEach((f) => {
+      if (f.id === 'num_reviews') query[f.id] = {$gt: Number(f.value)};
+      else query[f.id] = f.value;
+    });
     getCount(query)
     .then((cRes) => {
       const totalCount = cRes.result;
@@ -236,6 +244,7 @@ const requestData = (pageSize, page, sorted, filtered) => {
         // You can use the filters in your request, but you are responsible for applying them.
         if (filtered.length) {
           filteredData = filtered.reduce((filteredSoFar, nextFilter) => {
+            if (['num_reviews'].includes(nextFilter.id)) return filteredSoFar; // ignore
             return filteredSoFar.filter(row => {
               return (row[nextFilter.id] + "").includes(nextFilter.value);
             });
