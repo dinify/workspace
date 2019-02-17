@@ -6,7 +6,7 @@ import { ofType } from 'redux-observable';
 import * as API from '@dinify/common/dist/api/user';
 import { checkinInit } from 'ducks/restaurant/actions';
 import { loadUserData } from 'ducks/app/actions';
-import { setCookie } from '@dinify/common/dist/lib/FN';
+import { setCookie, getCookie } from '@dinify/common/dist/lib/FN';
 import { actionTypes } from 'react-redux-firebase';
 import { change as changeForm } from 'redux-form';
 import { setPage, setLinkProviders } from './actions';
@@ -26,6 +26,32 @@ const accessTokenEpic = (action$, state$) =>
     })
   );
 
+
+const languageHeaderEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(actionTypes.SET_PROFILE),
+    mergeMap(() => {
+      const profile = state$.value.firebase.profile;
+      if (profile.language) {
+        let val = '';
+        if (profile.language.primary) val += profile.language.primary;
+        if (profile.language.other && profile.language.other.length > 0) {
+          const len = profile.language.other.length;
+          profile.language.other.forEach((lang, i) => {
+            // distribute quality value weight and round to two decimal places
+            const q = Math.floor(100 * ((len - i) / (len + 1))) / 100;
+            val += `,${lang}:q=${q}`; // use colons instead of semicolons for cookie storage
+          });
+        }
+        const curr = getCookie('lang');
+        if (curr !== val) {
+          setCookie('lang', val);
+          return of({ type: 'LANGUAGE_UPDATED' });
+        }
+      }
+      return of();
+    })
+  );
 
 // return this.loginUser(error.email, params.password).then(result => {
 //   console.log('Reauthentication result', result);
@@ -96,5 +122,6 @@ const loginErrorEpic = (action$: Observable, { getFirebase }) =>
 export default [
   loginLinkEpic,
   accessTokenEpic,
+  languageHeaderEpic,
   loginErrorEpic,
 ];

@@ -5,7 +5,7 @@ export function Request(url, options = {}, noToken) {
   return new Promise((resolve, reject) => {
     if (!url) reject(new Error('URL parameter required'));
     const token = getCookie('access_token');
-    const lang = getCookie('lang');
+    const lang = getCookie('lang').split(':').join(';'); // Replace colons with semicolons to be able to store string in cookies
     const defaultOptions = {};
     if (!options.headers) {
       defaultOptions.headers = { 'Content-Type': 'application/json' };

@@ -12,6 +12,7 @@
   "scripts": {
     "app:dev": "cd packages/app && yarn start-dev",
     "app:deploy": "cd packages/app && yarn deploy",
+    "functions:deploy": "cd packages/app && yarn deploy:functions",
     "dash:dev": "cd packages/dashboard && yarn start-dev",
     "dash:deploy": "cd packages/dashboard && yarn deploy",
     "waiter:dev": "cd packages/waiterboard && yarn start-dev",
