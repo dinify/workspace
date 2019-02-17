@@ -18,7 +18,8 @@ function Request(url) {
   return new Promise(function (resolve, reject) {
     if (!url) reject(new Error('URL parameter required'));
     var token = (0, _FN.getCookie)('access_token');
-    var lang = (0, _FN.getCookie)('lang');
+    var lang = (0, _FN.getCookie)('lang').split(':').join(';'); // Replace colons with semicolons to be able to store string in cookies
+
     var defaultOptions = {};
 
     if (!options.headers) {
