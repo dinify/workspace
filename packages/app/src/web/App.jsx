@@ -17,6 +17,7 @@ import Cart from 'web/pages/Cart';
 import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
+import LandingPage from 'web/pages/LandingPage';
 
 import AccountSignIn from 'web/components/AccountSignIn';
 import AppBar from 'web/components/AppBar';
@@ -66,9 +67,11 @@ class App extends React.Component {
 
     return (
       <div>
-        <AppBar>
-          <AccountSignIn visible={!this.match(['/signin', '/account'])} history={history}/>
-        </AppBar>
+        {!this.match(['/landing']) &&
+          <AppBar>
+            <AccountSignIn visible={!this.match(['/signin', '/account'])} history={history}/>
+          </AppBar>
+        }
         <div style={{marginBottom: 56}}>
           <Switch location={location}>
             <Route exact path="/" render={() => (
@@ -96,11 +99,12 @@ class App extends React.Component {
             <Route path="/cart" component={Cart} />
             <Route path="/receipt" component={Receipt} />
             <Route path="/services" component={Services} />
+            <Route path="/landing" component={LandingPage} />
           </Switch>
         </div>
         <Motion
           defaultStyle={{x: 0}}
-          style={{x: spring(this.match(['/signin', '/account']) ? 1 : 0)}}>
+          style={{x: spring(this.match(['/signin', '/account', '/landing']) ? 1 : 0)}}>
           {style =>
             <Navigation
               style={{

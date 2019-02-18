@@ -1,0 +1,8 @@
+module.exports = __webpack_public_path__ + "static/media/vodafone.d5aeae4f.jpg";
+
+
+//////////////////
+// WEBPACK FOOTER
+// ./src/assets/img/assets-for-demo/ourClients/vodafone.jpg
+// module id = 1136
+// module chunks = 0

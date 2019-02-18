@@ -1,0 +1,8 @@
+module.exports = __webpack_public_path__ + "static/media/ex-pricing.b4411275.jpg";
+
+
+//////////////////
+// WEBPACK FOOTER
+// ./src/assets/img/assets-for-demo/example-pages/ex-pricing.jpg
+// module id = 1126
+// module chunks = 0

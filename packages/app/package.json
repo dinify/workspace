@@ -15,6 +15,7 @@
     "fingerprintjs2": "^1.8.6",
     "firebase": "^5.7.2",
     "firebase-tools": "^6.3.0",
+    "flag-icon-css": "^3.2.1",
     "jsqrcode": "0.0.7",
     "lodash": "^4.17.10",
     "lodash.isfunction": "^3.0.9",

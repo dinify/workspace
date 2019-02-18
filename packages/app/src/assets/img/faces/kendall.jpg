@@ -1,0 +1,8 @@
+module.exports = __webpack_public_path__ + "static/media/kendall.5a0e395b.jpg";
+
+
+//////////////////
+// WEBPACK FOOTER
+// ./src/assets/img/faces/kendall.jpg
+// module id = 97
+// module chunks = 0
