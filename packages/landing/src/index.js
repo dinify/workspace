@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createHashHistory } from "history";
-import { Router, Route, Switch } from "react-router";
+// import { createHashHistory } from "history";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
 // import ReactPixel from "react-facebook-pixel";
 
 import "assets/scss/material-kit-pro-react.css";
@@ -24,7 +25,7 @@ import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.jsx";
 import SignupPage from "views/SignupPage/SignupPage.jsx";
 import ErrorPage from "views/ErrorPage/ErrorPage.jsx";
 
-var hist = createHashHistory();
+// var hist = createHashHistory();
 
 //ReactPixel.init("111649226022273");
 //ReactPixel.pageView();
@@ -36,8 +37,10 @@ var hist = createHashHistory();
 //});
 
 ReactDOM.render(
-  <Router history={hist}>
+  <BrowserRouter>
     <Switch>
+      <Route exact path="/" component={LandingPage} />
+
       <Route path="/about-us" component={AboutUsPage} />
       <Route path="/blog-post" component={BlogPostPage} />
       <Route path="/blog-posts" component={BlogPostsPage} />
@@ -53,9 +56,7 @@ ReactDOM.render(
       <Route path="/shopping-cart-page" component={ShoppingCartPage} />
       <Route path="/signup-page" component={SignupPage} />
       <Route path="/error-page" component={ErrorPage} />
-
-      <Route exact path="/" component={LandingPage} />
     </Switch>
-  </Router>,
+  </BrowserRouter>,
   document.getElementById("root")
 );

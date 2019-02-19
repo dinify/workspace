@@ -1,24 +1,13 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-
-// @material-ui/icons
-import Chat from "@material-ui/icons/Chat";
-import Camera from "@material-ui/icons/CameraAlt";
-import VerifiedUser from "@material-ui/icons/VerifiedUser";
-import ViewList from "@material-ui/icons/ViewList";
-
-import Restaurant from "@material-ui/icons/Restaurant";
-
-import Fingerprint from "@material-ui/icons/Fingerprint";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import InfoArea from "components/InfoArea/InfoArea.jsx";
 
 import productStyle from "assets/jss/material-kit-pro-react/views/landingPageSections/productStyle.jsx";
 import presentationiPhone from "assets/img/appscreen1.jpg";
-import 'flag-icon-css/css/flag-icon.min.css';
+import "flag-icon-css/css/flag-icon.min.css";
 
 const countryCodes = [
   "us",
@@ -83,7 +72,11 @@ class SectionProduct extends React.Component {
             <div className={classes.sectionDescription}>
               <div style={{width: '280px', margin: '20px auto', textAlign: 'left'}}>
                 {countryCodes.map((code) =>
-                  <span style={{width: '50px', height: '38px', marginLeft: '20px', marginBottom: '16px', borderRadius: '3px', filter: 'brightness(95%)'}} className={`flag-icon flag-icon-${code}`} />
+                  <span
+                    key={code}
+                    style={{width: '50px', height: '38px', marginLeft: '20px', marginBottom: '16px', borderRadius: '3px', filter: 'brightness(95%)'}}
+                    className={`flag-icon flag-icon-${code}`}
+                  />
                 )}
               </div>
             </div>
