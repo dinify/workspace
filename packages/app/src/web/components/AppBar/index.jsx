@@ -30,10 +30,12 @@ const styles = theme => ({
   },
   expand: theme.mixins.toolbar,
   primary: {
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    fill: theme.palette.text.primary
   },
   contrastText: {
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.contrastText,
+    fill: theme.palette.primary.contrastText
   },
   themeButton: {
     color: theme.palette.text.secondary,
@@ -57,8 +59,8 @@ const AppBar = ({
 }) => {
   const logoWithText = true;
   const logo = (
-    <Link to="/">
-      {logoWithText && <LogoText className={color === 'default' ? classes.primary : classes.contrastText} style={{width: 74}}/>}
+    <Link to="/" style={{height: 24}}>
+      {logoWithText && <LogoText className={color === 'default' ? classes.primary : classes.contrastText}/>}
       {!logoWithText && <Logo className={color === 'default' ? classes.primary : classes.contrastText}/>}
     </Link>
   );

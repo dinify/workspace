@@ -163,14 +163,16 @@ export class SignInForm extends React.Component {
               flexDirection: 'column',
               marginBottom: 16
             }}>
-              <Link to="/">
+              <Link to="/" style={{height: 40}}>
                 <div style={{
+                  height: 40,
                   backgroundColor: "#c13939",
                   color: "rgba(255, 255, 255, 1)",
-                  borderRadius: 74 / 2,
+                  fill: "rgba(255, 255, 255, 1)",
+                  borderRadius: 20,
                   padding: '8px 16px'
                 }}>
-                  <LogoText color="inherit" style={{width: 74}}/>
+                  <LogoText color="inherit"/>
                 </div>
               </Link>
               <Typography style={{marginTop: 16, marginBottom: 8}} variant="h6">

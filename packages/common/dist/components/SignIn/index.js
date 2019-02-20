@@ -263,19 +263,21 @@ function (_React$Component) {
           marginBottom: 16
         }
       }, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/"
+        to: "/",
+        style: {
+          height: 40
+        }
       }, _react.default.createElement("div", {
         style: {
+          height: 40,
           backgroundColor: "#c13939",
           color: "rgba(255, 255, 255, 1)",
-          borderRadius: 74 / 2,
+          fill: "rgba(255, 255, 255, 1)",
+          borderRadius: 20,
           padding: '8px 16px'
         }
       }, _react.default.createElement(_LogoText.default, {
-        color: "inherit",
-        style: {
-          width: 74
-        }
+        color: "inherit"
       }))), _react.default.createElement(_Typography.default, {
         style: {
           marginTop: 16,
