@@ -142,7 +142,7 @@ App = connect(
 
 const AppWrapper = () => (
   <div>
-    <Router>
+    <Router basename="/s">
       <Route component={App} />
     </Router>
   </div>
