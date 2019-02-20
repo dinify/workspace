@@ -51,7 +51,7 @@
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
-    "start": "serve -s build",
+    "start": "serve -s build -p 3000",
     "start-dev": "npm-run-all -p watch-css start",
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
