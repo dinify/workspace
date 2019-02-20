@@ -79,7 +79,7 @@ class LandingPage extends React.Component {
               <div className={classes.right}>
                 &copy; {1900 + new Date().getYear()} , made with{" "}
                 <Favorite className={classes.icon} /> by{" "}
-                <a href="https://www.dinify.app">Dinify</a>
+                <a href="https://www.dinify.app/s">Dinify</a>
               </div>
             </div>
           }

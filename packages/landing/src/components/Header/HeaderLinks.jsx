@@ -88,7 +88,7 @@ function HeaderLinks({ ...props }) {
     <List className={classes.list + " " + classes.mlAuto}>
       <ListItem className={classes.listItem}>
         <Button
-          href="https://www.dinify.app"
+          href="https://www.dinify.app/s"
           color={window.innerWidth < 960 ? "info" : "white"}
           target="_blank"
           className={classes.navButton}
