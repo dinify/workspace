@@ -1,3 +1,3 @@
 export default {
-  LOAD_USER_DATA: 'tabb/app/LOAD_USER_DATA',
+  LOAD_USER_DATA: 'dinify/app/LOAD_USER_DATA',
 };

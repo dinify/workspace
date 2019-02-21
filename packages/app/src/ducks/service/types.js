@@ -1,5 +1,5 @@
 export default {
-  CALL_SERVICE_INIT: 'tabb/service/CALL_SERVICE_INIT',
-  CALL_SERVICE_DONE: 'tabb/service/CALL_SERVICE_DONE',
-  CALL_SERVICE_FAIL: 'tabb/service/CALL_SERVICE_FAIL'
+  CALL_SERVICE_INIT: 'dinify/service/CALL_SERVICE_INIT',
+  CALL_SERVICE_DONE: 'dinify/service/CALL_SERVICE_DONE',
+  CALL_SERVICE_FAIL: 'dinify/service/CALL_SERVICE_FAIL'
 };
