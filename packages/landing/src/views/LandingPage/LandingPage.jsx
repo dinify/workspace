@@ -14,6 +14,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 import landingPageStyle from "./landingPageStyle.jsx";
+import LogoText from "@dinify/common/dist/icons/LogoText";
 
 // Sections for this page
 import SectionProduct from "./Sections/SectionProduct.jsx";
@@ -32,7 +33,7 @@ class LandingPage extends React.Component {
       <div>
         <Header
           color="transparent"
-          brand="Dinify"
+          brand={<LogoText className={classes.contrastText} />}
           subBrand="for restaurants"
           links={<HeaderLinks dropdownHoverColor="info" />}
           fixed
@@ -55,7 +56,7 @@ class LandingPage extends React.Component {
                   color="primary"
                   style={{background: "linear-gradient(60deg, #c13939, #ff005e)"}}
                   size="lg"
-                  href="/"
+                  href="/s"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

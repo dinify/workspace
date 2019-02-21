@@ -16,7 +16,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Menu from "@material-ui/icons/Menu";
 import Close from "@material-ui/icons/Close";
 // core components
-import headerStyle from "assets/jss/material-kit-pro-react/components/headerStyle.jsx";
+import headerStyle from "./headerStyle.jsx";
 
 class Header extends React.Component {
   constructor(props) {
@@ -64,13 +64,9 @@ class Header extends React.Component {
       boxShadow: "none",
       borderRadius: 0
     };
-    const brandStyle = {
-      fontFamily: "Futura",
-      fontSize: 24
-    };
     const subBrandStyle = {
-      fontFamily: "Helvetica Neue",
-      fontSize: 22,
+      fontFamily: "Lato",
+      //fontSize: 20,
       marginLeft: 5
     };
     if (colorName === "primary") AppBarStyle.background = "linear-gradient(60deg, rgb(193, 57, 57), rgb(195, 0, 72))";
@@ -78,8 +74,10 @@ class Header extends React.Component {
       <AppBar className={appBarClasses} style={AppBarStyle}>
         <Toolbar className={classes.container}>
           <Button className={classes.title}>
-            <Link style={brandStyle} to="/">{brand}</Link>
-            <span style={subBrandStyle}>{subBrand && ` | ${subBrand}`}</span>
+            <Link to="/">
+              {brand}
+              <span style={subBrandStyle}>{subBrand && ` | ${subBrand}`}</span>
+            </Link>
           </Button>
           <Hidden smDown implementation="css" className={classes.hidden}>
             <div className={classes.collapse}>{links}</div>

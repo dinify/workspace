@@ -12,6 +12,10 @@ const landingPageStyle = {
     ...container,
     zIndex: "2"
   },
+  contrastText: {
+    color: '#ffffff',
+    fill: '#ffffff'
+  },
   title: {
     ...title,
     display: "inline-block",

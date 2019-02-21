@@ -330,7 +330,7 @@ const title = {
   marginTop: "30px",
   marginBottom: "25px",
   minHeight: "32px",
-  fontFamily: `Futura, sans-serif`
+  fontFamily: `Lato, sans-serif`
 };
 
 const cardTitle = {
