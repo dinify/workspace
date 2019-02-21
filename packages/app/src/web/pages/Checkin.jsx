@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { checkinInit } from 'ducks/restaurant/actions';
-import * as FN from '@dinify/common/dist/lib/FN';
 import QRscanner from './QRscanner';
 
 type CheckinProps = {
@@ -14,9 +13,6 @@ type CheckinProps = {
 class Checkin extends React.PureComponent {
   render() {
     const { checkedInRestaurant, checkin }: CheckinProps = this.props;
-
-    const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
-
     let initiated = false;
 
     const onData = (data) => {
@@ -36,7 +32,7 @@ class Checkin extends React.PureComponent {
           onData={onData}
         />
 
-        {/*checkedInRestaurant ? <div>{checkedInRestaurant}</div> : 'not checked in'*/}
+        {/* checkedInRestaurant ? <div>{checkedInRestaurant}</div> : 'not checked in' */}
       </div>
     )
   }
@@ -44,7 +40,7 @@ class Checkin extends React.PureComponent {
 
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     checkedInRestaurant: state.restaurant.checkedInRestaurant
   }),
   {

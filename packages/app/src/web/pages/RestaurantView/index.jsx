@@ -13,10 +13,10 @@ import Carousel from 'web/components/Carousel';
 import { fetchRestaurantInit } from 'ducks/restaurant/actions';
 import { fetchMenucategoriesInit } from 'ducks/menuCategory/actions';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
+import { checkinInit } from 'ducks/restaurant/actions';
 import InfoSection from './InfoSection';
 import MenuSection from './MenuSection';
 import Nav from './Nav';
-import { checkinInit } from 'ducks/restaurant/actions';
 
 const styles = theme => ({
   category: {
@@ -69,7 +69,6 @@ class RestaurantView extends React.PureComponent {
       // router,
       match: { params },
       location: { search },
-      history,
       checkin,
       user,
       checkedInRestaurant

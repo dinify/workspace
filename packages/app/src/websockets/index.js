@@ -15,7 +15,6 @@ const websockets = (store) => {
   window.initSocket = initSocket;
 
   socket.on('connect', () => {
-    console.log('Socket.io connected');
     initSocket();
   });
 

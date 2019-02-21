@@ -57,10 +57,7 @@ class BillItem extends React.PureComponent {
     const {
       classes,
       padding,
-      index,
       item,
-      selectBillItem,
-      loggedUserId,
       onClick,
       seat
     } = this.props;

@@ -50,10 +50,11 @@ class AccountSignIn extends React.Component {
     measuredWidth: 0
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if ((this.props.user.isLoaded !== prevProps.user.isLoaded) ||
-        (this.props.user.isEmpty !== prevProps.user.isEmpty)) {
-      console.log('Setting measured width to ', this.rootElem.clientWidth);
+  componentDidUpdate(prevProps) {
+    const { user } = this.props;
+    if ((user.isLoaded !== prevProps.user.isLoaded) ||
+        (user.isEmpty !== prevProps.user.isEmpty)) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({measuredWidth: this.rootElem.clientWidth});
     }
   }

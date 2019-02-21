@@ -70,6 +70,7 @@ class Eat extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const { selecting, seats } = this.props;
     if (prevProps.selecting !== selecting) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({splitMenuOpen: selecting});
     }
     if (prevProps.seats !== seats &&
@@ -77,29 +78,33 @@ class Eat extends React.Component {
         prevProps.seats[0] !== undefined &&
         prevProps.seats[0] !== seats[0] &&
         prevProps.seats[0].paid !== seats[0].paid) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({awaitingPaymentConfirmation: !seats[0].paid});
     }
   }
 
   onCancelSplit = () => {
-    this.props.clearSelectedBillItems();
+    const { clearSelectedBillItems } = this.props;
+    clearSelectedBillItems();
     this.setState({splitMenuOpen: false});
   }
 
   onGuestClick = i => {
-    if (!this.props.selecting) {
+    const { selecting, selectSeat, seats } = this.props;
+    if (!selecting) {
       this.setActiveGuest(i);
     }
     else {
-      this.props.selectSeat({
-        selected: !this.props.seats[i].selected,
+      selectSeat({
+        selected: !seats[i].selected,
         seatIndex: i
       })
     }
   }
 
   setActiveGuest = i => {
-    if (this.state.payMenuOpen) this.setState({payMenuOpen: false});
+    const { payMenuOpen } = this.state;
+    if (payMenuOpen) this.setState({payMenuOpen: false});
     this.setState({activeGuest: i});
   }
 
@@ -124,25 +129,19 @@ class Eat extends React.Component {
       selecting,
       setGratitude,
       gratitude,
-      subtotal,
       rmFromCart,
       checkedInRestaurant,
-      orderType,
-      setOrderType,
-      cartItems,
       order,
       selectBillItem,
       selectedBillItems,
       selectedSeats,
-      splitBill, //transferBill,
+      splitBill,
       loggedUserId,
-      initTransaction,
       splitLoading,
     } = this.props;
     let { seats = [] } = this.props;
 
     const { activeGuest, editingCart, awaitingPaymentConfirmation, payMenuOpen, splitMenuOpen } = this.state;
-    const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
     const multiparty = seats.length > 1;
     for (let i = 0; i < seats.length; i+=1) {
       if (seats[i].user_id === loggedUserId) {

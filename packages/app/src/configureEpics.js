@@ -1,5 +1,3 @@
-import * as most from 'most';
-import { from } from 'rxjs';
 import { combineEpics } from 'redux-observable';
 
 import { epics as crud } from 'ducks/crudEpics';
@@ -16,7 +14,7 @@ import { getFirebase } from 'react-redux-firebase'
 
 import { appEpics as app } from 'ducks/app';
 
-//const combineEpics = (...epics) => (...args) =>
+// const combineEpics = (...epics) => (...args) =>
 //  most.merge(
 //    ...epics.map(epic => epic(...args))
 //  );

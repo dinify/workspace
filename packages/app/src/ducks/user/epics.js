@@ -1,6 +1,6 @@
 // @flow
-import { Observable, of, from } from 'rxjs';
-import { mergeMap, map, catchError, filter, ignoreElements, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { ignoreElements, tap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 
 import types from './types';

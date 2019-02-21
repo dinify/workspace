@@ -5,7 +5,9 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 import { reducer as formReducer } from 'redux-form';
 import { snackbarReducer } from 'material-ui-snackbar-redux';
 import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
 
 import auth from 'ducks/auth';
 import ui from 'ducks/ui';

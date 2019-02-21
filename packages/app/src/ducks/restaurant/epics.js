@@ -1,6 +1,6 @@
 // @flow
 import { Observable, of, from } from 'rxjs';
-import { mergeMap, exhaustMap, map, catchError, filter, ignoreElements, tap, debounceTime } from 'rxjs/operators';
+import { mergeMap, exhaustMap, map, catchError, debounceTime } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import * as API from '@dinify/common/dist/api/restaurant';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
