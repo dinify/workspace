@@ -418,7 +418,7 @@ class Eat extends React.Component {
             </ContextMenu>
           </div>
         }
-        {!checkedin && <Cart appbar={false}/>}
+        {!checkedin && <Cart />}
         {/* <div style={{
           display: 'flex',
           flexDirection: 'column',

@@ -12,7 +12,6 @@ import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 
 // import SwipableItem from 'web/components/SwipableItem';
-import AppBar from 'web/components/AppBar';
 import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
 import Typography from '@dinify/common/dist/components/Typography';
 import CartItem from 'web/components/CartItem';
@@ -48,10 +47,8 @@ const Cart = ({
   order,
   checkedInRestaurant,
   orderType,
-  appbar = true,
   setOrderType
 }) => {
-  const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
 
   const notCheckedIn = !checkedin; // !checkedInRestaurant;
 
@@ -60,9 +57,10 @@ const Cart = ({
     setOrderType({ orderType: 'AHEAD' })
   }
 
+  if (!cart) return null;
+
   return (
     <div style={{paddingBottom: 64}}>
-      {!iosInstalled && appbar && <AppBar position="static"/>}
       {/* cartItemsList.map(item =>
         <div key={item.id} style={{paddingTop: 16}}>
           <SwipableItem
@@ -154,7 +152,7 @@ const Cart = ({
         {notCheckedIn &&
           <div>
             <Typography style={{marginTop: 16}}>
-              Check in by scanning the QR code in a restaurant near you to get started.
+              Hello there Check in by scanning the QR code in a restaurant near you to get started.
             </Typography>
           </div>
         }
@@ -165,7 +163,7 @@ const Cart = ({
 
 export default connect(
   state => ({
-    cart: state.cart.cart,
+    cart: state.cart.cart.res,
     checkedin: state.seat.checkedin,
     orderType: state.cart.orderType,
     checkedInRestaurant: state.restaurant.checkedInRestaurant

@@ -81,7 +81,13 @@ const orderEpic = (action$, state$) =>
 const updateAfterEditEpic = (action$: Observable) =>
   action$.pipe(
     ofType(types.REMOVE_ORDERITEM_DONE),
-    switchMap(() => of(fetchSeatsInit()))
+    mergeMap(() => {
+      const callActions = [
+        fetchSeatsInit(),
+        fetchCartInit()
+      ];
+      return callActions;
+    })
   );
 
 export default [

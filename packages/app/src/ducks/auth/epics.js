@@ -16,10 +16,12 @@ const accessTokenEpic = (action$, state$) =>
     }),
     mergeMap(() => {
       const auth = state$.value.firebase.auth;
+      let token = null;
       if (auth.stsTokenManager && auth.stsTokenManager.accessToken) {
-        setCookie('access_token', auth.stsTokenManager.accessToken, 90);
+        token = auth.stsTokenManager.accessToken;
+        setCookie('access_token', token, 90);
       } else setCookie('access_token', '', 1);
-      return of({ type: 'ACCESSTOKEN_HANDLED' });
+      return of({ type: 'ACCESSTOKEN_HANDLED', payload: { token } });
     })
   );
 
