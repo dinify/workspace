@@ -42,6 +42,7 @@ import * as FN from '@dinify/common/dist/lib/FN';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 
 const styles = theme => ({
   container: {
@@ -245,15 +246,15 @@ class Eat extends React.Component {
                               </Typography>
                             </div>
 
-                            {userIsMe && <Button
+                            {userIsMe && <Fab
                               disabled={notCheckedIn || selecting}
-                              style={{marginTop: 16}}
-                              variant="extendedFab"
-                              color="primary" fullWidth
+                              style={{marginTop: 16, width: '100%'}}
+                              variant="extended"
+                              color="primary"
                               onClick={() => order()}>
                               <RestaurantMenu style={{marginRight: 16}} />
                               Order
-                            </Button>}
+                            </Fab>}
                           </div>
                         }
                         <Divider style={{marginTop: userIsMe && seat.cart ? 0 : 16, marginBottom: 16}}/>
@@ -358,11 +359,11 @@ class Eat extends React.Component {
                                 marginTop: 16,
                                 marginBottom: 16
                               }}>
-                              <Button fullWidth disabled={awaitingPaymentConfirmation || selecting} onClick={() => this.openPayMenu()} color="primary" variant="extendedFab" aria-label="Pay">
+                              <Fab fullWidth disabled={awaitingPaymentConfirmation || selecting} onClick={() => this.openPayMenu()} color="primary" variant="extended" aria-label="Pay">
                                 <CreditCard style={{
                                         marginRight: 16
                                       }}/> Pay
-                              </Button>
+                              </Fab>
                               {awaitingPaymentConfirmation &&
                                 <Typography style={{marginTop: 16, width: '100%', textAlign: 'center'}} variant="caption">
                                   Awaiting payment confirmation...

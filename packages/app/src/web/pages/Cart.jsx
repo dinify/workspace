@@ -8,7 +8,7 @@ import Delete from '@material-ui/icons/DeleteRounded';
 import Done from '@material-ui/icons/DoneRounded';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 
 // import SwipableItem from 'web/components/SwipableItem';
@@ -141,15 +141,16 @@ const Cart = ({
             })}
           </Typography>
         </div>}
-        <Button
+        <Fab
           disabled={notCheckedIn || cart.count === 0 || cart === null }
-          style={{marginTop: 16}}
-          variant="extendedFab"
-          color="primary" fullWidth
+          style={{marginTop: 16, width: '100%'}}
+          variant="extended"
+          color="primary"
           onClick={() => order()}>
           <RestaurantMenu style={{marginRight: 16}} />
           Order
-        </Button>
+        </Fab>
+
         {notCheckedIn &&
           <div>
             <Typography style={{marginTop: 16}}>

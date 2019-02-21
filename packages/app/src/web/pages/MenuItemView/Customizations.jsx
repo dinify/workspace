@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Typography from '@dinify/common/dist/components/Typography';
 import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -240,21 +240,20 @@ let Customizations = ({
           </div>
         )
       })}
-      <Button
+      <Fab
         onClick={() => {
           addToCart({ menuItemId: menuItem.id });
           history.goBack();
         }} // add item to cart
-        style={{marginTop: 24, marginBottom: 16}}
+        style={{marginTop: 24, marginBottom: 16, width: '100%'}}
         disabled={selectCount < options.length && options.length !== 0}
-        fullWidth
-        variant="extendedFab"
+        variant="extended"
         color="primary"
         className={classes.button}
       >
         <AddShoppingCart style={{marginRight: 16}} />
         <span>Add to cart</span>
-      </Button>
+      </Fab>
     </div>
   )
 }
