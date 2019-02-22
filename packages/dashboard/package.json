@@ -4,11 +4,12 @@
   "private": true,
   "description": "Dinify Dashboard",
   "author": "Lukas Vanek",
+  "homepage": "https://dashboard.dinify.app",
   "scripts": {
     "start-dev": "react-scripts start",
     "start": "serve -s build",
     "build": "react-scripts build && cp build/index.html build/200.html",
-    "deploy": "react-scripts build && mv ./build/index.html ./build/200.html && surge ./build --domain=https://dashboard.dinify.app",
+    "deploy": "react-scripts build && firebase deploy --only hosting:dinify-dashboard",
     "test": "CI=true react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "coverage": "jest --coverage --env=jsdom",

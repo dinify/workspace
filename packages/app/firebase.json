@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target": "dinify-app",
     "public": "build",
     "ignore": [
       "firebase.json",

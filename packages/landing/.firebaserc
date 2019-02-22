@@ -5,8 +5,8 @@
   "targets": {
     "tabb-global": {
       "hosting": {
-        "dinify-app": [
-          "dinify-app"
+        "dinify": [
+          "dinify"
         ]
       }
     }

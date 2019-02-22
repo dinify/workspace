@@ -55,7 +55,7 @@ class LandingPage extends React.Component {
                   color="primary"
                   style={{background: "linear-gradient(60deg, #c13939, #ff005e)"}}
                   size="lg"
-                  href="/s"
+                  href="https://m.dinify.app"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
