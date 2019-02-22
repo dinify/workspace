@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "tabb-global",
+  "private_key_id": "e41b59a927fcd060d107f3f794992d7c00173604",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDgMIby+jf3tlLl\nczAulUQIrzwPSzcD70xNI6F2YEqAUnkQVrb98pQzU52TEuQ9OJTj7xHiOoJa4Rum\ne/bfMN43rpLdSQPMWijiYXjZzo+ZveqvAHgXpoJzP0dflkvmIgvhfadUvSqjspoG\nxM47yZIsS/OTpwr7JzZw4t/X+aOQfI9m5ohPndrUrr8kE6JzaY43J/3CObGsuO0R\nktpPsqgDTrLPcUV0FDKgaZgCZ3y6C+HXjGVJxbUNfx2zReR1CpZIxjboJjMWO+/q\nHg0jtUHSYWhYBpeXCkXN7QRruZBXR59O3JjWRc57Jk5Jsi4yH9BscmE8VBrZb0G+\nFL8L7X4hAgMBAAECggEANwYSCQ66r9SS8ffcioJeKVeBASvvu8p+yqwFE/28K1SS\nnBz8WsWv9A0ArrlDRXdeq7bgh8redZmsZKcmR09CKx5ws1kZUo2KXU2ZELQu8If5\nUqxlzUAz4j9UsDQ+OqR+kAB8EkM/dOAAB8tD5s6pTq/xf3rPKidMqFY2pFaD+5Dx\nJor1PQRULHuQM0D/mgiT7Rk04oizMRHLqZLpFfjbkHH221VQwukkiHMpAcPZOYlI\n3b0hchlSlD+7W/W/Uv6XYn+mwyfs2cL6rZXszXB0hHdmh8yN+s/bhPAXbtllpF6d\n6gUuz92D4DiEyOfA9TLsk641J4jOH+7Dr9Xlo3S8lQKBgQD26n3RvF1GRRMGqEv6\nRKXSgYPomy0Ofc7hz601Ghhapkd85CdpBfWVFob49Ec71ba43lcuc44qZF5MbPVm\n6TEljZbCAd9W0DpnzOeA7IFa/WBh4b06PtcCrMUmUEvABYAXZ2sgm/L16KXcFJQi\nQHL+50nY4YpkzzSotU2Fok+m/wKBgQDob/5GLkJ8tOsUgnIAl60mXTZs6hmMmlf9\n/nRE5BWvpwK7y4zlOlD7EHSK9IU0kTbNifFpVTXDpRCXB25HlMNsWl8CAkr/lDOH\n8isI4CQhUpQFN6yBZzH3wdgkJugdvGSUe6mK3TJ2UIKQEvRJZPPaR6oaWeW2OB1q\nN6flJor63wKBgQCL/P5Afu7S/C6BQ8FvrqPk6REEO5Yb9S/pzniA9r6ABm3ZXPEL\nFhnZ4N+9HaGVRuFFhqke6NzdI/JimhO3uNXoWJH0hGM/MOcsGnvWGEBueeC/HeDO\nuPnlxlYwFq4bvAKXQkb2QfRJfxEp6XDiym9oHXE8yQJRjThpvgCplxBZuQKBgGQ/\nEPJhtykjuhOBYvugbvwRzYxRtq0uT+7qlGi12iiEpigqVNz0NsLhSPI5HU4bpwAk\nkyqzpll30lzgxo42ucX8f+dU59WsrEDgj/DnAo4gmFhbt5mj0SgiwT5uTUOt4c8s\nOmX6mm3usTDEC/mvgYBN0i5FQU5Ci2UpFc89vUkPAoGAcyiBWPApW9vWe/9zaaFt\nIU6ufKUimpzBmJWt4njkWxv/UEnbUBXjKY2Qs6JRr2UVs0MADyVwkVcM2akraSyo\nqF5ZyAT4pLMVxGZ+XhjqprfHyF2RQLOgTp2qQBGljPVLvoRs3ChDmlFh+S+HOrMF\npy2iY4QPpLVcsO4D/6N+sD8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "starting-account-kft9ptgbhotu@tabb-global.iam.gserviceaccount.com",
+  "client_id": "103463585171598018475",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/starting-account-kft9ptgbhotu%40tabb-global.iam.gserviceaccount.com"
+}

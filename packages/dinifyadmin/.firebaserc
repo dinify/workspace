@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "tabb-global"
+  },
+  "targets": {
+    "tabb-global": {
+      "hosting": {
+        "dinify-admin": [
+          "dinify-admin"
+        ]
+      }
+    }
+  }
+}
