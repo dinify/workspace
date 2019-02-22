@@ -19,6 +19,19 @@ const productStyle = {
   iphoneImg: {
     //width: "100%",
     maxHeight: "600px"
+  },
+  demoContainer: {
+    position: "relative"
+  },
+  demoDescription: {
+    position: "absolute",
+    background: "#fafafa",
+    top: "295px",
+    left: "133px",
+    height: "70px",
+    width: "210px",
+    fontSize: "10px",
+    lineHeight: "11px"
   }
 };
 

@@ -34,7 +34,6 @@ class LandingPage extends React.Component {
         <Header
           color="transparent"
           brand={<LogoText className={classes.contrastText} />}
-          subBrand="for restaurants"
           links={<HeaderLinks dropdownHoverColor="info" />}
           fixed
           changeColorOnScroll={{
