@@ -1,6 +1,6 @@
 {
   "name": "@dinify/admin",
-  "version": "1.0.0",
+  "version": "0.0.11",
   "private": true,
   "dependencies": {
     "@types/react": "16.4.16",
@@ -33,7 +33,7 @@
     "reactstrap": "6.5.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start-dev": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "react-scripts build && firebase deploy --only hosting:dinify-admin",
     "deploy:functions": "firebase deploy --only functions",

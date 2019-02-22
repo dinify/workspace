@@ -10,6 +10,8 @@
     "nohoist": []
   },
   "scripts": {
+    "admin:dev": "cd packages/admin && yarn start-dev",
+    "admin:deploy": "cd packages/admin && yarn deploy",
     "app:dev": "cd packages/app && yarn start-dev",
     "app:deploy": "cd packages/app && yarn deploy",
     "landing:dev": "cd packages/landing && yarn start-dev",
