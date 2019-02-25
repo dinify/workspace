@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import { withStyles } from '@material-ui/core/styles';
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import Typography from '@dinify/common/dist/components/Typography';
 import MenuItemCard from 'web/components/MenuItemCard';
@@ -52,6 +53,7 @@ let MenuSection = ({
   restaurant,
   menuCategoriesList,
 }) => {
+  const { t } = useTranslation();
   if (!restaurant) {
     return <div />
   }
@@ -64,8 +66,8 @@ let MenuSection = ({
           <RestaurantMenu className={classes.primary} />
         </Grid>
         <Grid item>
-          <Typography variant="subtitle1">Menu</Typography>
-          <Typography variant="caption">Everything you can get in {restaurant.name}</Typography>
+          <Typography variant="subtitle1">{t('menu.title')}</Typography>
+          <Typography variant="caption">{t('menu.caption', { restaurant })}</Typography>
         </Grid>
       </Grid>
       {R.sort((a,b) => a.precedence - b.precedence, menuCategoriesList).map((category, i) => {

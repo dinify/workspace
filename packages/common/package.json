@@ -1,6 +1,6 @@
 {
   "name": "@dinify/common",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Common codebase for Dinify frontend",
   "main": "dist/index.js",
   "scripts": {
@@ -18,14 +18,17 @@
     "url": "git@gitlab.com:tabb/frontend-web/common.git"
   },
   "dependencies": {
-    "@material-ui/core": "^3.9.1",
+    "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
     "autosuggest-highlight": "^3.1.1",
+    "i18next": "^15.0.4",
     "material-ui-toggle-icon": "^1.0.2",
+    "moment": "^2.24.0",
     "numeral": "^2.0.6",
     "ramda": "^0.23.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-i18next": "^10.2.0",
     "react-motion": "^0.5.2",
     "react-redux": "^5.1.1",
     "react-redux-firebase": "^2.2.6",

@@ -1,0 +1,76 @@
+{
+  "list": {
+    "and_2": "{{first}} and {{last}}",
+    "and_start": "{{first}}, {{end}}",
+    "and_middle": "{{start}}, {{end}}",
+    "and_end": "{{start}}, and {{last}}"
+  },
+  "menu": {
+    "title": "Menu",
+    "caption": "Everything you can get in {{restaurant.name}}"
+  },
+  "address": "Address",
+  "hours": {
+    "open": "Open now",
+    "closed": "Closed"
+  },
+  "website": "Website",
+  "nav": {
+    "explore": "Explore",
+    "eat": "Eat",
+    "checkIn": "Check in",
+    "service": "Service"
+  },
+  "ingredients": "Ingredients",
+  "addons": "Addons",
+  "subtotal": "Subtotal",
+  "total": "Total",
+  "serviceFee": "Service fee",
+  "order": "Order",
+  "bill": {
+    "title": "Bill",
+    "split": "Split",
+    "selecting": "Select bill items to split with others",
+    "splittingWith": "Splitting with {{list}}",
+    "splittingWith_zero": "Select users to split with",
+    "splittingCount": "Splitting with {{count}} person",
+    "splittingCount_plural": "Splitting between {{count}} people",
+    "itemCountSelected": "{{count}} item selected",
+    "itemCountSelected_plural": "{{count}} items selected",
+    "itemCountSelected_none": "no items selected"
+  },
+  "gratuity": "Gratuity",
+  "pay": "Pay",
+  "paymentPending": "Awaiting payment confirmation...",
+  "editing": "editing",
+  "profile": "Profile",
+  "dashboard": "Dashboard",
+  "waiterboard": "Waiterboard",
+  "roles": {
+    "title": "Roles",
+    "manager": "Manager",
+    "waiter": "Waiter",
+    "cook": "Cook",
+    "proofreader": "Proofreader"
+  },
+  "language": {
+    "setPrimary": "Set primary language",
+    "default": "Default language",
+    "other": "Other languages",
+    "addOther": "Add another language"
+  },
+  "cart": {
+    "title": "Cart",
+    "itemCount": "{{count}} item",
+    "itemCount_plural": "{{count}} items",
+    "itemCount_none": "no items",
+    "add": "Add to cart",
+    "checkInInstructions": "Check in by scanning the QR code in a restaurant near you to get started."
+  },
+  "nutrition": {
+    "facts": "Nutrition facts",
+    "fats": "Fats",
+    "carbs": "Carbs",
+    "proteins": "Proteins"
+  }
+}

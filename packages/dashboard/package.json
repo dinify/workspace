@@ -1,6 +1,6 @@
 {
   "name": "@dinify/dashboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Dinify Dashboard",
   "author": "Lukas Vanek",
@@ -17,7 +17,7 @@
     "format": "prettier --write '**/*.{js,jsx}'"
   },
   "dependencies": {
-    "@dinify/common": "^0.1.0",
+    "@dinify/common": "^0.1.1",
     "@google-cloud/translate": "^2.1.3",
     "@material-ui/core": "^3.9.1",
     "@material-ui/icons": "^3.0.2",

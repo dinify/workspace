@@ -44,13 +44,33 @@ const languageHeaderEpic = (action$, state$) =>
         }
         const curr = getCookie('lang');
         if (curr !== val) {
-          setCookie('lang', val);
-          return of({ type: 'LANGUAGE_UPDATED' });
+          setCookie('lang', val, 90);
+          return of({ type: 'LANGUAGE_HEADER_UPDATED' });
         }
       }
       return of();
     })
   );
+
+  const languageSettingEpic = (action$, state$) =>
+    action$.pipe(
+      ofType(actionTypes.SET_PROFILE),
+      mergeMap(() => {
+        const { language } = state$.value.firebase.profile;
+        if (language) {
+          const val = JSON.stringify(language);
+          const curr = getCookie('language');
+          if (curr !== val) {
+            setCookie('language', val, 90);
+
+            // TODO: Call changelanguage in i18 API
+
+            return of({ type: 'LANGUAGE_UPDATED' });
+          }
+        }
+        return of();
+      })
+    );
 
 // return this.loginUser(error.email, params.password).then(result => {
 //   console.log('Reauthentication result', result);
@@ -122,5 +142,6 @@ export default [
   loginLinkEpic,
   accessTokenEpic,
   languageHeaderEpic,
+  languageSettingEpic,
   loginErrorEpic,
 ];

@@ -2,7 +2,8 @@ import React from 'react';
 import R from 'ramda';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { withFirebase } from 'react-redux-firebase'
+import { withFirebase } from 'react-redux-firebase';
+import { useTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import { getClaims } from 'ducks/auth/selectors';
 import { withStateHandlers } from 'recompose';
@@ -46,11 +47,6 @@ const styles = theme => ({
     color: 'rgba(255, 255, 255, 1)',
   }
 });
-
-const localizedType = {
-  manager: 'Manager',
-  waiter: 'Waiter'
-}
 
 const languages = parseLanguages(languagesRaw);
 
@@ -104,6 +100,7 @@ const Account = ({
     </div>
   );
 
+  const { t } = useTranslation();
   let primaryLang;
   if (profile && profile.language) primaryLang = getLang(profile.language.primary);
 
@@ -137,11 +134,11 @@ const Account = ({
       </div>
 
       <Typography variant="overline" color="textSecondary">
-        Profile
+        {t('profile')}
       </Typography>
       <Card>
         <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
-          Default language
+          {t('language.default')}
         </Typography>
         {primaryLang && <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={() => {openDialog('primary', primaryLang.code)}}>
           <ListItemIcon>
@@ -152,12 +149,12 @@ const Account = ({
         </ListItem>}
         {!primaryLang && <div style={{padding: '16px 24px'}}>
           <Button onClick={() => {openDialog('primary')}} variant="text" color="primary">
-            Set primary language
+            {t('language.setPrimary')}
           </Button>
         </div>}
         <Divider />
         <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
-          Other languages
+          {t('language.other')}
         </Typography>
         {profile.language && profile.language.other.map((lang, i) => {
           const language = getLang(lang);
@@ -194,14 +191,14 @@ const Account = ({
         })}
         <div style={{padding: '16px 24px'}}>
           <Button onClick={() => {openDialog('other')}} variant="text" color="primary">
-            Add another language
+            {t('language.addOther')}
           </Button>
         </div>
       </Card>
       {claims && claims.roles && (
         <Card style={{marginTop: 16}}>
           <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
-            Roles
+            {t('roles')}
           </Typography>
 
           {claims.roles.restaurant && (
@@ -210,14 +207,14 @@ const Account = ({
                 <Avatar className={classes[claims.roles.restaurant.type]}>
                   <Person />
                 </Avatar>
-                <ListItemText primary={localizedType[claims.roles.restaurant.type]} secondary="at Korea Grill" />
+                <ListItemText primary={t(`roles.${claims.roles.restaurant.type}`)} secondary="at Korea Grill" />
               </ListItem>
               <ListItem button onClick={() => {openInNewTab('https://dashboard.dinify.app/')}} style={{paddingLeft: 80, paddingRight: 24}}>
-                <ListItemText primary="Dashboard"/>
+                <ListItemText primary={t('dashboard')}/>
                 <OpenInNew style={{opacity: 0.54}}/>
               </ListItem>
               <ListItem button onClick={() => {openInNewTab('https://waiterboard.dinify.app/')}} style={{paddingLeft: 80, paddingRight: 24}}>
-                <ListItemText primary="Waiterboard"/>
+                <ListItemText primary={t('waiterboard')}/>
                 <OpenInNew style={{opacity: 0.54}}/>
               </ListItem>
             </div>
@@ -228,7 +225,7 @@ const Account = ({
         <Button variant="outlined" onClick={() => {
           firebase.logout();
         }} color="primary">
-          Log out
+          {t('user.logOut')}
         </Button>
       </div>
 

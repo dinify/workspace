@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
-
+import { withTranslation } from 'react-i18next';
 import {
   setGratitude as setGratitudeAction,
   splitBillInit,
@@ -139,6 +139,7 @@ class Eat extends React.Component {
       splitBill,
       loggedUserId,
       splitLoading,
+      t,
     } = this.props;
     let { seats = [] } = this.props;
 
@@ -161,14 +162,61 @@ class Eat extends React.Component {
       setOrderType({ orderType: 'AHEAD' })
     } */
 
-    let splitText = '';
+    const splitingWithNames = [];
     for (let i = 0; i < selectedSeats.length; i += 1) {
       const uid = selectedSeats[i].user_id;
       if (uid === loggedUserId) { continue; }
-      splitText += users[uid].name;
-      if (i === selectedSeats.length - 2) splitText += ' and ';
-      else if (i !== selectedSeats.length - 1) splitText += ', ';
+      splitingWithNames.push(users[uid].name);
     }
+    const localizedList = (key, arr) => {
+      if (!arr || arr.length === 0) return '';
+      else if (arr.length === 1) return arr[0];
+      else {
+        const obj = {};
+        arr.forEach((item, i) => {
+          obj[`${i}`] = item;
+        });
+        if (arr.length === 2) return t(key, {
+          context: '2',
+          first: arr[0],
+          last: arr[1]
+        });
+        else if (arr.length === 3) {
+          return t(key, {
+            context: 'start',
+            first: arr[0],
+            end: t(key, {
+              context: 'end',
+              start: arr[1],
+              last: arr[2],
+            })
+          });
+        }
+        else {
+          let pointer = arr.length - 1;
+          let result = t(key, {
+            context: 'end',
+            last: arr[pointer],
+            start: arr[pointer - 1]
+          });
+          pointer -= 2;
+          while (pointer > 0) {
+            result = t(key, {
+              context: 'middle',
+              end: result,
+              start: arr[pointer]
+            });
+            pointer -= 1;
+          }
+          result = t(key, {
+            context: 'start',
+            last: result,
+            first: arr[pointer] // pointer should be 0
+          });
+          return result;
+        }
+      }
+    };
     return (
       <div>
         {checkedin && <div>
@@ -202,6 +250,9 @@ class Eat extends React.Component {
                   const gratitudeAmount = subtotalAmount * (gratitude / 100);
                   const totalAmount = subtotalAmount + gratitudeAmount;
 
+                  const cartCount = seat.cart ? seat.cart.count : 0;
+                  const billCount = seat.bill ? seat.bill.count : 0;
+
                   return (
                     <div id={seat.id} key={seat.id} style={{
                         display: 'inline-block',
@@ -214,10 +265,10 @@ class Eat extends React.Component {
                         <div style={{display: 'flex'}}>
                           <div style={{flex: 1, display: 'flex', marginTop: 16}}>
                             <Typography style={{flex: 1, marginRight: 16}} variant="overline">
-                              Cart
+                              {t('cart.title')}
                             </Typography>
                             <Typography variant="caption">
-                              {editingCart && userIsMe ? 'editing' : `${seat.cart ? (seat.cart.count + (seat.cart.count !== 1 ? ' items' : ' item')) : 'no items'}`}
+                              {editingCart && userIsMe ? t('editing') : t('cart.itemCount', { count: cartCount, context: cartCount === 0 ? 'none' : undefined })}
                             </Typography>
 
                           </div>
@@ -238,7 +289,7 @@ class Eat extends React.Component {
                           <div style={{marginBottom: userIsMe && seat.cart ? 16: 0}}>
                             <div style={{display: 'flex', alignItems: 'center', marginTop: 16}}>
                               <Typography style={{flex: 1}} variant="subtitle1">
-                                Total
+                                {t('total')}
                               </Typography>
 
                               <Typography variant="subtitle1">
@@ -253,7 +304,7 @@ class Eat extends React.Component {
                               color="primary"
                               onClick={() => order()}>
                               <RestaurantMenu style={{marginRight: 16}} />
-                              Order
+                              {t('order')}
                             </Fab>}
                           </div>
                         }
@@ -261,15 +312,15 @@ class Eat extends React.Component {
 
                         <div style={{display: 'flex', marginTop: 16}}>
                           <Typography style={{flex: 1, marginRight: 16}} variant="overline">
-                            Bill
+                            {t('bill.title')}
                           </Typography>
                           <Typography variant="caption">
-                            {`${seat.bill ? (seat.bill.count + (seat.bill.count !== 1 ? ' items' : ' item')) : 'no items'}`}
+                            {t('cart.itemCount', { count: billCount, context: billCount === 0 ? 'none' : undefined })}
                           </Typography>
                         </div>
 
                         {userIsMe && <Typography variant="caption" color="textSecondary" style={{opacity: selecting ? 0 : 1}}>
-                          Select bill items to split with others
+                          {t('bill.selecting')}
                         </Typography>}
 
                         {seat.bill && FN.MapToList(seat.bill.orders).map(order =>
@@ -298,7 +349,7 @@ class Eat extends React.Component {
                                 <Typography style={{
                                     flex: 1,
                                   }}>
-                                  Subtotal
+                                  {t('subtotal')}
                                 </Typography>
                                 <Typography>
                                   {FN.formatPrice({amount: subtotalAmount, currency})}
@@ -318,7 +369,7 @@ class Eat extends React.Component {
                                 <Typography style={{
                                     flex: 1
                                   }}>
-                                  Gratuity
+                                  {t('gratuity')}
                                 </Typography>
                                 <Typography>
                                   {FN.formatPrice({amount: gratitudeAmount, currency})}
@@ -333,7 +384,7 @@ class Eat extends React.Component {
                                 <Typography variant="subtitle1" style={{
                                     flex: 1
                                   }}>
-                                  Total
+                                  {t('total')}
                                 </Typography>
                                 <Typography variant="subtitle1">
                                   {FN.formatPrice({amount: totalAmount, currency})}
@@ -348,7 +399,7 @@ class Eat extends React.Component {
                           <Typography style={{
                               flex: 1
                             }}>
-                            Subtotal
+                            {t('subtotal')}
                           </Typography>
                           <Typography>
                             {FN.formatPrice({amount: subtotalAmount, currency})}
@@ -359,14 +410,15 @@ class Eat extends React.Component {
                                 marginTop: 16,
                                 marginBottom: 16
                               }}>
-                              <Fab fullWidth disabled={awaitingPaymentConfirmation || selecting} onClick={() => this.openPayMenu()} color="primary" variant="extended" aria-label="Pay">
+                              <Fab fullWidth disabled={awaitingPaymentConfirmation || selecting} onClick={() => this.openPayMenu()} color="primary" variant="extended" aria-label={t('pay')}>
                                 <CreditCard style={{
-                                        marginRight: 16
-                                      }}/> Pay
+                                  marginRight: 16
+                                }}/>
+                                {t('pay')}
                               </Fab>
                               {awaitingPaymentConfirmation &&
                                 <Typography style={{marginTop: 16, width: '100%', textAlign: 'center'}} variant="caption">
-                                  Awaiting payment confirmation...
+                                  {t('paymentPending')}
                                 </Typography>
                               }
                             </div>
@@ -387,16 +439,19 @@ class Eat extends React.Component {
                   textOverflow: 'ellipsis',
                 }} variant="subtitle2" color="inherit">
                   {
-                    selectedSeats.length <= 1 ? 'Select users to split with' : (
-                    selectedSeats.length <= 2 ? `Splitting with ${splitText}` : (
-                      `Splitting between ${selectedSeats.length} people`
-                    ))
+                    selectedSeats.length <= 3 ? t('bill.splittingWith', {
+                      context: selectedSeats.length === 0 ? 'zero' : undefined,
+                      list: localizedList('list.and', splitingWithNames)
+                    }) : t('bill.splittingCount', { count: selectedSeats.length })
                   }
                 </Typography>
                 <Typography style={{
                   opacity: 0.72,
                 }} color="inherit" variant="caption">
-                  {selectedBillItems.length + (selectedBillItems.length === 1 ? ' item' : ' items')} selected
+                  {t('bill.itemCountSelected', {
+                    context: selectedBillItems.length === 0 ? 'none' : undefined,
+                    count: selectedBillItems.length,
+                  })}
                 </Typography>
               </div>
               {!splitLoading && <Button style={{
@@ -410,10 +465,10 @@ class Eat extends React.Component {
               })}
               variant="outlined"
               color="inherit">
-                Split
+                {t('split')}
               </Button>}
               {splitLoading && <Typography color="inherit" style={{opacity: 0.54}} variant="caption">
-                Loading...
+                {t('loadingEllipsis')}
               </Typography>}
             </ContextMenu>
           </div>
@@ -467,4 +522,4 @@ Eat = connect(state => ({
   order: orderInit
 })(Eat)
 
-export default withStyles(styles)(Eat);
+export default withTranslation()(withStyles(styles)(Eat));
