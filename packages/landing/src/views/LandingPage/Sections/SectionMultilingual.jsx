@@ -1,5 +1,7 @@
 import React from "react";
 // @material-ui/core components
+import classNames from "classnames";
+
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -9,6 +11,8 @@ import productStyle from "./productStyle.jsx";
 import presentationiPhone from "assets/img/appscreen1.jpg";
 import "flag-icon-css/css/flag-icon.min.css";
 import CountryLanguage from 'country-language';
+
+import translations from './translations.json';
 
 const countryCodes = [
   "us",
@@ -53,10 +57,10 @@ const flagStyle = (selected) => ({
   height: '38px',
   marginLeft: '20px',
   marginBottom: '16px',
-  borderRadius: '3px',
-  border: selected ? '3px solid black' : '3px solid transparent',
+  borderRadius: '6px',
+  border: selected ? '3px solid #777' : '3px solid white',
   cursor: 'pointer',
-  filter: 'brightness(95%)'
+  filter: 'brightness(132%) saturate(60%) contrast(90%)'
 })
 
 const functionsEndpoint = 'https://us-central1-tabb-global.cloudfunctions.net';
@@ -71,40 +75,56 @@ const getLangOfCountry = country => {
   })
 }
 
-const getTranslation = async ({ text, to }) => {
-  const response = await fetch(`${functionsEndpoint}/translate`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({from: 'en', to, text})
-  });
-  const body = await response.json();
-  return body;
-}
+// const getTranslation = async ({ text, to }) => {
+//   const response = await fetch(`${functionsEndpoint}/translate`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({from: 'en', to, text})
+//   });
+//   const body = await response.json();
+//   return body;
+// }
 
 class SectionProduct extends React.Component {
   state = {
-    selected: "us",
-    translations: {}
+    selectedIndex: 0,
+    //translations: {}
   }
-  selectLanguage = async code => {
-    this.setState({ selected: code });
-    if (!this.state.translations[code]) {
-      const langCode = await getLangOfCountry(code);
-      const translation = await getTranslation({ text: descriptionEn, to: langCode });
-      let translations = this.state.translations;
-      console.log(translation);
-      translations[code] = translation ? translation.result : 'nope';
-      console.log(translations);
-      this.setState({ translations });
+  componentDidMount() {
+    const intervalTrigger = () => {
+      return setInterval(() => {
+        if (this.state.selectedIndex+1 >= countryCodes.length) {
+          this.setState({selectedIndex: 0})
+        } else {
+          this.setState({selectedIndex: this.state.selectedIndex+1})
+        }
+      }, 1000);
     }
+    window.dnfTranslationsIntervalId = intervalTrigger();
+  }
+  selectLanguage = index => {
+    clearInterval(window.dnfTranslationsIntervalId)
+    this.setState({ selectedIndex: index });
+    // if (!this.state.translations[code]) {
+    //   const langCode = await getLangOfCountry(code);
+    //   const translation = await getTranslation({ text: descriptionEn, to: langCode });
+    //   let translations = this.state.translations;
+    //   console.log(translation);
+    //   translations[code] = translation ? translation.result : 'nope';
+    //   console.log(JSON.stringify(translations));
+    //   this.setState({ translations });
+    // }
   }
   render() {
     const { classes } = this.props;
-    const { translations, selected } = this.state;
+    const { selectedIndex } = this.state;
+    const selected = countryCodes[selectedIndex];
     return (
-      <div className={classes.section}>
+      <div className={classNames(classes.section)} style={{paddingBottom: 0}}>
+        <div className={classes.container}>
+
         <GridContainer justify="center">
           <GridItem xs={12} sm={8} md={8}>
             <h2 className={classes.title}>So, we built multilingual menu</h2>
@@ -119,7 +139,7 @@ class SectionProduct extends React.Component {
               <img
                 className={classes.iphoneImg}
                 src={presentationiPhone}
-                alt="iPad"
+                alt="Multilingual menu"
               />
               <div className={classes.demoDescription}>
                 {translations[selected] || descriptionEn}
@@ -128,10 +148,10 @@ class SectionProduct extends React.Component {
           </GridItem>
           <GridItem md={6}>
             <div className={classes.sectionDescription}>
-              <div style={{width: '280px', margin: '20px auto', textAlign: 'left'}}>
-                {countryCodes.map((code) =>
+              <div style={{width: '345px', margin: '20px auto', textAlign: 'left'}}>
+                {countryCodes.map((code, i) =>
                   <span
-                    onClick={() => this.selectLanguage(code)}
+                    onClick={() => this.selectLanguage(i)}
                     key={code}
                     style={flagStyle(code === selected)}
                     className={`flag-icon flag-icon-${code}`}
@@ -141,6 +161,7 @@ class SectionProduct extends React.Component {
             </div>
           </GridItem>
         </GridContainer>
+      </div>
       </div>
     );
   }

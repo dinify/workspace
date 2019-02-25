@@ -14,13 +14,13 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import InfoArea from "components/InfoArea/InfoArea.jsx";
 
-import productStyle from "assets/jss/material-kit-pro-react/views/landingPageSections/productStyle.jsx";
+import productStyle from "./productStyle.jsx";
 
 class SectionProduct extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classNames(classes.section, classes.sectionDark)}>
+      <div className={classNames(classes.section, classes.sectionDark, classes.container)}>
         <GridContainer justify="center">
           <GridItem xs={12} sm={8} md={8}>
             <h2 className={classes.title}>It's easy as 1 2 3</h2>

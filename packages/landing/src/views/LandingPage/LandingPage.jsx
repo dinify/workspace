@@ -11,13 +11,12 @@ import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 import landingPageStyle from "./landingPageStyle.jsx";
 import LogoText from "@dinify/common/dist/icons/LogoText";
 
 // Sections for this page
-import SectionProduct from "./Sections/SectionProduct.jsx";
+import SectionFeatures from "./Sections/SectionFeatures.jsx";
 import SectionMultilingual from "./Sections/SectionMultilingual.jsx";
 import SectionFAQ from "./Sections/SectionFAQ.jsx";
 import SectionWork from "./Sections/SectionWork.jsx";
@@ -34,10 +33,9 @@ class LandingPage extends React.Component {
         <Header
           color="transparent"
           brand={<LogoText className={classes.contrastText} />}
-          links={<HeaderLinks dropdownHoverColor="info" />}
           fixed
           changeColorOnScroll={{
-            height: 300,
+            height: 100,
             color: "primary"
           }}
           {...rest}
@@ -46,7 +44,11 @@ class LandingPage extends React.Component {
           <div className={classes.container}>
             <GridContainer>
               <GridItem xs={12} sm={6} md={6}>
-                <h1 className={classes.title}>Dining made seamless</h1>
+                <h1 className={classes.title}>
+                  Order in restaurants<br />
+                  in your own language.
+                  Anywhere.
+                </h1>
                 <h4>
                   We break barriers on your way to explore new cuisines.
                 </h4>
@@ -59,19 +61,17 @@ class LandingPage extends React.Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  TRY IT OUT
+                  EXPERIENCE
                 </Button>
               </GridItem>
             </GridContainer>
           </div>
         </Parallax>
         <div className={classNames(classes.main, classes.mainRaised)}>
-          <div>
-            <SectionMultilingual />
-            <SectionProduct />
-            <SectionWork />
-            <SectionFAQ />
-          </div>
+          <SectionMultilingual />
+          <SectionFeatures />
+          <SectionWork />
+          <SectionFAQ />
         </div>
         <Footer
           content={

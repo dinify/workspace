@@ -1,9 +1,16 @@
-import { title, grayColor } from "assets/jss/material-kit-pro-react.jsx";
+import {
+  container,
+  title,
+  grayColor
+} from "assets/jss/material-kit-pro-react.jsx";
 
 const productStyle = {
   section: {
     padding: "70px 0",
-    textAlign: "left"
+    textAlign: "center"
+  },
+  container: {
+    ...container
   },
   title: {
     ...title,
@@ -14,24 +21,35 @@ const productStyle = {
     textDecoration: "none"
   },
   description: {
-    color: grayColor[0]
-  },
-  iphoneImg: {
-    //width: "100%",
-    maxHeight: "600px"
+    color: grayColor[0],
   },
   demoContainer: {
-    position: "relative"
+    position: "relative",
+    height: "600px",
+    width: "355px",
+    margin: "0 auto"
+  },
+  iphoneImg: {
+    position: "absolute",
+    height: "600px",
+    width: "355px",
+    top: 0,
+    left: 0
   },
   demoDescription: {
     position: "absolute",
     background: "#fafafa",
-    top: "295px",
-    left: "133px",
-    height: "70px",
-    width: "210px",
+    textAlign: "left",
+    top: "310px",
+    left: "70px",
+    width: '232px',
+    height: '193px',
     fontSize: "10px",
-    lineHeight: "11px"
+    lineHeight: "12px",
+    padding: "10px"
+  },
+  featuresImg: {
+    width: "100%"
   }
 };
 

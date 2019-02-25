@@ -11,6 +11,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import workStyle from "assets/jss/material-kit-pro-react/views/landingPageSections/workStyle.jsx";
+import signupImage from "assets/img/signup.png";
 
 class SectionWork extends React.Component {
   render() {
@@ -19,52 +20,54 @@ class SectionWork extends React.Component {
       <div className={classes.section}>
         <GridContainer justify="center">
           <GridItem cs={12} sm={8} md={8}>
-            <h2 className={classes.title}>Work with us</h2>
+            <h2 className={classes.title}>Are you a restaurant?</h2>
             <h4 className={classes.description}>
-              Divide details about your product or agency work into parts. Write
-              a few lines about each one and contact us about any further
-              collaboration. We will responde get back to you in a couple of
-              hours.
+              Show your interest by contacting us.
+              We will help you understand the value propositions better.
             </h4>
             <form>
               <GridContainer>
                 <GridItem xs={12} sm={6} md={6}>
+                  <img
+                    style={{width: "100%"}}
+                    src={signupImage}
+                    alt="Signup"
+                  />                </GridItem>
+                <GridItem xs={12} sm={6} md={6}>
+
                   <CustomInput
-                    labelText="Your Name"
+                    labelText="Restaurant Name"
                     id="name"
                     formControlProps={{
                       fullWidth: true
                     }}
                   />
-                </GridItem>
-                <GridItem xs={12} sm={6} md={6}>
+
                   <CustomInput
-                    labelText="Your Email"
+                    labelText="Country"
+                    id="county"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                  />
+
+                  <CustomInput
+                    labelText="City"
+                    id="city"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                  />
+
+                  <CustomInput
+                    labelText="Email address"
                     id="email"
                     formControlProps={{
                       fullWidth: true
                     }}
                   />
-                </GridItem>
-                <CustomInput
-                  labelText="Your Message"
-                  id="message"
-                  formControlProps={{
-                    fullWidth: true,
-                    className: classes.textArea
-                  }}
-                  inputProps={{
-                    multiline: true,
-                    rows: 5
-                  }}
-                />
-                <GridItem
-                  xs={12}
-                  sm={4}
-                  md={4}
-                  className={`${classes.mrAuto} ${classes.mlAuto}`}
-                >
-                  <Button color="primary">Send Message</Button>
+
+                  <Button color="primary">Submit</Button>
                 </GridItem>
               </GridContainer>
             </form>

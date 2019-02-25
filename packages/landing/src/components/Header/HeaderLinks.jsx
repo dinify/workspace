@@ -41,7 +41,7 @@ import LineStyle from "@material-ui/icons/LineStyle";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import headerLinksStyle from "assets/jss/material-kit-pro-react/components/headerLinksStyle.jsx";
+import headerLinksStyle from "./headerLinksStyle.jsx";
 
 function HeaderLinks({ ...props }) {
   const easeInOutQuad = (t, b, c, d) => {

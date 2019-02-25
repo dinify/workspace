@@ -18,12 +18,16 @@ const landingPageStyle = {
   },
   title: {
     ...title,
+    fontWeight: 600,
     display: "inline-block",
     position: "relative",
     marginTop: "30px",
     minHeight: "32px",
     color: whiteColor,
-    textDecoration: "none"
+    textDecoration: "none",
+    '@media (max-width: 1200px)': {
+      fontSize: "2.3125rem"
+    }
   },
   subtitle: {
     fontSize: "1.313rem",

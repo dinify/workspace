@@ -79,40 +79,17 @@ class Header extends React.Component {
               <span style={subBrandStyle}>{subBrand && ` | ${subBrand}`}</span>
             </Link>
           </Button>
-          <Hidden smDown implementation="css" className={classes.hidden}>
-            <div className={classes.collapse}>{links}</div>
-          </Hidden>
-          <Hidden mdUp>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={this.handleDrawerToggle}
-            >
-              <Menu />
-            </IconButton>
-          </Hidden>
-        </Toolbar>
-        <Hidden mdUp implementation="css">
-          <Drawer
-            variant="temporary"
-            anchor={"right"}
-            open={this.state.mobileOpen}
-            classes={{
-              paper: classes.drawerPaper
-            }}
-            onClose={this.handleDrawerToggle}
+          <Button
+            href="https://m.dinify.app"
+            color={window.innerWidth < 960 ? "info" : "white"}
+            target="_blank"
+            className={classes.navButton}
+            round
           >
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={this.handleDrawerToggle}
-              className={classes.closeButtonDrawer}
-            >
-              <Close />
-            </IconButton>
-            <div className={classes.appResponsive}>{links}</div>
-          </Drawer>
-        </Hidden>
+            Go to app
+          </Button>
+        </Toolbar>
+
       </AppBar>
     );
   }

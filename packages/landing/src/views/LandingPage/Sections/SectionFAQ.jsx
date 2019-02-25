@@ -2,6 +2,7 @@ import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Accordion from "components/Accordion/Accordion.jsx";
+import classNames from "classnames";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -13,7 +14,7 @@ class SectionProduct extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.section}>
+      <div className={classNames(classes.section, classes.container)} style={{textAlign: "left"}}>
         <div className={classes.title}>
           <h2 className={classes.title}>FAQ</h2>
         </div>

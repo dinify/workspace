@@ -48,6 +48,7 @@ const headerStyle = theme => ({
     flexWrap: "nowrap"
   },
   title: {
+    padding: "8px 4px",
     "&,& a": {
       ...defaultFont,
       minWidth: "unset",
@@ -63,6 +64,25 @@ const headerStyle = theme => ({
     },
     "& svg, & span": {
       verticalAlign: "middle"
+    }
+  },
+  navButton: {
+    background: "transparent",
+    borderRadius: "2px",
+    boxShadow: "none",
+    color: "white !important",
+    border: '1px solid rgba(255,255,255,0.2)',
+    padding: "7px 14px",
+    position: "relative",
+    fontWeight: "400",
+    fontSize: "12px",
+    textTransform: "uppercase",
+    lineHeight: "20px",
+    textDecoration: "none",
+    margin: "0px",
+    display: "inline-flex",
+    "& :hover, & a:hover": {
+      color: "white"
     }
   },
   appResponsive: {
