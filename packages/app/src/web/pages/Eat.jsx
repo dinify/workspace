@@ -503,7 +503,7 @@ Eat = connect(state => ({
   selectedBillItems: selectedBillItemsSelector(state),
   selectedSeats: selectedSeatsSelector(state),
   gratitude: state.bill.gratitude,
-  loggedUserId: state.user.loggedUserId,
+  loggedUserId: state.firebase.auth.uid,
   cartItems: state.cart.items,
   subtotal: state.cart.subtotal,
   orderType: state.cart.orderType,

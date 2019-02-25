@@ -173,7 +173,7 @@ class BillItem extends React.PureComponent {
 }
 
 BillItem = connect(state => ({
-    loggedUserId: state.user.loggedUserId,
+  
   }), {
     selectBillItem: selectBillItemAction,
   }
