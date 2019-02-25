@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import Typography from '@dinify/common/dist/components/Typography';
 
 const styles = theme => ({
@@ -12,6 +13,7 @@ const NutritionFacts = ({
   classes,
   calories
 }) => {
+  const { t } = useTranslation();
   if (!calories) return <div />;
   return (
     <div>
@@ -19,11 +21,11 @@ const NutritionFacts = ({
         className={classes.secondary}
         gutterBottom
         variant="overline">
-        Nutrition Facts
+        {t('nutrition.facts')}
       </Typography>
       <div style={{display: 'flex'}}>
         <Typography style={{flex: 1}} >
-          Fats
+          {t('nutrition.fats')}
         </Typography>
         <Typography
           style={{alignSelf: 'flex-end', textTransform: 'none'}}
@@ -33,7 +35,7 @@ const NutritionFacts = ({
       </div>
       <div style={{display: 'flex'}}>
         <Typography style={{flex: 1}} >
-          Carbs
+          {t('nutrition.carbs')}
         </Typography>
         <Typography
           style={{alignSelf: 'flex-end', textTransform: 'none'}}
@@ -43,7 +45,7 @@ const NutritionFacts = ({
       </div>
       <div style={{display: 'flex'}}>
         <Typography style={{flex: 1}} >
-          Proteins
+          {t('nutrition.proteins')}
         </Typography>
         <Typography
           style={{alignSelf: 'flex-end', textTransform: 'none'}}
@@ -53,7 +55,7 @@ const NutritionFacts = ({
       </div>
       <div style={{display: 'flex'}}>
         <Typography style={{flex: 1}} >
-          Calories
+          {t('nutrition.calories')}
         </Typography>
         <Typography
           style={{alignSelf: 'flex-end', textTransform: 'none'}}

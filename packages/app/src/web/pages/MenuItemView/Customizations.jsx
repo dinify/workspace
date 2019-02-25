@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Typography from '@dinify/common/dist/components/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -71,6 +72,7 @@ let Customizations = ({
   history,
 }) => {
 
+  const { t } = useTranslation();
   const ingredients = FN.MapToList(menuItem.ingredients);
   const addons = FN.MapToList(menuItem.addons);
   const options = FN.MapToList(menuItem.options);
@@ -99,7 +101,7 @@ let Customizations = ({
         style={{marginTop: 32}}
         color="primary"
         variant="overline">
-        Ingredients
+        {t('ingredients')}
       </Typography>}
 
       {ingredients.length > 0 && ingredients.map(ingredient =>
@@ -152,7 +154,7 @@ let Customizations = ({
           style={{marginTop: 16}}
           color="primary"
           variant="overline">
-          Addons
+          {t('addons')}
         </Typography>
       }
       {addons.length > 0 && addons.map(addon =>
@@ -252,7 +254,7 @@ let Customizations = ({
         className={classes.button}
       >
         <AddShoppingCart style={{marginRight: 16}} />
-        <span>Add to cart</span>
+        <span>{t('cart.add')}</span>
       </Fab>
     </div>
   )

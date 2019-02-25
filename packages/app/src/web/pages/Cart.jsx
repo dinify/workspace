@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { withStateHandlers } from 'recompose';
+import { useTranslation } from 'react-i18next';
 
 import Delete from '@material-ui/icons/DeleteRounded';
 import Done from '@material-ui/icons/DoneRounded';
@@ -49,7 +50,7 @@ const Cart = ({
   orderType,
   setOrderType
 }) => {
-
+  const { t } = useTranslation();
   const notCheckedIn = !checkedin; // !checkedInRestaurant;
 
   if (checkedInRestaurant) setOrderType({ orderType: 'DINE_IN' })
@@ -58,7 +59,7 @@ const Cart = ({
   }
 
   if (!cart) return null;
-
+  const count = cart.count === undefined ? 0 : cart.count;
   return (
     <div style={{paddingBottom: 64}}>
       {/* cartItemsList.map(item =>
@@ -75,10 +76,10 @@ const Cart = ({
         <div style={{display: 'flex', alignItems: 'center', paddingTop: 16}}>
           <div style={{flex: 1}}>
             <Typography variant="subtitle1">
-              Cart
+              {t('cart.title')}
             </Typography>
             <Typography variant="caption">
-              {`${cart.count > 0 ? cart.count : 'no'} item${cart.count !== 1 ? 's' : ''}`}
+              {t('cart.itemCount', { count, context: count === 0 ? 'none' : undefined })}
             </Typography>
           </div>
 
@@ -109,7 +110,7 @@ const Cart = ({
           </RadioGroup> */}
           <div style={{display: 'flex', alignItems: 'center'}}>
             <Typography style={{flex: 1}} variant="caption">
-              Subtotal
+              {t('subtotal')}
             </Typography>
 
             <Typography variant="overline">
@@ -118,7 +119,7 @@ const Cart = ({
           </div>
           <div style={{display: 'flex', alignItems: 'center'}}>
             <Typography style={{flex: 1}} variant="caption">
-              Service fee
+              {t('serviceFee')}
             </Typography>
 
             <Typography variant="overline">
@@ -129,7 +130,7 @@ const Cart = ({
         {cart.count > 0 && <div style={{display: 'flex', alignItems: 'center', paddingLeft: notCheckedIn ? 0 : 72}}>
 
           <Typography style={{flex: 1}} variant="button">
-            Total
+            {t('total')}
           </Typography>
 
           <Typography variant="subtitle1">
@@ -146,13 +147,13 @@ const Cart = ({
           color="primary"
           onClick={() => order()}>
           <RestaurantMenu style={{marginRight: 16}} />
-          Order
+          {t('order')}
         </Fab>
 
         {notCheckedIn &&
           <div>
             <Typography style={{marginTop: 16}}>
-              Hello there Check in by scanning the QR code in a restaurant near you to get started.
+              {t('cart.checkInInstructions')}
             </Typography>
           </div>
         }

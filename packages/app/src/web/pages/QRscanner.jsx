@@ -61,9 +61,11 @@ export default class QRscanner extends React.Component {
   }
 
   componentWillUnmount() {
-    this.video.srcObject.getTracks().forEach((track) => {
-      track.stop();
-    });
+    if (this.video.srcObject) {
+      this.video.srcObject.getTracks().forEach((track) => {
+        track.stop();
+      });
+    }
   }
 
   setVideoContext = (v) => {

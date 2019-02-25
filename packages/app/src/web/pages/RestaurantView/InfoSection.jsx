@@ -1,4 +1,6 @@
 import React from 'react';
+import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -33,7 +35,7 @@ const styles = theme => ({
   }
 });
 
-const jsdays = [
+const days = [
   'sun',
   'mon',
   'tue',
@@ -43,22 +45,14 @@ const jsdays = [
   'sat',
 ]
 
-const days = {
-  mon: 'Monday',
-  tue: 'Tuesday',
-  wed: 'Wednesday',
-  thu: 'Thursday',
-  fri: 'Friday',
-  sat: 'Saturday',
-  sun: 'Sunday',
-}
-
 const InfoSection = ({
   classes,
   restaurant
 }) => {
   const addr = restaurant.address.postal;
-  const currentHours = restaurant.open_hours[jsdays[(new Date()).getDay()]];
+  const { t } = useTranslation();
+  const currentHours = restaurant.open_hours[days[moment().day()]];
+  const unordered = moment.weekdays(); // sunday is index 0
   return (
     <div>
       <a rel="noopener noreferrer" target="_blank" href={`https://www.google.com/maps/search/${restaurant.name}/@${restaurant.latitude},${restaurant.longitude},17z`}
@@ -73,7 +67,7 @@ const InfoSection = ({
             </ListItemIcon>
             <ListItemText
               primary={`${addr.street}, ${addr.region}, ${addr.locality} ${addr.postal_code}`}
-              secondary="Address"
+              secondary={t('address')}
               primaryTypographyProps={{variant: 'body1'}}
               secondaryTypographyProps={{variant: 'caption'}}/>
           </ListItem>
@@ -87,7 +81,7 @@ const InfoSection = ({
               <Schedule className={classes.secondary}/>
             </ListItemIcon>
             <ListItemText
-              primary={restaurant.open_now ? "Open now" : "Closed"}
+              primary={restaurant.open_now ? t('hours.open') : t('hours.closed')}
               secondary={`Closes at ${currentHours[0][1]}`}
               primaryTypographyProps={{variant: 'body1'}}
               secondaryTypographyProps={{variant: 'caption'}}/>
@@ -96,22 +90,29 @@ const InfoSection = ({
         <ExpansionPanelDetails >
           <table style={{borderSpacing: 0, paddingLeft: 56}}>
             <tbody>
-              {Object.entries(restaurant.open_hours).map(([day, values]) =>
-                <tr key={uniqueId()}>
-                  <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
-                    <Typography className={classes.secondary} >
-                      {days[day]}
-                    </Typography>
-                  </td>
-                  <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
-                    {values.map(value =>
-                      <Typography key={uniqueId()} style={{paddingLeft: 24}} >
-                        {value.join(' - ')}
+              {[...Array(6).keys()].map(index => {
+                const localizedDay = moment.weekdays(true, index);
+                let realIndex = index;
+                unordered.forEach((val, i) => {
+                  if (val === localizedDay) realIndex = i;
+                });
+                return (
+                  <tr key={uniqueId()}>
+                    <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
+                      <Typography className={classes.secondary} >
+                        {localizedDay}
                       </Typography>
-                    )}
-                  </td>
-                </tr>
-              )}
+                    </td>
+                    <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
+                      {restaurant.open_hours[days[realIndex]].map(value =>
+                        <Typography key={uniqueId()} style={{paddingLeft: 24}} >
+                          {value.join(' - ')}
+                        </Typography>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </ExpansionPanelDetails>
@@ -125,7 +126,7 @@ const InfoSection = ({
           </ListItemIcon>
           <ListItemText
             primary={restaurant.contact.phone}
-            secondary="Phone number"
+            secondary={t('phone.long')}
             primaryTypographyProps={{variant: 'body1'}}
             secondaryTypographyProps={{variant: 'caption'}}/>
         </ListItem>
@@ -138,7 +139,7 @@ const InfoSection = ({
           </ListItemIcon>
           <ListItemText
             primary={restaurant.contact.email}
-            secondary="Email address"
+            secondary={t('email.long')}
             primaryTypographyProps={{variant: 'body1'}}
             secondaryTypographyProps={{variant: 'caption'}}/>
         </ListItem>
@@ -151,7 +152,7 @@ const InfoSection = ({
           </ListItemIcon>
           <ListItemText
             primary={restaurant.contact.website}
-            secondary="Website"
+            secondary={t('website')}
             primaryTypographyProps={{variant: 'body1'}}
             secondaryTypographyProps={{variant: 'caption'}}/>
         </ListItem>

@@ -1,0 +1,15 @@
+{
+  "user": {
+    "signIn": "Sign in",
+    "logOut": "Log out"
+  },
+  "phone": {
+    "short": "Phone",
+    "long": "Phone number"
+  },
+  "email": {
+    "short": "Email",
+    "long": "Email address"
+  },
+  "loadingEllipsis": "Loading..."
+}

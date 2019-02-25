@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 //  import registerServiceWorker from './registerServiceWorker'
 import App from 'web/App';
 import { SnackbarProvider } from 'material-ui-snackbar-redux';
+import i18n from '@dinify/common/dist/i18n'
+import { getCookie } from '@dinify/common/dist/lib/FN';
 import store from './configureStore';
 import websockets from './websockets';
 
@@ -14,6 +16,12 @@ import websockets from './websockets';
 
 websockets(store);
 
+const language = JSON.parse(getCookie('language'));
+i18n({
+  namespace: 'app',
+  lang: language.primary,
+  fallback: language.other
+});
 
 ReactDOM.render(
   <Provider store={store}>

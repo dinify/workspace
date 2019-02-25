@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 
 import QRCodeScan from '@dinify/common/dist/icons/QRCodeScan';
 import NotificationsActive from '@material-ui/icons/NotificationsActiveRounded';
@@ -27,25 +28,26 @@ const Navigation = ({
   style,
   checkedInRestaurant
 }) => {
-    return (
-      <div style={style} className={classes.root}>
-        <Divider/>
-        <BottomNavigation
-          color="primary"
-          value={value}
-          onChange={handleChange}
-          showLabels
-        >
-          <BottomNavigationAction label="Explore" icon={<LocationOn />} />
-          <BottomNavigationAction label="Eat" icon={<RestaurantMenu />} />
-          {checkedInRestaurant || process.env.REACT_APP_CAMERA_SCANNER_ENABLED === 'false' ?
-            <BottomNavigationAction label="Service" icon={<NotificationsActive />} /> :
-            <BottomNavigationAction label="Check in" icon={<QRCodeScan />} />
-          }
-        </BottomNavigation>
-      </div>
+  const { t } = useTranslation();
+  return (
+    <div style={style} className={classes.root}>
+      <Divider/>
+      <BottomNavigation
+        color="primary"
+        value={value}
+        onChange={handleChange}
+        showLabels
+      >
+        <BottomNavigationAction label={t('nav.explore')} icon={<LocationOn />} />
+        <BottomNavigationAction label={t('nav.eat')} icon={<RestaurantMenu />} />
+        {checkedInRestaurant || process.env.REACT_APP_CAMERA_SCANNER_ENABLED === 'false' ?
+          <BottomNavigationAction label={t('nav.service')} icon={<NotificationsActive />} /> :
+          <BottomNavigationAction label={t('nav.checkIn')} icon={<QRCodeScan />} />
+        }
+      </BottomNavigation>
+    </div>
 
-    );
+  );
 }
 
 export default withStyles(styles)(Navigation);
