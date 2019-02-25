@@ -1,11 +1,12 @@
 import React from "react";
+import { withTranslation } from "react-i18next";
 import PhotoCamera from '@material-ui/icons/PhotoCameraRounded';
 import Button from '@material-ui/core/Button';
 import Typography from '@dinify/common/dist/components/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import QrScanner from "lib/qr-scanner.min.js";
 
-export default class QRscanner extends React.Component {
+class QRscanner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -96,6 +97,8 @@ export default class QRscanner extends React.Component {
 
   render() {
     // const b = this.state.box;
+    const { t } = this.props;
+    const { cameraAccessible, status } = this.state;
     return (
       <div id="container" style={{
         position: 'relative',
@@ -111,30 +114,32 @@ export default class QRscanner extends React.Component {
           muted autoPlay playsInline
           id="qrVideo"
           ref={this.setVideoContext}
-          hidden={this.state.cameraAccessible !== 'DONE'}
+          hidden={cameraAccessible !== 'DONE'}
           style={{
             maxHeight: 'calc(100vh - 112px)',
             maxWidth: '100vw'
           }}/>
-        {this.state.cameraAccessible === 'INIT' ? <CircularProgress color="inherit"/> : ''}
+        {cameraAccessible === 'INIT' ? <CircularProgress color="inherit"/> : ''}
 
-        {this.state.cameraAccessible === 'FAIL' ?
+        {cameraAccessible === 'FAIL' ?
           <div style={{margin: 32}}>
             <Typography style={{color: 'rgba(255, 255, 255, 0.87)'}} color="inherit" variant="subtitle1" gutterBottom>
-              Camera not available
+              {t('camera.notAvailable.title')}
             </Typography>
             <Typography color="inherit" variant="caption" gutterBottom>
-              The in-browser camera is not available on this device
+              {t('camera.notAvailable.subtitle')}
             </Typography>
 
             <Button variant="outlined" style={{border: '1px solid rgba(255, 255, 255, 0.38)'}} color="inherit" onClick={this.selectFromPhoto}>
               <PhotoCamera style={{marginRight: 8}} />
-              Take a photo
+              {t('camera.takePhoto')}
             </Button>
           </div>
         : ''}
-        {this.state.status}
+        {status}
       </div>
     );
   }
 }
+
+export default withTranslation()(QRscanner);

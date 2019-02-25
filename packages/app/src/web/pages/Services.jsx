@@ -1,4 +1,5 @@
 import React from 'react';
+import { withTranslation } from "react-i18next";
 import { connect } from 'react-redux';
 import AppBar from 'web/components/AppBar';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -24,13 +25,14 @@ class Services extends React.Component {
   }
 
   render() {
-    const { restaurant, call, services } = this.props;
+    const { restaurant, call, services, t } = this.props;
+    const { selectedTab } = this.state;
     const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
 
     let servicesList = restaurant ? FN.MapToList(restaurant.services) : [];
     servicesList = R.filter((s) => {
-      if (this.state.selectedTab === 0) return s.type === 'TABLEWARE';
-      if (this.state.selectedTab === 1) return s.type === 'CONDIMENT';
+      if (selectedTab === 0) return s.type === 'TABLEWARE';
+      if (selectedTab === 1) return s.type === 'CONDIMENT';
       return false;
     }, servicesList);
 
@@ -51,15 +53,15 @@ class Services extends React.Component {
                 <ServiceCallGraphic/>
               </div>
               <Typography gutterBottom variant="subtitle1">
-                Call a service
+                {t('service.title')}
               </Typography>
               <Typography variant="caption">
-                With this feature, you can request a any kind of condiment or tableware to your table.
+                {t('service.subtitle')}
               </Typography>
             </div>
         </div>
         <Typography style={{margin: 16}}>
-          Check in by scanning the QR code in a restaurant near you to get started.
+          {t('service.instruction')}
         </Typography>
       </div>
     )
@@ -78,13 +80,13 @@ class Services extends React.Component {
             marginTop: 16
           }}>
             <Tabs
-              value={this.state.selectedTab}
+              value={selectedTab}
               indicatorColor="primary"
               textColor="primary"
               onChange={(e, val) => this.setState({ selectedTab: val })}
             >
-              <Tab label="Tableware" />
-              <Tab label="Condiments" />
+              <Tab label={t('service.types.tableware')} />
+              <Tab label={t('service.types.condiments')} />
             </Tabs>
           </div>
         </div>
@@ -178,4 +180,4 @@ export default connect(
   {
     call: callServiceInit
   }
-)(Services);
+)(withTranslation()(Services));

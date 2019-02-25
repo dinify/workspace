@@ -27,6 +27,22 @@
   "total": "Total",
   "serviceFee": "Service fee",
   "order": "Order",
+  "camera": {
+    "notAvailable": {
+      "title": "Camera not available",
+      "subtitle": "The in-browser camera is not available on this device"
+    },
+    "takePhoto": "Take a photo"
+  },
+  "service": {
+    "title": "Call a service",
+    "subtitle": "With this feature, you can request a any kind of condiment or tableware to your table.",
+    "instruction": "Check in by scanning the QR code in a restaurant near you to get started.",
+    "types": {
+      "tableware": "Tableware",
+      "condiments": "Condiments"
+    }
+  },
   "bill": {
     "title": "Bill",
     "split": "Split",
