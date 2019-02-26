@@ -27,6 +27,13 @@
   "total": "Total",
   "serviceFee": "Service fee",
   "order": "Order",
+  "camera": {
+    "notAvailable": {
+      "title": "Camera not available",
+      "subtitle": "The in-browser camera is not available on this device"
+    },
+    "takePhoto": "Take a photo"
+  },
   "bill": {
     "title": "Bill",
     "split": "Split",
