@@ -12,6 +12,13 @@ const productStyle = {
   container: {
     ...container
   },
+  textCenter: {
+    textAlign: "center"
+  },
+  textArea: {
+    marginRight: "15px",
+    marginLeft: "15px"
+  },
   title: {
     ...title,
     textAlign: "center",

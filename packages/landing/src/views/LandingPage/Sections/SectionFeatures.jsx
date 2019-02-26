@@ -15,7 +15,7 @@ import GridItem from "components/Grid/GridItem.jsx";
 import InfoArea from "components/InfoArea/InfoArea.jsx";
 
 import productStyle from "./productStyle.jsx";
-import featuresImage from "assets/img/features.png";
+import featuresImage from "assets/img/features.jpg";
 
 class SectionFeatures extends React.Component {
   render() {
