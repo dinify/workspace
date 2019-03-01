@@ -3,6 +3,8 @@ import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import configureEpics from './configureEpics';
+
+import auth from '@dinify/common/dist/ducks/auth';
 import table from './ducks/table'
 import ui from './ducks/ui'
 import restaurant from './ducks/restaurant'
@@ -16,6 +18,7 @@ import seat from 'ducks/seat'
 
 
 const commonReducers = {
+  auth,
   table,
   ui,
   restaurant,

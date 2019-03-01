@@ -7,18 +7,29 @@ import { callEpics } from './ducks/call'
 import { orderEpics } from './ducks/order'
 import { seatEpics } from './ducks/seat'
 import { billEpics } from './ducks/bill'
+import { authEpics as auth } from '@dinify/common/dist/ducks/auth';
+import { getFirebase } from 'react-redux-firebase';
 
 
-const epics = [
-  ...restaurant,
-  ...wild,
-  ...bookingEpics,
-  ...callEpics,
-  ...tableEpics,
-  ...orderEpics,
-  ...seatEpics,
-  ...billEpics
-]
+const rootEpic = (action$, state$, ...rest) => {
+  const epic = combineEpics(
+    ...auth,
+    ...restaurant,
+    ...wild,
+    ...bookingEpics,
+    ...callEpics,
+    ...tableEpics,
+    ...orderEpics,
+    ...seatEpics,
+    ...billEpics
+  );
+  const output = epic(
+    action$,
+    state$,
+    { getFirebase },
+    ...rest
+  );
+  return output;
+};
 
-export default (deps = {}, platformEpics = []) => (action$, { getState, dispatch }) =>
-  combineEpics(...epics, ...platformEpics)(action$, { ...deps, getState, dispatch })
+export default rootEpic;
