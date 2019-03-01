@@ -198,7 +198,7 @@ const Account = ({
       {claims && claims.roles && (
         <Card style={{marginTop: 16}}>
           <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
-            {t('roles')}
+            {t('roles.title')}
           </Typography>
 
           {claims.roles.restaurant && (
