@@ -62,6 +62,9 @@
   "profile": "Profile",
   "dashboard": "Dashboard",
   "waiterboard": "Waiterboard",
+  "currency": {
+    "title": "Display currency"
+  },
   "roles": {
     "title": "Roles",
     "manager": "Manager",

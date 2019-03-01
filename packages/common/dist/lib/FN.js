@@ -94,15 +94,15 @@ function parseLanguages(languages) {
     var countries = lang[3].map(function (c) {
       return {
         langtag: c[0],
-        // BCP 47
+        // BCP 47    "en-US"
         regionCode: c[0].split('-')[c[0].split('-').length - 1],
-        // ISO 3166-1 (alpha-2) or UN M.49
+        // ISO 3166-1 (alpha-2) or UN M.49    "US"
         nameNative: c[1]
       };
     });
     return {
       code: lang[0],
-      // ISO 639-1 or ISO 639-2
+      // ISO 639-1 or ISO 639-2    "en"
       name: lang[1],
       nameNative: lang[2],
       countries: countries

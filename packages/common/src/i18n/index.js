@@ -2,11 +2,62 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import locales from './locales';
 import moment from 'moment';
+import globalize from './globalize';
+import { supplementalPaths } from './cldr';
 
 // TODO: move to backend with SSR for optimized loading
 
+const CLDR_ROOT = 'https://cldr.dinify.app';
+
+const getMainFiles = (locale) => {
+  return [
+    `main/${locale}/currencies`,
+    `main/${locale}/numbers`
+  ];
+}
+
+const getGlobalizedInstance = (language) => {
+  const instance = globalize(language);
+  const locale = instance.cldr.attributes.minLanguageId;
+  instance.cldr.attributes.bundle = locale;
+  instance.locale = locale;
+  return instance;
+}
+
 export default ({namespace, lang, fallback}) => {
   if (fallback === []) fallback = ['en'];
+
+  let globalized;
+  ((callback) => {
+    fetch(`${CLDR_ROOT}/supplemental/likelySubtags`)
+      .then((response) => {
+          response.json().then((likelySubtagsSata) => {
+            globalize.load(likelySubtagsSata);
+            const instance = getGlobalizedInstance(lang);
+            const supplemental = [
+              'supplemental/numberingSystems',
+              'supplemental/plurals',
+              'supplemental/ordinals',
+              'supplemental/currencyData'
+            ];
+
+            const requiredFiles = supplemental.concat(getMainFiles(instance.locale));
+
+            Promise.all(requiredFiles.map(file =>
+              fetch(`${CLDR_ROOT}/${file}`).then((response) => response.json()))
+            ).then((values) => {
+              globalize.load(...values);
+              callback(instance);
+            })
+          });
+        }
+      ).catch((err) => {
+        console.log('Fetch error:', err);
+      });
+  })((instance) => {
+    globalized = instance;
+  })
+
   const options = {
     lng: lang, // the language to use for translations
     resources: locales,
@@ -15,7 +66,36 @@ export default ({namespace, lang, fallback}) => {
     fallbackNS: 'common',
     fallbackLng: fallback ? fallback : 'en', // use english if fallback not specified
     interpolation: {
-      escapeValue: false // react has builtin protection against xss
+      escapeValue: false, // react has builtin protection against xss
+      format: (value, format, lng) => {
+        const delimiter = ':';
+        const delimiterSecondary = ',';
+        const split = format.split(delimiter);
+        const type = split[0];
+        let params;
+        if (split.length > 1) params = split[1].split(delimiterSecondary);
+
+        if (type === 'case') {
+          if (params[0] === 'upper') return value.toUpperCase();
+          if (params[0] === 'lower') return value.toLowerCase();
+        }
+        if (type === 'date') {
+          return moment(value).format(params[0]);
+        }
+        if (type === 'currency') {
+          // TODO: warning, globalized instance might still be undefined (async!)
+          if (!globalized) return 'globalized ASYNC PROBLEM';
+          return globalized.currencyFormatter(params[0])(value);
+        }
+        if (type === 'array') {
+          // TODO return formatted display list pattern
+        }
+
+        // fallback
+        if (Array.isArray(value)) ; // TODO return formatted display list pattern
+        if (value instanceof Date) return moment(value).format(format);
+        return value;
+      }
     }
   };
 
@@ -25,5 +105,18 @@ export default ({namespace, lang, fallback}) => {
 
   i18n.on('languageChanged', function(lng) {
     moment.locale(lng);
+    ((callback) => {
+      const instance = getGlobalizedInstance(lng);
+      const requiredFiles = getMainFiles(instance.locale)
+
+      Promise.all(requiredFiles.map(file =>
+        fetch(`${CLDR_ROOT}/${file}`).then((response) => response.json()))
+      ).then((values) => {
+        globalize.load(...values);
+        callback(instance);
+      })
+    })((instance) => {
+      globalized = instance;
+    })
   });
 }
