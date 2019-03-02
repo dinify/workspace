@@ -16,7 +16,6 @@ import ExitToApp from '@material-ui/icons/ExitToApp'
 import RestaurantMenu from '@material-ui/icons/RestaurantMenu'
 import Event from '@material-ui/icons/Event'
 
-import { logoutInitAction } from 'ducks/restaurant'
 import { toggleFrames, toggleModal } from 'ducks/ui'
 import { colorsByStages } from '../colors'
 
@@ -206,7 +205,6 @@ export default connect(
     orders: state.order.all
   }),
   {
-    logout: logoutInitAction,
     toggleFrames,
     toggleModal
   }

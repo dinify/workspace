@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import type { Error } from '../../flow'
 
 import { Form, Text } from 'react-form'
-import { loginInitAction } from 'ducks/restaurant'
+import { loginInitAction } from 'ducks/restaurant/actions'
 import { FormBox, FormBoxHead, FormBoxBody, FormBoxSubmit } from './styled/FormBox'
 
 const Content = styled.div`

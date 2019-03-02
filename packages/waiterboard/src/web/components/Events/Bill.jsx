@@ -4,12 +4,11 @@ import { colorsByStages } from '../../colors'
 import { connect } from 'react-redux';
 import { Form, Text as FormText } from 'react-form'
 import styled from 'styled-components'
-import { confirmBill } from '../../../ducks/restaurant'
+import { confirmBill } from 'ducks/restaurant/actions'
 import { ActionBox, Header, TableId, CheckButton, TableTag, Th, Tr, Td, Text } from '../styled/Events'
 import User from './user'
-import { isItOutdated } from '../../../common/helpers/time'
 import N from 'numeral';
-import * as FN from '../../../lib/FN'
+import * as FN from 'lib/FN'
 import Elapsed from './Elapsed';
 import moment from 'moment';
 

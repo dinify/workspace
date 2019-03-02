@@ -7,7 +7,9 @@ import { appIsRunning } from '../../selectors/restaurant'
 import media from '../../common/helpers/media'
 import Board from './Board'
 import SelectWB from './SelectWB'
-import Login from './Login'
+import SignIn from '@dinify/common/dist/components/SignIn';
+import withRoot from 'withRoot.js';
+
 
 const Content = styled.div`
   font-family: 'Montserrat', sans-serif;
@@ -24,7 +26,9 @@ const AppLoader = styled.div`
   color: white;
 `
 
-const App = ({ appLoading, user }) =>
+const SignInWithRoot = withRoot(SignIn);
+
+const App = ({ appLoading, user, history }) =>
   (<Router>
     <Content>
       {appLoading && <AppLoader>Waiterboard is loading...</AppLoader>}
@@ -32,14 +36,16 @@ const App = ({ appLoading, user }) =>
           <Switch>
           <Route path="/signin" component={() => {
             return user.isEmpty ? <SignInWithRoot user={user}/> :
-            <Redirect to="/"/>
+            <Redirect to="/board"/>
           }} />
-          <Route path="/" component={() => {
-            return (!user.isEmpty || !user.isLoaded) ? <Dashboard history={history} /> :
+          <Route path="/board" component={() => {
+            return (!user.isEmpty || !user.isLoaded) ? <SelectWB history={history} /> :
             <Redirect to="/signin"/>
           }} />
-          <Route path="/board" exact component={SelectWB} />
-          <Route path="/board/:id" exact component={Board} />
+          <Route path="/board/:id" component={() => {
+            return (!user.isEmpty || !user.isLoaded) ? <Board history={history} /> :
+            <Redirect to="/signin"/>
+          }} />
         </Switch>
       }
     </Content>

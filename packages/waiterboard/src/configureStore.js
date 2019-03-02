@@ -2,15 +2,17 @@ import { createEpicMiddleware } from 'redux-observable';
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
-import configureEpics from './configureEpics';
+import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase';
+import firebase from 'firebase';
+import rootEpic from 'configureEpics.js';
 
 import auth from '@dinify/common/dist/ducks/auth';
-import table from './ducks/table'
-import ui from './ducks/ui'
-import restaurant from './ducks/restaurant'
-import user from './ducks/user'
-import booking from './ducks/booking'
-import call from './ducks/call'
+import table from 'ducks/table'
+import ui from 'ducks/ui'
+import restaurant from 'ducks/restaurant'
+import user from 'ducks/user'
+import booking from 'ducks/booking'
+import call from 'ducks/call'
 import order from 'ducks/order'
 import bill from 'ducks/bill'
 import service from 'ducks/service'
@@ -28,32 +30,56 @@ const commonReducers = {
   order,
   bill,
   service,
-  seat
+  seat,
+  firebase: firebaseReducer
 }
 
-const configureStore = (options, storage) => {
-  const { initialState, platformDeps = {}, platformEpics = [], platformReducers = {} } = options;
+const firebaseConfig = {
+  apiKey: "AIzaSyAwKYz-JN76QWYpK60TEL1YJhV_cIh9ciM",
+  authDomain: "tabb-global.firebaseapp.com",
+  databaseURL: "https://tabb-global.firebaseio.com",
+  projectId: "tabb-global",
+  storageBucket: "tabb-global.appspot.com",
+  messagingSenderId: "448538111630"
+}
 
-  const rootEpic = configureEpics({ ...platformDeps }, platformEpics);
+// react-redux-firebase config
+const rrfConfig = {
+  userProfile: 'profiles',
+  useFirestoreForProfile: true,
+}
+firebase.initializeApp(firebaseConfig)
+
+const configureStore = (options, storage) => {
+  const {
+    initialState,
+    platformReducers = {}
+  } = options;
+
+  const epicMiddleware = createEpicMiddleware();
 
   const reducers = combineReducers({
     ...commonReducers,
     ...platformReducers
   });
 
-  const middlewares = [createEpicMiddleware(rootEpic)];
+  const middlewares = [
+    epicMiddleware
+  ];
 
   if (process.env.NODE_ENV === 'development') {
-    middlewares.push(createLogger({
-      diff: true,
-      collapsed: true,
-      predicate: (getState, action) => true//!action.type.includes('POLLING')
-    }));
+    middlewares.push(createLogger({ diff: true, collapsed: true }));
   }
 
-  const enhancers = compose(applyMiddleware(...middlewares), autoRehydrate());
+  const createStoreWithFirebase = compose(
+    reactReduxFirebase(firebase, rrfConfig), // firebase instance as first argument
+    applyMiddleware(...middlewares),
+    autoRehydrate(),
+  )(createStore);
 
-  const store = createStore(reducers, initialState, enhancers);
+  const store = createStoreWithFirebase(reducers, initialState);
+
+  epicMiddleware.run(rootEpic);
 
   // let the magic happen :–)
   persistStore(store, { blacklist: ['guests', 'tables', 'restaurant', 'seat'], storage }); // .purge() // in case you want to purge the store

@@ -2,7 +2,7 @@ import { createEpicMiddleware } from 'redux-observable';
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
-import rootEpic from './configureEpics';
+import rootEpic from 'configureEpics.js';
 import Raven from 'raven-js';
 import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase';
 import firebase from 'firebase';

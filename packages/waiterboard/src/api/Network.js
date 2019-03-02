@@ -68,8 +68,7 @@ const buildURL = ({
   v2,
   v3
 }) => {
-  if (v2) return `http://tabb-apiv2.eu-central-1.elasticbeanstalk.com/${path}`//`http://localhost:3005/${path}`//
-  if (v3) return `https://api.dev.tabb.global/${path}`
+  if (v3) return `https://api.dinify.app/${path}`
   return url;
 }
 //`http://localhost:3005/${path}`;//

@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { clearUser } from 'ducks/table/actions'
-import { getBillsOfUser, getOrdersOfUser } from '../../ducks/restaurant'
+import { getBillsOfUser, getOrdersOfUser } from 'ducks/restaurant/actions'
 import numeral from 'numeral'
 
 import Bill from './Events/Bill'

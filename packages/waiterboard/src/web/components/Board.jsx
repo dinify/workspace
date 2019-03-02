@@ -14,7 +14,7 @@ import ModalListOfBookings from './ModalListOfBookings'
 import ModalTable from './ModalTable'
 
 import { toggleFrames, toggleModal } from 'ducks/ui'
-import { setOHEnabled } from 'ducks/restaurant'
+import { setOHEnabled } from 'ducks/restaurant/actions'
 import { getGroupedBills } from 'ducks/bill/selectors';
 import { getTableList } from 'ducks/table/selectors';
 

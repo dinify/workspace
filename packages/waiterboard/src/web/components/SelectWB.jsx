@@ -4,9 +4,9 @@ import values from 'ramda/src/values'
 import keys from 'ramda/src/keys'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxChoice } from './styled/FormBox'
 import { Link } from 'react-router-dom'
-import { setWBidAction } from '../../ducks/restaurant';
+import { setWBidAction } from 'ducks/restaurant/actions';
+import { FormBox, FormBoxHead, FormBoxBody, FormBoxChoice } from './styled/FormBox'
 
 const Content = styled.div`
   position: relative;
