@@ -1,6 +1,6 @@
 {
-  "short_name": "tabbdashboard",
-  "name": "TABB Dashboard",
+  "short_name": "waiterboard",
+  "name": "Dinify Waiterboard",
   "icons": [
     {
       "src": "favicon.ico",

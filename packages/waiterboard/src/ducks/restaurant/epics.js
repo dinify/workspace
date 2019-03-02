@@ -75,11 +75,11 @@ const guestsPollingEpic = (action$, $state) =>
       //   dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
       // })
 
-      return of(
+      return [
         {type: 'LOAD_CALL_INIT'},
         {type: 'LOAD_SEATS_INIT'},
         {type: 'LOAD_BOOKING_INIT'}
-      );
+      ];
     })
   )
 

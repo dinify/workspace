@@ -123,7 +123,7 @@ var fetchAllEpic = function fetchAllEpic(action$, state$) {
       }, ids);
     }
 
-    return (0, _rxjs.of)(ids.map(function (id) {
+    return ids.map(function (id) {
       return {
         type: "".concat(path, "FETCH_").concat(subject, "_INIT"),
         payload: {
@@ -132,7 +132,7 @@ var fetchAllEpic = function fetchAllEpic(action$, state$) {
       };
     }).concat({
       type: "".concat(path, "FETCHALL_").concat(subject, "_DONE")
-    }));
+    });
   }));
 };
 

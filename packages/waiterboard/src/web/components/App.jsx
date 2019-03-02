@@ -38,7 +38,7 @@ const App = ({ appLoading, user, history }) =>
             return user.isEmpty ? <SignInWithRoot user={user}/> :
             <Redirect to="/board"/>
           }} />
-          <Route path="/board" component={() => {
+          <Route exact path="/board" component={() => {
             return (!user.isEmpty || !user.isLoaded) ? <SelectWB history={history} /> :
             <Redirect to="/signin"/>
           }} />
@@ -46,6 +46,7 @@ const App = ({ appLoading, user, history }) =>
             return (!user.isEmpty || !user.isLoaded) ? <Board history={history} /> :
             <Redirect to="/signin"/>
           }} />
+          <Route exact path="/" component={() => <Redirect to="/board" />} />
         </Switch>
       }
     </Content>

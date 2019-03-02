@@ -5,6 +5,7 @@ import numeral from 'numeral'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { MapToList } from 'lib/FN'
+import { withFirebase } from 'react-redux-firebase'
 
 import AppBar from '@material-ui/core/AppBar'
 import IconButton from '@material-ui/core/IconButton'
@@ -124,7 +125,7 @@ const Header = ({
   salesVolume = 0,
   loggedUser,
   selectedWBId,
-  logout,
+  firebase,
   toggleFrames,
   toggleModal,
   frameIndex,
@@ -183,7 +184,7 @@ const Header = ({
               <Label>Orders</Label><Value>{ordersList.length}</Value>
               <Label>Sales</Label><Value>{numeral(salesVolume).format('0.000')}KD</Value>
 
-              <IconButton onClick={logout}>
+              <IconButton onClick={() => firebase.logout()}>
                 <ExitToApp />
               </IconButton>
             </Grid>
@@ -208,4 +209,4 @@ export default connect(
     toggleFrames,
     toggleModal
   }
-)(Header)
+)(withFirebase(Header))

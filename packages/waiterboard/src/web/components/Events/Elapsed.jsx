@@ -22,7 +22,7 @@ class Elapsed extends React.Component{
     }
   }
   componentDidMount() {
-    this.interval = setInterval(this.updateReminderTime.bind(this), 1000);
+    this.interval = setInterval(this.updateReminderTime, 1000);
   }
   componentWillUnmount() {
     if (this.interval) clearInterval(this.interval);
