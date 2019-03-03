@@ -11,8 +11,8 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
 
-    case 'GET_BILLS_DONE': {
-      const list = action.payload;
+    case 'LOAD_BILL_DONE': {
+      const list = action.payload.res;
       return assoc('all', mergeDeepRight(state.all, ListToMap(list)))(state);
     }
 

@@ -79,7 +79,7 @@ function GetMe() {
 function GetUser(_ref5) {
   var id = _ref5.id;
   return (0, _Network.Get)({
-    v3: true,
+    endpoint: 'https://us-central1-tabb-global.cloudfunctions.net/api/',
     path: "user/".concat(id)
   });
 }

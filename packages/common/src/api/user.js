@@ -80,7 +80,10 @@ export function GetMe() {
 }
 
 export function GetUser({ id }) {
-  return Get({ v3: true, path: `user/${id}` })
+  return Get({
+    endpoint: 'https://us-central1-tabb-global.cloudfunctions.net/api/',
+    path: `user/${id}`
+  })
 }
 
 export function RegisterFirebaseToken({ token }) {

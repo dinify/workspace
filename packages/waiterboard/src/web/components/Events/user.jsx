@@ -22,15 +22,15 @@ const User = ({
 	}
 	return (
 		<div
-			onClick={() => toggleModal({ open: true, type: 'User', userId: user.id })}
+			onClick={() => toggleModal({ open: true, type: 'User', userId: userId })}
 			style={{
 				display: 'inline-block',
 				margin: '16px 0'
 			}}
 		>
-	    <Photo url={`https://picsum.photos/50/50/?image=12`}/>
+	    <Photo url={user.avatarUrl}/>
 			<UserDetails>
-		    <Name>{user.name}</Name>
+		    <Name>{user.displayName}</Name>
 				{checkinTime ? <Time>{checkinTime}</Time> : ''}
 			</UserDetails>
 		</div>

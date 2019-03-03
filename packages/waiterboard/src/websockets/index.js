@@ -5,7 +5,7 @@ import orderTypes from 'ducks/order/types';
 import billTypes from 'ducks/bill/types';
 import callTypes from 'ducks/call/types';
 
-const socket = io('https://downstream.tabb.global');
+const socket = io('https://ws.dinify.app');
 
 const chime = new Audio('/static/GLASS.wav');
 
@@ -22,6 +22,7 @@ const websockets = (store) => {
     let wbId = null;
     if (selectedId) wbId = selectedId;
     else wbId = getState().restaurant.selectedWBId;
+    console.log(wbId, 'wbId');
     if (wbId) socket.emit('init', `waiterboard/${wbId}`);
   }
   window.initSocket = initSocket;
@@ -69,7 +70,7 @@ const websockets = (store) => {
   })
 
   socket.on('call-incoming', (payload) => {
-    // console.log('call-incoming', data);
+    console.log('call-incoming', payload);
     dispatch({ type: callTypes.CALL_RECEIVED, payload });
     const userId = payload.call.user_id;
     dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });

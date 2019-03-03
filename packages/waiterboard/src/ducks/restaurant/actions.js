@@ -23,8 +23,8 @@ export const getBillsOfUser = (payload) => ({ type: 'GET_BILLSOFUSER_INIT', payl
 export const getOrdersOfUser = (payload) => ({ type: 'GET_ORDERSOFUSER_INIT', payload })
 
 export const setWBidAction = (id) => {
-  const path = window.location.pathname
-  if (path.includes('/board/') && path.length > 20) id = path.replace('/board/','').replace('/','')
+  const path = window.location.pathname;
+  if (path.includes('/board/') && path.length > 20) id = path.replace('/board/','').replace('/','');
   if (id) window.initSocket(id);
   return {
     type: 'SET_WBID',

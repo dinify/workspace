@@ -9,13 +9,11 @@ var _rxjs = require("rxjs");
 
 var _operators = require("rxjs/operators");
 
-var API = _interopRequireWildcard(require("api/restaurant"));
+var _api = _interopRequireDefault(require("../api"));
 
 var _ramda = _interopRequireDefault(require("ramda"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 var capitalize = function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -54,7 +52,7 @@ var createEpic = function createEpic(action$) {
         path = _getSubjectAndPath.path;
 
     var apiFnName = "Create".concat(camel(subject));
-    return (0, _rxjs.from)(API[apiFnName](payload)).pipe((0, _operators.map)(function (res) {
+    return (0, _rxjs.from)(_api.default[apiFnName](payload)).pipe((0, _operators.map)(function (res) {
       return {
         type: "".concat(path, "CREATE_").concat(subject, "_DONE"),
         payload: {
@@ -84,7 +82,7 @@ var fetchEpic = function fetchEpic(action$) {
         path = _getSubjectAndPath2.path;
 
     var apiFnName = "Get".concat(camel(subject));
-    return (0, _rxjs.from)(API[apiFnName](payload)).pipe((0, _operators.map)(function (res) {
+    return (0, _rxjs.from)(_api.default[apiFnName](payload)).pipe((0, _operators.map)(function (res) {
       return {
         type: "".concat(path, "FETCH_").concat(subject, "_DONE"),
         payload: {
@@ -148,7 +146,7 @@ var updateEpic = function updateEpic(action$) {
         path = _getSubjectAndPath4.path;
 
     var apiFnName = "Change".concat(camel(subject));
-    return (0, _rxjs.from)(API[apiFnName](payload)).pipe((0, _operators.map)(function (res) {
+    return (0, _rxjs.from)(_api.default[apiFnName](payload)).pipe((0, _operators.map)(function (res) {
       return {
         type: "".concat(path, "UPDATE_").concat(subject, "_DONE"),
         payload: {
@@ -178,7 +176,7 @@ var removeEpic = function removeEpic(action$) {
         path = _getSubjectAndPath5.path;
 
     var apiFnName = "Remove".concat(camel(subject));
-    return (0, _rxjs.from)(API[apiFnName](payload)).pipe((0, _operators.map)(function (res) {
+    return (0, _rxjs.from)(_api.default[apiFnName](payload)).pipe((0, _operators.map)(function (res) {
       return {
         type: "".concat(path, "REMOVE_").concat(subject, "_DONE"),
         payload: {

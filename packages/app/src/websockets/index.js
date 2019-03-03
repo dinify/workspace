@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import types from './types';
 
-const socket = io('https://downstream.tabb.global');
+const socket = io('https://ws.dinify.app');
 
 const websockets = (store) => {
   const { dispatch, getState } = store;

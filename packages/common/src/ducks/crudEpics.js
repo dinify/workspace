@@ -1,7 +1,7 @@
 // @flow
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
-import * as API from 'api/restaurant';
+import API from '../api';
 import R from 'ramda';
 
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);

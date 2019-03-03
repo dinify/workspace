@@ -72,14 +72,14 @@ const fetchAllEpic = (action$, state$) =>
         const all = state$.value[storeKey].all;
         ids = R.filter((id) => !all[id], ids);
       }
-      return of(ids.map((id) => ({
+      return ids.map((id) => ({
         type: `${path}FETCH_${subject}_INIT`,
         payload: {
           id
         }
       })).concat({
         type: `${path}FETCHALL_${subject}_DONE`
-      }))
+      })
     })
   );
 

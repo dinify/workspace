@@ -4,7 +4,7 @@ import { ofType } from 'redux-observable';
 import { actionTypes } from 'react-redux-firebase';
 import * as API from 'api/restaurant';
 import { setCookie } from '@dinify/common/dist/lib/FN';
-import { setWBidAction, loggedFetchedAction, appBootstrap, loadStateInit, confirmationFail  } from './actions';
+import { loggedFetchedAction, appBootstrap, confirmationFail  } from './actions';
 
 const setWBEpic = (action$) =>
   action$.pipe(
@@ -45,41 +45,35 @@ const loadRestaurant = (action$) =>
     ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
       return from(API.GetLoggedRestaurant()).pipe(
-        map(loggedUser => loggedFetchedAction(loggedUser)),
+        mergeMap(loggedUser => [
+          loggedFetchedAction(loggedUser),
+          { type: 'LOAD_STATE_INIT' }
+        ]),
         catchError(error => {
-          console.log(error);
           return of(appBootstrap());
         })
       );
     })
   );
 
-const guestsPollingEpic = (action$, $state) =>
+const guestsPollingEpic = (action$, state$) =>
   action$.pipe(
     ofType('LOAD_STATE_INIT'),
     mergeMap(() => {
-
-      // const waiterboardId = $state.value.restaurant.selectedWBId;
-
-      // API.GetOrders({ waiterboardId }).then((response) => {
-      //   // const oh = filter((o) => o.type === 'AHEAD')(response)
-      //   const di = filter((o) => o.type === 'DINE_IN')(response)
-      //   dispatch({ type: 'GET_ORDERS_DONE', payload: di });
-      //   const userIds = pluck('initiator', di);
-      //   dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
-      //   // dispatch({ type: 'GET_ORDERAHEADS_DONE', payload: oh });
-      // })
-      // API.GetBills({ waiterboardId }).then((response) => {
-      //   const userIds = pluck('initiator', response);
-      //   dispatch({ type: 'GET_BILLS_DONE', payload: response });
-      //   dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: userIds, cache: true} });
-      // })
-
-      return [
-        {type: 'LOAD_CALL_INIT'},
-        {type: 'LOAD_SEATS_INIT'},
+      const waiterboardId = state$.value.restaurant.selectedWBId;
+      let actions = [
         {type: 'LOAD_BOOKING_INIT'}
-      ];
+      ]
+      if (waiterboardId) {
+        actions = [
+          {type: 'LOAD_ORDER_INIT'},
+          {type: 'LOAD_BILL_INIT'},
+          {type: 'LOAD_CALL_INIT'},
+          {type: 'LOAD_SEATS_INIT'},
+          ...actions
+        ]
+      }
+      return actions;
     })
   )
 

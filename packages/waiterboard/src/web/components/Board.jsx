@@ -14,7 +14,7 @@ import ModalListOfBookings from './ModalListOfBookings'
 import ModalTable from './ModalTable'
 
 import { toggleFrames, toggleModal } from 'ducks/ui'
-import { setOHEnabled } from 'ducks/restaurant/actions'
+import { setOHEnabled, setWBidAction } from 'ducks/restaurant/actions'
 import { getGroupedBills } from 'ducks/bill/selectors';
 import { getTableList } from 'ducks/table/selectors';
 
@@ -68,7 +68,17 @@ const Board = ({
   modalPayload,
   toggleFrames,
   toggleModal,
+  selectedWBId,
+  setWBidAction
 }) => {
+
+  if (!selectedWBId) {
+    const path = window.location.pathname;
+    if (path.includes('/board/') && path.length > 20) {
+      const id = path.replace('/board/','').replace('/','');
+      setWBidAction(id);
+    }
+  }
 
   const closeModal = (e) => {
     if (e.target.className.indexOf('modal-area') > -1) toggleModal({ open: false });
@@ -148,10 +158,12 @@ export default connect(
     modalOpen: state.ui.modalOpen,
     modalType: state.ui.modalType,
     modalPayload: state.ui.modalPayload,
+    selectedWBId: state.restaurant.selectedWBId
   }),
   {
     toggleFrames,
     toggleModal,
-    setOHEnabled
+    setOHEnabled,
+    setWBidAction
   },
 )(Board);
