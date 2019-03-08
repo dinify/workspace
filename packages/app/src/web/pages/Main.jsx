@@ -3,26 +3,20 @@ import { connect } from 'react-redux';
 import { withTheme } from '@material-ui/core/styles';
 import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
 import ResponsiveGrid from 'web/components/ResponsiveGrid';
-import AppBar from 'web/components/AppBar';
 import Typography from '@dinify/common/dist/components/Typography';
-import Button from '@material-ui/core/Button';
-import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import RestaurantListItem from 'web/components/RestaurantListItem';
 import * as FN from '@dinify/common/dist/lib/FN';
 
-const Main = ({ restaurantsMap, theme }) => {
+const Main = ({ restaurantsMap }) => {
   const restaurantsList = FN.MapToList(restaurantsMap);
-  const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
   return (
     <div>
-      {!iosInstalled && <AppBar />}
       <ResponsiveContainer>
         <Typography
           style={{ paddingTop: 32 }}
           variant="h5"
-          gutterBottom
-        >
-          Explore local places
+          gutterBottom>
+          Explore nearby places
         </Typography>
         <ResponsiveGrid>
           {restaurantsList.map(restaurant => (
@@ -32,16 +26,7 @@ const Main = ({ restaurantsMap, theme }) => {
             />
           ))}
         </ResponsiveGrid>
-        <Typography
-          style={{ marginBottom: 8, marginTop: 32 }}
-          variant="caption"
-        >
-          455 more
-        </Typography>
-        <Button variant="outlined" color="secondary">
-          <span>Show all</span>
-          <ChevronRight style={{ marginLeft: 8 }} />
-        </Button>
+
       </ResponsiveContainer>
     </div>
   );

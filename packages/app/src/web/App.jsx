@@ -26,7 +26,7 @@ import * as FN from '@dinify/common/dist/lib/FN';
 
 import withRoot from 'withRoot.js';
 
-const HOMEPAGE = '/restaurant/koreagrill';
+const HOMEPAGE = '/';
 
 class App extends React.Component {
   onNavigate = (evt, val) => {
@@ -73,7 +73,7 @@ class App extends React.Component {
           <Switch location={location}>
             <Route exact path="/" render={() => (
               HOMEPAGE !== '/' ? (
-                <Redirect to="/restaurant/koreagrill"/>
+                <Redirect to={HOMEPAGE}/>
               ) : (
                 <Main/>
               )

@@ -4,16 +4,15 @@ import R from 'ramda';
 import * as FN from '@dinify/common/dist/lib/FN';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@dinify/common/dist/components/Typography';
-import Carousel from './Carousel';
 import { Link } from 'react-router-dom';
+import Carousel from './Carousel';
 
 const styles = theme => ({
   image: {
     position: 'relative',
-    borderRadius: 4,
+    borderRadius: '4px',
     marginBottom: theme.spacing.unit,
     backgroundColor: theme.palette.divider,
-    boxShadow: theme.shadows[2],
     overflow: 'hidden !important',
     '&:hover': {
       zIndex: 1,
@@ -31,6 +30,18 @@ const styles = theme => ({
     backgroundColor: theme.palette.common.black,
     opacity: 0,
     transition: theme.transitions.create('opacity'),
+  },
+  price: {
+    color: theme.palette.text.secondary
+  },
+  imageSrc: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
 });
 
@@ -72,10 +83,9 @@ const RestaurantListItem = ({
             variant="overline"
             color="primary"
           >
-            {tags.join(' · ')}
+            {tags.join(' • ')}
           </Typography>
         )}
-
         <Typography variant="h6">{restaurant.name}</Typography>
         { /* <Typography >{restaurant.description}</Typography> */}
       </div>

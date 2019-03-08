@@ -16,7 +16,10 @@ import websockets from './websockets';
 
 websockets(store);
 
-const language = JSON.parse(getCookie('language'));
+let language = { primary: navigator.language, other: [] };
+const langCookie = getCookie('language');
+if (langCookie) language = JSON.parse(langCookie);
+
 i18n({
   namespace: 'app',
   lang: language.primary,
