@@ -84,8 +84,13 @@ export default ({namespace, lang, fallback}) => {
         }
         if (type === 'currency') {
           // TODO: warning, globalized instance might still be undefined (async!)
-          if (!globalized) return '...';
+          if (!globalized) return '';
           return globalized.currencyFormatter(params[0])(value);
+        }
+        if (type === 'currencyName') {
+          if (!globalized) return '';
+          const displayName = globalized.cldr.main(`numbers/currencies/${value}/displayName`);
+          return displayName;
         }
         if (type === 'array') {
           // TODO return formatted display list pattern

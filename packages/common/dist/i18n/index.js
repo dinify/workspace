@@ -108,8 +108,14 @@ var _default = function _default(_ref) {
 
         if (type === 'currency') {
           // TODO: warning, globalized instance might still be undefined (async!)
-          if (!globalized) return '...';
+          if (!globalized) return '';
           return globalized.currencyFormatter(params[0])(value);
+        }
+
+        if (type === 'currencyName') {
+          if (!globalized) return '';
+          var displayName = globalized.cldr.main("numbers/currencies/".concat(value, "/displayName"));
+          return displayName;
         }
 
         if (type === 'array') {} // TODO return formatted display list pattern

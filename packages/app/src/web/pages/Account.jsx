@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import { getClaims } from 'ducks/auth/selectors';
 import { withStateHandlers } from 'recompose';
-import { parseLanguages } from '@dinify/common/dist/lib/FN';
+import { languages } from '@dinify/common/dist/lib';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import OpenInNew from '@material-ui/icons/OpenInNewRounded';
 import ArrowUpward from '@material-ui/icons/ArrowUpwardRounded';
@@ -23,10 +23,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
 import LanguagePickerDialog from '@dinify/common/dist/components/dialogs/LanguagePickerDialog';
+import CurrencyPickerDialog from '@dinify/common/dist/components/dialogs/CurrencyPickerDialog';
 import Image from 'web/components/Image';
 import Flag from '@dinify/common/dist/components/Flag';
 import Card from 'web/components/Card';
-import languagesRaw from '@dinify/common/dist/lib/languages';
 import countries from '@dinify/common/dist/lib/countries';
 import CashMultiple from '@dinify/common/dist/icons/CashMultiple';
 
@@ -48,8 +48,6 @@ const styles = theme => ({
     color: 'rgba(255, 255, 255, 1)',
   }
 });
-
-const languages = parseLanguages(languagesRaw);
 
 const getLang = langtag => {
   let result = null;
@@ -83,6 +81,7 @@ const Account = ({
   dispatch,
   dialogType,
   langDialogOpen,
+  currencyDialogOpen,
   openDialog,
   closeDialog,
   initialSelectedLanguage,
@@ -144,9 +143,7 @@ const Account = ({
         <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
           {t('currency.title')}
         </Typography>
-        {displayCurrency && <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={() => {
-          // TODO: open currency picker dialog
-        }}>
+        {displayCurrency && <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={() => {openDialog('currency')}}>
           <ListItemIcon>
             <CashMultiple />
           </ListItemIcon>
@@ -157,9 +154,7 @@ const Account = ({
           <Typography variant="body2">
             {t('currency.original')}
           </Typography>
-          <Button onClick={() => {
-            // TODO: open currency picker dialog
-          }} variant="text" color="primary">
+          <Button onClick={() => {openDialog('currency')}} variant="text" color="primary">
             {t('currency.set')}
           </Button>
         </div>}
@@ -256,6 +251,13 @@ const Account = ({
         </Button>
       </div>
 
+      <CurrencyPickerDialog
+        open={currencyDialogOpen}
+        onClose={(currencyCode) => {
+          console.log('Selected currency: ', currencyCode);
+          closeDialog();
+        }}/>
+
       <LanguagePickerDialog
         open={langDialogOpen}
         initialSelectedLanguage={initialSelectedLanguage}
@@ -292,17 +294,25 @@ const enhance = compose(
   withStateHandlers(
     () => ({
       langDialogOpen: false,
+      currencyDialogOpen: true,
       dialogType: null,
       initialSelectedLanguage: null
     }),
     {
-      openDialog: () => (type, initialSelectedLanguage) => ({
-        langDialogOpen: true,
-        dialogType: type,
-        initialSelectedLanguage
-      }),
+      openDialog: () => (type, initialSelectedLanguage) => {
+        if (type === 'currency') return {
+          currencyDialogOpen: true
+        };
+
+        return {
+          langDialogOpen: true,
+          dialogType: type,
+          initialSelectedLanguage
+        };
+      },
       closeDialog: () => () => ({
         langDialogOpen: false,
+        currencyDialogOpen: false,
         dialogType: null,
         initialSelectedLanguage: null
       }),
