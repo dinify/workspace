@@ -13,7 +13,9 @@ const Price = ({
   ...props
 }) => {
   if (!price) return null;
-  const { i18n } = useTranslation();
+
+  // eslint-disable-next-line no-unused-vars
+  const { t, i18n } = useTranslation();
 
   // TODO: move this to server side with precision and rounding based on currency
   const convert = (amt, from, to) => {
