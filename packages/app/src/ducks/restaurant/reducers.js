@@ -2,7 +2,7 @@
 import R from 'ramda';
 import types from './types';
 import wsTypes from '../../websockets/types';
-import authTypes from 'ducks/auth/types';
+import authTypes from '@dinify/common/dist/ducks/auth/types';
 
 const initialState = {
   all: {},
