@@ -9,7 +9,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import auth from 'ducks/auth';
+import auth from '@dinify/common/dist/ducks/auth';
 import ui from 'ducks/ui';
 import user from 'ducks/user';
 import restaurant from 'ducks/restaurant';

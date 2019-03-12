@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase';
 import { useTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
-import { getClaims } from 'ducks/auth/selectors';
+import { getClaims } from '@dinify/common/dist/ducks/auth/selectors';
 import { withStateHandlers } from 'recompose';
 import { languages } from '@dinify/common/dist/lib';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';

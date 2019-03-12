@@ -8,7 +8,7 @@ import types from './types';
 
 const meFetchedEpic = (action$: Observable) =>
   action$.pipe(
-    ofType(types.FETCH_ME_DONE),
+    ofType('ACCESSTOKEN_HANDLED'),
     tap(() => {
       window.initSocket();
     }),
