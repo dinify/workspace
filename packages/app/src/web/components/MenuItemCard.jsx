@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@dinify/common/dist/components/Typography';
 import { Link } from 'react-router-dom';
 import * as FN from '@dinify/common/dist/lib/FN';
+import Price from 'web/components/Price';
 
 const styles = theme => ({
   image: {
@@ -71,7 +72,7 @@ const MenuItemCard = ({
       <Typography
         className={classes.price}
         variant="overline">
-        {FN.formatPrice(menuItem.price)}
+        <Price price={menuItem.price}/>
       </Typography>
       <div style={{width: 1000}} />
       { /* <Typography noWrap >{menuItem.description}</Typography> */ }

@@ -8,6 +8,7 @@ import Typography from '@dinify/common/dist/components/Typography';
 import CheckCircle from '@material-ui/icons/CheckCircleRounded';
 import { Motion, spring } from 'react-motion';
 import * as FN from '@dinify/common/dist/lib/FN';
+import Price from 'web/components/Price';
 
 import { selectBillItem as selectBillItemAction } from 'ducks/bill/actions';
 
@@ -147,7 +148,7 @@ class BillItem extends React.PureComponent {
                   }}
                   color={divisor > 1 ? 'textSecondary' : 'textPrimary'}
                   variant="overline">
-                  {FN.formatPrice(divisor > 1 ? item.orgsubtotal : item.subtotal)}
+                  <Price price={divisor > 1 ? item.orgsubtotal : item.subtotal}/>
                 </Typography>
               </div>
               <div style={{display: 'flex', justifyContent: 'start'}}>
@@ -161,7 +162,7 @@ class BillItem extends React.PureComponent {
                 {divisor > 1 && <Typography
                   style={{alignSelf: 'flex-end'}}
                   variant="overline">
-                  {item && FN.formatPrice(item.subtotal)}
+                  {item && <Price price={item.subtotal}/>}
                 </Typography>}
               </div>
             </div>
@@ -173,7 +174,7 @@ class BillItem extends React.PureComponent {
 }
 
 BillItem = connect(state => ({
-  
+
   }), {
     selectBillItem: selectBillItemAction,
   }

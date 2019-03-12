@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@dinify/common/dist/components/Typography';
 import * as FN from '@dinify/common/dist/lib/FN';
 import uniqueId from 'lodash.uniqueid';
+import Price from 'web/components/Price';
 
 const styles = theme => ({
   cartItemImage: {
@@ -88,7 +89,7 @@ const CartItem = ({
             <Typography
               variant="overline"
               style={{alignSelf: 'flex-end', opacity: editing ? 0 : 1}}>
-              {item.menu_item && FN.formatPrice(item.menu_item.price)}
+              {item.menu_item && <Price price={item.menu_item.price}/>}
             </Typography>
           </div>
           {customizations.length ? customizations.map(customization =>
@@ -107,7 +108,10 @@ const CartItem = ({
                   opacity: editing ? 0 : 1,
                 }}
                 variant="overline">
-                {customization.amount && customization.amount > 1 ? `${customization.amount} × ` : ''}{parseFloat(customization.price.amount) > 0 && FN.formatPrice(customization.price)}
+                {customization.amount && customization.amount > 1 ? `${customization.amount} × ` : ''}
+                {parseFloat(customization.price.amount) > 0 && (
+                  <Price price={customization.price} />
+                )}
               </Typography>}
             </div>
           ) :

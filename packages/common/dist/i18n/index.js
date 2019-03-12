@@ -28,7 +28,7 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 // TODO: move to backend with SSR for optimized loading
-var CLDR_ROOT = 'https://cldr.dinify.app';
+var ROOT = 'https://static.dinify.app';
 
 var getMainFiles = function getMainFiles(locale) {
   return ["main/".concat(locale, "/currencies"), "main/".concat(locale, "/numbers")];
@@ -50,15 +50,15 @@ var _default = function _default(_ref) {
   var globalized;
 
   (function (callback) {
-    fetch("".concat(CLDR_ROOT, "/supplemental/likelySubtags")).then(function (response) {
+    fetch("".concat(ROOT, "/cldr/supplemental/likelySubtags")).then(function (response) {
       response.json().then(function (likelySubtagsSata) {
         _globalize.default.load(likelySubtagsSata);
 
         var instance = getGlobalizedInstance(lang);
-        var supplemental = ['supplemental/numberingSystems', 'supplemental/plurals', 'supplemental/ordinals', 'supplemental/currencyData'];
+        var supplemental = ['cldr/supplemental/numberingSystems', 'cldr/supplemental/plurals', 'cldr/supplemental/ordinals', 'cldr/supplemental/currencyData'];
         var requiredFiles = supplemental.concat(getMainFiles(instance.locale));
         Promise.all(requiredFiles.map(function (file) {
-          return fetch("".concat(CLDR_ROOT, "/").concat(file)).then(function (response) {
+          return fetch("".concat(ROOT, "/").concat(file)).then(function (response) {
             return response.json();
           });
         })).then(function (values) {
@@ -108,7 +108,7 @@ var _default = function _default(_ref) {
 
         if (type === 'currency') {
           // TODO: warning, globalized instance might still be undefined (async!)
-          if (!globalized) return 'globalized ASYNC PROBLEM';
+          if (!globalized) return '...';
           return globalized.currencyFormatter(params[0])(value);
         }
 
@@ -133,7 +133,7 @@ var _default = function _default(_ref) {
       var instance = getGlobalizedInstance(lng);
       var requiredFiles = getMainFiles(instance.locale);
       Promise.all(requiredFiles.map(function (file) {
-        return fetch("".concat(CLDR_ROOT, "/").concat(file)).then(function (response) {
+        return fetch("".concat(ROOT, "/").concat(file)).then(function (response) {
           return response.json();
         });
       })).then(function (values) {

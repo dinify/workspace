@@ -63,7 +63,9 @@
   "dashboard": "Dashboard",
   "waiterboard": "Waiterboard",
   "currency": {
-    "title": "Display currency"
+    "title": "Display currency",
+    "set": "Set display currency",
+    "original": "Showing prices in the original currency"
   },
   "roles": {
     "title": "Roles",

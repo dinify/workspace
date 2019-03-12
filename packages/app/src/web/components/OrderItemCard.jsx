@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@dinify/common/dist/components/Typography';
 import * as FN from '@dinify/common/dist/lib/FN';
+import Price from 'web/components/Price';
 
 const styles = theme => ({
   image: {
@@ -50,7 +51,7 @@ const OrderItemCard = ({
       <Typography
         className={classes.price}
         variant="overline">
-        {FN.formatPrice(orderItem.menu_item.price)}
+        <Price price={orderItem.menu_item.price} />
       </Typography>
       <Typography variant="subtitle1">{orderItem.menu_item.name}</Typography>
       <div style={{width: 1000}} />

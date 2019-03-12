@@ -14,6 +14,7 @@ import Chip from '@material-ui/core/Chip';
 import AddCircle from '@material-ui/icons/AddCircleRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
+import Price from 'web/components/Price';
 import * as FN from '@dinify/common/dist/lib/FN';
 import {
   excludeIngredient as excludeIngredientAction,
@@ -174,7 +175,7 @@ let Customizations = ({
           </Grid>
           <Grid item style={{flex: 1}}>
             <Typography className={classes.secondary} variant="overline">
-              {FN.formatPrice(addon.price)}
+              <Price price={addon.price} />
             </Typography>
             <Typography >
               {addon.name}
@@ -222,7 +223,7 @@ let Customizations = ({
                     avatar={parsedAmt !== 0 ? (
                       <div className={classes.chipDifference}>
                         <Typography variant="caption">
-                          {FN.formatPrice(choice.difference)}
+                          <Price price={choice.difference} />
                         </Typography>
                       </div>
                     ) : null}

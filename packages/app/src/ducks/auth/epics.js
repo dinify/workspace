@@ -3,6 +3,7 @@ import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 
+import i18next from 'i18next';
 import { setCookie, getCookie } from '@dinify/common/dist/lib/FN';
 import { actionTypes } from 'react-redux-firebase';
 import { change as changeForm } from 'redux-form';
@@ -63,7 +64,8 @@ const languageHeaderEpic = (action$, state$) =>
           if (curr !== val) {
             setCookie('language', val, 90);
 
-            // TODO: Call changelanguage in i18 API
+            // TODO: Get i18n instance from context instead of direct import
+            i18next.changeLanguage(language.primary);
 
             return of({ type: 'LANGUAGE_UPDATED' });
           }

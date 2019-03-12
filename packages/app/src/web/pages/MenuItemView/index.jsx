@@ -8,6 +8,7 @@ import FavoriteToggle from 'web/components/FavoriteToggle';
 import Typography from '@dinify/common/dist/components/Typography';
 import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
+import Price from 'web/components/Price';
 import * as FN from '@dinify/common/dist/lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import Customizations from './Customizations';
@@ -94,7 +95,9 @@ class MenuItemView extends React.PureComponent {
               <Grid container spacing={0}>
                 <Grid item style={{flex: 1}}>
                   <Typography variant="h6">{menuItem.name}</Typography>
-                  <Typography gutterBottom variant="subtitle1">{FN.formatPrice(menuItem.price)}</Typography>
+                  <Typography gutterBottom variant="subtitle1">
+                    <Price price={menuItem.price} />
+                  </Typography>
                 </Grid>
                 <Grid item>
                   <FavoriteToggle

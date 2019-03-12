@@ -28,6 +28,7 @@ import Flag from '@dinify/common/dist/components/Flag';
 import Card from 'web/components/Card';
 import languagesRaw from '@dinify/common/dist/lib/languages';
 import countries from '@dinify/common/dist/lib/countries';
+import CashMultiple from '@dinify/common/dist/icons/CashMultiple';
 
 const styles = theme => ({
   typeChip: {
@@ -104,6 +105,9 @@ const Account = ({
   let primaryLang;
   if (profile && profile.language) primaryLang = getLang(profile.language.primary);
 
+  let displayCurrency;
+  if (profile && profile.displayCurrency) displayCurrency = profile.displayCurrency;
+
   return (
     <div style={{
       maxWidth: 660,
@@ -137,6 +141,29 @@ const Account = ({
         {t('profile')}
       </Typography>
       <Card>
+        <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
+          {t('currency.title')}
+        </Typography>
+        {displayCurrency && <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={() => {
+          // TODO: open currency picker dialog
+        }}>
+          <ListItemIcon>
+            <CashMultiple />
+          </ListItemIcon>
+          <ListItemText primary={displayCurrency} secondary={displayCurrency} />
+          <ChevronRight />
+        </ListItem>}
+        {!displayCurrency && <div style={{padding: '0 24px 16px 24px'}}>
+          <Typography variant="body2">
+            {t('currency.original')}
+          </Typography>
+          <Button onClick={() => {
+            // TODO: open currency picker dialog
+          }} variant="text" color="primary">
+            {t('currency.set')}
+          </Button>
+        </div>}
+        <Divider />
         <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
           {t('language.default')}
         </Typography>
