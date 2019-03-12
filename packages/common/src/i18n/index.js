@@ -7,7 +7,7 @@ import { supplementalPaths } from './cldr';
 
 // TODO: move to backend with SSR for optimized loading
 
-const CLDR_ROOT = 'https://cldr.dinify.app';
+const ROOT = 'https://static.dinify.app';
 
 const getMainFiles = (locale) => {
   return [
@@ -29,22 +29,22 @@ export default ({namespace, lang, fallback}) => {
 
   let globalized;
   ((callback) => {
-    fetch(`${CLDR_ROOT}/supplemental/likelySubtags`)
+    fetch(`${ROOT}/cldr/supplemental/likelySubtags`)
       .then((response) => {
           response.json().then((likelySubtagsSata) => {
             globalize.load(likelySubtagsSata);
             const instance = getGlobalizedInstance(lang);
             const supplemental = [
-              'supplemental/numberingSystems',
-              'supplemental/plurals',
-              'supplemental/ordinals',
-              'supplemental/currencyData'
+              'cldr/supplemental/numberingSystems',
+              'cldr/supplemental/plurals',
+              'cldr/supplemental/ordinals',
+              'cldr/supplemental/currencyData'
             ];
 
             const requiredFiles = supplemental.concat(getMainFiles(instance.locale));
 
             Promise.all(requiredFiles.map(file =>
-              fetch(`${CLDR_ROOT}/${file}`).then((response) => response.json()))
+              fetch(`${ROOT}/${file}`).then((response) => response.json()))
             ).then((values) => {
               globalize.load(...values);
               callback(instance);
@@ -84,8 +84,13 @@ export default ({namespace, lang, fallback}) => {
         }
         if (type === 'currency') {
           // TODO: warning, globalized instance might still be undefined (async!)
-          if (!globalized) return 'globalized ASYNC PROBLEM';
+          if (!globalized) return '';
           return globalized.currencyFormatter(params[0])(value);
+        }
+        if (type === 'currencyName') {
+          if (!globalized) return '';
+          const displayName = globalized.cldr.main(`numbers/currencies/${value}/displayName`);
+          return displayName;
         }
         if (type === 'array') {
           // TODO return formatted display list pattern
@@ -110,7 +115,7 @@ export default ({namespace, lang, fallback}) => {
       const requiredFiles = getMainFiles(instance.locale)
 
       Promise.all(requiredFiles.map(file =>
-        fetch(`${CLDR_ROOT}/${file}`).then((response) => response.json()))
+        fetch(`${ROOT}/${file}`).then((response) => response.json()))
       ).then((values) => {
         globalize.load(...values);
         callback(instance);

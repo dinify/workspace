@@ -67,7 +67,7 @@ var styles = function styles(theme) {
   };
 };
 
-var LanguagePickerDialog = function LanguagePickerDialog(props) {
+var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
   var classes = props.classes,
       filter = props.filter,
       setFilter = props.setFilter,
@@ -84,21 +84,13 @@ var LanguagePickerDialog = function LanguagePickerDialog(props) {
       other = _objectWithoutProperties(props, ["classes", "filter", "setFilter", "selectedLang", "setSelectedLang", "page", "prevPage", "setPage", "open", "onClose", "resetState", "initialSelectedLanguage"]);
 
   var _useTranslation = (0, _reactI18next.useTranslation)(),
-      t = _useTranslation.t;
+      t = _useTranslation.t,
+      i18n = _useTranslation.i18n;
 
-  var filtered = _ramda.default.filter(function (lang) {
+  var filtered = _ramda.default.filter(function (currencyCode) {
     if (!filter) return true;
-    return (0, _match.default)(lang.name, filter).length + (0, _match.default)(lang.nameNative, filter).length > 0;
-  }, _lib.languages);
-
-  var languageClickHandler = function languageClickHandler(lang) {
-    var solo = lang.countries.length === 1;
-    if (solo) setSelectedLang(lang.countries[0].langtag);else setPage(lang);
-  };
-
-  var countryClickHandler = function countryClickHandler(country) {
-    setSelectedLang(country.langtag);
-  };
+    return (0, _match.default)(currencyCode, filter).length > 0;
+  }, _lib.currencies);
 
   var highlightBold = function highlightBold(text) {
     if (!filter) return text;
@@ -109,12 +101,20 @@ var LanguagePickerDialog = function LanguagePickerDialog(props) {
     }));
   };
 
-  var animConfig = {
-    stiffness: 480,
-    damping: 48
-  };
+  return _react.default.createElement(_Dialog.default, _extends({
+    open: open,
+    onClose: function onClose() {
+      resetState();
 
-  var mainPage = _react.default.createElement("div", {
+      _onClose(null);
+    }
+  }, other), _react.default.createElement(_DialogTitle.default, null, t('selectCurrency')), _react.default.createElement("div", {
+    style: {
+      height: 312,
+      width: 240,
+      overflow: 'hidden'
+    }
+  }, _react.default.createElement("div", {
     style: {
       height: '100%',
       display: 'flex',
@@ -143,16 +143,10 @@ var LanguagePickerDialog = function LanguagePickerDialog(props) {
     style: {
       flex: 1
     }
-  }, filtered.map(function (lang, i) {
-    var solo = lang.countries.length === 1;
-    var secondary = highlightBold(lang.nameNative);
-
-    if (lang.name.toLowerCase() === lang.nameNative.toLowerCase()) {
-      if (solo) secondary = _react.default.createElement("i", null, lang.countries[0].nameNative);else secondary = '';
-    }
-
+  }, filtered.map(function (currencyCode, i) {
+    var primary = i18n.format(currencyCode, 'currencyName');
+    var secondary = highlightBold(currencyCode);
     var selected = false;
-    if (selectedLang) selected = selectedLang.split('-')[0] === lang.code;
     return _react.default.createElement(_ListItem.default, {
       key: i,
       dense: true,
@@ -162,107 +156,12 @@ var LanguagePickerDialog = function LanguagePickerDialog(props) {
         paddingLeft: 24,
         paddingRight: 24
       },
-      onClick: function onClick() {
-        return languageClickHandler(lang);
-      }
+      onClick: function onClick() {}
     }, _react.default.createElement(_ListItemText.default, {
-      primary: highlightBold(lang.name),
+      primary: primary,
       secondary: secondary
-    }), solo ? _react.default.createElement(_Flag.default, {
-      country: lang.countries[0].regionCode
-    }) : _react.default.createElement(_ChevronRightRounded.default, {
-      style: {
-        opacity: 0.54
-      }
     }));
-  })));
-
-  var dialogContent;
-  var currentPage = page || prevPage;
-
-  if (currentPage) {
-    dialogContent = _react.default.createElement("div", {
-      style: {
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column'
-      }
-    }, _react.default.createElement("div", null, _react.default.createElement(_Button.default, {
-      style: {
-        margin: '0px 24px'
-      },
-      onClick: function onClick() {
-        return setPage(null);
-      }
-    }, _react.default.createElement(_ChevronLeftRounded.default, null), t('back'))), _react.default.createElement(_Divider.default, {
-      style: {
-        marginTop: 16
-      }
-    }), _react.default.createElement("div", {
-      className: classes.scrollingList,
-      style: {
-        flex: 1
-      }
-    }, currentPage.countries.map(function (country, i) {
-      var name = _lib.countries[country.regionCode];
-      return _react.default.createElement(_ListItem.default, {
-        key: i,
-        dense: true,
-        button: true,
-        selected: country.langtag === selectedLang,
-        style: {
-          paddingLeft: 24,
-          paddingRight: 24
-        },
-        onClick: function onClick() {
-          return countryClickHandler(country);
-        }
-      }, _react.default.createElement(_ListItemText.default, {
-        primary: name,
-        secondary: country.nameNative
-      }), _react.default.createElement(_Flag.default, {
-        country: country.regionCode
-      }));
-    })));
-  }
-
-  return _react.default.createElement(_Dialog.default, _extends({
-    open: open,
-    onClose: function onClose() {
-      resetState();
-
-      _onClose(null);
-    }
-  }, other), _react.default.createElement(_DialogTitle.default, null, page ? t('selectCountry') : t('selectLanguage')), _react.default.createElement("div", {
-    style: {
-      height: 312,
-      width: 240,
-      overflow: 'hidden'
-    }
-  }, _react.default.createElement(_reactMotion.Motion, {
-    defaultStyle: {
-      x: 0
-    },
-    style: {
-      x: (0, _reactMotion.spring)(page ? 1 : 0, animConfig)
-    }
-  }, function (style) {
-    return _react.default.createElement("div", {
-      style: {
-        height: '100%',
-        display: 'flex',
-        transform: "translate3d(".concat(-240 * style.x, "px, 0, 0)")
-      }
-    }, _react.default.createElement("div", {
-      style: {
-        minWidth: 240
-      }
-    }, mainPage), _react.default.createElement("div", {
-      style: {
-        minWidth: 240
-      }
-    }, dialogContent));
-  })), _react.default.createElement(_Divider.default, null), _react.default.createElement(_DialogActions.default, null, _react.default.createElement(_Button.default, {
+  })))), _react.default.createElement(_Divider.default, null), _react.default.createElement(_DialogActions.default, null, _react.default.createElement(_Button.default, {
     color: "primary",
     disabled: !selectedLang,
     onClick: function onClick() {
@@ -317,6 +216,6 @@ var enhance = (0, _redux.compose)((0, _recompose.withStateHandlers)(function (_r
   }
 }), (0, _styles.withStyles)(styles));
 
-var _default = enhance(LanguagePickerDialog);
+var _default = enhance(CurrencyPickerDialog);
 
 exports.default = _default;

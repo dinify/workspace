@@ -16,6 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
 import Typography from '@dinify/common/dist/components/Typography';
 import CartItem from 'web/components/CartItem';
+import Price from 'web/components/Price';
 // import Radio from '@material-ui/core/Radio';
 // import RadioGroup from '@material-ui/core/RadioGroup';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -114,7 +115,7 @@ const Cart = ({
             </Typography>
 
             <Typography variant="overline">
-              {FN.formatPrice(cart.subtotal)}
+              <Price price={cart.subtotal} />
             </Typography>
           </div>
           <div style={{display: 'flex', alignItems: 'center'}}>
@@ -123,7 +124,7 @@ const Cart = ({
             </Typography>
 
             <Typography variant="overline">
-              0.150 KD
+
             </Typography>
           </div>
         </div>}
@@ -134,10 +135,7 @@ const Cart = ({
           </Typography>
 
           <Typography variant="subtitle1">
-            {FN.formatPrice({
-              amount: parseFloat(cart.subtotal.amount),
-              currency: cart.subtotal.currency
-            })}
+            <Price price={cart.subtotal} />
           </Typography>
         </div>}
         <Fab

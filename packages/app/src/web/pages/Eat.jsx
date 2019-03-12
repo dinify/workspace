@@ -28,6 +28,7 @@ import CartItem from 'web/components/CartItem';
 import BillItem from 'web/components/BillItem';
 import PaymentOptionsDialog from '@dinify/common/dist/components/dialogs/PaymentOptionsDialog';
 import ContextMenu from 'web/components/ContextMenu';
+import Price from 'web/components/Price';
 import Cart from 'web/pages/Cart';
 
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
@@ -293,7 +294,7 @@ class Eat extends React.Component {
                               </Typography>
 
                               <Typography variant="subtitle1">
-                                {FN.formatPrice(seat.cart.subtotal)}
+                                <Price price={seat.cart.subtotal} />
                               </Typography>
                             </div>
 
@@ -352,7 +353,7 @@ class Eat extends React.Component {
                                   {t('subtotal')}
                                 </Typography>
                                 <Typography>
-                                  {FN.formatPrice({amount: subtotalAmount, currency})}
+                                  <Price price={{amount: subtotalAmount, currency}} />
                                 </Typography>
                               </div>
                               <div style={{
@@ -372,7 +373,7 @@ class Eat extends React.Component {
                                   {t('gratuity')}
                                 </Typography>
                                 <Typography>
-                                  {FN.formatPrice({amount: gratitudeAmount, currency})}
+                                  <Price price={{amount: gratitudeAmount, currency}} />
                                 </Typography>
                               </div>
                               <Slider disabled={awaitingPaymentConfirmation}
@@ -387,7 +388,7 @@ class Eat extends React.Component {
                                   {t('total')}
                                 </Typography>
                                 <Typography variant="subtitle1">
-                                  {FN.formatPrice({amount: totalAmount, currency})}
+                                  <Price price={{amount: totalAmount, currency}} />
                                 </Typography>
                               </div>
                             </div>
@@ -402,7 +403,7 @@ class Eat extends React.Component {
                             {t('subtotal')}
                           </Typography>
                           <Typography>
-                            {FN.formatPrice({amount: subtotalAmount, currency})}
+                            <Price price={{amount: subtotalAmount, currency}} />
                           </Typography>
                         </div>}
 

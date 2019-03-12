@@ -4,7 +4,8 @@ import { compose } from 'redux';
 import { withStateHandlers } from 'recompose';
 import { Motion, spring } from 'react-motion';
 import { withStyles } from '@material-ui/core/styles';
-import { parseLanguages } from '../../lib/FN';
+import { useTranslation } from 'react-i18next';
+
 import match from 'autosuggest-highlight/umd/match';
 import parse from 'autosuggest-highlight/umd/parse';
 import Button from '@material-ui/core/Button';
@@ -20,10 +21,7 @@ import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 
 import Flag from '../Flag';
-import languagesRaw from '../../lib/languages';
-import countries from '../../lib/countries';
-
-const languages = parseLanguages(languagesRaw);
+import { languages, countries } from '../../lib';
 
 const styles = theme => ({
   scrollingList: {
@@ -49,6 +47,8 @@ const LanguagePickerDialog = (props) => {
     initialSelectedLanguage,
     ...other
   } = props;
+
+  const { t } = useTranslation();
 
   const filtered = R.filter(lang => {
     if (!filter) return true;
@@ -129,7 +129,7 @@ const LanguagePickerDialog = (props) => {
       <div>
         <Button style={{margin: '0px 24px'}} onClick={() => setPage(null)}>
           <ChevronLeft />
-          Back
+          {t('back')}
         </Button>
       </div>
       <Divider style={{marginTop: 16}}/>
@@ -156,7 +156,7 @@ const LanguagePickerDialog = (props) => {
       onClose(null);
     }} {...other}>
       <DialogTitle>
-        {page ? 'Select country' : 'Select language'}
+        {page ? t('selectCountry') : t('selectLanguage')}
       </DialogTitle>
       <div style={{
         height: 312,
@@ -193,7 +193,7 @@ const LanguagePickerDialog = (props) => {
             resetState();
             onClose(selectedLang)
           }}>
-          Select
+          {t('select')}
         </Button>
       </DialogActions>
     </Dialog>
