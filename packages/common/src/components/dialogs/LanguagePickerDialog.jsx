@@ -21,7 +21,7 @@ import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 
 import Flag from '../Flag';
-import { languages, countries } from '../../lib';
+import { languages as unLocalizedLanguages, countries } from '../../lib';
 
 const styles = theme => ({
   scrollingList: {
@@ -48,7 +48,17 @@ const LanguagePickerDialog = (props) => {
     ...other
   } = props;
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const languages = unLocalizedLanguages.map(lang => {
+    const nameEnglish = lang.name;
+    const localizedName = i18n.format(lang.code, 'languageName');
+    return {
+      ...lang,
+      nameEnglish,
+      name: localizedName || nameEnglish
+    }
+  })
 
   const filtered = R.filter(lang => {
     if (!filter) return true;
@@ -85,9 +95,9 @@ const LanguagePickerDialog = (props) => {
       <div style={{padding: '0px 24px'}}>
         <TextField
           fullWidth
-          name="Search"
-          label="Search"
-          hint="Search"
+          name={t('search')}
+          label={t('search')}
+          hint={t('search')}
           variant="filled"
           value={filter || ''}
           onChange={event => setFilter(event.target.value)}/>

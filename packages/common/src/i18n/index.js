@@ -12,6 +12,7 @@ const ROOT = 'https://static.dinify.app';
 const getMainFiles = (locale) => {
   return [
     `main/${locale}/currencies`,
+    `main/${locale}/languages`,
     `main/${locale}/numbers`
   ];
 }
@@ -60,6 +61,11 @@ export default ({namespace, lang, fallback}) => {
         if (type === 'currencyName') {
           if (!globalized) return '';
           const displayName = globalized.cldr.main(`numbers/currencies/${value}/displayName`);
+          return displayName;
+        }
+        if (type === 'languageName') {
+          if (!globalized) return '';
+          const displayName = globalized.cldr.main(`localeDisplayNames/languages/${value}`);
           return displayName;
         }
         if (type === 'array') {

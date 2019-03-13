@@ -171,9 +171,9 @@ var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
     }
   }, _react.default.createElement(_TextField.default, {
     fullWidth: true,
-    name: "Search",
-    label: "Search",
-    hint: "Search",
+    name: t('search'),
+    label: t('search'),
+    hint: t('search'),
     variant: "filled",
     value: filter || '',
     onChange: function onChange(event) {

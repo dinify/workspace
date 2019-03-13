@@ -120,9 +120,9 @@ const CurrencyPickerDialog = (props) => {
           <div style={{padding: '0px 24px'}}>
             <TextField
               fullWidth
-              name="Search"
-              label="Search"
-              hint="Search"
+              name={t('search')}
+              label={t('search')}
+              hint={t('search')}
               variant="filled"
               value={filter || ''}
               onChange={event => setFilter(event.target.value)}/>

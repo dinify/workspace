@@ -56,6 +56,7 @@ const getLang = langtag => {
       if (country.langtag === langtag) {
         result = {
           ...lang,
+          countryCount: lang.countries.length,
           country: {
             ...country,
             name: countries[country.regionCode]
@@ -166,7 +167,7 @@ const Account = ({
           <ListItemIcon>
             <Flag country={primaryLang.country.regionCode}/>
           </ListItemIcon>
-          <ListItemText primary={primaryLang.name} secondary={primaryLang.country.nameNative} />
+          <ListItemText primary={primaryLang.nameNative} secondary={primaryLang.countryCount > 1 ? primaryLang.country.nameNative : primaryLang.name} />
           <ChevronRight />
         </ListItem>}
         {!primaryLang && <div style={{padding: '16px 24px'}}>
@@ -180,11 +181,12 @@ const Account = ({
         </Typography>
         {profile.language && profile.language.other.map((lang, i) => {
           const language = getLang(lang);
+          const secondary = language.countryCount > 1 ? language.country.nameNative : language.name;
           return <ListItem key={language.country.langtag} style={{paddingLeft: 24, paddingRight: 24}}>
             <ListItemIcon>
               <Flag country={language.country.regionCode}/>
             </ListItemIcon>
-            <ListItemText primary={language.name} secondary={language.country.nameNative} />
+            <ListItemText primary={language.nameNative} secondary={secondary} />
             <IconButton onClick={() => {
               const other = R.remove(i, 1, profile.language.other);
               firebase.updateProfile({

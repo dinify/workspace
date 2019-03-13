@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Bejelentkezés",
+    "logOut": "Kijelentkezés"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Telefonszám"
+  },
+  "email": {
+    "short": "E-mail",
+    "long": "E-mail cím"
+  },
+  "suggested": "Ajánlott",
+  "other": "Egyéb",
+  "selectLanguage": "Nyelv kiválasztása",
+  "selectCountry": "Terület kiválasztása",
+  "selectCurrency": "Valuta kiválasztása",
+  "back": "Vissza",
+  "select": "Kiválaszt",
+  "clear": "Töröl",
+  "search": "Keresés",
+  "loadingEllipsis": "Betöltés..."
+}

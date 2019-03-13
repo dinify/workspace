@@ -1,0 +1,97 @@
+{
+  "list": {
+    "and_2": "{{first}} és {{last}}",
+    "and_start": "{{first}}, {{end}}",
+    "and_middle": "{{start}}, {{end}}",
+    "and_end": "{{start}}, és {{last}}"
+  },
+  "menu": {
+    "title": "Menü",
+    "caption": "Minden amit itt kaphatsz: {{restaurant.name}}"
+  },
+  "address": "Cím",
+  "hours": {
+    "open": "Nyitva",
+    "closed": "Zárva"
+  },
+  "website": "Honlap",
+  "nav": {
+    "explore": "Éttermek",
+    "eat": "Kaja",
+    "checkIn": "Becsekkolás",
+    "service": "Felszolgálás"
+  },
+  "ingredients": "Összetevők",
+  "addons": "Ráadás",
+  "subtotal": "Részösszeg",
+  "total": "Összesen",
+  "serviceFee": "Szolgáltatás díj",
+  "order": "Rendelés",
+  "camera": {
+    "notAvailable": {
+      "title": "A kamera nem elérhető",
+      "subtitle": "A böngészőn belüli kamera nem érhető el ezen az eszközön"
+    },
+    "takePhoto": "Csinálj egy képet"
+  },
+  "service": {
+    "title": "Hívj egy felszolgálót",
+    "subtitle": "Ezzel a funckióval bármilyen terítéket vagy fűszert rendelhetsz az asztalodhoz.",
+    "instruction": "Vágj bele egy közeledben levő étteremben található QR-kód beszkennelésével.",
+    "types": {
+      "tableware": "Terítékek",
+      "condiments": "Szószok és fűszerek"
+    }
+  },
+  "bill": {
+    "title": "Számla",
+    "split": "Felosztás",
+    "selecting": "Select bill items to split with others",
+    "splittingWith": "Splitting with {{list}}",
+    "splittingWith_zero": "Select users to split with",
+    "splittingCount": "Splitting with {{count}} person",
+    "splittingCount_plural": "Splitting between {{count}} people",
+    "itemCountSelected": "{{count}} item selected",
+    "itemCountSelected_plural": "{{count}} items selected",
+    "itemCountSelected_none": "no items selected"
+  },
+  "gratuity": "Borravaló",
+  "pay": "Fizetés",
+  "paymentPending": "Awaiting payment confirmation...",
+  "editing": "editing",
+  "profile": "Profil",
+  "dashboard": "Dashboard",
+  "waiterboard": "Waiterboard",
+  "currency": {
+    "title": "Árak megjelenítése",
+    "set": "Valuta beállítása",
+    "original": "Az árak az eredeti valutában jelennek meg"
+  },
+  "roles": {
+    "title": "Szerepkör",
+    "manager": "Menedzser",
+    "waiter": "Pincér",
+    "cook": "Szakács",
+    "proofreader": "Korrektor"
+  },
+  "language": {
+    "setPrimary": "Elsődleges nyelv",
+    "default": "Alapértelmezett nyelv",
+    "other": "Egyéb nyelvek",
+    "addOther": "Plusz nyelv hozzáadása"
+  },
+  "cart": {
+    "title": "Kosár",
+    "itemCount": "{{count}} tétel",
+    "itemCount_plural": "{{count}} tételek",
+    "itemCount_none": "üres",
+    "add": "Hozzáadás a kosárhoz",
+    "checkInInstructions": "Vágj bele egy közeledben levő étteremben található QR-kód beszkennelésével."
+  },
+  "nutrition": {
+    "facts": "Nutrition facts",
+    "fats": "Fats",
+    "carbs": "Carbs",
+    "proteins": "Proteins"
+  }
+}
