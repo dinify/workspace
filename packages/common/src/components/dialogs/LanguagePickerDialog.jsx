@@ -106,8 +106,8 @@ const LanguagePickerDialog = (props) => {
       <div className={classes.scrollingList} style={{flex: 1}}>
         {filtered.map((lang, i) => {
           const solo = lang.countries.length === 1;
-
-          let secondary = highlightBold(lang.nameNative);
+          let primary = highlightBold(lang.nameNative);
+          let secondary = highlightBold(lang.name);
           if (lang.name.toLowerCase() === lang.nameNative.toLowerCase()) {
             if (solo) secondary = (<i>{lang.countries[0].nameNative}</i>);
             else secondary = '';
@@ -120,7 +120,7 @@ const LanguagePickerDialog = (props) => {
               key={i} dense button selected={selected}
               style={{paddingLeft: 24, paddingRight: 24}}
               onClick={() => languageClickHandler(lang)}>
-              <ListItemText primary={highlightBold(lang.name)} secondary={secondary}/>
+              <ListItemText primary={primary} secondary={secondary}/>
               {solo ? <Flag country={lang.countries[0].regionCode}/> : <ChevronRight style={{opacity: 0.54}}/>}
             </ListItem>
           );
@@ -145,13 +145,15 @@ const LanguagePickerDialog = (props) => {
       <Divider style={{marginTop: 16}}/>
       <div className={classes.scrollingList} style={{flex: 1}}>
         {currentPage.countries.map((country, i) => {
-          const name = countries[country.regionCode];
+          const name = i18n.format(country.regionCode, 'territoryName');
+          let secondary;
+          if (name !== country.nameNative) secondary = name;
           return (
             <ListItem key={i} dense button
               selected={country.langtag === selectedLang}
               style={{paddingLeft: 24, paddingRight: 24}}
               onClick={() => countryClickHandler(country)}>
-              <ListItemText primary={name} secondary={country.nameNative}/>
+              <ListItemText primary={country.nameNative} secondary={secondary}/>
               <Flag country={country.regionCode}/>
             </ListItem>
           );

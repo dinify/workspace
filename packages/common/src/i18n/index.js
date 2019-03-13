@@ -13,6 +13,7 @@ const getMainFiles = (locale) => {
   return [
     `main/${locale}/currencies`,
     `main/${locale}/languages`,
+    `main/${locale}/territories`,
     `main/${locale}/numbers`
   ];
 }
@@ -66,6 +67,11 @@ export default ({namespace, lang, fallback}) => {
         if (type === 'languageName') {
           if (!globalized) return '';
           const displayName = globalized.cldr.main(`localeDisplayNames/languages/${value}`);
+          return displayName;
+        }
+        if (type === 'territoryName') {
+          if (!globalized) return '';
+          const displayName = globalized.cldr.main(`localeDisplayNames/territories/${value}`);
           return displayName;
         }
         if (type === 'array') {

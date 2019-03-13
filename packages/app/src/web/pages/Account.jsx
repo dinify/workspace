@@ -105,6 +105,12 @@ const Account = ({
   let primaryLang;
   if (profile && profile.language) primaryLang = getLang(profile.language.primary);
 
+  let primaryLangSecondary;
+  if (primaryLang) {
+    if (primaryLang.countryCount > 1) primaryLangSecondary = <i>{primaryLang.country.nameNative}</i>;
+    else primaryLangSecondary = <span>{primaryLang.name}</span>;
+  }
+
   let displayCurrency;
   if (profile && profile.displayCurrency) displayCurrency = profile.displayCurrency;
 
@@ -167,7 +173,7 @@ const Account = ({
           <ListItemIcon>
             <Flag country={primaryLang.country.regionCode}/>
           </ListItemIcon>
-          <ListItemText primary={primaryLang.nameNative} secondary={primaryLang.countryCount > 1 ? primaryLang.country.nameNative : primaryLang.name} />
+          <ListItemText primary={primaryLang.nameNative} secondary={primaryLangSecondary} />
           <ChevronRight />
         </ListItem>}
         {!primaryLang && <div style={{padding: '16px 24px'}}>

@@ -31,7 +31,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var ROOT = 'https://static.dinify.app';
 
 var getMainFiles = function getMainFiles(locale) {
-  return ["main/".concat(locale, "/currencies"), "main/".concat(locale, "/languages"), "main/".concat(locale, "/numbers")];
+  return ["main/".concat(locale, "/currencies"), "main/".concat(locale, "/languages"), "main/".concat(locale, "/territories"), "main/".concat(locale, "/numbers")];
 };
 
 var getGlobalizedInstance = function getGlobalizedInstance(language) {
@@ -98,6 +98,14 @@ var _default = function _default(_ref) {
           var _displayName = globalized.cldr.main("localeDisplayNames/languages/".concat(value));
 
           return _displayName;
+        }
+
+        if (type === 'territoryName') {
+          if (!globalized) return '';
+
+          var _displayName2 = globalized.cldr.main("localeDisplayNames/territories/".concat(value));
+
+          return _displayName2;
         }
 
         if (type === 'array') {} // TODO return formatted display list pattern

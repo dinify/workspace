@@ -159,7 +159,8 @@ var LanguagePickerDialog = function LanguagePickerDialog(props) {
     }
   }, filtered.map(function (lang, i) {
     var solo = lang.countries.length === 1;
-    var secondary = highlightBold(lang.nameNative);
+    var primary = highlightBold(lang.nameNative);
+    var secondary = highlightBold(lang.name);
 
     if (lang.name.toLowerCase() === lang.nameNative.toLowerCase()) {
       if (solo) secondary = _react.default.createElement("i", null, lang.countries[0].nameNative);else secondary = '';
@@ -180,7 +181,7 @@ var LanguagePickerDialog = function LanguagePickerDialog(props) {
         return languageClickHandler(lang);
       }
     }, _react.default.createElement(_ListItemText.default, {
-      primary: highlightBold(lang.name),
+      primary: primary,
       secondary: secondary
     }), solo ? _react.default.createElement(_Flag.default, {
       country: lang.countries[0].regionCode
@@ -218,7 +219,9 @@ var LanguagePickerDialog = function LanguagePickerDialog(props) {
         flex: 1
       }
     }, currentPage.countries.map(function (country, i) {
-      var name = _lib.countries[country.regionCode];
+      var name = i18n.format(country.regionCode, 'territoryName');
+      var secondary;
+      if (name !== country.nameNative) secondary = name;
       return _react.default.createElement(_ListItem.default, {
         key: i,
         dense: true,
@@ -232,8 +235,8 @@ var LanguagePickerDialog = function LanguagePickerDialog(props) {
           return countryClickHandler(country);
         }
       }, _react.default.createElement(_ListItemText.default, {
-        primary: name,
-        secondary: country.nameNative
+        primary: country.nameNative,
+        secondary: secondary
       }), _react.default.createElement(_Flag.default, {
         country: country.regionCode
       }));
