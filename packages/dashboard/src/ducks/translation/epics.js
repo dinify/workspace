@@ -64,10 +64,10 @@ const saveTranslationEpic = (action$: Observable) =>
 
 const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
-const suggestTranslationEpic = (action$: Observable) =>
+const suggestTranslationEpic = (action$: Observable, state$) =>
   action$.pipe(
     ofType('SUGGEST_TRANSLATION_INIT'),
-    mergeMap(({ payload: {form, field, text, from, to} }) => {
+    mergeMap(({ payload: {form, text, field, from, to} }) => {
 
       const promise = Post(
         {endpoint: 'https://us-central1-tabb-global.cloudfunctions.net/', path: 'translate'},
@@ -85,9 +85,37 @@ const suggestTranslationEpic = (action$: Observable) =>
     })
   );
 
+const suggestAllEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('SUGGEST_ALLTRANSLATIONS_INIT'),
+    mergeMap(({ payload: {form, originalsList, from, to} }) => {
+      const fields = Object.keys(state$.value.form[form].registeredFields)
+      return fields.map((field) => {
+        let text = '';
+        if (field.includes('_description')) {
+          const prop = field.replace('_description', '');
+          text = R.find(R.propEq('id', prop))(originalsList).description || '';
+        } else {
+          text = R.find(R.propEq('id', field))(originalsList).name || '';
+        }
+        return {
+          type: 'SUGGEST_TRANSLATION_INIT',
+          payload: {
+            form,
+            field,
+            text,
+            from,
+            to
+          }
+        }
+      });
+    })
+  );
+
 
 export default [
   pushTranslationEpic,
   suggestTranslationEpic,
+  suggestAllEpic,
   saveTranslationEpic
 ];

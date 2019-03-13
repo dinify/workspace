@@ -26,6 +26,7 @@ exports.CallService = CallService;
 exports.GetTranslations = GetTranslations;
 exports.AddTranslation = AddTranslation;
 exports.RmTranslation = RmTranslation;
+exports.GetServiceimages = GetServiceimages;
 
 var _Network = require("./Network");
 
@@ -196,8 +197,10 @@ function CallService(_ref14) {
   });
 }
 
-function GetTranslations(_ref15) {
-  var locale = _ref15.locale;
+function GetTranslations() {
+  var _ref15 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      locale = _ref15.locale;
+
   if (locale) return (0, _Network.Get)({
     path: "translation/list/".concat(locale)
   });
@@ -233,5 +236,11 @@ function RmTranslation(_ref17) {
     type: type,
     id: id,
     locale: locale
+  });
+}
+
+function GetServiceimages() {
+  return (0, _Network.Get)({
+    path: "service/images"
   });
 }

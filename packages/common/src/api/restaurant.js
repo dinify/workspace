@@ -123,7 +123,7 @@ export function CallService({ serviceId }) {
   return Post({ path: `service/${serviceId}/call` });
 }
 
-export function GetTranslations({ locale }) {
+export function GetTranslations({ locale } = {}) {
   if (locale) return Get({ path: `translation/list/${locale}` });
   return Get({ path: 'translation/list' });
 }
@@ -134,4 +134,8 @@ export function AddTranslation({ type, id, locale, name, description }) {
 
 export function RmTranslation({ type, id, locale }) {
   return Post({ path: 'translation/remove' }, { type, id, locale });
+}
+
+export function GetServiceimages() {
+  return Get({ path: `service/images` });
 }

@@ -18,3 +18,9 @@ export const suggestTranslation = payload => ({
   type: 'SUGGEST_TRANSLATION_INIT',
   payload,
 });
+
+export const suggestAllTranslations = payload => ({
+  type: 'SUGGEST_ALLTRANSLATIONS_INIT',
+  payload,
+});
+

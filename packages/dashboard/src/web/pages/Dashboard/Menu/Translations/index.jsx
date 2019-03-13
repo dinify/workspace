@@ -23,16 +23,19 @@ import Divider from '@material-ui/core/Divider';
 import { addLocale, selectLocale, pushTranslation } from 'ducks/translation/actions';
 import diff from 'object-diff'
 
-const languages = R.mergeAll(languagesArray.map(function(el) {
-  return {
-    [el[0]]: {
+const languages = R.mergeAll(
+  languagesArray.map((el) => {
+    let key = el[0];
+    if (key === 'zh-Hans') key = 'zh-cn';
+    return {[key]: {
       code: el[0],
       langEn: el[1],
       langLoc: el[2],
       locales: el[3]
     }
-  }
-}))
+  }})
+);
+
 
 const brackets = (str) => `(${str})`
 
@@ -97,8 +100,6 @@ class Translations extends React.Component {
   render() {
     const { translations: {
       locales,
-      ofLocale,
-      ofDefaultLocale,
       byType,
       defaultByType
     }, classes, addLocale, selectLocale, selectedLocale, pushTranslation } = this.props;
@@ -119,7 +120,7 @@ class Translations extends React.Component {
                     key={locale}
                     className={classes.chip}
                     avatar={<Avatar>{locale.toUpperCase()}</Avatar>}
-                    label={languages[locale].langEn}
+                    label={languages[locale.toLowerCase()] && languages[locale.toLowerCase()].langEn}
                     onClick={() => selectLocale({ selectedLocale: locale })}
                     color={selectedLocale === locale ? 'primary' : 'default'}
                   />

@@ -25,7 +25,7 @@ import Save from '@material-ui/icons/Save';
 import GTranslate from '@material-ui/icons/GTranslate';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { suggestTranslation } from 'ducks/translation/actions';
+import { suggestTranslation, suggestAllTranslations } from 'ducks/translation/actions';
 
 
 const styles = theme => ({
@@ -75,6 +75,7 @@ class Editor extends React.Component {
       selectedLocale,
       defaultLocale,
       suggestTranslation,
+      suggestAllTranslations,
       languageName
     } = this.props;
 
@@ -82,6 +83,22 @@ class Editor extends React.Component {
 
     return (
       <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+      <center>
+      <Tooltip title="Suggest all translations" aria-label="Save">
+        <IconButton
+          component="span"
+          type="button"
+          onClick={() => suggestAllTranslations({
+            form: `translations/editor/${selectedLocale}/${type}`,
+            from: defaultLocale,
+            to: selectedLocale,
+            originalsList
+          })}
+        >
+          <GTranslate />
+        </IconButton>
+      </Tooltip>
+      </center>
         <Table className={classes.table} padding="none">
           <TableHead>
             <TableRow>
@@ -206,7 +223,10 @@ Editor = connect(
   state => ({
     progressMap: state.ui.progressMap
   }),
-  {suggestTranslation}
+  {
+    suggestTranslation,
+    suggestAllTranslations
+  }
 )(withStyles(styles)(Editor));
 
 
@@ -220,7 +240,6 @@ class DynamicEditorComponent extends React.Component {
   }
   render() {
     const EditorComponent = this.EditorComponent
-    console.log(this.props);
     return <EditorComponent {...this.props} />
   }
 }
