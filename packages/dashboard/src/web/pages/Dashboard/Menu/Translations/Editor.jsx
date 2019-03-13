@@ -1,24 +1,18 @@
 // @flow
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { MapToList } from 'lib/FN';
 import { connect } from 'react-redux';
-import R from 'ramda';
-import types from './types';
 import Text from 'web/components/MaterialInputs/Text';
-import FormControl from '@material-ui/core/FormControl';
-import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import AddCircle from '@material-ui/icons/AddCircle';
 import Button from '@material-ui/core/Button';
+
 import Fab from '@material-ui/core/Fab';
 import Done from '@material-ui/icons/Done';
 import Save from '@material-ui/icons/Save';
@@ -83,11 +77,12 @@ class Editor extends React.Component {
 
     return (
       <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-      <center>
       <Tooltip title="Suggest all translations" aria-label="Save">
-        <IconButton
+        <Button
+          style={{margin: '10px 20px'}}
           component="span"
           type="button"
+          variant="outlined"
           onClick={() => suggestAllTranslations({
             form: `translations/editor/${selectedLocale}/${type}`,
             from: defaultLocale,
@@ -95,10 +90,11 @@ class Editor extends React.Component {
             originalsList
           })}
         >
-          <GTranslate />
-        </IconButton>
+          <span>
+            Suggest all translations
+          </span>
+        </Button>
       </Tooltip>
-      </center>
         <Table className={classes.table} padding="none">
           <TableHead>
             <TableRow>
