@@ -10,7 +10,9 @@ import { billEpics as bill } from 'ducks/bill';
 import { seatEpics as seat } from 'ducks/seat';
 import { uiEpics as ui } from 'ducks/ui';
 import { serviceEpics as service } from 'ducks/service';
-import { getFirebase } from 'react-redux-firebase'
+import { getFirebase } from 'react-redux-firebase';
+
+import language from 'ducks/auth/epics';
 
 import { appEpics as app } from 'ducks/app';
 
@@ -24,6 +26,7 @@ const rootEpic = (action$, state$, ...rest) => {
     ...app,
     ...crud,
     ...auth,
+    ...language,
     ...user,
     ...restaurant,
     ...menuItem,
