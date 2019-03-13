@@ -100,7 +100,7 @@ const Account = ({
     </div>
   );
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   let primaryLang;
   if (profile && profile.language) primaryLang = getLang(profile.language.primary);
 
@@ -147,7 +147,7 @@ const Account = ({
           <ListItemIcon>
             <CashMultiple />
           </ListItemIcon>
-          <ListItemText primary={displayCurrency} secondary={displayCurrency} />
+          <ListItemText primary={i18n.format(displayCurrency, 'currencyName')} secondary={displayCurrency} />
           <ChevronRight />
         </ListItem>}
         {!displayCurrency && <div style={{padding: '0 24px 16px 24px'}}>
@@ -254,7 +254,11 @@ const Account = ({
       <CurrencyPickerDialog
         open={currencyDialogOpen}
         onClose={(currencyCode) => {
-          console.log('Selected currency: ', currencyCode);
+          if (currencyCode) {
+            firebase.updateProfile({
+              displayCurrency: currencyCode
+            });
+          }
           closeDialog();
         }}/>
 
@@ -294,7 +298,7 @@ const enhance = compose(
   withStateHandlers(
     () => ({
       langDialogOpen: false,
-      currencyDialogOpen: true,
+      currencyDialogOpen: false,
       dialogType: null,
       initialSelectedLanguage: null
     }),
