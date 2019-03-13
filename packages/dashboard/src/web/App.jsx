@@ -9,6 +9,7 @@ import SignIn from '@dinify/common/dist/components/SignIn';
 
 import Dashboard from 'web/pages/Dashboard';
 import Qr from 'web/pages/Qr';
+import NewRestaurant from 'web/pages/NewRestaurant';
 
 import withRoot from 'withRoot.js';
 
@@ -42,6 +43,10 @@ const App = ({ appLoading, user, history }: AppProps) => {
           <Switch>
             <Route path="/signin" component={() => {
               return user.isEmpty ? <SignInWithRoot user={user}/> :
+              <Redirect to="/"/>
+            }} />
+            <Route path="/newrestaurant" component={() => {
+              return (!user.isEmpty || !user.isLoaded) ? <NewRestaurant user={user}/> :
               <Redirect to="/"/>
             }} />
             <Route path="/" component={() => {
