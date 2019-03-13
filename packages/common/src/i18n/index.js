@@ -26,6 +26,8 @@ const getGlobalizedInstance = (language) => {
   return instance;
 }
 
+
+
 export default ({namespace, lang, fallback}) => {
   if (fallback === []) fallback = ['en'];
 
@@ -86,11 +88,14 @@ export default ({namespace, lang, fallback}) => {
     }
   };
 
+  let i18nInstanceReference;
+
   i18n
     .use(initReactI18next)
     .use({
       type: '3rdParty',
       init(instance) {
+        i18nInstanceReference = instance;
         ((callback) => {
           fetch(`${ROOT}/cldr/supplemental/likelySubtags`)
             .then((response) => {
@@ -128,9 +133,7 @@ export default ({namespace, lang, fallback}) => {
   i18n.on('languageChanged', function(lng) {
     moment.locale(lng);
     ((callback) => {
-      let globalizeInstance;
-      if (!globalized) globalizeInstance = getGlobalizedInstance(lng);
-      else globalizeInstance = globalized;
+      let globalizeInstance = getGlobalizedInstance(lng);
 
       const requiredFiles = getMainFiles(globalizeInstance.locale)
 
@@ -141,6 +144,7 @@ export default ({namespace, lang, fallback}) => {
         callback(globalizeInstance);
       })
     })((globalizeInstance) => {
+      i18nInstanceReference.globalize = globalizeInstance;
       globalized = globalizeInstance;
     })
   });

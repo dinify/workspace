@@ -119,10 +119,13 @@ var _default = function _default(_ref) {
       }
     }
   };
+  var i18nInstanceReference;
 
   _i18next.default.use(_reactI18next.initReactI18next).use({
     type: '3rdParty',
     init: function init(instance) {
+      i18nInstanceReference = instance;
+
       (function (callback) {
         fetch("".concat(ROOT, "/cldr/supplemental/likelySubtags")).then(function (response) {
           response.json().then(function (likelySubtagsSata) {
@@ -155,8 +158,7 @@ var _default = function _default(_ref) {
     _moment.default.locale(lng);
 
     (function (callback) {
-      var globalizeInstance;
-      if (!globalized) globalizeInstance = getGlobalizedInstance(lng);else globalizeInstance = globalized;
+      var globalizeInstance = getGlobalizedInstance(lng);
       var requiredFiles = getMainFiles(globalizeInstance.locale);
       Promise.all(requiredFiles.map(function (file) {
         return fetch("".concat(ROOT, "/").concat(file)).then(function (response) {
@@ -168,6 +170,7 @@ var _default = function _default(_ref) {
         callback(globalizeInstance);
       });
     })(function (globalizeInstance) {
+      i18nInstanceReference.globalize = globalizeInstance;
       globalized = globalizeInstance;
     });
   });
