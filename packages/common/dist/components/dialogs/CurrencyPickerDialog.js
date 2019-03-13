@@ -41,6 +41,8 @@ var _ListItem = _interopRequireDefault(require("@material-ui/core/ListItem"));
 
 var _ListItemText = _interopRequireDefault(require("@material-ui/core/ListItemText"));
 
+var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
+
 var _ChevronRightRounded = _interopRequireDefault(require("@material-ui/icons/ChevronRightRounded"));
 
 var _ChevronLeftRounded = _interopRequireDefault(require("@material-ui/icons/ChevronLeftRounded"));
@@ -84,17 +86,21 @@ var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
       t = _useTranslation.t,
       i18n = _useTranslation.i18n;
 
-  var currencies = _lib.currencies.map(function (code) {
-    return {
-      code: code,
-      name: i18n.format(code, 'currencyName')
-    };
-  });
+  var localizeMap = function localizeMap(list) {
+    return list.map(function (code) {
+      return {
+        code: code,
+        name: i18n.format(code, 'currencyName')
+      };
+    });
+  };
 
-  var filtered = _ramda.default.filter(function (currency) {
-    if (!filter) return true;
-    return (0, _match.default)(currency.name, filter).length + (0, _match.default)(currency.code, filter).length > 0;
-  }, currencies);
+  var searchFilter = function searchFilter(list) {
+    return _ramda.default.filter(function (currency) {
+      if (!filter) return true;
+      return (0, _match.default)(currency.name, filter).length + (0, _match.default)(currency.code, filter).length > 0;
+    }, list);
+  };
 
   var highlightBold = function highlightBold(text) {
     if (!filter) return text;
@@ -108,6 +114,37 @@ var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
   var currencyClickHandler = function currencyClickHandler(currencyCode) {
     setSelectedCurrency(currencyCode);
   };
+
+  var sections = [];
+  var country = i18n.globalize.cldr.attributes.territory; // TODO: use ip-api.com/json countryCode as fallback
+
+  var suggestedCodes = _lib.defaultCurrencies[country];
+
+  if (suggestedCodes && suggestedCodes.length > 0) {
+    var items = searchFilter(localizeMap(suggestedCodes));
+
+    if (items.length > 0) {
+      sections.push({
+        title: 'suggested',
+        items: items
+      });
+    }
+
+    var remaining = searchFilter(localizeMap(_ramda.default.filter(function (currencyCode) {
+      return !suggestedCodes.includes(currencyCode);
+    }, _lib.currencies)));
+
+    if (remaining.length > 0) {
+      sections.push({
+        title: 'other',
+        items: remaining
+      });
+    }
+  } else {
+    sections.push({
+      items: searchFilter(localizeMap(_lib.currencies))
+    });
+  }
 
   return _react.default.createElement(_Dialog.default, _extends({
     open: open,
@@ -151,27 +188,51 @@ var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
     style: {
       flex: 1
     }
-  }, filtered.map(function (currency, i) {
-    var primary = highlightBold(currency.name);
-    var secondary = highlightBold(currency.code);
-    var selected = selectedCurrency === currency.code;
-    return _react.default.createElement(_ListItem.default, {
-      key: i,
-      dense: true,
-      button: true,
-      selected: selected,
+  }, sections.map(function (section, sectionsIndex) {
+    return _react.default.createElement("div", {
+      key: section.title
+    }, sectionsIndex > 0 && section.title && _react.default.createElement(_Divider.default, {
       style: {
-        paddingLeft: 24,
-        paddingRight: 24
-      },
-      onClick: function onClick() {
-        currencyClickHandler(currency.code);
+        marginBottom: 8
       }
-    }, _react.default.createElement(_ListItemText.default, {
-      primary: primary,
-      secondary: secondary
+    }), section.title && _react.default.createElement(_Typography.default, {
+      variant: "overline",
+      color: "textSecondary",
+      style: {
+        marginLeft: 24,
+        marginRight: 24
+      }
+    }, t(section.title)), section.items.map(function (currency) {
+      var primary = highlightBold(currency.name);
+      var secondary = highlightBold(currency.code);
+      var selected = selectedCurrency === currency.code;
+      return _react.default.createElement(_ListItem.default, {
+        key: currency.code,
+        dense: true,
+        button: true,
+        selected: selected,
+        style: {
+          paddingLeft: 24,
+          paddingRight: 24
+        },
+        onClick: function onClick() {
+          currencyClickHandler(currency.code);
+        }
+      }, _react.default.createElement(_ListItemText.default, {
+        primary: primary,
+        secondary: secondary
+      }));
     }));
   })))), _react.default.createElement(_Divider.default, null), _react.default.createElement(_DialogActions.default, null, _react.default.createElement(_Button.default, {
+    color: "primary",
+    onClick: function onClick() {
+      resetState();
+
+      _onClose({
+        clear: true
+      });
+    }
+  }, t('clear')), _react.default.createElement(_Button.default, {
     color: "primary",
     disabled: !selectedCurrency,
     onClick: function onClick() {

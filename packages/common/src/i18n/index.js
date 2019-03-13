@@ -28,36 +28,6 @@ export default ({namespace, lang, fallback}) => {
   if (fallback === []) fallback = ['en'];
 
   let globalized;
-  ((callback) => {
-    fetch(`${ROOT}/cldr/supplemental/likelySubtags`)
-      .then((response) => {
-          response.json().then((likelySubtagsSata) => {
-            globalize.load(likelySubtagsSata);
-            const instance = getGlobalizedInstance(lang);
-            const supplemental = [
-              'cldr/supplemental/numberingSystems',
-              'cldr/supplemental/plurals',
-              'cldr/supplemental/ordinals',
-              'cldr/supplemental/currencyData'
-            ];
-
-            const requiredFiles = supplemental.concat(getMainFiles(instance.locale));
-
-            Promise.all(requiredFiles.map(file =>
-              fetch(`${ROOT}/${file}`).then((response) => response.json()))
-            ).then((values) => {
-              globalize.load(...values);
-              callback(instance);
-            })
-          });
-        }
-      ).catch((err) => {
-        console.log('Fetch error:', err);
-      });
-  })((instance) => {
-    globalized = instance;
-  })
-
   const options = {
     lng: lang, // the language to use for translations
     resources: locales,
@@ -106,22 +76,62 @@ export default ({namespace, lang, fallback}) => {
 
   i18n
     .use(initReactI18next)
+    .use({
+      type: '3rdParty',
+      init(instance) {
+        ((callback) => {
+          fetch(`${ROOT}/cldr/supplemental/likelySubtags`)
+            .then((response) => {
+                response.json().then((likelySubtagsSata) => {
+                  globalize.load(likelySubtagsSata);
+                  const globalizeInstance = getGlobalizedInstance(lang);
+                  const supplemental = [
+                    'cldr/supplemental/numberingSystems',
+                    'cldr/supplemental/plurals',
+                    'cldr/supplemental/ordinals',
+                    'cldr/supplemental/currencyData'
+                  ];
+
+                  const requiredFiles = supplemental.concat(getMainFiles(globalizeInstance.locale));
+
+                  Promise.all(requiredFiles.map(file =>
+                    fetch(`${ROOT}/${file}`).then((response) => response.json()))
+                  ).then((values) => {
+                    globalize.load(...values);
+                    callback(globalizeInstance);
+                  })
+                });
+              }
+            ).catch((err) => {
+              console.log('Fetch error:', err);
+            });
+        })((globalizeInstance) => {
+          instance.globalize = globalizeInstance;
+          globalized = globalizeInstance;
+        })
+      },
+    })
     .init(options);
 
   i18n.on('languageChanged', function(lng) {
     moment.locale(lng);
     ((callback) => {
-      const instance = getGlobalizedInstance(lng);
-      const requiredFiles = getMainFiles(instance.locale)
+      let globalizeInstance;
+      if (!globalized) globalizeInstance = getGlobalizedInstance(lng);
+      else globalizeInstance = globalized;
+
+      const requiredFiles = getMainFiles(globalizeInstance.locale)
 
       Promise.all(requiredFiles.map(file =>
         fetch(`${ROOT}/${file}`).then((response) => response.json()))
       ).then((values) => {
         globalize.load(...values);
-        callback(instance);
+        callback(globalizeInstance);
       })
-    })((instance) => {
-      globalized = instance;
+    })((globalizeInstance) => {
+      globalized = globalizeInstance;
     })
   });
+
+  return i18n;
 }

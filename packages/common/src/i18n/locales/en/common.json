@@ -11,10 +11,13 @@
     "short": "Email",
     "long": "Email address"
   },
+  "suggested": "Suggested",
+  "other": "Other",
   "selectLanguage": "Select language",
   "selectCountry": "Select country",
   "selectCurrency": "Select currency",
   "back": "Back",
   "select": "Select",
+  "clear": "Clear",
   "loadingEllipsis": "Loading..."
 }

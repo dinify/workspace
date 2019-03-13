@@ -17,6 +17,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 
@@ -47,14 +48,14 @@ const CurrencyPickerDialog = (props) => {
 
   const { t, i18n } = useTranslation();
 
-  const currencies = currencyCodes.map(code => ({
+  const localizeMap = (list) => list.map(code => ({
     code, name: i18n.format(code, 'currencyName')
   }));
 
-  const filtered = R.filter(currency => {
+  const searchFilter = (list) => R.filter(currency => {
     if (!filter) return true;
     return match(currency.name, filter).length + match(currency.code, filter).length > 0;
-  }, currencies);
+  }, list);
 
   const highlightBold = text => {
     if (!filter) return text;
@@ -67,6 +68,35 @@ const CurrencyPickerDialog = (props) => {
 
   const currencyClickHandler = (currencyCode) => {
     setSelectedCurrency(currencyCode);
+  }
+
+  const sections = [];
+  const country = i18n.globalize.cldr.attributes.territory; // TODO: use ip-api.com/json countryCode as fallback
+  const suggestedCodes = defaultCurrencies[country];
+  if (suggestedCodes && suggestedCodes.length > 0) {
+    const items = searchFilter(localizeMap(suggestedCodes));
+    if (items.length > 0) {
+      sections.push({
+        title: 'suggested',
+        items
+      })
+    }
+
+    const remaining = searchFilter(localizeMap(R.filter(currencyCode => {
+      return !suggestedCodes.includes(currencyCode);
+    }, currencyCodes)));
+
+    if (remaining.length > 0) {
+      sections.push({
+        title: 'other',
+        items: remaining
+      })
+    }
+  }
+  else {
+    sections.push({
+      items: searchFilter(localizeMap(currencyCodes))
+    })
   }
 
   return (
@@ -99,17 +129,32 @@ const CurrencyPickerDialog = (props) => {
           </div>
           <Divider style={{marginTop: 16}}/>
           <div className={classes.scrollingList} style={{flex: 1}}>
-            {filtered.map((currency, i) => {
-              const primary = highlightBold(currency.name)
-              const secondary = highlightBold(currency.code);
-              let selected = selectedCurrency === currency.code;
+            {sections.map((section, sectionsIndex) => {
               return (
-                <ListItem
-                  key={i} dense button selected={selected}
-                  style={{paddingLeft: 24, paddingRight: 24}}
-                  onClick={() => {currencyClickHandler(currency.code)}}>
-                  <ListItemText primary={primary} secondary={secondary}/>
-                </ListItem>
+                <div key={section.title}>
+                  {sectionsIndex > 0 && section.title && <Divider style={{ marginBottom: 8}} />}
+                  {section.title && (
+                    <Typography
+                      variant="overline"
+                      color="textSecondary"
+                      style={{ marginLeft: 24, marginRight: 24 }}>
+                      {t(section.title)}
+                    </Typography>
+                  )}
+                  {section.items.map(currency => {
+                    const primary = highlightBold(currency.name)
+                    const secondary = highlightBold(currency.code);
+                    let selected = selectedCurrency === currency.code;
+                    return (
+                      <ListItem
+                        key={currency.code} dense button selected={selected}
+                        style={{paddingLeft: 24, paddingRight: 24}}
+                        onClick={() => {currencyClickHandler(currency.code)}}>
+                        <ListItemText primary={primary} secondary={secondary}/>
+                      </ListItem>
+                    );
+                  })}
+                </div>
               );
             })}
           </div>
@@ -117,6 +162,14 @@ const CurrencyPickerDialog = (props) => {
       </div>
       <Divider />
       <DialogActions>
+        <Button
+          color="primary"
+          onClick={() => {
+            resetState();
+            onClose({clear: true})
+          }}>
+          {t('clear')}
+        </Button>
         <Button
           color="primary"
           disabled={!selectedCurrency}

@@ -48,32 +48,6 @@ var _default = function _default(_ref) {
       fallback = _ref.fallback;
   if (fallback === []) fallback = ['en'];
   var globalized;
-
-  (function (callback) {
-    fetch("".concat(ROOT, "/cldr/supplemental/likelySubtags")).then(function (response) {
-      response.json().then(function (likelySubtagsSata) {
-        _globalize.default.load(likelySubtagsSata);
-
-        var instance = getGlobalizedInstance(lang);
-        var supplemental = ['cldr/supplemental/numberingSystems', 'cldr/supplemental/plurals', 'cldr/supplemental/ordinals', 'cldr/supplemental/currencyData'];
-        var requiredFiles = supplemental.concat(getMainFiles(instance.locale));
-        Promise.all(requiredFiles.map(function (file) {
-          return fetch("".concat(ROOT, "/").concat(file)).then(function (response) {
-            return response.json();
-          });
-        })).then(function (values) {
-          _globalize.default.load.apply(_globalize.default, _toConsumableArray(values));
-
-          callback(instance);
-        });
-      });
-    }).catch(function (err) {
-      console.log('Fetch error:', err);
-    });
-  })(function (instance) {
-    globalized = instance;
-  });
-
   var options = {
     lng: lang,
     // the language to use for translations
@@ -130,14 +104,44 @@ var _default = function _default(_ref) {
     }
   };
 
-  _i18next.default.use(_reactI18next.initReactI18next).init(options);
+  _i18next.default.use(_reactI18next.initReactI18next).use({
+    type: '3rdParty',
+    init: function init(instance) {
+      (function (callback) {
+        fetch("".concat(ROOT, "/cldr/supplemental/likelySubtags")).then(function (response) {
+          response.json().then(function (likelySubtagsSata) {
+            _globalize.default.load(likelySubtagsSata);
+
+            var globalizeInstance = getGlobalizedInstance(lang);
+            var supplemental = ['cldr/supplemental/numberingSystems', 'cldr/supplemental/plurals', 'cldr/supplemental/ordinals', 'cldr/supplemental/currencyData'];
+            var requiredFiles = supplemental.concat(getMainFiles(globalizeInstance.locale));
+            Promise.all(requiredFiles.map(function (file) {
+              return fetch("".concat(ROOT, "/").concat(file)).then(function (response) {
+                return response.json();
+              });
+            })).then(function (values) {
+              _globalize.default.load.apply(_globalize.default, _toConsumableArray(values));
+
+              callback(globalizeInstance);
+            });
+          });
+        }).catch(function (err) {
+          console.log('Fetch error:', err);
+        });
+      })(function (globalizeInstance) {
+        instance.globalize = globalizeInstance;
+        globalized = globalizeInstance;
+      });
+    }
+  }).init(options);
 
   _i18next.default.on('languageChanged', function (lng) {
     _moment.default.locale(lng);
 
     (function (callback) {
-      var instance = getGlobalizedInstance(lng);
-      var requiredFiles = getMainFiles(instance.locale);
+      var globalizeInstance;
+      if (!globalized) globalizeInstance = getGlobalizedInstance(lng);else globalizeInstance = globalized;
+      var requiredFiles = getMainFiles(globalizeInstance.locale);
       Promise.all(requiredFiles.map(function (file) {
         return fetch("".concat(ROOT, "/").concat(file)).then(function (response) {
           return response.json();
@@ -145,12 +149,14 @@ var _default = function _default(_ref) {
       })).then(function (values) {
         _globalize.default.load.apply(_globalize.default, _toConsumableArray(values));
 
-        callback(instance);
+        callback(globalizeInstance);
       });
-    })(function (instance) {
-      globalized = instance;
+    })(function (globalizeInstance) {
+      globalized = globalizeInstance;
     });
   });
+
+  return _i18next.default;
 };
 
 exports.default = _default;

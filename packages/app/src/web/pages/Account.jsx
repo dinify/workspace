@@ -255,7 +255,10 @@ const Account = ({
         open={currencyDialogOpen}
         onClose={(currencyCode) => {
           if (currencyCode) {
-            firebase.updateProfile({
+            if (currencyCode.clear) firebase.updateProfile({
+              displayCurrency: null
+            });
+            else firebase.updateProfile({
               displayCurrency: currencyCode
             });
           }
