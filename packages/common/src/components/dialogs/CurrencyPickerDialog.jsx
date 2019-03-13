@@ -21,7 +21,7 @@ import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 
 import Flag from '../Flag';
-import { currencies, defaultCurrencies } from '../../lib';
+import { currencies as currencyCodes, defaultCurrencies } from '../../lib';
 
 const styles = theme => ({
   scrollingList: {
@@ -36,23 +36,24 @@ const CurrencyPickerDialog = (props) => {
     classes,
     filter,
     setFilter,
-    selectedLang,
-    setSelectedLang,
-    page,
-    prevPage,
-    setPage,
+    selectedCurrency,
+    setSelectedCurrency,
     open = false,
     onClose,
     resetState,
-    initialSelectedLanguage,
+    initialSelectedCurrency,
     ...other
   } = props;
 
   const { t, i18n } = useTranslation();
 
-  const filtered = R.filter(currencyCode => {
+  const currencies = currencyCodes.map(code => ({
+    code, name: i18n.format(code, 'currencyName')
+  }));
+
+  const filtered = R.filter(currency => {
     if (!filter) return true;
-    return match(currencyCode, filter).length > 0;
+    return match(currency.name, filter).length + match(currency.code, filter).length > 0;
   }, currencies);
 
   const highlightBold = text => {
@@ -62,6 +63,10 @@ const CurrencyPickerDialog = (props) => {
         return part.highlight ? (<b key={i}>{part.text}</b>) : part.text;
       })}
     </span>;
+  }
+
+  const currencyClickHandler = (currencyCode) => {
+    setSelectedCurrency(currencyCode);
   }
 
   return (
@@ -94,15 +99,15 @@ const CurrencyPickerDialog = (props) => {
           </div>
           <Divider style={{marginTop: 16}}/>
           <div className={classes.scrollingList} style={{flex: 1}}>
-            {filtered.map((currencyCode, i) => {
-              const primary = i18n.format(currencyCode, 'currencyName');
-              const secondary = highlightBold(currencyCode);
-              let selected = false;
+            {filtered.map((currency, i) => {
+              const primary = highlightBold(currency.name)
+              const secondary = highlightBold(currency.code);
+              let selected = selectedCurrency === currency.code;
               return (
                 <ListItem
                   key={i} dense button selected={selected}
                   style={{paddingLeft: 24, paddingRight: 24}}
-                  onClick={() => {}}>
+                  onClick={() => {currencyClickHandler(currency.code)}}>
                   <ListItemText primary={primary} secondary={secondary}/>
                 </ListItem>
               );
@@ -114,10 +119,10 @@ const CurrencyPickerDialog = (props) => {
       <DialogActions>
         <Button
           color="primary"
-          disabled={!selectedLang}
+          disabled={!selectedCurrency}
           onClick={() => {
             resetState();
-            onClose(selectedLang)
+            onClose(selectedCurrency)
           }}>
           {t('select')}
         </Button>
@@ -128,26 +133,19 @@ const CurrencyPickerDialog = (props) => {
 
 const enhance = compose(
   withStateHandlers(
-    ({ initialSelectedLanguage }) => ({
-      selectedLang: initialSelectedLanguage,
-      page: null,
-      prevPage: null,
+    ({ initialSelectedCurrency }) => ({
+      selectedCurrency: initialSelectedCurrency,
       filter: ''
     }),
     {
       setFilter: () => (value) => ({
         filter: value,
       }),
-      setPage: () => (value) => {
-        if (value == null) return { page: value };
-        else return { page: value, prevPage: value };
-      },
-      setSelectedLang: () => (value) => ({
-        selectedLang: value,
+      setSelectedCurrency: () => (value) => ({
+        selectedCurrency: value,
       }),
       resetState: () => (value) => ({
-        selectedLang: null,
-        page: null,
+        selectedCurrency: null,
         filter: ''
       })
     }

@@ -71,26 +71,30 @@ var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
   var classes = props.classes,
       filter = props.filter,
       setFilter = props.setFilter,
-      selectedLang = props.selectedLang,
-      setSelectedLang = props.setSelectedLang,
-      page = props.page,
-      prevPage = props.prevPage,
-      setPage = props.setPage,
+      selectedCurrency = props.selectedCurrency,
+      setSelectedCurrency = props.setSelectedCurrency,
       _props$open = props.open,
       open = _props$open === void 0 ? false : _props$open,
       _onClose = props.onClose,
       resetState = props.resetState,
-      initialSelectedLanguage = props.initialSelectedLanguage,
-      other = _objectWithoutProperties(props, ["classes", "filter", "setFilter", "selectedLang", "setSelectedLang", "page", "prevPage", "setPage", "open", "onClose", "resetState", "initialSelectedLanguage"]);
+      initialSelectedCurrency = props.initialSelectedCurrency,
+      other = _objectWithoutProperties(props, ["classes", "filter", "setFilter", "selectedCurrency", "setSelectedCurrency", "open", "onClose", "resetState", "initialSelectedCurrency"]);
 
   var _useTranslation = (0, _reactI18next.useTranslation)(),
       t = _useTranslation.t,
       i18n = _useTranslation.i18n;
 
-  var filtered = _ramda.default.filter(function (currencyCode) {
+  var currencies = _lib.currencies.map(function (code) {
+    return {
+      code: code,
+      name: i18n.format(code, 'currencyName')
+    };
+  });
+
+  var filtered = _ramda.default.filter(function (currency) {
     if (!filter) return true;
-    return (0, _match.default)(currencyCode, filter).length > 0;
-  }, _lib.currencies);
+    return (0, _match.default)(currency.name, filter).length + (0, _match.default)(currency.code, filter).length > 0;
+  }, currencies);
 
   var highlightBold = function highlightBold(text) {
     if (!filter) return text;
@@ -99,6 +103,10 @@ var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
         key: i
       }, part.text) : part.text;
     }));
+  };
+
+  var currencyClickHandler = function currencyClickHandler(currencyCode) {
+    setSelectedCurrency(currencyCode);
   };
 
   return _react.default.createElement(_Dialog.default, _extends({
@@ -143,10 +151,10 @@ var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
     style: {
       flex: 1
     }
-  }, filtered.map(function (currencyCode, i) {
-    var primary = i18n.format(currencyCode, 'currencyName');
-    var secondary = highlightBold(currencyCode);
-    var selected = false;
+  }, filtered.map(function (currency, i) {
+    var primary = highlightBold(currency.name);
+    var secondary = highlightBold(currency.code);
+    var selected = selectedCurrency === currency.code;
     return _react.default.createElement(_ListItem.default, {
       key: i,
       dense: true,
@@ -156,28 +164,28 @@ var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
         paddingLeft: 24,
         paddingRight: 24
       },
-      onClick: function onClick() {}
+      onClick: function onClick() {
+        currencyClickHandler(currency.code);
+      }
     }, _react.default.createElement(_ListItemText.default, {
       primary: primary,
       secondary: secondary
     }));
   })))), _react.default.createElement(_Divider.default, null), _react.default.createElement(_DialogActions.default, null, _react.default.createElement(_Button.default, {
     color: "primary",
-    disabled: !selectedLang,
+    disabled: !selectedCurrency,
     onClick: function onClick() {
       resetState();
 
-      _onClose(selectedLang);
+      _onClose(selectedCurrency);
     }
   }, t('select'))));
 };
 
 var enhance = (0, _redux.compose)((0, _recompose.withStateHandlers)(function (_ref) {
-  var initialSelectedLanguage = _ref.initialSelectedLanguage;
+  var initialSelectedCurrency = _ref.initialSelectedCurrency;
   return {
-    selectedLang: initialSelectedLanguage,
-    page: null,
-    prevPage: null,
+    selectedCurrency: initialSelectedCurrency,
     filter: ''
   };
 }, {
@@ -188,28 +196,17 @@ var enhance = (0, _redux.compose)((0, _recompose.withStateHandlers)(function (_r
       };
     };
   },
-  setPage: function setPage() {
-    return function (value) {
-      if (value == null) return {
-        page: value
-      };else return {
-        page: value,
-        prevPage: value
-      };
-    };
-  },
-  setSelectedLang: function setSelectedLang() {
+  setSelectedCurrency: function setSelectedCurrency() {
     return function (value) {
       return {
-        selectedLang: value
+        selectedCurrency: value
       };
     };
   },
   resetState: function resetState() {
     return function (value) {
       return {
-        selectedLang: null,
-        page: null,
+        selectedCurrency: null,
         filter: ''
       };
     };
