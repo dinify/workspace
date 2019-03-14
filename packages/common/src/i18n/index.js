@@ -15,6 +15,7 @@ const getMainFiles = (locale) => {
     `main/${locale}/languages`,
     `main/${locale}/territories`,
     `main/${locale}/numbers`,
+    `main/${locale}/ca-gregorian`,
     `main/${locale}/units`
   ];
 }
@@ -87,6 +88,33 @@ export default ({namespace, lang, fallback}) => {
           if (!globalized) return '';
           return globalized.unitFormatter(params[0], { form: params[1] || 'long' } )(value);
         }
+        if (type === 'dateTimeInterval') {
+          if (!globalized) return '';
+          const hHKk = globalized.cldr.supplemental.timeData.preferred();
+          const skeleton = hHKk + 'm';
+          const possibleSplitChars = ['–', '-', '\'a\'', 'تا', '～', '~', '至'];
+          const intervalFormat = globalized.cldr.main(`dates/calendars/gregorian/dateTimeFormats/intervalFormats/${skeleton}/m`);
+          if (intervalFormat) {
+            let parts;
+            let splitChar;
+            possibleSplitChars.forEach(char => {
+              if (intervalFormat.includes(char)) {
+                splitChar = char;
+                parts = intervalFormat.split(char);
+              }
+            });
+            const start = globalized.dateFormatter({raw: parts[0]})(value.start);
+            const end = globalized.dateFormatter({raw: parts[1]})(value.end);
+            return [start, end].join(splitChar);
+          }
+
+          // Use fallback in case format wasn't found
+          const start = globalized.dateFormatter({time: 'short'})(value.start);
+          const end = globalized.dateFormatter({time: 'short'})(value.end);
+          const intervalFormatFallback = globalized.cldr.main(`dates/calendars/gregorian/dateTimeFormats/intervalFormats/intervalFormatFallback`);
+          return intervalFormatFallback.replace('{0}', start).replace('{1}', end);
+        }
+
         if (type === 'array') {
           // TODO return formatted display list pattern
         }
@@ -117,6 +145,7 @@ export default ({namespace, lang, fallback}) => {
                     'cldr/supplemental/numberingSystems',
                     'cldr/supplemental/plurals',
                     'cldr/supplemental/ordinals',
+                    'cldr/supplemental/timeData',
                     'cldr/supplemental/currencyData'
                   ];
 

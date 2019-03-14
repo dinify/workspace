@@ -50,7 +50,7 @@ const InfoSection = ({
   restaurant
 }) => {
   const addr = restaurant.address.postal;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const currentHours = restaurant.open_hours[days[moment().day()]];
   const unordered = moment.weekdays(); // sunday is index 0
   return (
@@ -96,6 +96,9 @@ const InfoSection = ({
                 unordered.forEach((val, i) => {
                   if (val === localizedDay) realIndex = i;
                 });
+
+                i18n.format('mon', 'weekDayName');
+
                 return (
                   <tr key={uniqueId()}>
                     <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
@@ -104,11 +107,18 @@ const InfoSection = ({
                       </Typography>
                     </td>
                     <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
-                      {restaurant.open_hours[days[realIndex]].map(value =>
-                        <Typography key={uniqueId()} style={{paddingLeft: 24}} >
-                          {value.join(' - ')}
-                        </Typography>
-                      )}
+                      {restaurant.open_hours[days[realIndex]].map(value => {
+                        // TODO: better time respresentation (?)
+                        const formatted = i18n.format({
+                          start: new Date(`1970-01-01 ${value[0]}`),
+                          end: new Date(`1970-01-01 ${value[1]}`)
+                        }, 'dateTimeInterval');
+                        return (
+                          <Typography key={uniqueId()} style={{paddingLeft: 24}} >
+                            {formatted}
+                          </Typography>
+                        );
+                      })}
                     </td>
                   </tr>
                 );

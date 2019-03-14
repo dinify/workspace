@@ -31,7 +31,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var ROOT = 'https://static.dinify.app';
 
 var getMainFiles = function getMainFiles(locale) {
-  return ["main/".concat(locale, "/currencies"), "main/".concat(locale, "/languages"), "main/".concat(locale, "/territories"), "main/".concat(locale, "/numbers"), "main/".concat(locale, "/units")];
+  return ["main/".concat(locale, "/currencies"), "main/".concat(locale, "/languages"), "main/".concat(locale, "/territories"), "main/".concat(locale, "/numbers"), "main/".concat(locale, "/ca-gregorian"), "main/".concat(locale, "/units")];
 };
 
 var getGlobalizedInstance = function getGlobalizedInstance(language) {
@@ -120,6 +120,45 @@ var _default = function _default(_ref) {
           })(value);
         }
 
+        if (type === 'dateTimeInterval') {
+          if (!globalized) return '';
+          var hHKk = globalized.cldr.supplemental.timeData.preferred();
+          var skeleton = hHKk + 'm';
+          var possibleSplitChars = ['–', '-', '\'a\'', 'تا', '～', '~', '至'];
+          var intervalFormat = globalized.cldr.main("dates/calendars/gregorian/dateTimeFormats/intervalFormats/".concat(skeleton, "/m"));
+
+          if (intervalFormat) {
+            var parts;
+            var splitChar;
+            possibleSplitChars.forEach(function (char) {
+              if (intervalFormat.includes(char)) {
+                splitChar = char;
+                parts = intervalFormat.split(char);
+              }
+            });
+
+            var _start = globalized.dateFormatter({
+              raw: parts[0]
+            })(value.start);
+
+            var _end = globalized.dateFormatter({
+              raw: parts[1]
+            })(value.end);
+
+            return [_start, _end].join(splitChar);
+          } // Use fallback in case format wasn't found
+
+
+          var start = globalized.dateFormatter({
+            time: 'short'
+          })(value.start);
+          var end = globalized.dateFormatter({
+            time: 'short'
+          })(value.end);
+          var intervalFormatFallback = globalized.cldr.main("dates/calendars/gregorian/dateTimeFormats/intervalFormats/intervalFormatFallback");
+          return intervalFormatFallback.replace('{0}', start).replace('{1}', end);
+        }
+
         if (type === 'array') {} // TODO return formatted display list pattern
         // fallback
 
@@ -144,7 +183,7 @@ var _default = function _default(_ref) {
             _globalize.default.load(likelySubtagsSata);
 
             var globalizeInstance = getGlobalizedInstance(lang);
-            var supplemental = ['cldr/supplemental/numberingSystems', 'cldr/supplemental/plurals', 'cldr/supplemental/ordinals', 'cldr/supplemental/currencyData'];
+            var supplemental = ['cldr/supplemental/numberingSystems', 'cldr/supplemental/plurals', 'cldr/supplemental/ordinals', 'cldr/supplemental/timeData', 'cldr/supplemental/currencyData'];
             var requiredFiles = supplemental.concat(getMainFiles(globalizeInstance.locale));
             Promise.all(requiredFiles.map(function (file) {
               return fetch("".concat(ROOT, "/").concat(file)).then(function (response) {
