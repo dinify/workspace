@@ -12,7 +12,9 @@
   "address": "Cím",
   "hours": {
     "open": "Nyitva",
-    "closed": "Zárva"
+    "closed": "Zárva",
+    "opens_at": "{{time, time:short}} órakor nyit ki",
+    "closes_at": "{{time, time:short}} órakor zár be"
   },
   "website": "Honlap",
   "nav": {

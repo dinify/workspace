@@ -77,7 +77,37 @@ var _default = function _default(_ref) {
         }
 
         if (type === 'date') {
-          return (0, _moment.default)(value).format(params[0]);
+          if (!globalized) return '';
+          return globalized.dateFormatter({
+            date: params[0] || 'short'
+          })(value);
+        }
+
+        if (type === 'time') {
+          if (!globalized) return '';
+          return globalized.dateFormatter({
+            time: params[0] || 'short'
+          })(value);
+        }
+
+        if (type === 'dateTime') {
+          if (!globalized) return '';
+          return globalized.dateFormatter({
+            datetime: params[0] || 'short'
+          })(value);
+        }
+
+        if (type === 'dateTimeSkeleton') {
+          if (!globalized) return '';
+          return globalized.dateFormatter({
+            skeleton: params[0]
+          })(value);
+        }
+
+        if (type === 'weekDayName') {
+          if (!globalized) return '';
+          var standAloneDays = globalized.cldr.main("dates/calendars/gregorian/days")['stand-alone'];
+          return standAloneDays[params[0] || 'wide'][value];
         }
 
         if (type === 'currency') {

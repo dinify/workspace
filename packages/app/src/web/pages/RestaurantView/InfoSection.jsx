@@ -51,8 +51,8 @@ const InfoSection = ({
 }) => {
   const addr = restaurant.address.postal;
   const { t, i18n } = useTranslation();
-  const currentHours = restaurant.open_hours[days[moment().day()]];
-  const unordered = moment.weekdays(); // sunday is index 0
+  const currentWeekDayIndex = new Date().getDay();
+  const currentHours = restaurant.open_hours[days[currentWeekDayIndex]];
   return (
     <div>
       <a rel="noopener noreferrer" target="_blank" href={`https://www.google.com/maps/search/${restaurant.name}/@${restaurant.latitude},${restaurant.longitude},17z`}
@@ -82,7 +82,7 @@ const InfoSection = ({
             </ListItemIcon>
             <ListItemText
               primary={restaurant.open_now ? t('hours.open') : t('hours.closed')}
-              secondary={`Closes at ${currentHours[0][1]}`}
+              secondary={t((restaurant.open_now ? 'hours.closes_at' : 'hours.opens_at'), {time: new Date(`1970-01-01 ${currentHours[0][restaurant.open_now ? 1 : 0]}`)})}
               primaryTypographyProps={{variant: 'body1'}}
               secondaryTypographyProps={{variant: 'caption'}}/>
           </ListItem>
@@ -91,23 +91,18 @@ const InfoSection = ({
           <table style={{borderSpacing: 0, paddingLeft: 56}}>
             <tbody>
               {[...Array(6).keys()].map(index => {
-                const localizedDay = moment.weekdays(true, index);
-                let realIndex = index;
-                unordered.forEach((val, i) => {
-                  if (val === localizedDay) realIndex = i;
-                });
-
-                i18n.format('mon', 'weekDayName');
+                const offsetIndex = (currentWeekDayIndex + index) % 7;
+                const localizedDay = i18n.format(days[offsetIndex], 'weekDayName:wide');
 
                 return (
                   <tr key={uniqueId()}>
                     <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
-                      <Typography className={classes.secondary} >
-                        {localizedDay}
+                      <Typography color={index === 0 ? 'textPrimary' : 'textSecondary'} >
+                        {index === 0 ? <b>{localizedDay}</b> : localizedDay}
                       </Typography>
                     </td>
                     <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
-                      {restaurant.open_hours[days[realIndex]].map(value => {
+                      {restaurant.open_hours[days[offsetIndex]].map(value => {
                         // TODO: better time respresentation (?)
                         const formatted = i18n.format({
                           start: new Date(`1970-01-01 ${value[0]}`),
@@ -115,7 +110,7 @@ const InfoSection = ({
                         }, 'dateTimeInterval');
                         return (
                           <Typography key={uniqueId()} style={{paddingLeft: 24}} >
-                            {formatted}
+                            {index === 0 ? <b>{formatted}</b> : formatted}
                           </Typography>
                         );
                       })}

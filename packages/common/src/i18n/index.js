@@ -56,7 +56,25 @@ export default ({namespace, lang, fallback}) => {
           if (params[0] === 'lower') return value.toLowerCase();
         }
         if (type === 'date') {
-          return moment(value).format(params[0]);
+          if (!globalized) return '';
+          return globalized.dateFormatter({date: params[0] || 'short'})(value);
+        }
+        if (type === 'time') {
+          if (!globalized) return '';
+          return globalized.dateFormatter({time: params[0] || 'short'})(value);
+        }
+        if (type === 'dateTime') {
+          if (!globalized) return '';
+          return globalized.dateFormatter({datetime: params[0] || 'short'})(value);
+        }
+        if (type === 'dateTimeSkeleton') {
+          if (!globalized) return '';
+          return globalized.dateFormatter({skeleton: params[0]})(value);
+        }
+        if (type === 'weekDayName') {
+          if (!globalized) return '';
+          const standAloneDays = globalized.cldr.main("dates/calendars/gregorian/days")['stand-alone'];
+          return standAloneDays[params[0] || 'wide'][value];
         }
         if (type === 'currency') {
           // TODO: warning, globalized instance might still be undefined (async!)

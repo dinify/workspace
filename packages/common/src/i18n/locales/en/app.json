@@ -12,7 +12,9 @@
   "address": "Address",
   "hours": {
     "open": "Open now",
-    "closed": "Closed"
+    "closed": "Closed",
+    "opens_at": "Opens at {{time, time:short}}",
+    "closes_at": "Closes at {{time, time:short}}"
   },
   "website": "Website",
   "nav": {
