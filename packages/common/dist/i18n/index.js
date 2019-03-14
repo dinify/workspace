@@ -156,12 +156,22 @@ var _default = function _default(_ref) {
           if (!globalized) return '';
           var hHKk = globalized.cldr.supplemental.timeData.preferred();
           var skeleton = hHKk + 'm';
-          var possibleSplitChars = ['–', '-', '\'a\'', 'تا', '～', '~', '至'];
-          var intervalFormat = globalized.cldr.main("dates/calendars/gregorian/dateTimeFormats/intervalFormats/".concat(skeleton, "/m"));
+          var greatestDiff = 'm';
+
+          if (['h', 'K'].includes(hHKk)) {
+            var isAMStart = value.start.getHours() < 12; // 0 - 23
+
+            var isAMEnd = value.end.getHours() < 12; // 0 - 23
+
+            if (isAMStart !== isAMEnd) greatestDiff = 'a';
+          }
+
+          var intervalFormat = globalized.cldr.main("dates/calendars/gregorian/dateTimeFormats/intervalFormats/".concat(skeleton, "/").concat(greatestDiff));
 
           if (intervalFormat) {
             var parts;
             var splitChar;
+            var possibleSplitChars = ['–', '-', '\'a\'', 'تا', '～', '~', '至'];
             possibleSplitChars.forEach(function (char) {
               if (intervalFormat.includes(char)) {
                 splitChar = char;

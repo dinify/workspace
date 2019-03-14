@@ -111,11 +111,18 @@ export default ({namespace, lang, fallback}) => {
           if (!globalized) return '';
           const hHKk = globalized.cldr.supplemental.timeData.preferred();
           const skeleton = hHKk + 'm';
-          const possibleSplitChars = ['–', '-', '\'a\'', 'تا', '～', '~', '至'];
-          const intervalFormat = globalized.cldr.main(`dates/calendars/gregorian/dateTimeFormats/intervalFormats/${skeleton}/m`);
+          let greatestDiff = 'm';
+          if (['h', 'K'].includes(hHKk)) {
+            const isAMStart = value.start.getHours() < 12; // 0 - 23
+            const isAMEnd = value.end.getHours() < 12; // 0 - 23
+            if (isAMStart !== isAMEnd) greatestDiff = 'a';
+          }
+          const intervalFormat = globalized.cldr.main(`dates/calendars/gregorian/dateTimeFormats/intervalFormats/${skeleton}/${greatestDiff}`);
           if (intervalFormat) {
             let parts;
             let splitChar;
+
+            const possibleSplitChars = ['–', '-', '\'a\'', 'تا', '～', '~', '至'];
             possibleSplitChars.forEach(char => {
               if (intervalFormat.includes(char)) {
                 splitChar = char;

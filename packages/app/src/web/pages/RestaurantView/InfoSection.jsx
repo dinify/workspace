@@ -105,7 +105,7 @@ const InfoSection = ({
                       {restaurant.open_hours[days[offsetIndex]].map(value => {
                         // TODO: better time respresentation (?)
                         const formatted = i18n.format({
-                          start: new Date(`1970-01-01 ${value[0]}`),
+                          start: index === 0 ? new Date(`1970-01-01 08:00`) : new Date(`1970-01-01 ${value[0]}`),
                           end: new Date(`1970-01-01 ${value[1]}`)
                         }, 'dateTimeInterval');
                         return (
