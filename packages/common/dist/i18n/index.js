@@ -68,7 +68,7 @@ var _default = function _default(_ref) {
         var split = _format.split(delimiter);
 
         var type = split[0];
-        var params;
+        var params = [];
         if (split.length > 1) params = split[1].split(delimiterSecondary);
 
         if (type === 'case') {
@@ -88,24 +88,29 @@ var _default = function _default(_ref) {
 
         if (type === 'currencyName') {
           if (!globalized) return '';
-          var displayName = globalized.cldr.main("numbers/currencies/".concat(value, "/displayName"));
-          return displayName;
+
+          if (params[0]) {
+            var count = parseFloat(params[0]);
+            var plural = globalized.pluralGenerator()(count);
+            var result = globalized.cldr.main("numbers/currencies/".concat(value, "/displayName-count-").concat(plural));
+            if (result) return result;
+          }
+
+          return globalized.cldr.main("numbers/currencies/".concat(value, "/displayName"));
         }
 
         if (type === 'languageName') {
           if (!globalized) return '';
-
-          var _displayName = globalized.cldr.main("localeDisplayNames/languages/".concat(value));
-
-          return _displayName;
+          var displayName = globalized.cldr.main("localeDisplayNames/languages/".concat(value));
+          return displayName;
         }
 
         if (type === 'territoryName') {
           if (!globalized) return '';
 
-          var _displayName2 = globalized.cldr.main("localeDisplayNames/territories/".concat(value));
+          var _displayName = globalized.cldr.main("localeDisplayNames/territories/".concat(value));
 
-          return _displayName2;
+          return _displayName;
         }
 
         if (type === 'array') {} // TODO return formatted display list pattern

@@ -10,6 +10,7 @@ const Price = ({
   display,
   price,
   profile,
+  original = false,
   ...props
 }) => {
   if (!price) return null;
@@ -25,7 +26,7 @@ const Price = ({
     return toBase * rates.rates[to];
   };
 
-  const displayCurrency = profile.displayCurrency || display || price.currency;
+  const displayCurrency = original ? price.currency : (profile.displayCurrency || display || price.currency);
   const number = convert(parseFloat(price.amount), price.currency, displayCurrency);
   return (
     <span style={{textTransform: 'none'}}>

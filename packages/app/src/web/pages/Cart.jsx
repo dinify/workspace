@@ -17,6 +17,7 @@ import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContai
 import Typography from '@dinify/common/dist/components/Typography';
 import CartItem from 'web/components/CartItem';
 import Price from 'web/components/Price';
+import TotalPrice from 'web/components/TotalPrice';
 // import Radio from '@material-ui/core/Radio';
 // import RadioGroup from '@material-ui/core/RadioGroup';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -128,16 +129,11 @@ const Cart = ({
             </Typography>
           </div>
         </div>}
-        {cart.count > 0 && <div style={{display: 'flex', alignItems: 'center', paddingLeft: notCheckedIn ? 0 : 72}}>
-
-          <Typography style={{flex: 1}} variant="button">
-            {t('total')}
-          </Typography>
-
-          <Typography variant="subtitle1">
-            <Price price={cart.subtotal} />
-          </Typography>
-        </div>}
+        {cart.count > 0 && (
+          <div style={{paddingLeft: notCheckedIn ? 0 : 72}}>
+            <TotalPrice price={cart.subtotal} />
+          </div>
+        )}
         <Fab
           disabled={notCheckedIn || cart.count === 0 || cart === null }
           style={{marginTop: 16, width: '100%'}}

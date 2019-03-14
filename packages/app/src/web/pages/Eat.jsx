@@ -29,6 +29,7 @@ import BillItem from 'web/components/BillItem';
 import PaymentOptionsDialog from '@dinify/common/dist/components/dialogs/PaymentOptionsDialog';
 import ContextMenu from 'web/components/ContextMenu';
 import Price from 'web/components/Price';
+import TotalPrice from 'web/components/TotalPrice';
 import Cart from 'web/pages/Cart';
 
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
@@ -288,14 +289,8 @@ class Eat extends React.Component {
 
                         {seat.cart &&
                           <div style={{marginBottom: userIsMe && seat.cart ? 16: 0}}>
-                            <div style={{display: 'flex', alignItems: 'center', marginTop: 16}}>
-                              <Typography style={{flex: 1}} variant="subtitle1">
-                                {t('total')}
-                              </Typography>
-
-                              <Typography variant="subtitle1">
-                                <Price price={seat.cart.subtotal} />
-                              </Typography>
+                            <div style={{marginTop: 16}}>
+                              <TotalPrice price={seat.cart.subtotal}/>
                             </div>
 
                             {userIsMe && <Fab
@@ -378,18 +373,8 @@ class Eat extends React.Component {
                               </div>
                               <Slider disabled={awaitingPaymentConfirmation}
                                  value={gratitude} min={0} max={50} step={1} onChange={(event, val) => setGratitude({percentage: val})}/>
-                              <div style={{
-                                  marginTop: 32,
-                                  display: 'flex'
-                                }}>
-                                <Typography variant="subtitle1" style={{
-                                    flex: 1
-                                  }}>
-                                  {t('total')}
-                                </Typography>
-                                <Typography variant="subtitle1">
-                                  <Price price={{amount: totalAmount, currency}} />
-                                </Typography>
+                              <div style={{ marginTop: 32 }}>
+                                <TotalPrice price={seat.cart.subtotal}/>
                               </div>
                             </div>
                         }

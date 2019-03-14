@@ -46,7 +46,7 @@ export default ({namespace, lang, fallback}) => {
         const delimiterSecondary = ',';
         const split = format.split(delimiter);
         const type = split[0];
-        let params;
+        let params = [];
         if (split.length > 1) params = split[1].split(delimiterSecondary);
 
         if (type === 'case') {
@@ -63,8 +63,14 @@ export default ({namespace, lang, fallback}) => {
         }
         if (type === 'currencyName') {
           if (!globalized) return '';
-          const displayName = globalized.cldr.main(`numbers/currencies/${value}/displayName`);
-          return displayName;
+
+          if (params[0]) {
+            const count = parseFloat(params[0]);
+            const plural = globalized.pluralGenerator()(count);
+            const result = globalized.cldr.main(`numbers/currencies/${value}/displayName-count-${plural}`);
+            if (result) return result;
+          }
+          return globalized.cldr.main(`numbers/currencies/${value}/displayName`);
         }
         if (type === 'languageName') {
           if (!globalized) return '';

@@ -25,6 +25,7 @@
   "addons": "Addons",
   "subtotal": "Subtotal",
   "total": "Total",
+  "totalConverted": "Total ({{currencyName}})",
   "serviceFee": "Service fee",
   "order": "Order",
   "camera": {
@@ -92,6 +93,7 @@
     "facts": "Nutrition facts",
     "fats": "Fats",
     "carbs": "Carbs",
-    "proteins": "Proteins"
+    "proteins": "Proteins",
+    "calories": "Calories"
   }
 }

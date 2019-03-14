@@ -25,6 +25,7 @@
   "addons": "Ráadás",
   "subtotal": "Részösszeg",
   "total": "Összesen",
+  "totalConverted": "Összesen ({{currencyName}})",
   "serviceFee": "Szolgáltatás díj",
   "order": "Rendelés",
   "camera": {
@@ -58,7 +59,7 @@
   "gratuity": "Borravaló",
   "pay": "Fizetés",
   "paymentPending": "Awaiting payment confirmation...",
-  "editing": "editing",
+  "editing": "szerkesztés",
   "profile": "Profil",
   "dashboard": "Dashboard",
   "waiterboard": "Waiterboard",
@@ -83,15 +84,15 @@
   "cart": {
     "title": "Kosár",
     "itemCount": "{{count}} tétel",
-    "itemCount_plural": "{{count}} tételek",
     "itemCount_none": "üres",
     "add": "Hozzáadás a kosárhoz",
     "checkInInstructions": "Vágj bele egy közeledben levő étteremben található QR-kód beszkennelésével."
   },
   "nutrition": {
-    "facts": "Nutrition facts",
-    "fats": "Fats",
-    "carbs": "Carbs",
-    "proteins": "Proteins"
+    "facts": "Tápanyagtartalom",
+    "fats": "Zsír",
+    "carbs": "Szénhidrát",
+    "proteins": "Fehérje",
+    "calories": "Energia"
   }
 }
