@@ -13,7 +13,7 @@ const NutritionFacts = ({
   classes,
   calories
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   if (!calories) return <div />;
   return (
     <div>
@@ -30,7 +30,7 @@ const NutritionFacts = ({
         <Typography
           style={{alignSelf: 'flex-end', textTransform: 'none'}}
           variant="overline">
-          {calories.fats} g
+          {i18n.format(calories.fats, 'unit:mass-gram,narrow')}
         </Typography>
       </div>
       <div style={{display: 'flex'}}>
@@ -40,7 +40,7 @@ const NutritionFacts = ({
         <Typography
           style={{alignSelf: 'flex-end', textTransform: 'none'}}
           variant="overline">
-          {calories.carbs} g
+          {i18n.format(calories.carbs, 'unit:mass-gram,narrow')}
         </Typography>
       </div>
       <div style={{display: 'flex'}}>
@@ -50,7 +50,7 @@ const NutritionFacts = ({
         <Typography
           style={{alignSelf: 'flex-end', textTransform: 'none'}}
           variant="overline">
-          {calories.proteins} g
+          {i18n.format(calories.proteins, 'unit:mass-gram,narrow')}
         </Typography>
       </div>
       <div style={{display: 'flex'}}>
@@ -60,7 +60,7 @@ const NutritionFacts = ({
         <Typography
           style={{alignSelf: 'flex-end', textTransform: 'none'}}
           variant="overline">
-          {calories.total} Kcal
+          {i18n.format(calories.total, 'unit:energy-foodcalorie,narrow')}
         </Typography>
       </div>
     </div>

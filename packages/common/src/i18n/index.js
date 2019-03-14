@@ -14,7 +14,8 @@ const getMainFiles = (locale) => {
     `main/${locale}/currencies`,
     `main/${locale}/languages`,
     `main/${locale}/territories`,
-    `main/${locale}/numbers`
+    `main/${locale}/numbers`,
+    `main/${locale}/units`
   ];
 }
 
@@ -81,6 +82,10 @@ export default ({namespace, lang, fallback}) => {
           if (!globalized) return '';
           const displayName = globalized.cldr.main(`localeDisplayNames/territories/${value}`);
           return displayName;
+        }
+        if (type === 'unit') {
+          if (!globalized) return '';
+          return globalized.unitFormatter(params[0], { form: params[1] || 'long' } )(value);
         }
         if (type === 'array') {
           // TODO return formatted display list pattern
