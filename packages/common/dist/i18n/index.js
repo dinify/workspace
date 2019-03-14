@@ -27,6 +27,8 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
+
 // TODO: move to backend with SSR for optimized loading
 var ROOT = 'https://static.dinify.app';
 
@@ -46,7 +48,8 @@ var _default = function _default(_ref) {
   var namespace = _ref.namespace,
       lang = _ref.lang,
       fallback = _ref.fallback;
-  if (fallback === []) fallback = ['en'];
+  var defaultFallback = ['en'];
+  if (fallback && fallback.length) defaultFallback = (_readOnlyError("defaultFallback"), fallback);
   var globalized;
   var options = {
     lng: lang,
@@ -54,10 +57,9 @@ var _default = function _default(_ref) {
     resources: _locales.default,
     ns: ['common', 'app'],
     // array of namespaces to load
-    defaultNS: namespace ? namespace : 'common',
+    defaultNS: namespace || 'common',
     fallbackNS: 'common',
-    fallbackLng: fallback ? fallback : 'en',
-    // use english if fallback not specified
+    fallbackLng: defaultFallback,
     interpolation: {
       escapeValue: false,
       // react has builtin protection against xss
@@ -200,6 +202,7 @@ var _default = function _default(_ref) {
       }
     }
   };
+  console.log(options.lng, options.fallbackLng);
   var i18nInstanceReference;
 
   _i18next.default.use(_reactI18next.initReactI18next).use({

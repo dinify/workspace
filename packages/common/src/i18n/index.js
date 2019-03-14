@@ -31,16 +31,17 @@ const getGlobalizedInstance = (language) => {
 
 
 export default ({namespace, lang, fallback}) => {
-  if (fallback === []) fallback = ['en'];
+  const defaultFallback = ['en']
+  if (fallback && fallback.length) defaultFallback = fallback;
 
   let globalized;
   const options = {
     lng: lang, // the language to use for translations
     resources: locales,
     ns: [ 'common', 'app' ], // array of namespaces to load
-    defaultNS: namespace ? namespace : 'common',
+    defaultNS: namespace || 'common',
     fallbackNS: 'common',
-    fallbackLng: fallback ? fallback : 'en', // use english if fallback not specified
+    fallbackLng: defaultFallback,
     interpolation: {
       escapeValue: false, // react has builtin protection against xss
       format: (value, format, lng) => {
@@ -144,6 +145,8 @@ export default ({namespace, lang, fallback}) => {
       }
     }
   };
+
+  console.log(options.lng, options.fallbackLng);
 
   let i18nInstanceReference;
 
