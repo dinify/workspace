@@ -45,22 +45,6 @@ class SectionWork extends React.Component {
                     />
 
                     <CustomInput
-                      labelText="Country"
-                      id="county"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-
-                    <CustomInput
-                      labelText="City"
-                      id="city"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
-
-                    <CustomInput
                       labelText="Email address"
                       id="email"
                       formControlProps={{
@@ -68,7 +52,14 @@ class SectionWork extends React.Component {
                       }}
                     />
 
-                    <Button color="primary">Submit</Button>
+                    <Button style={{float: 'left'}}>Request demo</Button>
+
+                    <div style={{display: 'inline-block', margin: '10px 0'}}>- or -</div>
+
+                    <a href="https://dashboard.dinify.app/register">
+                      <Button style={{float: 'right'}} color="primary">Register</Button>
+                    </a>
+                    
                   </GridItem>
                 </GridContainer>
               </form>

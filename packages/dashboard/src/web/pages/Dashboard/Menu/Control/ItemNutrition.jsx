@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { updateFoodNutritionInit } from 'ducks/restaurantLegacy';
+import { updateFoodNutritionInit } from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@material-ui/core/Button';

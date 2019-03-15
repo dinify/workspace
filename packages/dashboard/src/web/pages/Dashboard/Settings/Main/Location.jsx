@@ -13,7 +13,7 @@ import {
   FormBoxHead,
   FormBoxBody,
 } from 'web/components/styled/FormBox';
-import { updateLocationInitAction } from 'ducks/restaurantLegacy';
+import { updateLocationInitAction } from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';
 
 const MapComponent = compose(

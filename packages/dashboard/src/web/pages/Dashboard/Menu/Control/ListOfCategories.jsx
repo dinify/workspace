@@ -30,7 +30,7 @@ import {
   deleteMenucategoryInitAction,
   selectCategoryAction,
   reorderCategoriesAction,
-} from 'ducks/restaurantLegacy';
+} from 'ducks/restaurant/actions';
 
 const CategoriesList = styled.ul`
   list-style: none;

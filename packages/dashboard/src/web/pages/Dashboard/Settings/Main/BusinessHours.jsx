@@ -19,7 +19,7 @@ import {
   updateHoursInitAction,
   addDayToBusinessHours,
   addRangeToBusinessHours,
-} from 'ducks/restaurantLegacy';
+} from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';
 
 const dayNames = {

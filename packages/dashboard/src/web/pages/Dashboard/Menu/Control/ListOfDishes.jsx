@@ -33,7 +33,7 @@ import {
   deleteMenuitemInitAction,
   reorderItemsAction,
   selectFoodAction,
-} from 'ducks/restaurantLegacy';
+} from 'ducks/restaurant/actions';
 
 const FoodList = styled.div`
   margin: 0 10px;
