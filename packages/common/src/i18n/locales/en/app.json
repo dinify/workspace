@@ -50,7 +50,7 @@
     "title": "Bill",
     "split": "Split",
     "selecting": "Select bill items to split with others",
-    "splittingWith": "Splitting with {{list}}",
+    "splittingWith": "Splitting with {{list, list}}",
     "splittingWith_zero": "Select users to split with",
     "splittingCount": "Splitting with {{count}} person",
     "splittingCount_plural": "Splitting between {{count}} people",

@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import locales from './locales';
 import moment from 'moment';
 import globalize from './globalize';
+import formatters from './formatters';
 import { supplementalPaths } from './cldr';
 
 // TODO: move to backend with SSR for optimized loading
@@ -16,7 +17,8 @@ const getMainFiles = (locale) => {
     `main/${locale}/territories`,
     `main/${locale}/numbers`,
     `main/${locale}/ca-gregorian`,
-    `main/${locale}/units`
+    `main/${locale}/units`,
+    `main/${locale}/listPatterns`
   ];
 }
 
@@ -52,97 +54,13 @@ export default ({namespace, lang, fallback}) => {
         let params = [];
         if (split.length > 1) params = split[1].split(delimiterSecondary);
 
+        const formatted = formatters(globalized)(value, type, params);
+        if (formatted) return formatted;
+
+        // other misc formatters
         if (type === 'case') {
           if (params[0] === 'upper') return value.toUpperCase();
           if (params[0] === 'lower') return value.toLowerCase();
-        }
-        if (type === 'date') {
-          if (!globalized) return '';
-          return globalized.dateFormatter({date: params[0] || 'short'})(value);
-        }
-        if (type === 'time') {
-          if (!globalized) return '';
-          return globalized.dateFormatter({time: params[0] || 'short'})(value);
-        }
-        if (type === 'dateTime') {
-          if (!globalized) return '';
-          return globalized.dateFormatter({datetime: params[0] || 'short'})(value);
-        }
-        if (type === 'dateTimeSkeleton') {
-          if (!globalized) return '';
-          return globalized.dateFormatter({skeleton: params[0]})(value);
-        }
-        if (type === 'weekDayName') {
-          if (!globalized) return '';
-          const standAloneDays = globalized.cldr.main("dates/calendars/gregorian/days")['stand-alone'];
-          return standAloneDays[params[0] || 'wide'][value];
-        }
-        if (type === 'currency') {
-          // TODO: warning, globalized instance might still be undefined (async!)
-          if (!globalized) return '';
-          return globalized.currencyFormatter(params[0])(value);
-        }
-        if (type === 'currencyName') {
-          if (!globalized) return '';
-
-          if (params[0]) {
-            const count = parseFloat(params[0]);
-            const plural = globalized.pluralGenerator()(count);
-            const result = globalized.cldr.main(`numbers/currencies/${value}/displayName-count-${plural}`);
-            if (result) return result;
-          }
-          return globalized.cldr.main(`numbers/currencies/${value}/displayName`);
-        }
-        if (type === 'languageName') {
-          if (!globalized) return '';
-          const displayName = globalized.cldr.main(`localeDisplayNames/languages/${value}`);
-          return displayName;
-        }
-        if (type === 'territoryName') {
-          if (!globalized) return '';
-          const displayName = globalized.cldr.main(`localeDisplayNames/territories/${value}`);
-          return displayName;
-        }
-        if (type === 'unit') {
-          if (!globalized) return '';
-          return globalized.unitFormatter(params[0], { form: params[1] || 'long' } )(value);
-        }
-        if (type === 'dateTimeInterval') {
-          if (!globalized) return '';
-          const hHKk = globalized.cldr.supplemental.timeData.preferred();
-          const skeleton = hHKk + 'm';
-          let greatestDiff = 'm';
-          if (['h', 'K'].includes(hHKk)) {
-            const isAMStart = value.start.getHours() < 12; // 0 - 23
-            const isAMEnd = value.end.getHours() < 12; // 0 - 23
-            if (isAMStart !== isAMEnd) greatestDiff = 'a';
-          }
-          const intervalFormat = globalized.cldr.main(`dates/calendars/gregorian/dateTimeFormats/intervalFormats/${skeleton}/${greatestDiff}`);
-          if (intervalFormat) {
-            let parts;
-            let splitChar;
-
-            const possibleSplitChars = ['–', '-', '\'a\'', 'تا', '～', '~', '至'];
-            possibleSplitChars.forEach(char => {
-              if (intervalFormat.includes(char)) {
-                splitChar = char;
-                parts = intervalFormat.split(char);
-              }
-            });
-            const start = globalized.dateFormatter({raw: parts[0]})(value.start);
-            const end = globalized.dateFormatter({raw: parts[1]})(value.end);
-            return [start, end].join(splitChar);
-          }
-
-          // Use fallback in case format wasn't found
-          const start = globalized.dateFormatter({time: 'short'})(value.start);
-          const end = globalized.dateFormatter({time: 'short'})(value.end);
-          const intervalFormatFallback = globalized.cldr.main(`dates/calendars/gregorian/dateTimeFormats/intervalFormats/intervalFormatFallback`);
-          return intervalFormatFallback.replace('{0}', start).replace('{1}', end);
-        }
-
-        if (type === 'array') {
-          // TODO return formatted display list pattern
         }
 
         // fallback

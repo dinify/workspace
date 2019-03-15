@@ -15,6 +15,8 @@ var _moment = _interopRequireDefault(require("moment"));
 
 var _globalize = _interopRequireDefault(require("./globalize"));
 
+var _formatters = _interopRequireDefault(require("./formatters"));
+
 var _cldr = require("./cldr");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -33,7 +35,7 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
 var ROOT = 'https://static.dinify.app';
 
 var getMainFiles = function getMainFiles(locale) {
-  return ["main/".concat(locale, "/currencies"), "main/".concat(locale, "/languages"), "main/".concat(locale, "/territories"), "main/".concat(locale, "/numbers"), "main/".concat(locale, "/ca-gregorian"), "main/".concat(locale, "/units")];
+  return ["main/".concat(locale, "/currencies"), "main/".concat(locale, "/languages"), "main/".concat(locale, "/territories"), "main/".concat(locale, "/numbers"), "main/".concat(locale, "/ca-gregorian"), "main/".concat(locale, "/units"), "main/".concat(locale, "/listPatterns")];
 };
 
 var getGlobalizedInstance = function getGlobalizedInstance(language) {
@@ -72,137 +74,13 @@ var _default = function _default(_ref) {
         var type = split[0];
         var params = [];
         if (split.length > 1) params = split[1].split(delimiterSecondary);
+        var formatted = (0, _formatters.default)(globalized)(value, type, params);
+        if (formatted) return formatted; // other misc formatters
 
         if (type === 'case') {
           if (params[0] === 'upper') return value.toUpperCase();
           if (params[0] === 'lower') return value.toLowerCase();
-        }
-
-        if (type === 'date') {
-          if (!globalized) return '';
-          return globalized.dateFormatter({
-            date: params[0] || 'short'
-          })(value);
-        }
-
-        if (type === 'time') {
-          if (!globalized) return '';
-          return globalized.dateFormatter({
-            time: params[0] || 'short'
-          })(value);
-        }
-
-        if (type === 'dateTime') {
-          if (!globalized) return '';
-          return globalized.dateFormatter({
-            datetime: params[0] || 'short'
-          })(value);
-        }
-
-        if (type === 'dateTimeSkeleton') {
-          if (!globalized) return '';
-          return globalized.dateFormatter({
-            skeleton: params[0]
-          })(value);
-        }
-
-        if (type === 'weekDayName') {
-          if (!globalized) return '';
-          var standAloneDays = globalized.cldr.main("dates/calendars/gregorian/days")['stand-alone'];
-          return standAloneDays[params[0] || 'wide'][value];
-        }
-
-        if (type === 'currency') {
-          // TODO: warning, globalized instance might still be undefined (async!)
-          if (!globalized) return '';
-          return globalized.currencyFormatter(params[0])(value);
-        }
-
-        if (type === 'currencyName') {
-          if (!globalized) return '';
-
-          if (params[0]) {
-            var count = parseFloat(params[0]);
-            var plural = globalized.pluralGenerator()(count);
-            var result = globalized.cldr.main("numbers/currencies/".concat(value, "/displayName-count-").concat(plural));
-            if (result) return result;
-          }
-
-          return globalized.cldr.main("numbers/currencies/".concat(value, "/displayName"));
-        }
-
-        if (type === 'languageName') {
-          if (!globalized) return '';
-          var displayName = globalized.cldr.main("localeDisplayNames/languages/".concat(value));
-          return displayName;
-        }
-
-        if (type === 'territoryName') {
-          if (!globalized) return '';
-
-          var _displayName = globalized.cldr.main("localeDisplayNames/territories/".concat(value));
-
-          return _displayName;
-        }
-
-        if (type === 'unit') {
-          if (!globalized) return '';
-          return globalized.unitFormatter(params[0], {
-            form: params[1] || 'long'
-          })(value);
-        }
-
-        if (type === 'dateTimeInterval') {
-          if (!globalized) return '';
-          var hHKk = globalized.cldr.supplemental.timeData.preferred();
-          var skeleton = hHKk + 'm';
-          var greatestDiff = 'm';
-
-          if (['h', 'K'].includes(hHKk)) {
-            var isAMStart = value.start.getHours() < 12; // 0 - 23
-
-            var isAMEnd = value.end.getHours() < 12; // 0 - 23
-
-            if (isAMStart !== isAMEnd) greatestDiff = 'a';
-          }
-
-          var intervalFormat = globalized.cldr.main("dates/calendars/gregorian/dateTimeFormats/intervalFormats/".concat(skeleton, "/").concat(greatestDiff));
-
-          if (intervalFormat) {
-            var parts;
-            var splitChar;
-            var possibleSplitChars = ['–', '-', '\'a\'', 'تا', '～', '~', '至'];
-            possibleSplitChars.forEach(function (char) {
-              if (intervalFormat.includes(char)) {
-                splitChar = char;
-                parts = intervalFormat.split(char);
-              }
-            });
-
-            var _start = globalized.dateFormatter({
-              raw: parts[0]
-            })(value.start);
-
-            var _end = globalized.dateFormatter({
-              raw: parts[1]
-            })(value.end);
-
-            return [_start, _end].join(splitChar);
-          } // Use fallback in case format wasn't found
-
-
-          var start = globalized.dateFormatter({
-            time: 'short'
-          })(value.start);
-          var end = globalized.dateFormatter({
-            time: 'short'
-          })(value.end);
-          var intervalFormatFallback = globalized.cldr.main("dates/calendars/gregorian/dateTimeFormats/intervalFormats/intervalFormatFallback");
-          return intervalFormatFallback.replace('{0}', start).replace('{1}', end);
-        }
-
-        if (type === 'array') {} // TODO return formatted display list pattern
-        // fallback
+        } // fallback
 
 
         if (Array.isArray(value)) ; // TODO return formatted display list pattern

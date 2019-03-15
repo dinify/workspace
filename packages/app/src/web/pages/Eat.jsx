@@ -170,55 +170,6 @@ class Eat extends React.Component {
       if (uid === loggedUserId) { continue; }
       splitingWithNames.push(users[uid].name);
     }
-    const localizedList = (key, arr) => {
-      if (!arr || arr.length === 0) return '';
-      else if (arr.length === 1) return arr[0];
-      else {
-        const obj = {};
-        arr.forEach((item, i) => {
-          obj[`${i}`] = item;
-        });
-        if (arr.length === 2) return t(key, {
-          context: '2',
-          first: arr[0],
-          last: arr[1]
-        });
-        else if (arr.length === 3) {
-          return t(key, {
-            context: 'start',
-            first: arr[0],
-            end: t(key, {
-              context: 'end',
-              start: arr[1],
-              last: arr[2],
-            })
-          });
-        }
-        else {
-          let pointer = arr.length - 1;
-          let result = t(key, {
-            context: 'end',
-            last: arr[pointer],
-            start: arr[pointer - 1]
-          });
-          pointer -= 2;
-          while (pointer > 0) {
-            result = t(key, {
-              context: 'middle',
-              end: result,
-              start: arr[pointer]
-            });
-            pointer -= 1;
-          }
-          result = t(key, {
-            context: 'start',
-            last: result,
-            first: arr[pointer] // pointer should be 0
-          });
-          return result;
-        }
-      }
-    };
     return (
       <div>
         {checkedin && <div>
@@ -427,7 +378,7 @@ class Eat extends React.Component {
                   {
                     selectedSeats.length <= 3 ? t('bill.splittingWith', {
                       context: selectedSeats.length === 0 ? 'zero' : undefined,
-                      list: localizedList('list.and', splitingWithNames)
+                      list: splitingWithNames
                     }) : t('bill.splittingCount', { count: selectedSeats.length })
                   }
                 </Typography>
