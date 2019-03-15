@@ -1,0 +1,23 @@
+{
+  "user": {
+    "signIn": "Ngena",
+    "logOut": "Phuma"
+  },
+  "phone": {
+    "short": "Phone",
+    "long": "Inombolo yomnxeba"
+  },
+  "email": {
+    "short": "Email",
+    "long": "Idilesi yemeyile"
+  },
+  "suggested": "Kucetyiswa",
+  "other": "Nezinye iilwimi",
+  "selectLanguage": "Khetha ulwimi",
+  "selectCountry": "Khetha ilizwe",
+  "selectCurrency": "Khetha currency",
+  "back": "Buya umva",
+  "select": "Khetha",
+  "clear": "Sula ukukhetha",
+  "loadingEllipsis": "Iyalayisha ..."
+}

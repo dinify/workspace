@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "প্রবেশ কর",
+    "logOut": "সাইন আউট"
+  },
+  "phone": {
+    "short": "ফোন",
+    "long": "ফোন নম্বর"
+  },
+  "email": {
+    "short": "ইমেইল",
+    "long": "ই-মেইল ঠিকানা"
+  },
+  "suggested": "প্রস্তাবিত",
+  "other": "অন্যান্য ভাষাসমূহ",
+  "selectLanguage": "ভাষা নির্বাচন কর",
+  "selectCountry": "দেশ নির্বাচন করুন",
+  "selectCurrency": "কারেন্সি নির্বাচন করুন",
+  "back": "ফিরে যাও",
+  "select": "চয়ন করুন",
+  "clear": "সাফ নির্বাচন",
+  "search": "অনুসন্ধান",
+  "loadingEllipsis": "লোড হচ্ছে ..."
+}

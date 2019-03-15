@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Đăng nhập",
+    "logOut": "Đăng xuất"
+  },
+  "phone": {
+    "short": "Điện thoại",
+    "long": "Số điện thoại"
+  },
+  "email": {
+    "short": "E-mail",
+    "long": "Địa chỉ email"
+  },
+  "suggested": "Gợi ý",
+  "other": "Những ngôn ngữ khác",
+  "selectLanguage": "Chọn ngôn ngữ",
+  "selectCountry": "Chọn quốc gia",
+  "selectCurrency": "Chọn tiền tệ",
+  "back": "Quay lại",
+  "select": "Chọn",
+  "clear": "Rõ ràng lựa chọn",
+  "search": "Tìm kiếm",
+  "loadingEllipsis": "Tải..."
+}

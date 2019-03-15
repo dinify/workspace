@@ -1,0 +1,89 @@
+{
+  "menu": {
+    "caption": "Segala sesuatu yang Anda bisa mendapatkan di {{restaurant.name}}"
+  },
+  "address": "Alamat",
+  "hours": {
+    "open": "Buka sekarang",
+    "closed": "Tutup",
+    "opens_at": "Terbuka di {{time, time:short}}",
+    "closes_at": "Tutup pukul {{time, time:short}}"
+  },
+  "website": "Situs web",
+  "nav": {
+    "explore": "Menjelajah",
+    "eat": "Untuk makan",
+    "checkIn": "Mendaftar",
+    "service": "Layanan"
+  },
+  "ingredients": "Bahan",
+  "addons": "Tambahan",
+  "serviceFee": "Biaya jasa",
+  "order": "Memesan",
+  "camera": {
+    "notAvailable": {
+      "title": "Kamera tidak tersedia",
+      "subtitle": "Kamera browser tidak tersedia pada perangkat ini"
+    },
+    "takePhoto": "Mengambil foto itu"
+  },
+  "service": {
+    "title": "Hubungi layanan",
+    "subtitle": "Dengan fitur ini, Anda dapat meminta segala jenis bumbu atau peralatan makan ke meja Anda.",
+    "instruction": "Check in dengan memindai kode QR di sebuah restoran di dekat Anda untuk memulai.",
+    "types": {
+      "tableware": "Barang pecah belah",
+      "condiments": "Bumbu"
+    }
+  },
+  "bill": {
+    "title": "Tagihan",
+    "split": "Membagi",
+    "selecting": "Pilih item dalam RUU",
+    "splittingWith": "Dibagi antara:",
+    "splittingWith_zero": "Pilih pengguna",
+    "splittingCount": "{{count}} orang",
+    "splittingCount_plural": "{{count}} orang",
+    "itemCountSelected": "{{count}} item yang dipilih",
+    "itemCountSelected_plural": "{{count}} item yang dipilih",
+    "itemCountSelected_none": "Tidak ada item yang dipilih"
+  },
+  "gratuity": "Persen",
+  "pay": "Membayar",
+  "paymentPending": "Menunggu pembayaran...",
+  "profile": "Profil",
+  "dashboard": "Dasbor",
+  "currency": {
+    "title": "Mata uang tampilan",
+    "set": "Mengatur mata uang display",
+    "original": "Menunjukkan harga dalam mata uang asli"
+  },
+  "roles": {
+    "title": "Peran",
+    "manager": "Manajer",
+    "waiter": "Pelayan",
+    "cook": "Memasak",
+    "proofreader": "Korektor"
+  },
+  "language": {
+    "setPrimary": "Mengatur bahasa utama",
+    "default": "Bahasa default",
+    "other": "Bahasa lainnya",
+    "addOther": "Menambahkan bahasa lain"
+  },
+  "cart": {
+    "title": "Kereta Belanja",
+    "itemCount": "{{count}} potong",
+    "itemCount_plural": "{{count}} buah",
+    "itemCount_none": "Kosong",
+    "add": "Masukkan ke keranjang",
+    "checkInInstructions": "Untuk memulai, memindai kode QR di sebuah restoran terdekat"
+  },
+  "nutrition": {
+    "facts": "Nilai gizi",
+    "fats": "Lemak",
+    "carbs": "Karbohidrat",
+    "proteins": "Protein",
+    "calories": "Kalori"
+  }
+}

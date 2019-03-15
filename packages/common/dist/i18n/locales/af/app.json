@@ -1,0 +1,92 @@
+{
+  "menu": {
+    "title": "Spyskaart",
+    "caption": "Alles wat jy kan kry in {{restaurant.name}}"
+  },
+  "address": "Adres",
+  "hours": {
+    "open": "Nou oop",
+    "closed": "Gesluit",
+    "opens_at": "Open om {{time, time:short}}",
+    "closes_at": "Sluit om {{time, time:short}}"
+  },
+  "website": "Webwerf",
+  "nav": {
+    "explore": "Verken",
+    "eat": "Om te eet",
+    "checkIn": "Inboek",
+    "service": "Diens"
+  },
+  "ingredients": "Bestanddele",
+  "addons": "Voeg op",
+  "subtotal": "Subtotaal",
+  "total": "Totaal",
+  "totalConverted": "Totaal ({{currencyName}})",
+  "serviceFee": "Diensfooi",
+  "order": "Orde",
+  "camera": {
+    "notAvailable": {
+      "title": "Kamera nie beskikbaar",
+      "subtitle": "Kamera die leser se is nie beskikbaar op hierdie toestel"
+    },
+    "takePhoto": "Neem 'n foto van dit"
+  },
+  "service": {
+    "title": "Bel 'n diens",
+    "subtitle": "Met hierdie funksie, kan jy 'n enige soort kruiderij of eetgerei versoek om jou tafel.",
+    "instruction": "So deur die skandering van die QR-kode in 'n restaurant naby jou om te begin.",
+    "types": {
+      "tableware": "Eetgerei",
+      "condiments": "Speserye"
+    }
+  },
+  "bill": {
+    "split": "Verdeel",
+    "selecting": "Kies die items in wetsontwerp",
+    "splittingWith": "Is verdeel tussen:",
+    "splittingWith_zero": "Kies gebruikers",
+    "splittingCount": "{{count}} persoon",
+    "splittingCount_plural": "{{count}} persone",
+    "itemCountSelected": "{{count}} item gekies",
+    "itemCountSelected_plural": "{{count}} items gekies",
+    "itemCountSelected_none": "Geen items gekies"
+  },
+  "gratuity": "Gratifikasie",
+  "pay": "Betaal",
+  "paymentPending": "Wag vir betaling ...",
+  "editing": "Redigering",
+  "profile": "Profiel",
+  "currency": {
+    "title": "Vertoning geldeenheid",
+    "set": "Stel vertoning geldeenheid",
+    "original": "Resultate pryse in die oorspronklike geldeenheid"
+  },
+  "roles": {
+    "title": "Rolle",
+    "manager": "Bestuurder",
+    "waiter": "Kelner",
+    "cook": "Kok",
+    "proofreader": "Proefleser"
+  },
+  "language": {
+    "setPrimary": "Stel primêre taal",
+    "default": "Verstek taal",
+    "other": "Ander tale",
+    "addOther": "Voeg 'n ander taal"
+  },
+  "cart": {
+    "title": "Inkopie mandjie",
+    "itemCount": "{{count}} stuk",
+    "itemCount_plural": "{{count}} stukke",
+    "itemCount_none": "Leë",
+    "add": "Voeg toe aan winkelwagen",
+    "checkInInstructions": "Om te begin, scan die QR-kode in 'n restaurant in die buurt"
+  },
+  "nutrition": {
+    "facts": "Voedingswaarde",
+    "fats": "Vet",
+    "carbs": "Koolhidrate",
+    "proteins": "Proteïene",
+    "calories": "Kalorieë"
+  }
+}

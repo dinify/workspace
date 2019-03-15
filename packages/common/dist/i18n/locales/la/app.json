@@ -1,0 +1,85 @@
+{
+  "menu": {
+    "caption": "Vos can adepto per omnia {{restaurant.name}}"
+  },
+  "address": "Oratio",
+  "hours": {
+    "open": "Nunc aperta",
+    "closed": "Claudi",
+    "opens_at": "{{time, time:short}} ad opens",
+    "closes_at": "Clauserit viscera ad {{time, time:short}}"
+  },
+  "website": "Website",
+  "nav": {
+    "eat": "Manducare",
+    "checkIn": "Reprehendo in"
+  },
+  "ingredients": "Ingredientia",
+  "addons": "Adde",
+  "total": "Summa",
+  "totalConverted": "Summa ({{currencyName}})",
+  "serviceFee": "Feodo servitium",
+  "order": "Ordo",
+  "camera": {
+    "notAvailable": {
+      "title": "Non praesto camera",
+      "subtitle": "De camera scriptor pasco est non available in hac fabrica"
+    },
+    "takePhoto": "Tolle a photo ex eo"
+  },
+  "service": {
+    "title": "Voca est religio",
+    "subtitle": "Hoc pluma potestis mensae tuae Tableware poscunt seu aliquam condimentum.",
+    "instruction": "Reprehendo in per scanning est QR code in popina prope est ut incipiat.",
+    "types": {
+      "tableware": "GUSTATORIUM",
+      "condiments": "Rebus"
+    }
+  },
+  "bill": {
+    "split": "Split",
+    "selecting": "Select the items per libellum",
+    "splittingWith": "Medetur;",
+    "splittingWith_zero": "Lego users",
+    "splittingCount": "{{count}} persona",
+    "splittingCount_plural": "{{count}} homines",
+    "itemCountSelected": "{{count}} item electus",
+    "itemCountSelected_plural": "{{count}} items electus",
+    "itemCountSelected_none": "Nullas delectus"
+  },
+  "gratuity": "COMMODUM",
+  "pay": "Redde",
+  "paymentPending": "Mercedem exspectantes ...",
+  "editing": "Recensere",
+  "dashboard": "Ashboardday",
+  "currency": {
+    "title": "Display monetæ",
+    "set": "Constitue ostentationem monetæ",
+    "original": "Showing in originali monetæ prices"
+  },
+  "roles": {
+    "title": "Roles",
+    "waiter": "Famulus potionem",
+    "proofreader": "Proofreader"
+  },
+  "language": {
+    "setPrimary": "Constitue prima lingua",
+    "default": "Default lingua",
+    "other": "Other languages",
+    "addOther": "Addere aliam linguam"
+  },
+  "cart": {
+    "title": "Shopping cart",
+    "itemCount": "Pars {{count}}",
+    "itemCount_plural": "Partibus {{count}}",
+    "itemCount_none": "Inanis",
+    "checkInInstructions": "Ut incipias, et scan QR code in popina prope"
+  },
+  "nutrition": {
+    "facts": "Nutritionis valorem",
+    "fats": "Crassus",
+    "carbs": "Carbohydrates",
+    "proteins": "Proteins",
+    "calories": "Suspendisse"
+  }
+}

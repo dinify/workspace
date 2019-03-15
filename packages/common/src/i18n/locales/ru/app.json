@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "Меню",
+    "caption": "Все, что вы можете получить в {{restaurant.name}}"
+  },
+  "address": "Адрес",
+  "hours": {
+    "open": "Открой сейчас",
+    "closed": "Закрыто",
+    "opens_at": "Открывается в {{time, time:short}}",
+    "closes_at": "Закрывается на {{time, time:short}}"
+  },
+  "website": "Веб-сайт",
+  "nav": {
+    "explore": "Проводить исследования",
+    "eat": "Кушать",
+    "checkIn": "Регистрироваться",
+    "service": "Обслуживание"
+  },
+  "ingredients": "Ингредиенты",
+  "addons": "Добавить",
+  "subtotal": "Промежуточный итог",
+  "total": "Всего",
+  "totalConverted": "Всего ({{currencyName}})",
+  "serviceFee": "Плата за обслуживание",
+  "order": "Порядок",
+  "camera": {
+    "notAvailable": {
+      "title": "Камера не доступен",
+      "subtitle": "Камера браузера не доступна на этом устройстве"
+    },
+    "takePhoto": "Сфотографируйте его"
+  },
+  "service": {
+    "title": "Вызов службы",
+    "subtitle": "С помощью этой функции вы можете запросить любую приправу или посуды на ваш стол.",
+    "instruction": "Заезд путем сканирования QR-кода в ресторане рядом с вами, чтобы начать работу.",
+    "types": {
+      "tableware": "Посуда",
+      "condiments": "Приправы"
+    }
+  },
+  "bill": {
+    "title": "Билл",
+    "split": "Трещина",
+    "selecting": "Выберите элементы в счете",
+    "splittingWith": "Разделена между:",
+    "splittingWith_zero": "Выбор пользователей",
+    "splittingCount": "{{count}} человек",
+    "splittingCount_plural": "{{count}} человек",
+    "itemCountSelected": "{{count}} выбранный элемент",
+    "itemCountSelected_plural": "{{count}} элементы, выбранные",
+    "itemCountSelected_none": "Нет элементов, выбранных"
+  },
+  "gratuity": "Наградные",
+  "pay": "Платить",
+  "paymentPending": "Ожидается платеж...",
+  "editing": "Редактирование",
+  "profile": "Профиль",
+  "dashboard": "Приборная доска",
+  "currency": {
+    "title": "Дисплей валюты",
+    "set": "Набор валюты дисплея",
+    "original": "Показаны цены в исходной валюте"
+  },
+  "roles": {
+    "title": "Роли",
+    "manager": "Менеджер",
+    "waiter": "Официант",
+    "cook": "Готовить",
+    "proofreader": "Корректура"
+  },
+  "language": {
+    "setPrimary": "Установить первичный язык",
+    "default": "Язык по умолчанию",
+    "other": "Другие языки",
+    "addOther": "Добавить другой язык"
+  },
+  "cart": {
+    "title": "Корзина",
+    "itemCount": "{{count}} кусок",
+    "itemCount_plural": "{{count}} куска",
+    "itemCount_none": "Пустой",
+    "add": "Добавить в корзину",
+    "checkInInstructions": "Для начала сканирования QR-кода в близлежащем ресторане"
+  },
+  "nutrition": {
+    "facts": "Питательная ценность",
+    "fats": "Жир",
+    "carbs": "Углеводы",
+    "proteins": "Белки",
+    "calories": "Калории"
+  }
+}

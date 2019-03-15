@@ -1,10 +1,4 @@
 {
-  "list": {
-    "and_2": "{{first}} és {{last}}",
-    "and_start": "{{first}}, {{end}}",
-    "and_middle": "{{start}}, {{end}}",
-    "and_end": "{{start}}, és {{last}}"
-  },
   "menu": {
     "title": "Menü",
     "caption": "Minden amit itt kaphatsz: {{restaurant.name}}"

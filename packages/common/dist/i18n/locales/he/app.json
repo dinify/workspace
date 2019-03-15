@@ -1,0 +1,93 @@
+{
+  "menu": {
+    "title": "תפריט",
+    "caption": "כל מה שאתה יכול להשיג ב {{restaurant.name}}"
+  },
+  "address": "כתובת",
+  "hours": {
+    "open": "פתוח עכשיו",
+    "closed": "סגור",
+    "opens_at": "פותח ב {{time, time:short}}",
+    "closes_at": "נסגר בשעה {{time, time:short}}"
+  },
+  "website": "אתר אינטרנט",
+  "nav": {
+    "explore": "חקור",
+    "eat": "לאכול",
+    "checkIn": "קבלה",
+    "service": "שירות"
+  },
+  "ingredients": "רכיבים",
+  "addons": "תוסיף",
+  "subtotal": "סיכום ביניים",
+  "total": "סה\"כ",
+  "totalConverted": "סה\"כ ({{currencyName}})",
+  "serviceFee": "עמלת שירות",
+  "order": "להזמין",
+  "camera": {
+    "notAvailable": {
+      "title": "המצלמה אינה זמינה",
+      "subtitle": "המצלמה של הדפדפן אינה זמינה במכשיר זה"
+    },
+    "takePhoto": "צלם תמונה של אותו"
+  },
+  "service": {
+    "title": "התקשר לשירות",
+    "subtitle": "באמצעות תכונה זו, תוכל לבקש כל סוג של תבלין או שולחן לשולחן שלך.",
+    "instruction": "הגעה ידי סריקת קוד QR במסעדה קרובה אליך כדי להתחיל.",
+    "types": {
+      "tableware": "כלי שולחן",
+      "condiments": "תבלינים"
+    }
+  },
+  "bill": {
+    "title": "שטר כסף",
+    "split": "פיצול",
+    "selecting": "בחר את פריטי הצעת חוק",
+    "splittingWith": "מחולק בין:",
+    "splittingWith_zero": "בחירת משתמשים",
+    "splittingCount": "{{count}} אדם",
+    "splittingCount_plural": "{{count}} אנשים",
+    "itemCountSelected": "{{count}} שנבחר פריט",
+    "itemCountSelected_plural": "{{count}} פריטים שנבחרו",
+    "itemCountSelected_none": "אין פריטים שנבחרו"
+  },
+  "gratuity": "טִיפּ",
+  "pay": "שלם",
+  "paymentPending": "מחכה לתשלום...",
+  "editing": "עריכה",
+  "profile": "פרופיל",
+  "currency": {
+    "title": "מטבע תצוגה",
+    "set": "מטבע תצוגת גדר",
+    "original": "מציג מחירים במטבע המקורי"
+  },
+  "roles": {
+    "title": "תפקידים",
+    "manager": "מנהל",
+    "waiter": "מֶלְצַר",
+    "cook": "קוק",
+    "proofreader": "מַגִיהַ"
+  },
+  "language": {
+    "setPrimary": "שפה עיקרית גדר",
+    "default": "שפת ברירת מחדל",
+    "other": "שפות אחרות",
+    "addOther": "הוסף שפה אחרת"
+  },
+  "cart": {
+    "title": "עגלת קניות",
+    "itemCount": "{{count}} חתיכה",
+    "itemCount_plural": "{{count}} חתיכות",
+    "itemCount_none": "ריק",
+    "add": "הוסף לעגלה",
+    "checkInInstructions": "כדי להתחיל, לסרוק את קוד QR במסעדה סמוכה"
+  },
+  "nutrition": {
+    "facts": "ערך תזונתי",
+    "fats": "שמן",
+    "carbs": "פחמימות",
+    "proteins": "חלבונים",
+    "calories": "קלוריות"
+  }
+}

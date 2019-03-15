@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Kirjaudu sisään",
+    "logOut": "Kirjaudu ulos"
+  },
+  "phone": {
+    "short": "Puhelin",
+    "long": "Puhelinnumero"
+  },
+  "email": {
+    "short": "Sähköposti",
+    "long": "Sähköpostiosoite"
+  },
+  "suggested": "Ehdotti",
+  "other": "Muut kielet",
+  "selectLanguage": "Valitse kieli",
+  "selectCountry": "Valitse maa",
+  "selectCurrency": "Valitse valuutta",
+  "back": "Mene takaisin",
+  "select": "Valita",
+  "clear": "Tyhjennä valinta",
+  "search": "Hae",
+  "loadingEllipsis": "Ladataan..."
+}

@@ -1,0 +1,90 @@
+{
+  "menu": {
+    "caption": "Dena ere eskuratu ahal izango dituzu {{restaurant.name}}"
+  },
+  "address": "Helbidea",
+  "hours": {
+    "open": "Open orain",
+    "closed": "Itxita",
+    "opens_at": "Tan {{time, time:short}} irekitzen",
+    "closes_at": "Tan {{time, time:short}} ixten"
+  },
+  "website": "Web",
+  "nav": {
+    "explore": "Arakatu",
+    "eat": "Jan",
+    "checkIn": "Erregistratu",
+    "service": "Zerbitzua"
+  },
+  "ingredients": "Osagaiak",
+  "addons": "Gehitu",
+  "subtotal": "Subtotala",
+  "total": "Guztira",
+  "totalConverted": "Guztira ({{currencyName}})",
+  "serviceFee": "Zerbitzua kuota",
+  "order": "Agindua",
+  "camera": {
+    "notAvailable": {
+      "title": "Kamera ez dago erabilgarri",
+      "subtitle": "Nabigatzailea kamera ez da gailu honetan erabilgarri"
+    },
+    "takePhoto": "Atera argazkia horren"
+  },
+  "service": {
+    "title": "Deitu zerbitzu bat",
+    "subtitle": "Ezaugarri honekin, edozein kondimentu edo tableware mota eska dezakezu zure taula.",
+    "instruction": "Check in QR kodea eskaneatzen jatetxe batean gertu Hasteko arabera.",
+    "types": {
+      "tableware": "Tableware",
+      "condiments": "Condiments"
+    }
+  },
+  "bill": {
+    "selecting": "Aukeratu faktura elementu",
+    "splittingWith": "Dago artean zatitu:",
+    "splittingWith_zero": "Aukeratu erabiltzaile",
+    "splittingCount": "{{count}} pertsonak",
+    "splittingCount_plural": "{{count}} pertsona",
+    "itemCountSelected": "{{count}} elementua hautatuta",
+    "itemCountSelected_plural": "{{count}} elementurik hautatu",
+    "itemCountSelected_none": "No elementurik hautatu"
+  },
+  "gratuity": "Doakotasuna",
+  "pay": "Ordaindu",
+  "paymentPending": "Ordainketa zain ...",
+  "editing": "Edizio",
+  "profile": "Profila",
+  "dashboard": "Arbela",
+  "currency": {
+    "title": "Display moneta",
+    "set": "Ezarri pantaila moneta",
+    "original": "Prezioak erakustea jatorrizko monetan"
+  },
+  "roles": {
+    "title": "Rolak",
+    "manager": "Kudeatzailea",
+    "waiter": "Camarero",
+    "proofreader": "Zuzentzailea"
+  },
+  "language": {
+    "setPrimary": "Lehen hizkuntza Ezarri",
+    "default": "Hizkuntza lehenetsia",
+    "other": "Beste hizkuntzetan",
+    "addOther": "Gehitu beste hizkuntza"
+  },
+  "cart": {
+    "title": "Erosketa saskia",
+    "itemCount": "{{count}} pieza",
+    "itemCount_plural": "{{count}} zuzenak",
+    "itemCount_none": "Hutsik",
+    "add": "Gehitu saskira",
+    "checkInInstructions": "Hasteko, eskaneatu QR kodea jatetxe batean Gertuko"
+  },
+  "nutrition": {
+    "facts": "Elikadura-balioa",
+    "fats": "Potolo",
+    "carbs": "Karbohidratoak",
+    "proteins": "Proteinak",
+    "calories": "Kaloriak"
+  }
+}

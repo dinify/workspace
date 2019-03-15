@@ -1,0 +1,90 @@
+{
+  "menu": {
+    "title": "Cardápio",
+    "caption": "Tudo o que você pode entrar em {{restaurant.name}}"
+  },
+  "address": "Endereço",
+  "hours": {
+    "open": "Abra agora",
+    "closed": "Fechadas",
+    "opens_at": "Abre às {{time, time:short}}",
+    "closes_at": "Encerra às {{time, time:short}}"
+  },
+  "website": "Local na rede Internet",
+  "nav": {
+    "explore": "Explorar",
+    "eat": "Comer",
+    "checkIn": "Check-in",
+    "service": "Serviço"
+  },
+  "ingredients": "Ingredientes",
+  "addons": "Adicionar",
+  "serviceFee": "Taxa de serviço",
+  "order": "Ordem",
+  "camera": {
+    "notAvailable": {
+      "title": "A câmara não disponível",
+      "subtitle": "A câmera do navegador não está disponível neste dispositivo"
+    },
+    "takePhoto": "Tire uma foto dele"
+  },
+  "service": {
+    "title": "Chamar um serviço",
+    "subtitle": "Com esse recurso, você pode solicitar um qualquer tipo de condimento ou utensílios de mesa à sua mesa.",
+    "instruction": "O check-in, digitalizando o código QR em um restaurante perto de você para começar.",
+    "types": {
+      "tableware": "Talheres",
+      "condiments": "Condimentos"
+    }
+  },
+  "bill": {
+    "title": "Conta",
+    "split": "Dividido",
+    "selecting": "Selecione os itens na conta",
+    "splittingWith": "É dividido entre:",
+    "splittingWith_zero": "Selecione usuários",
+    "splittingCount": "{{count}} pessoa",
+    "splittingCount_plural": "{{count}} pessoas",
+    "itemCountSelected": "{{count}} item seleccionado",
+    "itemCountSelected_plural": "{{count}} itens selecionados",
+    "itemCountSelected_none": "Há itens selecionados"
+  },
+  "gratuity": "Gratificação",
+  "pay": "Pagar",
+  "paymentPending": "À espera de pagamento...",
+  "editing": "Edição",
+  "profile": "Perfil",
+  "dashboard": "Painel de controle",
+  "currency": {
+    "title": "Moeda de exibição",
+    "set": "Definir moeda de exibição",
+    "original": "Mostrando preços na moeda original"
+  },
+  "roles": {
+    "manager": "Gerente",
+    "waiter": "Garçom",
+    "cook": "Cozinhar",
+    "proofreader": "Revisor"
+  },
+  "language": {
+    "setPrimary": "Definir idioma principal",
+    "default": "Idioma padrão",
+    "other": "Outras línguas",
+    "addOther": "Adicionar outro idioma"
+  },
+  "cart": {
+    "title": "Carrinho de compras",
+    "itemCount": "{{count}} pedaço",
+    "itemCount_plural": "{{count}} pedaços",
+    "itemCount_none": "Esvaziar",
+    "add": "Adicionar ao carrinho",
+    "checkInInstructions": "Para começar, leia o código QR em um restaurante nas proximidades,"
+  },
+  "nutrition": {
+    "facts": "Valor nutricional",
+    "fats": "Gordura",
+    "carbs": "Carboidratos",
+    "proteins": "Proteínas",
+    "calories": "Calorias"
+  }
+}

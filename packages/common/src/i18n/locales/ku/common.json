@@ -1,0 +1,22 @@
+{
+  "user": {
+    "signIn": "Têketin",
+    "logOut": "Guhê xwe nedene"
+  },
+  "phone": {
+    "long": "Jimare telefon"
+  },
+  "email": {
+    "long": "Navnîşana emailê"
+  },
+  "suggested": "Pêşniyar",
+  "other": "Zimanên din",
+  "selectLanguage": "Hilbijêre zimanê",
+  "selectCountry": "Hilbijêre welatê",
+  "selectCurrency": "Hilbijêre currency",
+  "back": "Min himbêz bike",
+  "select": "Helbijartin",
+  "clear": "Selection Clear",
+  "search": "Gerr",
+  "loadingEllipsis": "Loading ..."
+}

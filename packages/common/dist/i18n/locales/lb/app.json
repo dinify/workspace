@@ -1,0 +1,85 @@
+{
+  "menu": {
+    "caption": "Alles kënnt am kréien {{restaurant.name}}"
+  },
+  "address": "Adress",
+  "hours": {
+    "open": "Open elo",
+    "closed": "Zougemaach",
+    "opens_at": "Mëcht bei {{time, time:short}}",
+    "closes_at": "Mécht bei {{time, time:short}}"
+  },
+  "website": "Websäit",
+  "nav": {
+    "explore": "Entdeckt",
+    "eat": "Iessen",
+    "checkIn": "Umellen"
+  },
+  "ingredients": "Ingredienten",
+  "addons": "Zousaz",
+  "total": "Ganzen",
+  "totalConverted": "Ganzen ({{currencyName}})",
+  "serviceFee": "Service dossier",
+  "order": "Uerdnung",
+  "camera": {
+    "notAvailable": {
+      "title": "Kamera net sinn",
+      "subtitle": "D'Kamera an d'Browser ass op dëser Apparat net sinn"
+    },
+    "takePhoto": "Huelt eng Foto vun et"
+  },
+  "service": {
+    "title": "Call engem Service",
+    "subtitle": "Mat dëser Fonktioun, kënnt Dir e iergendenger vun condiment oder Parzeläin op Är Ufro Dësch.",
+    "instruction": "Check vun Scannen der qr code an engem Restaurant an der Géigend Dir ugefangen ze kréien.",
+    "types": {
+      "tableware": "Parzeläin",
+      "condiments": "Gebrauch"
+    }
+  },
+  "bill": {
+    "selecting": "Wielt d'Elementer am Gesetzesprojet",
+    "splittingWith": "Ass Norweeger:",
+    "splittingWith_zero": "Wielt Benotzer",
+    "splittingCount": "{{count}} Persoun",
+    "splittingCount_plural": "{{count}} Persounen",
+    "itemCountSelected": "{{count}} Punkt ausgewielt",
+    "itemCountSelected_plural": "{{count}} heizou ausgewielt",
+    "itemCountSelected_none": "Keng Saache ausgewielt"
+  },
+  "pay": "Bezuelen",
+  "paymentPending": "Gewaart bezuelt ...",
+  "editing": "Redaktioun",
+  "profile": "Profil",
+  "dashboard": "Bäi der",
+  "currency": {
+    "title": "Haaptsäit Währung",
+    "set": "Set Haaptsäit Währung",
+    "original": "Weist Präisser am Original Währung"
+  },
+  "roles": {
+    "title": "Rollen",
+    "waiter": "Comptoir stoe"
+  },
+  "language": {
+    "setPrimary": "Set Primärschoul Sprooch",
+    "default": "Default Sprooch",
+    "other": "Aner Sproochen",
+    "addOther": "Foto anerer Sprooch"
+  },
+  "cart": {
+    "title": "Akaafsweenschen",
+    "itemCount": "{{count}} Stéck",
+    "itemCount_plural": "{{count}} Stécker",
+    "itemCount_none": "Eidel",
+    "add": "An de Weenche leeën",
+    "checkInInstructions": "Ze kréien huet, Scanner der qr code an engem Restaurant Emgéigend"
+  },
+  "nutrition": {
+    "facts": "Muss Wäert",
+    "fats": "Fett",
+    "carbs": "Kuelenhydrater",
+    "proteins": "Proteinen",
+    "calories": "Kalorien"
+  }
+}

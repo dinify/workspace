@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Masuk",
+    "logOut": "Keluar"
+  },
+  "phone": {
+    "short": "Telepon",
+    "long": "Nomor telepon"
+  },
+  "email": {
+    "short": "E-mail",
+    "long": "Alamat email"
+  },
+  "suggested": "Disarankan",
+  "other": "Bahasa lainnya",
+  "selectLanguage": "Pilih bahasa",
+  "selectCountry": "Pilih negara",
+  "selectCurrency": "Pilih Mata Uang",
+  "back": "Kembali",
+  "select": "Memilih",
+  "clear": "Hapus pilihan",
+  "search": "Pencarian",
+  "loadingEllipsis": "Pemuatan..."
+}

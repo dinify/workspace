@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "Meni",
+    "caption": "Sve što možete dobiti u {{restaurant.name}}"
+  },
+  "address": "Adresa",
+  "hours": {
+    "open": "Trenutno je otvoreno",
+    "closed": "Zatvoreno",
+    "opens_at": "Otvara se u {{time, time:short}}",
+    "closes_at": "Zatvara u {{time, time:short}}"
+  },
+  "website": "Sajt",
+  "nav": {
+    "explore": "Istražiti",
+    "eat": "Jesti",
+    "checkIn": "Provjeri",
+    "service": "Usluga"
+  },
+  "ingredients": "Sastojci",
+  "addons": "Dodaj na",
+  "subtotal": "Suma stavke",
+  "total": "Ukupno",
+  "totalConverted": "Ukupno ({{currencyName}})",
+  "serviceFee": "Naknada za uslugu",
+  "order": "Poredak",
+  "camera": {
+    "notAvailable": {
+      "title": "Kamera nije dostupan",
+      "subtitle": "Kamera pretraživača nije dostupan na ovom uređaju"
+    },
+    "takePhoto": "Uzmite sliku o njemu"
+  },
+  "service": {
+    "title": "Pozovite servisera",
+    "subtitle": "Uz ovu funkciju, možete zatražiti bilo koju vrstu začin ili pribor na stol.",
+    "instruction": "Provjeriti u skeniranjem QR koda u restoranu blizu vas za početak.",
+    "types": {
+      "tableware": "Stono posuđe",
+      "condiments": "Začini"
+    }
+  },
+  "bill": {
+    "title": "Račun",
+    "split": "Podijeliti",
+    "selecting": "Odaberite stavke u računu",
+    "splittingWith": "Je podijeljena između:",
+    "splittingWith_zero": "Izaberite korisnika",
+    "splittingCount": "{{count}} osoba",
+    "splittingCount_plural": "{{count}} osobe",
+    "itemCountSelected": "{{count}} stavka odabrana",
+    "itemCountSelected_plural": "{{count}} stavkama koje su izabrane",
+    "itemCountSelected_none": "Nema artikala izabrane"
+  },
+  "gratuity": "Napojnica",
+  "pay": "Platiti",
+  "paymentPending": "Čeka za plaćanje ...",
+  "editing": "Montaža",
+  "profile": "Profil",
+  "dashboard": "Komandna tabla",
+  "currency": {
+    "title": "Prikaz valuta",
+    "set": "Set prikaz valuta",
+    "original": "Pokazuje cijene u originalnoj valuti"
+  },
+  "roles": {
+    "title": "Uloge",
+    "manager": "Menadžer",
+    "waiter": "Konobar",
+    "cook": "Kuvarica",
+    "proofreader": "Korektor"
+  },
+  "language": {
+    "setPrimary": "Set primarni jezik",
+    "default": "Zadani jezik",
+    "other": "Ostali jezici",
+    "addOther": "Dodajte drugi jezik"
+  },
+  "cart": {
+    "title": "Kolica za kupovinu",
+    "itemCount": "{{count}} komad",
+    "itemCount_plural": "{{count}} komada",
+    "itemCount_none": "Prazan",
+    "add": "Dodaj u korpu",
+    "checkInInstructions": "Da biste započeli, skenirajte QR kod u obližnjem restoranu"
+  },
+  "nutrition": {
+    "facts": "Hranjiva vrijednost",
+    "fats": "Mast",
+    "carbs": "Ugljikohidrati",
+    "proteins": "Proteini",
+    "calories": "Kalorija"
+  }
+}

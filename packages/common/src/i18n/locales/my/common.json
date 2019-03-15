@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "ဆိုင်းအင်လုပ်ခြင်း",
+    "logOut": "ဆိုင်းအောက်"
+  },
+  "phone": {
+    "short": "ဖုန်းနံပါတ်",
+    "long": "ဖုန်းနံပါတ်"
+  },
+  "email": {
+    "short": "အီးမေးလ်ပို့ရန်",
+    "long": "အီးမေးလိပ်စာ"
+  },
+  "suggested": "အကြံပြု",
+  "other": "အခြားဘာသာစကားများ",
+  "selectLanguage": "ဘာသာစကားကိုရွေးချယ်ပါ",
+  "selectCountry": "နိုင်ငံကိုရွေးချယ်ပါ",
+  "selectCurrency": "ငွေကြေးကိုကို Select လုပ်ပါ",
+  "back": "ပြန်သွားသည်",
+  "select": "ရှေးခယျြ",
+  "clear": "Clear ကိုရွေးချယ်ရေး",
+  "search": "ရှာဖှေ",
+  "loadingEllipsis": "Loading ..."
+}

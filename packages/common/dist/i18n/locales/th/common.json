@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "ลงชื่อเข้าใช้",
+    "logOut": "ออกจากระบบ"
+  },
+  "phone": {
+    "short": "โทรศัพท์",
+    "long": "หมายเลขโทรศัพท์"
+  },
+  "email": {
+    "short": "อีเมล์",
+    "long": "ที่อยู่อีเมล"
+  },
+  "suggested": "แนะนำ",
+  "other": "ภาษาอื่น ๆ",
+  "selectLanguage": "เลือกภาษา",
+  "selectCountry": "เลือกประเทศ",
+  "selectCurrency": "เลือกสกุลเงิน",
+  "back": "ย้อนกลับ",
+  "select": "เลือก",
+  "clear": "ตัวเลือกที่ชัดเจน",
+  "search": "ค้นหา",
+  "loadingEllipsis": "กำลังโหลด ..."
+}

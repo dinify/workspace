@@ -1,0 +1,85 @@
+{
+  "menu": {
+    "caption": "Everything gheibh thu ann {{restaurant.name}}"
+  },
+  "address": "Seòladh",
+  "hours": {
+    "open": "Fosgailte a-nis",
+    "closed": "Dùinte",
+    "opens_at": "A 'fosgladh aig {{time, time:short}}",
+    "closes_at": "A 'dùnadh aig {{time, time:short}}"
+  },
+  "website": "Làrach-lìn",
+  "nav": {
+    "explore": "Rannsaich",
+    "eat": "Airson ithe",
+    "checkIn": "Dèan clàradh",
+    "service": "Seirbheis"
+  },
+  "ingredients": "Tàthchuid",
+  "addons": "Cuir air a '",
+  "total": "Iomlan",
+  "totalConverted": "Iomlan ({{currencyName}})",
+  "serviceFee": "Seirbheis chìs",
+  "order": "Òrdugh",
+  "camera": {
+    "notAvailable": {
+      "title": "Camera Neo-fhaotainneach",
+      "subtitle": "Tha brabhsair chamara chan eil e ri fhaotainn air an uidheam seo"
+    },
+    "takePhoto": "Dèan dealbh dheth"
+  },
+  "service": {
+    "title": "Call seirbheis",
+    "subtitle": "Le feart seo, faodaidh sibh iarraidh de sheòrsa sam bith, no soithichean condiment ri ur clàr.",
+    "instruction": "Lorg ann an sganadh le QR code ann an taigh-bìdh faisg ort airson tòiseachadh.",
+    "types": {
+      "tableware": "Soithichean"
+    }
+  },
+  "bill": {
+    "selecting": "Tagh sa bhile",
+    "splittingWith": "Air a roinn eadar:",
+    "splittingWith_zero": "Tagh an luchd-chleachdaidh",
+    "splittingCount": "{{count}} neach",
+    "itemCountSelected": "{{count}} Notaichean a thaghadh",
+    "itemCountSelected_plural": "{{count}} nithean a thaghadh",
+    "itemCountSelected_none": "Chan eil nithean a thaghadh"
+  },
+  "pay": "Pàigh",
+  "paymentPending": "A 'feitheamh airson pàigheadh ​​...",
+  "editing": "Deasachadh",
+  "profile": "Cunntas",
+  "dashboard": "Deas-bhòrd",
+  "currency": {
+    "title": "Taisbeanadh currency",
+    "set": "Suidhich taisbeanadh currency",
+    "original": "A 'sealltainn prìsean anns a' chiad currency"
+  },
+  "roles": {
+    "title": "Dreuchan",
+    "manager": "Manaidsear",
+    "waiter": "Ghille-frithealaidh",
+    "proofreader": "Ceartachadh sgrìobhainnean"
+  },
+  "language": {
+    "setPrimary": "Suidhich prìomh chànan",
+    "default": "Default Language",
+    "other": "Cànain eile",
+    "addOther": "Cuir an cànan eile"
+  },
+  "cart": {
+    "title": "Shopping cairt",
+    "itemCount": "{{count}} pìos",
+    "itemCount_plural": "{{count}} pìosan",
+    "itemCount_none": "Falamh",
+    "add": "Cuir ri cairt",
+    "checkInInstructions": "Airson tòiseachadh, a 'sganadh QR code ann an taigh-bìdh faisg air làimh"
+  },
+  "nutrition": {
+    "facts": "Luach beathachaidh",
+    "carbs": "Gualaisgean",
+    "proteins": "Pròtainean",
+    "calories": "Calaraidhean"
+  }
+}

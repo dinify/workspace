@@ -1,0 +1,21 @@
+{
+  "user": {
+    "signIn": "Eʻe",
+    "logOut": "Lele"
+  },
+  "phone": {
+    "long": "Helu kelepona"
+  },
+  "email": {
+    "long": "Helu leka uila"
+  },
+  "suggested": "? aaei",
+  "other": "Nā 'ōlelo",
+  "selectLanguage": "Wae 'ōlelo",
+  "selectCountry": "Wae aupuni",
+  "selectCurrency": "Wae kālā",
+  "back": "Hoʻi aku",
+  "select": "Koho",
+  "clear": "Maopopo koho",
+  "loadingEllipsis": "Loading ..."
+}

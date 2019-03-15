@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Registrati",
+    "logOut": "Disconnessione"
+  },
+  "phone": {
+    "short": "Telefono",
+    "long": "Numero di telefono"
+  },
+  "email": {
+    "short": "E-mail",
+    "long": "Indirizzo email"
+  },
+  "suggested": "Consigliato",
+  "other": "Altre lingue",
+  "selectLanguage": "Seleziona la lingua",
+  "selectCountry": "Seleziona il paese",
+  "selectCurrency": "Seleziona la valuta",
+  "back": "Torna indietro",
+  "select": "Scegliere",
+  "clear": "Cancella selezione",
+  "search": "Ricerca",
+  "loadingEllipsis": "Caricamento in corso..."
+}

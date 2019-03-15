@@ -1,0 +1,89 @@
+{
+  "menu": {
+    "title": "Меню",
+    "caption": "Ҳар чизе ки шумо метавонед дар даст {{restaurant.name}}"
+  },
+  "address": "Нишонӣ",
+  "hours": {
+    "open": "Open ҳоло",
+    "closed": "Баста",
+    "opens_at": "Мекушояд, дар {{time, time:short}}",
+    "closes_at": "Пӯшида дар {{time, time:short}}"
+  },
+  "website": "Сомонаи",
+  "nav": {
+    "explore": "Омӯхтан",
+    "eat": "Хӯрдан",
+    "checkIn": "Сабт шудан",
+    "service": "Хизматрасонӣ"
+  },
+  "ingredients": "Компонентњо",
+  "addons": "Илова ба",
+  "total": "Њамагї",
+  "totalConverted": "Њамагї ({{currencyName}})",
+  "serviceFee": "Пардохти хизматрасонии",
+  "order": "Тартибот",
+  "camera": {
+    "notAvailable": {
+      "title": "Камера дастрас нест",
+      "subtitle": "Камера Дар браузери аст дастрас нест, ин дастгоҳ"
+    },
+    "takePhoto": "Андешидани як акс аз он"
+  },
+  "service": {
+    "title": "Тамос бо хадамоти",
+    "subtitle": "Бо ин хусусият, шумо метавонед ягон навъ равған ё tableware ба мизи худ талаб намояд.",
+    "instruction": "Санҷед, ки дар тарафи бознигарии коди QR дар як тарабхона дар наздикии шумо ба оғоз намоед.",
+    "types": {
+      "condiments": "Мурчу"
+    }
+  },
+  "bill": {
+    "title": "Ҳисоб",
+    "split": "Зада шикастан",
+    "selecting": "Интихоб кунед адад дар Векселҳои",
+    "splittingWith": "Аст, тақсим миёни:",
+    "splittingWith_zero": "Истифодабарандагони ро интихоб кунед",
+    "splittingCount": "{{count}} нафар",
+    "splittingCount_plural": "{{count}} нафар",
+    "itemCountSelected": "{{count}} провайдер интихоб нашудааст",
+    "itemCountSelected_plural": "{{count}} элементҳоро ҷудо созед",
+    "itemCountSelected_none": "Нест, элементҳоро ҷудо созед"
+  },
+  "pay": "Пардохт",
+  "paymentPending": "Интизорӣ барои пардохти ...",
+  "editing": "Таҳриркунӣ",
+  "profile": "Чеҳра",
+  "dashboard": "Панели",
+  "currency": {
+    "title": "Асъори Display",
+    "set": "Танзими асъор Намоиши",
+    "original": "Намоиши нархҳо дар асъори аслӣ"
+  },
+  "roles": {
+    "title": "Наќш",
+    "waiter": "Пешхизмат",
+    "cook": "Ошпаз"
+  },
+  "language": {
+    "setPrimary": "Забони ибтидоӣ танзим",
+    "default": "Забони пешфарз",
+    "other": "Дигар забон",
+    "addOther": "Иловаи забон дигар"
+  },
+  "cart": {
+    "title": "Сабади харид",
+    "itemCount": "{{count}} адад",
+    "itemCount_plural": "{{count}} адад",
+    "itemCount_none": "Холӣ",
+    "add": "Ба сабат андоз",
+    "checkInInstructions": "Барои оғози кор, скан кодекси QR дар тарабхона ҳамсоя"
+  },
+  "nutrition": {
+    "facts": "Арзиши ѓизоии",
+    "fats": "Фарбеҳ",
+    "carbs": "Карбогидратҳо",
+    "proteins": "Сафедаҳо",
+    "calories": "Калория"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "Меню",
+    "caption": "Всичко, което може да получи в {{restaurant.name}}"
+  },
+  "address": "Адрес",
+  "hours": {
+    "open": "Отвори сега",
+    "closed": "Затворен",
+    "opens_at": "Отваря в {{time, time:short}}",
+    "closes_at": "Затваря в {{time, time:short}}"
+  },
+  "website": "Уебсайт",
+  "nav": {
+    "explore": "Изследвам",
+    "eat": "Да ям",
+    "checkIn": "Означаване",
+    "service": "Обслужване"
+  },
+  "ingredients": "Съставки",
+  "addons": "Добавяне на",
+  "subtotal": "Междинна сума",
+  "total": "Общо",
+  "totalConverted": "Общо ({{currencyName}})",
+  "serviceFee": "Такса за обслужване",
+  "order": "Поръчка",
+  "camera": {
+    "notAvailable": {
+      "title": "Камерата не е наличен",
+      "subtitle": "Камерата на браузъра не е налице на устройството"
+    },
+    "takePhoto": "Направете снимка на него"
+  },
+  "service": {
+    "title": "Обадете се на услуга",
+    "subtitle": "С тази функция можете да направите заявка за всякакъв вид подправка артикули в таблицата си.",
+    "instruction": "Проверете в чрез сканиране на QR кода в ресторант близо до вас, за да започнете.",
+    "types": {
+      "tableware": "Прибори за хранене",
+      "condiments": "Подправки"
+    }
+  },
+  "bill": {
+    "title": "Законопроект",
+    "split": "Разцепване",
+    "selecting": "Изберете елементите в законопроекта",
+    "splittingWith": "Е разделена между:",
+    "splittingWith_zero": "Избиране на потребители",
+    "splittingCount": "{{count}} човек",
+    "splittingCount_plural": "{{count}}-ма души",
+    "itemCountSelected": "{{count}} избран елемент",
+    "itemCountSelected_plural": "{{count}} избраните елементи",
+    "itemCountSelected_none": "Избрани обекти"
+  },
+  "gratuity": "Бакшиш",
+  "pay": "Плащам",
+  "paymentPending": "В очакване на плащане ...",
+  "editing": "Редактиране",
+  "profile": "Профил",
+  "dashboard": "Табло",
+  "currency": {
+    "title": "Дисплей валута",
+    "set": "Задайте валута дисплей",
+    "original": "Показване на цените в оригиналната валута"
+  },
+  "roles": {
+    "title": "Роли",
+    "manager": "Мениджър",
+    "waiter": "Сервитьор",
+    "cook": "Готвач",
+    "proofreader": "Коректор"
+  },
+  "language": {
+    "setPrimary": "Задайте основен език",
+    "default": "Език по подразбиране",
+    "other": "Други езици",
+    "addOther": "Добавяне на друг език"
+  },
+  "cart": {
+    "title": "Карта за пазаруване",
+    "itemCount": "{{count}} парче",
+    "itemCount_plural": "{{count}} части",
+    "itemCount_none": "Празен",
+    "add": "Добави в кошницата",
+    "checkInInstructions": "За да започнете, да сканират кода в ресторант наблизо"
+  },
+  "nutrition": {
+    "facts": "Хранителна стойност",
+    "fats": "Дебел",
+    "carbs": "Въглехидрати",
+    "proteins": "Протеини",
+    "calories": "Калории"
+  }
+}

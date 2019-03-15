@@ -156,7 +156,6 @@ var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
   }, other), _react.default.createElement(_DialogTitle.default, null, t('selectCurrency')), _react.default.createElement("div", {
     style: {
       height: 312,
-      width: 240,
       overflow: 'hidden'
     }
   }, _react.default.createElement("div", {
@@ -219,6 +218,12 @@ var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
           currencyClickHandler(currency.code);
         }
       }, _react.default.createElement(_ListItemText.default, {
+        primaryTypographyProps: {
+          style: {
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis'
+          }
+        },
         primary: primary,
         secondary: secondary
       }));

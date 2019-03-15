@@ -1,0 +1,83 @@
+{
+  "menu": {
+    "title": "Menu",
+    "caption": "O mea uma e mafai ona e maua i {{restaurant.name}}"
+  },
+  "hours": {
+    "open": "Tatala nei",
+    "closed": "Punitia",
+    "opens_at": "Tatalaina i {{time, time:short}}",
+    "closes_at": "Faaiu i {{time, time:short}}"
+  },
+  "nav": {
+    "explore": "Suʻe",
+    "eat": "E aai ai",
+    "checkIn": "Siaki i totonu",
+    "service": "Tautua"
+  },
+  "ingredients": "Vaega",
+  "addons": "Faaopoopo i",
+  "total": "Aofai",
+  "totalConverted": "Aofai ({{currencyName}})",
+  "serviceFee": "Totogifuapauina o Galuega",
+  "order": "Poloaiga",
+  "camera": {
+    "notAvailable": {
+      "title": "Mea pueata le o maua",
+      "subtitle": "E le o maua o le mea pueata le browser i lenei masini"
+    },
+    "takePhoto": "Ave se ata o le"
+  },
+  "service": {
+    "title": "Valaau se auaunaga",
+    "subtitle": "Faatasi ai ma lenei vaega, e mafai ona e talosagaina a so o se ituaiga o condiment po tableware i lou laulau.",
+    "instruction": "Siaki i e tilotilo solo i le QR code i se faleaiga latalata ia te oe e amata ai."
+  },
+  "bill": {
+    "title": "Pili",
+    "split": "Vaeluaina",
+    "selecting": "Filifili le mea i totonu o tulafono tau faaofi",
+    "splittingWith": "Vaeluaina i le va o:",
+    "splittingWith_zero": "Filifilia tagata e faaaogāina",
+    "splittingCount": "{{count}} tagata",
+    "splittingCount_plural": "{{count}} tagata",
+    "itemCountSelected": "{{count}} mea filifilia",
+    "itemCountSelected_plural": "{{count}} mea filifilia",
+    "itemCountSelected_none": "Leai se mea e filifilia"
+  },
+  "gratuity": "Tupe faameaalofa",
+  "pay": "Totogi",
+  "paymentPending": "Faatalitali mo le totogiina ...",
+  "editing": "Faasaʻoina",
+  "profile": "Tino mai",
+  "currency": {
+    "title": "Faaali atu tupe",
+    "set": "Seti tupe faaaliga",
+    "original": "Faaalia o le tau i tupe uluai"
+  },
+  "roles": {
+    "title": "Matafaioi",
+    "manager": "Pule",
+    "waiter": "Laulauʻaiga",
+    "cook": "Kuka"
+  },
+  "language": {
+    "setPrimary": "Seti gagana autu",
+    "default": "Gagana faaletonu",
+    "other": "Isi gagana",
+    "addOther": "Faaopoopo se isi gagana"
+  },
+  "cart": {
+    "title": "Faatauga taavale",
+    "itemCount": "{{count}} fasi",
+    "itemCount_plural": "{{count}} fasi",
+    "itemCount_none": "Gaogao",
+    "add": "Faaopoopo i taavale",
+    "checkInInstructions": "Ina ia amataina, e faitau vave le code QR i se faleaiga latalata ane"
+  },
+  "nutrition": {
+    "facts": "Taua ona lelei",
+    "fats": "Gaʻo",
+    "proteins": "Polotini"
+  }
+}

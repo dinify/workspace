@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "היכנס",
+    "logOut": "התנתק"
+  },
+  "phone": {
+    "short": "מכשיר טלפון",
+    "long": "מספר טלפון"
+  },
+  "email": {
+    "short": "דוא\"ל",
+    "long": "כתובת דוא\"ל"
+  },
+  "suggested": "הצעות",
+  "other": "שפות אחרות",
+  "selectLanguage": "בחר שפה",
+  "selectCountry": "בחר מדינה",
+  "selectCurrency": "תבחר מדינה",
+  "back": "תחזור",
+  "select": "בחר",
+  "clear": "מחק את הבחירה",
+  "search": "לחפש",
+  "loadingEllipsis": "טעינה..."
+}

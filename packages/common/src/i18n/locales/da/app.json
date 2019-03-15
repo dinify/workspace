@@ -1,0 +1,90 @@
+{
+  "menu": {
+    "caption": "Alt, hvad du kan få i {{restaurant.name}}"
+  },
+  "address": "Adresse",
+  "hours": {
+    "open": "Åbn nu",
+    "closed": "Lukket",
+    "opens_at": "Åbner kl {{time, time:short}}",
+    "closes_at": "Lukker kl {{time, time:short}}"
+  },
+  "website": "Internet side",
+  "nav": {
+    "explore": "Udforske",
+    "eat": "At spise",
+    "checkIn": "Checkin",
+    "service": "C"
+  },
+  "ingredients": "Ingredienser",
+  "addons": "Tilføjelse",
+  "total": "I alt",
+  "totalConverted": "I alt ({{currencyName}})",
+  "serviceFee": "Servicegebyr",
+  "order": "Bestille",
+  "camera": {
+    "notAvailable": {
+      "title": "Kamera ikke tilgængeligt",
+      "subtitle": "Browseren kamera er ikke tilgængelig på denne enhed"
+    },
+    "takePhoto": "Tag et billede af det"
+  },
+  "service": {
+    "title": "Ring til en tjeneste",
+    "subtitle": "Med denne funktion kan du anmode om en hvilken som helst form for krydderi og bordbrug til dit bord.",
+    "instruction": "Check ind ved at scanne QR-koden på en restaurant i nærheden af ​​dig at komme i gang.",
+    "types": {
+      "tableware": "Bordservice",
+      "condiments": "Krydderier"
+    }
+  },
+  "bill": {
+    "title": "Regning",
+    "split": "Dele",
+    "selecting": "Vælg de elementer i lovforslaget",
+    "splittingWith": "Er delt mellem:",
+    "splittingWith_zero": "Vælg brugere",
+    "splittingCount_plural": "{{count}} personer",
+    "itemCountSelected": "{{count}} element valgt",
+    "itemCountSelected_plural": "{{count}} elementer udvalgte",
+    "itemCountSelected_none": "Ingen emner udvalgte"
+  },
+  "gratuity": "Drikkepenge",
+  "pay": "Betale",
+  "paymentPending": "Venter på betaling ...",
+  "editing": "Redigering",
+  "profile": "Profil",
+  "dashboard": "Instrumentbræt",
+  "currency": {
+    "title": "Display valuta",
+    "set": "Indstil display valuta",
+    "original": "Viser priserne i den oprindelige valuta"
+  },
+  "roles": {
+    "title": "Roller",
+    "waiter": "Tjener",
+    "cook": "Laver mad",
+    "proofreader": "Korrekturlæser"
+  },
+  "language": {
+    "setPrimary": "Sæt primære sprog",
+    "default": "Standard sprog",
+    "other": "Andre sprog",
+    "addOther": "Tilføj et andet sprog"
+  },
+  "cart": {
+    "title": "Indkøbskurv",
+    "itemCount": "{{count}} styk",
+    "itemCount_plural": "{{count}} stykker",
+    "itemCount_none": "Tom",
+    "add": "Tilføj til kurv",
+    "checkInInstructions": "For at komme i gang, scan QR-koden i en restaurant i nærheden"
+  },
+  "nutrition": {
+    "facts": "Næringsværdi",
+    "fats": "Fed",
+    "carbs": "Kulhydrater",
+    "proteins": "Proteiner",
+    "calories": "Kalorier"
+  }
+}

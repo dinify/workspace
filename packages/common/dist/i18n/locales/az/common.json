@@ -1,0 +1,23 @@
+{
+  "user": {
+    "signIn": "Qeydiyyat",
+    "logOut": "Çıxış"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Telefon nömrəsi"
+  },
+  "email": {
+    "long": "E-poçt ünvanı"
+  },
+  "suggested": "Təklif",
+  "other": "Başqa dillər",
+  "selectLanguage": "Dil seçimi",
+  "selectCountry": "Ölkə seç",
+  "selectCurrency": "Select valyuta",
+  "back": "Qeri gayıt",
+  "select": "Seçmək",
+  "clear": "Clear seçimi",
+  "search": "Axtarış",
+  "loadingEllipsis": "Loading ..."
+}

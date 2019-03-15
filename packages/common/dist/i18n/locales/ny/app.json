@@ -1,0 +1,83 @@
+{
+  "menu": {
+    "title": "Menyu",
+    "caption": "Chirichonse chimene inu mukhoza kulowa mu {{restaurant.name}}"
+  },
+  "hours": {
+    "open": "Tsegulani pano",
+    "closed": "Tatseka",
+    "opens_at": "Atsegula {{time, time:short}}",
+    "closes_at": "Atseka pa {{time, time:short}}"
+  },
+  "nav": {
+    "explore": "Onani",
+    "eat": "Kudya",
+    "checkIn": "Lembetsani"
+  },
+  "ingredients": "Zosakaniza",
+  "addons": "Phatikiza",
+  "serviceFee": "Amalipiritsa Service",
+  "camera": {
+    "notAvailable": {
+      "title": "Kamera palibe",
+      "subtitle": "Kamera osatsegula a palibe pachidachi"
+    },
+    "takePhoto": "Kutenga chithunzi cha izo"
+  },
+  "service": {
+    "title": "Itanani utumiki",
+    "subtitle": "Ndi Mbali imeneyi, mukhoza kuitanitsa mtundu uliwonse condiment kapena tableware ku gome lanu.",
+    "instruction": "Fufuzani ndi kuyang'ana QR code ku malo odyera pafupi nanu kuti tiyambepo.",
+    "types": {
+      "tableware": "Tableware",
+      "condiments": "Condiments"
+    }
+  },
+  "bill": {
+    "split": "Gawa",
+    "selecting": "Sankhani zinthu biloyi",
+    "splittingWith": "Ng'ambidwa pakati:",
+    "splittingWith_zero": "Select ogwiritsa",
+    "splittingCount": "Munthu {{count}}",
+    "splittingCount_plural": "Anthu {{count}}",
+    "itemCountSelected": "{{count}} item anasankha",
+    "itemCountSelected_plural": "{{count}} zinthu anasankha",
+    "itemCountSelected_none": "Palibe zinthu anasankha"
+  },
+  "pay": "Kulipira",
+  "paymentPending": "Kudikira malipiro ...",
+  "editing": "Kusintha",
+  "profile": "Mbiri",
+  "dashboard": "Lakutsogolo",
+  "currency": {
+    "title": "Sonyezani ndalama",
+    "set": "Anasonyeza anapereka ndalama",
+    "original": "Kuonetsa mitengo ndalama original"
+  },
+  "roles": {
+    "title": "Udindo",
+    "waiter": "Othandizira",
+    "proofreader": "Yoona"
+  },
+  "language": {
+    "setPrimary": "Sankhani chinenero chofala",
+    "default": "Kusakhulupirika chinenero",
+    "other": "Zinenero zina",
+    "addOther": "Onjezani chiyankhulo china"
+  },
+  "cart": {
+    "title": "Ngolo yogulira",
+    "itemCount": "Chidutswa {{count}}",
+    "itemCount_plural": "{{count}} zidutswa",
+    "itemCount_none": "Kanthu",
+    "add": "Onjezani kungolo yogulira",
+    "checkInInstructions": "Kuti muyambepo, aone QR code ku malo odyera pafupi"
+  },
+  "nutrition": {
+    "facts": "Zakudya mtengo",
+    "fats": "Mafuta",
+    "carbs": "Chakudya",
+    "proteins": "Mapuloteni",
+    "calories": "Milingo"
+  }
+}

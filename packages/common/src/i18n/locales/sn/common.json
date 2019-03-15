@@ -1,0 +1,21 @@
+{
+  "user": {
+    "signIn": "Nyorera mu",
+    "logOut": "Buda"
+  },
+  "phone": {
+    "long": "Nhamba yenhare"
+  },
+  "email": {
+    "long": "Chikero chetsamba yemumhepo"
+  },
+  "other": "Other mitauro",
+  "selectLanguage": "Select mutauro",
+  "selectCountry": "Select nyika",
+  "selectCurrency": "Select mari",
+  "back": "Dzokera",
+  "select": "Sarudza",
+  "clear": "Clear vakasarudzwa",
+  "search": "Kutsvaka",
+  "loadingEllipsis": "Loading ..."
+}

@@ -1,0 +1,93 @@
+{
+  "menu": {
+    "title": "Thực đơn",
+    "caption": "Tất cả những gì bạn có thể nhận được trong {{restaurant.name}}"
+  },
+  "address": "Địa chỉ nhà",
+  "hours": {
+    "open": "Mở ngay bây giờ",
+    "closed": "Đóng",
+    "opens_at": "Mở lúc {{time, time:short}}",
+    "closes_at": "Đóng cửa lúc {{time, time:short}}"
+  },
+  "website": "Trang mạng",
+  "nav": {
+    "explore": "Khám phá",
+    "eat": "Ăn",
+    "checkIn": "Đăng ký vào",
+    "service": "Dịch vụ"
+  },
+  "ingredients": "Thành phần",
+  "addons": "Thêm vao",
+  "total": "Tổng",
+  "totalConverted": "Tổng ({{currencyName}})",
+  "serviceFee": "Phí dịch vụ",
+  "order": "Gọi món",
+  "camera": {
+    "notAvailable": {
+      "title": "Máy ảnh không có sẵn",
+      "subtitle": "Chiếc máy ảnh này của trình duyệt không có sẵn trên thiết bị này"
+    },
+    "takePhoto": "Chụp ảnh của nó"
+  },
+  "service": {
+    "title": "Gọi một dịch vụ",
+    "subtitle": "Với tính năng này, bạn có thể yêu cầu bất kỳ loại gia vị hoặc bộ đồ ăn để bàn của bạn.",
+    "instruction": "Kiểm tra trong bằng cách quét mã QR tại một nhà hàng gần bạn để bắt đầu.",
+    "types": {
+      "tableware": "Đồ dùng trên bàn",
+      "condiments": "Gia vị"
+    }
+  },
+  "bill": {
+    "title": "Hóa đơn",
+    "split": "Chẻ",
+    "selecting": "Chọn các mục trong hóa đơn",
+    "splittingWith": "Được phân chia giữa:",
+    "splittingWith_zero": "Chọn người dùng",
+    "splittingCount": "{{count}} người",
+    "splittingCount_plural": "{{count}} người",
+    "itemCountSelected": "{{count}} mục được chọn",
+    "itemCountSelected_plural": "{{count}} mục đã chọn",
+    "itemCountSelected_none": "Không có mục đã chọn"
+  },
+  "gratuity": "Tiền thưởng",
+  "pay": "Trả",
+  "paymentPending": "Đang chờ thanh toán ...",
+  "editing": "Chỉnh sửa",
+  "profile": "Hồ sơ",
+  "dashboard": "Bảng điều khiển",
+  "currency": {
+    "title": "Tệ Display",
+    "set": "Đặt tệ hiển thị",
+    "original": "Hiển thị giá bằng tiền tệ gốc"
+  },
+  "roles": {
+    "title": "Vai trò",
+    "manager": "Giám đốc",
+    "waiter": "Phục vụ nam",
+    "cook": "Đầu bếp",
+    "proofreader": "Người đọc thử"
+  },
+  "language": {
+    "setPrimary": "Đặt ngôn ngữ chính",
+    "default": "Ngôn ngữ mặc định",
+    "other": "Những ngôn ngữ khác",
+    "addOther": "Thêm ngôn ngữ khác"
+  },
+  "cart": {
+    "title": "Giỏ hàng",
+    "itemCount": "{{count}} miếng",
+    "itemCount_plural": "{{count}} miếng",
+    "itemCount_none": "Trống",
+    "add": "Thêm vào giỏ hàng",
+    "checkInInstructions": "Để bắt đầu, quét mã QR trong một nhà hàng gần đó"
+  },
+  "nutrition": {
+    "facts": "Giá trị dinh dưỡng",
+    "fats": "Mập",
+    "carbs": "Carbohydrates",
+    "proteins": "Thức ăn nhiều đạm",
+    "calories": "Calo"
+  }
+}

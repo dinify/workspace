@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "ورود",
+    "logOut": "خروج"
+  },
+  "phone": {
+    "short": "تلفن",
+    "long": "شماره تلفن"
+  },
+  "email": {
+    "short": "پست الکترونیک",
+    "long": "آدرس ایمیل"
+  },
+  "suggested": "پیشنهادی",
+  "other": "زبان های دیگر",
+  "selectLanguage": "زبان را انتخاب کنید",
+  "selectCountry": "کشور را انتخاب کنید",
+  "selectCurrency": "واحد پول را انتخاب کنید",
+  "back": "برگرد",
+  "select": "انتخاب کنید",
+  "clear": "پاک کردن انتخاب",
+  "search": "جستجو کردن",
+  "loadingEllipsis": "بارگذاری..."
+}

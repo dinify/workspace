@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Logga in",
+    "logOut": "Logga ut"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Telefonnummer"
+  },
+  "email": {
+    "short": "E-post",
+    "long": "E-postadress"
+  },
+  "suggested": "Föreslagen",
+  "other": "Andra språk",
+  "selectLanguage": "Välj språk",
+  "selectCountry": "Välj land",
+  "selectCurrency": "Välj valuta",
+  "back": "Gå tillbaka",
+  "select": "Välja",
+  "clear": "Rensa val",
+  "search": "Sök",
+  "loadingEllipsis": "Läser in..."
+}

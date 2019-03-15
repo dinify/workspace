@@ -1,0 +1,23 @@
+{
+  "user": {
+    "signIn": "Umellen",
+    "logOut": "Ofmellen"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Telefonsnummer"
+  },
+  "email": {
+    "long": "E-Mailadress"
+  },
+  "suggested": "Recommendéiert",
+  "other": "Aner Sproochen",
+  "selectLanguage": "Wielt Sprooch",
+  "selectCountry": "Wielt Land",
+  "selectCurrency": "Wielt Währung",
+  "back": "Géi zréck",
+  "select": "Wielt",
+  "clear": "Kloer Auswiel",
+  "search": "Sich",
+  "loadingEllipsis": "Loading ..."
+}

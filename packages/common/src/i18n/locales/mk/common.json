@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Најави се",
+    "logOut": "Одјави се"
+  },
+  "phone": {
+    "short": "Телефон",
+    "long": "Телефонски број"
+  },
+  "email": {
+    "short": "Е-пошта",
+    "long": "И-мејл адреса"
+  },
+  "suggested": "Препорачан",
+  "other": "Други јазици",
+  "selectLanguage": "Одбери јазик",
+  "selectCountry": "Избери земја",
+  "selectCurrency": "Изберете валута",
+  "back": "Врати се назад",
+  "select": "Избери",
+  "clear": "Отстрани избор",
+  "search": "Барај",
+  "loadingEllipsis": "Се вчитува ..."
+}

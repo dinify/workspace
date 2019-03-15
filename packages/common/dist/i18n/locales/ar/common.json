@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "تسجيل الدخول",
+    "logOut": "خروج"
+  },
+  "phone": {
+    "short": "هاتف",
+    "long": "رقم الهاتف"
+  },
+  "email": {
+    "short": "البريد الإلكتروني",
+    "long": "عنوان بريد الكتروني"
+  },
+  "suggested": "اقترحت",
+  "other": "لغات اخرى",
+  "selectLanguage": "اختار اللغة",
+  "selectCountry": "حدد الدولة",
+  "selectCurrency": "اختر العملة",
+  "back": "عد",
+  "select": "أختر",
+  "clear": "اختيار واضحة",
+  "search": "بحث",
+  "loadingEllipsis": "جار التحميل..."
+}

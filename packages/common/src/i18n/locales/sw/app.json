@@ -1,0 +1,84 @@
+{
+  "menu": {
+    "title": "Menu",
+    "caption": "Kila kitu unaweza kupata katika {{restaurant.name}}"
+  },
+  "address": "Anuani",
+  "hours": {
+    "open": "Open sasa",
+    "closed": "Ilifungwa",
+    "opens_at": "Fungua kwa {{time, time:short}}",
+    "closes_at": "Hufungwa saa {{time, time:short}}"
+  },
+  "website": "Tovuti",
+  "nav": {
+    "explore": "Vumbua",
+    "eat": "Kula"
+  },
+  "ingredients": "Viungo",
+  "addons": "Kuongeza juu ya",
+  "subtotal": "Jumla ndogo",
+  "total": "Jumla",
+  "totalConverted": "Jumla ({{currencyName}})",
+  "serviceFee": "Ada ya huduma",
+  "camera": {
+    "notAvailable": {
+      "title": "Kamera haipatikani",
+      "subtitle": "Kamera ya kivinjari haipatikani kwenye kifaa hiki"
+    },
+    "takePhoto": "Kuchukua picha ya hiyo"
+  },
+  "service": {
+    "title": "Wito huduma",
+    "subtitle": "Pamoja na kipengele hiki, unaweza kuomba aina yoyote ya kitoweo au tableware kwa meza yako.",
+    "instruction": "Angalia katika kwa skanning code QR katika mgahawa karibu na wewe ili kuanza.",
+    "types": {
+      "tableware": "Tableware",
+      "condiments": "Mahitaji mengine ya lazima"
+    }
+  },
+  "bill": {
+    "selecting": "Kuchagua vitu katika muswada",
+    "splittingWith": "Umegawanyika kati ya:",
+    "splittingWith_zero": "Chagua watumiaji",
+    "splittingCount": "Mtu {{count}}",
+    "splittingCount_plural": "Watu {{count}}",
+    "itemCountSelected": "{{count}} bidhaa kuchaguliwa",
+    "itemCountSelected_plural": "{{count}} vilivyochaguliwa",
+    "itemCountSelected_none": "Vitu ya kuchaguliwa"
+  },
+  "gratuity": "Kiinua mgongo",
+  "pay": "Kulipa",
+  "paymentPending": "Kusubiri kwa ajili ya malipo ...",
+  "currency": {
+    "title": "Display fedha",
+    "set": "Kuonyesha Kuweka fedha",
+    "original": "Showing bei katika sarafu ya awali"
+  },
+  "roles": {
+    "title": "Majukumu",
+    "manager": "Meneja",
+    "waiter": "Waiter",
+    "proofreader": "Proofreader"
+  },
+  "language": {
+    "setPrimary": "Kuweka lugha ya msingi",
+    "default": "Lugha chaguo-msingi",
+    "other": "Lugha nyingine",
+    "addOther": "Kuongeza lugha nyingine"
+  },
+  "cart": {
+    "title": "Ununuzi gari",
+    "itemCount": "Kipande {{count}}",
+    "itemCount_plural": "{{count}} vipande",
+    "itemCount_none": "Tupu",
+    "add": "Kuongeza kwa gari",
+    "checkInInstructions": "Ili kuanza, Scan code QR katika mgahawa jirani"
+  },
+  "nutrition": {
+    "facts": "Thamani ya lishe",
+    "carbs": "Wanga",
+    "proteins": "Protini",
+    "calories": "Kalori"
+  }
+}

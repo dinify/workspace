@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Mewngofnodi",
+    "logOut": "Allgofnodi"
+  },
+  "phone": {
+    "short": "Ffôn",
+    "long": "Rhif ffôn"
+  },
+  "email": {
+    "short": "E-bost",
+    "long": "Cyfeiriad ebost"
+  },
+  "suggested": "Awgrymir",
+  "other": "Ieithoedd eraill",
+  "selectLanguage": "Dewiswch iaith",
+  "selectCountry": "Dewiswch gwlad",
+  "selectCurrency": "Dewiswch cyfred",
+  "back": "Mynd yn ôl",
+  "select": "Dewiswch",
+  "clear": "Dewis clir",
+  "search": "Chwilio",
+  "loadingEllipsis": "Llwytho ..."
+}

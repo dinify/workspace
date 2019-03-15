@@ -1,0 +1,92 @@
+{
+  "menu": {
+    "caption": "Tutto ciò che si può ottenere in {{restaurant.name}}"
+  },
+  "address": "Indirizzo",
+  "hours": {
+    "open": "Aperto adesso",
+    "closed": "Chiuso",
+    "opens_at": "Apre alle {{time, time:short}}",
+    "closes_at": "Chiude a {{time, time:short}}"
+  },
+  "website": "Sito web",
+  "nav": {
+    "explore": "Esplorare",
+    "eat": "Mangiare",
+    "checkIn": "Registrare",
+    "service": "Servizio"
+  },
+  "ingredients": "Ingredienti",
+  "addons": "Aggiungi su",
+  "subtotal": "Totale parziale",
+  "total": "Totale",
+  "totalConverted": "Totale ({{currencyName}})",
+  "serviceFee": "Costo del servizio",
+  "order": "Ordine",
+  "camera": {
+    "notAvailable": {
+      "title": "La fotocamera non disponibili",
+      "subtitle": "Fotocamera del browser non è disponibile su questo dispositivo"
+    },
+    "takePhoto": "Scattare una foto di esso"
+  },
+  "service": {
+    "title": "Chiamare un servizio",
+    "subtitle": "Grazie a questa funzione, è possibile richiedere un qualsiasi tipo di condimento o articoli per la tavola al vostro tavolo.",
+    "instruction": "Il check-in attraverso la scansione del codice QR in un ristorante vicino a te per iniziare.",
+    "types": {
+      "tableware": "Vasellame",
+      "condiments": "Condimenti"
+    }
+  },
+  "bill": {
+    "title": "Conto",
+    "split": "Diviso",
+    "selecting": "Selezionare gli elementi in bolletta",
+    "splittingWith": "È diviso tra:",
+    "splittingWith_zero": "Selezionare gli utenti",
+    "splittingCount": "{{count}} persona",
+    "splittingCount_plural": "{{count}} persone",
+    "itemCountSelected": "{{count}} elemento selezionato",
+    "itemCountSelected_plural": "{{count}} elementi selezionati",
+    "itemCountSelected_none": "Articoli selezionati"
+  },
+  "gratuity": "Gratifica",
+  "pay": "Pagare",
+  "paymentPending": "In attesa del pagamento...",
+  "editing": "La modifica",
+  "profile": "Profilo",
+  "dashboard": "Cruscotto",
+  "currency": {
+    "title": "Valuta display",
+    "set": "Impostare la valuta di visualizzazione",
+    "original": "Mostrando i prezzi nella valuta"
+  },
+  "roles": {
+    "title": "Ruoli",
+    "waiter": "Cameriere",
+    "cook": "Cucinare",
+    "proofreader": "Correttore di bozze"
+  },
+  "language": {
+    "setPrimary": "Lingua principale Set",
+    "default": "Lingua di default",
+    "other": "Altre lingue",
+    "addOther": "Aggiungere un'altra lingua"
+  },
+  "cart": {
+    "title": "Carrello della spesa",
+    "itemCount": "{{count}} pezzo",
+    "itemCount_plural": "{{count}} pezzi",
+    "itemCount_none": "Vuoto",
+    "add": "Aggiungi al carrello",
+    "checkInInstructions": "Per iniziare, la scansione del codice QR in un ristorante nelle vicinanze"
+  },
+  "nutrition": {
+    "facts": "Valore nutrizionale",
+    "fats": "Grasso",
+    "carbs": "Carboidrati",
+    "proteins": "Proteine",
+    "calories": "Calorie"
+  }
+}

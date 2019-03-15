@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Sign sa",
+    "logOut": "Sign sa"
+  },
+  "phone": {
+    "short": "Phone",
+    "long": "Numero sa telepono"
+  },
+  "email": {
+    "short": "Email",
+    "long": "Email address"
+  },
+  "suggested": "Gisugyot nga",
+  "other": "Ang ubang mga pinulongan",
+  "selectLanguage": "Pagpili pinulongan",
+  "selectCountry": "Pagpili nasud",
+  "selectCurrency": "Pagpili currency",
+  "back": "Bumalik",
+  "select": "Pagpili",
+  "clear": "Tin-aw nga pagpili",
+  "search": "Pangita",
+  "loadingEllipsis": "Loading ..."
+}

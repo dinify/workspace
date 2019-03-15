@@ -1,0 +1,21 @@
+{
+  "user": {
+    "signIn": "Lowani muakaunti",
+    "logOut": "Tulukani"
+  },
+  "phone": {
+    "long": "Nambala yafoni"
+  },
+  "email": {
+    "long": "Imelo adilesi"
+  },
+  "suggested": "Mavesi",
+  "other": "Zinenero zina",
+  "selectLanguage": "Sankhani chinenero",
+  "selectCountry": "Sankhani dziko",
+  "selectCurrency": "Select ndalama",
+  "back": "Bwererani",
+  "select": "Sankhani",
+  "clear": "Chotsani kusankha",
+  "loadingEllipsis": "Kutsegula ..."
+}

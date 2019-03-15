@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "سائن ان ڪريو",
+    "logOut": "سائن آئوٽ ڪريو"
+  },
+  "phone": {
+    "short": "فون",
+    "long": "فون نمبر"
+  },
+  "email": {
+    "short": "اي ميل",
+    "long": "اي ميل پتو"
+  },
+  "suggested": "تجويز",
+  "other": "ٻيون ٻوليون",
+  "selectLanguage": "ٻولي چونڊيو",
+  "selectCountry": "ملڪ کي منتخب ڪريو",
+  "selectCurrency": "ڪرنسي کي منتخب ڪريو",
+  "back": "واپس وڃو",
+  "select": "چونڊي",
+  "clear": "صاف جي چونڊ",
+  "search": "ڳولا",
+  "loadingEllipsis": "لوڊنگ ٿي رهي آهي ..."
+}

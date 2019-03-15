@@ -1,0 +1,21 @@
+{
+  "user": {
+    "signIn": "Firmà lu",
+    "logOut": "Sorte"
+  },
+  "phone": {
+    "long": "Numeru di telefonu"
+  },
+  "email": {
+    "long": "Indirizzu mail"
+  },
+  "suggested": "Pruponini",
+  "other": "Àutri lingui",
+  "selectLanguage": "Select lingua",
+  "selectCountry": "Select paese",
+  "selectCurrency": "Select muneta",
+  "back": "Riturnà",
+  "select": "Scegli",
+  "clear": "Và selezzione",
+  "loadingEllipsis": "Loading ..."
+}

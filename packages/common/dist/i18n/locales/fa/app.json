@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "فهرست",
+    "caption": "همه چیز شما می توانید در گرفتن {{restaurant.name}}"
+  },
+  "address": "نشانی",
+  "hours": {
+    "open": "باز در حال حاضر",
+    "closed": "بسته",
+    "opens_at": "باز می شود در {{time, time:short}}",
+    "closes_at": "بسته در {{time, time:short}}"
+  },
+  "website": "سایت اینترنتی",
+  "nav": {
+    "explore": "کاوش",
+    "eat": "به خوردن",
+    "checkIn": "اعلام حضور",
+    "service": "سرویس"
+  },
+  "ingredients": "عناصر",
+  "addons": "اضافه کردن در",
+  "subtotal": "جمع جزء",
+  "total": "مجموع",
+  "totalConverted": "مجموع ({{currencyName}})",
+  "serviceFee": "هزینه خدمات",
+  "order": "سفارش",
+  "camera": {
+    "notAvailable": {
+      "title": "دوربین در دسترس نیست",
+      "subtitle": "دوربین مرورگر موجود بر روی این دستگاه"
+    },
+    "takePhoto": "نگاهی به عکس از آن"
+  },
+  "service": {
+    "title": "پاسخ یک سرویس",
+    "subtitle": "با این قابلیت، شما می توانید یک هر نوع نمک و فلفل و یا کارد و چنگال به جدول خود را درخواست می کند.",
+    "instruction": "بررسی در با اسکن کد QR در یک رستوران در نزدیکی شما برای شروع.",
+    "types": {
+      "tableware": "کارد و چنگال",
+      "condiments": "چاشنی"
+    }
+  },
+  "bill": {
+    "title": "لایحه",
+    "split": "شکاف",
+    "selecting": "انتخاب اقلام در لایحه",
+    "splittingWith": "تقسیم بین:",
+    "splittingWith_zero": "کاربران انتخاب",
+    "splittingCount": "{{count}} نفر",
+    "splittingCount_plural": "{{count}} نفر",
+    "itemCountSelected": "{{count}} آیتم انتخاب شده",
+    "itemCountSelected_plural": "{{count}} موارد انتخاب شده",
+    "itemCountSelected_none": "هیچ آیتم های انتخاب شده"
+  },
+  "gratuity": "پاداش",
+  "pay": "پرداخت",
+  "paymentPending": "در حال انتظار برای پرداخت ...",
+  "editing": "ویرایش",
+  "profile": "مشخصات",
+  "dashboard": "داشبورد",
+  "currency": {
+    "title": "ارز ها",
+    "set": "مجموعه ای ارز نمایش",
+    "original": "نمایش قیمت ارز اصلی"
+  },
+  "roles": {
+    "title": "نقش",
+    "manager": "مدیر",
+    "waiter": "گارسون",
+    "cook": "پختن",
+    "proofreader": "مصحح"
+  },
+  "language": {
+    "setPrimary": "زبان اصلی تنظیم",
+    "default": "زبان پیش فرض",
+    "other": "زبان های دیگر",
+    "addOther": "اضافه کردن زبان دیگر"
+  },
+  "cart": {
+    "title": "سبد خرید",
+    "itemCount": "{{count}} قطعه",
+    "itemCount_plural": "{{count}} قطعه",
+    "itemCount_none": "خالی",
+    "add": "افزودن به سبد خرید",
+    "checkInInstructions": "برای شروع، اسکن کد QR در یک رستوران در نزدیکی"
+  },
+  "nutrition": {
+    "facts": "ارزش غذایی",
+    "fats": "چربی",
+    "carbs": "کربوهیدرات ها",
+    "proteins": "پروتئین ها",
+    "calories": "کالری"
+  }
+}

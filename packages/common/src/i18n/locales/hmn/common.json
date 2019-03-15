@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Sau npe",
+    "logOut": "Npe tawm"
+  },
+  "phone": {
+    "short": "Xov tooj",
+    "long": "Xov tooj"
+  },
+  "email": {
+    "short": "Email",
+    "long": "Email chaw nyob"
+  },
+  "suggested": "Tswv yim",
+  "other": "Lwm yam lus",
+  "selectLanguage": "Xaiv lus",
+  "selectCountry": "Xaiv lub teb chaws",
+  "selectCurrency": "Xaiv cov txiaj",
+  "back": "Rov qab mus",
+  "select": "Xaiv",
+  "clear": "Clear xaiv",
+  "search": "Nrhiav",
+  "loadingEllipsis": "Chaw thau khoom ..."
+}

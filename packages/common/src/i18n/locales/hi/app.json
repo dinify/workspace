@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "मेन्यू",
+    "caption": "सब कुछ आप में प्राप्त कर सकते हैं {{restaurant.name}}"
+  },
+  "address": "पता",
+  "hours": {
+    "open": "अब खोलो",
+    "closed": "बन्द है",
+    "opens_at": "{{time, time:short}} बजे खुलेगा",
+    "closes_at": "{{time, time:short}} इस समय बंद"
+  },
+  "website": "वेबसाइट",
+  "nav": {
+    "explore": "अन्वेषण",
+    "eat": "खाने के लिए",
+    "checkIn": "चेक इन",
+    "service": "सर्विस"
+  },
+  "ingredients": "सामग्री",
+  "addons": "ऐड ऑन",
+  "subtotal": "उप-योग",
+  "total": "कुल",
+  "totalConverted": "कुल ({{currencyName}})",
+  "serviceFee": "सेवा शुल्क",
+  "order": "क्रम",
+  "camera": {
+    "notAvailable": {
+      "title": "कैमरा उपलब्ध नहीं",
+      "subtitle": "ब्राउज़र की कैमरा इस डिवाइस पर उपलब्ध नहीं है"
+    },
+    "takePhoto": "इसके बारे में एक तस्वीर ले लो"
+  },
+  "service": {
+    "title": "एक सेवा कॉल",
+    "subtitle": "इस सुविधा के साथ, आप अपनी तालिका में मसाला या मेज की किसी भी तरह का अनुरोध कर सकते हैं।",
+    "instruction": "एक रेस्तरां में QR कोड को स्कैन आप आरंभ करने के लिए निकट से जांच करें।",
+    "types": {
+      "tableware": "मेज",
+      "condiments": "मसालों"
+    }
+  },
+  "bill": {
+    "title": "बिल",
+    "split": "विभाजित करें",
+    "selecting": "बिल में आइटम का चयन करें",
+    "splittingWith": "के बीच विभाजित है:",
+    "splittingWith_zero": "उपयोगकर्ताओं को चुनें",
+    "splittingCount": "{{count}} व्यक्ति",
+    "splittingCount_plural": "{{count}} शख्स",
+    "itemCountSelected": "{{count}} आइटम का चयन किया",
+    "itemCountSelected_plural": "{{count}} चयनित आइटम",
+    "itemCountSelected_none": "कोई चयनित आइटम"
+  },
+  "gratuity": "उपहार",
+  "pay": "वेतन",
+  "paymentPending": "भुगतान की प्रतीक्षा करना...",
+  "editing": "संपादन",
+  "profile": "प्रोफाइल",
+  "dashboard": "डैशबोर्ड",
+  "currency": {
+    "title": "प्रदर्शन मुद्रा",
+    "set": "प्रदर्शन मुद्रा सेट",
+    "original": "मूल मुद्रा में मूल्य दिखा रहा है"
+  },
+  "roles": {
+    "title": "भूमिकाएँ",
+    "manager": "मैनेजर",
+    "waiter": "वेटर",
+    "cook": "रसोइया",
+    "proofreader": "शुद्धिकारक"
+  },
+  "language": {
+    "setPrimary": "सेट प्राथमिक भाषा",
+    "default": "डिफ़ॉल्ट भाषा",
+    "other": "अन्य भाषाएँ",
+    "addOther": "अन्य भाषा जोड़ें"
+  },
+  "cart": {
+    "title": "शॉपिंग कार्ट",
+    "itemCount": "{{count}} टुकड़ा",
+    "itemCount_plural": "{{count}} टुकड़े",
+    "itemCount_none": "खाली",
+    "add": "कार्ट में डालें",
+    "checkInInstructions": "आरंभ करने के लिए पास के एक रेस्तरां में QR कोड स्कैन"
+  },
+  "nutrition": {
+    "facts": "पोषण का महत्व",
+    "fats": "मोटी",
+    "carbs": "कार्बोहाइड्रेट",
+    "proteins": "प्रोटीन",
+    "calories": "कैलोरी"
+  }
+}

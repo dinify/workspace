@@ -1,0 +1,23 @@
+{
+  "user": {
+    "signIn": "Soidhnig a-steach",
+    "logOut": "Soidhnig a-mach"
+  },
+  "phone": {
+    "long": "Àireamh fòn"
+  },
+  "email": {
+    "short": "Cuir post-dealain",
+    "long": "Seòladh puist-d"
+  },
+  "suggested": "Mholar",
+  "other": "Cànain eile",
+  "selectLanguage": "Tagh cànan",
+  "selectCountry": "Tagh an dùthaich",
+  "selectCurrency": "Tagh currency",
+  "back": "Theirig air ais",
+  "select": "Tagh",
+  "clear": "Taghadh soilleir",
+  "search": "Rannsachadh",
+  "loadingEllipsis": "Loading ..."
+}

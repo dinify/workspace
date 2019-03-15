@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Prisijungti",
+    "logOut": "Atsijungti"
+  },
+  "phone": {
+    "short": "Telefonas",
+    "long": "Telefono numeris"
+  },
+  "email": {
+    "short": "Paštas",
+    "long": "Elektroninio pašto adresas"
+  },
+  "suggested": "Siūlomi",
+  "other": "Kitos kalbos",
+  "selectLanguage": "Pasirinkite kalbą",
+  "selectCountry": "Pasirinkite šalį",
+  "selectCurrency": "Pasirinkite valiutą",
+  "back": "Eik atgal",
+  "select": "Pasirinkti",
+  "clear": "Išvalyti pasirinkimo",
+  "search": "Paieška",
+  "loadingEllipsis": "Kraunasi ..."
+}

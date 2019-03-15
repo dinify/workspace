@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Rexístrate",
+    "logOut": "Saír"
+  },
+  "phone": {
+    "short": "Teléfono",
+    "long": "Número de teléfono"
+  },
+  "email": {
+    "short": "Correo",
+    "long": "Enderezo electrónico"
+  },
+  "suggested": "Suxerido",
+  "other": "Noutros idiomas",
+  "selectLanguage": "Seleccione lingua",
+  "selectCountry": "Escolla un país",
+  "selectCurrency": "Seleccione unha moeda",
+  "back": "Volver",
+  "select": "Escoller",
+  "clear": "Borrar selección",
+  "search": "Busca",
+  "loadingEllipsis": "Cargando ..."
+}

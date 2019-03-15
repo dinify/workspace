@@ -1,0 +1,85 @@
+{
+  "menu": {
+    "title": "Menu",
+    "caption": "Sagalana bisa meunang di {{restaurant.name}}"
+  },
+  "address": "Alamat",
+  "hours": {
+    "open": "Buka ayeuna",
+    "closed": "Katutup",
+    "opens_at": "Muka di {{time, time:short}}",
+    "closes_at": "Nutup di {{time, time:short}}"
+  },
+  "website": "Website",
+  "nav": {
+    "explore": "Ngajajah",
+    "eat": "Dahar",
+    "checkIn": "Cék in",
+    "service": "Palayanan"
+  },
+  "ingredients": "Bahan",
+  "addons": "Tambihan",
+  "serviceFee": "Fee Service",
+  "order": "Pesenan",
+  "camera": {
+    "notAvailable": {
+      "title": "Kaméra teu sadia",
+      "subtitle": "Kaméra browser urang henteu sadia dina alat ieu"
+    },
+    "takePhoto": "Candak poto eta"
+  },
+  "service": {
+    "title": "Nelepon jasa a",
+    "subtitle": "Kalawan fitur ieu, anjeun bisa menta hiji nanaon nu condiment atanapi tableware kana méja anjeun.",
+    "instruction": "Pariksa dina ku scanning teh QR kode di restoran deukeut anjeun ngamimitian."
+  },
+  "bill": {
+    "title": "Tagihan",
+    "split": "Beulah",
+    "selecting": "Pilih item di bil",
+    "splittingWith": "Ieu pamisah antara:",
+    "splittingWith_zero": "Pilih pamaké",
+    "splittingCount": "{{count}} jalma",
+    "splittingCount_plural": "{{count}} jalma",
+    "itemCountSelected": "{{count}} item nu dipilih",
+    "itemCountSelected_plural": "{{count}} item nu dipilih",
+    "itemCountSelected_none": "Euweuh barang nu dipilih"
+  },
+  "pay": "Mayar",
+  "paymentPending": "Ngantosan mayar ...",
+  "editing": "Ngedit",
+  "profile": "Keureutan",
+  "dashboard": "Dasbor",
+  "currency": {
+    "title": "Mata uang tampilan",
+    "set": "Atur mata uang tampilan",
+    "original": "Némbongkeun harga di mata uang aslina"
+  },
+  "roles": {
+    "title": "Kalungguhan",
+    "manager": "Pingpinan",
+    "waiter": "Palayan",
+    "cook": "Masak"
+  },
+  "language": {
+    "setPrimary": "Atur basa primér",
+    "default": "Basa standar",
+    "other": "Basa séjén",
+    "addOther": "Tambahkeun basa sejen"
+  },
+  "cart": {
+    "title": "Karanjang balanja",
+    "itemCount": "{{count}} sapotong",
+    "itemCount_plural": "{{count}} buah",
+    "itemCount_none": "Kosong",
+    "add": "Tambihkeun kana karanjang",
+    "checkInInstructions": "Pikeun ngamimitian, seken di QR kode di restoran caket dieu"
+  },
+  "nutrition": {
+    "facts": "Nilai gizi",
+    "fats": "Gajih",
+    "carbs": "Karbohidrat",
+    "proteins": "Protéin",
+    "calories": "Kalori"
+  }
+}

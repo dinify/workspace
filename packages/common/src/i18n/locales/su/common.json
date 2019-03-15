@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Daptar",
+    "logOut": "Kaluar"
+  },
+  "phone": {
+    "short": "Telepon",
+    "long": "Nomer telepon"
+  },
+  "email": {
+    "short": "Email",
+    "long": "Alamat email"
+  },
+  "suggested": "Ngusulkeun",
+  "other": "Basa séjén",
+  "selectLanguage": "Pilih basa",
+  "selectCountry": "Pilih nagara",
+  "selectCurrency": "Pilih mata uang",
+  "back": "Uih deui",
+  "select": "Milih",
+  "clear": "Jelas Pilihan",
+  "search": "Neangan",
+  "loadingEllipsis": "Loading ..."
+}

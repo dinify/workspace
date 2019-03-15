@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "Valikko",
+    "caption": "Kaikki mitä voi saada {{restaurant.name}}"
+  },
+  "address": "Osoite",
+  "hours": {
+    "open": "Avoinna nyt",
+    "closed": "Suljettu",
+    "opens_at": "Avataan klo {{time, time:short}}",
+    "closes_at": "Suljetaan klo {{time, time:short}}"
+  },
+  "website": "Verkkosivusto",
+  "nav": {
+    "explore": "Tutkia",
+    "eat": "Syödä",
+    "checkIn": "Ilmoittautua",
+    "service": "Palvelu"
+  },
+  "ingredients": "Ainekset",
+  "addons": "Lisättävää",
+  "subtotal": "Välisumma",
+  "total": "Yhteensä",
+  "totalConverted": "Yhteensä ({{currencyName}})",
+  "serviceFee": "Palvelumaksu",
+  "order": "Tilata",
+  "camera": {
+    "notAvailable": {
+      "title": "Kamera ei ole käytettävissä",
+      "subtitle": "Selaimen Kamera ei ole käytettävissä tällä laitteella"
+    },
+    "takePhoto": "Ottaa kuvan siitä"
+  },
+  "service": {
+    "title": "Soita palvelu",
+    "subtitle": "Tämän ominaisuuden, voit pyytää mitä tahansa mauste tai astioita pöytään.",
+    "instruction": "Lähtöselvityksen skannaamalla QR-koodin ravintolassa lähellä sinua pääsemään alkuun.",
+    "types": {
+      "tableware": "Pöytäkalusto",
+      "condiments": "Mausteet"
+    }
+  },
+  "bill": {
+    "title": "Laskuttaa",
+    "split": "Jakaa",
+    "selecting": "Valitse kohteet laskun",
+    "splittingWith": "Jakautuu:",
+    "splittingWith_zero": "Valitse käyttäjät",
+    "splittingCount": "{{count}} henkilö",
+    "splittingCount_plural": "{{count}} henkilöä",
+    "itemCountSelected": "{{count}} kohde valittu",
+    "itemCountSelected_plural": "{{count}} valittua kohdetta",
+    "itemCountSelected_none": "Ei valittuja kohteita"
+  },
+  "gratuity": "Palkkio",
+  "pay": "Maksaa",
+  "paymentPending": "Odottaa maksua...",
+  "editing": "Editointi",
+  "profile": "Profiili",
+  "dashboard": "Kojelauta",
+  "currency": {
+    "title": "Näytä valuutta",
+    "set": "Aseta näyttö valuutta",
+    "original": "Näytetään hinnat alkuperäisessä valuutassa"
+  },
+  "roles": {
+    "title": "Roolit",
+    "manager": "Johtaja",
+    "waiter": "Tarjoilija",
+    "cook": "Kokki",
+    "proofreader": "Korjauslukija"
+  },
+  "language": {
+    "setPrimary": "Aseta ensisijainen kieli",
+    "default": "Oletuskieli",
+    "other": "Muut kielet",
+    "addOther": "Lisää toinen kieli"
+  },
+  "cart": {
+    "title": "Ostoskärry",
+    "itemCount": "{{count}} kpl",
+    "itemCount_plural": "{{count}} kpl",
+    "itemCount_none": "Tyhjä",
+    "add": "Lisää koriin",
+    "checkInInstructions": "Aloita skannata QR-koodin läheisessä ravintolassa"
+  },
+  "nutrition": {
+    "facts": "Ravintoarvo",
+    "fats": "Rasva",
+    "carbs": "Hiilihydraatit",
+    "proteins": "Proteiinit",
+    "calories": "Kalorit"
+  }
+}

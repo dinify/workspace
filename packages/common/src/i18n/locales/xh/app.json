@@ -1,0 +1,83 @@
+{
+  "menu": {
+    "title": "Menu",
+    "caption": "Yonke into onokuthi ulufumane {{restaurant.name}}"
+  },
+  "address": "Idilesi",
+  "hours": {
+    "open": "Vula ngoku",
+    "closed": "Kuvaliwe",
+    "opens_at": "Ivulwa ngo- {{time, time:short}}",
+    "closes_at": "Ivala e {{time, time:short}}"
+  },
+  "website": "Website",
+  "nav": {
+    "explore": "Hlola",
+    "eat": "Ukutya",
+    "checkIn": "Ngena"
+  },
+  "ingredients": "Izithako",
+  "addons": "Faka kwi",
+  "subtotal": "Losuku",
+  "total": "Itotali",
+  "totalConverted": "Itotali ({{currencyName}})",
+  "serviceFee": "Imali Service",
+  "order": "Order",
+  "camera": {
+    "notAvailable": {
+      "title": "Ikhamera ayifumaneki",
+      "subtitle": "Camera Isikhangeli alikho iyafumaneka kule divaysi"
+    },
+    "takePhoto": "Thatha ifoto kuyo"
+  },
+  "service": {
+    "title": "Biza i inkonzo",
+    "subtitle": "Ngesi feature, uyakwazi ukucela naluphi na uhlobo nesinongo okanye tableware etafileni yakho.",
+    "instruction": "Ngena kwi uskene ikhowudi QR kwindawo yokutyela ekufutshane nawe ukuze uqalise."
+  },
+  "bill": {
+    "split": "Umehlulelwano",
+    "selecting": "Khetha izinto kwityala",
+    "splittingWith": "Into zahlulwe phakathi:",
+    "splittingWith_zero": "Khetha abasebenzisi",
+    "splittingCount": "{{count}} umntu",
+    "splittingCount_plural": "Abantu {{count}}",
+    "itemCountSelected": "{{count}} into ekhethiweyo",
+    "itemCountSelected_plural": "{{count}} izinto ezikhethiweyo",
+    "itemCountSelected_none": "Akukho izinto ezikhethiweyo"
+  },
+  "gratuity": "Nomhlala",
+  "pay": "Hlawula",
+  "paymentPending": "Imele ukuba inkokhelo ...",
+  "editing": "Ukuhlela",
+  "currency": {
+    "title": "Bonisa lwemali",
+    "set": "Misa ukubonisa lwemali",
+    "original": "Ukubonisa amaxabiso ngohlobo lwemali yokuqala"
+  },
+  "roles": {
+    "title": "Iindima",
+    "waiter": "Umnikezi kutya",
+    "proofreader": "Iimpazamo zabaguquleli"
+  },
+  "language": {
+    "setPrimary": "Ulwimi oluphambili Beka",
+    "default": "Ulwimi Default",
+    "other": "Nezinye iilwimi",
+    "addOther": "Faka olunye ulwimi"
+  },
+  "cart": {
+    "title": "Isikhoji sokuthenga",
+    "itemCount_plural": "Iziqwenga {{count}}",
+    "itemCount_none": "Engenanto",
+    "add": "Ngeza kwitshathi",
+    "checkInInstructions": "Ukuqalisa, scan ikhowudi QR kwindawo yokutyela ekufuphi"
+  },
+  "nutrition": {
+    "facts": "Umsoco",
+    "fats": "Fat",
+    "carbs": "Carbohydrate",
+    "proteins": "Protein",
+    "calories": "Calorie"
+  }
+}

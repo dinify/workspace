@@ -1,0 +1,89 @@
+{
+  "menu": {
+    "title": "Meni",
+    "caption": "Vse, kar lahko dobite v {{restaurant.name}}"
+  },
+  "address": "Naslov",
+  "hours": {
+    "open": "Odpri zdaj",
+    "closed": "Zaprto",
+    "opens_at": "Odpre se ob {{time, time:short}}",
+    "closes_at": "Zapre na {{time, time:short}}"
+  },
+  "website": "Spletna stran",
+  "nav": {
+    "explore": "Razišči",
+    "eat": "Jesti",
+    "checkIn": "Prijava",
+    "service": "Storitev"
+  },
+  "ingredients": "Sestavine",
+  "addons": "Dodaj na",
+  "subtotal": "Vmesni seštevek",
+  "total": "Skupaj",
+  "totalConverted": "Skupaj ({{currencyName}})",
+  "serviceFee": "Pristojbina za storitve",
+  "order": "Vrstni red",
+  "camera": {
+    "notAvailable": {
+      "title": "Kamera ni na voljo",
+      "subtitle": "Kamera brskalnika ni na voljo za to napravo"
+    },
+    "takePhoto": "Fotografirajte njo"
+  },
+  "service": {
+    "title": "Pokličite storitev",
+    "subtitle": "S to funkcijo, lahko zahtevate kakršnokoli začimba ali posode na mizi.",
+    "instruction": "Prevzem s skeniranjem QR kode v restavraciji blizu, da bi začeli.",
+    "types": {
+      "tableware": "Namizna",
+      "condiments": "Začimbe"
+    }
+  },
+  "bill": {
+    "selecting": "Izberite elemente v račun",
+    "splittingWith": "Se razdeli med:",
+    "splittingWith_zero": "Izberite uporabnike",
+    "splittingCount": "{{count}} oseba",
+    "splittingCount_plural": "{{count}} osebi",
+    "itemCountSelected": "{{count}} izbrani element",
+    "itemCountSelected_plural": "{{count}} postavke izbrane",
+    "itemCountSelected_none": "Ni izbrani elementi"
+  },
+  "gratuity": "Nagrado",
+  "pay": "Plačaj",
+  "paymentPending": "Čakanje na plačilo ...",
+  "editing": "Urejanje",
+  "profile": "Profil",
+  "dashboard": "Nadzorna plošča",
+  "currency": {
+    "title": "Zaslon valuta",
+    "set": "Nastavitev prikaza valuta",
+    "original": "Prikaz cen v originalni valuti"
+  },
+  "roles": {
+    "title": "Vloge",
+    "waiter": "Natakar",
+    "proofreader": "Lektor"
+  },
+  "language": {
+    "setPrimary": "Nastavi primarni jezik",
+    "default": "Privzeti jezik",
+    "other": "Drugi jeziki",
+    "addOther": "Dodaj drug jezik"
+  },
+  "cart": {
+    "title": "Nakupovalni voziček",
+    "itemCount": "{{count}} kos",
+    "itemCount_plural": "{{count}} kosa",
+    "itemCount_none": "Prazno",
+    "add": "Dodaj v voziček",
+    "checkInInstructions": "Za začetek, skenirajte QR kodo v restavraciji v bližini"
+  },
+  "nutrition": {
+    "facts": "Hranilna vrednost",
+    "carbs": "Ogljikovi hidrati",
+    "proteins": "Beljakovine",
+    "calories": "Kalorije"
+  }
+}

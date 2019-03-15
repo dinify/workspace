@@ -1,0 +1,81 @@
+{
+  "menu": {
+    "caption": "Ihe niile i nwere ike inwe na {{restaurant.name}}"
+  },
+  "hours": {
+    "open": "Open ugbu a",
+    "closed": "Emechiela",
+    "opens_at": "Ga-na {{time, time:short}}",
+    "closes_at": "Closes {{time, time:short}}"
+  },
+  "website": "Weebụsaịtị",
+  "nav": {
+    "eat": "Iri",
+    "checkIn": "Ndebanye mbata"
+  },
+  "ingredients": "Efrata",
+  "addons": "Mgbakwunye",
+  "serviceFee": "Ọrụ ego",
+  "camera": {
+    "notAvailable": {
+      "title": "Camera adịghị",
+      "subtitle": "The nchọgharị igwefoto bụ adịghị na a ngwaọrụ"
+    },
+    "takePhoto": "Were a foto nke ya"
+  },
+  "service": {
+    "title": "Kpọọ a ọrụ",
+    "subtitle": "A mma, i nwere ike ịrịọ a ụdị ọ bụla nke nanị ma ọ bụ tableware na tebụl gị.",
+    "instruction": "Lelee na site ịgụ isiokwu ndị QR code na a ụlọ oriri na ọṅụṅụ dị gị nso ka malitere.",
+    "types": {
+      "tableware": "Tableware",
+      "condiments": "Condiments"
+    }
+  },
+  "bill": {
+    "split": "Kewaa",
+    "selecting": "Họrọ ihe na ụgwọ",
+    "splittingWith": "Na-kewaa n'etiti:",
+    "splittingWith_zero": "Họrọ ọrụ",
+    "splittingCount": "{{count}} onye",
+    "splittingCount_plural": "{{count}} mmadụ",
+    "itemCountSelected": "{{count}} item họrọ",
+    "itemCountSelected_plural": "{{count}} ihe họrọ",
+    "itemCountSelected_none": "Dịghị ihe họrọ"
+  },
+  "pay": "Lezienụ",
+  "paymentPending": "Ichere maka ugwo ...",
+  "editing": "Edezi",
+  "profile": "Profaịlụ",
+  "currency": {
+    "title": "Display ego",
+    "set": "Nịm ngosi ego",
+    "original": "Egosi ahịa na mbụ ego"
+  },
+  "roles": {
+    "title": "Ọrụ",
+    "waiter": "Onye na-ebu nri",
+    "proofreader": "Ngụgharị"
+  },
+  "language": {
+    "setPrimary": "Nịm bụ asụsụ bụ isi",
+    "default": "Ndabere asụsụ",
+    "other": "Ndị ọzọ na-asụ asụsụ",
+    "addOther": "Tinye asụsụ ọzọ"
+  },
+  "cart": {
+    "title": "Ụgbọ ibu azụmahịa",
+    "itemCount": "{{count}} mpempe",
+    "itemCount_plural": "{{count}} iberibe",
+    "itemCount_none": "Efu",
+    "add": "Tinye na ụgbọ ibu",
+    "checkInInstructions": "Ka malitere, iṅomi QR code na a ụlọ oriri na ọṅụṅụ dị nso"
+  },
+  "nutrition": {
+    "facts": "Ekwukwa n'akwụkwọ uru",
+    "fats": "Abụba",
+    "carbs": "Carbohydrates",
+    "proteins": "Ndi na-edozi",
+    "calories": "Calories"
+  }
+}

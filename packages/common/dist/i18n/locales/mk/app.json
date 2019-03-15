@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "Мени",
+    "caption": "Сè што може да се добие во {{restaurant.name}}"
+  },
+  "address": "Адреса",
+  "hours": {
+    "open": "Отворено сега",
+    "closed": "Затворено",
+    "opens_at": "Отвора во {{time, time:short}}",
+    "closes_at": "Затвора во {{time, time:short}}"
+  },
+  "website": "Веб-страница",
+  "nav": {
+    "explore": "Истражува",
+    "eat": "Да јаде",
+    "checkIn": "Пријавување",
+    "service": "Сервис"
+  },
+  "ingredients": "Состојки",
+  "addons": "Додади на",
+  "subtotal": "Субтотална",
+  "total": "Вкупно",
+  "totalConverted": "Вкупно ({{currencyName}})",
+  "serviceFee": "Цена на услугата",
+  "order": "Со цел",
+  "camera": {
+    "notAvailable": {
+      "title": "Камера не се достапни",
+      "subtitle": "Камерата на прелистувачот не е достапно на овој уред"
+    },
+    "takePhoto": "Се слика на тоа"
+  },
+  "service": {
+    "title": "Јавете се на услуга",
+    "subtitle": "Со оваа функција, можете да побарате било каков вид на подправка прибор за на маса или на вашата маса.",
+    "instruction": "Провери во со скенирање на QR код во еден ресторан во близина на вас, за да започнете.",
+    "types": {
+      "tableware": "Прибор за на маса",
+      "condiments": "Мирудии"
+    }
+  },
+  "bill": {
+    "title": "Бил",
+    "split": "Подели",
+    "selecting": "Изберете ги ставките во законот",
+    "splittingWith": "Е поделена помеѓу:",
+    "splittingWith_zero": "Изберете корисници",
+    "splittingCount": "{{count}} лице",
+    "splittingCount_plural": "{{count}} лица",
+    "itemCountSelected": "{{count}} изберено",
+    "itemCountSelected_plural": "{{count}} избрани елементи",
+    "itemCountSelected_none": "Избрани елементи"
+  },
+  "gratuity": "Бакшиш",
+  "pay": "Плати",
+  "paymentPending": "Чекање за плаќање ...",
+  "editing": "Уредување",
+  "profile": "Профил",
+  "dashboard": "Семафорот",
+  "currency": {
+    "title": "Покажи валута",
+    "set": "Поставете валута дисплеј",
+    "original": "Прикажани се цени во оригинална валута"
+  },
+  "roles": {
+    "title": "Улоги",
+    "manager": "Менаџер",
+    "waiter": "Келнер",
+    "cook": "Готви",
+    "proofreader": "Коректор"
+  },
+  "language": {
+    "setPrimary": "Поставете примарен јазик",
+    "default": "Стандардниот јазик",
+    "other": "Други јазици",
+    "addOther": "Додаде друг јазик"
+  },
+  "cart": {
+    "title": "Купувачка кошничка",
+    "itemCount": "{{count}} парче",
+    "itemCount_plural": "{{count}} парчиња",
+    "itemCount_none": "Празна",
+    "add": "Додади го во кошничка",
+    "checkInInstructions": "За да започнете, скенирање на QR кодот во блискиот ресторан"
+  },
+  "nutrition": {
+    "facts": "Нутрициона вредност",
+    "fats": "Масти",
+    "carbs": "Јаглехидратите",
+    "proteins": "Протеини",
+    "calories": "Калории"
+  }
+}

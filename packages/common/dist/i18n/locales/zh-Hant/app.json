@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "菜單",
+    "caption": "一切你可以得到{{restaurant.name}}"
+  },
+  "address": "地址",
+  "hours": {
+    "open": "現在開門了",
+    "closed": "關閉",
+    "opens_at": "在打開{{time, time:short}}",
+    "closes_at": "關閉在{{time, time:short}}"
+  },
+  "website": "網站",
+  "nav": {
+    "explore": "探索",
+    "eat": "去吃",
+    "checkIn": "報到",
+    "service": "服務"
+  },
+  "ingredients": "配料",
+  "addons": "添加在",
+  "subtotal": "小計",
+  "total": "總（©）",
+  "totalConverted": "總（{{currencyName}}）",
+  "serviceFee": "服務費",
+  "order": "訂購",
+  "camera": {
+    "notAvailable": {
+      "title": "無法使用相機",
+      "subtitle": "瀏覽器的相機無法使用此設備上"
+    },
+    "takePhoto": "取一張照片"
+  },
+  "service": {
+    "title": "呼叫服務",
+    "subtitle": "有了這個功能，你可以要求任何一種調料或餐具到你的表。",
+    "instruction": "通過掃描QR碼在附近的一家飯店，你就可以開始辦理入住手續。",
+    "types": {
+      "tableware": "餐具",
+      "condiments": "調味品"
+    }
+  },
+  "bill": {
+    "title": "法案",
+    "split": "分裂",
+    "selecting": "選擇賬單項目",
+    "splittingWith": "拆分之間：",
+    "splittingWith_zero": "選擇用戶",
+    "splittingCount": "{{count}}人",
+    "splittingCount_plural": "{{count}}人",
+    "itemCountSelected": "{{count}}項目選擇",
+    "itemCountSelected_plural": "{{count}}所選項目",
+    "itemCountSelected_none": "未選擇任何項目"
+  },
+  "gratuity": "賞錢",
+  "pay": "工資",
+  "paymentPending": "等待付款...",
+  "editing": "編輯",
+  "profile": "輪廓",
+  "dashboard": "儀表板",
+  "currency": {
+    "title": "顯示貨幣",
+    "set": "設置顯示貨幣",
+    "original": "顯示價格在原幣"
+  },
+  "roles": {
+    "title": "角色",
+    "manager": "經理",
+    "waiter": "服務員",
+    "cook": "廚師",
+    "proofreader": "校對"
+  },
+  "language": {
+    "setPrimary": "設置主要語言",
+    "default": "預設語言",
+    "other": "其他語言",
+    "addOther": "添加其他語言"
+  },
+  "cart": {
+    "title": "購物車",
+    "itemCount": "{{count}}片",
+    "itemCount_plural": "{{count}}件",
+    "itemCount_none": "空",
+    "add": "添加到購物車",
+    "checkInInstructions": "要開始，掃描QR碼在附近的餐館"
+  },
+  "nutrition": {
+    "facts": "營養價值",
+    "fats": "脂肪",
+    "carbs": "碳水化合物",
+    "proteins": "蛋白質",
+    "calories": "卡路里"
+  }
+}

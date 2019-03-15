@@ -1,0 +1,23 @@
+{
+  "user": {
+    "signIn": "Даромад",
+    "logOut": "Баромадан"
+  },
+  "phone": {
+    "short": "Телефон",
+    "long": "Рақами мобилӣ"
+  },
+  "email": {
+    "long": "Суроғаи электронӣ"
+  },
+  "suggested": "Пешниҳодшуда",
+  "other": "Дигар забон",
+  "selectLanguage": "Интихоб забони",
+  "selectCountry": "Интихоб кишвар",
+  "selectCurrency": "Интихоб кунед асъор",
+  "back": "Баргаштан",
+  "select": "Интихоб кардан",
+  "clear": "Интихоби Clear",
+  "search": "Кофтуков",
+  "loadingEllipsis": "Loading ..."
+}

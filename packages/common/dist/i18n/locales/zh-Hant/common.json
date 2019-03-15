@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "登入",
+    "logOut": "登出"
+  },
+  "phone": {
+    "short": "電話",
+    "long": "電話號碼"
+  },
+  "email": {
+    "short": "電子郵件",
+    "long": "電子郵件地址"
+  },
+  "suggested": "建議",
+  "other": "其他語言",
+  "selectLanguage": "選擇語言",
+  "selectCountry": "選擇國家",
+  "selectCurrency": "選擇貨幣",
+  "back": "回去",
+  "select": "選擇",
+  "clear": "清空選項",
+  "search": "搜索",
+  "loadingEllipsis": "載入中..."
+}

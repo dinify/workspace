@@ -1,0 +1,78 @@
+{
+  "menu": {
+    "caption": "Tuttu vi pò arrivare in {{restaurant.name}}"
+  },
+  "hours": {
+    "open": "Open avà",
+    "closed": "Chjusu",
+    "opens_at": "Apre à {{time, time:short}}",
+    "closes_at": "Chiudi à {{time, time:short}}"
+  },
+  "website": "Situ",
+  "nav": {
+    "eat": "À manger",
+    "checkIn": "Arregistrà si"
+  },
+  "ingredients": "Sbuchjate e cipolle",
+  "addons": "Ajouter à",
+  "serviceFee": "Tassa Service",
+  "camera": {
+    "notAvailable": {
+      "title": "Camera non disponibile",
+      "subtitle": "Camera di u navigatore ùn hè disponibile in stu dispusitivu"
+    },
+    "takePhoto": "Piglià una foto di lu"
+  },
+  "service": {
+    "title": "Chjama un serviziu",
+    "subtitle": "Cù stu dispusitivu, si pò dumandà una ogni tipu di cundimentu, o tabulazione à u vostru tavulinu.",
+    "instruction": "Cuntrolla a da pdf u QR code in una osteria vicinu à voi à abbicinàrisi â.",
+    "types": {
+      "tableware": "Stoviglie",
+      "condiments": "Cunnimenta"
+    }
+  },
+  "bill": {
+    "selecting": "Selezziunà i muri a legi",
+    "splittingWith": "Hè addividìrisi trà:",
+    "splittingWith_zero": "Select utilizatori",
+    "itemCountSelected": "{{count}} bagagliu sceltu",
+    "itemCountSelected_plural": "{{count}} voci sceltu",
+    "itemCountSelected_none": "Senza voci sceltu"
+  },
+  "pay": "Pacà",
+  "paymentPending": "Aspittava di pagamentu ...",
+  "editing": "Scrittura",
+  "profile": "Profile",
+  "dashboard": "Escrivania",
+  "currency": {
+    "title": "Muneta Mustrà",
+    "set": "Piazzà muneta cumparisce",
+    "original": "Mustrà prezzi in u muneta uriginale"
+  },
+  "roles": {
+    "title": "Rolli",
+    "manager": "Manager",
+    "waiter": "Santa Lucia"
+  },
+  "language": {
+    "setPrimary": "Lingua primaria Set",
+    "default": "Lingua difettu",
+    "other": "Àutri lingui",
+    "addOther": "Ajouter un altru lingua"
+  },
+  "cart": {
+    "title": "Shopping cart",
+    "itemCount": "{{count}} pezzu",
+    "itemCount_none": "Viotu",
+    "add": "Add to cistella",
+    "checkInInstructions": "À abbicinàrisi, scanning u QR code in una osteria vicina"
+  },
+  "nutrition": {
+    "facts": "Valore nutriziunali",
+    "fats": "Grassu",
+    "carbs": "Manciannu",
+    "proteins": "Prutiìni",
+    "calories": "Calurii"
+  }
+}

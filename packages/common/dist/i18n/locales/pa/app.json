@@ -1,0 +1,93 @@
+{
+  "menu": {
+    "title": "ਮੇਨੂ",
+    "caption": "ਹਰ ਚੀਜ਼ ਤੁਹਾਨੂੰ ਵਿੱਚ ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ {{restaurant.name}}"
+  },
+  "address": "ਪਤਾ",
+  "hours": {
+    "open": "ਹੁਣ ਓਪਨ",
+    "closed": "ਬੰਦ",
+    "opens_at": "{{time, time:short}} ਤੇ ਖੋਲਦਾ ਹੈ",
+    "closes_at": "{{time, time:short}} ਤੇ ਬੰਦ"
+  },
+  "website": "ਵੈੱਬਸਾਈਟ",
+  "nav": {
+    "explore": "ਐਕਸਪਲੋਰ",
+    "eat": "ਖਾਣ ਲਈ",
+    "checkIn": "ਲਾਗਇਨ",
+    "service": "ਸੇਵਾ"
+  },
+  "ingredients": "ਸਮੱਗਰੀ",
+  "addons": "ਹੋਰ ਜੋੜਨਾ",
+  "subtotal": "ਬਸਰਲੇਖ",
+  "total": "ਕੁੱਲ",
+  "totalConverted": "ਕੁੱਲ ({{currencyName}})",
+  "serviceFee": "ਸਰਵਿਸ ਫੀਸ",
+  "order": "ਆਰਡਰ",
+  "camera": {
+    "notAvailable": {
+      "title": "ਕੈਮਰਾ ਉਪਲਬਧ ਨਾ",
+      "subtitle": "ਬਰਾਊਜ਼ਰ ਦਾ ਕੈਮਰਾ ਇਸ ਡਿਵਾਈਸ ਤੇ ਉਪਲਬਧ ਨਹੀ ਹੈ"
+    },
+    "takePhoto": "ਇਸ ਦੀ ਇੱਕ ਫੋਟੋ ਲਵੋ"
+  },
+  "service": {
+    "title": "ਇੱਕ ਸੇਵਾ ਨੂੰ ਕਾਲ ਕਰੋ",
+    "subtitle": "ਇਸ ਫੀਚਰ ਨਾਲ, ਤੁਹਾਨੂੰ ਆਪਣੇ ਟੇਬਲ ਨੂੰ condiment ਜ tableware ਦੀ ਇੱਕ ਕਿਸੇ ਵੀ ਕਿਸਮ ਦੀ ਬੇਨਤੀ ਕਰ ਸਕਦੇ ਹੋ.",
+    "instruction": "ਨੂੰ ਇੱਕ ਹੋਟਲ ਵਿਚ QR ਕੋਡ ਨੂੰ ਸਕੈਨ ਤੁਹਾਨੂੰ ਸ਼ੁਰੂ ਕਰਨ ਦੇ ਨੇੜੇ ਹੈ ਵਿਚ ਚੈੱਕ ਕਰੋ.",
+    "types": {
+      "tableware": "Tableware",
+      "condiments": "ਚਟਨੀ"
+    }
+  },
+  "bill": {
+    "title": "ਬਿੱਲ",
+    "split": "ਵੰਡ",
+    "selecting": "ਬਿੱਲ ਵਿਚ ਇਕਾਈ ਦੀ ਚੋਣ ਕਰੋ",
+    "splittingWith": "ਵਿਚਕਾਰ ਵੰਡਿਆ ਹੈ:",
+    "splittingWith_zero": "ਉਪਭੋਗੀ ਨੂੰ ਚੁਣੋ",
+    "splittingCount": "{{count}} ਵਿਅਕਤੀ",
+    "splittingCount_plural": "{{count}} ਵਿਅਕਤੀ",
+    "itemCountSelected": "{{count}} ਇਕਾਈ ਨੂੰ ਚੁਣਿਆ",
+    "itemCountSelected_plural": "{{count}} ਚੁਣਿਆ ਆਈਟਮ",
+    "itemCountSelected_none": "ਕੋਈ ਚੁਣਿਆ ਆਈਟਮ"
+  },
+  "gratuity": "ਗਰੈਚੁਟੀ",
+  "pay": "ਭੁਗਤਾਨ",
+  "paymentPending": "ਭੁਗਤਾਨ ਦੀ ਉਡੀਕ ਕਰ ਰਿਹਾ ਹੈ ...",
+  "editing": "ਸੰਪਾਦਨ",
+  "profile": "ਪ੍ਰੋਫਾਈਲ",
+  "dashboard": "ਡੈਸ਼ਬੋਰਡ",
+  "currency": {
+    "title": "ਡਿਸਪਲੇਅ ਮੁਦਰਾ",
+    "set": "ਡਿਸਪਲੇਅ ਮੁਦਰਾ ਸੈਟ ਕਰੋ",
+    "original": "ਅਸਲੀ ਮੁਦਰਾ ਵਿੱਚ ਭਾਅ ਦਿਖਾ"
+  },
+  "roles": {
+    "title": "ਰੋਲ",
+    "manager": "ਮੈਨੇਜਰ",
+    "waiter": "ਬਹਿਰਾ",
+    "cook": "ਕੁੱਕ"
+  },
+  "language": {
+    "setPrimary": "ਸੈੱਟ ਕਰੋ ਮੁੱਖ ਭਾਸ਼ਾ",
+    "default": "ਮੂਲ ਭਾਸ਼ਾ",
+    "other": "ਹੋਰ ਭਾਸ਼ਾ",
+    "addOther": "ਹੋਰ ਭਾਸ਼ਾ ਜੋੜੋ"
+  },
+  "cart": {
+    "title": "ਖਰੀਦਾਰੀ ਠੇਲ੍ਹਾ",
+    "itemCount": "{{count}} ਟੁਕੜਾ",
+    "itemCount_plural": "{{count}} ਟੁਕੜੇ",
+    "itemCount_none": "ਖਾਲੀ",
+    "add": "ਠੇਲ੍ਹੇ ਵਿੱਚ ਪਾਓ",
+    "checkInInstructions": "ਸ਼ੁਰੂ ਕਰਨ ਲਈ, ਨੇੜਲੇ ਨੂੰ ਇੱਕ ਹੋਟਲ ਵਿਚ QR ਕੋਡ ਨੂੰ ਸਕੈਨ"
+  },
+  "nutrition": {
+    "facts": "ਪੋਸ਼ਣ ਮੁੱਲ",
+    "fats": "ਵਸਾ",
+    "carbs": "ਕਾਰਬੋਹਾਈਡਰੇਟ",
+    "proteins": "ਪ੍ਰੋਟੀਨ",
+    "calories": "ਕੈਲੋਰੀ"
+  }
+}

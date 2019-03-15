@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "Μενού",
+    "caption": "Ό, τι μπορείτε να έρθετε σε {{restaurant.name}}"
+  },
+  "address": "Διεύθυνση",
+  "hours": {
+    "open": "Ανοιξε τώρα",
+    "closed": "Κλειστό",
+    "opens_at": "Ανοίγει σε {{time, time:short}}",
+    "closes_at": "Κλείνει σε {{time, time:short}}"
+  },
+  "website": "Δικτυακός τόπος",
+  "nav": {
+    "explore": "Εξερευνώ",
+    "eat": "Να φάω",
+    "checkIn": "Checkin",
+    "service": "Υπηρεσία"
+  },
+  "ingredients": "Συστατικά",
+  "addons": "Πρόσθετο",
+  "subtotal": "ΜΕΡΙΚΟ ΣΥΝΟΛΟ",
+  "total": "Σύνολο",
+  "totalConverted": "Σύνολο ({{currencyName}})",
+  "serviceFee": "Κόστος υπηρεσίας",
+  "order": "Σειρά",
+  "camera": {
+    "notAvailable": {
+      "title": "Φωτογραφική μηχανή δεν είναι διαθέσιμη",
+      "subtitle": "Η κάμερα του προγράμματος περιήγησης δεν είναι διαθέσιμη σε αυτήν τη συσκευή"
+    },
+    "takePhoto": "Πάρτε μια φωτογραφία του"
+  },
+  "service": {
+    "title": "Καλέστε την υπηρεσία",
+    "subtitle": "Με αυτή τη λειτουργία, μπορείτε να ζητήσετε οποιοδήποτε είδος καρύκευμα ή επιτραπέζιων σκευών στο τραπέζι σας.",
+    "instruction": "Άφιξη σαρώνοντας τον κωδικό QR σε ένα εστιατόριο κοντά σας για να ξεκινήσετε.",
+    "types": {
+      "tableware": "Επιτραπέζια σκεύη",
+      "condiments": "Καρυκεύματα"
+    }
+  },
+  "bill": {
+    "title": "Νομοσχέδιο",
+    "split": "Διαίρεση",
+    "selecting": "Επιλέξτε τα στοιχεία στο νομοσχέδιο",
+    "splittingWith": "Μοιράζεται μεταξύ:",
+    "splittingWith_zero": "Επιλέξτε τους χρήστες",
+    "splittingCount": "{{count}} άτομο",
+    "splittingCount_plural": "{{count}} άτομα",
+    "itemCountSelected": "{{count}} επιλεγμένου στοιχείου",
+    "itemCountSelected_plural": "{{count}} αντικείμενα επιλεγμένα",
+    "itemCountSelected_none": "Δεν υπάρχουν στοιχεία που επιλέγονται"
+  },
+  "gratuity": "Φιλοδώρημα",
+  "pay": "Πληρωμή",
+  "paymentPending": "Αναμονή για πληρωμή...",
+  "editing": "Επεξεργασία",
+  "profile": "Προφίλ",
+  "dashboard": "Ταμπλό",
+  "currency": {
+    "title": "Νόμισμα οθόνη",
+    "set": "Ορισμός νομίσματος οθόνη",
+    "original": "Εμφάνιση των τιμών στο αρχικό νόμισμα"
+  },
+  "roles": {
+    "title": "Ρόλοι",
+    "manager": "Διευθυντής",
+    "waiter": "Σερβιτόρος",
+    "cook": "Μάγειρας",
+    "proofreader": "Διορθωτής τυπογραφικών δοκιμιών"
+  },
+  "language": {
+    "setPrimary": "Ορισμός κύρια γλώσσα",
+    "default": "Προεπιλεγμένη γλώσσα",
+    "other": "Άλλες γλώσσες",
+    "addOther": "Προσθέστε μια άλλη γλώσσα"
+  },
+  "cart": {
+    "title": "Καλάθι αγορών",
+    "itemCount": "{{count}} τεμάχιο",
+    "itemCount_plural": "{{count}} κομμάτια",
+    "itemCount_none": "Αδειάζω",
+    "add": "Προσθήκη στο καλάθι",
+    "checkInInstructions": "Για να ξεκινήσετε, σαρώστε τον κωδικό QR σε κοντινό εστιατόριο"
+  },
+  "nutrition": {
+    "facts": "Διατροφική αξία",
+    "fats": "Λίπος",
+    "carbs": "Υδατάνθρακες",
+    "proteins": "Πρωτεΐνες",
+    "calories": "Θερμίδες"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "ننوزئ",
+    "logOut": "وتون"
+  },
+  "phone": {
+    "short": "تيليفون",
+    "long": "د تلیفون شمیره"
+  },
+  "email": {
+    "short": "برېښنالیک",
+    "long": "بریښنالیک"
+  },
+  "suggested": "انديز",
+  "other": "نور ژبو",
+  "selectLanguage": "ژبه وټاکئ",
+  "selectCountry": "ټاکنه د هېواد",
+  "selectCurrency": "ټاکنه رایجی پیسی",
+  "back": "بيرته لاړ شه",
+  "select": "غوره",
+  "clear": "څرګن د انتخاب",
+  "search": "لټون",
+  "loadingEllipsis": "Loading ..."
+}

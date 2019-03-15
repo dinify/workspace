@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "મેનુ",
+    "caption": "બધું તમે મેળવી શકો છો {{restaurant.name}}"
+  },
+  "address": "સરનામું",
+  "hours": {
+    "open": "હવે ખોલો",
+    "closed": "બંધ",
+    "opens_at": "{{time, time:short}} વાગ્યે ખુલશે",
+    "closes_at": "{{time, time:short}} ખાતે બંધ"
+  },
+  "website": "વેબસાઇટ",
+  "nav": {
+    "explore": "અન્વેષણ",
+    "eat": "ખાવા માટે",
+    "checkIn": "ચેકઇન",
+    "service": "સેવા"
+  },
+  "ingredients": "સામગ્રી",
+  "addons": "પર ઉમેરો",
+  "subtotal": "પેટાસરવાળો",
+  "total": "કુલ",
+  "totalConverted": "કુલ ({{currencyName}})",
+  "serviceFee": "સેવા શુલ્ક",
+  "order": "ઓર્ડર",
+  "camera": {
+    "notAvailable": {
+      "title": "કૅમેરો ઉપલબ્ધ નથી",
+      "subtitle": "બ્રાઉઝરની કૅમેરા આ ઉપકરણ પર ઉપલબ્ધ નથી"
+    },
+    "takePhoto": "તે એક ફોટો લો"
+  },
+  "service": {
+    "title": "એક સેવાને કૉલ",
+    "subtitle": "આ લક્ષણ સાથે, તમે તમારા ટેબલ પર ખોરાક માટેનો ગરમ મસાલો અથવા ટેબલવેર એક કોઇ પણ પ્રકારની વિનંતી કરી શકો છો.",
+    "instruction": "રેસ્ટોરન્ટમાં QR કોડ સ્કેન તમે પ્રારંભ કરવા માટે નજીક દ્વારા ચેક ઇન કરો.",
+    "types": {
+      "tableware": "ટેબલવેર",
+      "condiments": "મસાલાઓના"
+    }
+  },
+  "bill": {
+    "title": "બિલ",
+    "split": "સ્પ્લિટ",
+    "selecting": "બિલમાં આઇટમ્સ પસંદ કરો",
+    "splittingWith": "વચ્ચે વિભાજિત થયેલ છે:",
+    "splittingWith_zero": "વપરાશકર્તાઓ પસંદ કરો",
+    "splittingCount": "{{count}} વ્યક્તિ",
+    "splittingCount_plural": "{{count}} વ્યક્તિઓ",
+    "itemCountSelected": "{{count}} આઇટમ પસંદ",
+    "itemCountSelected_plural": "{{count}} પસંદ કરેલ વસ્તુઓ",
+    "itemCountSelected_none": "કોઈ આઇટમ્સ પસંદ કરી"
+  },
+  "gratuity": "ગ્રેચ્યુઇટી",
+  "pay": "પે",
+  "paymentPending": "ચુકવણી માટે રાહ જુએ છે ...",
+  "editing": "સંપાદન",
+  "profile": "પ્રોફાઇલ",
+  "dashboard": "ડેશબોર્ડ",
+  "currency": {
+    "title": "ડિસ્પ્લે ચલણ",
+    "set": "પ્રદર્શન ચલણ સેટ",
+    "original": "મૂળ ચલણ ભાવો બતાવી"
+  },
+  "roles": {
+    "title": "ભૂમિકાઓ",
+    "manager": "વ્યવસ્થાપક",
+    "waiter": "વેઈટર",
+    "cook": "કૂક",
+    "proofreader": "Proofreader"
+  },
+  "language": {
+    "setPrimary": "સેટ પ્રાથમિક ભાષા",
+    "default": "ડિફોલ્ટ ભાષા",
+    "other": "બીજી ભાષા",
+    "addOther": "બીજી ભાષા ઉમેરો"
+  },
+  "cart": {
+    "title": "શોપિંગ કાર્ટ",
+    "itemCount": "{{count}} ટુકડો",
+    "itemCount_plural": "{{count}} ટુકડાઓ",
+    "itemCount_none": "ખાલી",
+    "add": "સૂચી માં સામેલ કરો",
+    "checkInInstructions": "પ્રારંભ કરવા માટે, નજીકના રેસ્ટોરન્ટમાં QR કોડ સ્કેન"
+  },
+  "nutrition": {
+    "facts": "પોષણ મૂલ્ય",
+    "fats": "ફેટ",
+    "carbs": "કાર્બોહાઇડ્રેટ",
+    "proteins": "પ્રોટીન્સ",
+    "calories": "કૅલરીઝ"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "menu": {
+    "title": "پروجيڪٽ",
+    "caption": "سڀڪنھن شيء کي اوھان ۾ حاصل ڪري سگهو ٿا {{restaurant.name}}"
+  },
+  "address": "ائڊريس",
+  "hours": {
+    "open": "هاڻي کلي",
+    "closed": "بند",
+    "opens_at": "تي نظريي {{time, time:short}}",
+    "closes_at": "تي ٻيهر {{time, time:short}}"
+  },
+  "website": "ويب سائيٽ",
+  "nav": {
+    "explore": "جستجو",
+    "eat": "کائڻ",
+    "checkIn": "چيڪ ان ڪريو",
+    "service": "خدمت"
+  },
+  "addons": "تي شامل ڪريو",
+  "total": "ڪل",
+  "totalConverted": "ڪل ({{currencyName}})",
+  "serviceFee": "خدمت فيس",
+  "order": "حڪم",
+  "camera": {
+    "notAvailable": {
+      "title": "ڪئميرا موجود نه",
+      "subtitle": "هن برائوزر جي ڪئميرا هن ڊوائس تي موجود نه آهي"
+    },
+    "takePhoto": "ان جي هڪ ڦوٽو وٺو"
+  },
+  "service": {
+    "title": "هڪ خدمت سڏ",
+    "subtitle": "ھن مضمون سان گڏ، توهان پنهنجي ميز ڏانهن condiment يا tableware جي ڪنهن به قسم جي درخواست ڪري سگهن ٿا.",
+    "instruction": "توهان جي ويجھو هڪ ريسٽورنٽ شروع حاصل ڪرڻ ۾ آر ڪوڊ اسڪيننگ جي ۾ چيڪ ڪريو.",
+    "types": {
+      "condiments": "گرم مصالحن"
+    }
+  },
+  "bill": {
+    "title": "بل",
+    "split": "۾ ورهايو ويو",
+    "selecting": "بل ۾ شيون چونڊيو",
+    "splittingWith": "جي وچ ۾ تقسيم ڪيو آهي:",
+    "splittingWith_zero": "صارفين کي منتخب ڪريو",
+    "splittingCount": "{{count}} شخص",
+    "splittingCount_plural": "{{count}} ماڻهن",
+    "itemCountSelected": "{{count}} شيء جي چونڊ",
+    "itemCountSelected_plural": "{{count}} شيون چونڊيل",
+    "itemCountSelected_none": "في شيون چونڊيل"
+  },
+  "gratuity": "نوڪر",
+  "pay": "ادا",
+  "paymentPending": "ادائيگي لاء انتظار ...",
+  "editing": "آڻيندي",
+  "profile": "پروفائيل جون",
+  "dashboard": "ڊيش بورڊ",
+  "currency": {
+    "title": "ظاهر ڪرنسي",
+    "set": "ڊسپلي ڪرنسي مقرر",
+    "original": "اصل ڪرنسي ۾ ڏٺيون قيمت"
+  },
+  "roles": {
+    "title": "ڪردار",
+    "manager": "مئنيجر",
+    "cook": "پچائڻ"
+  },
+  "language": {
+    "setPrimary": "قائم پرائمري ٻولي",
+    "default": "ھونئن ٻولي",
+    "other": "ٻيون ٻوليون",
+    "addOther": "ٻي ٻولي شامل ڪريو"
+  },
+  "cart": {
+    "title": "خريداري جو گاڏو",
+    "itemCount": "{{count}} ٽڪرو",
+    "itemCount_plural": "{{count}} ٽڪر",
+    "itemCount_none": "خالي",
+    "add": "گاڏو کي شامل ڪريو",
+    "checkInInstructions": "شروع حاصل ڪرڻ لاء، جي ڀرسان هڪ هوٽل ۾ آر ڪوڊ اسڪين"
+  },
+  "nutrition": {
+    "facts": "Nutritional قدر",
+    "fats": "وسا",
+    "carbs": "آڪسيجن",
+    "proteins": "پروٽين",
+    "calories": "گھرجون پوريون"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Skráðu þig inn",
+    "logOut": "Útskrá"
+  },
+  "phone": {
+    "short": "Síminn",
+    "long": "Símanúmer"
+  },
+  "email": {
+    "short": "Tölvupóstur",
+    "long": "Netfang"
+  },
+  "suggested": "Leiðbeinandi",
+  "other": "Önnur tungumál",
+  "selectLanguage": "Veldu tungumál",
+  "selectCountry": "Veldu land",
+  "selectCurrency": "Veldu gjaldmiðil",
+  "back": "Farðu til baka",
+  "select": "Veldu",
+  "clear": "Hreinsa val",
+  "search": "Leit",
+  "loadingEllipsis": "Hleðsla ..."
+}

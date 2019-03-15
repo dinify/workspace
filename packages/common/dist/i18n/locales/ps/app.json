@@ -1,0 +1,92 @@
+{
+  "menu": {
+    "title": "غورنۍ",
+    "caption": "هر څه چې تاسو په تر لاسه کولای شي {{restaurant.name}}"
+  },
+  "address": "پته",
+  "hours": {
+    "open": "اوس د پرانیستې",
+    "closed": "تړل",
+    "opens_at": "په {{time, time:short}} پرانيست",
+    "closes_at": "په {{time, time:short}} تړلي"
+  },
+  "website": "وېب پاڼه",
+  "nav": {
+    "explore": "ولټوئ",
+    "eat": "خوړل",
+    "checkIn": "کتل",
+    "service": "خدمت"
+  },
+  "ingredients": "د جدي",
+  "addons": "اضافه شوی",
+  "subtotal": "ثبتوي",
+  "total": "ټول",
+  "totalConverted": "ټول ({{currencyName}})",
+  "serviceFee": "خدمتونو د فيس",
+  "order": "نظم",
+  "camera": {
+    "notAvailable": {
+      "title": "د کامرې موجود نه وي",
+      "subtitle": "لټونګر د کامرې په دې آله موجوده نه ده"
+    },
+    "takePhoto": "د دا د يو عکس واخلي"
+  },
+  "service": {
+    "title": "غږ د خدمت",
+    "subtitle": "سره دا فیچر، تاسو کولی شئ د condiment یا tableware هر ډول ستاسو د جدول غوښتنه وکړي.",
+    "instruction": "له خوا په یوه رستورانت کې د QR کوډ سکن نږدې تاسو د پيل کې وګورئ.",
+    "types": {
+      "condiments": "نوشه"
+    }
+  },
+  "bill": {
+    "title": "بیل",
+    "split": "وېشل شوى",
+    "selecting": "په مسوده کې د توکو وټاکئ",
+    "splittingWith": "ده په منځ کې تقسيم:",
+    "splittingWith_zero": "انتخاب کاروونکو",
+    "splittingCount": "{{count}} کس",
+    "splittingCount_plural": "{{count}} کسانو",
+    "itemCountSelected": "{{count}} توکی ټاکل",
+    "itemCountSelected_plural": "{{count}} توکي ټاکل",
+    "itemCountSelected_none": "نه توکي ټاکل"
+  },
+  "gratuity": "بخشش",
+  "pay": "د تنخاوو",
+  "paymentPending": "انتظار لپاره د پیسو ...",
+  "editing": "د سمون",
+  "profile": "د پېژندنې",
+  "dashboard": "ډشبورډ",
+  "currency": {
+    "title": "مخکيني اسعارو",
+    "set": "جوړ نندارې ته د اسعارو د",
+    "original": "په اصلي اسعارو بیې ښودنه"
+  },
+  "roles": {
+    "title": "رول",
+    "manager": "د مدير",
+    "waiter": "چوبړوال",
+    "cook": "کوک"
+  },
+  "language": {
+    "setPrimary": "د ټاکلو په لومړنۍ ژبه",
+    "default": "Default ژبه",
+    "other": "نور ژبو",
+    "addOther": "بل ژبه ورزیات کړئ"
+  },
+  "cart": {
+    "title": "د سودا لاس ګاډی",
+    "itemCount": "{{count}} ټوټه",
+    "itemCount_plural": "{{count}} ټوټې",
+    "itemCount_none": "تش",
+    "add": "کارټ ته یی اضافه کړه",
+    "checkInInstructions": "پيل وکړو، په یوه رستورانت ته نږدې د QR کوډ څيړنه"
+  },
+  "nutrition": {
+    "facts": "د تغذيې ارزښت",
+    "fats": "په شحمو",
+    "carbs": "شکري",
+    "proteins": "پروتينونه",
+    "calories": "کالوري"
+  }
+}

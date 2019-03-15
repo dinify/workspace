@@ -1,0 +1,23 @@
+{
+  "user": {
+    "signIn": "Siyen nan",
+    "logOut": "Dekonekte"
+  },
+  "phone": {
+    "short": "Telefòn",
+    "long": "Nimewo telefòn"
+  },
+  "email": {
+    "short": "Imèl",
+    "long": "Imèl adrès"
+  },
+  "suggested": "Sijere",
+  "other": "Lòt lang",
+  "selectLanguage": "Chwazi lang",
+  "selectCountry": "Chwazi peyi",
+  "selectCurrency": "Chwazi lajan",
+  "back": "Tounen",
+  "select": "Chwazi",
+  "clear": "Klè seleksyon",
+  "loadingEllipsis": "Loading ..."
+}

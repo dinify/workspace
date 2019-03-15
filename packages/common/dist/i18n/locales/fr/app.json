@@ -1,0 +1,93 @@
+{
+  "menu": {
+    "caption": "Tout ce que vous pouvez obtenir en {{restaurant.name}}"
+  },
+  "address": "Adresse",
+  "hours": {
+    "open": "Ouvrez maintenant",
+    "closed": "Fermé",
+    "opens_at": "Ouvre à {{time, time:short}}",
+    "closes_at": "Fermeture à {{time, time:short}}"
+  },
+  "website": "Site Internet",
+  "nav": {
+    "explore": "Explorer",
+    "eat": "Manger",
+    "checkIn": "Enregistrement",
+    "service": "Un service"
+  },
+  "ingredients": "Ingrédients",
+  "addons": "Ajouter",
+  "subtotal": "Total",
+  "total": "Total des",
+  "totalConverted": "Total des ({{currencyName}})",
+  "serviceFee": "Frais de service",
+  "order": "Ordre",
+  "camera": {
+    "notAvailable": {
+      "title": "Appareil photo non disponible",
+      "subtitle": "La caméra du navigateur n'est pas disponible sur cet appareil"
+    },
+    "takePhoto": "Prenez une photo de celui-ci"
+  },
+  "service": {
+    "title": "Appelez un service",
+    "subtitle": "Grâce à cette fonctionnalité, vous pouvez demander un tout type de condiment ou la vaisselle à votre table.",
+    "instruction": "Arrivée en scannant le code QR dans un restaurant près de chez vous pour commencer.",
+    "types": {
+      "tableware": "Vaisselle",
+      "condiments": "Condiments"
+    }
+  },
+  "bill": {
+    "title": "Facture",
+    "split": "Divisé",
+    "selecting": "Sélectionnez les éléments du projet de loi",
+    "splittingWith": "Est divisé entre:",
+    "splittingWith_zero": "Sélectionner des utilisateurs",
+    "splittingCount": "{{count}} personne",
+    "splittingCount_plural": "{{count}} personnes",
+    "itemCountSelected": "{{count}} élément sélectionné",
+    "itemCountSelected_plural": "{{count}} éléments sélectionnés",
+    "itemCountSelected_none": "Aucun élément sélectionné"
+  },
+  "gratuity": "Pourboire",
+  "pay": "Payer",
+  "paymentPending": "En attente de paiement...",
+  "editing": "Rédaction",
+  "profile": "Profil",
+  "dashboard": "Tableau de bord",
+  "currency": {
+    "title": "Devise d'affichage",
+    "set": "Définir une devise d'affichage",
+    "original": "Affichage des prix dans la devise d'origine"
+  },
+  "roles": {
+    "title": "Rôles",
+    "manager": "Directeur",
+    "waiter": "Serveur",
+    "cook": "Cuisinier",
+    "proofreader": "Correcteur des épreuves"
+  },
+  "language": {
+    "setPrimary": "Définir la langue maternelle",
+    "default": "Langage par défaut",
+    "other": "Autres langues",
+    "addOther": "Ajouter une autre langue"
+  },
+  "cart": {
+    "title": "Chariot",
+    "itemCount": "{{count}} pièce",
+    "itemCount_plural": "{{count}} pièces",
+    "itemCount_none": "Vide",
+    "add": "Ajouter au panier",
+    "checkInInstructions": "Pour commencer, scanner le code QR dans un restaurant à proximité"
+  },
+  "nutrition": {
+    "facts": "La valeur nutritionnelle",
+    "fats": "Graisse",
+    "carbs": "Les glucides",
+    "proteins": "Les protéines",
+    "calories": "Calories"
+  }
+}

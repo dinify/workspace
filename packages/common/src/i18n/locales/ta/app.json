@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "பட்டி",
+    "caption": "எல்லாம் நீங்கள் பெற முடியும் {{restaurant.name}}"
+  },
+  "address": "முகவரி",
+  "hours": {
+    "open": "இப்போது திற",
+    "closed": "மூடப்பட்ட",
+    "opens_at": "மணிக்கு {{time, time:short}} திறக்கிறது",
+    "closes_at": "மணிக்கு {{time, time:short}} மூடும்"
+  },
+  "website": "இணையதளம்",
+  "nav": {
+    "explore": "ஆராயுங்கள்",
+    "eat": "சாப்பிடுவதற்கு",
+    "checkIn": "புதுப்பிப்பது",
+    "service": "சேவை"
+  },
+  "ingredients": "தேவையான பொருட்கள்",
+  "addons": "இல் சேர்",
+  "subtotal": "கூட்டுத்தொகை",
+  "total": "மொத்தம்",
+  "totalConverted": "மொத்தம் ({{currencyName}})",
+  "serviceFee": "சேவை கட்டணம்",
+  "order": "ஆணை",
+  "camera": {
+    "notAvailable": {
+      "title": "கேமரா இல்லை",
+      "subtitle": "உலாவியின் கேமரா இந்த சாதனத்தில் கிடைக்கவில்லை"
+    },
+    "takePhoto": "அதை படமெடுக்கவும்"
+  },
+  "service": {
+    "title": "ஒரு சேவை அழைப்புக்கு",
+    "subtitle": "இந்த அம்சம், நீங்கள் உங்கள் அட்டவணையில் தாளிக்கும் அல்லது மேசைப் ஒரு எந்த வகையான கோரலாம்.",
+    "instruction": "நீங்கள் தொடங்குவதற்கு அருகே ஒரு உணவகத்தில் QR குறியீட்டை ஸ்கேன் செய்வதன் மூலம் சரிபார்க்கலாம்.",
+    "types": {
+      "tableware": "Tableware",
+      "condiments": "சுவையூட்டும்"
+    }
+  },
+  "bill": {
+    "title": "ர சி து",
+    "split": "பிரி",
+    "selecting": "மசோதா உள்ள அவற்றைத் தேர்ந்தெடுக்கவும்",
+    "splittingWith": "பிளவடைந்து:",
+    "splittingWith_zero": "பயனர்களைத் தேர்ந்தெடுக்கவும்",
+    "splittingCount": "{{count}} நபர்",
+    "splittingCount_plural": "{{count}} நபர்கள்",
+    "itemCountSelected": "{{count}} உருப்படி தேர்ந்தெடுக்கப்பட்டது",
+    "itemCountSelected_plural": "தேர்ந்தெடுக்கப்பட்டுள்ளன {{count}} பொருட்களை",
+    "itemCountSelected_none": "எந்த உருப்படிகள் தேர்ந்தெடுக்கப்பட்டன"
+  },
+  "gratuity": "பணிக்கொடை",
+  "pay": "செலுத்த",
+  "paymentPending": "கட்டணம் காத்திருக்கிறது ...",
+  "editing": "எடிட்டிங்",
+  "profile": "விவரம்",
+  "dashboard": "டாஷ்போர்டு",
+  "currency": {
+    "title": "காட்சி நாணய",
+    "set": "காட்சி நாணய அமை",
+    "original": "அசல் நாணய விலைகளை காட்டும்"
+  },
+  "roles": {
+    "title": "பாத்திரங்கள்",
+    "manager": "மேலாளர்",
+    "waiter": "வெயிட்டர்",
+    "cook": "குக்",
+    "proofreader": "Proofreader"
+  },
+  "language": {
+    "setPrimary": "முதன்மை மொழி அமை",
+    "default": "இயல்பு மொழி",
+    "other": "பிற மொழிகள்",
+    "addOther": "மற்றொரு மொழியைச் சேர்"
+  },
+  "cart": {
+    "title": "ஷாப்பிங் கார்ட்",
+    "itemCount": "{{count}} துண்டு",
+    "itemCount_plural": "{{count}} துண்டுகள்",
+    "itemCount_none": "காலியாக",
+    "add": "பெட்டகத்தில் சேர்",
+    "checkInInstructions": "தொடங்குவதற்கு, அருகிலுள்ள ஒரு உணவகத்தில் QR குறியீட்டை ஸ்கேன்"
+  },
+  "nutrition": {
+    "facts": "ஊட்டச்சத்தும்",
+    "fats": "கொழுப்பு",
+    "carbs": "கார்போஹைட்ரேட்",
+    "proteins": "புரதங்கள்",
+    "calories": "கலோரிகள்"
+  }
+}

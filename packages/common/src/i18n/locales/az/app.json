@@ -1,0 +1,89 @@
+{
+  "menu": {
+    "title": "Menyu",
+    "caption": "Hər şey əldə edə bilərsiniz {{restaurant.name}}"
+  },
+  "address": "Ünvan",
+  "hours": {
+    "open": "Open indi",
+    "closed": "Bağlı",
+    "opens_at": "{{time, time:short}} Açdı",
+    "closes_at": "{{time, time:short}} bağlayır"
+  },
+  "website": "Ana səhifə",
+  "nav": {
+    "explore": "Araşdırmaq",
+    "eat": "Yemək",
+    "checkIn": "Kontrol",
+    "service": "Xidmət"
+  },
+  "ingredients": "Tərkibi",
+  "addons": "Əlavə",
+  "subtotal": "Ümumi",
+  "total": "Ümumi",
+  "totalConverted": "Ümumi ({{currencyName}})",
+  "serviceFee": "Xidmət haqqı",
+  "order": "Sifariş",
+  "camera": {
+    "notAvailable": {
+      "title": "Mövcud deyil Camera",
+      "subtitle": "Brauzerinizin kamera bu cihazda mövcud deyil"
+    },
+    "takePhoto": "Onu bir şəkil çəkmək"
+  },
+  "service": {
+    "title": "Xidmət Zəng",
+    "subtitle": "Bu xüsusiyyət ilə, sizin masa çeşni və ya qab bir hər cür tələb edə bilər.",
+    "instruction": "Siz başlamaq üçün yaxın bir restoranda qr kodu skaner tərəfindən yoxlayın.",
+    "types": {
+      "tableware": "Qab",
+      "condiments": "Dad əlavələri"
+    }
+  },
+  "bill": {
+    "title": "Qanun layihəsi",
+    "selecting": "Qanun maddələr seçin",
+    "splittingWith": "Arasında bölünüb:",
+    "splittingCount": "{{count}} nəfər",
+    "splittingCount_plural": "{{count}} nəfər",
+    "itemCountSelected": "{{count}} maddə seçilmiş",
+    "itemCountSelected_plural": "Seçilmiş {{count}} maddələr",
+    "itemCountSelected_none": "Seçilmiş heç bir maddələr"
+  },
+  "gratuity": "Hediye",
+  "pay": "Maaş",
+  "paymentPending": "Ödəniş gözləyir ...",
+  "editing": "Redaktə",
+  "profile": "Profil",
+  "currency": {
+    "title": "Display valyuta",
+    "set": "Set ekran valyuta",
+    "original": "Orijinal valyuta qiymətləri bayrağı"
+  },
+  "roles": {
+    "title": "Rollar",
+    "cook": "Aşpaz",
+    "proofreader": "Korrektor"
+  },
+  "language": {
+    "setPrimary": "Set əsas dil",
+    "default": "U mənim dil",
+    "other": "Başqa dillər",
+    "addOther": "Başqa bir dil əlavə"
+  },
+  "cart": {
+    "title": "Alış-veriş kartı",
+    "itemCount": "{{count}} ədəd",
+    "itemCount_plural": "{{count}} ədəd",
+    "itemCount_none": "Boş",
+    "add": "Səbətə",
+    "checkInInstructions": "Başlamaq üçün, yaxın bir restoran qr kodu scan"
+  },
+  "nutrition": {
+    "facts": "Qida dəyəri",
+    "fats": "Yağ",
+    "carbs": "Karbohidratlar",
+    "proteins": "Zülallar",
+    "calories": "Kalori"
+  }
+}

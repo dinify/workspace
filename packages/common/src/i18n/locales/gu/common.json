@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "સાઇન ઇન કરો",
+    "logOut": "સાઇન આઉટ કરો"
+  },
+  "phone": {
+    "short": "ફોન",
+    "long": "ફોન નંબર"
+  },
+  "email": {
+    "short": "ઇમેઇલ",
+    "long": "ઈ - મેઈલ સરનામું"
+  },
+  "suggested": "સૂચવેલ",
+  "other": "બીજી ભાષા",
+  "selectLanguage": "ભાષા પસંદ કરો",
+  "selectCountry": "દેશ પસંદ કરો",
+  "selectCurrency": "ચલણ પસંદ",
+  "back": "પાછા જાવ",
+  "select": "પસંદ",
+  "clear": "પસંદગી સાફ કરો",
+  "search": "શોધ",
+  "loadingEllipsis": "લોડ કરી રહ્યું છે ..."
+}

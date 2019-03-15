@@ -1,0 +1,89 @@
+{
+  "menu": {
+    "title": "Menuo",
+    "caption": "Ĉio povas eniri {{restaurant.name}}"
+  },
+  "address": "Adreso",
+  "hours": {
+    "open": "Malfermu nun",
+    "closed": "Fermita",
+    "opens_at": "Malfermiĝas ĉe {{time, time:short}}",
+    "closes_at": "Fermas je {{time, time:short}}"
+  },
+  "website": "Afiŝinto",
+  "nav": {
+    "explore": "Esplori",
+    "eat": "Manĝi",
+    "checkIn": "Checkin",
+    "service": "Servo"
+  },
+  "ingredients": "Ingrediencoj",
+  "addons": "Aldoni sur",
+  "subtotal": "Subtotal",
+  "total": "Totalo",
+  "totalConverted": "Totalo ({{currencyName}})",
+  "serviceFee": "Servo kotizon",
+  "order": "Ordo",
+  "camera": {
+    "notAvailable": {
+      "title": "Fotilo ne haveblas",
+      "subtitle": "La retumilo fotilo ne haveblas en ĉi tiu aparato"
+    },
+    "takePhoto": "Prenu foton de ĝi"
+  },
+  "service": {
+    "title": "Voku servo",
+    "subtitle": "Kun ĉi tiu funkcio, vi povas peti ian kondimento aŭ servico al via tablo.",
+    "instruction": "Kontrolu en skandante la QR kodon en restoracio proksime al vi komencu.",
+    "types": {
+      "tableware": "Servico",
+      "condiments": "Spicaĵoj"
+    }
+  },
+  "bill": {
+    "selecting": "Elektu la artikoloj en beko",
+    "splittingWith": "Estas dividita;",
+    "splittingWith_zero": "Elektu uzantoj",
+    "splittingCount": "{{count}} persono",
+    "splittingCount_plural": "{{count}} personoj",
+    "itemCountSelected": "{{count}} ero elektita",
+    "itemCountSelected_plural": "{{count}} erojn elektitaj",
+    "itemCountSelected_none": "Neniu erojn elektitaj"
+  },
+  "gratuity": "Dankmono",
+  "pay": "Pagu",
+  "paymentPending": "Atendante pago ...",
+  "editing": "Redaktado",
+  "profile": "Profilo",
+  "currency": {
+    "title": "Montru valuto",
+    "set": "Agordu display valuto",
+    "original": "Montras prezoj en la originala valuto"
+  },
+  "roles": {
+    "title": "Roloj",
+    "manager": "Manaĝero",
+    "waiter": "Kelnero"
+  },
+  "language": {
+    "setPrimary": "Agordu primara lingvo",
+    "default": "Defaŭlta lingvo",
+    "other": "Aliaj lingvoj",
+    "addOther": "Aldoni alian lingvon"
+  },
+  "cart": {
+    "title": "Aĉetoĉaro",
+    "itemCount": "{{count}} peco",
+    "itemCount_plural": "{{count}} pecoj",
+    "itemCount_none": "Malplena",
+    "add": "Aldonu al la korbo",
+    "checkInInstructions": "Por komenci, skani la QR kodon en restoracio proksime"
+  },
+  "nutrition": {
+    "facts": "Nutra valoro",
+    "fats": "Dika",
+    "carbs": "Karbonhidratoj",
+    "proteins": "Proteinoj",
+    "calories": "Kalorioj"
+  }
+}

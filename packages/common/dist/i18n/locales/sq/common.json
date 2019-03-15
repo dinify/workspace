@@ -1,0 +1,22 @@
+{
+  "user": {
+    "signIn": "Hyni"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Numri i telefonit"
+  },
+  "email": {
+    "long": "Email"
+  },
+  "suggested": "Sugjeroi",
+  "other": "Gjuhe te tjera",
+  "selectLanguage": "Zgjidh gjuhen",
+  "selectCountry": "Zgjidh Shtetin",
+  "selectCurrency": "Zgjidh monedhën",
+  "back": "Kthehu mbrapa",
+  "select": "Zgjedh",
+  "clear": "Zgjedhja e qartë",
+  "search": "Kërkim",
+  "loadingEllipsis": "Loading ..."
+}

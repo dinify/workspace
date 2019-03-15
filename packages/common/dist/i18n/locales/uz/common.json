@@ -1,0 +1,23 @@
+{
+  "user": {
+    "signIn": "Tizimga kirish",
+    "logOut": "Chiqish"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Telefon raqami"
+  },
+  "email": {
+    "long": "Elektron pochta manzili"
+  },
+  "suggested": "Tavsiya etilgan",
+  "other": "Boshqa tillar",
+  "selectLanguage": "Tilni tanlang",
+  "selectCountry": "Mamlakatni tanlang",
+  "selectCurrency": "Tanlang valyuta",
+  "back": "Ortga qaytish",
+  "select": "Tanlang",
+  "clear": "Tanlov tozala",
+  "search": "Qidirmoq",
+  "loadingEllipsis": "Loading ..."
+}

@@ -1,0 +1,23 @@
+{
+  "user": {
+    "signIn": "Weka sahihi",
+    "logOut": "Toka"
+  },
+  "phone": {
+    "short": "Simu",
+    "long": "Nambari ya simu"
+  },
+  "email": {
+    "short": "Barua pepe",
+    "long": "Barua pepe"
+  },
+  "suggested": "Mapendekezo",
+  "other": "Lugha nyingine",
+  "selectLanguage": "Chagua lugha",
+  "selectCountry": "Chagua nchi",
+  "selectCurrency": "Chagua fedha",
+  "back": "Rudi nyuma",
+  "select": "Chagua",
+  "clear": "Ondoa uteuzi",
+  "loadingEllipsis": "Loading ..."
+}

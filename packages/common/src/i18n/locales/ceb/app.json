@@ -1,0 +1,84 @@
+{
+  "menu": {
+    "title": "Menu",
+    "caption": "Ang tanan nga butang nga imong mahimo og sa {{restaurant.name}}"
+  },
+  "address": "Address",
+  "hours": {
+    "open": "Open karon",
+    "closed": "Sirado",
+    "opens_at": "Abli sa {{time, time:short}}",
+    "closes_at": "Closes sa {{time, time:short}}"
+  },
+  "website": "Website",
+  "nav": {
+    "explore": "Susiha ang",
+    "eat": "Mokaon",
+    "service": "Serbisyo"
+  },
+  "ingredients": "Sagol",
+  "addons": "Idugang sa",
+  "camera": {
+    "notAvailable": {
+      "title": "Camera dili magamit",
+      "subtitle": "Camera sa browser dili anaa sa device niini nga"
+    },
+    "takePhoto": "Dad-a sa usa ka litrato niini"
+  },
+  "service": {
+    "title": "Tawga sa usa ka pag-alagad",
+    "subtitle": "Uban niini nga bahin, nga imong mahimo mohangyo sa usa ka sa bisan unsa nga matang sa condiment o tableware sa imong lamesa.",
+    "instruction": "Check sa pinaagi sa pag-scan sa QR code sa usa ka restaurant duol kaninyo sa pagsugod.",
+    "types": {
+      "condiments": "Condiments"
+    }
+  },
+  "bill": {
+    "split": "Split",
+    "selecting": "Pagpili sa mga butang sa bill",
+    "splittingWith": "Ang tipak sa taliwala sa:",
+    "splittingWith_zero": "Pagpili tiggamit",
+    "splittingCount": "{{count}} tawo",
+    "splittingCount_plural": "{{count}} tawo",
+    "itemCountSelected": "{{count}} butang pinili nga",
+    "itemCountSelected_plural": "{{count}} butang pinili nga",
+    "itemCountSelected_none": "Walay pinili nga mga butang"
+  },
+  "gratuity": "Gratuity",
+  "pay": "Bayri",
+  "paymentPending": "Naghulat alang sa pagbayad ...",
+  "editing": "Pag-usab",
+  "profile": "Profile",
+  "currency": {
+    "title": "Ipakita ang currency",
+    "set": "Ibutang display currency",
+    "original": "Nagpakita sa presyo sa mga orihinal nga currency"
+  },
+  "roles": {
+    "title": "Tahas",
+    "manager": "Manager",
+    "waiter": "Waiter",
+    "proofreader": "Proofreader"
+  },
+  "language": {
+    "setPrimary": "Ibutang nag-unang pinulongan",
+    "default": "Nga remate pinulongan",
+    "other": "Ang ubang mga pinulongan",
+    "addOther": "Idugang laing pinulongan"
+  },
+  "cart": {
+    "title": "Shopping carromata",
+    "itemCount": "{{count}} ka piraso",
+    "itemCount_plural": "{{count}} ka book",
+    "itemCount_none": "Walay sulod",
+    "add": "Idugang sa carromata",
+    "checkInInstructions": "Sa pagsugod, scan ang QR code sa usa ka restaurant duol"
+  },
+  "nutrition": {
+    "facts": "Nutritional bili",
+    "fats": "Tambok",
+    "carbs": "Carbohydrates",
+    "proteins": "Protina",
+    "calories": "Kaloriya"
+  }
+}

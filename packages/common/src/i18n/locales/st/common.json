@@ -1,0 +1,21 @@
+{
+  "user": {
+    "signIn": "Kena",
+    "logOut": "Tsoaha"
+  },
+  "phone": {
+    "long": "Nomoro ea mohala"
+  },
+  "email": {
+    "long": "Aterese ea imeile"
+  },
+  "suggested": "Etsa tlhahiso",
+  "other": "Lipuo tse ling",
+  "selectLanguage": "Select puo",
+  "selectCountry": "Select naheng",
+  "selectCurrency": "Select chelete",
+  "back": "Leba morao",
+  "select": "Khetha",
+  "clear": "Hlakile kgetho",
+  "loadingEllipsis": "Loading ..."
+}

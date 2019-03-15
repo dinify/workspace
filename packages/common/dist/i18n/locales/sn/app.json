@@ -1,0 +1,83 @@
+{
+  "menu": {
+    "title": "Menyu",
+    "caption": "Zvose unogona kupinda {{restaurant.name}}"
+  },
+  "address": "Adhiresi",
+  "hours": {
+    "open": "Open ikozvino",
+    "closed": "Vharika",
+    "opens_at": "Anovhura pa {{time, time:short}}",
+    "closes_at": "Rwunopera pa {{time, time:short}}"
+  },
+  "nav": {
+    "explore": "Pasura",
+    "eat": "Kudya",
+    "checkIn": "Pinda",
+    "service": "Sevhisi"
+  },
+  "addons": "Wedzera pamusoro",
+  "serviceFee": "Service kubhadhara",
+  "order": "Hurongwa",
+  "camera": {
+    "notAvailable": {
+      "title": "Camera haana kuwanikwa",
+      "subtitle": "The Browser wacho kamera haasi kuwanika pamusoro mudziyo uyu"
+    },
+    "takePhoto": "Tora pikicha pariri"
+  },
+  "service": {
+    "title": "Call basa",
+    "subtitle": "With chikamu ichi, unogona kukumbira chero condiment kana tableware nomutsa tafura yako.",
+    "instruction": "Check nenzira kushanda pakuvheneka ari QR code muresitorendi pedyo newe kuti kutanga.",
+    "types": {
+      "tableware": "Tableware"
+    }
+  },
+  "bill": {
+    "title": "Bhiri",
+    "split": "Paradzanisa",
+    "selecting": "Sarudza zvinhu zviri bhiri",
+    "splittingWith": "Iri akatsemura pakati:",
+    "splittingWith_zero": "Select vanoshandisa",
+    "splittingCount": "{{count}} munhu",
+    "itemCountSelected": "Chinhu {{count}} yasarudzwa",
+    "itemCountSelected_plural": "{{count}} zvinhu yasarudzwa",
+    "itemCountSelected_none": "Hapana zvinhu yasarudzwa"
+  },
+  "paymentPending": "Kumirira mubhadharo ...",
+  "editing": "Fora",
+  "currency": {
+    "title": "Ratidza mari",
+    "set": "Set kuratidza mari",
+    "original": "Kuratidza mitengo chepakutanga mari"
+  },
+  "roles": {
+    "title": "Mumabasa",
+    "manager": "Meneja",
+    "waiter": "Hweta",
+    "cook": "Kuka",
+    "proofreader": "Muverengi"
+  },
+  "language": {
+    "setPrimary": "Set mutauro chepuraimari",
+    "default": "Default mutauro",
+    "other": "Other mitauro",
+    "addOther": "Wedzera mumwe mutauro"
+  },
+  "cart": {
+    "title": "Yekutengera",
+    "itemCount": "{{count}} chidimbu",
+    "itemCount_plural": "{{count}} zvidimbu",
+    "itemCount_none": "Chinhu",
+    "add": "Wedzera ngoro",
+    "checkInInstructions": "Kutanga, atarise QR code muresitorendi pedyo"
+  },
+  "nutrition": {
+    "facts": "Muviri ukoshi",
+    "fats": "Mafuta",
+    "carbs": "Makabhohaidhiretsi",
+    "proteins": "Mapuroteni",
+    "calories": "Macalorie"
+  }
+}

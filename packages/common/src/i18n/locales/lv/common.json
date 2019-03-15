@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Ielogoties",
+    "logOut": "Izrakstīties"
+  },
+  "phone": {
+    "short": "Telefons",
+    "long": "Telefona numurs"
+  },
+  "email": {
+    "short": "E-pasts",
+    "long": "Epasta adrese"
+  },
+  "suggested": "Ieteikts",
+  "other": "Citas valodas",
+  "selectLanguage": "Izvēlēties valodu",
+  "selectCountry": "Izvēlies valsti",
+  "selectCurrency": "Izvēlieties valūtu",
+  "back": "Atgriezties",
+  "select": "Izvēlēties",
+  "clear": "Notīrīt atlasi",
+  "search": "Meklēt",
+  "loadingEllipsis": "Notiek ielāde ..."
+}

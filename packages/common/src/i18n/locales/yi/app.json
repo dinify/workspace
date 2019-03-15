@@ -1,0 +1,95 @@
+{
+  "menu": {
+    "title": "מעניו",
+    "caption": "אַלץ איר קענען באַקומען אין {{restaurant.name}}"
+  },
+  "address": "אַדרעס",
+  "hours": {
+    "open": "עפענען איצט",
+    "closed": "קלאָוזד",
+    "opens_at": "אָפּענס בייַ {{time, time:short}}",
+    "closes_at": "קלאָסעס ביי {{time, time:short}}"
+  },
+  "website": "וועבזייַטל",
+  "nav": {
+    "explore": "ויספאָרשן",
+    "eat": "צו עסן",
+    "checkIn": "געב דיך איין",
+    "service": "דינסט"
+  },
+  "ingredients": "ינגרעדיענץ",
+  "addons": "לייגן מער",
+  "subtotal": "סובטאָטאַל",
+  "total": "גאַנץ",
+  "totalConverted": "גאַנץ ({{currencyName}})",
+  "serviceFee": "דינסט אָפּצאָל",
+  "order": "אָרדענונג",
+  "camera": {
+    "notAvailable": {
+      "title": "אַפּאַראַט ניט בנימצא",
+      "subtitle": "דעם בלעטערער ס אַפּאַראַט איז ניט בנימצא אויף דעם מיטל"
+    },
+    "takePhoto": "נעמען אַ photo of עס"
+  },
+  "service": {
+    "title": "רופן אַ דינסט",
+    "subtitle": "מיט דעם שטריך, איר קענען בעטן אַ קיין מין פון קאַנדאַמאַנט אָדער טייבאַלווער צו דיין טיש.",
+    "instruction": "קוק אין דורך סקאַנינג די קר קאָד אין אַ רעסטאָראַן לעבן איר צו באַקומען סטאַרטעד.",
+    "types": {
+      "tableware": "טאַבלעוואַרע",
+      "condiments": "קאָנדימענץ"
+    }
+  },
+  "bill": {
+    "title": "רעכענונג",
+    "split": "שפּאַלטן",
+    "selecting": "סעלעקט די זאכן אין רעכענונג",
+    "splittingWith": "איז שפּאַלטן צווישן:",
+    "splittingWith_zero": "סעלעקט ניצערס",
+    "splittingCount": "{{count}} מענטש",
+    "splittingCount_plural": "{{count}} מענטשן",
+    "itemCountSelected": "{{count}} נומער אויסגעקליבן",
+    "itemCountSelected_plural": "{{count}} זאכן אויסגעקליבן",
+    "itemCountSelected_none": "קיין זאכן אויסגעקליבן"
+  },
+  "gratuity": "טרינקגעלט",
+  "pay": "באַצאָלן",
+  "paymentPending": "ווארטן פֿאַר צאָלונג ...",
+  "editing": "עדיטינג",
+  "profile": "פּראָפיל",
+  "dashboard": "דאַשבאָאַרד",
+  "waiterboard": "וואַיטערבאָאַרד",
+  "currency": {
+    "title": "אַרויסווייַזן קראַנטקייַט",
+    "set": "שטעלן אַרויסווייַזן קראַנטקייַט",
+    "original": "ווייַזונג פּרייסיז אין די אָריגינעל קראַנטקייַט"
+  },
+  "roles": {
+    "title": "ראָלעס",
+    "manager": "פאַרוואַלטער",
+    "waiter": "קעלנער",
+    "cook": "קאָכן",
+    "proofreader": "קאָרעקטאָר"
+  },
+  "language": {
+    "setPrimary": "שטעלן ערשטיק שפּראַך",
+    "default": "ניט ויסצאָלן שפּראַך",
+    "other": "אנדערע שפּראַכן",
+    "addOther": "לייג צו אן אנדער שפּראַך"
+  },
+  "cart": {
+    "title": "שאַפּינג קאַרט",
+    "itemCount": "{{count}} שטיק",
+    "itemCount_plural": "{{count}} ברעקלעך",
+    "itemCount_none": "ליידיק",
+    "add": "לייג צו צום קארטע",
+    "checkInInstructions": "צו באַקומען אנגעהויבן, יבערקוקן די קר קאָד אין אַ רעסטאָראַן נירביי"
+  },
+  "nutrition": {
+    "facts": "נוטרישאַנאַל ווערט",
+    "fats": "פעט",
+    "carbs": "קאַרבאָהידראַטעס",
+    "proteins": "פּראָטעינס",
+    "calories": "קאַלאָריעס"
+  }
+}

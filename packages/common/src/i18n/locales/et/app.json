@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "Menüü",
+    "caption": "Kõik, mida võite {{restaurant.name}}"
+  },
+  "address": "Aadress",
+  "hours": {
+    "open": "Ava nüüd",
+    "closed": "Suletud",
+    "opens_at": "Avatakse {{time, time:short}}",
+    "closes_at": "Suletakse {{time, time:short}}"
+  },
+  "website": "Veebisait",
+  "nav": {
+    "explore": "Uurima",
+    "eat": "Sööma",
+    "checkIn": "Registreerumise",
+    "service": "Teenus"
+  },
+  "ingredients": "Koostisosad",
+  "addons": "Lisa",
+  "subtotal": "Osakokkuvõte",
+  "total": "Kokku",
+  "totalConverted": "Kokku ({{currencyName}})",
+  "serviceFee": "Teenustasu",
+  "order": "Järjekord",
+  "camera": {
+    "notAvailable": {
+      "title": "Kaamera ei ole saadaval",
+      "subtitle": "Brauser kaamera ei ole selles seadmes saadaval"
+    },
+    "takePhoto": "Pildistage see"
+  },
+  "service": {
+    "title": "Kõne teenus",
+    "subtitle": "Selle funktsiooni abil saate taotleda mingit maitseainete või lauanõud tabelisse.",
+    "instruction": "Check in skaneerides QR koodi restoran lähedal alustada.",
+    "types": {
+      "tableware": "Lauanõud",
+      "condiments": "Maitseained"
+    }
+  },
+  "bill": {
+    "title": "Arve",
+    "split": "Lõhe",
+    "selecting": "Valige üksused arve",
+    "splittingWith": "On jagatud:",
+    "splittingWith_zero": "Valige kasutajad",
+    "splittingCount": "{{count}} inimene",
+    "splittingCount_plural": "{{count}} inimest",
+    "itemCountSelected": "{{count}} valitud üksuse",
+    "itemCountSelected_plural": "{{count}} valitud üksuste",
+    "itemCountSelected_none": "Valitud üksused puuduvad"
+  },
+  "gratuity": "Vaevatasu",
+  "pay": "Maksma",
+  "paymentPending": "Ootan makset ...",
+  "editing": "Toimetamine",
+  "profile": "Profiil",
+  "dashboard": "Armatuurlaud",
+  "currency": {
+    "title": "Display valuuta",
+    "set": "Määra kuvatud valuuta",
+    "original": "Näitan hinnad algses valuutas"
+  },
+  "roles": {
+    "title": "Rollid",
+    "manager": "Juht",
+    "waiter": "Kelner",
+    "cook": "Kokk",
+    "proofreader": "Korrektori"
+  },
+  "language": {
+    "setPrimary": "Määra esmane keel",
+    "default": "Vaikimisi keel",
+    "other": "Teised keeled",
+    "addOther": "Lisa veel üks keel"
+  },
+  "cart": {
+    "title": "Ostukorv",
+    "itemCount": "{{count}} tükk",
+    "itemCount_plural": "{{count}} tükki",
+    "itemCount_none": "Tühi",
+    "add": "Lisa ostukorvi",
+    "checkInInstructions": "Alustamiseks QR koodi restoran lähedal"
+  },
+  "nutrition": {
+    "facts": "Toiteväärtus",
+    "fats": "Rasv",
+    "carbs": "Süsivesikud",
+    "proteins": "Valgud",
+    "calories": "Kalorid"
+  }
+}

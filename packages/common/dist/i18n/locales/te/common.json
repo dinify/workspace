@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "సైన్ ఇన్",
+    "logOut": "సైన్ ఔట్"
+  },
+  "phone": {
+    "short": "ఫోన్",
+    "long": "ఫోను నంబరు"
+  },
+  "email": {
+    "short": "ఇమెయిల్",
+    "long": "ఇమెయిల్ చిరునామా"
+  },
+  "suggested": "సూచించిన",
+  "other": "ఇతర భాషలు",
+  "selectLanguage": "భాషను ఎంచుకోండి",
+  "selectCountry": "దేశంలో ఎంచుకోండి",
+  "selectCurrency": "కరెన్సీ ఎంచుకోండి",
+  "back": "వెనక్కి వెళ్ళు",
+  "select": "ఎంచుకోండి",
+  "clear": "ప్రశాంతంగా ఎంపిక",
+  "search": "శోధన",
+  "loadingEllipsis": "లోడ్..."
+}

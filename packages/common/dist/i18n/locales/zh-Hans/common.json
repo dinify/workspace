@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "登入",
+    "logOut": "登出"
+  },
+  "phone": {
+    "short": "电话",
+    "long": "电话号码"
+  },
+  "email": {
+    "short": "电子邮件",
+    "long": "电子邮件地址"
+  },
+  "suggested": "建议",
+  "other": "其他语言",
+  "selectLanguage": "选择语言",
+  "selectCountry": "选择国家",
+  "selectCurrency": "选择货币",
+  "back": "回去",
+  "select": "选择",
+  "clear": "清空选项",
+  "search": "搜索",
+  "loadingEllipsis": "载入中..."
+}

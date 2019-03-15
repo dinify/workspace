@@ -1,0 +1,92 @@
+{
+  "menu": {
+    "caption": "Çdo gjë që ju mund të merrni në {{restaurant.name}}"
+  },
+  "address": "Adresë",
+  "hours": {
+    "open": "Open tani",
+    "closed": "Mbyllur",
+    "opens_at": "Hapet në {{time, time:short}}",
+    "closes_at": "Mbyllet në {{time, time:short}}"
+  },
+  "website": "Faqja e internetit",
+  "nav": {
+    "explore": "Eksploroni",
+    "eat": "Për të ngrënë",
+    "checkIn": "Mberritja",
+    "service": "Shërbim"
+  },
+  "ingredients": "Përbërësit",
+  "addons": "Shtoni në",
+  "subtotal": "Nëntotali",
+  "total": "Gjithsej",
+  "totalConverted": "Gjithsej ({{currencyName}})",
+  "serviceFee": "Tarifa e shërbimit",
+  "order": "Urdhër",
+  "camera": {
+    "notAvailable": {
+      "title": "Kamera nuk është në dispozicion",
+      "subtitle": "Kamera shfletuesi nuk është në dispozicion në këtë pajisje"
+    },
+    "takePhoto": "Marrë një foto të saj"
+  },
+  "service": {
+    "title": "Telefononi një shërbim",
+    "subtitle": "Me këtë funksion, ju mund të kërkoni një çdo lloj piper ose sendesh në tryezën tuaj.",
+    "instruction": "Kontrolloni në nga skanimi kodin QR në një restorant pranë jush për të marrë filluar.",
+    "types": {
+      "tableware": "Takëm",
+      "condiments": "Condiments"
+    }
+  },
+  "bill": {
+    "title": "Fature",
+    "split": "Ndarje",
+    "selecting": "Zgjidhni artikujt në faturën",
+    "splittingWith": "Është e ndarë në mes:",
+    "splittingWith_zero": "Zgjidh përdoruesit",
+    "splittingCount_plural": "{{count}} persona",
+    "itemCountSelected": "{{count}} pika të zgjedhura",
+    "itemCountSelected_plural": "{{count}} pikat e zgjedhura",
+    "itemCountSelected_none": "Nuk ka artikuj të përzgjedhura"
+  },
+  "gratuity": "Bakshish",
+  "pay": "Paguaj",
+  "paymentPending": "Duke pritur për pagesën e ...",
+  "editing": "Redaktimi",
+  "profile": "Profil",
+  "dashboard": "Baltëpritëse",
+  "currency": {
+    "title": "Display monedhës",
+    "set": "Set monedhës ekran",
+    "original": "Tregon çmimet në monedhën origjinale"
+  },
+  "roles": {
+    "title": "Rolet",
+    "manager": "Menaxher",
+    "waiter": "Kamerier",
+    "cook": "Kuzhinier",
+    "proofreader": "Korrektor bocash"
+  },
+  "language": {
+    "setPrimary": "Gjuha kryesore Set",
+    "default": "Gjuha e albumit",
+    "other": "Gjuhe te tjera",
+    "addOther": "Shto një gjuhë tjetër"
+  },
+  "cart": {
+    "title": "Karrocë pazar",
+    "itemCount": "{{count}} copë",
+    "itemCount_plural": "{{count}} copa",
+    "itemCount_none": "Bosh",
+    "add": "Shportë",
+    "checkInInstructions": "Për t'ia filluar, skanoni kodin QR në një restorant aty pranë"
+  },
+  "nutrition": {
+    "facts": "Vlera ushqyese",
+    "fats": "Yndyrë",
+    "carbs": "Karbohidratet",
+    "proteins": "Proteinat",
+    "calories": "Kalorive"
+  }
+}

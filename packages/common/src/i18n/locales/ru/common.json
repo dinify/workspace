@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Войти в систему",
+    "logOut": "Выход"
+  },
+  "phone": {
+    "short": "Телефон",
+    "long": "Номер телефона"
+  },
+  "email": {
+    "short": "Эл. адрес",
+    "long": "Адрес электронной почты"
+  },
+  "suggested": "Предложенный",
+  "other": "Другие языки",
+  "selectLanguage": "Выберите язык",
+  "selectCountry": "Выберите страну",
+  "selectCurrency": "Выберите валюту",
+  "back": "Вернитесь",
+  "select": "Выберите",
+  "clear": "Очистить выбор",
+  "search": "Поиск",
+  "loadingEllipsis": "Loading ..."
+}

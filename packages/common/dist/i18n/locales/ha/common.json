@@ -1,0 +1,22 @@
+{
+  "user": {
+    "signIn": "Shiga",
+    "logOut": "Shiga daga"
+  },
+  "phone": {
+    "long": "Lambar tarho"
+  },
+  "email": {
+    "short": "Email",
+    "long": "Adireshin i-mel"
+  },
+  "suggested": "Shawara",
+  "other": "Wasu harsuna",
+  "selectLanguage": "Zabi harshe",
+  "selectCountry": "Zabi kasa",
+  "selectCurrency": "Zabi kudin",
+  "back": "Koma",
+  "select": "Zabi",
+  "search": "Search",
+  "loadingEllipsis": "Loading ..."
+}

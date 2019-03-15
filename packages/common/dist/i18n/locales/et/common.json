@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Logi sisse",
+    "logOut": "Logi välja"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Telefoninumber"
+  },
+  "email": {
+    "short": "Saatke",
+    "long": "E-posti aadress"
+  },
+  "suggested": "Soovitatud",
+  "other": "Teised keeled",
+  "selectLanguage": "Vali keel",
+  "selectCountry": "Vali riik",
+  "selectCurrency": "Vali valuuta",
+  "back": "Mine tagasi",
+  "select": "Valima",
+  "clear": "Puhasta valik",
+  "search": "Otsing",
+  "loadingEllipsis": "Laadimine ..."
+}

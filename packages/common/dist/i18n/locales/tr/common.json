@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Oturum aç",
+    "logOut": "Oturumu Kapat"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Telefon numarası"
+  },
+  "email": {
+    "short": "E-posta",
+    "long": "E"
+  },
+  "suggested": "Önerilen",
+  "other": "Diğer diller",
+  "selectLanguage": "Dil Seçin",
+  "selectCountry": "Ülke seçin",
+  "selectCurrency": "Para birimini seçin",
+  "back": "Geri dön",
+  "select": "Seçmek",
+  "clear": "Seçimi temizle",
+  "search": "Arama",
+  "loadingEllipsis": "Yükleniyor..."
+}

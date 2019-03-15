@@ -1,0 +1,92 @@
+{
+  "menu": {
+    "title": "Clár",
+    "caption": "Gach rud is féidir leat a fháil i {{restaurant.name}}"
+  },
+  "address": "Seoladh",
+  "hours": {
+    "open": "Oscail anois",
+    "closed": "Dúnta",
+    "opens_at": "Oscail ag {{time, time:short}}",
+    "closes_at": "Dúnann ag {{time, time:short}}"
+  },
+  "website": "Láithreán",
+  "nav": {
+    "explore": "Déan iniúchadh",
+    "eat": "Ith",
+    "checkIn": "Checkin",
+    "service": "Seirbhís"
+  },
+  "ingredients": "Comhábhair",
+  "addons": "Cuir ar",
+  "subtotal": "Fo-iomlán CHEANNTEIDEAL",
+  "total": "Iomlán",
+  "totalConverted": "Iomlán ({{currencyName}})",
+  "serviceFee": "Táille seirbhíse",
+  "order": "Ordú",
+  "camera": {
+    "notAvailable": {
+      "title": "Ceamara nach bhfuil ar fáil",
+      "subtitle": "Níl an ceamara leis an mbrabhsálaí le fáil ar an ngléas"
+    },
+    "takePhoto": "Glac grianghraf de sé"
+  },
+  "service": {
+    "title": "Cuir glaoch ar seirbhís",
+    "subtitle": "Leis an ghné seo, is féidir leat a iarraidh ar aon chineál de condiment nó earraí boird le do tábla.",
+    "instruction": "Seiceáil i ag scanadh an cód QR i mbialann in aice leat chun tús a chur.",
+    "types": {
+      "tableware": "Gréithe boird",
+      "condiments": "Tarsann"
+    }
+  },
+  "bill": {
+    "split": "Scoilt",
+    "selecting": "Roghnaigh na míreanna i bhille",
+    "splittingWith": "Roinnte idir:",
+    "splittingWith_zero": "Roghnaigh úsáideoirí",
+    "splittingCount": "{{count}} duine",
+    "splittingCount_plural": "{{count}} daoine",
+    "itemCountSelected": "{{count}} mhír roghnaithe",
+    "itemCountSelected_plural": "{{count}} míreanna roghnaithe",
+    "itemCountSelected_none": "Níl aon rud roghnaithe"
+  },
+  "gratuity": "Aisce",
+  "pay": "Pá",
+  "paymentPending": "Ag feitheamh le híocaíocht ...",
+  "editing": "Eagarthóireacht",
+  "profile": "Próifíl",
+  "dashboard": "Painéal na nIonstraimí",
+  "currency": {
+    "title": "Airgeadra Taispeáin",
+    "set": "Airgeadra taispeáint Socraigh",
+    "original": "Praghsanna Showing san airgeadra bunaidh"
+  },
+  "roles": {
+    "title": "Rólanna",
+    "manager": "Bainisteoir",
+    "waiter": "Waiter",
+    "proofreader": "Proofreader"
+  },
+  "language": {
+    "setPrimary": "Phríomhtheanga Socraigh",
+    "default": "Teanga réamhshocraithe",
+    "other": "Teangacha eile",
+    "addOther": "Cuir teanga eile"
+  },
+  "cart": {
+    "title": "Cart siopadóireacht",
+    "itemCount": "{{count}} píosa",
+    "itemCount_plural": "{{count}} píosaí",
+    "itemCount_none": "Folamh",
+    "add": "Cuir le cart",
+    "checkInInstructions": "Chun tús a chur, scanadh an cód QR i mbialann in aice láimhe"
+  },
+  "nutrition": {
+    "facts": "Luach cothaithe",
+    "fats": "Saill",
+    "carbs": "Carbaihiodráití",
+    "proteins": "Próitéiní",
+    "calories": "Calories"
+  }
+}

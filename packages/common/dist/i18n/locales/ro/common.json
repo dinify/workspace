@@ -1,0 +1,23 @@
+{
+  "user": {
+    "signIn": "Conectare"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Numar de telefon"
+  },
+  "email": {
+    "short": "E-mail",
+    "long": "Adresa de email"
+  },
+  "suggested": "Sugerat",
+  "other": "Alte limbi",
+  "selectLanguage": "Selecteaza limba",
+  "selectCountry": "Selecteaza tara",
+  "selectCurrency": "Selectați moneda",
+  "back": "Întoarce-te",
+  "select": "Alege",
+  "clear": "Selecție clară",
+  "search": "Căutare",
+  "loadingEllipsis": "Se incarca..."
+}

@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "مینو",
+    "caption": "سب کچھ جو آپ کے لئے حاصل کر سکتے ہیں {{restaurant.name}}"
+  },
+  "address": "ایڈریس",
+  "hours": {
+    "open": "اب کھولیں",
+    "closed": "بند",
+    "opens_at": "{{time, time:short}} بجے کھلتا ہے",
+    "closes_at": "{{time, time:short}} اوپر بند کرتا"
+  },
+  "website": "ویب سائٹ",
+  "nav": {
+    "explore": "کھنگالیں",
+    "eat": "کھانے کو",
+    "checkIn": "چیک ان",
+    "service": "سروس"
+  },
+  "ingredients": "اجزاء",
+  "addons": "اضافت",
+  "subtotal": "ذیلی کل",
+  "total": "کل",
+  "totalConverted": "کل ({{currencyName}})",
+  "serviceFee": "خدمت کے پیسے",
+  "order": "آرڈر",
+  "camera": {
+    "notAvailable": {
+      "title": "دستیاب نہیں کیمرے",
+      "subtitle": "براؤزر کی کیمرے اس آلہ پر دستیاب نہیں ہے"
+    },
+    "takePhoto": "اس کی ایک تصویر لے لو"
+  },
+  "service": {
+    "title": "ایک سروس کو کال کریں",
+    "subtitle": "اس خصوصیت کے ساتھ، آپ کو آپ کی میز پر سالن یا کٹلری کی کسی بھی قسم کی درخواست کر سکتے ہیں.",
+    "instruction": "ایک ریستوران میں QR کوڈ کو سکین آپ کو شروع کرنے کے قریب کی طرف سے جانچ پڑتال کریں.",
+    "types": {
+      "tableware": "کٹلری",
+      "condiments": "مصالحہ جات"
+    }
+  },
+  "bill": {
+    "title": "بل",
+    "split": "سپلٹ",
+    "selecting": "بل میں اشیاء کو منتخب کریں",
+    "splittingWith": "کے درمیان تقسیم کیا جاتا ہے:",
+    "splittingWith_zero": "صارفین منتخب کریں",
+    "splittingCount": "{{count}} شخص",
+    "splittingCount_plural": "{{count}} افراد",
+    "itemCountSelected": "{{count}} آئٹم منتخب",
+    "itemCountSelected_plural": "{{count}} منتخب اشیاء",
+    "itemCountSelected_none": "منتخب شدہ کی کوئی شے"
+  },
+  "gratuity": "اپدان",
+  "pay": "ادائیگی",
+  "paymentPending": "ادائیگی کے لئے انتظار کر رہا ہے ...",
+  "editing": "ایڈیٹنگ",
+  "profile": "پروفائل",
+  "dashboard": "ڈیش بورڈ",
+  "currency": {
+    "title": "کرنسی دکھائیں",
+    "set": "ڈسپلے کرنسی سیٹ کریں",
+    "original": "اصل کرنسی میں قیمتوں کی نمائش"
+  },
+  "roles": {
+    "title": "کردار",
+    "manager": "مینیجر",
+    "waiter": "ویٹر",
+    "cook": "کوک",
+    "proofreader": "Proofreader کی"
+  },
+  "language": {
+    "setPrimary": "مقرر کی بنیادی زبان",
+    "default": "پہلے سے طے شدہ زبان",
+    "other": "دوسری زبانیں",
+    "addOther": "کسی اور زبان میں شامل کریں"
+  },
+  "cart": {
+    "title": "خریداری کی ٹوکری",
+    "itemCount": "{{count}} ٹکڑا",
+    "itemCount_plural": "{{count}} ٹکڑے",
+    "itemCount_none": "خالی",
+    "add": "ٹوکری میں شامل کریں",
+    "checkInInstructions": "شروع کرنے کیلئے، ایک قریبی ریستوران میں QR کوڈ کو اسکین"
+  },
+  "nutrition": {
+    "facts": "غذائی اہمیت",
+    "fats": "موٹی",
+    "carbs": "کاربوہائیڈریٹس",
+    "proteins": "پروٹین",
+    "calories": "حرارے"
+  }
+}

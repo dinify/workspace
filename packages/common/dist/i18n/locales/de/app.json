@@ -1,0 +1,91 @@
+{
+  "menu": {
+    "title": "Speisekarte",
+    "caption": "Alles, was Sie können in bekommen {{restaurant.name}}"
+  },
+  "address": "Adresse",
+  "hours": {
+    "open": "Jetzt geöffnet",
+    "closed": "Geschlossen",
+    "opens_at": "Öffnet bei {{time, time:short}}",
+    "closes_at": "Schließt bei {{time, time:short}}"
+  },
+  "website": "Webseite",
+  "nav": {
+    "explore": "Erkunden",
+    "eat": "Essen",
+    "checkIn": "Check-In",
+    "service": "Bedienung"
+  },
+  "ingredients": "Zutaten",
+  "addons": "Erweiterung",
+  "subtotal": "Zwischensumme",
+  "serviceFee": "Servicegebühr",
+  "order": "Auftrag",
+  "camera": {
+    "notAvailable": {
+      "title": "Kamera nicht verfügbar",
+      "subtitle": "Die Kamera des Browsers ist auf diesem Gerät nicht verfügbar"
+    },
+    "takePhoto": "Nehmen Sie ein Foto davon"
+  },
+  "service": {
+    "title": "Kontaktieren Sie einen Service",
+    "subtitle": "Mit dieser Funktion können Sie eine beliebige Art von Würze oder Geschirr auf den Tisch anfordern.",
+    "instruction": "Überprüfen Sie durch Scannen des QR-Code in einem Restaurant in der Nähe von Ihnen, um loszulegen.",
+    "types": {
+      "tableware": "Geschirr",
+      "condiments": "Gewürze"
+    }
+  },
+  "bill": {
+    "title": "Rechnung",
+    "split": "Teilt",
+    "selecting": "Wählen Sie die Elemente in Rechnung",
+    "splittingWith": "Wird aufgeteilt zwischen:",
+    "splittingWith_zero": "Wählen Sie Benutzer",
+    "splittingCount": "{{count}} Person",
+    "splittingCount_plural": "{{count}} Personen",
+    "itemCountSelected": "{{count}} Element ausgewählt",
+    "itemCountSelected_plural": "{{count}} Artikel ausgewählt",
+    "itemCountSelected_none": "Keine Elemente ausgewählt"
+  },
+  "gratuity": "Trinkgeld",
+  "pay": "Zahlen",
+  "paymentPending": "Warten auf Zahlung...",
+  "editing": "Bearbeitung",
+  "profile": "Profil",
+  "dashboard": "Instrumententafel",
+  "currency": {
+    "title": "Anzeigewährung",
+    "set": "Stellen Sie Anzeigewährung",
+    "original": "Es werden Preise in Originalwährung"
+  },
+  "roles": {
+    "title": "Rollen",
+    "waiter": "Bedienung",
+    "cook": "Koch",
+    "proofreader": "Korrektor"
+  },
+  "language": {
+    "setPrimary": "Set Primärsprache",
+    "default": "Standardsprache",
+    "other": "Andere Sprachen",
+    "addOther": "In einer anderen Sprache"
+  },
+  "cart": {
+    "title": "Einkaufswagen",
+    "itemCount": "{{count}} Stück",
+    "itemCount_plural": "{{count}} Stücke",
+    "itemCount_none": "Leeren",
+    "add": "In den Warenkorb legen",
+    "checkInInstructions": "Um loszulegen, scannen den QR-Code in einem Restaurant in der Nähe"
+  },
+  "nutrition": {
+    "facts": "Nährwert",
+    "fats": "Fett",
+    "carbs": "Kohlenhydrate",
+    "proteins": "Proteine",
+    "calories": "Kalorien"
+  }
+}

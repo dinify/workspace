@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Log ind",
+    "logOut": "Log ud"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Telefonnummer"
+  },
+  "email": {
+    "short": "E-mail",
+    "long": "Email adresse"
+  },
+  "suggested": "Foreslået",
+  "other": "Andre sprog",
+  "selectLanguage": "Vælg sprog",
+  "selectCountry": "Vælg land",
+  "selectCurrency": "Vælg valuta",
+  "back": "Gå tilbage",
+  "select": "Vælge",
+  "clear": "Nulstil valg",
+  "search": "Søg",
+  "loadingEllipsis": "Indlæser..."
+}

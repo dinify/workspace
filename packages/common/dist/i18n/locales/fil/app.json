@@ -1,0 +1,89 @@
+{
+  "menu": {
+    "title": "Menu",
+    "caption": "Lahat ng bagay maaari kang makipag-{{restaurant.name}}"
+  },
+  "address": "Address",
+  "hours": {
+    "open": "Bukas na ngayon",
+    "closed": "Sarado",
+    "opens_at": "Bukas nang {{time, time:short}}",
+    "closes_at": "Isasara sa {{time, time:short}}"
+  },
+  "nav": {
+    "explore": "Galugarin",
+    "eat": "Kumain",
+    "checkIn": "Checkin",
+    "service": "Serbisyo"
+  },
+  "ingredients": "Sangkap",
+  "addons": "Idagdag sa",
+  "subtotal": "Subtotal",
+  "total": "Kabuuan",
+  "totalConverted": "Kabuuan ({{currencyName}})",
+  "serviceFee": "Kabayaran sa serbisyo",
+  "order": "Pagkakasunud-sunod",
+  "camera": {
+    "notAvailable": {
+      "title": "Camera hindi magagamit",
+      "subtitle": "Camera ng browser ay hindi magagamit sa device na ito"
+    },
+    "takePhoto": "Kumuha ng larawan ng mga ito"
+  },
+  "service": {
+    "title": "Tumawag sa isang serbisyo ng",
+    "subtitle": "Sa tampok na ito, maaari kang humiling ng anumang uri ng pampalasa o kubyertos sa iyong talahanayan.",
+    "instruction": "Mag-check in sa pamamagitan ng pag-scan ang QR code sa isang restaurant na malapit sa iyo upang makapagsimula.",
+    "types": {
+      "tableware": "Mga pinggan",
+      "condiments": "Condiments"
+    }
+  },
+  "bill": {
+    "title": "Bayarin",
+    "split": "Split",
+    "selecting": "Piliin ang mga item sa bill",
+    "splittingWith": "Ay nahati sa pagitan ng:",
+    "splittingWith_zero": "Pumili ng mga user",
+    "splittingCount": "{{count}} tao",
+    "splittingCount_plural": "{{count}} tao",
+    "itemCountSelected": "{{count}} item na napili",
+    "itemCountSelected_plural": "{{count}} item ang pinili",
+    "itemCountSelected_none": "Walang napiling mga item"
+  },
+  "gratuity": "Pabuya",
+  "pay": "Magbayad",
+  "paymentPending": "Naghihintay ng mga bayad...",
+  "editing": "Pag-edit",
+  "currency": {
+    "title": "Display currency",
+    "set": "I-set ang display pera",
+    "original": "Ipinapakita ang mga presyo sa orihinal na pera"
+  },
+  "roles": {
+    "manager": "Tagapamahala",
+    "waiter": "Weyter",
+    "cook": "Tagaluto",
+    "proofreader": "Tagawasto"
+  },
+  "language": {
+    "setPrimary": "I-set ang pangunahing wika",
+    "default": "Default na wika",
+    "other": "Iba pang mga wika",
+    "addOther": "Magdagdag ng isa pang wika"
+  },
+  "cart": {
+    "itemCount": "{{count}} piraso",
+    "itemCount_plural": "{{count}} piraso",
+    "itemCount_none": "Walang laman",
+    "add": "Idagdag sa cart",
+    "checkInInstructions": "Upang makapagsimula, i-scan ang QR code sa isang restaurant malapit"
+  },
+  "nutrition": {
+    "facts": "Nutritional halaga",
+    "fats": "Taba",
+    "carbs": "Carbohydrates",
+    "proteins": "Proteins",
+    "calories": "Calories"
+  }
+}

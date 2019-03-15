@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "মেনু",
+    "caption": "সবকিছু আপনি পেতে পারেন {{restaurant.name}}"
+  },
+  "address": "ঠিকানা",
+  "hours": {
+    "open": "এখন খুলুন",
+    "closed": "বন্ধ",
+    "opens_at": "{{time, time:short}} এ খোলে",
+    "closes_at": "{{time, time:short}} এ বন্ধ হয়"
+  },
+  "website": "ওয়েবসাইট",
+  "nav": {
+    "explore": "অন্বেষণ করা",
+    "eat": "খেতে",
+    "checkIn": "চেকইন",
+    "service": "সেবা"
+  },
+  "ingredients": "ওপকরণ",
+  "addons": "এ জুড়ুন",
+  "subtotal": "উপমোট",
+  "total": "মোট",
+  "totalConverted": "মোট ({{currencyName}})",
+  "serviceFee": "পরিসেবা চার্জ",
+  "order": "ক্রম",
+  "camera": {
+    "notAvailable": {
+      "title": "ক্যামেরা উপলব্ধ নয়",
+      "subtitle": "ব্রাউজারের ক্যামেরা এই ডিভাইসে উপলব্ধ নেই"
+    },
+    "takePhoto": "এটি একটি ফটো তুলুন"
+  },
+  "service": {
+    "title": "একটি সেবা কল",
+    "subtitle": "এই বৈশিষ্ট্যটি সঙ্গে, আপনি আপনার টেবিলে আচার বা খাবার থালাবাসন একটি কোন ধরনের অনুরোধ করতে পারেন।",
+    "instruction": "একটি রেস্তোরায় QR কোড স্ক্যান আপনাকে শুরু করতে নিকটে করে পরীক্ষা করে দেখুন।",
+    "types": {
+      "tableware": "খাবার থালাবাসন",
+      "condiments": "মশলা"
+    }
+  },
+  "bill": {
+    "title": "বিল",
+    "split": "বিভক্ত করা",
+    "selecting": "বিলে আইটেম নির্বাচন করুন",
+    "splittingWith": "মধ্যে বিভক্ত করা হয়:",
+    "splittingWith_zero": "ব্যবহারকারীদের নির্বাচন করুন",
+    "splittingCount": "{{count}} ব্যক্তি",
+    "splittingCount_plural": "{{count}} জন",
+    "itemCountSelected": "{{count}} টি আইটেম নির্বাচন করা",
+    "itemCountSelected_plural": "{{count}} নির্বাচিত আইটেমগুলি",
+    "itemCountSelected_none": "কোন নির্বাচিত আইটেমগুলি"
+  },
+  "gratuity": "আনুতোষিক",
+  "pay": "বেতন",
+  "paymentPending": "টাকা প্রদানের জন্য অপেক্ষা করছি...",
+  "editing": "সম্পাদনা",
+  "profile": "প্রোফাইলের",
+  "dashboard": "ড্যাশবোর্ড",
+  "currency": {
+    "title": "ডিসপ্লে মুদ্রা",
+    "set": "প্রদর্শন মুদ্রা সেট",
+    "original": "মূল মুদ্রার মূল্য দেখানো"
+  },
+  "roles": {
+    "title": "ভূমিকা",
+    "manager": "ম্যানেজার",
+    "waiter": "ওয়েটার",
+    "cook": "রাঁধুনি",
+    "proofreader": "প্রূফ্সংশোধক"
+  },
+  "language": {
+    "setPrimary": "সেট প্রাথমিক ভাষা",
+    "default": "নির্ধারিত ভাষা",
+    "other": "অন্যান্য ভাষাসমূহ",
+    "addOther": "অন্য ভাষা যুক্ত করুন"
+  },
+  "cart": {
+    "title": "বাজারের ব্যাগ",
+    "itemCount": "{{count}} টুকরা",
+    "itemCount_plural": "{{count}} টুকরা",
+    "itemCount_none": "খালি",
+    "add": "কার্ট যোগ করুন",
+    "checkInInstructions": "শুরু করার জন্য, কাছাকাছি একটি রেস্তোরায় QR কোড স্ক্যান"
+  },
+  "nutrition": {
+    "facts": "পুষ্টিগত মান",
+    "fats": "চর্বি",
+    "carbs": "শর্করা",
+    "proteins": "প্রোটিন",
+    "calories": "ক্যালরি"
+  }
+}

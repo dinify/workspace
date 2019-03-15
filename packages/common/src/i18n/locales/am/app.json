@@ -1,0 +1,91 @@
+{
+  "menu": {
+    "title": "ማውጫ",
+    "caption": "ሁሉም ነገር በእናንተ ላይ ማግኘት ይችላሉ {{restaurant.name}}"
+  },
+  "address": "አድራሻ",
+  "hours": {
+    "open": "አሁን ክፈት",
+    "closed": "ዝግ",
+    "opens_at": "{{time, time:short}} ላይ ይከፍታል",
+    "closes_at": "{{time, time:short}} ላይ ይዘጋል"
+  },
+  "website": "ድህረገፅ",
+  "nav": {
+    "explore": "ያስሱ",
+    "eat": "መብላት",
+    "checkIn": "ያረጋግጡ",
+    "service": "አገልግሎት"
+  },
+  "ingredients": "ንጥረ ነገሮች",
+  "addons": "ላይ ያክሉ",
+  "subtotal": "ንዑስ ድምር",
+  "total": "ጠቅላላ",
+  "totalConverted": "ጠቅላላ ({{currencyName}})",
+  "serviceFee": "የአገልግሎት ክፍያ",
+  "order": "ትእዛዝ",
+  "camera": {
+    "notAvailable": {
+      "title": "ካሜራ ሊገኝ አይችልም",
+      "subtitle": "አሳሹ ካሜራ በዚህ መሣሪያ ላይ አይገኝም"
+    },
+    "takePhoto": "ይህ ፎቶ አንሳ"
+  },
+  "service": {
+    "title": "አንድ አገልግሎት ይደውሉ",
+    "subtitle": "ይህን ባህሪ ጋር, የእርስዎ ጠረጴዛ ላይ condiment ወይም tableware የሆነ ማንኛውንም ዓይነት መጠየቅ ይችላሉ.",
+    "instruction": "እርስዎ ለመጀመር አቅራቢያ አንድ ምግብ ቤት ውስጥ የ QR ኮድ እየቃኘ በማድረግ ላይ ይመልከቱ.",
+    "types": {
+      "condiments": "ማጣፈጫዎች"
+    }
+  },
+  "bill": {
+    "title": "ቢል",
+    "split": "ሰነጠቀ",
+    "selecting": "ደረሰኝ ውስጥ ንጥሎችን ምረጥ",
+    "splittingWith": "መካከል ሊከፋፈሉ ነው:",
+    "splittingWith_zero": "ተጠቃሚዎች ምረጥ",
+    "splittingCount": "{{count}} ሰው",
+    "splittingCount_plural": "{{count}} ሰዎች",
+    "itemCountSelected": "{{count}} ንጥል ተመርጧል",
+    "itemCountSelected_plural": "የተመረጡ {{count}} ንጥሎች",
+    "itemCountSelected_none": "የተመረጡ ምንም ንጥሎች"
+  },
+  "pay": "ይክፈሉ",
+  "paymentPending": "ክፍያ በመጠባበቅ ላይ ...",
+  "editing": "አርትዖት",
+  "profile": "ባንድ በኩል የሆነ መልክ",
+  "dashboard": "ዳሽቦርድ",
+  "currency": {
+    "title": "አሳይ ምንዛሬ",
+    "set": "አዘጋጅ ማሳያ ምንዛሬ",
+    "original": "የመጀመሪያውን ምንዛሬ ዋጋዎችን በማሳየት ላይ"
+  },
+  "roles": {
+    "title": "ሚናዎች",
+    "manager": "አስተዳዳሪ",
+    "waiter": "አሳላፊ",
+    "cook": "ወጥ ቤት ሴት"
+  },
+  "language": {
+    "setPrimary": "አዘጋጅ ዋና ቋንቋ",
+    "default": "ነባሪ ቋንቋ",
+    "other": "ሌሎች ቋንቋዎች",
+    "addOther": "ሌላ ቋንቋ አክል"
+  },
+  "cart": {
+    "title": "ወደ ግዢ ሳጥን ጨመር",
+    "itemCount": "{{count}} ቁራጭ",
+    "itemCount_plural": "{{count}} ቁርጥራጮች",
+    "itemCount_none": "ባዶ",
+    "add": "ወደ ግዢው ቅርጫት ጨምር",
+    "checkInInstructions": "ለመጀመር, በአቅራቢያው አንድ ምግብ ቤት ውስጥ ያለውን የ QR ኮድ ይቃኙ"
+  },
+  "nutrition": {
+    "facts": "አልሚ እሴት",
+    "fats": "ወፍራም",
+    "carbs": "ካርቦሃይድሬት",
+    "proteins": "ፕሮቲኖች",
+    "calories": "ካሎሪዎች"
+  }
+}

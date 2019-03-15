@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Daftar masuk",
+    "logOut": "Log keluar"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Nombor telefon"
+  },
+  "email": {
+    "short": "E-mel",
+    "long": "Alamat emel"
+  },
+  "suggested": "Yang dicadangkan",
+  "other": "Bahasa lain",
+  "selectLanguage": "Pilih Bahasa",
+  "selectCountry": "Pilih negara",
+  "selectCurrency": "Pilih mata wang",
+  "back": "Pergi balik",
+  "select": "Pilih",
+  "clear": "Pemilihan yang jelas",
+  "search": "Carian",
+  "loadingEllipsis": "Loading ..."
+}

@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "title": "Меню",
+    "caption": "Усё, што вы можаце атрымаць у {{restaurant.name}}"
+  },
+  "address": "Адрас",
+  "hours": {
+    "open": "Якія працуюць зараз",
+    "closed": "Закрыта",
+    "opens_at": "Адкрываецца ў {{time, time:short}}",
+    "closes_at": "Зачыняецца на {{time, time:short}}"
+  },
+  "website": "Вэб-сайт",
+  "nav": {
+    "explore": "Даследаваць",
+    "eat": "Есці",
+    "checkIn": "Прыбыцце",
+    "service": "Абслугоўванне"
+  },
+  "ingredients": "Інгрэдыенты",
+  "addons": "Прырэзаць",
+  "subtotal": "Падузровень",
+  "total": "Усяго",
+  "totalConverted": "Усяго ({{currencyName}})",
+  "serviceFee": "Плата за паслугі",
+  "order": "Заказ",
+  "camera": {
+    "notAvailable": {
+      "title": "Камера не даступны",
+      "subtitle": "Камера браўзэра не даступная на гэтай прыладзе"
+    },
+    "takePhoto": "Сфатаграфуйце яго"
+  },
+  "service": {
+    "title": "Выклік службы",
+    "subtitle": "З дапамогай гэтай функцыі вы можаце запытаць любую заправу або посуду на ваш стол.",
+    "instruction": "Заезд шляхам сканавання QR-кода ў рэстаране побач з вамі, каб пачаць працу.",
+    "types": {
+      "tableware": "Посуд",
+      "condiments": "Прыправы"
+    }
+  },
+  "bill": {
+    "title": "Банкнота",
+    "split": "Расшчэплены",
+    "selecting": "Выберыце элементы ў рахунку",
+    "splittingWith": "Падзелена паміж:",
+    "splittingWith_zero": "Выбар карыстальнікаў",
+    "splittingCount": "{{count}} чалавек",
+    "splittingCount_plural": "{{count}} чалавек",
+    "itemCountSelected": "{{count}} абраны элемент",
+    "itemCountSelected_plural": "{{count}} элементы, выбраныя",
+    "itemCountSelected_none": "Няма элементаў, выбраных"
+  },
+  "gratuity": "Хабар",
+  "pay": "Плаціць",
+  "paymentPending": "Чаканне аплаты ...",
+  "editing": "Рэдагаванне",
+  "profile": "Профіль",
+  "dashboard": "Прыборная панэль",
+  "currency": {
+    "title": "Дысплей валюты",
+    "set": "Набор валюты дысплея",
+    "original": "Паказаны кошты ў зыходнай валюце"
+  },
+  "roles": {
+    "title": "Ролі",
+    "manager": "Менеджэр",
+    "waiter": "Афіцыянт",
+    "cook": "Кок",
+    "proofreader": "Карэктура"
+  },
+  "language": {
+    "setPrimary": "Ўсталяваць першасны мова",
+    "default": "Мову па змаўчанні",
+    "other": "Іншыя мовы",
+    "addOther": "Дадаць іншую мову"
+  },
+  "cart": {
+    "title": "Кошык",
+    "itemCount": "{{count}} шт",
+    "itemCount_plural": "{{count}} шт",
+    "itemCount_none": "Пусты",
+    "add": "Дадаць у кошык",
+    "checkInInstructions": "Для пачатку сканавання QR-кода ў бліжэйшым рэстаране"
+  },
+  "nutrition": {
+    "facts": "Харчовая каштоўнасць",
+    "fats": "Тлушч",
+    "carbs": "Вугляводы",
+    "proteins": "Вавёркі",
+    "calories": "Калорыі"
+  }
+}

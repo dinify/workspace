@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Přihlásit se",
+    "logOut": "Odhlásit se"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Telefonní číslo"
+  },
+  "email": {
+    "short": "E-mailem",
+    "long": "Emailová adresa"
+  },
+  "suggested": "Doporučené",
+  "other": "Jiné jazyky",
+  "selectLanguage": "Zvolte jazyk",
+  "selectCountry": "Vyberte zemi",
+  "selectCurrency": "Vyberte měnu",
+  "back": "Vrátit se",
+  "select": "Vybrat",
+  "clear": "Zrušit výběr",
+  "search": "Vyhledávání",
+  "loadingEllipsis": "Načítání..."
+}

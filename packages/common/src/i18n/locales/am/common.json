@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "ስግን እን",
+    "logOut": "ዛግተ ውጣ"
+  },
+  "phone": {
+    "short": "ስልክ",
+    "long": "ስልክ ቁጥር"
+  },
+  "email": {
+    "short": "ኢሜይል",
+    "long": "የ ኢሜል አድራሻ"
+  },
+  "suggested": "የተጠቆሙ",
+  "other": "ሌሎች ቋንቋዎች",
+  "selectLanguage": "ቋንቋ ይምረጡ",
+  "selectCountry": "አገር ይምረጡ",
+  "selectCurrency": "ምረጥ ምንዛሬ",
+  "back": "ተመለስ",
+  "select": "ይምረጡ",
+  "clear": "ምርጫን አጥራ",
+  "search": "ፍለጋ",
+  "loadingEllipsis": "በመጫን ላይ ..."
+}

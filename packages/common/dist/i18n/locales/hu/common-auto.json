@@ -1,0 +1,23 @@
+{
+  "user": {
+    "signIn": "Bejelentkezés",
+    "logOut": "Kijelentkezés"
+  },
+  "phone": {
+    "short": "Telefon",
+    "long": "Telefonszám"
+  },
+  "email": {
+    "long": "Email cím"
+  },
+  "suggested": "Javasolt",
+  "other": "Más nyelvek",
+  "selectLanguage": "Válasszon nyelvet",
+  "selectCountry": "Válassz országot",
+  "selectCurrency": "Válasszon pénznemet",
+  "back": "Menjen vissza",
+  "select": "Választ",
+  "clear": "A kiválasztás törlése",
+  "search": "Keresés",
+  "loadingEllipsis": "Betöltés..."
+}

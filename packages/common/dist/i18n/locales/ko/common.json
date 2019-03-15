@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "로그인",
+    "logOut": "로그 아웃"
+  },
+  "phone": {
+    "short": "전화",
+    "long": "전화 번호"
+  },
+  "email": {
+    "short": "이메일",
+    "long": "이메일 주소"
+  },
+  "suggested": "제안",
+  "other": "다른 언어",
+  "selectLanguage": "언어 선택",
+  "selectCountry": "국가를 선택하세요",
+  "selectCurrency": "통화 선택",
+  "back": "돌아 가기",
+  "select": "고르다",
+  "clear": "명확한 선택",
+  "search": "수색",
+  "loadingEllipsis": "로드 중 ..."
+}

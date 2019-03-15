@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Waitohu i roto i",
+    "logOut": "Waitohu i roto i"
+  },
+  "phone": {
+    "short": "Waea",
+    "long": "Tau waea"
+  },
+  "email": {
+    "short": "Īmēra",
+    "long": "Wāhitau īmēra"
+  },
+  "suggested": "Fokotu◊u ki",
+  "other": "Ētahi atu reo",
+  "selectLanguage": "Tīpako reo",
+  "selectCountry": "Tīpako whenua",
+  "selectCurrency": "Tīpako moni",
+  "back": "Haere hoki",
+  "select": "Kōwhiri",
+  "clear": "Kōwhiringa Ūkui",
+  "search": "Rapu",
+  "loadingEllipsis": "Loading ..."
+}

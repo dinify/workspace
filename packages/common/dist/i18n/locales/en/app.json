@@ -1,10 +1,4 @@
 {
-  "list": {
-    "and_2": "{{first}} and {{last}}",
-    "and_start": "{{first}}, {{end}}",
-    "and_middle": "{{start}}, {{end}}",
-    "and_end": "{{start}}, and {{last}}"
-  },
   "menu": {
     "title": "Menu",
     "caption": "Everything you can get in {{restaurant.name}}"

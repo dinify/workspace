@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Sínigh isteach",
+    "logOut": "Logáil Amach"
+  },
+  "phone": {
+    "short": "Fón",
+    "long": "Uimhir teileafón"
+  },
+  "email": {
+    "short": "Ríomhphost",
+    "long": "Seoladh ríomhphoist"
+  },
+  "suggested": "Molta",
+  "other": "Teangacha eile",
+  "selectLanguage": "Roghnaigh teanga",
+  "selectCountry": "Roghnaigh tír",
+  "selectCurrency": "Roghnaigh airgeadra",
+  "back": "Dul ar ais",
+  "select": "Roghnaigh",
+  "clear": "Roghnú Clear",
+  "search": "Cuardach",
+  "loadingEllipsis": "Loading ..."
+}

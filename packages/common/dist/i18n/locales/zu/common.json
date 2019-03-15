@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Ngena ngemvume",
+    "logOut": "Sayinela ukuphuma"
+  },
+  "phone": {
+    "short": "Ucingo",
+    "long": "Inombolo yocingo"
+  },
+  "email": {
+    "short": "Imeyili",
+    "long": "Ikheli le-imeyili"
+  },
+  "suggested": "Eziphakanyisiwe",
+  "other": "Ezinye izilimi",
+  "selectLanguage": "Khetha ulimi",
+  "selectCountry": "Khetha izwe",
+  "selectCurrency": "Khetha lwemali",
+  "back": "Buyela emuva",
+  "select": "Khetha",
+  "clear": "Sula okukhethiwe",
+  "search": "Ukucinga",
+  "loadingEllipsis": "Iyalayisha ..."
+}

@@ -1,0 +1,24 @@
+{
+  "user": {
+    "signIn": "Sinjal",
+    "logOut": "Sign barra"
+  },
+  "phone": {
+    "short": "Phone",
+    "long": "Numru tat-telefon"
+  },
+  "email": {
+    "short": "Email",
+    "long": "Indirizz email"
+  },
+  "suggested": "Suġġeriti",
+  "other": "Lingwi oħra",
+  "selectLanguage": "Agħżel lingwa",
+  "selectCountry": "Pajjiż Agħżel",
+  "selectCurrency": "Munita Agħżel",
+  "back": "Mur lura",
+  "select": "Agħżel",
+  "clear": "Għażla ċara",
+  "search": "Fittex",
+  "loadingEllipsis": "Tagħbija..."
+}

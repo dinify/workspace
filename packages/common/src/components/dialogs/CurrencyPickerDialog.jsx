@@ -109,7 +109,6 @@ const CurrencyPickerDialog = (props) => {
       </DialogTitle>
       <div style={{
         height: 312,
-        width: 240,
         overflow: 'hidden'
       }}>
         <div style={{
@@ -150,7 +149,13 @@ const CurrencyPickerDialog = (props) => {
                         key={currency.code} dense button selected={selected}
                         style={{paddingLeft: 24, paddingRight: 24}}
                         onClick={() => {currencyClickHandler(currency.code)}}>
-                        <ListItemText primary={primary} secondary={secondary}/>
+                        <ListItemText
+                          primaryTypographyProps={{style: {
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis'
+                          }}}
+                          primary={primary}
+                          secondary={secondary} />
                       </ListItem>
                     );
                   })}
