@@ -13,7 +13,7 @@ import { DateRangePicker } from 'react-dates';
 import 'react-table/react-table.css';
 import 'react-dates/lib/css/_datepicker.css';
 
-import { getBillsInitAction } from 'ducks/restaurantLegacy';
+import { getBillsInitAction } from 'ducks/restaurant/actions';
 
 const Header = styled.div`
   position: fixed;

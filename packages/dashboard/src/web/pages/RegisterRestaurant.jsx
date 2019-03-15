@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@material-ui/core/Button';
@@ -8,30 +9,23 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import { withStyles } from '@material-ui/core/styles';
+import { registerRestaurant } from 'ducks/restaurant/actions';
 
 const styles = {
   card: {
     maxWidth: '500px',
     margin: '50px auto'
   },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
   title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
+    fontSize: 18,
+  }
 };
 
 let RegistrationForm = ({ handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <Field
-        name="name"
+        name="restaurantName"
         component={Text}
         componentProps={{ label: 'Restaurant name', fullWidth: true, margin: 'normal' }}
       />
@@ -52,23 +46,31 @@ let RegistrationForm = ({ handleSubmit }) => {
 };
 
 RegistrationForm = reduxForm({
-  form: 'newrestaurant',
+  form: 'RegisterRestaurant',
   enableReinitialize: true,
   destroyOnUnmount: false
 })(RegistrationForm);
 
-const NewRestaurant = ({ classes }) => {
+const RegisterRestaurant = ({ classes, registerRestaurant }) => {
   return (
     <Card className={classes.card}>
       <CardContent>
         <Typography className={classes.title} variant="h1" gutterBottom>
           Register new restaurant
         </Typography>
-        <RegistrationForm onSubmit={() => {}} />
+        <RegistrationForm onSubmit={(fields) => registerRestaurant(fields)} />
       </CardContent>
     </Card>
   );
 };
 
-export default connect(state => ({
-}))(withStyles(styles)(NewRestaurant));
+const enhance = compose(
+  withStyles(styles),
+  connect(state => ({
+    
+  }), {
+    registerRestaurant
+  })
+)
+
+export default enhance(RegisterRestaurant);

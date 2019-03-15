@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import {
   Label
 } from 'web/components/styled/FormBox';
-import { updateNameInitAction } from 'ducks/restaurantLegacy';
+import { updateNameInitAction } from 'ducks/restaurant/actions';
 import { createServiceInit, removeServiceInit } from 'ducks/service/actions';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';

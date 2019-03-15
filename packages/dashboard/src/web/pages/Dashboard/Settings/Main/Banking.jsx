@@ -7,7 +7,7 @@ import {
   FormBoxHead,
   FormBoxBody,
 } from 'web/components/styled/FormBox';
-import { updateBankInitAction } from 'ducks/restaurantLegacy';
+import { updateBankInitAction } from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';
 import Text from 'web/components/MaterialInputs/Text';
 import Button from '@material-ui/core/Button';

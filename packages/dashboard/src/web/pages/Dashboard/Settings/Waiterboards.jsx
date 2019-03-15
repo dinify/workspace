@@ -31,7 +31,7 @@ import {
   createTableInitAction,
   deleteTableInitAction,
   updateTableInitAction,
-} from 'ducks/restaurantLegacy';
+} from 'ducks/restaurant/actions';
 
 const WB = styled.div`
   background: rgb(60, 60, 65);

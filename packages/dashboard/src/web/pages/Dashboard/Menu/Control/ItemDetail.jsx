@@ -6,7 +6,7 @@ import Dropzone from 'react-dropzone';
 import {
   updateMenuitemInitAction,
   uploadItemImageInitAction,
-} from 'ducks/restaurantLegacy';
+} from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@material-ui/core/Button';

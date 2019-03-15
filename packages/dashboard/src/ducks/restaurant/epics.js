@@ -55,67 +55,7 @@ const loadRestaurant = (action$) =>
     })
   );
 
-export const signupDoneAction = (payload: object) => {
-  //console.log(payload);
-  //window.location.replace('/')
-  return { type: 'LOGIN_INIT', payload: { ...payload, crRest: true } };
-};
-
-export const signupFailAction = (err: Error) => ({
-  type: 'SIGNUP_FAIL',
-  payload: err,
-});
-
-const registrationEpic = (action$, state$) =>
-  action$.pipe(
-    ofType('SIGNUP_INIT'),
-    switchMap(({ payload }) => {
-      const { name, phone, email, password, restaurantName, subdomain } = payload;
-      const logged = state$.value.restaurant.loggedRestaurant;
-      if (!logged) {
-        // register new user, log in, create new restaurant
-        return from(API.RegisterUser({ name, phone, email, password })).pipe(
-          map(() => signupDoneAction({ name, phone, email, password, restaurantName, subdomain })),
-          catchError(error => of(signupFailAction(error)))
-        )
-      }
-      // create restaurant
-      console.log('logggggggged');
-      return of(signupFailAction());
-    })
-  );
-
-export const loginFailAction = (err: Error) => ({
-  type: 'LOGIN_FAIL',
-  payload: err,
-});
-
 export const FailAction = (err: Error) => ({ type: 'FAIL', payload: err });
-
-export const loginDoneAction = (res: object) => {
-  window.location.replace('/settings');
-  return { type: 'LOGIN_DONE', payload: res };
-};
-
-const loginEpic = (action$) =>
-  action$.pipe(
-    ofType('LOGIN_INIT'),
-    switchMap(({ payload: { email, password, crRest, restaurantName, subdomain } }) => {
-      return from(API.LoginUser({ email, password })).pipe(
-        map(res => {
-          //setCookie('access_token', res.token, 30);
-          if (crRest) {
-            return {
-              type: 'REGISTER_RESTAURANT_INIT',
-              payload: { restaurantName, subdomain, email, password },
-            };
-          }
-          return loginDoneAction(res);
-        }),
-        catchError(error => of(loginFailAction(error)))
-      );
-    })
-  );
 
 export const createRestaurantDoneAction = ({ email, password }) => {
   return { type: 'LOGIN_INIT', payload: { email, password } };
@@ -125,10 +65,10 @@ export const createRestaurantDoneAction = ({ email, password }) => {
 const registerRestaurantEpic = (action$: Observable) =>
   action$.pipe(
     ofType('REGISTER_RESTAURANT_INIT'),
-    switchMap(({ payload: { restaurantName, subdomain, email, password } }) => {
+    switchMap(({ payload: { restaurantName, subdomain } }) => {
       return from(API.CreateRestaurant({ restaurantName, subdomain })).pipe(
-        map(() => createRestaurantDoneAction({ email, password })),
-        catchError(error => of(loginFailAction(error)))
+        map(() => of({ type: 'REGISTER_RESTAURANT_DONE' })),
+        catchError(error => of({ type: 'REGISTER_RESTAURANT_FAIL', error }))
       );
     })
   );
@@ -181,8 +121,6 @@ export default [
   loadRestaurant,
   bootstrapEpic,
   getLoggedEpic,
-  loginEpic,
-  registrationEpic,
   registerRestaurantEpic,
   reorderEpic,
   editImageEpic,

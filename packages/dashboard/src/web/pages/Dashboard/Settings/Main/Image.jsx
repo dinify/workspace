@@ -8,7 +8,7 @@ import {
   FormBoxHead,
   FormBoxBody,
 } from 'web/components/styled/FormBox';
-import { uploadMainImageInitAction } from 'ducks/restaurantLegacy';
+import { uploadMainImageInitAction } from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';
 
 const Image = ({ uploadMainImage, loggedRestaurant }) => {
