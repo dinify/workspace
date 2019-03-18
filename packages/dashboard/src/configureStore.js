@@ -40,7 +40,7 @@ const commonReducers = {
 };
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAwKYz-JN76QWYpK60TEL1YJhV_cIh9ciM",
+  apiKey: "AIzaSyCRg0En-xj3Ky02oElBV3HogOCZlPEdd30",
   authDomain: "tabb-global.firebaseapp.com",
   databaseURL: "https://tabb-global.firebaseio.com",
   projectId: "tabb-global",

@@ -38,8 +38,8 @@ const commonReducers = {
 };
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAwKYz-JN76QWYpK60TEL1YJhV_cIh9ciM",
-  authDomain: "tabb-global.firebaseapp.com",
+  apiKey: "AIzaSyCRg0En-xj3Ky02oElBV3HogOCZlPEdd30",
+  authDomain: "m.dinify.app",
   databaseURL: "https://tabb-global.firebaseio.com",
   projectId: "tabb-global",
   storageBucket: "tabb-global.appspot.com",

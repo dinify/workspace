@@ -4,7 +4,7 @@ importScripts('https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/5.2.0/firebase-messaging.js');
 
 const config = {
-  apiKey: "AIzaSyAwKYz-JN76QWYpK60TEL1YJhV_cIh9ciM",
+  apiKey: "AIzaSyCRg0En-xj3Ky02oElBV3HogOCZlPEdd30",
   authDomain: "tabb-global.firebaseapp.com",
   databaseURL: "https://tabb-global.firebaseio.com",
   projectId: "tabb-global",
