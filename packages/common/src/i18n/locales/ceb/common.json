@@ -4,15 +4,9 @@
     "logOut": "Sign sa"
   },
   "phone": {
-    "short": "Phone",
     "long": "Numero sa telepono"
   },
-  "email": {
-    "short": "Email",
-    "long": "Email address"
-  },
   "suggested": "Gisugyot nga",
-  "other": "Ang ubang mga pinulongan",
   "selectLanguage": "Pagpili pinulongan",
   "selectCountry": "Pagpili nasud",
   "selectCurrency": "Pagpili currency",

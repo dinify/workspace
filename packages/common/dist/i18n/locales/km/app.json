@@ -36,7 +36,6 @@
     "subtitle": "ជាមួយនឹងលក្ខណៈពិសេសនេះ, អ្នកអាចស្នើសុំប្រភេទរបស់ condiment ឬ tableware ណាមួយទៅតុរបស់អ្នក។",
     "instruction": "សូមពិនិត្យមើលដោយការស្កេនលេខកូដ QR នៅក្នុងភោជនីយដ្ឋានមួយនៅជិតអ្នកដើម្បីចាប់ផ្តើម។",
     "types": {
-      "tableware": "Tableware",
       "condiments": "Condiment"
     }
   },
@@ -46,13 +45,12 @@
     "selecting": "ជ្រើសធាតុនៅក្នុងវិក័យប័ត្រ",
     "splittingWith": "ត្រូវបានបំបែករវាង:",
     "splittingWith_zero": "ជ្រើសអ្នកប្រើ",
-    "splittingCount": "{{count}} នាក់",
-    "splittingCount_plural": "{{count}} នាក់",
-    "itemCountSelected": "{{count}}ធាតុដែលបានជ្រើស",
-    "itemCountSelected_plural": "{{count}}ធាតុដែលបានជ្រើស",
+    "splittingCount": "{{count, number}} នាក់",
+    "splittingCount_plural": "{{count, number}} នាក់",
+    "itemCountSelected": "{{count, number}}ធាតុដែលបានជ្រើស",
+    "itemCountSelected_plural": "{{count, number}}ធាតុដែលបានជ្រើស",
     "itemCountSelected_none": "គ្មានធាតុដែលជ្រើស"
   },
-  "gratuity": "Gratuity",
   "pay": "បង់",
   "paymentPending": "កំពុងរង់ចាំសម្រាប់ការទូទាត់ ...",
   "editing": "ការកែសម្រួល",
@@ -61,7 +59,8 @@
   "currency": {
     "title": "បង្ហាញរូបិយប័ណ្ណ",
     "set": "កំណត់រូបិយប័ណ្ណបង្ហាញ",
-    "original": "ការបង្ហាញតម្លៃរូបិយប័ណ្ណដើម"
+    "original": "ការបង្ហាញតម្លៃរូបិយប័ណ្ណដើម",
+    "other": "រូបិយប័ណ្ណផ្សេងទៀត"
   },
   "roles": {
     "title": "តួនាទី",
@@ -78,8 +77,8 @@
   },
   "cart": {
     "title": "រទេះ​ដើរ​ទិញ​ឥវ៉ាន់",
-    "itemCount": "{{count}} ដុំ",
-    "itemCount_plural": "បំណែកទី {{count}}",
+    "itemCount": "{{count, number}} ដុំ",
+    "itemCount_plural": "បំណែកទី {{count, number}}",
     "itemCount_none": "ទទេ",
     "add": "បញ្ចូលទៅក្នុងរទេះ",
     "checkInInstructions": "ដើម្បីចាប់ផ្ដើមស្កេនលេខកូដ QR នៅក្នុងភោជនីយដ្ឋានមួយនៅក្បែរនោះ"

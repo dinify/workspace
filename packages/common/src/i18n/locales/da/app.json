@@ -12,9 +12,7 @@
   "website": "Internet side",
   "nav": {
     "explore": "Udforske",
-    "eat": "At spise",
-    "checkIn": "Checkin",
-    "service": "C"
+    "eat": "At spise"
   },
   "ingredients": "Ingredienser",
   "addons": "Tilføjelse",
@@ -44,9 +42,9 @@
     "selecting": "Vælg de elementer i lovforslaget",
     "splittingWith": "Er delt mellem:",
     "splittingWith_zero": "Vælg brugere",
-    "splittingCount_plural": "{{count}} personer",
-    "itemCountSelected": "{{count}} element valgt",
-    "itemCountSelected_plural": "{{count}} elementer udvalgte",
+    "splittingCount_plural": "{{count, number}} personer",
+    "itemCountSelected": "{{count, number}} element valgt",
+    "itemCountSelected_plural": "{{count, number}} elementer udvalgte",
     "itemCountSelected_none": "Ingen emner udvalgte"
   },
   "gratuity": "Drikkepenge",
@@ -58,7 +56,8 @@
   "currency": {
     "title": "Display valuta",
     "set": "Indstil display valuta",
-    "original": "Viser priserne i den oprindelige valuta"
+    "original": "Viser priserne i den oprindelige valuta",
+    "other": "Andre valutaer"
   },
   "roles": {
     "title": "Roller",
@@ -74,8 +73,8 @@
   },
   "cart": {
     "title": "Indkøbskurv",
-    "itemCount": "{{count}} styk",
-    "itemCount_plural": "{{count}} stykker",
+    "itemCount": "{{count, number}} styk",
+    "itemCount_plural": "{{count, number}} stykker",
     "itemCount_none": "Tom",
     "add": "Tilføj til kurv",
     "checkInInstructions": "For at komme i gang, scan QR-koden i en restaurant i nærheden"

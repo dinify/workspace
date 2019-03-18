@@ -1,6 +1,5 @@
 {
   "menu": {
-    "title": "Menu",
     "caption": "Sagalana bisa meunang di {{restaurant.name}}"
   },
   "address": "Alamat",
@@ -10,7 +9,6 @@
     "opens_at": "Muka di {{time, time:short}}",
     "closes_at": "Nutup di {{time, time:short}}"
   },
-  "website": "Website",
   "nav": {
     "explore": "Ngajajah",
     "eat": "Dahar",
@@ -39,10 +37,10 @@
     "selecting": "Pilih item di bil",
     "splittingWith": "Ieu pamisah antara:",
     "splittingWith_zero": "Pilih pamaké",
-    "splittingCount": "{{count}} jalma",
-    "splittingCount_plural": "{{count}} jalma",
-    "itemCountSelected": "{{count}} item nu dipilih",
-    "itemCountSelected_plural": "{{count}} item nu dipilih",
+    "splittingCount": "{{count, number}} jalma",
+    "splittingCount_plural": "{{count, number}} jalma",
+    "itemCountSelected": "{{count, number}} item nu dipilih",
+    "itemCountSelected_plural": "{{count, number}} item nu dipilih",
     "itemCountSelected_none": "Euweuh barang nu dipilih"
   },
   "pay": "Mayar",
@@ -53,7 +51,8 @@
   "currency": {
     "title": "Mata uang tampilan",
     "set": "Atur mata uang tampilan",
-    "original": "Némbongkeun harga di mata uang aslina"
+    "original": "Némbongkeun harga di mata uang aslina",
+    "other": "Currencies séjén"
   },
   "roles": {
     "title": "Kalungguhan",
@@ -69,8 +68,8 @@
   },
   "cart": {
     "title": "Karanjang balanja",
-    "itemCount": "{{count}} sapotong",
-    "itemCount_plural": "{{count}} buah",
+    "itemCount": "{{count, number}} sapotong",
+    "itemCount_plural": "{{count, number}} buah",
     "itemCount_none": "Kosong",
     "add": "Tambihkeun kana karanjang",
     "checkInInstructions": "Pikeun ngamimitian, seken di QR kode di restoran caket dieu"

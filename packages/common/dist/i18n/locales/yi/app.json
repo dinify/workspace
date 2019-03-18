@@ -46,10 +46,10 @@
     "selecting": "סעלעקט די זאכן אין רעכענונג",
     "splittingWith": "איז שפּאַלטן צווישן:",
     "splittingWith_zero": "סעלעקט ניצערס",
-    "splittingCount": "{{count}} מענטש",
-    "splittingCount_plural": "{{count}} מענטשן",
-    "itemCountSelected": "{{count}} נומער אויסגעקליבן",
-    "itemCountSelected_plural": "{{count}} זאכן אויסגעקליבן",
+    "splittingCount": "{{count, number}} מענטש",
+    "splittingCount_plural": "{{count, number}} מענטשן",
+    "itemCountSelected": "{{count, number}} נומער אויסגעקליבן",
+    "itemCountSelected_plural": "{{count, number}} זאכן אויסגעקליבן",
     "itemCountSelected_none": "קיין זאכן אויסגעקליבן"
   },
   "gratuity": "טרינקגעלט",
@@ -62,7 +62,8 @@
   "currency": {
     "title": "אַרויסווייַזן קראַנטקייַט",
     "set": "שטעלן אַרויסווייַזן קראַנטקייַט",
-    "original": "ווייַזונג פּרייסיז אין די אָריגינעל קראַנטקייַט"
+    "original": "ווייַזונג פּרייסיז אין די אָריגינעל קראַנטקייַט",
+    "other": "אנדערע קעראַנסיז"
   },
   "roles": {
     "title": "ראָלעס",
@@ -79,8 +80,8 @@
   },
   "cart": {
     "title": "שאַפּינג קאַרט",
-    "itemCount": "{{count}} שטיק",
-    "itemCount_plural": "{{count}} ברעקלעך",
+    "itemCount": "{{count, number}} שטיק",
+    "itemCount_plural": "{{count, number}} ברעקלעך",
     "itemCount_none": "ליידיק",
     "add": "לייג צו צום קארטע",
     "checkInInstructions": "צו באַקומען אנגעהויבן, יבערקוקן די קר קאָד אין אַ רעסטאָראַן נירביי"

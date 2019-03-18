@@ -1,9 +1,7 @@
 {
   "menu": {
-    "title": "Menu",
     "caption": "Lahat ng bagay maaari kang makipag-{{restaurant.name}}"
   },
-  "address": "Address",
   "hours": {
     "open": "Bukas na ngayon",
     "closed": "Sarado",
@@ -13,12 +11,10 @@
   "nav": {
     "explore": "Galugarin",
     "eat": "Kumain",
-    "checkIn": "Checkin",
     "service": "Serbisyo"
   },
   "ingredients": "Sangkap",
   "addons": "Idagdag sa",
-  "subtotal": "Subtotal",
   "total": "Kabuuan",
   "totalConverted": "Kabuuan ({{currencyName}})",
   "serviceFee": "Kabayaran sa serbisyo",
@@ -35,20 +31,18 @@
     "subtitle": "Sa tampok na ito, maaari kang humiling ng anumang uri ng pampalasa o kubyertos sa iyong talahanayan.",
     "instruction": "Mag-check in sa pamamagitan ng pag-scan ang QR code sa isang restaurant na malapit sa iyo upang makapagsimula.",
     "types": {
-      "tableware": "Mga pinggan",
-      "condiments": "Condiments"
+      "tableware": "Mga pinggan"
     }
   },
   "bill": {
     "title": "Bayarin",
-    "split": "Split",
     "selecting": "Piliin ang mga item sa bill",
     "splittingWith": "Ay nahati sa pagitan ng:",
     "splittingWith_zero": "Pumili ng mga user",
-    "splittingCount": "{{count}} tao",
-    "splittingCount_plural": "{{count}} tao",
-    "itemCountSelected": "{{count}} item na napili",
-    "itemCountSelected_plural": "{{count}} item ang pinili",
+    "splittingCount": "{{count, number}} tao",
+    "splittingCount_plural": "{{count, number}} tao",
+    "itemCountSelected": "{{count, number}} item na napili",
+    "itemCountSelected_plural": "{{count, number}} item ang pinili",
     "itemCountSelected_none": "Walang napiling mga item"
   },
   "gratuity": "Pabuya",
@@ -56,9 +50,9 @@
   "paymentPending": "Naghihintay ng mga bayad...",
   "editing": "Pag-edit",
   "currency": {
-    "title": "Display currency",
     "set": "I-set ang display pera",
-    "original": "Ipinapakita ang mga presyo sa orihinal na pera"
+    "original": "Ipinapakita ang mga presyo sa orihinal na pera",
+    "other": "Iba pang mga pera"
   },
   "roles": {
     "manager": "Tagapamahala",
@@ -73,17 +67,14 @@
     "addOther": "Magdagdag ng isa pang wika"
   },
   "cart": {
-    "itemCount": "{{count}} piraso",
-    "itemCount_plural": "{{count}} piraso",
+    "itemCount": "{{count, number}} piraso",
+    "itemCount_plural": "{{count, number}} piraso",
     "itemCount_none": "Walang laman",
     "add": "Idagdag sa cart",
     "checkInInstructions": "Upang makapagsimula, i-scan ang QR code sa isang restaurant malapit"
   },
   "nutrition": {
     "facts": "Nutritional halaga",
-    "fats": "Taba",
-    "carbs": "Carbohydrates",
-    "proteins": "Proteins",
-    "calories": "Calories"
+    "fats": "Taba"
   }
 }

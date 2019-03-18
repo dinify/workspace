@@ -46,10 +46,10 @@
     "selecting": "ബിൽ ഇനങ്ങൾ തിരഞ്ഞെടുക്കുക",
     "splittingWith": "തമ്മിൽ വിഭജിച്ചു:",
     "splittingWith_zero": "ഉപയോക്താക്കളെ തിരഞ്ഞെടുക്കുക",
-    "splittingCount": "{{count}} വ്യക്തി",
-    "splittingCount_plural": "{{count}} പേർ",
-    "itemCountSelected": "{{count}} ഇനം തിരഞ്ഞെടുത്തു",
-    "itemCountSelected_plural": "{{count}} ഇനങ്ങൾ തിരഞ്ഞെടുത്തു",
+    "splittingCount": "{{count, number}} വ്യക്തി",
+    "splittingCount_plural": "{{count, number}} പേർ",
+    "itemCountSelected": "{{count, number}} ഇനം തിരഞ്ഞെടുത്തു",
+    "itemCountSelected_plural": "{{count, number}} ഇനങ്ങൾ തിരഞ്ഞെടുത്തു",
     "itemCountSelected_none": "ഇനങ്ങൾ തിരഞ്ഞെടുത്തിട്ടില്ല"
   },
   "gratuity": "ഗ്രാറ്റുവിറ്റി",
@@ -62,7 +62,8 @@
   "currency": {
     "title": "ഡിസ്പ്ലേ കറൻസി",
     "set": "ഡിസ്പ്ലേ കറൻസി സജ്ജമാക്കുക",
-    "original": "യഥാർത്ഥ കറൻസി കാണിക്കുന്നു വില"
+    "original": "യഥാർത്ഥ കറൻസി കാണിക്കുന്നു വില",
+    "other": "മറ്റ് കറൻസികൾ"
   },
   "roles": {
     "title": "റോളുകൾ",
@@ -79,8 +80,8 @@
   },
   "cart": {
     "title": "ഷോപ്പിംഗ് കാർട്ട്",
-    "itemCount": "{{count}} കഷ്ണം",
-    "itemCount_plural": "{{count}} കഷണങ്ങൾ",
+    "itemCount": "{{count, number}} കഷ്ണം",
+    "itemCount_plural": "{{count, number}} കഷണങ്ങൾ",
     "itemCount_none": "ഒഴിഞ്ഞ",
     "add": "കാർട്ടിലേക്ക് ചേർക്കുക",
     "checkInInstructions": "ആരംഭിക്കുന്നതിന്, അടുത്തുള്ള ഒരു ഭക്ഷണശാലയിൽ QR കോഡ് സ്കാൻ"

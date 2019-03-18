@@ -1,6 +1,5 @@
 {
   "menu": {
-    "title": "Menu",
     "caption": "Kollox inti tista 'tagħmel {{restaurant.name}}"
   },
   "address": "Indirizz",
@@ -10,11 +9,9 @@
     "opens_at": "Tiftaħ fi {{time, time:short}}",
     "closes_at": "Tagħlaq {{time, time:short}}"
   },
-  "website": "Website",
   "nav": {
     "explore": "Esplora",
     "eat": "Biex jieklu",
-    "checkIn": "Checkin",
     "service": "Servizz"
   },
   "ingredients": "Ingredjenti",
@@ -42,28 +39,27 @@
     "selecting": "Agħżel l-oġġetti fil-kont",
     "splittingWith": "Huwa maqsum bejn:",
     "splittingWith_zero": "Utenti Agħżel",
-    "splittingCount": "{{count}} persuna",
-    "splittingCount_plural": "{{count}} persuni",
-    "itemCountSelected": "{{count}} partita magħżula",
-    "itemCountSelected_plural": "{{count}} punti magħżula",
+    "splittingCount": "{{count, number}} persuna",
+    "splittingCount_plural": "{{count, number}} persuni",
+    "itemCountSelected": "{{count, number}} partita magħżula",
+    "itemCountSelected_plural": "{{count, number}} punti magħżula",
     "itemCountSelected_none": "L-ebda oġġetti magħżula"
   },
   "gratuity": "Gratifikazzjoni",
   "paymentPending": "Stennija għall-ħlas ...",
   "editing": "Editjar",
   "profile": "Profil",
-  "dashboard": "Dashboard",
   "currency": {
     "title": "Munita display",
     "set": "Munita wiri Set",
-    "original": "Showing prezzijiet fil-munita oriġinali"
+    "original": "Showing prezzijiet fil-munita oriġinali",
+    "other": "Muniti oħra"
   },
   "roles": {
     "title": "Rwoli",
     "manager": "Maniġer",
     "waiter": "Wejter",
-    "cook": "Kok",
-    "proofreader": "Proofreader"
+    "cook": "Kok"
   },
   "language": {
     "setPrimary": "Lingwa ewlenija Set",
@@ -72,9 +68,8 @@
     "addOther": "Żid lingwa oħra"
   },
   "cart": {
-    "title": "Shopping cart",
-    "itemCount": "{{count}} biċċa",
-    "itemCount_plural": "{{count}} biċċiet",
+    "itemCount": "{{count, number}} biċċa",
+    "itemCount_plural": "{{count, number}} biċċiet",
     "itemCount_none": "Vojta",
     "add": "Żid mal CART",
     "checkInInstructions": "Biex tibda, skennjati l-kodiċi QR fil restorant fil-qrib"

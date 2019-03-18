@@ -46,10 +46,10 @@
     "selecting": "Виберіть елементи в рахунку",
     "splittingWith": "Розділена між:",
     "splittingWith_zero": "Вибір користувачів",
-    "splittingCount": "{{count}} людина",
-    "splittingCount_plural": "{{count}} осіб",
-    "itemCountSelected": "{{count}} вибраний елемент",
-    "itemCountSelected_plural": "{{count}} елементи, вибрані",
+    "splittingCount": "{{count, number}} людина",
+    "splittingCount_plural": "{{count, number}} осіб",
+    "itemCountSelected": "{{count, number}} вибраний елемент",
+    "itemCountSelected_plural": "{{count, number}} елементи, вибрані",
     "itemCountSelected_none": "Немає елементів, вибраних"
   },
   "gratuity": "Хабар",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "Дисплей валюти",
     "set": "Набір валюти дисплея",
-    "original": "Показані ціни в вихідній валюті"
+    "original": "Показані ціни в вихідній валюті",
+    "other": "Інші валюти"
   },
   "roles": {
     "title": "Ролі",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "Магазинний візок",
-    "itemCount": "{{count}} шт",
-    "itemCount_plural": "{{count}} шт",
+    "itemCount": "{{count, number}} шт",
+    "itemCount_plural": "{{count, number}} шт",
     "itemCount_none": "Порожній",
     "add": "Додати в кошик",
     "checkInInstructions": "Для початку сканування QR-коду в прилеглому ресторані"

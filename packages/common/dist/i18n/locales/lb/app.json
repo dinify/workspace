@@ -41,10 +41,10 @@
     "selecting": "Wielt d'Elementer am Gesetzesprojet",
     "splittingWith": "Ass Norweeger:",
     "splittingWith_zero": "Wielt Benotzer",
-    "splittingCount": "{{count}} Persoun",
-    "splittingCount_plural": "{{count}} Persounen",
-    "itemCountSelected": "{{count}} Punkt ausgewielt",
-    "itemCountSelected_plural": "{{count}} heizou ausgewielt",
+    "splittingCount": "{{count, number}} Persoun",
+    "splittingCount_plural": "{{count, number}} Persounen",
+    "itemCountSelected": "{{count, number}} Punkt ausgewielt",
+    "itemCountSelected_plural": "{{count, number}} heizou ausgewielt",
     "itemCountSelected_none": "Keng Saache ausgewielt"
   },
   "pay": "Bezuelen",
@@ -55,7 +55,8 @@
   "currency": {
     "title": "Haaptsäit Währung",
     "set": "Set Haaptsäit Währung",
-    "original": "Weist Präisser am Original Währung"
+    "original": "Weist Präisser am Original Währung",
+    "other": "Aner Währungen"
   },
   "roles": {
     "title": "Rollen",
@@ -69,8 +70,8 @@
   },
   "cart": {
     "title": "Akaafsweenschen",
-    "itemCount": "{{count}} Stéck",
-    "itemCount_plural": "{{count}} Stécker",
+    "itemCount": "{{count, number}} Stéck",
+    "itemCount_plural": "{{count, number}} Stécker",
     "itemCount_none": "Eidel",
     "add": "An de Weenche leeën",
     "checkInInstructions": "Ze kréien huet, Scanner der qr code an engem Restaurant Emgéigend"

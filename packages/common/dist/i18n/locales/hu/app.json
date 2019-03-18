@@ -46,10 +46,10 @@
     "selecting": "Select bill items to split with others",
     "splittingWith": "Splitting with {{list, list}}",
     "splittingWith_zero": "Select users to split with",
-    "splittingCount": "Splitting with {{count}} person",
-    "splittingCount_plural": "Splitting between {{count}} people",
-    "itemCountSelected": "{{count}} item selected",
-    "itemCountSelected_plural": "{{count}} items selected",
+    "splittingCount": "Splitting with {{count, number}} person",
+    "splittingCount_plural": "Splitting between {{count, number}} people",
+    "itemCountSelected": "{{count, number}} item selected",
+    "itemCountSelected_plural": "{{count, number}} items selected",
     "itemCountSelected_none": "no items selected"
   },
   "gratuity": "Borravaló",
@@ -62,7 +62,8 @@
   "currency": {
     "title": "Árak megjelenítése",
     "set": "Valuta beállítása",
-    "original": "Az árak az eredeti valutában jelennek meg"
+    "original": "Az árak az eredeti valutában jelennek meg",
+    "other": "Egyéb valuták"
   },
   "roles": {
     "title": "Szerepkör",
@@ -79,7 +80,7 @@
   },
   "cart": {
     "title": "Kosár",
-    "itemCount": "{{count}} tétel",
+    "itemCount": "{{count, number}} tétel",
     "itemCount_none": "üres",
     "add": "Hozzáadás a kosárhoz",
     "checkInInstructions": "Vágj bele egy közeledben levő étteremben található QR-kód beszkennelésével."

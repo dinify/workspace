@@ -46,10 +46,10 @@
     "selecting": "Tasarıda öğeleri seçin",
     "splittingWith": "Arasında bölünür:",
     "splittingWith_zero": "Kullanıcıları seçin",
-    "splittingCount": "{{count}} kişi",
-    "splittingCount_plural": "{{count}} kişi",
-    "itemCountSelected": "{{count}} öğe seçildi",
-    "itemCountSelected_plural": "Seçilen {{count}} öğe",
+    "splittingCount": "{{count, number}} kişi",
+    "splittingCount_plural": "{{count, number}} kişi",
+    "itemCountSelected": "{{count, number}} öğe seçildi",
+    "itemCountSelected_plural": "Seçilen {{count, number}} öğe",
     "itemCountSelected_none": "Seçilen hiçbir öğe"
   },
   "gratuity": "Armağan",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "Görüntü birimi",
     "set": "Set ekran birimi",
-    "original": "Orijinal para birimi cinsinden fiyatları gösteriliyor"
+    "original": "Orijinal para birimi cinsinden fiyatları gösteriliyor",
+    "other": "Diğer para birimleri"
   },
   "roles": {
     "title": "Roller",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "Alışveriş kartı",
-    "itemCount": "{{count}} parça",
-    "itemCount_plural": "{{count}} parça",
+    "itemCount": "{{count, number}} parça",
+    "itemCount_plural": "{{count, number}} parça",
     "itemCount_none": "Boş",
     "add": "Sepete ekle",
     "checkInInstructions": "Başlamak için yakınlardaki bir restoranda QR kodunu tarayın"

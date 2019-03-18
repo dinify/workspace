@@ -36,23 +36,22 @@
     "selecting": "Selezziunà i muri a legi",
     "splittingWith": "Hè addividìrisi trà:",
     "splittingWith_zero": "Select utilizatori",
-    "itemCountSelected": "{{count}} bagagliu sceltu",
-    "itemCountSelected_plural": "{{count}} voci sceltu",
+    "itemCountSelected": "{{count, number}} bagagliu sceltu",
+    "itemCountSelected_plural": "{{count, number}} voci sceltu",
     "itemCountSelected_none": "Senza voci sceltu"
   },
   "pay": "Pacà",
   "paymentPending": "Aspittava di pagamentu ...",
   "editing": "Scrittura",
-  "profile": "Profile",
   "dashboard": "Escrivania",
   "currency": {
     "title": "Muneta Mustrà",
     "set": "Piazzà muneta cumparisce",
-    "original": "Mustrà prezzi in u muneta uriginale"
+    "original": "Mustrà prezzi in u muneta uriginale",
+    "other": "Altri paesi"
   },
   "roles": {
     "title": "Rolli",
-    "manager": "Manager",
     "waiter": "Santa Lucia"
   },
   "language": {
@@ -62,8 +61,7 @@
     "addOther": "Ajouter un altru lingua"
   },
   "cart": {
-    "title": "Shopping cart",
-    "itemCount": "{{count}} pezzu",
+    "itemCount": "{{count, number}} pezzu",
     "itemCount_none": "Viotu",
     "add": "Add to cistella",
     "checkInInstructions": "À abbicinàrisi, scanning u QR code in una osteria vicina"

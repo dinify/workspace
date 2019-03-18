@@ -45,13 +45,12 @@
     "selecting": "Veldu atriði í frumvarpinu",
     "splittingWith": "Er skipt á milli:",
     "splittingWith_zero": "Veldu notendur",
-    "splittingCount": "{{count}} aðili",
-    "splittingCount_plural": "{{count}} manns",
-    "itemCountSelected": "{{count}} atriði valið",
-    "itemCountSelected_plural": "{{count}} atriði valin",
+    "splittingCount": "{{count, number}} aðili",
+    "splittingCount_plural": "{{count, number}} manns",
+    "itemCountSelected": "{{count, number}} atriði valið",
+    "itemCountSelected_plural": "{{count, number}} atriði valin",
     "itemCountSelected_none": "Engin atriði valin"
   },
-  "gratuity": "Gratuity",
   "pay": "Borga",
   "paymentPending": "Bíð eftir greiðslu ...",
   "editing": "Útgáfa",
@@ -59,7 +58,8 @@
   "currency": {
     "title": "Sýna mynt",
     "set": "Stilla skjá mynt",
-    "original": "Sýni verð í upprunalegu gjaldmiðli"
+    "original": "Sýni verð í upprunalegu gjaldmiðli",
+    "other": "Aðrir gjaldmiðlar"
   },
   "roles": {
     "title": "Hlutverk",
@@ -74,8 +74,8 @@
   },
   "cart": {
     "title": "Innkaupakerra",
-    "itemCount": "{{count}} stykki",
-    "itemCount_plural": "{{count}} stykki",
+    "itemCount": "{{count, number}} stykki",
+    "itemCount_plural": "{{count, number}} stykki",
     "itemCount_none": "Tóm",
     "add": "Setja í körfu",
     "checkInInstructions": "Til að byrja, skanna QR kóðann á veitingastað í nágrenninu"

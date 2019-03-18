@@ -26,21 +26,17 @@
   "service": {
     "title": "Kpọọ a ọrụ",
     "subtitle": "A mma, i nwere ike ịrịọ a ụdị ọ bụla nke nanị ma ọ bụ tableware na tebụl gị.",
-    "instruction": "Lelee na site ịgụ isiokwu ndị QR code na a ụlọ oriri na ọṅụṅụ dị gị nso ka malitere.",
-    "types": {
-      "tableware": "Tableware",
-      "condiments": "Condiments"
-    }
+    "instruction": "Lelee na site ịgụ isiokwu ndị QR code na a ụlọ oriri na ọṅụṅụ dị gị nso ka malitere."
   },
   "bill": {
     "split": "Kewaa",
     "selecting": "Họrọ ihe na ụgwọ",
     "splittingWith": "Na-kewaa n'etiti:",
     "splittingWith_zero": "Họrọ ọrụ",
-    "splittingCount": "{{count}} onye",
-    "splittingCount_plural": "{{count}} mmadụ",
-    "itemCountSelected": "{{count}} item họrọ",
-    "itemCountSelected_plural": "{{count}} ihe họrọ",
+    "splittingCount": "{{count, number}} onye",
+    "splittingCount_plural": "{{count, number}} mmadụ",
+    "itemCountSelected": "{{count, number}} item họrọ",
+    "itemCountSelected_plural": "{{count, number}} ihe họrọ",
     "itemCountSelected_none": "Dịghị ihe họrọ"
   },
   "pay": "Lezienụ",
@@ -50,7 +46,8 @@
   "currency": {
     "title": "Display ego",
     "set": "Nịm ngosi ego",
-    "original": "Egosi ahịa na mbụ ego"
+    "original": "Egosi ahịa na mbụ ego",
+    "other": "Ndị ọzọ ego"
   },
   "roles": {
     "title": "Ọrụ",
@@ -65,8 +62,8 @@
   },
   "cart": {
     "title": "Ụgbọ ibu azụmahịa",
-    "itemCount": "{{count}} mpempe",
-    "itemCount_plural": "{{count}} iberibe",
+    "itemCount": "{{count, number}} mpempe",
+    "itemCount_plural": "{{count, number}} iberibe",
     "itemCount_none": "Efu",
     "add": "Tinye na ụgbọ ibu",
     "checkInInstructions": "Ka malitere, iṅomi QR code na a ụlọ oriri na ọṅụṅụ dị nso"
@@ -74,8 +71,6 @@
   "nutrition": {
     "facts": "Ekwukwa n'akwụkwọ uru",
     "fats": "Abụba",
-    "carbs": "Carbohydrates",
-    "proteins": "Ndi na-edozi",
-    "calories": "Calories"
+    "proteins": "Ndi na-edozi"
   }
 }

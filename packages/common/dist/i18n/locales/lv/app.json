@@ -46,10 +46,10 @@
     "selecting": "Izvēlieties vienumus rēķinu",
     "splittingWith": "Ir sadalīta starp:",
     "splittingWith_zero": "Atlasīt lietotājus",
-    "splittingCount": "{{count}} persona",
-    "splittingCount_plural": "{{count}} personām",
-    "itemCountSelected": "{{count}} vienums",
-    "itemCountSelected_plural": "{{count}} vienumi",
+    "splittingCount": "{{count, number}} persona",
+    "splittingCount_plural": "{{count, number}} personām",
+    "itemCountSelected": "{{count, number}} vienums",
+    "itemCountSelected_plural": "{{count, number}} vienumi",
     "itemCountSelected_none": "Saraksts ir tukšs"
   },
   "gratuity": "Prēmija",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "Displejs valūta",
     "set": "Uzstādīt displejs valūta",
-    "original": "Rāda cenas oriģinālajā valūtā"
+    "original": "Rāda cenas oriģinālajā valūtā",
+    "other": "Pārējās valūtas"
   },
   "roles": {
     "title": "Lomas",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "Iepirkšanās ratiņi",
-    "itemCount": "{{count}} gabals",
-    "itemCount_plural": "{{count}} gabali",
+    "itemCount": "{{count, number}} gabals",
+    "itemCount_plural": "{{count, number}} gabali",
     "itemCount_none": "Tukšs",
     "add": "Pievienot grozam",
     "checkInInstructions": "Lai sāktu, skenēt QR kodu restorānā tuvumā"

@@ -46,10 +46,10 @@
     "selecting": "選擇賬單項目",
     "splittingWith": "拆分之間：",
     "splittingWith_zero": "選擇用戶",
-    "splittingCount": "{{count}}人",
-    "splittingCount_plural": "{{count}}人",
-    "itemCountSelected": "{{count}}項目選擇",
-    "itemCountSelected_plural": "{{count}}所選項目",
+    "splittingCount": "{{count, number}}人",
+    "splittingCount_plural": "{{count, number}}人",
+    "itemCountSelected": "{{count, number}}項目選擇",
+    "itemCountSelected_plural": "{{count, number}}所選項目",
     "itemCountSelected_none": "未選擇任何項目"
   },
   "gratuity": "賞錢",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "顯示貨幣",
     "set": "設置顯示貨幣",
-    "original": "顯示價格在原幣"
+    "original": "顯示價格在原幣",
+    "other": "其他貨幣"
   },
   "roles": {
     "title": "角色",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "購物車",
-    "itemCount": "{{count}}片",
-    "itemCount_plural": "{{count}}件",
+    "itemCount": "{{count, number}}片",
+    "itemCount_plural": "{{count, number}}件",
     "itemCount_none": "空",
     "add": "添加到購物車",
     "checkInInstructions": "要開始，掃描QR碼在附近的餐館"

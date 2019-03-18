@@ -45,10 +45,10 @@
     "selecting": "په مسوده کې د توکو وټاکئ",
     "splittingWith": "ده په منځ کې تقسيم:",
     "splittingWith_zero": "انتخاب کاروونکو",
-    "splittingCount": "{{count}} کس",
-    "splittingCount_plural": "{{count}} کسانو",
-    "itemCountSelected": "{{count}} توکی ټاکل",
-    "itemCountSelected_plural": "{{count}} توکي ټاکل",
+    "splittingCount": "{{count, number}} کس",
+    "splittingCount_plural": "{{count, number}} کسانو",
+    "itemCountSelected": "{{count, number}} توکی ټاکل",
+    "itemCountSelected_plural": "{{count, number}} توکي ټاکل",
     "itemCountSelected_none": "نه توکي ټاکل"
   },
   "gratuity": "بخشش",
@@ -60,7 +60,8 @@
   "currency": {
     "title": "مخکيني اسعارو",
     "set": "جوړ نندارې ته د اسعارو د",
-    "original": "په اصلي اسعارو بیې ښودنه"
+    "original": "په اصلي اسعارو بیې ښودنه",
+    "other": "نور اسعار"
   },
   "roles": {
     "title": "رول",
@@ -76,8 +77,8 @@
   },
   "cart": {
     "title": "د سودا لاس ګاډی",
-    "itemCount": "{{count}} ټوټه",
-    "itemCount_plural": "{{count}} ټوټې",
+    "itemCount": "{{count, number}} ټوټه",
+    "itemCount_plural": "{{count, number}} ټوټې",
     "itemCount_none": "تش",
     "add": "کارټ ته یی اضافه کړه",
     "checkInInstructions": "پيل وکړو، په یوه رستورانت ته نږدې د QR کوډ څيړنه"

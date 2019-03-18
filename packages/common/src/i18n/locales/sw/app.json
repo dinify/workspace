@@ -1,6 +1,5 @@
 {
   "menu": {
-    "title": "Menu",
     "caption": "Kila kitu unaweza kupata katika {{restaurant.name}}"
   },
   "address": "Anuani",
@@ -33,7 +32,6 @@
     "subtitle": "Pamoja na kipengele hiki, unaweza kuomba aina yoyote ya kitoweo au tableware kwa meza yako.",
     "instruction": "Angalia katika kwa skanning code QR katika mgahawa karibu na wewe ili kuanza.",
     "types": {
-      "tableware": "Tableware",
       "condiments": "Mahitaji mengine ya lazima"
     }
   },
@@ -41,10 +39,10 @@
     "selecting": "Kuchagua vitu katika muswada",
     "splittingWith": "Umegawanyika kati ya:",
     "splittingWith_zero": "Chagua watumiaji",
-    "splittingCount": "Mtu {{count}}",
-    "splittingCount_plural": "Watu {{count}}",
-    "itemCountSelected": "{{count}} bidhaa kuchaguliwa",
-    "itemCountSelected_plural": "{{count}} vilivyochaguliwa",
+    "splittingCount": "Mtu {{count, number}}",
+    "splittingCount_plural": "Watu {{count, number}}",
+    "itemCountSelected": "{{count, number}} bidhaa kuchaguliwa",
+    "itemCountSelected_plural": "{{count, number}} vilivyochaguliwa",
     "itemCountSelected_none": "Vitu ya kuchaguliwa"
   },
   "gratuity": "Kiinua mgongo",
@@ -53,13 +51,12 @@
   "currency": {
     "title": "Display fedha",
     "set": "Kuonyesha Kuweka fedha",
-    "original": "Showing bei katika sarafu ya awali"
+    "original": "Showing bei katika sarafu ya awali",
+    "other": "Sarafu nyingine"
   },
   "roles": {
     "title": "Majukumu",
-    "manager": "Meneja",
-    "waiter": "Waiter",
-    "proofreader": "Proofreader"
+    "manager": "Meneja"
   },
   "language": {
     "setPrimary": "Kuweka lugha ya msingi",
@@ -69,8 +66,8 @@
   },
   "cart": {
     "title": "Ununuzi gari",
-    "itemCount": "Kipande {{count}}",
-    "itemCount_plural": "{{count}} vipande",
+    "itemCount": "Kipande {{count, number}}",
+    "itemCount_plural": "{{count, number}} vipande",
     "itemCount_none": "Tupu",
     "add": "Kuongeza kwa gari",
     "checkInInstructions": "Ili kuanza, Scan code QR katika mgahawa jirani"

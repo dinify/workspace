@@ -14,7 +14,6 @@
   "nav": {
     "explore": "Εξερευνώ",
     "eat": "Να φάω",
-    "checkIn": "Checkin",
     "service": "Υπηρεσία"
   },
   "ingredients": "Συστατικά",
@@ -46,10 +45,10 @@
     "selecting": "Επιλέξτε τα στοιχεία στο νομοσχέδιο",
     "splittingWith": "Μοιράζεται μεταξύ:",
     "splittingWith_zero": "Επιλέξτε τους χρήστες",
-    "splittingCount": "{{count}} άτομο",
-    "splittingCount_plural": "{{count}} άτομα",
-    "itemCountSelected": "{{count}} επιλεγμένου στοιχείου",
-    "itemCountSelected_plural": "{{count}} αντικείμενα επιλεγμένα",
+    "splittingCount": "{{count, number}} άτομο",
+    "splittingCount_plural": "{{count, number}} άτομα",
+    "itemCountSelected": "{{count, number}} επιλεγμένου στοιχείου",
+    "itemCountSelected_plural": "{{count, number}} αντικείμενα επιλεγμένα",
     "itemCountSelected_none": "Δεν υπάρχουν στοιχεία που επιλέγονται"
   },
   "gratuity": "Φιλοδώρημα",
@@ -61,7 +60,8 @@
   "currency": {
     "title": "Νόμισμα οθόνη",
     "set": "Ορισμός νομίσματος οθόνη",
-    "original": "Εμφάνιση των τιμών στο αρχικό νόμισμα"
+    "original": "Εμφάνιση των τιμών στο αρχικό νόμισμα",
+    "other": "Άλλα νομίσματα"
   },
   "roles": {
     "title": "Ρόλοι",
@@ -78,8 +78,8 @@
   },
   "cart": {
     "title": "Καλάθι αγορών",
-    "itemCount": "{{count}} τεμάχιο",
-    "itemCount_plural": "{{count}} κομμάτια",
+    "itemCount": "{{count, number}} τεμάχιο",
+    "itemCount_plural": "{{count, number}} κομμάτια",
     "itemCount_none": "Αδειάζω",
     "add": "Προσθήκη στο καλάθι",
     "checkInInstructions": "Για να ξεκινήσετε, σαρώστε τον κωδικό QR σε κοντινό εστιατόριο"

@@ -1,6 +1,5 @@
 {
   "menu": {
-    "title": "Menu",
     "caption": "Semua yang anda boleh mendapatkan dalam {{restaurant.name}}"
   },
   "address": "Alamat",
@@ -44,10 +43,10 @@
     "selecting": "Pilih item dalam rang undang-undang",
     "splittingWith": "Berpecah antara:",
     "splittingWith_zero": "Pilih pengguna",
-    "splittingCount": "{{count}} orang",
-    "splittingCount_plural": "{{count}} orang",
-    "itemCountSelected": "{{count}} item yang dipilih",
-    "itemCountSelected_plural": "{{count}} item yang dipilih",
+    "splittingCount": "{{count, number}} orang",
+    "splittingCount_plural": "{{count, number}} orang",
+    "itemCountSelected": "{{count, number}} item yang dipilih",
+    "itemCountSelected_plural": "{{count, number}} item yang dipilih",
     "itemCountSelected_none": "Item yang dipilih"
   },
   "gratuity": "Ganjaran",
@@ -57,7 +56,8 @@
   "currency": {
     "title": "Mata wang paparan",
     "set": "Mata wang paparan ditetapkan",
-    "original": "Menunjukkan harga dalam mata wang asal"
+    "original": "Menunjukkan harga dalam mata wang asal",
+    "other": "Mata wang lain"
   },
   "roles": {
     "title": "Peranan",
@@ -73,8 +73,8 @@
   },
   "cart": {
     "title": "Troli",
-    "itemCount": "{{count}} keping",
-    "itemCount_plural": "{{count}} keping",
+    "itemCount": "{{count, number}} keping",
+    "itemCount_plural": "{{count, number}} keping",
     "itemCount_none": "Kosong",
     "add": "Tambah ke troli",
     "checkInInstructions": "Untuk bermula, imbas kod QR di restoran yang berhampiran"

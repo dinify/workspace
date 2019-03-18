@@ -29,10 +29,7 @@
   "service": {
     "title": "Call basa",
     "subtitle": "With chikamu ichi, unogona kukumbira chero condiment kana tableware nomutsa tafura yako.",
-    "instruction": "Check nenzira kushanda pakuvheneka ari QR code muresitorendi pedyo newe kuti kutanga.",
-    "types": {
-      "tableware": "Tableware"
-    }
+    "instruction": "Check nenzira kushanda pakuvheneka ari QR code muresitorendi pedyo newe kuti kutanga."
   },
   "bill": {
     "title": "Bhiri",
@@ -40,9 +37,9 @@
     "selecting": "Sarudza zvinhu zviri bhiri",
     "splittingWith": "Iri akatsemura pakati:",
     "splittingWith_zero": "Select vanoshandisa",
-    "splittingCount": "{{count}} munhu",
-    "itemCountSelected": "Chinhu {{count}} yasarudzwa",
-    "itemCountSelected_plural": "{{count}} zvinhu yasarudzwa",
+    "splittingCount": "{{count, number}} munhu",
+    "itemCountSelected": "Chinhu {{count, number}} yasarudzwa",
+    "itemCountSelected_plural": "{{count, number}} zvinhu yasarudzwa",
     "itemCountSelected_none": "Hapana zvinhu yasarudzwa"
   },
   "paymentPending": "Kumirira mubhadharo ...",
@@ -50,7 +47,8 @@
   "currency": {
     "title": "Ratidza mari",
     "set": "Set kuratidza mari",
-    "original": "Kuratidza mitengo chepakutanga mari"
+    "original": "Kuratidza mitengo chepakutanga mari",
+    "other": "Other dzeEurope"
   },
   "roles": {
     "title": "Mumabasa",
@@ -67,8 +65,8 @@
   },
   "cart": {
     "title": "Yekutengera",
-    "itemCount": "{{count}} chidimbu",
-    "itemCount_plural": "{{count}} zvidimbu",
+    "itemCount": "{{count, number}} chidimbu",
+    "itemCount_plural": "{{count, number}} zvidimbu",
     "itemCount_none": "Chinhu",
     "add": "Wedzera ngoro",
     "checkInInstructions": "Kutanga, atarise QR code muresitorendi pedyo"

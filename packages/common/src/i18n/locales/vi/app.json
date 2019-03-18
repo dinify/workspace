@@ -45,10 +45,10 @@
     "selecting": "Chọn các mục trong hóa đơn",
     "splittingWith": "Được phân chia giữa:",
     "splittingWith_zero": "Chọn người dùng",
-    "splittingCount": "{{count}} người",
-    "splittingCount_plural": "{{count}} người",
-    "itemCountSelected": "{{count}} mục được chọn",
-    "itemCountSelected_plural": "{{count}} mục đã chọn",
+    "splittingCount": "{{count, number}} người",
+    "splittingCount_plural": "{{count, number}} người",
+    "itemCountSelected": "{{count, number}} mục được chọn",
+    "itemCountSelected_plural": "{{count, number}} mục đã chọn",
     "itemCountSelected_none": "Không có mục đã chọn"
   },
   "gratuity": "Tiền thưởng",
@@ -60,7 +60,8 @@
   "currency": {
     "title": "Tệ Display",
     "set": "Đặt tệ hiển thị",
-    "original": "Hiển thị giá bằng tiền tệ gốc"
+    "original": "Hiển thị giá bằng tiền tệ gốc",
+    "other": "Tệ khác"
   },
   "roles": {
     "title": "Vai trò",
@@ -77,8 +78,8 @@
   },
   "cart": {
     "title": "Giỏ hàng",
-    "itemCount": "{{count}} miếng",
-    "itemCount_plural": "{{count}} miếng",
+    "itemCount": "{{count, number}} miếng",
+    "itemCount_plural": "{{count, number}} miếng",
     "itemCount_none": "Trống",
     "add": "Thêm vào giỏ hàng",
     "checkInInstructions": "Để bắt đầu, quét mã QR trong một nhà hàng gần đó"
@@ -86,7 +87,6 @@
   "nutrition": {
     "facts": "Giá trị dinh dưỡng",
     "fats": "Mập",
-    "carbs": "Carbohydrates",
     "proteins": "Thức ăn nhiều đạm",
     "calories": "Calo"
   }

@@ -36,7 +36,6 @@
     "subtitle": "यो सुविधा सँग, तपाईंले आफ्नो तालिका मसला वा tableware को एक कुनै पनि प्रकारको अनुरोध गर्न सक्नुहुन्छ।",
     "instruction": "तपाईं सुरू नजिक रेस्टुरा मा QR कोड स्क्यानिङ गरेर जाँच गर्नुहोस्।",
     "types": {
-      "tableware": "Tableware",
       "condiments": "मसालों"
     }
   },
@@ -46,10 +45,10 @@
     "selecting": "बिल वस्तुहरू चयन",
     "splittingWith": "विभाजित छ बीच:",
     "splittingWith_zero": "प्रयोगकर्ताहरू चयन गर्नुहोस्",
-    "splittingCount": "{{count}} व्यक्ति",
-    "splittingCount_plural": "{{count}} व्यक्ति",
-    "itemCountSelected": "{{count}} वस्तु चयन",
-    "itemCountSelected_plural": "{{count}} चयन गरिएका वस्तुहरू",
+    "splittingCount": "{{count, number}} व्यक्ति",
+    "splittingCount_plural": "{{count, number}} व्यक्ति",
+    "itemCountSelected": "{{count, number}} वस्तु चयन",
+    "itemCountSelected_plural": "{{count, number}} चयन गरिएका वस्तुहरू",
     "itemCountSelected_none": "चयन गरिएको कुनै वस्तुहरू"
   },
   "gratuity": "ग्रेज्युटी",
@@ -61,7 +60,8 @@
   "currency": {
     "title": "मुद्रा प्रदर्शन",
     "set": "प्रदर्शन मुद्रा सेट",
-    "original": "मूल मुद्रा मा मूल्यहरु देखाउँदै"
+    "original": "मूल मुद्रा मा मूल्यहरु देखाउँदै",
+    "other": "अन्य मुद्राहरू"
   },
   "roles": {
     "title": "भूमिकाको",
@@ -77,8 +77,8 @@
   },
   "cart": {
     "title": "किनमेल कार्ट",
-    "itemCount": "{{count}} टुक्रा",
-    "itemCount_plural": "{{count}} टुक्रा",
+    "itemCount": "{{count, number}} टुक्रा",
+    "itemCount_plural": "{{count, number}} टुक्रा",
     "itemCount_none": "खाली",
     "add": "भाडोमा हाल",
     "checkInInstructions": "सुरू गर्न, नजिकैको एक रेस्टुरेन्ट मा QR कोड स्क्यान"

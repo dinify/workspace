@@ -46,10 +46,10 @@
     "selecting": "ಬಿಲ್ನಲ್ಲಿ ಐಟಂಗಳನ್ನು ಆಯ್ಕೆ",
     "splittingWith": "ವಿಭಜಿಸಲಾಗಿದೆ:",
     "splittingWith_zero": "ಬಳಕೆದಾರರನ್ನು ಆಯ್ಕೆ",
-    "splittingCount": "{{count}} ವ್ಯಕ್ತಿ",
-    "splittingCount_plural": "{{count}} ವ್ಯಕ್ತಿಗಳು",
-    "itemCountSelected": "{{count}} ಐಟಂ ಆಯ್ಕೆ",
-    "itemCountSelected_plural": "{{count}} ಆಯ್ಕೆಮಾಡಿದ ಐಟಂಗಳನ್ನು",
+    "splittingCount": "{{count, number}} ವ್ಯಕ್ತಿ",
+    "splittingCount_plural": "{{count, number}} ವ್ಯಕ್ತಿಗಳು",
+    "itemCountSelected": "{{count, number}} ಐಟಂ ಆಯ್ಕೆ",
+    "itemCountSelected_plural": "{{count, number}} ಆಯ್ಕೆಮಾಡಿದ ಐಟಂಗಳನ್ನು",
     "itemCountSelected_none": "ಯಾವುದೇ ಐಟಂಗಳನ್ನು ಆಯ್ಕೆ"
   },
   "gratuity": "ಹಣರೂಪದ",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "ಪ್ರದರ್ಶನ ಕರೆನ್ಸಿ",
     "set": "ಪ್ರದರ್ಶನ ಕರೆನ್ಸಿ ಹೊಂದಿಸಿ",
-    "original": "ಮೂಲ ಕರೆನ್ಸಿಯಲ್ಲಿ ಬೆಲೆ ತೋರಿಸಲಾಗುತ್ತಿದೆ"
+    "original": "ಮೂಲ ಕರೆನ್ಸಿಯಲ್ಲಿ ಬೆಲೆ ತೋರಿಸಲಾಗುತ್ತಿದೆ",
+    "other": "ಇತರೆ ಕರೆನ್ಸಿಗಳ"
   },
   "roles": {
     "title": "ಪಾತ್ರಗಳು",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "ಶಾಪಿಂಗ್ ಕಾರ್ಟ್",
-    "itemCount": "{{count}} ತುಣುಕು",
-    "itemCount_plural": "{{count}} ತುಣುಕುಗಳನ್ನು",
+    "itemCount": "{{count, number}} ತುಣುಕು",
+    "itemCount_plural": "{{count, number}} ತುಣುಕುಗಳನ್ನು",
     "itemCount_none": "ಖಾಲಿ",
     "add": "ಕಾರ್ಟ್ ಸೇರಿಸಿ",
     "checkInInstructions": "ಪ್ರಾರಂಭಿಸಲು, ಹತ್ತಿರದ ರೆಸ್ಟೋರೆಂಟ್ QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್"

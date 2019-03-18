@@ -46,10 +46,10 @@
     "selecting": "بل میں اشیاء کو منتخب کریں",
     "splittingWith": "کے درمیان تقسیم کیا جاتا ہے:",
     "splittingWith_zero": "صارفین منتخب کریں",
-    "splittingCount": "{{count}} شخص",
-    "splittingCount_plural": "{{count}} افراد",
-    "itemCountSelected": "{{count}} آئٹم منتخب",
-    "itemCountSelected_plural": "{{count}} منتخب اشیاء",
+    "splittingCount": "{{count, number}} شخص",
+    "splittingCount_plural": "{{count, number}} افراد",
+    "itemCountSelected": "{{count, number}} آئٹم منتخب",
+    "itemCountSelected_plural": "{{count, number}} منتخب اشیاء",
     "itemCountSelected_none": "منتخب شدہ کی کوئی شے"
   },
   "gratuity": "اپدان",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "کرنسی دکھائیں",
     "set": "ڈسپلے کرنسی سیٹ کریں",
-    "original": "اصل کرنسی میں قیمتوں کی نمائش"
+    "original": "اصل کرنسی میں قیمتوں کی نمائش",
+    "other": "دیگر کرنسیوں"
   },
   "roles": {
     "title": "کردار",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "خریداری کی ٹوکری",
-    "itemCount": "{{count}} ٹکڑا",
-    "itemCount_plural": "{{count}} ٹکڑے",
+    "itemCount": "{{count, number}} ٹکڑا",
+    "itemCount_plural": "{{count, number}} ٹکڑے",
     "itemCount_none": "خالی",
     "add": "ٹوکری میں شامل کریں",
     "checkInInstructions": "شروع کرنے کیلئے، ایک قریبی ریستوران میں QR کوڈ کو اسکین"

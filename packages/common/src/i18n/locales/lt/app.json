@@ -46,10 +46,10 @@
     "selecting": "Pasirinkite Bill daiktų",
     "splittingWith": "Yra padalinta tarp:",
     "splittingWith_zero": "Pasirinkite vartotojai",
-    "splittingCount": "{{count}} asmuo",
-    "splittingCount_plural": "{{count}} asmenims",
-    "itemCountSelected": "{{count}} pasirinktas elementas",
-    "itemCountSelected_plural": "{{count}} Pasirinkta elementų",
+    "splittingCount": "{{count, number}} asmuo",
+    "splittingCount_plural": "{{count, number}} asmenims",
+    "itemCountSelected": "{{count, number}} pasirinktas elementas",
+    "itemCountSelected_plural": "{{count, number}} Pasirinkta elementų",
     "itemCountSelected_none": "Jokių elementų pažymėtus"
   },
   "gratuity": "Atsidėkojimas",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "Rodyti valiuta",
     "set": "Nustatyti ekrano valiuta",
-    "original": "Rodoma kainas originalioje valiuta"
+    "original": "Rodoma kainas originalioje valiuta",
+    "other": "Kitos valiutos"
   },
   "roles": {
     "title": "Vaidmenys",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "Pirkinių krepšelis",
-    "itemCount": "{{count}} gabalėlis",
-    "itemCount_plural": "{{count}} gabalėliai",
+    "itemCount": "{{count, number}} gabalėlis",
+    "itemCount_plural": "{{count, number}} gabalėliai",
     "itemCount_none": "Tuščia",
     "add": "Į krepšelį",
     "checkInInstructions": "Norėdami pradėti, nuskaitykite QR kodą į restoraną netoliese"

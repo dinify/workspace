@@ -45,10 +45,10 @@
     "selecting": "Wybierz pozycje w rachunku",
     "splittingWith": "Jest podzielona pomiędzy:",
     "splittingWith_zero": "Wybierz użytkowników",
-    "splittingCount": "{{count}} osoba",
-    "splittingCount_plural": "{{count}} osoby",
-    "itemCountSelected": "{{count}} wybrany przedmiot",
-    "itemCountSelected_plural": "{{count}} wybrane pozycje",
+    "splittingCount": "{{count, number}} osoba",
+    "splittingCount_plural": "{{count, number}} osoby",
+    "itemCountSelected": "{{count, number}} wybrany przedmiot",
+    "itemCountSelected_plural": "{{count, number}} wybrane pozycje",
     "itemCountSelected_none": "Brak wybrane pozycje"
   },
   "gratuity": "Napiwek",
@@ -60,7 +60,8 @@
   "currency": {
     "title": "Wyświetlacz waluty",
     "set": "Ustaw wyświetlacz waluty",
-    "original": "Pokazuje cen w oryginalnej walucie"
+    "original": "Pokazuje cen w oryginalnej walucie",
+    "other": "Inne waluty"
   },
   "roles": {
     "title": "Role",
@@ -77,8 +78,8 @@
   },
   "cart": {
     "title": "Wózek sklepowy",
-    "itemCount": "{{count}} kawałek",
-    "itemCount_plural": "{{count}} kawałki",
+    "itemCount": "{{count, number}} kawałek",
+    "itemCount_plural": "{{count, number}} kawałki",
     "itemCount_none": "Pusty",
     "add": "Dodaj do koszyka",
     "checkInInstructions": "Aby rozpocząć, zeskanować kod QR w pobliskiej restauracji"

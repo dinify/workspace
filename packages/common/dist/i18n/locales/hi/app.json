@@ -46,10 +46,10 @@
     "selecting": "बिल में आइटम का चयन करें",
     "splittingWith": "के बीच विभाजित है:",
     "splittingWith_zero": "उपयोगकर्ताओं को चुनें",
-    "splittingCount": "{{count}} व्यक्ति",
-    "splittingCount_plural": "{{count}} शख्स",
-    "itemCountSelected": "{{count}} आइटम का चयन किया",
-    "itemCountSelected_plural": "{{count}} चयनित आइटम",
+    "splittingCount": "{{count, number}} व्यक्ति",
+    "splittingCount_plural": "{{count, number}} शख्स",
+    "itemCountSelected": "{{count, number}} आइटम का चयन किया",
+    "itemCountSelected_plural": "{{count, number}} चयनित आइटम",
     "itemCountSelected_none": "कोई चयनित आइटम"
   },
   "gratuity": "उपहार",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "प्रदर्शन मुद्रा",
     "set": "प्रदर्शन मुद्रा सेट",
-    "original": "मूल मुद्रा में मूल्य दिखा रहा है"
+    "original": "मूल मुद्रा में मूल्य दिखा रहा है",
+    "other": "अन्य मुद्राओं"
   },
   "roles": {
     "title": "भूमिकाएँ",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "शॉपिंग कार्ट",
-    "itemCount": "{{count}} टुकड़ा",
-    "itemCount_plural": "{{count}} टुकड़े",
+    "itemCount": "एक टुकड़ा",
+    "itemCount_plural": "{{count, number}} टुकड़े",
     "itemCount_none": "खाली",
     "add": "कार्ट में डालें",
     "checkInInstructions": "आरंभ करने के लिए पास के एक रेस्तरां में QR कोड स्कैन"

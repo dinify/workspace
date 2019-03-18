@@ -35,10 +35,10 @@
     "selecting": "Khetha lintho ka bili",
     "splittingWith": "E arola pakeng tsa:",
     "splittingWith_zero": "Select basebelisi",
-    "splittingCount": "Motho {{count}}",
-    "splittingCount_plural": "Batho ba {{count}}",
-    "itemCountSelected": "{{count}} ntho kgethile",
-    "itemCountSelected_plural": "{{count}} dintho kgethile",
+    "splittingCount": "Motho {{count, number}}",
+    "splittingCount_plural": "Batho ba {{count, number}}",
+    "itemCountSelected": "{{count, number}} ntho kgethile",
+    "itemCountSelected_plural": "{{count, number}} dintho kgethile",
     "itemCountSelected_none": "Ha ho na lintho tse kgethile"
   },
   "gratuity": "Boqheku",
@@ -48,7 +48,8 @@
   "currency": {
     "title": "Display chelete",
     "set": "Bontshiweng beha chelete",
-    "original": "Bontsha litheko ka chelete pele"
+    "original": "Bontsha litheko ka chelete pele",
+    "other": "Lichelete tse ling"
   },
   "roles": {
     "title": "Likarolo",
@@ -64,8 +65,8 @@
   },
   "cart": {
     "title": "Koloana ea ho reka",
-    "itemCount": "Sengoathoana {{count}}",
-    "itemCount_plural": "{{count}} likotoana",
+    "itemCount": "Sengoathoana {{count, number}}",
+    "itemCount_plural": "{{count, number}} likotoana",
     "itemCount_none": "Na letho",
     "add": "Kenya lenaneng",
     "checkInInstructions": "Ho qala, Scan le khoutu QR ka reschorenteng e haufi le moo"

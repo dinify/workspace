@@ -8,16 +8,13 @@
     "long": "Nomer telpon"
   },
   "email": {
-    "short": "Email",
     "long": "Alamat email"
   },
-  "other": "Basa liyane",
   "selectLanguage": "Pilih basa",
   "selectCountry": "Pilih negara",
   "selectCurrency": "Pilih itungan",
   "back": "Mulih",
   "select": "Pilih",
   "clear": "Langit pilihan",
-  "search": "Search",
   "loadingEllipsis": "Loading ..."
 }

@@ -27,21 +27,17 @@
   "service": {
     "title": "Itanani utumiki",
     "subtitle": "Ndi Mbali imeneyi, mukhoza kuitanitsa mtundu uliwonse condiment kapena tableware ku gome lanu.",
-    "instruction": "Fufuzani ndi kuyang'ana QR code ku malo odyera pafupi nanu kuti tiyambepo.",
-    "types": {
-      "tableware": "Tableware",
-      "condiments": "Condiments"
-    }
+    "instruction": "Fufuzani ndi kuyang'ana QR code ku malo odyera pafupi nanu kuti tiyambepo."
   },
   "bill": {
     "split": "Gawa",
     "selecting": "Sankhani zinthu biloyi",
     "splittingWith": "Ng'ambidwa pakati:",
     "splittingWith_zero": "Select ogwiritsa",
-    "splittingCount": "Munthu {{count}}",
-    "splittingCount_plural": "Anthu {{count}}",
-    "itemCountSelected": "{{count}} item anasankha",
-    "itemCountSelected_plural": "{{count}} zinthu anasankha",
+    "splittingCount": "Munthu {{count, number}}",
+    "splittingCount_plural": "Anthu {{count, number}}",
+    "itemCountSelected": "{{count, number}} item anasankha",
+    "itemCountSelected_plural": "{{count, number}} zinthu anasankha",
     "itemCountSelected_none": "Palibe zinthu anasankha"
   },
   "pay": "Kulipira",
@@ -52,7 +48,8 @@
   "currency": {
     "title": "Sonyezani ndalama",
     "set": "Anasonyeza anapereka ndalama",
-    "original": "Kuonetsa mitengo ndalama original"
+    "original": "Kuonetsa mitengo ndalama original",
+    "other": "Ndalama zina"
   },
   "roles": {
     "title": "Udindo",
@@ -67,8 +64,8 @@
   },
   "cart": {
     "title": "Ngolo yogulira",
-    "itemCount": "Chidutswa {{count}}",
-    "itemCount_plural": "{{count}} zidutswa",
+    "itemCount": "Chidutswa {{count, number}}",
+    "itemCount_plural": "{{count, number}} zidutswa",
     "itemCount_none": "Kanthu",
     "add": "Onjezani kungolo yogulira",
     "checkInInstructions": "Kuti muyambepo, aone QR code ku malo odyera pafupi"

@@ -33,10 +33,10 @@
     "selecting": "Fanteno ireo singa ao amin'ny volavolan-dalàna",
     "splittingWith": "Dia nizara eo:",
     "splittingWith_zero": "Select mpampiasa",
-    "splittingCount": "{{count}} olona",
-    "splittingCount_plural": "{{count}} olona",
-    "itemCountSelected": "{{count}} zavatra nofantenana",
-    "itemCountSelected_plural": "{{count}} zavatra voafantina",
+    "splittingCount": "{{count, number}} olona",
+    "splittingCount_plural": "{{count, number}} olona",
+    "itemCountSelected": "{{count, number}} zavatra nofantenana",
+    "itemCountSelected_plural": "{{count, number}} zavatra voafantina",
     "itemCountSelected_none": "Tsy misy zavatra voafantina"
   },
   "pay": "Aloavy",
@@ -45,7 +45,8 @@
   "currency": {
     "title": "Display vola",
     "set": "Set miseho vola",
-    "original": "Maneho vidin-javatra tany am-boalohany vola"
+    "original": "Maneho vidin-javatra tany am-boalohany vola",
+    "other": "Vola hafa"
   },
   "roles": {
     "title": "Andraikitra",
@@ -60,8 +61,8 @@
   },
   "cart": {
     "title": "Harona fiantsenana",
-    "itemCount": "{{count}} miray",
-    "itemCount_plural": "{{count}} farantsa",
+    "itemCount": "{{count, number}} miray",
+    "itemCount_plural": "{{count, number}} farantsa",
     "itemCount_none": "Foana",
     "add": "Atao anaty harona",
     "checkInInstructions": "Hanomboka, banjino ny QR code ao amin'ny toeram-pisakafoanana teo akaiky teo"

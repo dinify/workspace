@@ -43,10 +43,10 @@
     "selecting": "Selecione os itens na conta",
     "splittingWith": "É dividido entre:",
     "splittingWith_zero": "Selecione usuários",
-    "splittingCount": "{{count}} pessoa",
-    "splittingCount_plural": "{{count}} pessoas",
-    "itemCountSelected": "{{count}} item seleccionado",
-    "itemCountSelected_plural": "{{count}} itens selecionados",
+    "splittingCount": "{{count, number}} pessoa",
+    "splittingCount_plural": "{{count, number}} pessoas",
+    "itemCountSelected": "{{count, number}} item seleccionado",
+    "itemCountSelected_plural": "{{count, number}} itens selecionados",
     "itemCountSelected_none": "Há itens selecionados"
   },
   "gratuity": "Gratificação",
@@ -58,7 +58,8 @@
   "currency": {
     "title": "Moeda de exibição",
     "set": "Definir moeda de exibição",
-    "original": "Mostrando preços na moeda original"
+    "original": "Mostrando preços na moeda original",
+    "other": "Outras moedas"
   },
   "roles": {
     "manager": "Gerente",
@@ -74,8 +75,8 @@
   },
   "cart": {
     "title": "Carrinho de compras",
-    "itemCount": "{{count}} pedaço",
-    "itemCount_plural": "{{count}} pedaços",
+    "itemCount": "{{count, number}} pedaço",
+    "itemCount_plural": "{{count, number}} pedaços",
     "itemCount_none": "Esvaziar",
     "add": "Adicionar ao carrinho",
     "checkInInstructions": "Para começar, leia o código QR em um restaurante nas proximidades,"

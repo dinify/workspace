@@ -8,11 +8,9 @@
     "long": "Nomer telepon"
   },
   "email": {
-    "short": "Email",
     "long": "Alamat email"
   },
   "suggested": "Ngusulkeun",
-  "other": "Basa séjén",
   "selectLanguage": "Pilih basa",
   "selectCountry": "Pilih nagara",
   "selectCurrency": "Pilih mata uang",

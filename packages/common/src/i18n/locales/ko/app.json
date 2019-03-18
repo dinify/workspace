@@ -46,10 +46,10 @@
     "selecting": "법안의 항목을 선택",
     "splittingWith": "사이에 분할됩니다 :",
     "splittingWith_zero": "사용자를 선택",
-    "splittingCount": "{{count}} 명",
-    "splittingCount_plural": "{{count}} 명",
-    "itemCountSelected": "{{count}} 항목을 선택",
-    "itemCountSelected_plural": "선택 {{count}} 항목",
+    "splittingCount": "{{count, number}} 명",
+    "splittingCount_plural": "{{count, number}} 명",
+    "itemCountSelected": "{{count, number}} 항목을 선택",
+    "itemCountSelected_plural": "선택 {{count, number}} 항목",
     "itemCountSelected_none": "선택 항목이 없습니다"
   },
   "gratuity": "사례금",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "표시 통화",
     "set": "설정 표시 통화",
-    "original": "원래 통화로 가격을 표시"
+    "original": "원래 통화로 가격을 표시",
+    "other": "다른 통화"
   },
   "roles": {
     "title": "역할",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "쇼핑 카트",
-    "itemCount": "{{count}} 조각",
-    "itemCount_plural": "{{count}} 조각",
+    "itemCount": "{{count, number}} 조각",
+    "itemCount_plural": "{{count, number}} 조각",
     "itemCount_none": "빈",
     "add": "쇼핑 카트에 담기",
     "checkInInstructions": "시작하려면, 근처 레스토랑에서 QR 코드를 스캔"

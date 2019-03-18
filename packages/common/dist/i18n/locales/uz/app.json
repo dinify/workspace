@@ -19,7 +19,6 @@
   },
   "ingredients": "Tarkibi",
   "addons": "Qo'shimcha",
-  "subtotal": "Subtotal",
   "total": "Umumiy",
   "totalConverted": "Umumiy ({{currencyName}})",
   "serviceFee": "Xizmat to'lovi",
@@ -45,10 +44,10 @@
     "selecting": "Qonun ma'lumotlar tanlash",
     "splittingWith": "O'rtasida bo'linadi:",
     "splittingWith_zero": "Tanlang foydalanuvchilar",
-    "splittingCount": "{{count}} kishi",
-    "splittingCount_plural": "{{count}} shaxslar",
-    "itemCountSelected": "{{count}} element tanlangan",
-    "itemCountSelected_plural": "Tanlangan {{count}} mahsulot",
+    "splittingCount": "{{count, number}} kishi",
+    "splittingCount_plural": "{{count, number}} shaxslar",
+    "itemCountSelected": "{{count, number}} element tanlangan",
+    "itemCountSelected_plural": "Tanlangan {{count, number}} mahsulot",
     "itemCountSelected_none": "Tanlangan mahsulot"
   },
   "gratuity": "Yordam",
@@ -59,7 +58,8 @@
   "currency": {
     "title": "Displey valyuta",
     "set": "O'rnatish ko'rsatish valyuta",
-    "original": "Original valyutada narxlarni Ko'rsatilgan"
+    "original": "Original valyutada narxlarni Ko'rsatilgan",
+    "other": "Boshqa pul birliklari"
   },
   "roles": {
     "title": "Rollarda",
@@ -75,8 +75,8 @@
   },
   "cart": {
     "title": "Xarid savati",
-    "itemCount": "{{count}} qism",
-    "itemCount_plural": "{{count}} dona",
+    "itemCount": "{{count, number}} qism",
+    "itemCount_plural": "{{count, number}} dona",
     "itemCount_none": "Bo'sh",
     "add": "Savatchaga qo'shish",
     "checkInInstructions": "Boshlash uchun yaqin bir restoranda QR kodni skanerlash"

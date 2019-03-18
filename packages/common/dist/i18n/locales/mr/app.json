@@ -45,10 +45,10 @@
     "selecting": "बिल आयटम निवडा",
     "splittingWith": "यांच्यामध्ये विभाजित केले जाते:",
     "splittingWith_zero": "वापरकर्ते निवडा",
-    "splittingCount": "{{count}} व्यक्ती",
-    "splittingCount_plural": "{{count}} व्यक्ती",
-    "itemCountSelected": "{{count}} आयटम निवडले",
-    "itemCountSelected_plural": "{{count}} आयटम निवडले",
+    "splittingCount": "{{count, number}} व्यक्ती",
+    "splittingCount_plural": "{{count, number}} व्यक्ती",
+    "itemCountSelected": "{{count, number}} आयटम निवडले",
+    "itemCountSelected_plural": "{{count, number}} आयटम निवडले",
     "itemCountSelected_none": "नाही आयटम निवडले"
   },
   "gratuity": "ग्रॅच्युइटी",
@@ -60,14 +60,14 @@
   "currency": {
     "title": "प्रदर्शन चलन",
     "set": "प्रदर्शन चलन सेट करा",
-    "original": "मूळ चलन दर दर्शवित"
+    "original": "मूळ चलन दर दर्शवित",
+    "other": "इतर चलने"
   },
   "roles": {
     "title": "भूमिका",
     "manager": "व्यवस्थापक",
     "waiter": "वेटर",
-    "cook": "कूक",
-    "proofreader": "Proofreader"
+    "cook": "कूक"
   },
   "language": {
     "setPrimary": "प्राथमिक भाषा सेट करा",
@@ -77,8 +77,8 @@
   },
   "cart": {
     "title": "हे खरेदी सूचीत टाका",
-    "itemCount": "{{count}} तुकडा",
-    "itemCount_plural": "{{count}} तुकडे",
+    "itemCount": "{{count, number}} तुकडा",
+    "itemCount_plural": "{{count, number}} तुकडे",
     "itemCount_none": "रिक्त",
     "add": "सूचीत टाका",
     "checkInInstructions": "प्रारंभ करण्यासाठी, जवळपास एक रेस्टॉरंट मध्ये QR कोड स्कॅन"

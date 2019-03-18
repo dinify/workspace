@@ -1,6 +1,5 @@
 {
   "menu": {
-    "title": "Menu",
     "caption": "Wax kasta oo aad ka heli kartaa in {{restaurant.name}}"
   },
   "hours": {
@@ -9,7 +8,6 @@
     "opens_at": "Furmayaa {{time, time:short}}",
     "closes_at": "Oo xirtey xarunteedii ugu {{time, time:short}}"
   },
-  "website": "Website",
   "nav": {
     "explore": "Baadh",
     "eat": "Si aad u cuni",
@@ -38,21 +36,21 @@
   "bill": {
     "selecting": "Dooro waxyaabaha ku jira biilka",
     "splittingWith": "Waxaa kala:",
-    "splittingCount": "{{count}} qof",
-    "splittingCount_plural": "{{count}} qof",
-    "itemCountSelected": "{{count}} item la doortay",
-    "itemCountSelected_plural": "{{count}} waxyaabaha soo xulay",
+    "splittingCount": "{{count, number}} qof",
+    "splittingCount_plural": "{{count, number}} qof",
+    "itemCountSelected": "{{count, number}} item la doortay",
+    "itemCountSelected_plural": "{{count, number}} waxyaabaha soo xulay",
     "itemCountSelected_none": "Items ma soo xulay"
   },
   "pay": "Bixi",
   "paymentPending": "Sugitaanka bixinta ...",
   "editing": "Tafatirka",
   "profile": "Muuqaal",
-  "dashboard": "Dashboard",
   "currency": {
     "title": "Lacagta Display",
     "set": "Calan lacagta bandhigay",
-    "original": "Muujinaya qiimaha lacagta asalka ah"
+    "original": "Muujinaya qiimaha lacagta asalka ah",
+    "other": "Lacagaha kale"
   },
   "roles": {
     "title": "Doorarka",
@@ -66,16 +64,14 @@
   },
   "cart": {
     "title": "Shopping gaadhigii",
-    "itemCount": "{{count}} gabal",
-    "itemCount_plural": "{{count}} xabbadood",
+    "itemCount": "{{count, number}} gabal",
+    "itemCount_plural": "{{count, number}} xabbadood",
     "itemCount_none": "Madhan",
     "add": "Ku dar gaadhigii",
     "checkInInstructions": "Si aad u bilowdo, iskaan code QR ee maqaayad ku dhow"
   },
   "nutrition": {
     "facts": "Qiimo nafaqo",
-    "carbs": "Carbohydrates",
-    "proteins": "Borotiin",
-    "calories": "Calories"
+    "proteins": "Borotiin"
   }
 }

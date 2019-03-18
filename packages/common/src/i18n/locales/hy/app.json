@@ -45,10 +45,10 @@
     "selecting": "Ընտրեք այն կետերը օրինագծի",
     "splittingWith": "Որը բաժանվում է:",
     "splittingWith_zero": "Ընտրել օգտվողները",
-    "splittingCount": "{{count}} անձը",
-    "splittingCount_plural": "{{count}} անձինք",
-    "itemCountSelected": "{{count}} տարր է ընտրվել",
-    "itemCountSelected_plural": "{{count}} ընտրված",
+    "splittingCount": "{{count, number}} անձը",
+    "splittingCount_plural": "{{count, number}} անձինք",
+    "itemCountSelected": "{{count, number}} տարր է ընտրվել",
+    "itemCountSelected_plural": "{{count, number}} ընտրված",
     "itemCountSelected_none": "Ոչ ընտրված"
   },
   "gratuity": "Պարգեվադրամ",
@@ -60,7 +60,8 @@
   "currency": {
     "title": "Ցուցադրում արժույթը",
     "set": "Սահմանել ցուցադրում արժույթը",
-    "original": "Ցույց գները `բնօրինակ արժույթով"
+    "original": "Ցույց գները `բնօրինակ արժույթով",
+    "other": "Այլ արժույթներ"
   },
   "roles": {
     "title": "Դերերը",
@@ -77,8 +78,8 @@
   },
   "cart": {
     "title": "Ձեր Գնումների զամբյուղը",
-    "itemCount": "{{count}} կտոր",
-    "itemCount_plural": "{{count}} հատ",
+    "itemCount": "{{count, number}} կտոր",
+    "itemCount_plural": "{{count, number}} հատ",
     "itemCount_none": "Դատարկ",
     "add": "Ավելացնել քարտին",
     "checkInInstructions": "Սկսելու համար, սկան է QR կոդը մի ռեստորանում մոտակայքում"

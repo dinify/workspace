@@ -32,21 +32,17 @@
   "service": {
     "title": "Pe a iṣẹ",
     "subtitle": "Pẹlu ẹya ara ẹrọ yi, o le beere a eyikeyi irú ti condiment tabi tableware si rẹ tabili.",
-    "instruction": "Ṣayẹwo ni nipa Antivirus awọn QR koodu ni a ounjẹ sunmọ ọ lati to bẹrẹ.",
-    "types": {
-      "tableware": "Tableware",
-      "condiments": "Condiments"
-    }
+    "instruction": "Ṣayẹwo ni nipa Antivirus awọn QR koodu ni a ounjẹ sunmọ ọ lati to bẹrẹ."
   },
   "bill": {
     "split": "Pin",
     "selecting": "Yan awọn ohun kan ni owo",
     "splittingWith": "Wa ni pipin laarin:",
     "splittingWith_zero": "Yan awọn olumulo",
-    "splittingCount": "{{count}} eniyan",
-    "splittingCount_plural": "{{count}} eniyan",
-    "itemCountSelected": "{{count}} ohun kan ti a ti yan",
-    "itemCountSelected_plural": "{{count}} ohun ti a ti yan",
+    "splittingCount": "{{count, number}} eniyan",
+    "splittingCount_plural": "{{count, number}} eniyan",
+    "itemCountSelected": "{{count, number}} ohun kan ti a ti yan",
+    "itemCountSelected_plural": "{{count, number}} ohun ti a ti yan",
     "itemCountSelected_none": "Ko si ohun ti a ti yan"
   },
   "pay": "San",
@@ -56,7 +52,8 @@
   "currency": {
     "title": "Àpapọ owo",
     "set": "Ṣeto àpapọ owo",
-    "original": "Fifi owo ni atilẹba owo"
+    "original": "Fifi owo ni atilẹba owo",
+    "other": "Miiran owo"
   },
   "roles": {
     "title": "Ipa",
@@ -70,8 +67,8 @@
   },
   "cart": {
     "title": "Ohun tio wa fun rira",
-    "itemCount": "{{count}} nkan",
-    "itemCount_plural": "{{count}} ege",
+    "itemCount": "{{count, number}} nkan",
+    "itemCount_plural": "{{count, number}} ege",
     "itemCount_none": "Sofo",
     "add": "Fi kun Awon nkan ti o nra",
     "checkInInstructions": "Lati to bẹrẹ, ọlọjẹ awọn QR koodu ni a ounjẹ wa nitosi"
@@ -79,7 +76,6 @@
   "nutrition": {
     "facts": "Onje tio dara iye",
     "fats": "Ọra",
-    "carbs": "Carbohydrates",
     "proteins": "Awọn ọlọjẹ",
     "calories": "Kalori"
   }

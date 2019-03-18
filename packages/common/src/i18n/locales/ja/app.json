@@ -46,10 +46,10 @@
     "selecting": "法案で項目を選択",
     "splittingWith": "間で分割されています。",
     "splittingWith_zero": "ユーザーを選択",
-    "splittingCount": "{{count}}人",
-    "splittingCount_plural": "{{count}}名様",
-    "itemCountSelected": "{{count}}項目が選択します",
-    "itemCountSelected_plural": "{{count}}項目が選択します",
+    "splittingCount": "{{count, number}}人",
+    "splittingCount_plural": "{{count, number}}名様",
+    "itemCountSelected": "{{count, number}}項目が選択します",
+    "itemCountSelected_plural": "{{count, number}}項目が選択します",
     "itemCountSelected_none": "選択したアイテムはありません"
   },
   "gratuity": "心付け",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "表示通貨",
     "set": "設定した表示通貨",
-    "original": "元の通貨で価格を表示"
+    "original": "元の通貨で価格を表示",
+    "other": "その他の通貨"
   },
   "roles": {
     "title": "役割",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "ショッピングカート",
-    "itemCount": "{{count}}枚",
-    "itemCount_plural": "{{count}}枚",
+    "itemCount": "{{count, number}}枚",
+    "itemCount_plural": "{{count, number}}枚",
     "itemCount_none": "空の",
     "add": "カートに追加",
     "checkInInstructions": "開始するには、近くのレストランでQRコードをスキャン"

@@ -33,20 +33,16 @@
   "service": {
     "title": "Deitu zerbitzu bat",
     "subtitle": "Ezaugarri honekin, edozein kondimentu edo tableware mota eska dezakezu zure taula.",
-    "instruction": "Check in QR kodea eskaneatzen jatetxe batean gertu Hasteko arabera.",
-    "types": {
-      "tableware": "Tableware",
-      "condiments": "Condiments"
-    }
+    "instruction": "Check in QR kodea eskaneatzen jatetxe batean gertu Hasteko arabera."
   },
   "bill": {
     "selecting": "Aukeratu faktura elementu",
     "splittingWith": "Dago artean zatitu:",
     "splittingWith_zero": "Aukeratu erabiltzaile",
-    "splittingCount": "{{count}} pertsonak",
-    "splittingCount_plural": "{{count}} pertsona",
-    "itemCountSelected": "{{count}} elementua hautatuta",
-    "itemCountSelected_plural": "{{count}} elementurik hautatu",
+    "splittingCount": "{{count, number}} pertsonak",
+    "splittingCount_plural": "{{count, number}} pertsona",
+    "itemCountSelected": "{{count, number}} elementua hautatuta",
+    "itemCountSelected_plural": "{{count, number}} elementurik hautatu",
     "itemCountSelected_none": "No elementurik hautatu"
   },
   "gratuity": "Doakotasuna",
@@ -58,7 +54,8 @@
   "currency": {
     "title": "Display moneta",
     "set": "Ezarri pantaila moneta",
-    "original": "Prezioak erakustea jatorrizko monetan"
+    "original": "Prezioak erakustea jatorrizko monetan",
+    "other": "Beste moneta"
   },
   "roles": {
     "title": "Rolak",
@@ -74,8 +71,8 @@
   },
   "cart": {
     "title": "Erosketa saskia",
-    "itemCount": "{{count}} pieza",
-    "itemCount_plural": "{{count}} zuzenak",
+    "itemCount": "{{count, number}} pieza",
+    "itemCount_plural": "{{count, number}} zuzenak",
     "itemCount_none": "Hutsik",
     "add": "Gehitu saskira",
     "checkInInstructions": "Hasteko, eskaneatu QR kodea jatetxe batean Gertuko"

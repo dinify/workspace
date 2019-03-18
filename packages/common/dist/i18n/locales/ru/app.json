@@ -46,10 +46,10 @@
     "selecting": "Выберите элементы в счете",
     "splittingWith": "Разделена между:",
     "splittingWith_zero": "Выбор пользователей",
-    "splittingCount": "{{count}} человек",
-    "splittingCount_plural": "{{count}} человек",
-    "itemCountSelected": "{{count}} выбранный элемент",
-    "itemCountSelected_plural": "{{count}} элементы, выбранные",
+    "splittingCount": "{{count, number}} человек",
+    "splittingCount_plural": "{{count, number}} человек",
+    "itemCountSelected": "{{count, number}} выбранный элемент",
+    "itemCountSelected_plural": "{{count, number}} элементы, выбранные",
     "itemCountSelected_none": "Нет элементов, выбранных"
   },
   "gratuity": "Наградные",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "Дисплей валюты",
     "set": "Набор валюты дисплея",
-    "original": "Показаны цены в исходной валюте"
+    "original": "Показаны цены в исходной валюте",
+    "other": "Другие валюты"
   },
   "roles": {
     "title": "Роли",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "Корзина",
-    "itemCount": "{{count}} кусок",
-    "itemCount_plural": "{{count}} куска",
+    "itemCount": "{{count, number}} кусок",
+    "itemCount_plural": "{{count, number}} куска",
     "itemCount_none": "Пустой",
     "add": "Добавить в корзину",
     "checkInInstructions": "Для начала сканирования QR-кода в близлежащем ресторане"

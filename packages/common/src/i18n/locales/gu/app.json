@@ -46,10 +46,10 @@
     "selecting": "બિલમાં આઇટમ્સ પસંદ કરો",
     "splittingWith": "વચ્ચે વિભાજિત થયેલ છે:",
     "splittingWith_zero": "વપરાશકર્તાઓ પસંદ કરો",
-    "splittingCount": "{{count}} વ્યક્તિ",
-    "splittingCount_plural": "{{count}} વ્યક્તિઓ",
-    "itemCountSelected": "{{count}} આઇટમ પસંદ",
-    "itemCountSelected_plural": "{{count}} પસંદ કરેલ વસ્તુઓ",
+    "splittingCount": "{{count, number}} વ્યક્તિ",
+    "splittingCount_plural": "{{count, number}} વ્યક્તિઓ",
+    "itemCountSelected": "{{count, number}} આઇટમ પસંદ",
+    "itemCountSelected_plural": "{{count, number}} પસંદ કરેલ વસ્તુઓ",
     "itemCountSelected_none": "કોઈ આઇટમ્સ પસંદ કરી"
   },
   "gratuity": "ગ્રેચ્યુઇટી",
@@ -61,14 +61,14 @@
   "currency": {
     "title": "ડિસ્પ્લે ચલણ",
     "set": "પ્રદર્શન ચલણ સેટ",
-    "original": "મૂળ ચલણ ભાવો બતાવી"
+    "original": "મૂળ ચલણ ભાવો બતાવી",
+    "other": "અન્ય ચલણોની"
   },
   "roles": {
     "title": "ભૂમિકાઓ",
     "manager": "વ્યવસ્થાપક",
     "waiter": "વેઈટર",
-    "cook": "કૂક",
-    "proofreader": "Proofreader"
+    "cook": "કૂક"
   },
   "language": {
     "setPrimary": "સેટ પ્રાથમિક ભાષા",
@@ -78,8 +78,8 @@
   },
   "cart": {
     "title": "શોપિંગ કાર્ટ",
-    "itemCount": "{{count}} ટુકડો",
-    "itemCount_plural": "{{count}} ટુકડાઓ",
+    "itemCount": "{{count, number}} ટુકડો",
+    "itemCount_plural": "{{count, number}} ટુકડાઓ",
     "itemCount_none": "ખાલી",
     "add": "સૂચી માં સામેલ કરો",
     "checkInInstructions": "પ્રારંભ કરવા માટે, નજીકના રેસ્ટોરન્ટમાં QR કોડ સ્કેન"

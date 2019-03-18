@@ -46,10 +46,10 @@
     "selecting": "Изберете елементите в законопроекта",
     "splittingWith": "Е разделена между:",
     "splittingWith_zero": "Избиране на потребители",
-    "splittingCount": "{{count}} човек",
-    "splittingCount_plural": "{{count}}-ма души",
-    "itemCountSelected": "{{count}} избран елемент",
-    "itemCountSelected_plural": "{{count}} избраните елементи",
+    "splittingCount": "{{count, number}} човек",
+    "splittingCount_plural": "{{count, number}}-ма души",
+    "itemCountSelected": "{{count, number}} избран елемент",
+    "itemCountSelected_plural": "{{count, number}} избраните елементи",
     "itemCountSelected_none": "Избрани обекти"
   },
   "gratuity": "Бакшиш",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "Дисплей валута",
     "set": "Задайте валута дисплей",
-    "original": "Показване на цените в оригиналната валута"
+    "original": "Показване на цените в оригиналната валута",
+    "other": "Други валути"
   },
   "roles": {
     "title": "Роли",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "Карта за пазаруване",
-    "itemCount": "{{count}} парче",
-    "itemCount_plural": "{{count}} части",
+    "itemCount": "{{count, number}} парче",
+    "itemCount_plural": "{{count, number}} части",
     "itemCount_none": "Празен",
     "add": "Добави в кошницата",
     "checkInInstructions": "За да започнете, да сканират кода в ресторант наблизо"

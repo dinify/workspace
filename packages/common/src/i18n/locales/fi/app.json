@@ -46,10 +46,10 @@
     "selecting": "Valitse kohteet laskun",
     "splittingWith": "Jakautuu:",
     "splittingWith_zero": "Valitse käyttäjät",
-    "splittingCount": "{{count}} henkilö",
-    "splittingCount_plural": "{{count}} henkilöä",
-    "itemCountSelected": "{{count}} kohde valittu",
-    "itemCountSelected_plural": "{{count}} valittua kohdetta",
+    "splittingCount": "{{count, number}} henkilö",
+    "splittingCount_plural": "{{count, number}} henkilöä",
+    "itemCountSelected": "{{count, number}} kohde valittu",
+    "itemCountSelected_plural": "{{count, number}} valittua kohdetta",
     "itemCountSelected_none": "Ei valittuja kohteita"
   },
   "gratuity": "Palkkio",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "Näytä valuutta",
     "set": "Aseta näyttö valuutta",
-    "original": "Näytetään hinnat alkuperäisessä valuutassa"
+    "original": "Näytetään hinnat alkuperäisessä valuutassa",
+    "other": "Muut valuutat"
   },
   "roles": {
     "title": "Roolit",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "Ostoskärry",
-    "itemCount": "{{count}} kpl",
-    "itemCount_plural": "{{count}} kpl",
+    "itemCount": "{{count, number}} kpl",
+    "itemCount_plural": "{{count, number}} kpl",
     "itemCount_none": "Tyhjä",
     "add": "Lisää koriin",
     "checkInInstructions": "Aloita skannata QR-koodin läheisessä ravintolassa"

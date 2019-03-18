@@ -46,10 +46,10 @@
     "selecting": "Вексель элементтерді таңдаңыз",
     "splittingWith": "Арасында бөлінеді:",
     "splittingWith_zero": "Пайдаланушылар таңдаңыз",
-    "splittingCount": "{{count}} адам",
-    "splittingCount_plural": "{{count}} адам",
-    "itemCountSelected": "{{count}} элемент таңдалған",
-    "itemCountSelected_plural": "{{count}} элементтер таңдалған",
+    "splittingCount": "{{count, number}} адам",
+    "splittingCount_plural": "{{count, number}} адам",
+    "itemCountSelected": "{{count, number}} элемент таңдалған",
+    "itemCountSelected_plural": "{{count, number}} элементтер таңдалған",
     "itemCountSelected_none": "Элементтер таңдалған жоқ"
   },
   "gratuity": "Жәрдемақы",
@@ -60,7 +60,8 @@
   "currency": {
     "title": "Дисплей валюта",
     "set": "Орнату дисплей валюта",
-    "original": "Бастапқы валютада көрсету бағасы"
+    "original": "Бастапқы валютада көрсету бағасы",
+    "other": "Басқа валюта"
   },
   "roles": {
     "title": "Рөлдері",
@@ -77,8 +78,8 @@
   },
   "cart": {
     "title": "Шоппинг арбашасы",
-    "itemCount": "{{count}} дана",
-    "itemCount_plural": "{{count}} дана",
+    "itemCount": "{{count, number}} дана",
+    "itemCount_plural": "{{count, number}} дана",
     "itemCount_none": "Бос",
     "add": "Себетке қосу",
     "checkInInstructions": "Жұмысты бастау үшін, жақын мейрамханасында QR-кодты сканерлеу"

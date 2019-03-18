@@ -5,74 +5,78 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _default = function _default(globalized) {
+var _default = function _default(globalize) {
   return function (value, type, params) {
-    // TODO: warning, globalized instance might still be undefined (async!)
-    if (!globalized) return '';
+    // TODO: warning, globalize instance might still be undefined (async!)
+    if (!globalize) return '';
+
+    if (type === 'number') {
+      return globalize.numberFormatter()(value);
+    }
 
     if (type === 'date') {
-      return globalized.dateFormatter({
+      return globalize.dateFormatter({
         date: params[0] || 'short'
       })(value);
     }
 
     if (type === 'time') {
-      return globalized.dateFormatter({
+      return globalize.dateFormatter({
         time: params[0] || 'short'
       })(value);
     }
 
     if (type === 'dateTime') {
-      return globalized.dateFormatter({
+      return globalize.dateFormatter({
         datetime: params[0] || 'short'
       })(value);
     }
 
     if (type === 'dateTimeSkeleton') {
-      return globalized.dateFormatter({
+      return globalize.dateFormatter({
         skeleton: params[0]
       })(value);
     }
 
     if (type === 'weekDayName') {
-      var standAloneDays = globalized.cldr.main("dates/calendars/gregorian/days")['stand-alone'];
+      var standAloneDays = globalize.cldr.main("dates/calendars/gregorian/days")['stand-alone'];
       return standAloneDays[params[0] || 'wide'][value];
     }
 
     if (type === 'currency') {
-      return globalized.currencyFormatter(params[0])(value);
+      return globalize.currencyFormatter(params[0])(value);
     }
 
     if (type === 'currencyName') {
       if (params[0]) {
         var count = parseFloat(params[0]);
-        var plural = globalized.pluralGenerator()(count);
-        var result = globalized.cldr.main("numbers/currencies/".concat(value, "/displayName-count-").concat(plural));
+        var plural = globalize.pluralGenerator()(count);
+        var result = globalize.cldr.main("numbers/currencies/".concat(value, "/displayName-count-").concat(plural));
         if (result) return result;
       }
 
-      return globalized.cldr.main("numbers/currencies/".concat(value, "/displayName"));
+      return globalize.cldr.main("numbers/currencies/".concat(value, "/displayName"));
     }
 
     if (type === 'languageName') {
-      var displayName = globalized.cldr.main("localeDisplayNames/languages/".concat(value));
+      var displayName = globalize.cldr.main("localeDisplayNames/languages/".concat(value));
       return displayName;
     }
 
     if (type === 'territoryName') {
-      var _displayName = globalized.cldr.main("localeDisplayNames/territories/".concat(value));
+      var _displayName = globalize.cldr.main("localeDisplayNames/territories/".concat(value));
 
       return _displayName;
     }
 
     if (type === 'unit') {
-      return globalized.unitFormatter(params[0], {
+      return globalize.unitFormatter(params[0], {
         form: params[1] || 'long'
       })(value);
     }
 
     if (type === 'dateTimeInterval') {
-      var hHKk = globalized.cldr.supplemental.timeData.preferred();
+      var hHKk = globalize.cldr.supplemental.timeData.preferred();
       var skeleton = hHKk + 'm';
       var greatestDiff = 'm';
 
@@ -84,7 +88,7 @@ var _default = function _default(globalized) {
         if (isAMStart !== isAMEnd) greatestDiff = 'a';
       }
 
-      var intervalFormat = globalized.cldr.main("dates/calendars/gregorian/dateTimeFormats/intervalFormats/".concat(skeleton, "/").concat(greatestDiff));
+      var intervalFormat = globalize.cldr.main("dates/calendars/gregorian/dateTimeFormats/intervalFormats/".concat(skeleton, "/").concat(greatestDiff));
 
       if (intervalFormat) {
         var parts;
@@ -97,11 +101,11 @@ var _default = function _default(globalized) {
           }
         });
 
-        var _start = globalized.dateFormatter({
+        var _start = globalize.dateFormatter({
           raw: parts[0]
         })(value.start);
 
-        var _end = globalized.dateFormatter({
+        var _end = globalize.dateFormatter({
           raw: parts[1]
         })(value.end);
 
@@ -109,13 +113,13 @@ var _default = function _default(globalized) {
       } // Use fallback in case format wasn't found
 
 
-      var start = globalized.dateFormatter({
+      var start = globalize.dateFormatter({
         time: 'short'
       })(value.start);
-      var end = globalized.dateFormatter({
+      var end = globalize.dateFormatter({
         time: 'short'
       })(value.end);
-      var intervalFormatFallback = globalized.cldr.main("dates/calendars/gregorian/dateTimeFormats/intervalFormats/intervalFormatFallback");
+      var intervalFormatFallback = globalize.cldr.main("dates/calendars/gregorian/dateTimeFormats/intervalFormats/intervalFormatFallback");
       return intervalFormatFallback.replace('{0}', start).replace('{1}', end);
     }
 
@@ -127,7 +131,7 @@ var _default = function _default(globalized) {
         var widthType = params[1] || ''; // one of: narrow, short, (empty)
 
         var listPatternRulePath = "listPatterns/listPattern-type-".concat(listType);
-        var listPatternRules = globalized.cldr.main(widthType === '' ? listPatternRulePath : "".concat(listPatternRulePath, "-").concat(widthType));
+        var listPatternRules = globalize.cldr.main(widthType === '' ? listPatternRulePath : "".concat(listPatternRulePath, "-").concat(widthType));
         if (!listPatternRules) throw new Error('Unable to find a valid list pattern or fallback pattern for key: ' + (widthType === '' ? listPatternRulePath : "".concat(listPatternRulePath, "-").concat(widthType))); // Check for literal length rules
 
         if (listPatternRules.hasOwnProperty(list.length + '')) {

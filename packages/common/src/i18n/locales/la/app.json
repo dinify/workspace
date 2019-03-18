@@ -9,7 +9,6 @@
     "opens_at": "{{time, time:short}} ad opens",
     "closes_at": "Clauserit viscera ad {{time, time:short}}"
   },
-  "website": "Website",
   "nav": {
     "eat": "Manducare",
     "checkIn": "Reprehendo in"
@@ -37,14 +36,13 @@
     }
   },
   "bill": {
-    "split": "Split",
     "selecting": "Select the items per libellum",
     "splittingWith": "Medetur;",
     "splittingWith_zero": "Lego users",
-    "splittingCount": "{{count}} persona",
-    "splittingCount_plural": "{{count}} homines",
-    "itemCountSelected": "{{count}} item electus",
-    "itemCountSelected_plural": "{{count}} items electus",
+    "splittingCount": "I persona",
+    "splittingCount_plural": "II homines",
+    "itemCountSelected": "{{count, number}} item electus",
+    "itemCountSelected_plural": "{{count, number}} items electus",
     "itemCountSelected_none": "Nullas delectus"
   },
   "gratuity": "COMMODUM",
@@ -55,31 +53,26 @@
   "currency": {
     "title": "Display monetæ",
     "set": "Constitue ostentationem monetæ",
-    "original": "Showing in originali monetæ prices"
+    "original": "Showing in originali monetæ prices",
+    "other": "Alii valūtās"
   },
   "roles": {
-    "title": "Roles",
-    "waiter": "Famulus potionem",
-    "proofreader": "Proofreader"
+    "waiter": "Famulus potionem"
   },
   "language": {
     "setPrimary": "Constitue prima lingua",
     "default": "Default lingua",
-    "other": "Other languages",
     "addOther": "Addere aliam linguam"
   },
   "cart": {
-    "title": "Shopping cart",
-    "itemCount": "Pars {{count}}",
-    "itemCount_plural": "Partibus {{count}}",
+    "itemCount": "Pars I",
+    "itemCount_plural": "II pieces",
     "itemCount_none": "Inanis",
     "checkInInstructions": "Ut incipias, et scan QR code in popina prope"
   },
   "nutrition": {
     "facts": "Nutritionis valorem",
     "fats": "Crassus",
-    "carbs": "Carbohydrates",
-    "proteins": "Proteins",
     "calories": "Suspendisse"
   }
 }

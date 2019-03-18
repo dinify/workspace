@@ -14,7 +14,6 @@
   "nav": {
     "explore": "Archwiliwch",
     "eat": "Bwyta",
-    "checkIn": "Checkin",
     "service": "Gwasanaeth"
   },
   "ingredients": "Cynhwysion",
@@ -45,9 +44,9 @@
     "selecting": "Dewiswch y eitemau yn bil",
     "splittingWith": "Cael ei rannu rhwng:",
     "splittingWith_zero": "Dewiswch y defnyddwyr",
-    "splittingCount_plural": "{{count}} berson",
-    "itemCountSelected": "{{count}} eitem a ddewiswyd",
-    "itemCountSelected_plural": "{{count}} eitemau a ddewiswyd",
+    "splittingCount_plural": "{{count, number}} berson",
+    "itemCountSelected": "{{count, number}} eitem a ddewiswyd",
+    "itemCountSelected_plural": "{{count, number}} eitemau a ddewiswyd",
     "itemCountSelected_none": "Dim eitemau a ddewiswyd"
   },
   "gratuity": "Arian rhodd",
@@ -59,7 +58,8 @@
   "currency": {
     "title": "Arddangos cyfred",
     "set": "Gosod cyfred arddangos",
-    "original": "Yn dangos prisiau yn yr arian cyfred gwreiddiol"
+    "original": "Yn dangos prisiau yn yr arian cyfred gwreiddiol",
+    "other": "Arian cyfred eraill"
   },
   "roles": {
     "title": "Rolau",
@@ -75,8 +75,8 @@
   },
   "cart": {
     "title": "Basged siopa",
-    "itemCount": "{{count}} darn",
-    "itemCount_plural": "{{count}} ddarn",
+    "itemCount": "{{count, number}} darn",
+    "itemCount_plural": "{{count, number}} ddarn",
     "itemCount_none": "Gwag",
     "add": "Ychwanegu at eich trol siopa",
     "checkInInstructions": "I ddechrau, sganio'r cod QR mewn bwyty gerllaw"

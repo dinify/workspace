@@ -44,10 +44,10 @@
     "selecting": "Izberite elemente v račun",
     "splittingWith": "Se razdeli med:",
     "splittingWith_zero": "Izberite uporabnike",
-    "splittingCount": "{{count}} oseba",
-    "splittingCount_plural": "{{count}} osebi",
-    "itemCountSelected": "{{count}} izbrani element",
-    "itemCountSelected_plural": "{{count}} postavke izbrane",
+    "splittingCount": "{{count, number}} oseba",
+    "splittingCount_plural": "{{count, number}} osebi",
+    "itemCountSelected": "{{count, number}} izbrani element",
+    "itemCountSelected_plural": "{{count, number}} postavke izbrane",
     "itemCountSelected_none": "Ni izbrani elementi"
   },
   "gratuity": "Nagrado",
@@ -59,7 +59,8 @@
   "currency": {
     "title": "Zaslon valuta",
     "set": "Nastavitev prikaza valuta",
-    "original": "Prikaz cen v originalni valuti"
+    "original": "Prikaz cen v originalni valuti",
+    "other": "Druge valute"
   },
   "roles": {
     "title": "Vloge",
@@ -74,8 +75,8 @@
   },
   "cart": {
     "title": "Nakupovalni voziček",
-    "itemCount": "{{count}} kos",
-    "itemCount_plural": "{{count}} kosa",
+    "itemCount": "{{count, number}} kos",
+    "itemCount_plural": "{{count, number}} kosa",
     "itemCount_none": "Prazno",
     "add": "Dodaj v voziček",
     "checkInInstructions": "Za začetek, skenirajte QR kodo v restavraciji v bližini"

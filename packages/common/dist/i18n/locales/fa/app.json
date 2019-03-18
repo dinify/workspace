@@ -46,10 +46,10 @@
     "selecting": "انتخاب اقلام در لایحه",
     "splittingWith": "تقسیم بین:",
     "splittingWith_zero": "کاربران انتخاب",
-    "splittingCount": "{{count}} نفر",
-    "splittingCount_plural": "{{count}} نفر",
-    "itemCountSelected": "{{count}} آیتم انتخاب شده",
-    "itemCountSelected_plural": "{{count}} موارد انتخاب شده",
+    "splittingCount": "{{count, number}} نفر",
+    "splittingCount_plural": "{{count, number}} نفر",
+    "itemCountSelected": "{{count, number}} آیتم انتخاب شده",
+    "itemCountSelected_plural": "{{count, number}} موارد انتخاب شده",
     "itemCountSelected_none": "هیچ آیتم های انتخاب شده"
   },
   "gratuity": "پاداش",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "ارز ها",
     "set": "مجموعه ای ارز نمایش",
-    "original": "نمایش قیمت ارز اصلی"
+    "original": "نمایش قیمت ارز اصلی",
+    "other": "ارزهای دیگر"
   },
   "roles": {
     "title": "نقش",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "سبد خرید",
-    "itemCount": "{{count}} قطعه",
-    "itemCount_plural": "{{count}} قطعه",
+    "itemCount": "{{count, number}} قطعه",
+    "itemCount_plural": "{{count, number}} قطعه",
     "itemCount_none": "خالی",
     "add": "افزودن به سبد خرید",
     "checkInInstructions": "برای شروع، اسکن کد QR در یک رستوران در نزدیکی"

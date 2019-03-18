@@ -46,10 +46,10 @@
     "selecting": "בחר את פריטי הצעת חוק",
     "splittingWith": "מחולק בין:",
     "splittingWith_zero": "בחירת משתמשים",
-    "splittingCount": "{{count}} אדם",
-    "splittingCount_plural": "{{count}} אנשים",
-    "itemCountSelected": "{{count}} שנבחר פריט",
-    "itemCountSelected_plural": "{{count}} פריטים שנבחרו",
+    "splittingCount": "{{count, number}} אדם",
+    "splittingCount_plural": "{{count, number}} אנשים",
+    "itemCountSelected": "{{count, number}} שנבחר פריט",
+    "itemCountSelected_plural": "{{count, number}} פריטים שנבחרו",
     "itemCountSelected_none": "אין פריטים שנבחרו"
   },
   "gratuity": "טִיפּ",
@@ -60,7 +60,8 @@
   "currency": {
     "title": "מטבע תצוגה",
     "set": "מטבע תצוגת גדר",
-    "original": "מציג מחירים במטבע המקורי"
+    "original": "מציג מחירים במטבע המקורי",
+    "other": "מטבעות אחרים"
   },
   "roles": {
     "title": "תפקידים",
@@ -77,8 +78,8 @@
   },
   "cart": {
     "title": "עגלת קניות",
-    "itemCount": "{{count}} חתיכה",
-    "itemCount_plural": "{{count}} חתיכות",
+    "itemCount": "{{count, number}} חתיכה",
+    "itemCount_plural": "{{count, number}} חתיכות",
     "itemCount_none": "ריק",
     "add": "הוסף לעגלה",
     "checkInInstructions": "כדי להתחיל, לסרוק את קוד QR במסעדה סמוכה"

@@ -46,10 +46,10 @@
     "selecting": "حدد العناصر في فاتورة",
     "splittingWith": "يتم تقسيم بين:",
     "splittingWith_zero": "حدد المستخدمين",
-    "splittingCount": "{{count}} شخص",
-    "splittingCount_plural": "شخص {{count}}",
-    "itemCountSelected": "{{count}} البند اختيار",
-    "itemCountSelected_plural": "{{count}} العناصر المحددة",
+    "splittingCount": "{{count, number}} شخص",
+    "splittingCount_plural": "شخص {{count, number}}",
+    "itemCountSelected": "{{count, number}} البند اختيار",
+    "itemCountSelected_plural": "{{count, number}} العناصر المحددة",
     "itemCountSelected_none": "لا العناصر المحددة"
   },
   "gratuity": "بقشيش",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "العملة عرض",
     "set": "تعيين عملة العرض",
-    "original": "عرض أسعار بالعملة الأصلية"
+    "original": "عرض أسعار بالعملة الأصلية",
+    "other": "عملات أخرى"
   },
   "roles": {
     "title": "الأدوار",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "عربة التسوق",
-    "itemCount": "{{count}} قطعة",
-    "itemCount_plural": "{{count}} قطعة",
+    "itemCount": "{{count, number}} قطعة",
+    "itemCount_plural": "{{count, number}} قطعة",
     "itemCount_none": "فارغة",
     "add": "أضف إلى السلة",
     "checkInInstructions": "للبدء، مسح رمز الاستجابة السريعة في مطعم قريب"

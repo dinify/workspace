@@ -7,10 +7,8 @@
     "long": "Telefoannûmer"
   },
   "email": {
-    "short": "Email",
     "long": "E-postadres"
   },
-  "other": "Oare talen",
   "selectLanguage": "Selektearje taal",
   "selectCountry": "Selektearje lân",
   "selectCurrency": "Selektearje faluta",

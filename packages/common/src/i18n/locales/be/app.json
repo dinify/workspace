@@ -46,10 +46,10 @@
     "selecting": "Выберыце элементы ў рахунку",
     "splittingWith": "Падзелена паміж:",
     "splittingWith_zero": "Выбар карыстальнікаў",
-    "splittingCount": "{{count}} чалавек",
-    "splittingCount_plural": "{{count}} чалавек",
-    "itemCountSelected": "{{count}} абраны элемент",
-    "itemCountSelected_plural": "{{count}} элементы, выбраныя",
+    "splittingCount": "{{count, number}} чалавек",
+    "splittingCount_plural": "{{count, number}} чалавек",
+    "itemCountSelected": "{{count, number}} абраны элемент",
+    "itemCountSelected_plural": "{{count, number}} элементы, выбраныя",
     "itemCountSelected_none": "Няма элементаў, выбраных"
   },
   "gratuity": "Хабар",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "Дысплей валюты",
     "set": "Набор валюты дысплея",
-    "original": "Паказаны кошты ў зыходнай валюце"
+    "original": "Паказаны кошты ў зыходнай валюце",
+    "other": "Іншыя валюты"
   },
   "roles": {
     "title": "Ролі",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "Кошык",
-    "itemCount": "{{count}} шт",
-    "itemCount_plural": "{{count}} шт",
+    "itemCount": "{{count, number}} шт",
+    "itemCount_plural": "{{count, number}} шт",
     "itemCount_none": "Пусты",
     "add": "Дадаць у кошык",
     "checkInInstructions": "Для пачатку сканавання QR-кода ў бліжэйшым рэстаране"

@@ -43,10 +43,10 @@
     "selecting": "بل ۾ شيون چونڊيو",
     "splittingWith": "جي وچ ۾ تقسيم ڪيو آهي:",
     "splittingWith_zero": "صارفين کي منتخب ڪريو",
-    "splittingCount": "{{count}} شخص",
-    "splittingCount_plural": "{{count}} ماڻهن",
-    "itemCountSelected": "{{count}} شيء جي چونڊ",
-    "itemCountSelected_plural": "{{count}} شيون چونڊيل",
+    "splittingCount": "{{count, number}} شخص",
+    "splittingCount_plural": "{{count, number}} ماڻهن",
+    "itemCountSelected": "{{count, number}} شيء جي چونڊ",
+    "itemCountSelected_plural": "{{count, number}} شيون چونڊيل",
     "itemCountSelected_none": "في شيون چونڊيل"
   },
   "gratuity": "نوڪر",
@@ -58,7 +58,8 @@
   "currency": {
     "title": "ظاهر ڪرنسي",
     "set": "ڊسپلي ڪرنسي مقرر",
-    "original": "اصل ڪرنسي ۾ ڏٺيون قيمت"
+    "original": "اصل ڪرنسي ۾ ڏٺيون قيمت",
+    "other": "ٻين currencies"
   },
   "roles": {
     "title": "ڪردار",
@@ -73,8 +74,8 @@
   },
   "cart": {
     "title": "خريداري جو گاڏو",
-    "itemCount": "{{count}} ٽڪرو",
-    "itemCount_plural": "{{count}} ٽڪر",
+    "itemCount": "{{count, number}} ٽڪرو",
+    "itemCount_plural": "{{count, number}} ٽڪر",
     "itemCount_none": "خالي",
     "add": "گاڏو کي شامل ڪريو",
     "checkInInstructions": "شروع حاصل ڪرڻ لاء، جي ڀرسان هڪ هوٽل ۾ آر ڪوڊ اسڪين"

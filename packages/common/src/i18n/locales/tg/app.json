@@ -44,10 +44,10 @@
     "selecting": "Интихоб кунед адад дар Векселҳои",
     "splittingWith": "Аст, тақсим миёни:",
     "splittingWith_zero": "Истифодабарандагони ро интихоб кунед",
-    "splittingCount": "{{count}} нафар",
-    "splittingCount_plural": "{{count}} нафар",
-    "itemCountSelected": "{{count}} провайдер интихоб нашудааст",
-    "itemCountSelected_plural": "{{count}} элементҳоро ҷудо созед",
+    "splittingCount": "{{count, number}} нафар",
+    "splittingCount_plural": "{{count, number}} нафар",
+    "itemCountSelected": "{{count, number}} провайдер интихоб нашудааст",
+    "itemCountSelected_plural": "{{count, number}} элементҳоро ҷудо созед",
     "itemCountSelected_none": "Нест, элементҳоро ҷудо созед"
   },
   "pay": "Пардохт",
@@ -58,7 +58,8 @@
   "currency": {
     "title": "Асъори Display",
     "set": "Танзими асъор Намоиши",
-    "original": "Намоиши нархҳо дар асъори аслӣ"
+    "original": "Намоиши нархҳо дар асъори аслӣ",
+    "other": "Дигар асъор"
   },
   "roles": {
     "title": "Наќш",
@@ -73,8 +74,8 @@
   },
   "cart": {
     "title": "Сабади харид",
-    "itemCount": "{{count}} адад",
-    "itemCount_plural": "{{count}} адад",
+    "itemCount": "{{count, number}} адад",
+    "itemCount_plural": "{{count, number}} адад",
     "itemCount_none": "Холӣ",
     "add": "Ба сабат андоз",
     "checkInInstructions": "Барои оғози кор, скан кодекси QR дар тарабхона ҳамсоя"

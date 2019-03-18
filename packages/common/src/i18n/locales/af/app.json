@@ -45,10 +45,10 @@
     "selecting": "Kies die items in wetsontwerp",
     "splittingWith": "Is verdeel tussen:",
     "splittingWith_zero": "Kies gebruikers",
-    "splittingCount": "{{count}} persoon",
-    "splittingCount_plural": "{{count}} persone",
-    "itemCountSelected": "{{count}} item gekies",
-    "itemCountSelected_plural": "{{count}} items gekies",
+    "splittingCount": "{{count, number}} persoon",
+    "splittingCount_plural": "{{count, number}} persone",
+    "itemCountSelected": "{{count, number}} item gekies",
+    "itemCountSelected_plural": "{{count, number}} items gekies",
     "itemCountSelected_none": "Geen items gekies"
   },
   "gratuity": "Gratifikasie",
@@ -59,7 +59,8 @@
   "currency": {
     "title": "Vertoning geldeenheid",
     "set": "Stel vertoning geldeenheid",
-    "original": "Resultate pryse in die oorspronklike geldeenheid"
+    "original": "Resultate pryse in die oorspronklike geldeenheid",
+    "other": "Ander geldeenhede"
   },
   "roles": {
     "title": "Rolle",
@@ -76,8 +77,8 @@
   },
   "cart": {
     "title": "Inkopie mandjie",
-    "itemCount": "{{count}} stuk",
-    "itemCount_plural": "{{count}} stukke",
+    "itemCount": "{{count, number}} stuk",
+    "itemCount_plural": "{{count, number}} stukke",
     "itemCount_none": "Leë",
     "add": "Voeg toe aan winkelwagen",
     "checkInInstructions": "Om te begin, scan die QR-kode in 'n restaurant in die buurt"

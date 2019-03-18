@@ -45,10 +45,10 @@
     "selecting": "Мыйзам долбоорунда ден тандоо",
     "splittingWith": "Ортосунда бөлүнөт:",
     "splittingWith_zero": "Колдонуучуларды тандоо",
-    "splittingCount": "{{count}} адам",
-    "splittingCount_plural": "{{count}} адам",
-    "itemCountSelected": "{{count}} нерсе тандалды",
-    "itemCountSelected_plural": "{{count}} тандалды",
+    "splittingCount": "{{count, number}} адам",
+    "splittingCount_plural": "{{count, number}} адам",
+    "itemCountSelected": "{{count, number}} нерсе тандалды",
+    "itemCountSelected_plural": "{{count, number}} тандалды",
     "itemCountSelected_none": "Тандалган жок нерсе"
   },
   "pay": "Төлөө",
@@ -59,7 +59,8 @@
   "currency": {
     "title": "Display акча",
     "set": "Дисплей акча",
-    "original": "Баштапкы акча менен бааны көрсөтүү"
+    "original": "Баштапкы акча менен бааны көрсөтүү",
+    "other": "Башка учурда"
   },
   "roles": {
     "title": "Ролдору",
@@ -76,8 +77,8 @@
   },
   "cart": {
     "title": "Корзинага салуу",
-    "itemCount": "{{count}}-бөлүгү",
-    "itemCount_plural": "{{count}} даана",
+    "itemCount": "{{count, number}}-бөлүгү",
+    "itemCount_plural": "{{count, number}} даана",
     "itemCount_none": "Бош",
     "add": "Арабага кошуу",
     "checkInInstructions": "Баштоо үчүн, ресторанда QR кодун жакын арытып,"

@@ -34,8 +34,7 @@
     "subtitle": "Ki te tenei āhuatanga, ka taea e koe te tono i te ahua o te condiment hokona ranei tetahi ki tou tepu.",
     "instruction": "Tirohia i roto i na roto i te karapa i te waehere QR i roto i te wharekai tata koe ki te tīmata.",
     "types": {
-      "tableware": "Hokona",
-      "condiments": "Condiments"
+      "tableware": "Hokona"
     }
   },
   "bill": {
@@ -43,10 +42,10 @@
     "selecting": "Tīpakohia te tūemi i roto i te pire",
     "splittingWith": "Kei te wahia i waenganui i:",
     "splittingWith_zero": "Tīpako kaiwhakamahi",
-    "splittingCount": "{{count}} tangata",
-    "splittingCount_plural": "{{count}} tangata",
-    "itemCountSelected": "{{count}} tūemi kua tīpakohia",
-    "itemCountSelected_plural": "{{count}} tūemi kua tīpakohia",
+    "splittingCount": "{{count, number}} tangata",
+    "splittingCount_plural": "{{count, number}} tangata",
+    "itemCountSelected": "{{count, number}} tūemi kua tīpakohia",
+    "itemCountSelected_plural": "{{count, number}} tūemi kua tīpakohia",
     "itemCountSelected_none": "Kahore tūemi kua tīpakohia"
   },
   "pay": "Utu",
@@ -57,12 +56,12 @@
   "currency": {
     "title": "Whakaatu moni",
     "set": "Whakatakotoria he moni whakaatu",
-    "original": "Whakaatu utu i roto i te moni taketake"
+    "original": "Whakaatu utu i roto i te moni taketake",
+    "other": "Ētahi atu Moni"
   },
   "roles": {
     "title": "Ngā tūranga",
     "manager": "Kaiwhakahaere",
-    "waiter": "Waiter",
     "proofreader": "Kaipānuiwhakatika"
   },
   "language": {
@@ -73,8 +72,8 @@
   },
   "cart": {
     "title": "Kete kata",
-    "itemCount": "{{count}} wahi",
-    "itemCount_plural": "{{count}} mongamonga",
+    "itemCount": "{{count, number}} wahi",
+    "itemCount_plural": "{{count, number}} mongamonga",
     "itemCount_none": "Kau",
     "add": "Tāpiri ki te kata",
     "checkInInstructions": "Hei tīmata, te matawai i te waehere QR i roto i te wharekai tata"

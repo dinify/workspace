@@ -46,10 +46,10 @@
     "selecting": "Изаберите ставке у рачуну",
     "splittingWith": "Је подељена између:",
     "splittingWith_zero": "Izaberite корисника",
-    "splittingCount": "{{count}} особа",
-    "splittingCount_plural": "{{count}} особе",
-    "itemCountSelected": "{{count}} ставка изабрана",
-    "itemCountSelected_plural": "{{count}} ставке изабране",
+    "splittingCount": "{{count, number}} особа",
+    "splittingCount_plural": "{{count, number}} особе",
+    "itemCountSelected": "{{count, number}} ставка изабрана",
+    "itemCountSelected_plural": "{{count, number}} ставке изабране",
     "itemCountSelected_none": "Но изабране ставке"
   },
   "gratuity": "Напојница",
@@ -62,7 +62,8 @@
   "currency": {
     "title": "Дисплаи валута",
     "set": "Сет дисплеј валута",
-    "original": "Приказ цене у оригиналној валути"
+    "original": "Приказ цене у оригиналној валути",
+    "other": "Остале валуте"
   },
   "roles": {
     "title": "Uloge",
@@ -79,8 +80,8 @@
   },
   "cart": {
     "title": "Колица за куповину",
-    "itemCount": "{{count}} комад",
-    "itemCount_plural": "{{count}} комада",
+    "itemCount": "{{count, number}} комад",
+    "itemCount_plural": "{{count, number}} комада",
     "itemCount_none": "Празан",
     "add": "Додај у колица",
     "checkInInstructions": "Да бисте започели, скенирајте КР код у оближњем ресторану"

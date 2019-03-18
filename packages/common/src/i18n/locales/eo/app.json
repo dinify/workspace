@@ -14,12 +14,10 @@
   "nav": {
     "explore": "Esplori",
     "eat": "Manĝi",
-    "checkIn": "Checkin",
     "service": "Servo"
   },
   "ingredients": "Ingrediencoj",
   "addons": "Aldoni sur",
-  "subtotal": "Subtotal",
   "total": "Totalo",
   "totalConverted": "Totalo ({{currencyName}})",
   "serviceFee": "Servo kotizon",
@@ -44,10 +42,10 @@
     "selecting": "Elektu la artikoloj en beko",
     "splittingWith": "Estas dividita;",
     "splittingWith_zero": "Elektu uzantoj",
-    "splittingCount": "{{count}} persono",
-    "splittingCount_plural": "{{count}} personoj",
-    "itemCountSelected": "{{count}} ero elektita",
-    "itemCountSelected_plural": "{{count}} erojn elektitaj",
+    "splittingCount": "{{count, number}} persono",
+    "splittingCount_plural": "{{count, number}} personoj",
+    "itemCountSelected": "{{count, number}} ero elektita",
+    "itemCountSelected_plural": "{{count, number}} erojn elektitaj",
     "itemCountSelected_none": "Neniu erojn elektitaj"
   },
   "gratuity": "Dankmono",
@@ -58,7 +56,8 @@
   "currency": {
     "title": "Montru valuto",
     "set": "Agordu display valuto",
-    "original": "Montras prezoj en la originala valuto"
+    "original": "Montras prezoj en la originala valuto",
+    "other": "Aliaj valutoj"
   },
   "roles": {
     "title": "Roloj",
@@ -73,8 +72,8 @@
   },
   "cart": {
     "title": "Aĉetoĉaro",
-    "itemCount": "{{count}} peco",
-    "itemCount_plural": "{{count}} pecoj",
+    "itemCount": "{{count, number}} peco",
+    "itemCount_plural": "{{count, number}} pecoj",
     "itemCount_none": "Malplena",
     "add": "Aldonu al la korbo",
     "checkInInstructions": "Por komenci, skani la QR kodon en restoracio proksime"

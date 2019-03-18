@@ -40,10 +40,10 @@
     "selecting": "Xaiv cov khoom nyob rau hauv daim nqi",
     "splittingWith": "Yog phua nruab nrab:",
     "splittingWith_zero": "Xaiv cov neeg siv",
-    "splittingCount": "{{count}} tus neeg",
-    "splittingCount_plural": "{{count}} cov neeg",
-    "itemCountSelected": "{{count}} yam khoom xaiv",
-    "itemCountSelected_plural": "{{count}} khoom xaiv",
+    "splittingCount": "{{count, number}} tus neeg",
+    "splittingCount_plural": "{{count, number}} cov neeg",
+    "itemCountSelected": "{{count, number}} yam khoom xaiv",
+    "itemCountSelected_plural": "{{count, number}} khoom xaiv",
     "itemCountSelected_none": "Tsis muaj cov khoom uas koj xaiv"
   },
   "pay": "Them",
@@ -51,13 +51,12 @@
   "currency": {
     "title": "Zaub txiaj",
     "set": "Teem zaub txiaj",
-    "original": "Uas qhia tus nqi nyob rau hauv tus thawj txiaj"
+    "original": "Uas qhia tus nqi nyob rau hauv tus thawj txiaj",
+    "other": "Lwm yam currencies"
   },
   "roles": {
     "title": "Cwj pwm",
-    "waiter": "Waiter",
-    "cook": "Ua noj",
-    "proofreader": "Proofreader"
+    "cook": "Ua noj"
   },
   "language": {
     "setPrimary": "Teem thawj hom lus",
@@ -67,15 +66,13 @@
   },
   "cart": {
     "title": "Khw laub",
-    "itemCount": "{{count}} daim",
-    "itemCount_plural": "{{count}} daim",
+    "itemCount": "{{count, number}} daim",
     "add": "Ntxiv rau lub tawb nqa khoom",
     "checkInInstructions": "Yog xav tau pib, luam theej duab cov QR code nyob rau hauv ib tug noj mov nyob ze"
   },
   "nutrition": {
     "facts": "Tus nqi noj haus",
     "fats": "Rog",
-    "carbs": "Carbohydrates",
     "proteins": "Cov nqaijrog",
     "calories": "Calorie ntau ntau"
   }

@@ -45,9 +45,9 @@
     "selecting": "Markera de objekt i räkningen",
     "splittingWith": "Delas mellan:",
     "splittingWith_zero": "Välj användare",
-    "splittingCount_plural": "{{count}} personer",
-    "itemCountSelected": "{{count}} objektet vald",
-    "itemCountSelected_plural": "{{count}} poster som valts",
+    "splittingCount_plural": "{{count, number}} personer",
+    "itemCountSelected": "{{count, number}} objektet vald",
+    "itemCountSelected_plural": "{{count, number}} poster som valts",
     "itemCountSelected_none": "Inga artiklar utvalda"
   },
   "gratuity": "Dricks",
@@ -59,7 +59,8 @@
   "currency": {
     "title": "Display valuta",
     "set": "Ställ display valuta",
-    "original": "Visar priser i den ursprungliga valutan"
+    "original": "Visar priser i den ursprungliga valutan",
+    "other": "Andra valutor"
   },
   "roles": {
     "title": "Roller",
@@ -76,8 +77,8 @@
   },
   "cart": {
     "title": "Kundvagn",
-    "itemCount": "{{count}} del",
-    "itemCount_plural": "{{count}} st",
+    "itemCount": "{{count, number}} del",
+    "itemCount_plural": "{{count, number}} st",
     "itemCount_none": "Tömma",
     "add": "Lägg till i kundvagn",
     "checkInInstructions": "För att komma igång, skanna QR-kod på en restaurang i närheten"

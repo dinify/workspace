@@ -46,10 +46,10 @@
     "selecting": "选择账单项目",
     "splittingWith": "拆分之间：",
     "splittingWith_zero": "选择用户",
-    "splittingCount": "{{count}}人",
-    "splittingCount_plural": "{{count}}人",
-    "itemCountSelected": "{{count}}项目选择",
-    "itemCountSelected_plural": "{{count}}所选项目",
+    "splittingCount": "{{count, number}}人",
+    "splittingCount_plural": "{{count, number}}人",
+    "itemCountSelected": "{{count, number}}项目选择",
+    "itemCountSelected_plural": "{{count, number}}所选项目",
     "itemCountSelected_none": "未选择任何项目"
   },
   "gratuity": "赏钱",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "显示货币",
     "set": "设置显示货币",
-    "original": "显示价格在原币"
+    "original": "显示价格在原币",
+    "other": "其他货币"
   },
   "roles": {
     "title": "角色",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "购物车",
-    "itemCount": "{{count}}片",
-    "itemCount_plural": "{{count}}件",
+    "itemCount": "{{count, number}}片",
+    "itemCount_plural": "{{count, number}}件",
     "itemCount_none": "空",
     "add": "添加到购物车",
     "checkInInstructions": "要开始，扫描QR码在附近的餐馆"

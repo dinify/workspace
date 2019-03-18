@@ -35,8 +35,7 @@
     "subtitle": "Grâce à cette fonctionnalité, vous pouvez demander un tout type de condiment ou la vaisselle à votre table.",
     "instruction": "Arrivée en scannant le code QR dans un restaurant près de chez vous pour commencer.",
     "types": {
-      "tableware": "Vaisselle",
-      "condiments": "Condiments"
+      "tableware": "Vaisselle"
     }
   },
   "bill": {
@@ -45,10 +44,10 @@
     "selecting": "Sélectionnez les éléments du projet de loi",
     "splittingWith": "Est divisé entre:",
     "splittingWith_zero": "Sélectionner des utilisateurs",
-    "splittingCount": "{{count}} personne",
-    "splittingCount_plural": "{{count}} personnes",
-    "itemCountSelected": "{{count}} élément sélectionné",
-    "itemCountSelected_plural": "{{count}} éléments sélectionnés",
+    "splittingCount": "{{count, number}} personne",
+    "splittingCount_plural": "{{count, number}} personnes",
+    "itemCountSelected": "{{count, number}} élément sélectionné",
+    "itemCountSelected_plural": "{{count, number}} éléments sélectionnés",
     "itemCountSelected_none": "Aucun élément sélectionné"
   },
   "gratuity": "Pourboire",
@@ -60,7 +59,8 @@
   "currency": {
     "title": "Devise d'affichage",
     "set": "Définir une devise d'affichage",
-    "original": "Affichage des prix dans la devise d'origine"
+    "original": "Affichage des prix dans la devise d'origine",
+    "other": "D'autres devises"
   },
   "roles": {
     "title": "Rôles",
@@ -77,8 +77,8 @@
   },
   "cart": {
     "title": "Chariot",
-    "itemCount": "{{count}} pièce",
-    "itemCount_plural": "{{count}} pièces",
+    "itemCount": "{{count, number}} pièce",
+    "itemCount_plural": "{{count, number}} pièces",
     "itemCount_none": "Vide",
     "add": "Ajouter au panier",
     "checkInInstructions": "Pour commencer, scanner le code QR dans un restaurant à proximité"
@@ -87,7 +87,6 @@
     "facts": "La valeur nutritionnelle",
     "fats": "Graisse",
     "carbs": "Les glucides",
-    "proteins": "Les protéines",
-    "calories": "Calories"
+    "proteins": "Les protéines"
   }
 }

@@ -46,10 +46,10 @@
     "selecting": "বিলে আইটেম নির্বাচন করুন",
     "splittingWith": "মধ্যে বিভক্ত করা হয়:",
     "splittingWith_zero": "ব্যবহারকারীদের নির্বাচন করুন",
-    "splittingCount": "{{count}} ব্যক্তি",
-    "splittingCount_plural": "{{count}} জন",
-    "itemCountSelected": "{{count}} টি আইটেম নির্বাচন করা",
-    "itemCountSelected_plural": "{{count}} নির্বাচিত আইটেমগুলি",
+    "splittingCount": "{{count, number}} ব্যক্তি",
+    "splittingCount_plural": "{{count, number}} জন",
+    "itemCountSelected": "{{count, number}} টি আইটেম নির্বাচন করা",
+    "itemCountSelected_plural": "{{count, number}} নির্বাচিত আইটেমগুলি",
     "itemCountSelected_none": "কোন নির্বাচিত আইটেমগুলি"
   },
   "gratuity": "আনুতোষিক",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "ডিসপ্লে মুদ্রা",
     "set": "প্রদর্শন মুদ্রা সেট",
-    "original": "মূল মুদ্রার মূল্য দেখানো"
+    "original": "মূল মুদ্রার মূল্য দেখানো",
+    "other": "অন্যান্য মুদ্রায়"
   },
   "roles": {
     "title": "ভূমিকা",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "বাজারের ব্যাগ",
-    "itemCount": "{{count}} টুকরা",
-    "itemCount_plural": "{{count}} টুকরা",
+    "itemCount": "{{count, number}} টুকরা",
+    "itemCount_plural": "২ টুকরা",
     "itemCount_none": "খালি",
     "add": "কার্ট যোগ করুন",
     "checkInInstructions": "শুরু করার জন্য, কাছাকাছি একটি রেস্তোরায় QR কোড স্ক্যান"

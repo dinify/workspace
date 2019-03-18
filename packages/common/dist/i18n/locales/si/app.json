@@ -46,10 +46,10 @@
     "selecting": "පනතේ භාණ්ඩ තෝරන්න",
     "splittingWith": "අතර වෙන් කර ඇත:",
     "splittingWith_zero": "පරිශීලකයන් තෝරා",
-    "splittingCount": "{{count}} පුද්ගලයා",
-    "splittingCount_plural": "{{count}} පුද්ගලයින්",
-    "itemCountSelected": "{{count}} අයිතමය තෝරා",
-    "itemCountSelected_plural": "{{count}} තෝරාගත් භාණ්ඩ",
+    "splittingCount": "{{count, number}} පුද්ගලයා",
+    "splittingCount_plural": "{{count, number}} පුද්ගලයින්",
+    "itemCountSelected": "{{count, number}} අයිතමය තෝරා",
+    "itemCountSelected_plural": "{{count, number}} තෝරාගත් භාණ්ඩ",
     "itemCountSelected_none": "භාණ්ඩ තෝරා නැත"
   },
   "gratuity": "පාරිතෝෂික",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "ප්රදර්ශනය මුදල්",
     "set": "සකසන්න සංදර්ශකය මුදල්",
-    "original": "මුල් මුදල් පෙන්නුම් මිල"
+    "original": "මුල් මුදල් පෙන්නුම් මිල",
+    "other": "අනෙකුත් මුදල්"
   },
   "roles": {
     "title": "භූමිකා",
@@ -77,8 +78,8 @@
   },
   "cart": {
     "title": "සාප්පු ට්රොලිය",
-    "itemCount": "{{count}} කෑල්ලක්",
-    "itemCount_plural": "{{count}} කෑලි",
+    "itemCount": "{{count, number}} කෑල්ලක්",
+    "itemCount_plural": "{{count, number}} කෑලි",
     "itemCount_none": "හිස්",
     "add": "ගැලට එක් කරන්න",
     "checkInInstructions": "ආරම්භ කර ගැනීමට, ළඟ පහත අවන්හලක් තුළ QR ​​කේතය ස්කෑන්"

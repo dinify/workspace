@@ -14,7 +14,6 @@
   "nav": {
     "explore": "Déan iniúchadh",
     "eat": "Ith",
-    "checkIn": "Checkin",
     "service": "Seirbhís"
   },
   "ingredients": "Comhábhair",
@@ -45,10 +44,10 @@
     "selecting": "Roghnaigh na míreanna i bhille",
     "splittingWith": "Roinnte idir:",
     "splittingWith_zero": "Roghnaigh úsáideoirí",
-    "splittingCount": "{{count}} duine",
-    "splittingCount_plural": "{{count}} daoine",
-    "itemCountSelected": "{{count}} mhír roghnaithe",
-    "itemCountSelected_plural": "{{count}} míreanna roghnaithe",
+    "splittingCount": "{{count, number}} duine",
+    "splittingCount_plural": "{{count, number}} daoine",
+    "itemCountSelected": "{{count, number}} mhír roghnaithe",
+    "itemCountSelected_plural": "{{count, number}} míreanna roghnaithe",
     "itemCountSelected_none": "Níl aon rud roghnaithe"
   },
   "gratuity": "Aisce",
@@ -60,13 +59,12 @@
   "currency": {
     "title": "Airgeadra Taispeáin",
     "set": "Airgeadra taispeáint Socraigh",
-    "original": "Praghsanna Showing san airgeadra bunaidh"
+    "original": "Praghsanna Showing san airgeadra bunaidh",
+    "other": "Airgeadraí eile"
   },
   "roles": {
     "title": "Rólanna",
-    "manager": "Bainisteoir",
-    "waiter": "Waiter",
-    "proofreader": "Proofreader"
+    "manager": "Bainisteoir"
   },
   "language": {
     "setPrimary": "Phríomhtheanga Socraigh",
@@ -76,8 +74,8 @@
   },
   "cart": {
     "title": "Cart siopadóireacht",
-    "itemCount": "{{count}} píosa",
-    "itemCount_plural": "{{count}} píosaí",
+    "itemCount": "{{count, number}} píosa",
+    "itemCount_plural": "{{count, number}} píosaí",
     "itemCount_none": "Folamh",
     "add": "Cuir le cart",
     "checkInInstructions": "Chun tús a chur, scanadh an cód QR i mbialann in aice láimhe"
@@ -86,7 +84,6 @@
     "facts": "Luach cothaithe",
     "fats": "Saill",
     "carbs": "Carbaihiodráití",
-    "proteins": "Próitéiní",
-    "calories": "Calories"
+    "proteins": "Próitéiní"
   }
 }

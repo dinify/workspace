@@ -34,10 +34,10 @@
     "selecting": "Koho i na 'ikamu i loko o ka palapala",
     "splittingWith": "Ua Wāwahi ma waena o:",
     "splittingWith_zero": "Wae mea hoʻohana",
-    "splittingCount": "{{count}} kanaka",
-    "splittingCount_plural": "{{count}} kanaka",
-    "itemCountSelected": "{{count}} ikamu i koho",
-    "itemCountSelected_plural": "{{count}} 'ikamu i koho",
+    "splittingCount": "{{count, number}} kanaka",
+    "splittingCount_plural": "{{count, number}} kanaka",
+    "itemCountSelected": "{{count, number}} ikamu i koho",
+    "itemCountSelected_plural": "{{count, number}} 'ikamu i koho",
     "itemCountSelected_none": "Ole 'ikamu i koho"
   },
   "pay": "Uku aku",
@@ -46,7 +46,8 @@
   "currency": {
     "title": "E hōʻike he kālā",
     "set": "E hoʻopaʻa 'ia kālā",
-    "original": "Hōʻike 'ia nā kumukūʻai ma ka palapala kālā"
+    "original": "Hōʻike 'ia nā kumukūʻai ma ka palapala kālā",
+    "other": "Other nā waiwai"
   },
   "roles": {
     "title": "Mau manamana",
@@ -60,8 +61,8 @@
   },
   "cart": {
     "title": "Kūʻai kaʻa",
-    "itemCount": "{{count}} kauwahi",
-    "itemCount_plural": "{{count}} apana",
+    "itemCount": "{{count, number}} kauwahi",
+    "itemCount_plural": "{{count, number}} apana",
     "itemCount_none": "Me ka nele",
     "add": "Pākuʻi i kaʻa",
     "checkInInstructions": "I ka hoʻomaka 'ana, scan ka QR code i loko o ka Hawaii kokoke"

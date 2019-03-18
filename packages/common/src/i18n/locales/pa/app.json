@@ -36,7 +36,6 @@
     "subtitle": "ਇਸ ਫੀਚਰ ਨਾਲ, ਤੁਹਾਨੂੰ ਆਪਣੇ ਟੇਬਲ ਨੂੰ condiment ਜ tableware ਦੀ ਇੱਕ ਕਿਸੇ ਵੀ ਕਿਸਮ ਦੀ ਬੇਨਤੀ ਕਰ ਸਕਦੇ ਹੋ.",
     "instruction": "ਨੂੰ ਇੱਕ ਹੋਟਲ ਵਿਚ QR ਕੋਡ ਨੂੰ ਸਕੈਨ ਤੁਹਾਨੂੰ ਸ਼ੁਰੂ ਕਰਨ ਦੇ ਨੇੜੇ ਹੈ ਵਿਚ ਚੈੱਕ ਕਰੋ.",
     "types": {
-      "tableware": "Tableware",
       "condiments": "ਚਟਨੀ"
     }
   },
@@ -46,10 +45,10 @@
     "selecting": "ਬਿੱਲ ਵਿਚ ਇਕਾਈ ਦੀ ਚੋਣ ਕਰੋ",
     "splittingWith": "ਵਿਚਕਾਰ ਵੰਡਿਆ ਹੈ:",
     "splittingWith_zero": "ਉਪਭੋਗੀ ਨੂੰ ਚੁਣੋ",
-    "splittingCount": "{{count}} ਵਿਅਕਤੀ",
-    "splittingCount_plural": "{{count}} ਵਿਅਕਤੀ",
-    "itemCountSelected": "{{count}} ਇਕਾਈ ਨੂੰ ਚੁਣਿਆ",
-    "itemCountSelected_plural": "{{count}} ਚੁਣਿਆ ਆਈਟਮ",
+    "splittingCount": "{{count, number}} ਵਿਅਕਤੀ",
+    "splittingCount_plural": "{{count, number}} ਵਿਅਕਤੀ",
+    "itemCountSelected": "{{count, number}} ਇਕਾਈ ਨੂੰ ਚੁਣਿਆ",
+    "itemCountSelected_plural": "{{count, number}} ਚੁਣਿਆ ਆਈਟਮ",
     "itemCountSelected_none": "ਕੋਈ ਚੁਣਿਆ ਆਈਟਮ"
   },
   "gratuity": "ਗਰੈਚੁਟੀ",
@@ -61,7 +60,8 @@
   "currency": {
     "title": "ਡਿਸਪਲੇਅ ਮੁਦਰਾ",
     "set": "ਡਿਸਪਲੇਅ ਮੁਦਰਾ ਸੈਟ ਕਰੋ",
-    "original": "ਅਸਲੀ ਮੁਦਰਾ ਵਿੱਚ ਭਾਅ ਦਿਖਾ"
+    "original": "ਅਸਲੀ ਮੁਦਰਾ ਵਿੱਚ ਭਾਅ ਦਿਖਾ",
+    "other": "ਹੋਰ ਮੁਦਰਾ"
   },
   "roles": {
     "title": "ਰੋਲ",
@@ -77,8 +77,8 @@
   },
   "cart": {
     "title": "ਖਰੀਦਾਰੀ ਠੇਲ੍ਹਾ",
-    "itemCount": "{{count}} ਟੁਕੜਾ",
-    "itemCount_plural": "{{count}} ਟੁਕੜੇ",
+    "itemCount": "{{count, number}} ਟੁਕੜਾ",
+    "itemCount_plural": "{{count, number}} ਟੁਕੜੇ",
     "itemCount_none": "ਖਾਲੀ",
     "add": "ਠੇਲ੍ਹੇ ਵਿੱਚ ਪਾਓ",
     "checkInInstructions": "ਸ਼ੁਰੂ ਕਰਨ ਲਈ, ਨੇੜਲੇ ਨੂੰ ਇੱਕ ਹੋਟਲ ਵਿਚ QR ਕੋਡ ਨੂੰ ਸਕੈਨ"

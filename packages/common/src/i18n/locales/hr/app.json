@@ -45,10 +45,10 @@
     "selecting": "Odaberite stavke u računu",
     "splittingWith": "Je podijeljen između:",
     "splittingWith_zero": "Odabir korisnika",
-    "splittingCount": "{{count}} osoba",
-    "splittingCount_plural": "{{count}} osobe",
-    "itemCountSelected": "{{count}} odabrana stavka",
-    "itemCountSelected_plural": "{{count}} Odabrane stavke",
+    "splittingCount": "{{count, number}} osoba",
+    "splittingCount_plural": "{{count, number}} osobe",
+    "itemCountSelected": "{{count, number}} odabrana stavka",
+    "itemCountSelected_plural": "{{count, number}} Odabrane stavke",
     "itemCountSelected_none": "Nema odabranih stavki"
   },
   "gratuity": "Napojnica",
@@ -60,7 +60,8 @@
   "currency": {
     "title": "Prikaz valuta",
     "set": "Postavite zaslon valuta",
-    "original": "Prikazuje se cijena u izvornoj valuti"
+    "original": "Prikazuje se cijena u izvornoj valuti",
+    "other": "Ostale valute"
   },
   "roles": {
     "title": "Uloge",
@@ -77,8 +78,8 @@
   },
   "cart": {
     "title": "Košarica",
-    "itemCount": "{{count}} komad",
-    "itemCount_plural": "{{count}} komada",
+    "itemCount": "{{count, number}} komad",
+    "itemCount_plural": "{{count, number}} komada",
     "itemCount_none": "Prazan",
     "add": "Dodaj u košaricu",
     "checkInInstructions": "Da biste započeli, skenirajte QR kod u restoranu u blizini"

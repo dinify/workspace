@@ -45,10 +45,10 @@
     "selecting": "Билл зүйлсийг сонгоно уу",
     "splittingWith": "Хооронд хуваагддаг:",
     "splittingWith_zero": "Сонгох хэрэглэгчид",
-    "splittingCount": "{{count}} хүн",
-    "splittingCount_plural": "{{count}} хүн",
-    "itemCountSelected": "{{count}} зүйл сонгогдсон",
-    "itemCountSelected_plural": "{{count}} сонгосон зүйлс",
+    "splittingCount": "{{count, number}} хүн",
+    "splittingCount_plural": "{{count, number}} хүн",
+    "itemCountSelected": "{{count, number}} зүйл сонгогдсон",
+    "itemCountSelected_plural": "{{count, number}} сонгосон зүйлс",
     "itemCountSelected_none": "Ямар ч зүйл сонгогдсон"
   },
   "gratuity": "Хөлс хураамжийн",
@@ -59,7 +59,8 @@
   "currency": {
     "title": "Дэлгэц валютын",
     "set": "Тодорхой дэлгэцийн валютын",
-    "original": "Анхны валютаар харагдаж байгаа үнэ"
+    "original": "Анхны валютаар харагдаж байгаа үнэ",
+    "other": "Бусад валют"
   },
   "roles": {
     "title": "Үүрэг",
@@ -75,8 +76,8 @@
   },
   "cart": {
     "title": "Дэлгүүрийн түрдэг тэрэг",
-    "itemCount": "{{count}}-р хэсэг",
-    "itemCount_plural": "{{count}}-р хэсэг",
+    "itemCount": "{{count, number}}-р хэсэг",
+    "itemCount_plural": "{{count, number}}-р хэсэг",
     "itemCount_none": "Хоосон",
     "add": "Картанд нэмэх",
     "checkInInstructions": "Эхлэхийн тулд ойролцоох ресторанд QR кодыг хайлт"

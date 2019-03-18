@@ -41,10 +41,10 @@
     "selecting": "Chwazi atik yo nan bòdwo",
     "splittingWith": "Se divize ant:",
     "splittingWith_zero": "Chwazi itilizatè",
-    "splittingCount": "{{count}} moun",
-    "splittingCount_plural": "{{count}} moun",
-    "itemCountSelected": "{{count}} atik chwazi",
-    "itemCountSelected_plural": "{{count}} atik chwazi",
+    "splittingCount": "{{count, number}} moun",
+    "splittingCount_plural": "{{count, number}} moun",
+    "itemCountSelected": "{{count, number}} atik chwazi",
+    "itemCountSelected_plural": "{{count, number}} atik chwazi",
     "itemCountSelected_none": "Pa gen okenn atik chwazi"
   },
   "gratuity": "Prim",
@@ -55,12 +55,12 @@
   "currency": {
     "title": "Ekspozisyon lajan",
     "set": "Mete lajan ekspozisyon",
-    "original": "Showing pri nan lajan orijinal la"
+    "original": "Showing pri nan lajan orijinal la",
+    "other": "Lòt lajan"
   },
   "roles": {
     "title": "Wòl",
     "manager": "Manadjè",
-    "waiter": "Waiter",
     "cook": "Kwit"
   },
   "language": {
@@ -70,9 +70,8 @@
     "addOther": "Ajoute yon lòt lang"
   },
   "cart": {
-    "title": "Shopping cart",
-    "itemCount": "{{count}} moso",
-    "itemCount_plural": "{{count}} moso",
+    "itemCount": "{{count, number}} moso",
+    "itemCount_plural": "{{count, number}} moso",
     "itemCount_none": "Vid",
     "add": "Ajouter au panier",
     "checkInInstructions": "Pou jwenn te kòmanse, eskane kòd QR la nan yon restoran ki tou pre"

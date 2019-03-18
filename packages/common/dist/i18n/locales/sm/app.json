@@ -1,6 +1,5 @@
 {
   "menu": {
-    "title": "Menu",
     "caption": "O mea uma e mafai ona e maua i {{restaurant.name}}"
   },
   "hours": {
@@ -39,10 +38,10 @@
     "selecting": "Filifili le mea i totonu o tulafono tau faaofi",
     "splittingWith": "Vaeluaina i le va o:",
     "splittingWith_zero": "Filifilia tagata e faaaogāina",
-    "splittingCount": "{{count}} tagata",
-    "splittingCount_plural": "{{count}} tagata",
-    "itemCountSelected": "{{count}} mea filifilia",
-    "itemCountSelected_plural": "{{count}} mea filifilia",
+    "splittingCount": "{{count, number}} tagata",
+    "splittingCount_plural": "{{count, number}} tagata",
+    "itemCountSelected": "{{count, number}} mea filifilia",
+    "itemCountSelected_plural": "{{count, number}} mea filifilia",
     "itemCountSelected_none": "Leai se mea e filifilia"
   },
   "gratuity": "Tupe faameaalofa",
@@ -53,7 +52,8 @@
   "currency": {
     "title": "Faaali atu tupe",
     "set": "Seti tupe faaaliga",
-    "original": "Faaalia o le tau i tupe uluai"
+    "original": "Faaalia o le tau i tupe uluai",
+    "other": "Isi tupe"
   },
   "roles": {
     "title": "Matafaioi",
@@ -69,8 +69,8 @@
   },
   "cart": {
     "title": "Faatauga taavale",
-    "itemCount": "{{count}} fasi",
-    "itemCount_plural": "{{count}} fasi",
+    "itemCount": "{{count, number}} fasi",
+    "itemCount_plural": "{{count, number}} fasi",
     "itemCount_none": "Gaogao",
     "add": "Faaopoopo i taavale",
     "checkInInstructions": "Ina ia amataina, e faitau vave le code QR i se faleaiga latalata ane"

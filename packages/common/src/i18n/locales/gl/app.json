@@ -14,7 +14,6 @@
   "nav": {
     "explore": "Explotar",
     "eat": "Comer",
-    "checkIn": "Checkin",
     "service": "Servizo"
   },
   "ingredients": "Ingredientes",
@@ -43,10 +42,10 @@
     "selecting": "Seleccione os elementos na conta",
     "splittingWith": "Divídese entre:",
     "splittingWith_zero": "Seleccione usuarios",
-    "splittingCount": "{{count}} persoa",
-    "splittingCount_plural": "{{count}} persoas",
-    "itemCountSelected": "{{count}} elemento seleccionado",
-    "itemCountSelected_plural": "{{count}} elementos seleccionados",
+    "splittingCount": "{{count, number}} persoa",
+    "splittingCount_plural": "{{count, number}} persoas",
+    "itemCountSelected": "{{count, number}} elemento seleccionado",
+    "itemCountSelected_plural": "{{count, number}} elementos seleccionados",
     "itemCountSelected_none": "Hai elementos seleccionados"
   },
   "gratuity": "Gratificación",
@@ -58,7 +57,8 @@
   "currency": {
     "title": "Moeda de visualización",
     "set": "Establecer moeda de visualización",
-    "original": "Mostrando prezos en moeda orixinal"
+    "original": "Mostrando prezos en moeda orixinal",
+    "other": "Outras moedas"
   },
   "roles": {
     "title": "Papeis",
@@ -75,8 +75,8 @@
   },
   "cart": {
     "title": "Carriño da compra",
-    "itemCount": "{{count}} peza",
-    "itemCount_plural": "{{count}} pezas",
+    "itemCount": "{{count, number}} peza",
+    "itemCount_plural": "{{count, number}} pezas",
     "itemCount_none": "Branco",
     "add": "Engadir á cesta",
     "checkInInstructions": "Para comezar, le o código QR nun restaurante preto,"

@@ -44,10 +44,10 @@
     "selecting": "Seleccione los elementos en la factura",
     "splittingWith": "Se divide entre:",
     "splittingWith_zero": "Seleccione los usuarios",
-    "splittingCount": "{{count}} persona",
-    "splittingCount_plural": "{{count}} personas",
-    "itemCountSelected": "{{count}} elemento seleccionado",
-    "itemCountSelected_plural": "{{count}} elementos seleccionados",
+    "splittingCount": "{{count, number}} persona",
+    "splittingCount_plural": "{{count, number}} personas",
+    "itemCountSelected": "{{count, number}} elemento seleccionado",
+    "itemCountSelected_plural": "{{count, number}} elementos seleccionados",
     "itemCountSelected_none": "No hay elementos seleccionados"
   },
   "gratuity": "Gratificación",
@@ -59,7 +59,8 @@
   "currency": {
     "title": "Pantalla de divisas",
     "set": "Establecer moneda de visualización",
-    "original": "Mostrando los precios en la moneda original"
+    "original": "Mostrando los precios en la moneda original",
+    "other": "Otras monedas"
   },
   "roles": {
     "manager": "Gerente",
@@ -75,8 +76,8 @@
   },
   "cart": {
     "title": "Carrito de compras",
-    "itemCount": "{{count}} pieza",
-    "itemCount_plural": "{{count}} piezas",
+    "itemCount": "{{count, number}} pieza",
+    "itemCount_plural": "{{count, number}} piezas",
     "itemCount_none": "Vacío",
     "add": "Añadir a la cesta",
     "checkInInstructions": "Para empezar, escanear el código QR en un restaurante cercano"

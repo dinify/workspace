@@ -42,10 +42,10 @@
     "selecting": "Selecteer de items in rekening",
     "splittingWith": "Wordt verdeeld:",
     "splittingWith_zero": "Gebruikers selecteren",
-    "splittingCount": "{{count}} persoon",
-    "splittingCount_plural": "{{count}} personen",
-    "itemCountSelected": "{{count}} geselecteerde item",
-    "itemCountSelected_plural": "{{count}} items geselecteerd",
+    "splittingCount": "{{count, number}} persoon",
+    "splittingCount_plural": "{{count, number}} personen",
+    "itemCountSelected": "{{count, number}} geselecteerde item",
+    "itemCountSelected_plural": "{{count, number}} items geselecteerd",
     "itemCountSelected_none": "Geen items geselecteerd"
   },
   "gratuity": "Fooi",
@@ -55,7 +55,8 @@
   "currency": {
     "title": "Weergavevaluta",
     "set": "Stel weergavevaluta",
-    "original": "Resultaat prijzen in de oorspronkelijke valuta"
+    "original": "Resultaat prijzen in de oorspronkelijke valuta",
+    "other": "Andere valuta's"
   },
   "roles": {
     "title": "Rollen",
@@ -71,8 +72,8 @@
   },
   "cart": {
     "title": "Winkelwagen",
-    "itemCount": "{{count}} stuk",
-    "itemCount_plural": "{{count}} stukken",
+    "itemCount": "{{count, number}} stuk",
+    "itemCount_plural": "{{count, number}} stukken",
     "itemCount_none": "Leeg",
     "add": "Voeg toe aan winkelmandje",
     "checkInInstructions": "Om te beginnen, scan de QR-code in een restaurant in de buurt"

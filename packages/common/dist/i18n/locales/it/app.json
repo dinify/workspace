@@ -45,10 +45,10 @@
     "selecting": "Selezionare gli elementi in bolletta",
     "splittingWith": "È diviso tra:",
     "splittingWith_zero": "Selezionare gli utenti",
-    "splittingCount": "{{count}} persona",
-    "splittingCount_plural": "{{count}} persone",
-    "itemCountSelected": "{{count}} elemento selezionato",
-    "itemCountSelected_plural": "{{count}} elementi selezionati",
+    "splittingCount": "{{count, number}} persona",
+    "splittingCount_plural": "{{count, number}} persone",
+    "itemCountSelected": "{{count, number}} elemento selezionato",
+    "itemCountSelected_plural": "{{count, number}} elementi selezionati",
     "itemCountSelected_none": "Articoli selezionati"
   },
   "gratuity": "Gratifica",
@@ -60,7 +60,8 @@
   "currency": {
     "title": "Valuta display",
     "set": "Impostare la valuta di visualizzazione",
-    "original": "Mostrando i prezzi nella valuta"
+    "original": "Mostrando i prezzi nella valuta",
+    "other": "Altre valute"
   },
   "roles": {
     "title": "Ruoli",
@@ -76,8 +77,8 @@
   },
   "cart": {
     "title": "Carrello della spesa",
-    "itemCount": "{{count}} pezzo",
-    "itemCount_plural": "{{count}} pezzi",
+    "itemCount": "{{count, number}} pezzo",
+    "itemCount_plural": "{{count, number}} pezzi",
     "itemCount_none": "Vuoto",
     "add": "Aggiungi al carrello",
     "checkInInstructions": "Per iniziare, la scansione del codice QR in un ristorante nelle vicinanze"

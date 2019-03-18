@@ -7,11 +7,9 @@
     "long": "Lambarka taleefanka"
   },
   "email": {
-    "short": "Email",
     "long": "Cinwaanka emailka"
   },
   "suggested": "La soo-jeediyey",
-  "other": "Luqado kale",
   "selectLanguage": "Dooro luqad",
   "selectCountry": "Select dalka",
   "selectCurrency": "Dooro lacagta",

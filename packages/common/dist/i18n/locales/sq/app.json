@@ -35,8 +35,7 @@
     "subtitle": "Me këtë funksion, ju mund të kërkoni një çdo lloj piper ose sendesh në tryezën tuaj.",
     "instruction": "Kontrolloni në nga skanimi kodin QR në një restorant pranë jush për të marrë filluar.",
     "types": {
-      "tableware": "Takëm",
-      "condiments": "Condiments"
+      "tableware": "Takëm"
     }
   },
   "bill": {
@@ -45,9 +44,9 @@
     "selecting": "Zgjidhni artikujt në faturën",
     "splittingWith": "Është e ndarë në mes:",
     "splittingWith_zero": "Zgjidh përdoruesit",
-    "splittingCount_plural": "{{count}} persona",
-    "itemCountSelected": "{{count}} pika të zgjedhura",
-    "itemCountSelected_plural": "{{count}} pikat e zgjedhura",
+    "splittingCount_plural": "{{count, number}} persona",
+    "itemCountSelected": "{{count, number}} pika të zgjedhura",
+    "itemCountSelected_plural": "{{count, number}} pikat e zgjedhura",
     "itemCountSelected_none": "Nuk ka artikuj të përzgjedhura"
   },
   "gratuity": "Bakshish",
@@ -59,7 +58,8 @@
   "currency": {
     "title": "Display monedhës",
     "set": "Set monedhës ekran",
-    "original": "Tregon çmimet në monedhën origjinale"
+    "original": "Tregon çmimet në monedhën origjinale",
+    "other": "Monedha të tjera"
   },
   "roles": {
     "title": "Rolet",
@@ -76,8 +76,8 @@
   },
   "cart": {
     "title": "Karrocë pazar",
-    "itemCount": "{{count}} copë",
-    "itemCount_plural": "{{count}} copa",
+    "itemCount": "{{count, number}} copë",
+    "itemCount_plural": "{{count, number}} copa",
     "itemCount_none": "Bosh",
     "add": "Shportë",
     "checkInInstructions": "Për t'ia filluar, skanoni kodin QR në një restorant aty pranë"

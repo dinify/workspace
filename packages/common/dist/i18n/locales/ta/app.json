@@ -36,7 +36,6 @@
     "subtitle": "இந்த அம்சம், நீங்கள் உங்கள் அட்டவணையில் தாளிக்கும் அல்லது மேசைப் ஒரு எந்த வகையான கோரலாம்.",
     "instruction": "நீங்கள் தொடங்குவதற்கு அருகே ஒரு உணவகத்தில் QR குறியீட்டை ஸ்கேன் செய்வதன் மூலம் சரிபார்க்கலாம்.",
     "types": {
-      "tableware": "Tableware",
       "condiments": "சுவையூட்டும்"
     }
   },
@@ -46,10 +45,10 @@
     "selecting": "மசோதா உள்ள அவற்றைத் தேர்ந்தெடுக்கவும்",
     "splittingWith": "பிளவடைந்து:",
     "splittingWith_zero": "பயனர்களைத் தேர்ந்தெடுக்கவும்",
-    "splittingCount": "{{count}} நபர்",
-    "splittingCount_plural": "{{count}} நபர்கள்",
-    "itemCountSelected": "{{count}} உருப்படி தேர்ந்தெடுக்கப்பட்டது",
-    "itemCountSelected_plural": "தேர்ந்தெடுக்கப்பட்டுள்ளன {{count}} பொருட்களை",
+    "splittingCount": "{{count, number}} நபர்",
+    "splittingCount_plural": "{{count, number}} நபர்கள்",
+    "itemCountSelected": "{{count, number}} உருப்படி தேர்ந்தெடுக்கப்பட்டது",
+    "itemCountSelected_plural": "தேர்ந்தெடுக்கப்பட்டுள்ளன {{count, number}} பொருட்களை",
     "itemCountSelected_none": "எந்த உருப்படிகள் தேர்ந்தெடுக்கப்பட்டன"
   },
   "gratuity": "பணிக்கொடை",
@@ -61,14 +60,14 @@
   "currency": {
     "title": "காட்சி நாணய",
     "set": "காட்சி நாணய அமை",
-    "original": "அசல் நாணய விலைகளை காட்டும்"
+    "original": "அசல் நாணய விலைகளை காட்டும்",
+    "other": "மற்ற நாணயங்களுக்கு"
   },
   "roles": {
     "title": "பாத்திரங்கள்",
     "manager": "மேலாளர்",
     "waiter": "வெயிட்டர்",
-    "cook": "குக்",
-    "proofreader": "Proofreader"
+    "cook": "குக்"
   },
   "language": {
     "setPrimary": "முதன்மை மொழி அமை",
@@ -78,8 +77,8 @@
   },
   "cart": {
     "title": "ஷாப்பிங் கார்ட்",
-    "itemCount": "{{count}} துண்டு",
-    "itemCount_plural": "{{count}} துண்டுகள்",
+    "itemCount": "{{count, number}} துண்டு",
+    "itemCount_plural": "{{count, number}} துண்டுகள்",
     "itemCount_none": "காலியாக",
     "add": "பெட்டகத்தில் சேர்",
     "checkInInstructions": "தொடங்குவதற்கு, அருகிலுள்ள ஒரு உணவகத்தில் QR குறியீட்டை ஸ்கேன்"

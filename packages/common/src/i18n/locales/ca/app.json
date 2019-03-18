@@ -17,7 +17,6 @@
     "checkIn": "Registrar",
     "service": "Servei"
   },
-  "ingredients": "Ingredients",
   "addons": "Afegir",
   "subtotal": "Total parcial",
   "serviceFee": "Comissió de servei",
@@ -34,8 +33,7 @@
     "subtitle": "Amb aquesta funció, pot sol·licitar un qualsevol tipus de condiment o vaixelles a la seva taula.",
     "instruction": "Arribada escanejant el codi QR en un restaurant proper a començar.",
     "types": {
-      "tableware": "Vaixella",
-      "condiments": "Condiments"
+      "tableware": "Vaixella"
     }
   },
   "bill": {
@@ -44,10 +42,10 @@
     "selecting": "Seleccioneu els elements a la factura",
     "splittingWith": "Es divideix entre:",
     "splittingWith_zero": "Seleccioneu els usuaris",
-    "splittingCount": "A {{count}} persona",
-    "splittingCount_plural": "A {{count}} persones",
-    "itemCountSelected": "{{count}} element seleccionat",
-    "itemCountSelected_plural": "{{count}} elements seleccionats",
+    "splittingCount": "A {{count, number}} persona",
+    "splittingCount_plural": "A {{count, number}} persones",
+    "itemCountSelected": "{{count, number}} element seleccionat",
+    "itemCountSelected_plural": "{{count, number}} elements seleccionats",
     "itemCountSelected_none": "No hi ha elements seleccionats"
   },
   "gratuity": "Gratificació",
@@ -59,7 +57,8 @@
   "currency": {
     "title": "Pantalla de divises",
     "set": "Establir moneda de visualització",
-    "original": "Ara es mostren els preus en la moneda original"
+    "original": "Ara es mostren els preus en la moneda original",
+    "other": "Altres monedes"
   },
   "roles": {
     "title": "Rols",
@@ -76,8 +75,8 @@
   },
   "cart": {
     "title": "Carret de compra",
-    "itemCount": "{{count}} peça",
-    "itemCount_plural": "{{count}} peces",
+    "itemCount": "{{count, number}} peça",
+    "itemCount_plural": "{{count, number}} peces",
     "itemCount_none": "Buit",
     "add": "Afegir a la cistella",
     "checkInInstructions": "Per començar, escanejar el codi QR en un restaurant proper"
@@ -86,7 +85,6 @@
     "facts": "Valor nutricional",
     "fats": "Greix",
     "carbs": "Els hidrats de carboni",
-    "proteins": "Proteïnes",
-    "calories": "Calories"
+    "proteins": "Proteïnes"
   }
 }

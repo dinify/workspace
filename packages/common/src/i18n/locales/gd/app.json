@@ -41,9 +41,9 @@
     "selecting": "Tagh sa bhile",
     "splittingWith": "Air a roinn eadar:",
     "splittingWith_zero": "Tagh an luchd-chleachdaidh",
-    "splittingCount": "{{count}} neach",
-    "itemCountSelected": "{{count}} Notaichean a thaghadh",
-    "itemCountSelected_plural": "{{count}} nithean a thaghadh",
+    "splittingCount": "{{count, number}} neach",
+    "itemCountSelected": "{{count, number}} Notaichean a thaghadh",
+    "itemCountSelected_plural": "{{count, number}} nithean a thaghadh",
     "itemCountSelected_none": "Chan eil nithean a thaghadh"
   },
   "pay": "Pàigh",
@@ -54,7 +54,8 @@
   "currency": {
     "title": "Taisbeanadh currency",
     "set": "Suidhich taisbeanadh currency",
-    "original": "A 'sealltainn prìsean anns a' chiad currency"
+    "original": "A 'sealltainn prìsean anns a' chiad currency",
+    "other": "Eile"
   },
   "roles": {
     "title": "Dreuchan",
@@ -64,14 +65,13 @@
   },
   "language": {
     "setPrimary": "Suidhich prìomh chànan",
-    "default": "Default Language",
     "other": "Cànain eile",
     "addOther": "Cuir an cànan eile"
   },
   "cart": {
     "title": "Shopping cairt",
-    "itemCount": "{{count}} pìos",
-    "itemCount_plural": "{{count}} pìosan",
+    "itemCount": "{{count, number}} pìos",
+    "itemCount_plural": "{{count, number}} pìosan",
     "itemCount_none": "Falamh",
     "add": "Cuir ri cairt",
     "checkInInstructions": "Airson tòiseachadh, a 'sganadh QR code ann an taigh-bìdh faisg air làimh"

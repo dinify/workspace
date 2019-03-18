@@ -26,32 +26,26 @@
   "service": {
     "title": "Nelpon layanan sing",
     "subtitle": "Kanthi fitur iki, sampeyan bisa njaluk sembarang jenis bumbu utawa tableware kanggo meja.",
-    "instruction": "Priksa dening mindhai kode QR ing restoran cedhak sampeyan kanggo miwiti.",
-    "types": {
-      "tableware": "Tableware",
-      "condiments": "Condiments"
-    }
+    "instruction": "Priksa dening mindhai kode QR ing restoran cedhak sampeyan kanggo miwiti."
   },
   "bill": {
     "selecting": "Pilih item ing Bill",
     "splittingWith": "Dipérang antarane:",
     "splittingWith_zero": "Pilih pangguna",
-    "splittingCount": "{{count}} wong",
-    "itemCountSelected": "{{count}} item sing dipilih",
-    "itemCountSelected_plural": "{{count}} item sing dipilih",
+    "splittingCount": "{{count, number}} wong",
+    "itemCountSelected": "{{count, number}} item sing dipilih",
+    "itemCountSelected_plural": "{{count, number}} item sing dipilih",
     "itemCountSelected_none": "Ora item sing dipilih"
   },
-  "gratuity": "Gratuity",
   "paymentPending": "Nunggu pembayaran ...",
-  "dashboard": "Dashboard",
   "currency": {
     "title": "Itungan tampilan",
     "set": "Setel itungan tampilan",
-    "original": "Nuduhake prices ing itungan asli"
+    "original": "Nuduhake prices ing itungan asli",
+    "other": "Duit liyane"
   },
   "roles": {
-    "title": "Dhapukan",
-    "waiter": "Waiter"
+    "title": "Dhapukan"
   },
   "language": {
     "setPrimary": "Setel basa utami",
@@ -60,9 +54,7 @@
     "addOther": "Tambah basa liyane"
   },
   "cart": {
-    "title": "Shopping cart",
-    "itemCount": "{{count}} potong",
-    "itemCount_plural": "{{count}} potong",
+    "itemCount_plural": "{{count, number}} bêsik",
     "itemCount_none": "P",
     "add": "Tambah Wadhah",
     "checkInInstructions": "Kanggo miwiti, mindhai kode QR ing restoran toko"

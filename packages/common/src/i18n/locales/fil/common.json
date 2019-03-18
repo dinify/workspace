@@ -7,12 +7,7 @@
     "short": "Telepono",
     "long": "Numero ng telepono"
   },
-  "email": {
-    "short": "Email",
-    "long": "Email address"
-  },
   "suggested": "Iminungkahing",
-  "other": "Iba pang mga wika",
   "selectLanguage": "Piliin ang wika",
   "selectCountry": "Piliin ang bansa",
   "selectCurrency": "Pumili ng pera",

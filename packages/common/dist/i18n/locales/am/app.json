@@ -45,10 +45,10 @@
     "selecting": "ደረሰኝ ውስጥ ንጥሎችን ምረጥ",
     "splittingWith": "መካከል ሊከፋፈሉ ነው:",
     "splittingWith_zero": "ተጠቃሚዎች ምረጥ",
-    "splittingCount": "{{count}} ሰው",
-    "splittingCount_plural": "{{count}} ሰዎች",
-    "itemCountSelected": "{{count}} ንጥል ተመርጧል",
-    "itemCountSelected_plural": "የተመረጡ {{count}} ንጥሎች",
+    "splittingCount": "{{count, number}} ሰው",
+    "splittingCount_plural": "{{count, number}} ሰዎች",
+    "itemCountSelected": "{{count, number}} ንጥል ተመርጧል",
+    "itemCountSelected_plural": "የተመረጡ {{count, number}} ንጥሎች",
     "itemCountSelected_none": "የተመረጡ ምንም ንጥሎች"
   },
   "pay": "ይክፈሉ",
@@ -59,7 +59,8 @@
   "currency": {
     "title": "አሳይ ምንዛሬ",
     "set": "አዘጋጅ ማሳያ ምንዛሬ",
-    "original": "የመጀመሪያውን ምንዛሬ ዋጋዎችን በማሳየት ላይ"
+    "original": "የመጀመሪያውን ምንዛሬ ዋጋዎችን በማሳየት ላይ",
+    "other": "ሌሎች ገንዘቦች"
   },
   "roles": {
     "title": "ሚናዎች",
@@ -75,8 +76,8 @@
   },
   "cart": {
     "title": "ወደ ግዢ ሳጥን ጨመር",
-    "itemCount": "{{count}} ቁራጭ",
-    "itemCount_plural": "{{count}} ቁርጥራጮች",
+    "itemCount": "{{count, number}} ቁራጭ",
+    "itemCount_plural": "{{count, number}} ቁርጥራጮች",
     "itemCount_none": "ባዶ",
     "add": "ወደ ግዢው ቅርጫት ጨምር",
     "checkInInstructions": "ለመጀመር, በአቅራቢያው አንድ ምግብ ቤት ውስጥ ያለውን የ QR ኮድ ይቃኙ"

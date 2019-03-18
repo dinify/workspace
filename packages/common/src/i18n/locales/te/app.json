@@ -46,10 +46,10 @@
     "selecting": "బిల్లులో అంశాలను ఎంచుకోండి",
     "splittingWith": "మధ్య విడిపోయింది:",
     "splittingWith_zero": "వినియోగదారులు ఎంచుకోండి",
-    "splittingCount": "{{count}} వ్యక్తి",
-    "splittingCount_plural": "{{count}} వ్యక్తులు",
-    "itemCountSelected": "{{count}} అంశం ఎంపిక",
-    "itemCountSelected_plural": "{{count}} అంశాలను ఎంపిక",
+    "splittingCount": "{{count, number}} వ్యక్తి",
+    "splittingCount_plural": "{{count, number}} వ్యక్తులు",
+    "itemCountSelected": "{{count, number}} అంశం ఎంపిక",
+    "itemCountSelected_plural": "{{count, number}} అంశాలను ఎంపిక",
     "itemCountSelected_none": "ఏ ఐటంలు ఎంపిక"
   },
   "gratuity": "గ్రాట్యుటీ",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "ప్రదర్శన కరెన్సీ",
     "set": "ప్రదర్శన కరెన్సీ సెట్",
-    "original": "అసలు కరెన్సీలో ధరలు చూపిస్తున్న"
+    "original": "అసలు కరెన్సీలో ధరలు చూపిస్తున్న",
+    "other": "ఇతర కరెన్సీలు"
   },
   "roles": {
     "title": "పాత్రలు",
@@ -77,8 +78,8 @@
   },
   "cart": {
     "title": "షాపింగ్ కార్ట్",
-    "itemCount": "{{count}} ముక్క",
-    "itemCount_plural": "{{count}} ముక్కలు",
+    "itemCount": "{{count, number}} ముక్క",
+    "itemCount_plural": "{{count, number}} ముక్కలు",
     "itemCount_none": "ఖాళీగా",
     "add": "కార్ట్ జోడించండి",
     "checkInInstructions": "ప్రారంభించడానికి, సమీపంలోని ఒక రెస్టారెంట్ లో QR కోడ్ స్కాన్"

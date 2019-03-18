@@ -46,10 +46,10 @@
     "selecting": "เลือกรายการในใบเรียกเก็บเงิน",
     "splittingWith": "จะถูกแบ่งออกระหว่าง:",
     "splittingWith_zero": "เลือกผู้ใช้",
-    "splittingCount": "{{count}} คน",
-    "splittingCount_plural": "{{count}} ท่าน",
-    "itemCountSelected": "{{count}}รายการที่เลือก",
-    "itemCountSelected_plural": "{{count}}รายการที่เลือก",
+    "splittingCount": "{{count, number}} คน",
+    "splittingCount_plural": "{{count, number}} ท่าน",
+    "itemCountSelected": "{{count, number}}รายการที่เลือก",
+    "itemCountSelected_plural": "{{count, number}}รายการที่เลือก",
     "itemCountSelected_none": "ไม่มีรายการที่เลือก"
   },
   "gratuity": "เงินรางวัล",
@@ -61,7 +61,8 @@
   "currency": {
     "title": "สกุลเงินที่แสดง",
     "set": "ตั้งค่าการแสดงผลของสกุลเงิน",
-    "original": "แสดงราคาในสกุลเงินเดิม"
+    "original": "แสดงราคาในสกุลเงินเดิม",
+    "other": "สกุลเงินอื่น ๆ"
   },
   "roles": {
     "title": "บทบาท",
@@ -78,8 +79,8 @@
   },
   "cart": {
     "title": "รถเข็น",
-    "itemCount": "{{count}} ชิ้น",
-    "itemCount_plural": "{{count}} ชิ้น",
+    "itemCount": "{{count, number}} ชิ้น",
+    "itemCount_plural": "{{count, number}} ชิ้น",
     "itemCount_none": "ว่างเปล่า",
     "add": "หยิบใส่ตะกร้า",
     "checkInInstructions": "ในการเริ่มต้นการสแกนรหัส QR ในร้านอาหารใกล้เคียง"

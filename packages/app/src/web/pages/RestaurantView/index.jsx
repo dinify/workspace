@@ -132,7 +132,7 @@ class RestaurantView extends React.PureComponent {
                   gutterBottom
                   variant="overline"
                   color="primary">
-                  {tags.join(' · ')}
+                  {tags.join(' • ')}
                 </Typography>
               )}
               <Typography gutterBottom variant="h6">{restaurant.name}</Typography>

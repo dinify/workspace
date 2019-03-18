@@ -42,13 +42,12 @@
     "selecting": "Აირჩიეთ ელემენტი კანონპროექტი",
     "splittingWith": "Გაყოფილი შორის:",
     "splittingWith_zero": "Აირჩიეთ მომხმარებლები",
-    "splittingCount": "{{count}}-",
-    "splittingCount_plural": "{{count}} პირი",
-    "itemCountSelected": "{{count}} პუნქტის შერჩეული",
-    "itemCountSelected_plural": "{{count}} ნივთები შერჩეული",
+    "splittingCount": "{{count, number}}-",
+    "splittingCount_plural": "{{count, number}} პირი",
+    "itemCountSelected": "{{count, number}} პუნქტის შერჩეული",
+    "itemCountSelected_plural": "{{count, number}} ნივთები შერჩეული",
     "itemCountSelected_none": "Არსებობს ნივთები შერჩეული"
   },
-  "gratuity": "Gratuity",
   "pay": "Გადახდა",
   "paymentPending": "Ველოდები გადახდის ...",
   "editing": "Რედაქტირება",
@@ -56,7 +55,8 @@
   "currency": {
     "title": "Ჩვენების ვალუტა",
     "set": "Უცნობია ჩვენება ვალუტა",
-    "original": "Ჩვენება ფასები ორიგინალური ვალუტა"
+    "original": "Ჩვენება ფასები ორიგინალური ვალუტა",
+    "other": "Სხვა ვალუტაში"
   },
   "roles": {
     "title": "Როლები",
@@ -70,15 +70,14 @@
   },
   "cart": {
     "title": "Საყიდლების კალათი",
-    "itemCount": "{{count}} ნაჭერი",
-    "itemCount_plural": "{{count}} ცალი",
+    "itemCount": "{{count, number}} ნაჭერი",
+    "itemCount_plural": "{{count, number}} ცალი",
     "itemCount_none": "Ცარიელი",
     "add": "Კალათაში დამატება",
     "checkInInstructions": "Უნდა დავიწყოთ, სკანირების QR კოდი რესტორანში მიმდებარე"
   },
   "nutrition": {
     "facts": "Კვებითი ღირებულება",
-    "fats": "Fat",
     "carbs": "Ნახშირწყლები",
     "proteins": "Ცილები",
     "calories": "Კალორია"

@@ -17,7 +17,6 @@
   },
   "ingredients": "Yngrediïnten",
   "addons": "Add op",
-  "subtotal": "SUBTOTAL",
   "total": "Totaal",
   "totalConverted": "Totaal ({{currencyName}})",
   "order": "Bestelle",
@@ -31,10 +30,7 @@
   "service": {
     "title": "Neame in tsjinst",
     "subtitle": "Mei dizze funksje, kinne jo in eltse soarte fan condiment of servies oan dyn tafel.",
-    "instruction": "Check yn troch in skennen fan de QR-koade yn in restaurant by jo to te begjinnen.",
-    "types": {
-      "tableware": "Tableware"
-    }
+    "instruction": "Check yn troch in skennen fan de QR-koade yn in restaurant by jo to te begjinnen."
   },
   "bill": {
     "title": "Rekken",
@@ -42,21 +38,20 @@
     "selecting": "Selektearje de items yn bill",
     "splittingWith": "Wurdt spjalte tusken:",
     "splittingWith_zero": "Selektearje brûkers",
-    "splittingCount": "{{count}} persoan",
-    "splittingCount_plural": "{{count}} persoanen",
-    "itemCountSelected": "{{count}} item selektearre",
-    "itemCountSelected_plural": "{{count}} items selektearre",
+    "splittingCount": "{{count, number}} persoan",
+    "splittingCount_plural": "{{count, number}} persoanen",
+    "itemCountSelected": "{{count, number}} item selektearre",
+    "itemCountSelected_plural": "{{count, number}} items selektearre",
     "itemCountSelected_none": "Gjin items selektearre"
   },
-  "gratuity": "Gratuity",
   "pay": "Betelje",
   "paymentPending": "Wachtsje op betelling ...",
   "profile": "Profyl",
-  "dashboard": "Dashboard",
   "currency": {
     "title": "Display faluta",
     "set": "Set skerm faluta",
-    "original": "Showing prizen yn de orizjinele faluta"
+    "original": "Showing prizen yn de orizjinele faluta",
+    "other": "Oare muntienheden"
   },
   "roles": {
     "manager": "Behearder",
@@ -72,8 +67,8 @@
   },
   "cart": {
     "title": "Winkelwein",
-    "itemCount": "{{count}} stik",
-    "itemCount_plural": "{{count}} stikken",
+    "itemCount": "{{count, number}} stik",
+    "itemCount_plural": "{{count, number}} stikken",
     "itemCount_none": "Leech",
     "checkInInstructions": "Om te begjinnen, scannen fan de QR-koade yn in restaurant buert"
   },

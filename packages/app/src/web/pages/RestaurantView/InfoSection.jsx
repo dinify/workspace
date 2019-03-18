@@ -91,8 +91,8 @@ const InfoSection = ({
           <table style={{borderSpacing: 0, paddingLeft: 56}}>
             <tbody>
               {[...Array(6).keys()].map(index => {
-                const offsetIndex = (currentWeekDayIndex + index) % 7;
-                const localizedDay = i18n.format(days[offsetIndex], 'weekDayName:wide');
+                const weekDayKey = days[(currentWeekDayIndex + index) % 7];
+                const localizedDay = i18n.format(weekDayKey, 'weekDayName:wide');
 
                 return (
                   <tr key={uniqueId()}>
@@ -102,10 +102,10 @@ const InfoSection = ({
                       </Typography>
                     </td>
                     <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
-                      {restaurant.open_hours[days[offsetIndex]].map(value => {
+                      {restaurant.open_hours[weekDayKey].map(value => {
                         // TODO: better time respresentation (?)
                         const formatted = i18n.format({
-                          start: index === 0 ? new Date(`1970-01-01 08:00`) : new Date(`1970-01-01 ${value[0]}`),
+                          start: new Date(`1970-01-01 ${value[0]}`),
                           end: new Date(`1970-01-01 ${value[1]}`)
                         }, 'dateTimeInterval');
                         return (

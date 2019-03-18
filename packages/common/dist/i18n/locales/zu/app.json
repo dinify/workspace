@@ -35,7 +35,6 @@
     "subtitle": "Nge lesi sici, ungacela noma yiluphi uhlobo condiment noma tableware etafuleni lakho.",
     "instruction": "Ngena nge kuthwetshulwa ikhodi QR endaweni yokudlela eduze nawe ukuze uqalise.",
     "types": {
-      "tableware": "Tableware",
       "condiments": "Ukudla"
     }
   },
@@ -44,10 +43,10 @@
     "selecting": "Khetha izinto bill",
     "splittingWith": "Kuhlukaniswa phakathi:",
     "splittingWith_zero": "Khetha abasebenzisi",
-    "splittingCount": "Umuntu ongu-{{count}}",
-    "splittingCount_plural": "{{count}} abantu",
-    "itemCountSelected": "{{count}} into ekhethiwe",
-    "itemCountSelected_plural": "{{count}} izinto ezikhethiwe",
+    "splittingCount": "Umuntu ongu-{{count, number}}",
+    "splittingCount_plural": "{{count, number}} abantu",
+    "itemCountSelected": "{{count, number}} into ekhethiwe",
+    "itemCountSelected_plural": "{{count, number}} izinto ezikhethiwe",
     "itemCountSelected_none": "Kungekho izinto ezikhethiwe"
   },
   "pay": "Khokha",
@@ -57,7 +56,8 @@
   "currency": {
     "title": "Bonisa lwemali",
     "set": "Setha isibonisi lwemali",
-    "original": "Ibonisa izintengo ngohlobo lwemali yasekuqaleni"
+    "original": "Ibonisa izintengo ngohlobo lwemali yasekuqaleni",
+    "other": "Okunye zezimali"
   },
   "roles": {
     "title": "Izindima",
@@ -73,8 +73,8 @@
   },
   "cart": {
     "title": "Inqola yokuthenga",
-    "itemCount": "{{count}} isiqephu",
-    "itemCount_plural": "{{count}} izingcezu",
+    "itemCount": "{{count, number}} isiqephu",
+    "itemCount_plural": "{{count, number}} izingcezu",
     "itemCount_none": "Ezingenalutho",
     "add": "Engeza ekalishini",
     "checkInInstructions": "Ukuze uqalise, ihlole ikhodi QR esitolo sokudlela esasiseduze"

@@ -43,10 +43,10 @@
     "selecting": "Vyberte položky v návrhu zákona",
     "splittingWith": "Je rozdělena mezi:",
     "splittingWith_zero": "Vyberte uživatele",
-    "splittingCount": "{{count}} osoba",
-    "splittingCount_plural": "{{count}} osoby",
-    "itemCountSelected": "{{count}} vybraná položka",
-    "itemCountSelected_plural": "{{count}} vybrané položky",
+    "splittingCount": "{{count, number}} osoba",
+    "splittingCount_plural": "{{count, number}} osoby",
+    "itemCountSelected": "{{count, number}} vybraná položka",
+    "itemCountSelected_plural": "{{count, number}} vybrané položky",
     "itemCountSelected_none": "Žádné položky vybrané"
   },
   "gratuity": "Spropitné",
@@ -58,7 +58,8 @@
   "currency": {
     "title": "Displej měny",
     "set": "Nastavena měna display",
-    "original": "Zobrazující ceny v původní měně"
+    "original": "Zobrazující ceny v původní měně",
+    "other": "Ostatní měny"
   },
   "roles": {
     "title": "Role",
@@ -75,8 +76,8 @@
   },
   "cart": {
     "title": "Nákupní košík",
-    "itemCount": "{{count}} kus",
-    "itemCount_plural": "{{count}} kusy",
+    "itemCount": "{{count, number}} kus",
+    "itemCount_plural": "{{count, number}} kusy",
     "itemCount_none": "Prázdný",
     "add": "Přidat do košíku",
     "checkInInstructions": "Chcete-li začít, skenování QR kódu v restauraci poblíž"

@@ -1,49 +1,51 @@
 
-export default (globalized) => (value, type, params) => {
-  // TODO: warning, globalized instance might still be undefined (async!)
-  if (!globalized) return '';
-
+export default (globalize) => (value, type, params) => {
+  // TODO: warning, globalize instance might still be undefined (async!)
+  if (!globalize) return '';
+  if (type === 'number') {
+    return globalize.numberFormatter()(value);
+  }
   if (type === 'date') {
-    return globalized.dateFormatter({date: params[0] || 'short'})(value);
+    return globalize.dateFormatter({date: params[0] || 'short'})(value);
   }
   if (type === 'time') {
-    return globalized.dateFormatter({time: params[0] || 'short'})(value);
+    return globalize.dateFormatter({time: params[0] || 'short'})(value);
   }
   if (type === 'dateTime') {
-    return globalized.dateFormatter({datetime: params[0] || 'short'})(value);
+    return globalize.dateFormatter({datetime: params[0] || 'short'})(value);
   }
   if (type === 'dateTimeSkeleton') {
-    return globalized.dateFormatter({skeleton: params[0]})(value);
+    return globalize.dateFormatter({skeleton: params[0]})(value);
   }
   if (type === 'weekDayName') {
-    const standAloneDays = globalized.cldr.main("dates/calendars/gregorian/days")['stand-alone'];
+    const standAloneDays = globalize.cldr.main("dates/calendars/gregorian/days")['stand-alone'];
     return standAloneDays[params[0] || 'wide'][value];
   }
   if (type === 'currency') {
-    return globalized.currencyFormatter(params[0])(value);
+    return globalize.currencyFormatter(params[0])(value);
   }
   if (type === 'currencyName') {
     if (params[0]) {
       const count = parseFloat(params[0]);
-      const plural = globalized.pluralGenerator()(count);
-      const result = globalized.cldr.main(`numbers/currencies/${value}/displayName-count-${plural}`);
+      const plural = globalize.pluralGenerator()(count);
+      const result = globalize.cldr.main(`numbers/currencies/${value}/displayName-count-${plural}`);
       if (result) return result;
     }
-    return globalized.cldr.main(`numbers/currencies/${value}/displayName`);
+    return globalize.cldr.main(`numbers/currencies/${value}/displayName`);
   }
   if (type === 'languageName') {
-    const displayName = globalized.cldr.main(`localeDisplayNames/languages/${value}`);
+    const displayName = globalize.cldr.main(`localeDisplayNames/languages/${value}`);
     return displayName;
   }
   if (type === 'territoryName') {
-    const displayName = globalized.cldr.main(`localeDisplayNames/territories/${value}`);
+    const displayName = globalize.cldr.main(`localeDisplayNames/territories/${value}`);
     return displayName;
   }
   if (type === 'unit') {
-    return globalized.unitFormatter(params[0], { form: params[1] || 'long' } )(value);
+    return globalize.unitFormatter(params[0], { form: params[1] || 'long' } )(value);
   }
   if (type === 'dateTimeInterval') {
-    const hHKk = globalized.cldr.supplemental.timeData.preferred();
+    const hHKk = globalize.cldr.supplemental.timeData.preferred();
     const skeleton = hHKk + 'm';
     let greatestDiff = 'm';
     if (['h', 'K'].includes(hHKk)) {
@@ -51,7 +53,7 @@ export default (globalized) => (value, type, params) => {
       const isAMEnd = value.end.getHours() < 12; // 0 - 23
       if (isAMStart !== isAMEnd) greatestDiff = 'a';
     }
-    const intervalFormat = globalized.cldr.main(`dates/calendars/gregorian/dateTimeFormats/intervalFormats/${skeleton}/${greatestDiff}`);
+    const intervalFormat = globalize.cldr.main(`dates/calendars/gregorian/dateTimeFormats/intervalFormats/${skeleton}/${greatestDiff}`);
     if (intervalFormat) {
       let parts;
       let splitChar;
@@ -63,15 +65,15 @@ export default (globalized) => (value, type, params) => {
           parts = intervalFormat.split(char);
         }
       });
-      const start = globalized.dateFormatter({raw: parts[0]})(value.start);
-      const end = globalized.dateFormatter({raw: parts[1]})(value.end);
+      const start = globalize.dateFormatter({raw: parts[0]})(value.start);
+      const end = globalize.dateFormatter({raw: parts[1]})(value.end);
       return [start, end].join(splitChar);
     }
 
     // Use fallback in case format wasn't found
-    const start = globalized.dateFormatter({time: 'short'})(value.start);
-    const end = globalized.dateFormatter({time: 'short'})(value.end);
-    const intervalFormatFallback = globalized.cldr.main(`dates/calendars/gregorian/dateTimeFormats/intervalFormats/intervalFormatFallback`);
+    const start = globalize.dateFormatter({time: 'short'})(value.start);
+    const end = globalize.dateFormatter({time: 'short'})(value.end);
+    const intervalFormatFallback = globalize.cldr.main(`dates/calendars/gregorian/dateTimeFormats/intervalFormats/intervalFormatFallback`);
     return intervalFormatFallback.replace('{0}', start).replace('{1}', end);
   }
   if (type === 'list') {
@@ -83,7 +85,7 @@ export default (globalized) => (value, type, params) => {
       const widthType = params[1] || ''; // one of: narrow, short, (empty)
 
       const listPatternRulePath = `listPatterns/listPattern-type-${listType}`;
-      const listPatternRules = globalized.cldr.main(widthType === '' ? listPatternRulePath : `${listPatternRulePath}-${widthType}`);
+      const listPatternRules = globalize.cldr.main(widthType === '' ? listPatternRulePath : `${listPatternRulePath}-${widthType}`);
       if (!listPatternRules)
         throw new Error('Unable to find a valid list pattern or fallback pattern for key: ' + (widthType === '' ? listPatternRulePath : `${listPatternRulePath}-${widthType}`));
 

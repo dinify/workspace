@@ -46,10 +46,10 @@
     "selecting": "Select bill items to split with others",
     "splittingWith": "Splitting with {{list, list}}",
     "splittingWith_zero": "Select users to split with",
-    "splittingCount": "Splitting with {{count}} person",
-    "splittingCount_plural": "Splitting between {{count}} people",
-    "itemCountSelected": "{{count}} item selected",
-    "itemCountSelected_plural": "{{count}} items selected",
+    "splittingCount": "Splitting with {{count, number}} person",
+    "splittingCount_plural": "Splitting between {{count, number}} people",
+    "itemCountSelected": "{{count, number}} item selected",
+    "itemCountSelected_plural": "{{count, number}} items selected",
     "itemCountSelected_none": "no items selected"
   },
   "gratuity": "Gratuity",
@@ -62,7 +62,8 @@
   "currency": {
     "title": "Display currency",
     "set": "Set display currency",
-    "original": "Showing prices in the original currency"
+    "original": "Showing prices in the original currency",
+    "other": "Other currencies"
   },
   "roles": {
     "title": "Roles",
@@ -79,8 +80,8 @@
   },
   "cart": {
     "title": "Cart",
-    "itemCount": "{{count}} item",
-    "itemCount_plural": "{{count}} items",
+    "itemCount": "{{count, number}} item",
+    "itemCount_plural": "{{count, number}} items",
     "itemCount_none": "no items",
     "add": "Add to cart",
     "checkInInstructions": "Check in by scanning the QR code in a restaurant near you to get started."

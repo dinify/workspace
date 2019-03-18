@@ -8,17 +8,14 @@
     "long": "Nọmba ekwentị"
   },
   "email": {
-    "short": "Email",
     "long": "Adreesị ozi ịntanetị"
   },
   "suggested": "Aro",
-  "other": "Ndị ọzọ na-asụ asụsụ",
   "selectLanguage": "Họrọ asụsụ",
   "selectCountry": "Họrọ mba",
   "selectCurrency": "Họrọ ego",
   "back": "Laghachi azụ",
   "select": "Họrọ",
   "clear": "Clear nhọrọ",
-  "search": "Search",
   "loadingEllipsis": "Loading ..."
 }

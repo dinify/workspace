@@ -45,26 +45,25 @@
     "selecting": "ເລືອກລາຍການໃນບັນຊີລາຍການ",
     "splittingWith": "ແບ່ງປັນລະຫວ່າງ:",
     "splittingWith_zero": "ເລືອກຜູ້ໃຊ້",
-    "splittingCount": "{{count}} ຄົນ",
-    "splittingCount_plural": "{{count}} ບຸກຄົນ",
-    "itemCountSelected": "{{count}}ລາຍການທີ່ເລືອກ",
-    "itemCountSelected_plural": "{{count}}ລາຍການທີ່ເລືອກ",
+    "splittingCount": "{{count, number}} ຄົນ",
+    "splittingCount_plural": "{{count, number}} ບຸກຄົນ",
+    "itemCountSelected": "{{count, number}}ລາຍການທີ່ເລືອກ",
+    "itemCountSelected_plural": "{{count, number}}ລາຍການທີ່ເລືອກ",
     "itemCountSelected_none": "ບໍ່ມີລາຍການທີ່ເລືອກ"
   },
   "gratuity": "ບໍາເຫນໍ",
   "pay": "ຈ່າຍ",
   "paymentPending": "ລໍຖ້າສໍາລັບການຊໍາລະເງິນ ...",
   "editing": "ການແກ້ໄຂ",
-  "dashboard": "Dashboard",
   "currency": {
     "title": "ສະກຸນເງິນ Display",
     "set": "ກໍານົດສະກຸນເງິນການສະແດງ",
-    "original": "ສະແດງລາຄາໃນສະກຸນເງິນຕົ້ນສະບັບ"
+    "original": "ສະແດງລາຄາໃນສະກຸນເງິນຕົ້ນສະບັບ",
+    "other": "ສະກຸນເງິນອື່ນ"
   },
   "roles": {
     "title": "ພາລະບົດບາດ",
     "manager": "ຜູ້​ຈັດ​ການ",
-    "waiter": "Waiter",
     "cook": "ປຸງແຕ່ງອາຫານ",
     "proofreader": "ພິສູດອັກສອນ"
   },
@@ -76,8 +75,8 @@
   },
   "cart": {
     "title": "ໂຄງຮ່າງການໄປຊື້ເຄື່ອງ",
-    "itemCount": "{{count}} ສິ້ນ",
-    "itemCount_plural": "{{count}} ຊິ້ນ",
+    "itemCount": "{{count, number}} ສິ້ນ",
+    "itemCount_plural": "{{count, number}} ຊິ້ນ",
     "itemCount_none": "ເປົ່າ",
     "add": "ຕື່ມການເພື່ອໂຄງຮ່າງ",
     "checkInInstructions": "ຈະເລີ່ມຕົ້ນໄດ້, ສະແກນລະຫັດ QR ໃນຮ້ານອາຫານໃກ້ຄຽງ"

@@ -42,10 +42,10 @@
     "selecting": "Pilih item dalam RUU",
     "splittingWith": "Dibagi antara:",
     "splittingWith_zero": "Pilih pengguna",
-    "splittingCount": "{{count}} orang",
-    "splittingCount_plural": "{{count}} orang",
-    "itemCountSelected": "{{count}} item yang dipilih",
-    "itemCountSelected_plural": "{{count}} item yang dipilih",
+    "splittingCount": "{{count, number}} orang",
+    "splittingCount_plural": "{{count, number}} orang",
+    "itemCountSelected": "{{count, number}} item yang dipilih",
+    "itemCountSelected_plural": "{{count, number}} item yang dipilih",
     "itemCountSelected_none": "Tidak ada item yang dipilih"
   },
   "gratuity": "Persen",
@@ -56,7 +56,8 @@
   "currency": {
     "title": "Mata uang tampilan",
     "set": "Mengatur mata uang display",
-    "original": "Menunjukkan harga dalam mata uang asli"
+    "original": "Menunjukkan harga dalam mata uang asli",
+    "other": "Mata uang lainnya"
   },
   "roles": {
     "title": "Peran",
@@ -73,8 +74,8 @@
   },
   "cart": {
     "title": "Kereta Belanja",
-    "itemCount": "{{count}} potong",
-    "itemCount_plural": "{{count}} buah",
+    "itemCount": "{{count, number}} potong",
+    "itemCount_plural": "{{count, number}} buah",
     "itemCount_none": "Kosong",
     "add": "Masukkan ke keranjang",
     "checkInInstructions": "Untuk memulai, memindai kode QR di sebuah restoran terdekat"

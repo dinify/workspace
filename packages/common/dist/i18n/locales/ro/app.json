@@ -10,7 +10,6 @@
     "opens_at": "Se va deschide la {{time, time:short}}",
     "closes_at": "Se închide la {{time, time:short}}"
   },
-  "website": "Website",
   "nav": {
     "explore": "Explora",
     "eat": "A mânca",
@@ -43,10 +42,10 @@
     "selecting": "Selectați elementele din proiectul de lege",
     "splittingWith": "Este împărțită între:",
     "splittingWith_zero": "Selectați utilizatori",
-    "splittingCount": "{{count}} persoană",
-    "splittingCount_plural": "{{count}} persoane",
-    "itemCountSelected": "{{count}} element selectat",
-    "itemCountSelected_plural": "{{count}} elementele selectate",
+    "splittingCount": "{{count, number}} persoană",
+    "splittingCount_plural": "{{count, number}} persoane",
+    "itemCountSelected": "{{count, number}} element selectat",
+    "itemCountSelected_plural": "{{count, number}} elementele selectate",
     "itemCountSelected_none": "Niciun element selectat"
   },
   "gratuity": "Gratificație",
@@ -58,14 +57,14 @@
   "currency": {
     "title": "Moneda de afișare",
     "set": "Setați moneda de afișare",
-    "original": "Se afișează prețuri în moneda originală"
+    "original": "Se afișează prețuri în moneda originală",
+    "other": "Alte valute"
   },
   "roles": {
     "title": "Roluri",
     "manager": "Administrator",
     "waiter": "Chelner",
-    "cook": "Bucătar",
-    "proofreader": "Proofreader"
+    "cook": "Bucătar"
   },
   "language": {
     "setPrimary": "Setați limba principală",
@@ -75,8 +74,8 @@
   },
   "cart": {
     "title": "Cărucior de cumpărături",
-    "itemCount": "{{count}} bucata",
-    "itemCount_plural": "{{count}} bucăți",
+    "itemCount": "{{count, number}} bucata",
+    "itemCount_plural": "{{count, number}} bucăți",
     "itemCount_none": "Gol",
     "add": "Adaugă în coș",
     "checkInInstructions": "Pentru a începe, scanați codul QR într-un restaurant din apropiere"

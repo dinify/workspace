@@ -44,10 +44,9 @@
     "selecting": "Wählen Sie die Elemente in Rechnung",
     "splittingWith": "Wird aufgeteilt zwischen:",
     "splittingWith_zero": "Wählen Sie Benutzer",
-    "splittingCount": "{{count}} Person",
-    "splittingCount_plural": "{{count}} Personen",
-    "itemCountSelected": "{{count}} Element ausgewählt",
-    "itemCountSelected_plural": "{{count}} Artikel ausgewählt",
+    "splittingCount_plural": "{{count, number}} Personen",
+    "itemCountSelected": "{{count, number}} Element ausgewählt",
+    "itemCountSelected_plural": "{{count, number}} Artikel ausgewählt",
     "itemCountSelected_none": "Keine Elemente ausgewählt"
   },
   "gratuity": "Trinkgeld",
@@ -59,7 +58,8 @@
   "currency": {
     "title": "Anzeigewährung",
     "set": "Stellen Sie Anzeigewährung",
-    "original": "Es werden Preise in Originalwährung"
+    "original": "Es werden Preise in Originalwährung",
+    "other": "Andere Währungen"
   },
   "roles": {
     "title": "Rollen",
@@ -75,8 +75,8 @@
   },
   "cart": {
     "title": "Einkaufswagen",
-    "itemCount": "{{count}} Stück",
-    "itemCount_plural": "{{count}} Stücke",
+    "itemCount": "{{count, number}} Stück",
+    "itemCount_plural": "{{count, number}} Stücke",
     "itemCount_none": "Leeren",
     "add": "In den Warenkorb legen",
     "checkInInstructions": "Um loszulegen, scannen den QR-Code in einem Restaurant in der Nähe"

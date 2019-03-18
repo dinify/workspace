@@ -14,7 +14,6 @@
   "nav": {
     "explore": "Preskúmať",
     "eat": "Jesť",
-    "checkIn": "Checkin",
     "service": "Služba"
   },
   "ingredients": "Prísady",
@@ -44,10 +43,10 @@
     "selecting": "Vyberte položky v návrhu zákona",
     "splittingWith": "Je rozdelená medzi:",
     "splittingWith_zero": "Vyberte používateľa",
-    "splittingCount": "{{count}} človek",
-    "splittingCount_plural": "{{count}} osoby",
-    "itemCountSelected": "{{count}} vybraná položka",
-    "itemCountSelected_plural": "{{count}} vybrané položky",
+    "splittingCount": "{{count, number}} človek",
+    "splittingCount_plural": "{{count, number}} osoby",
+    "itemCountSelected": "{{count, number}} vybraná položka",
+    "itemCountSelected_plural": "{{count, number}} vybrané položky",
     "itemCountSelected_none": "Žiadne položky vybrané"
   },
   "gratuity": "Prepitné",
@@ -59,7 +58,8 @@
   "currency": {
     "title": "Displej meny",
     "set": "Nastavená mena display",
-    "original": "Zobrazujúci ceny v pôvodnej mene"
+    "original": "Zobrazujúci ceny v pôvodnej mene",
+    "other": "Ostatné meny"
   },
   "roles": {
     "title": "Role",
@@ -76,8 +76,8 @@
   },
   "cart": {
     "title": "Nákupný vozík",
-    "itemCount": "{{count}} kus",
-    "itemCount_plural": "{{count}} kusy",
+    "itemCount": "{{count, number}} kus",
+    "itemCount_plural": "{{count, number}} kusy",
     "itemCount_none": "Prázdny",
     "add": "Pridať do košíka",
     "checkInInstructions": "Ak chcete začať, skenovanie QR kódu v reštaurácii v blízkosti"
