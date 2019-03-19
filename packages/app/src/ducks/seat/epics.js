@@ -3,14 +3,14 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import R from 'ramda';
-import types from './types';
 import { fetchAllUsersInit } from 'ducks/user/actions';
+import types from './types';
 
 const fetchUsersOfSeatsEpic = (action$: Observable) =>
   action$.pipe(
     ofType(types.FETCH_SEATS_DONE),
     switchMap(({ payload }) => {
-      const userIds = R.pluck('user_id', payload.res).filter((id) => id.length === 24)
+      const userIds = R.pluck('user_id', payload.res);
       return of(fetchAllUsersInit(userIds));
     })
   )

@@ -52,6 +52,7 @@
     "itemCountSelected_plural": "{{count, number}} items selected",
     "itemCountSelected_none": "no items selected"
   },
+  "meParentheses": "(me)",
   "gratuity": "Gratuity",
   "pay": "Pay",
   "paymentPending": "Awaiting payment confirmation...",

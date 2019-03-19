@@ -7,7 +7,6 @@ exports.Register = Register;
 exports.Login = Login;
 exports.LoginWithFacebook = LoginWithFacebook;
 exports.LoginWithGoogle = LoginWithGoogle;
-exports.GetMe = GetMe;
 exports.GetUser = GetUser;
 exports.RegisterFirebaseToken = RegisterFirebaseToken;
 
@@ -67,12 +66,6 @@ function LoginWithGoogle(_ref4) {
     noToken: true
   }, {
     oauth_access_token: accessToken
-  });
-}
-
-function GetMe() {
-  return (0, _Network.Get)({
-    path: 'user/my'
   });
 }
 

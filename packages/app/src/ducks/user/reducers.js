@@ -10,12 +10,6 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case types.FETCH_ME_DONE: {
-      const user = action.payload.res;
-      return R.assoc('loggedUserId', user.id)(
-        R.assocPath(['all', user.id], user)(state),
-      );
-    }
     case types.FETCH_ME_FAIL: {
       const payload = action.payload;
       if (payload instanceof Array && payload[0].status === 401) {
@@ -25,7 +19,7 @@ export default function reducer(state = initialState, action) {
     }
     case types.FETCH_USER_DONE: {
       const payload = action.payload.res;
-      return R.assocPath(['all', payload.id], payload)(state);
+      return R.assocPath(['all', payload.uid], payload)(state);
     }
     case authTypes.LOGOUT_DONE: {
       if (state.loggedUserId) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import { withTranslation } from 'react-i18next';
 import Person from '@material-ui/icons/PersonRounded';
 import Typography from '@dinify/common/dist/components/Typography';
 import ScrollSnapView from 'web/components/ScrollSnapView';
@@ -12,15 +13,22 @@ import { checkSelecting } from 'ducks/seat/selectors';
 
 
 const styles = theme => ({
-
+  avatarMe: {
+    margin: -4,
+    padding: 2,
+    borderRadius: '50%',
+    border: `2px solid ${theme.palette.primary.main}`
+  }
 });
 
 class GuestList extends React.Component {
   render() {
     const {
+      t,
       classes,
       seats,
       active,
+      auth,
       onGuestClick = () => {},
       users
     } = this.props;
@@ -36,8 +44,12 @@ class GuestList extends React.Component {
         ref={(node => {this.root = node})}
         selected={active}>
         {seats.map((seat, i, arr) => {
+          const me = auth.uid === seat.user_id;
           const user = users[seat.user_id];
           const selected = seat.selected;
+          let displayName = '';
+          if (user) displayName = me ? t('meParentheses') : user.displayName;
+
           return <div id={`guest-${seat.id}`} key={`guest-${seat.id}`} style={{
             // border: '1px solid rgba(255, 0,0,0.54)',
             display: 'inline-block',
@@ -55,12 +67,18 @@ class GuestList extends React.Component {
                 alignItems: 'center',
                 justifyContent: 'start'
               }}>
-              {user && user.image && <Avatar alt={user.name} src={user.image} />}
-              {user && !user.image &&
-                <Avatar className={classes.avatar}>
-                  <Person />
-                </Avatar>
-              }
+              {user && user.photoURL && (
+                <div className={me ? classes.avatarMe : classes.avatar}>
+                  <Avatar alt={me ? t('meParentheses') : displayName} src={user.photoURL} />
+                </div>
+              )}
+              {user && !user.photoURL && (
+                <div className={me ? classes.avatarMe : classes.avatar}>
+                  <Avatar>
+                    <Person />
+                  </Avatar>
+                </div>
+              )}
               <Motion
                 defaultStyle={{x: 0}}
                 style={{x: spring(selected ? 1 : 0, { stiffness: 260, damping: 24 })}}>
@@ -100,7 +118,7 @@ class GuestList extends React.Component {
                     whiteSpace: 'normal',
                     transform: `translate3d(0,0,0) scale(${style.x}, ${style.x})`,
                   }}  color={active === i ? 'default' : 'textSecondary'}>
-                    {user ? user.name : ''}
+                    {displayName}
                   </Typography>
                 }
               </Motion>
@@ -116,9 +134,10 @@ class GuestList extends React.Component {
 
 GuestList = connect(
   state => ({
+    auth: state.firebase.auth,
     users: state.user.all,
     selecting: checkSelecting(state)
   })
 )(GuestList)
 
-export default withStyles(styles)(GuestList);
+export default withTranslation()(withStyles(styles)(GuestList));

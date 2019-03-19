@@ -65,6 +65,7 @@ export default (admin) => {
               });
               else response.json({
                 profile: data,
+                uid: userRecord.uid,
                 email: userRecord.email,
                 displayName: userRecord.displayName,
                 photoURL: userRecord.photoURL,

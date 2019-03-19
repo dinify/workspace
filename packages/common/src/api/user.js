@@ -75,10 +75,6 @@ export function LoginWithGoogle({ accessToken }) {
   );
 }
 
-export function GetMe() {
-  return Get({ path: 'user/my' });
-}
-
 export function GetUser({ id }) {
   return Get({
     endpoint: 'https://us-central1-tabb-global.cloudfunctions.net/api/',
