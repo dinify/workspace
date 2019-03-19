@@ -8,16 +8,16 @@
     <mj-text align="center" mj-class="social">
       <span>
         <a style="padding-right: 4px; text-decoration: none;"
-           href="http://www.facebook.com/tabbstory/">
-          <img src="http://images.tabb.global/icons/facebook.png"
+           href="http://www.facebook.com/dinifyapp">
+          <img src="https://static.dinify.app/icons/facebook.png"
                width="24px"
                height="24px"
                style="opacity: 0.38"/>
         </a></span>
       <span>
         <a style="padding: 0px 4px; text-decoration: none;"
-           href="https://www.instagram.com/trytabb/">
-          <img src="http://images.tabb.global/icons/instagram.png"
+           href="https://www.instagram.com/dinifyapp">
+          <img src="https://static.dinify.app/icons/instagram.png"
                width="24px"
                height="24px"
                style="opacity: 0.38"/>
@@ -25,8 +25,8 @@
       </span>
       <span>
         <a style="padding: 0px 4px; text-decoration: none;"
-           href="https://twitter.com/tabbstory/">
-          <img src="http://images.tabb.global/icons/twitter.png"
+           href="https://twitter.com/dinifyapp">
+          <img src="https://static.dinify.app/icons/twitter.png"
                width="24px"
                height="24px"
                style="opacity: 0.38"/>
@@ -35,7 +35,16 @@
       <span>
         <a style="padding: 0px 4px; text-decoration: none;"
            href="https://www.dinify.app/">
-          <img src="http://images.tabb.global/icons/public.png"
+          <img src="https://static.dinify.app/icons/public.png"
+               width="24px"
+               height="24px"
+               style="opacity: 0.38"/>
+        </a>
+      </span>
+      <span>
+        <a style="padding: 0px 4px; text-decoration: none;"
+           href="https://github.com/dinify">
+          <img src="https://static.dinify.app/icons/github.png"
                width="24px"
                height="24px"
                style="opacity: 0.38"/>
@@ -43,8 +52,8 @@
       </span>
       <span>
         <a style="padding-left: 4px; text-decoration: none;"
-           href="http://google.com/+tabbstory">
-          <img src="http://images.tabb.global/icons/google-plus.png"
+           href="https://www.youtube.com/channel/UCARTi0PRcbWMskKRf7A9REg">
+          <img src="https://static.dinify.app/icons/youtube.png"
                width="24px"
                height="24px"
                style="opacity: 0.38"/>
@@ -63,7 +72,7 @@
       <a href="mailto:${from.email}" style="color: rgba(0, 0, 0, 0.54)">${from.email}</a>
       <br>
       <br>
-      Sent with <img style="display: inline; opacity: 0.38;" src="http://images.tabb.global/icons/favorite.png"
+      Sent with <img style="display: inline; opacity: 0.38;" src="https://static.dinify.app/icons/favorite.png"
       width="12px"
       height="12px"/> from the team in Brno
       <br>

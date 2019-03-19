@@ -1,6 +1,6 @@
 <mj-section padding css-class="red">
   <mj-column>
-    <mj-image width="88px" src="https://storage.googleapis.com/images.tabb.global/brand/logo-text.png"></mj-image>
+    <mj-image width="92px" src="https://static.dinify.app/logo/2x/text-white.png"></mj-image>
   </mj-column>
 </mj-section>
 <mj-section css-class="red">

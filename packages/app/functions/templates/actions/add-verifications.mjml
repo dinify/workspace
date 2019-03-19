@@ -4,7 +4,7 @@
     <mj-text align="left">
       <img width="24px"
            height="24px"
-           style="opacity: 0.38" src="http://images.tabb.global/icons/security.png"/>
+           style="opacity: 0.38" src="https://static.dinify.app/icons/security.png"/>
     </mj-text>
   </mj-column>
   <mj-column width="90%">
@@ -22,7 +22,7 @@
   </mj-column>
   <mj-column width="90%">
     <mj-button href="#" padding align="left">
-      <img style="opacity: 0.54" width="134px" src="http://images.tabb.global/brand/text-add-verifications.png"/>
+      <img style="opacity: 0.54" width="134px" src="https://static.dinify.app/emails/text-add-verifications.png"/>
     </mj-button>
   </mj-column>
   <!--/mj-group-->

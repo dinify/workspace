@@ -4,7 +4,7 @@
     <mj-text align="left">
       <img width="24px"
            height="24px"
-           style="opacity: 0.38" src="http://images.tabb.global/icons/assignment.png"/>
+           style="opacity: 0.38" src="https://static.dinify.app/icons/assignment.png"/>
     </mj-text>
   </mj-column>
   <mj-column width="90%">
@@ -24,7 +24,7 @@
   </mj-column>
   <mj-column width="90%">
     <mj-button href="#" padding align="left">
-      <img style="opacity: 0.54" width="131px" src="http://images.tabb.global/brand/text-complete-profile.png"/>
+      <img style="opacity: 0.54" width="131px" src="https://static.dinify.app/emails/text-complete-profile.png"/>
     </mj-button>
   </mj-column>
   <!--/mj-group-->

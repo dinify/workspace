@@ -18,7 +18,7 @@
     <mj-section padding>
       <mj-column>
         <mj-button align="center" href="https://gotabb.com/account?id=${user.id}" padding align="left">
-          <img style="opacity: 0.54" width="94px" src="http://images.tabb.global/brand/text-account.png" />
+          <img style="opacity: 0.54" width="94px" src="https://static.dinify.app/emails/text-account.png" />
         </mj-button>
       </mj-column>
     </mj-section>

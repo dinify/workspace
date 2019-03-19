@@ -20,7 +20,7 @@
         <mj-section padding>
           <mj-column>
             <mj-button align="center" href="${secondary_url}" padding align="left">
-      <img style="opacity: 0.54" width="${secondary_width}px" src="http://images.tabb.global/brand/${secondary_button}.png"/>
+      <img style="opacity: 0.54" width="${secondary_width}px" src="https://static.dinify.app/emails/${secondary_button}.png"/>
     </mj-button>
           </mj-column>
         </mj-section>

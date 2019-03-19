@@ -21,7 +21,7 @@
         <mj-column padding="0px" vertical-align="middle">
           <mj-button mj-class="cta"
                      href="${verification_link}">
-            <img width="59px" src="http://images.tabb.global/brand/text-verify.png"/>
+            <img width="59px" src="https://static.dinify.app/emails/text-verify.png"/>
           </mj-button>
         </mj-column>
       </mj-section>
