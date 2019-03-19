@@ -23,6 +23,7 @@ let Nav = ({
   favRestaurant,
 }) => {
   const social = restaurant.social;
+  const bookingElement = document.getElementById('booking');
   return (
     <Grid container style={{marginLeft: -16}} spacing={8}>
 
@@ -70,11 +71,10 @@ let Nav = ({
         />
       </Grid>
 
-      <Grid item>
+      {bookingElement !== null && <Grid item>
         <IconButton
           onClick={() => {
-            const node = document.getElementById('booking');
-            scrollIntoView(node, {
+            scrollIntoView(bookingElement, {
               behavior: 'smooth',
               scrollMode: 'always',
               block: 'start',
@@ -82,7 +82,7 @@ let Nav = ({
           }}>
           <CalendarClock className={classes.secondary} />
         </IconButton>
-      </Grid>
+      </Grid>}
     </Grid>
   )
 }

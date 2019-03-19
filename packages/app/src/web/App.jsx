@@ -8,7 +8,6 @@ import { Motion, spring } from 'react-motion';
 
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
-import CategoryView from 'web/pages/CategoryView';
 import MenuItemView from 'web/pages/MenuItemView';
 import SignIn from '@dinify/common/dist/components/SignIn';
 import Account from 'web/pages/Account';
@@ -29,6 +28,13 @@ import withRoot from 'withRoot.js';
 const HOMEPAGE = '/';
 
 class App extends React.Component {
+  componentDidUpdate(prevProps) {
+    const { history } = this.props;
+    if (history.action === 'PUSH') {
+      window.scrollTo(0, 0);
+    }
+  }
+
   onNavigate = (evt, val) => {
     const { history, checkedInRestaurant } = this.props;
     if (val === 0) history.push('/');
@@ -89,7 +95,6 @@ class App extends React.Component {
 
             <Route path="/checkin" component={Checkin} />
             <Route path="/restaurant/:subdomain" component={RestaurantView} />
-            <Route path="/category/:id" component={CategoryView} />
             <Route path="/menu/item/:id" component={MenuItemView} />
 
             <Route path="/eat" component={Eat} />

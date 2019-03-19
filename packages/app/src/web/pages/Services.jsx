@@ -27,7 +27,6 @@ class Services extends React.Component {
   render() {
     const { restaurant, call, services, t } = this.props;
     const { selectedTab } = this.state;
-    const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
 
     let servicesList = restaurant ? FN.MapToList(restaurant.services) : [];
     servicesList = R.filter((s) => {
@@ -68,7 +67,6 @@ class Services extends React.Component {
 
     return (
       <div>
-        {!iosInstalled && <AppBar position="static"/>}
         <div style={{
           width: '100%',
           marginTop: 16

@@ -76,11 +76,9 @@ let MenuSection = ({
         return (
         <div className={mobile ? classes.expand : null} style={{marginTop: i === 0 ? 32 : 0}} key={uniqueId()}>
           {i > 0 && <Divider className={mobile ? classes.margin : null} style={{marginTop: mobile ? 0 : 32, marginBottom: 32}} />}
-          <Link style={{textDecoration: 'none'}} to={`/category/${category.id}`}>
-            <Typography className={mobile ? classes.margin : null} gutterBottom variant="h6">
-              {category.name}
-            </Typography>
-          </Link>
+          <Typography className={mobile ? classes.margin : null} gutterBottom variant="h6">
+            {category.name}
+          </Typography>
           {mobile ?
             <div className={classes.scroller}>
               {R.sort((a,b) => a.precedence - b.precedence, categoryItems).map((menuItem, i, arr) =>
