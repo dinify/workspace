@@ -202,7 +202,7 @@ const Table = ({
 
         {presentGuests.map((guest, i) =>
           <Guest key={i} onClick={() => guest.user ? toggleModal({ open: true, type: 'User', userId: guest.user.id }) : ''}>
-            <Photo url={`https://picsum.photos/50/50/?image=${i*3+20}`} />
+            <Photo url={guest.user.avatarUrl} />
             {guest.user ?
               <Name title={guest.user.displayName}>{S(guest.user.displayName).truncate(16).s}</Name>
             : ''}

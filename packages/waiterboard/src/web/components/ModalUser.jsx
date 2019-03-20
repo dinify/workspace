@@ -127,7 +127,7 @@ class ModalUser extends React.Component {
           <SmallTable>
             <tr>
               <TdLabel>Name</TdLabel>
-              <TdValue>{user  ? user.name : ''}</TdValue>
+              <TdValue>{user  ? user.displayName : ''}</TdValue>
             </tr>
             <tr>
               <TdLabel>No. of visits</TdLabel>

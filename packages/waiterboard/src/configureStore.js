@@ -36,7 +36,7 @@ const commonReducers = {
 
 const firebaseConfig = {
   apiKey: "AIzaSyCRg0En-xj3Ky02oElBV3HogOCZlPEdd30",
-  authDomain: "tabb-global.firebaseapp.com",
+  authDomain: "waiterboard.dinify.app",
   databaseURL: "https://tabb-global.firebaseio.com",
   projectId: "tabb-global",
   storageBucket: "tabb-global.appspot.com",
