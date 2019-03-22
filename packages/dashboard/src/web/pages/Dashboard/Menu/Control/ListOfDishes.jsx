@@ -10,7 +10,7 @@ import {
   arrayMove,
 } from 'react-sortable-hoc';
 import * as FN from 'lib/FN';
-import R from 'ramda';
+import * as R from 'ramda';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Checkbox from '@material-ui/core/Checkbox';

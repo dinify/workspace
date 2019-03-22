@@ -5,11 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = reducer;
 
-var _ramda = _interopRequireDefault(require("ramda"));
+var R = _interopRequireWildcard(require("ramda"));
 
 var _types = _interopRequireDefault(require("./types"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 var initialState = {
   page: 'default',
@@ -25,12 +27,12 @@ function reducer() {
   switch (action.type) {
     case _types.default.SET_PAGE:
       {
-        return _ramda.default.assoc('page', action.payload)(state);
+        return R.assoc('page', action.payload)(state);
       }
 
     case _types.default.SET_SHOWPASSWORD:
       {
-        return _ramda.default.assoc('showPassword', action.payload)(state);
+        return R.assoc('showPassword', action.payload)(state);
       }
 
     case _types.default.SET_LINKPROVIDERS:
@@ -38,10 +40,8 @@ function reducer() {
         var _action$payload = action.payload,
             credential = _action$payload.credential,
             linkProviders = _action$payload.linkProviders;
-
-        var newState = _ramda.default.assoc('credential', credential)(state);
-
-        return _ramda.default.assoc('linkProviders', linkProviders)(newState);
+        var newState = R.assoc('credential', credential)(state);
+        return R.assoc('linkProviders', linkProviders)(newState);
       }
 
     default:

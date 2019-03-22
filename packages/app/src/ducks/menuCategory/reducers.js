@@ -1,5 +1,5 @@
 // @flow
-import R from 'ramda';
+import * as R from 'ramda';
 import types from './types';
 import * as FN from '@dinify/common/dist/lib/FN';
 

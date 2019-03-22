@@ -2,7 +2,7 @@
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import R from 'ramda';
+import * as R from 'ramda';
 import { fetchAllUsersInit } from 'ducks/user/actions';
 import types from './types';
 

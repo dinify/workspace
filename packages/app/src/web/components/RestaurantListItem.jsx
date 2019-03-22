@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import * as FN from '@dinify/common/dist/lib/FN';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@dinify/common/dist/components/Typography';

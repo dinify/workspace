@@ -1,5 +1,5 @@
 // @flow
-import R from 'ramda';
+import * as R from 'ramda';
 import * as FN from '@dinify/common/dist/lib/FN';
 import types from './types';
 import menuCategoryTypes from 'ducks/menuCategory/types';

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import R from 'ramda'
+import * as R from 'ramda'
 import * as FN from '@dinify/common/dist/lib/FN';
 
 export const getItemsOfCategory = createSelector(

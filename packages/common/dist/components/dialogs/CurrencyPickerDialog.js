@@ -7,7 +7,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _ramda = _interopRequireDefault(require("ramda"));
+var R = _interopRequireWildcard(require("ramda"));
 
 var _redux = require("redux");
 
@@ -50,6 +50,8 @@ var _ChevronLeftRounded = _interopRequireDefault(require("@material-ui/icons/Che
 var _Flag = _interopRequireDefault(require("../Flag"));
 
 var _lib = require("../../lib");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -96,7 +98,7 @@ var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
   };
 
   var searchFilter = function searchFilter(list) {
-    return _ramda.default.filter(function (currency) {
+    return R.filter(function (currency) {
       if (!filter) return true;
       return (0, _match.default)(currency.name, filter).length + (0, _match.default)(currency.code, filter).length > 0;
     }, list);
@@ -130,7 +132,7 @@ var CurrencyPickerDialog = function CurrencyPickerDialog(props) {
       });
     }
 
-    var remaining = searchFilter(localizeMap(_ramda.default.filter(function (currencyCode) {
+    var remaining = searchFilter(localizeMap(R.filter(function (currencyCode) {
       return !suggestedCodes.includes(currencyCode);
     }, _lib.currencies)));
 

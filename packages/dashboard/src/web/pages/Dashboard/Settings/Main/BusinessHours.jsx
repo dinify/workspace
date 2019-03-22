@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { Field, reduxForm } from 'redux-form';

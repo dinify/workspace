@@ -1,5 +1,5 @@
 // @flow
-import R from 'ramda';
+import * as R from 'ramda';
 import { selectedBillItems } from 'ducks/seat/selectors';
 import types from './types';
 import billTypes from '../bill/types';

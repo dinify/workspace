@@ -2,7 +2,7 @@
 import { Observable, of, from as fromPromise } from 'rxjs';
 import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import R from 'ramda';
+import * as R from 'ramda';
 import { actionTypes } from 'react-redux-firebase';
 import * as API from 'api/restaurant';
 import { Post } from '@dinify/common/dist/api/Network';

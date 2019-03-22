@@ -12,7 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ServiceCallGraphic from 'web/components/ServiceCallGraphic';
 import { callServiceInit } from 'ducks/service/actions';
 import { Motion, spring } from 'react-motion';
-import R from 'ramda';
+import * as R from 'ramda';
 
 import * as FN from '@dinify/common/dist/lib/FN';
 

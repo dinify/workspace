@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import moment from 'moment';
 import numeral from 'numeral';
-import R from 'ramda';
+import * as R from 'ramda';
 
 import ReactTable from 'react-table';
 import { DateRangePicker } from 'react-dates';

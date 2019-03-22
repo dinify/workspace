@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import R from 'ramda';
+import * as R from 'ramda';
 import * as FN from 'lib/FN';
 import { Label } from 'web/components/styled/FormBox';
 import { updateCusomizationsInit } from 'ducks/menuItem/actions';

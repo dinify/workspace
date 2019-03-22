@@ -1,5 +1,5 @@
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { compose } from 'redux';
 import { withStateHandlers } from 'recompose';
 import { Motion, spring } from 'react-motion';

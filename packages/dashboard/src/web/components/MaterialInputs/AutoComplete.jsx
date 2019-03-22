@@ -16,7 +16,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 import Chip from '@material-ui/core/Chip';
 import Select from 'react-select';
-import 'react-select/dist/react-select.css';
 
 class Option extends React.Component {
   render() {

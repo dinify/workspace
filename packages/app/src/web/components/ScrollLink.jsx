@@ -1,5 +1,5 @@
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 
 class ScrollLink extends React.Component {
   shouldComponentUpdate (nextProps, nextState) {

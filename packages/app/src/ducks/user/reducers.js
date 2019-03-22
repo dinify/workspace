@@ -1,5 +1,5 @@
 // @flow
-import R from 'ramda';
+import * as R from 'ramda';
 import types from './types';
 import authTypes from '@dinify/common/dist/ducks/auth/types';
 

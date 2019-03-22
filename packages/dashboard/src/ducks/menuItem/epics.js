@@ -2,7 +2,7 @@
 import { Observable, of} from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import R from 'ramda';
+import * as R from 'ramda';
 import * as FN from 'lib/FN';
 
 const updateCusomizationsEpic = (action$: Observable, state$) =>

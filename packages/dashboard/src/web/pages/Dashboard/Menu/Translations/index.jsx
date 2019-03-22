@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import { MapToList, ListToMap } from 'lib/FN';
 import { connect } from 'react-redux';
-import R from 'ramda';
+import * as R from 'ramda';
 import types from './types';
 import Editor from './Editor';
 import languagesArray from '@dinify/common/dist/lib/languages.json'

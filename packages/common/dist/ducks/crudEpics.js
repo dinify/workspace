@@ -11,7 +11,9 @@ var _operators = require("rxjs/operators");
 
 var _api = _interopRequireDefault(require("../api"));
 
-var _ramda = _interopRequireDefault(require("ramda"));
+var R = _interopRequireWildcard(require("ramda"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -116,7 +118,7 @@ var fetchAllEpic = function fetchAllEpic(action$, state$) {
     if (payload.cache) {
       var storeKey = subject.toLowerCase();
       var all = state$.value[storeKey].all;
-      ids = _ramda.default.filter(function (id) {
+      ids = R.filter(function (id) {
         return !all[id];
       }, ids);
     }

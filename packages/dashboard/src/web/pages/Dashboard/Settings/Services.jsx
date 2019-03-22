@@ -15,7 +15,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import R from 'ramda';
+import * as R from 'ramda';
 
 let ServiceForm = ({ handleSubmit }) => {
   return (

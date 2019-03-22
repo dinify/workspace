@@ -14,18 +14,20 @@ exports.setCookie = setCookie;
 exports.getCookie = getCookie;
 exports.UpdateOriginal = exports.MapPath = exports.Identity = exports.ListToMap = exports.MapToList = void 0;
 
-var _ramda = _interopRequireDefault(require("ramda"));
+var R = _interopRequireWildcard(require("ramda"));
 
 var _numeral = _interopRequireDefault(require("numeral"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var MapToList = function MapToList(items) {
-  return _ramda.default.toPairs(items).map(function (pair) {
+  return R.toPairs(items).map(function (pair) {
     return _objectSpread({
       id: pair[0]
     }, pair[1]);
@@ -66,10 +68,9 @@ function isInstalled() {
   return false;
 }
 
-var MapPath = _ramda.default.curry(function (path, f, obj) {
-  return _ramda.default.assocPath(path, f(_ramda.default.path(path, obj)), obj);
+var MapPath = R.curry(function (path, f, obj) {
+  return R.assocPath(path, f(R.path(path, obj)), obj);
 });
-
 exports.MapPath = MapPath;
 
 var UpdateOriginal = function UpdateOriginal(originalMap, actual) {
@@ -77,7 +78,7 @@ var UpdateOriginal = function UpdateOriginal(originalMap, actual) {
   var actualMap = actual;
   MapToList(originalMap).forEach(function (o) {
     if (actualMap[o.id]) {
-      _ramda.default.keys(o).forEach(function (originalKey) {
+      R.keys(o).forEach(function (originalKey) {
         if (actualMap[o.id][originalKey] === undefined) {
           actualMap[o.id][originalKey] = o[originalKey];
         }

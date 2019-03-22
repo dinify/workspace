@@ -2,7 +2,7 @@
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import API from '@dinify/common/dist/api';
-import R from 'ramda';
+import * as R from 'ramda';
 
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 const camel = str => capitalize(str.toLowerCase());
