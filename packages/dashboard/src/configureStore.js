@@ -18,6 +18,7 @@ import addon from 'ducks/addon';
 import service from 'ducks/service';
 import translation from 'ducks/translation';
 
+import firebaseConfig from '@dinify/common/firebaseConfig.json';
 
 import { reducer as formReducer } from 'redux-form';
 
@@ -39,14 +40,6 @@ const commonReducers = {
   firebase: firebaseReducer
 };
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCRg0En-xj3Ky02oElBV3HogOCZlPEdd30",
-  authDomain: "tabb-global.firebaseapp.com",
-  databaseURL: "https://tabb-global.firebaseio.com",
-  projectId: "tabb-global",
-  storageBucket: "tabb-global.appspot.com",
-  messagingSenderId: "448538111630"
-}
 
 // react-redux-firebase config
 const rrfConfig = {

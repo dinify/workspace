@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "target": "dinify-waiterboard",
+    "target": "dinify-waiterboard-8b8f4",
     "public": "build",
     "ignore": [
       "firebase.json",

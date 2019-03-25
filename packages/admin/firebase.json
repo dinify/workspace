@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "target": "dinify-admin",
+    "target": "dinify-admin-c0e7b",
     "public": "build",
     "ignore": [
       "firebase.json",

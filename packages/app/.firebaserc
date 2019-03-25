@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "tabb-global"
+    "default": "dinify"
   },
   "targets": {
-    "tabb-global": {
+    "dinify": {
       "hosting": {
-        "dinify-app": [
-          "dinify-app"
+        "dinify-app-8ab42": [
+          "dinify-app-8ab42"
         ]
       }
     }

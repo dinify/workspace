@@ -18,6 +18,7 @@ import bill from 'ducks/bill'
 import service from 'ducks/service'
 import seat from 'ducks/seat'
 
+import firebaseConfig from '@dinify/common/firebaseConfig.json';
 
 const commonReducers = {
   auth,
@@ -32,15 +33,6 @@ const commonReducers = {
   service,
   seat,
   firebase: firebaseReducer
-}
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCRg0En-xj3Ky02oElBV3HogOCZlPEdd30",
-  authDomain: "waiterboard.dinify.app",
-  databaseURL: "https://tabb-global.firebaseio.com",
-  projectId: "tabb-global",
-  storageBucket: "tabb-global.appspot.com",
-  messagingSenderId: "448538111630"
 }
 
 // react-redux-firebase config

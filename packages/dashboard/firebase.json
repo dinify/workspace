@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "target": "dinify-dashboard",
+    "target": "dinify-dashboard-0a2dc",
     "public": "build",
     "ignore": [
       "firebase.json",

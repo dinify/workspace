@@ -21,6 +21,7 @@ import bill from 'ducks/bill';
 import seat from 'ducks/seat';
 import rootEpic from './configureEpics';
 
+import firebaseConfig from '@dinify/common/firebaseConfig.json';
 
 const commonReducers = {
   auth,
@@ -36,15 +37,6 @@ const commonReducers = {
   snackbar: snackbarReducer,
   firebase: firebaseReducer,
 };
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCRg0En-xj3Ky02oElBV3HogOCZlPEdd30",
-  authDomain: "m.dinify.app",
-  databaseURL: "https://tabb-global.firebaseio.com",
-  projectId: "tabb-global",
-  storageBucket: "tabb-global.appspot.com",
-  messagingSenderId: "448538111630"
-}
 
 // react-redux-firebase config
 const rrfConfig = {

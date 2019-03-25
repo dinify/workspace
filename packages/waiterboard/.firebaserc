@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "tabb-global"
+    "default": "dinify"
   },
   "targets": {
-    "tabb-global": {
+    "dinify": {
       "hosting": {
-        "dinify-waiterboard": [
-          "dinify-waiterboard"
+        "dinify-waiterboard-8b8f4": [
+          "dinify-waiterboard-8b8f4"
         ]
       }
     }
