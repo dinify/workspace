@@ -77,3 +77,33 @@ export const sendWelcomeEmail = functions
         ...msg
     });
 });
+
+export const assignRole = functions
+.region('europe-west1')
+.https.onRequest((req, res) => {
+    if (req.body.user_id && req.body.restaurant_id && req.body.role) {
+        return admin.auth().setCustomUserClaims(req.body.user_id, {
+            roles: {
+                restaurant: {
+                    type: req.body.role,
+                    id: req.body.restaurant_id,
+                    admin: true
+                }
+            }
+        })
+        .then((response) => {
+          return res.status(200).send(response);
+        })
+        .catch((err) => {
+          return res.status(400).send({
+              code: "assign-error",
+              message: "Role assignment failed",
+              error: err
+          });
+        });
+    }
+    return res.status(400).send({
+        code: "required-missing",
+        message: "Required request body parameters: user_id, restaurant_id, role"
+    });
+});
