@@ -19,8 +19,10 @@ const db = admin.firestore();
 * Note: the name of this variable determines the route of the function
 * In this case: /api
 */
-export const api = functions.https.onRequest((req, res) => {
-    // https://tabb-global.cloudfunctions.net/api
+export const api = functions
+.region('europe-west1')
+.https.onRequest((req, res) => {
+    // https://europe-west1-dinify.cloudfunctions.net/api
     // without trailing "/" will have req.path = null, req.url = null
     // which won"t match to your app.get("/", ...) route
 
@@ -32,7 +34,9 @@ export const api = functions.https.onRequest((req, res) => {
     return app(req, res)
 });
 
-export const sendWelcomeEmail = functions.auth.user().onCreate(async (user) => {
+export const sendWelcomeEmail = functions
+.region('europe-west1')
+.auth.user().onCreate(async (user) => {
 
     // TODO: post message to slack webhook
     console.log("New user joined", user);
