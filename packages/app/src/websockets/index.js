@@ -9,8 +9,8 @@ const websockets = (store) => {
   const { dispatch, getState } = store;
 
   const initSocket = () => {
-    const loggedUserId = getState().user.loggedUserId;
-    if (loggedUserId) socket.emit('init', `user/${loggedUserId}`);
+    const auth = getState().firebase.auth;
+    if (auth.uid) socket.emit('init', `user/${auth.uid}`);
   }
   window.initSocket = initSocket;
 
