@@ -4,12 +4,11 @@ import async from 'async';
 
 
 const doIt = (limit, page) => {
-  taAPI.getRestaurants({ locID: 274707, limit, offset: page*limit }).then((res) => {
+  taAPI.getRestaurants({ locID: 187323, limit, offset: page*limit }).then((res) => {
 
     res.data.forEach((restaurant) => {
       console.log(restaurant.email);
       console.log(restaurant.website);
-      console.log(restaurant.phone);
 
       Restaurants.update(
         {location_id: restaurant.location_id},
@@ -17,13 +16,12 @@ const doIt = (limit, page) => {
         {upsert: true, setDefaultsOnInsert: true},
         (e) => {
           if (e) console.log(e);
-          else console.log('saved');
         }
       );
 
     });
     if (res.data.length) {
-      setTimeout(() => doIt(limit, page + 1), 2000);
+      setTimeout(() => doIt(limit, page + 1), 100);
     } else {
       console.log('done');
     }
@@ -38,3 +36,4 @@ export default run;
 
 // brno 274714
 // prague 274707
+// berlin 187323

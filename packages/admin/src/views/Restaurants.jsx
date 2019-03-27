@@ -188,7 +188,7 @@ const useFields = [
 //  }
 ];
 
-const functionsEndpoint = 'https://us-central1-tabb-global.cloudfunctions.net';
+const functionsEndpoint = 'https://europe-west1-dinify.cloudfunctions.net';
 
 const getData = async (props) => {
   const response = await fetch(`${functionsEndpoint}/dbFind`, {

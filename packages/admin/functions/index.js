@@ -14,7 +14,7 @@ const cors = require('cors')({
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
-exports.dbFind = functions.https.onRequest((req, res) => {
+exports.dbFind = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {
       query = {},
@@ -31,7 +31,7 @@ exports.dbFind = functions.https.onRequest((req, res) => {
     });
   });
 });
-exports.dbCount = functions.https.onRequest((req, res) => {
+exports.dbCount = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {
       query = {}
@@ -45,7 +45,7 @@ exports.dbCount = functions.https.onRequest((req, res) => {
     });
   });
 });
-exports.dbAggregate = functions.https.onRequest((req, res) => {
+exports.dbAggregate = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {
       query = []
@@ -59,7 +59,7 @@ exports.dbAggregate = functions.https.onRequest((req, res) => {
     })
   });
 });
-exports.translate = functions.https.onRequest((req, res) => {
+exports.translate = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {
       text = '',

@@ -18,5 +18,5 @@ import Reviews from '../models/Reviews';
 //})
 
 // restaurants();
-//reviews();
-langcounts();
+reviews();
+// langcounts();

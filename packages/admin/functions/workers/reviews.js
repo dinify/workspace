@@ -43,7 +43,7 @@ const saveReviews = (locID, limit, page, done) => {
 
 const doIt = (limit, page) => {
   Restaurants
-  .find()
+  .find({ranking_geo: 'Berlin'})
   .sort({ num_reviews: -1, _id: 1 })
   .skip(limit*page)
   .limit(limit)
