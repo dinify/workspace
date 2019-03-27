@@ -72,7 +72,7 @@ function LoginWithGoogle(_ref4) {
 function GetUser(_ref5) {
   var id = _ref5.id;
   return (0, _Network.Get)({
-    endpoint: 'https://us-central1-tabb-global.cloudfunctions.net/api/',
+    endpoint: 'https://europe-west1-dinify.cloudfunctions.net/api/',
     path: "user/".concat(id)
   });
 }

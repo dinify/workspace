@@ -77,7 +77,7 @@ export function LoginWithGoogle({ accessToken }) {
 
 export function GetUser({ id }) {
   return Get({
-    endpoint: 'https://us-central1-tabb-global.cloudfunctions.net/api/',
+    endpoint: 'https://europe-west1-dinify.cloudfunctions.net/api/',
     path: `user/${id}`
   })
 }
