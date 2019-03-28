@@ -238,7 +238,7 @@ class SignInPage extends React.Component {
     super(props);
     const { prefill } = props;
     let initialValues = {};
-    if (prefill.email) {
+    if (prefill && prefill.email) {
       initialValues.email = prefill.email;
     }
     this.state = {

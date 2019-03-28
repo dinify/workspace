@@ -375,7 +375,7 @@ function (_React$Component2) {
     var prefill = props.prefill;
     var initialValues = {};
 
-    if (prefill.email) {
+    if (prefill && prefill.email) {
       initialValues.email = prefill.email;
     }
 
