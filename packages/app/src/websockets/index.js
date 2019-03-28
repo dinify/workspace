@@ -22,31 +22,31 @@ const websockets = (store) => {
     const me = data.transaction.initiator === getState().user.loggedUserId;
     if (data.transaction.status === 'PROCESSED') {
       dispatch({ type: types.CONFIRMED_PAYMENT, payload: data });
-      if (me) dispatch(snackbar.show({ message: 'Payment confirmed' }))
+      if (me) dispatch(snackbar.show({ message: 'Payment confirmed' }));
     }
-    else if (me) dispatch(snackbar.show({ message: 'Payment cancelled' }))
+    else if (me) dispatch(snackbar.show({ message: 'Payment cancelled' }));
   });
 
   socket.on('order-status', (data) => {
     if (data.order.status === 'CONFIRMED') {
       dispatch({ type: types.CONFIRMED_ORDER, payload: data });
       if (data.order.initiator === getState().user.loggedUserId) {
-        dispatch(snackbar.show({ message: 'Order confirmed' }))
+        dispatch(snackbar.show({ message: 'Order confirmed' }));
       }
     }
     else if (data.order.status === 'CANCELLED') {
       if (data.order.initiator === getState().user.loggedUserId)
-        dispatch(snackbar.show({ message: 'Your order was cancelled' }))
+        dispatch(snackbar.show({ message: 'Your order was cancelled' }));
     }
   });
 
   socket.on('call-status', (data) => {
     if (data.call.status === 'CONFIRMED') {
       dispatch({ type: types.CONFIRMED_CALL, payload: data });
-      dispatch(snackbar.show({ message: `${data.call.service.name} is on its way!` }))
+      dispatch(snackbar.show({ message: `${data.call.service.name} is on its way!` }));
     }
     else if (data.call.status === 'CANCELLED') {
-      dispatch(snackbar.show({ message: `${data.call.service.name} cannot make it to your table` }))
+      dispatch(snackbar.show({ message: `${data.call.service.name} cannot make it to your table` }));
     }
   });
 

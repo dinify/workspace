@@ -1,13 +1,12 @@
 // @flow
 import { Observable, of, from as fromPromise } from 'rxjs';
-import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import * as R from 'ramda';
-import { actionTypes } from 'react-redux-firebase';
 import * as API from 'api/restaurant';
 import { Post } from '@dinify/common/dist/api/Network';
 import { change as changeForm } from 'redux-form';
-import { MapToList, ListToMap } from 'lib/FN';
+import { MapToList } from 'lib/FN';
 
 const saveTranslationDone = () => {
   return { type: 'PUSH_TRANSLATION_DONE'}

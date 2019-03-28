@@ -1,6 +1,7 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import { Form, Text, Field, TextArea, Radio, RadioGroup, Select, Checkbox } from 'react-form';
 
 // @material-ui/icons
 
@@ -12,6 +13,53 @@ import Button from "components/CustomButtons/Button.jsx";
 
 import workStyle from "./productStyle.jsx";
 import signupImage from "assets/img/signup.png";
+
+const CustomText = props => (
+  <Field field={props.field}>
+    { fieldApi => {
+      const { onChange, onBlur, field, ...rest } = props
+      const { value, error, warning, success, setValue, setTouched } = fieldApi
+      return (
+        <div>
+
+          <CustomInput
+            formControlProps={{
+              fullWidth: true
+            }}
+            inputProps={{
+              onChange: e => {
+                console.log('ssx')
+                setValue(e.target.value)
+                if (onChange) {
+                  onChange(e.target.value, e)
+                }
+              },
+              onBlur: e => {
+                setTouched()
+                if (onBlur) {
+                  onBlur(e)
+                }
+              },
+              value: value || '',
+              ...rest
+            }}
+            {...rest}
+          />
+          {/*error ? <Message color="red" message={error} /> : null}
+          {!error && warning ? <Message color="orange" message={warning} /> : null}
+          {!error && !warning && success ? <Message color="green" message={success} /> : null*/}
+        </div>
+      )
+    }}
+  </Field>
+)
+
+const registerRedirect = (obj) => {
+  const params = Object.keys(obj)
+    .map(key => key + "=" + obj[key])
+    .join("&");
+  window.location.href = "https://dashboard.dinify.app/register?" + params;
+}
 
 class SectionWork extends React.Component {
   render() {
@@ -36,29 +84,26 @@ class SectionWork extends React.Component {
                     />                </GridItem>
                   <GridItem xs={12} sm={6} md={6}>
 
-                    <CustomInput
-                      labelText="Restaurant Name"
-                      id="name"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
+                    <Form onSubmit={submittedValues => registerRedirect(submittedValues)}>
+                      {formApi => (
+                        <form onSubmit={formApi.submitForm} id="form2">
 
-                    <CustomInput
-                      labelText="Email address"
-                      id="email"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                    />
+                          <CustomText
+                            labelText="Restaurant name"
+                            field="restaurantName"
+                            id="restaurantName"
+                          />
 
-                    <Button style={{float: 'left'}}>Request demo</Button>
+                          <CustomText
+                            labelText="Email address"
+                            field="email"
+                            id="email"
+                          />
 
-                    <div style={{display: 'inline-block', margin: '10px 0'}}>- or -</div>
-
-                    <a href="https://dashboard.dinify.app/register">
-                      <Button style={{float: 'right'}} color="primary">Register</Button>
-                    </a>
+                          <Button type="submit" style={{float: 'right'}} color="primary">Register</Button>
+                        </form>
+                      )}
+                    </Form>
                     
                   </GridItem>
                 </GridContainer>

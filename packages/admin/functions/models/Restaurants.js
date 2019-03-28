@@ -49,6 +49,7 @@ RestaurantsSchema.index({ num_reviews: -1 });
 RestaurantsSchema.index({ num_reviews: -1, _id: 1 });
 RestaurantsSchema.index({ targetLang: -1 });
 RestaurantsSchema.index({ targetLangRel: -1 });
+RestaurantsSchema.index({ ranking_geo: 1 });
 RestaurantsSchema.index({ 'langDist.ja.count': -1 });
 RestaurantsSchema.index({ 'langDist.ko.count': -1 });
 RestaurantsSchema.index({ 'langDist.zhCN.count': -1 });

@@ -14,12 +14,27 @@ const initialState = {
   bills: [],
   selectedCategoryId: null,
   selectedFoodId: null,
+  prefill: {
+    email: null,
+    restaurantName: null
+  },
+  ongoingRegistration: false
 };
 
 export default function reducer(state: State = initialState, action) {
   switch (action.type) {
     case 'BOOTSTRAP':
       return R.assoc('appRun', true)(state);
+    case 'PREFILL_EMAIL':
+      return R.assocPath(['prefill', 'email'], action.payload.email)(
+        state,
+      );
+    case 'PREFILL_RESTAURANTNAME':
+      return R.assocPath(['prefill', 'restaurantName'], action.payload.restaurantName)(
+        state,
+      );
+    case 'SET_ONGOINGREGISTRATION':
+      return R.assoc('ongoingRegistration', !!action.payload)(state);
     case 'LOGGED_FETCHED_DONE': {
       return R.assoc('loggedRestaurant', action.payload)(state);
     }

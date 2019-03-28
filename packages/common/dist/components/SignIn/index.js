@@ -197,7 +197,8 @@ function (_React$Component) {
           pristine = _this$props2.pristine,
           submitting = _this$props2.submitting,
           page = _this$props2.page,
-          setPage = _this$props2.setPage;
+          setPage = _this$props2.setPage,
+          env = _this$props2.env;
       var animConfig = {
         stiffness: 480,
         damping: 48
@@ -211,6 +212,10 @@ function (_React$Component) {
       var leftButtonAction = function leftButtonAction() {
         return setPage(formOpen ? 'default' : 'signUp');
       };
+
+      if (env === 'DASHBOARD') {
+        formSubtitle = 'to start setting things up, sign in with your email or social media account';
+      }
 
       if (page === 'signIn') {
         submitButtonText = 'Sign in';
@@ -350,16 +355,56 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.SignInForm = SignInForm;
+exports.SignInForm = SignInForm = (0, _reduxForm.reduxForm)({
+  form: 'auth/signin',
+  enableReinitialize: true,
+  destroyOnUnmount: false
+})(SignInForm);
 
-var _default = (0, _redux.compose)((0, _styles.withStyles)(styles), (0, _reduxForm.reduxForm)({
-  form: 'auth/signin'
-}), (0, _reactReduxFirebase.firebaseConnect)(), (0, _reactRedux.connect)(function (state) {
+var SignInPage =
+/*#__PURE__*/
+function (_React$Component2) {
+  _inherits(SignInPage, _React$Component2);
+
+  function SignInPage(props) {
+    var _this2;
+
+    _classCallCheck(this, SignInPage);
+
+    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(SignInPage).call(this, props));
+    var prefill = props.prefill;
+    var initialValues = {};
+
+    if (prefill.email) {
+      initialValues.email = prefill.email;
+    }
+
+    _this2.state = {
+      initialValues: initialValues
+    };
+    return _this2;
+  }
+
+  _createClass(SignInPage, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement(SignInForm, _extends({
+        initialValues: this.state.initialValues
+      }, this.props)));
+    }
+  }]);
+
+  return SignInPage;
+}(_react.default.Component);
+
+var _default = (0, _redux.compose)((0, _styles.withStyles)(styles), (0, _reactReduxFirebase.firebaseConnect)(), (0, _reactRedux.connect)(function (state) {
   return {
-    page: state.auth.page
+    page: state.auth.page,
+    prefill: state.restaurant.prefill
   };
 }, {
   setPage: _actions.setPage,
   openDialog: _actions2.openDialog
-}))(SignInForm);
+}))(SignInPage);
 
 exports.default = _default;
