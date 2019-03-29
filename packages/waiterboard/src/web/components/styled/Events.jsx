@@ -4,7 +4,7 @@ import { darken } from 'polished'
 export const ActionBox = styled.div`
   position: relative;
   background: rgba(255,255,255,0.95);
-  width: calc(50% - 20px);
+  min-width: 100%;
   margin: 0 10px 10px 0;
   color: black;
   display: inline-block;
