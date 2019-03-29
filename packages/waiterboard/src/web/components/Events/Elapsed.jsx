@@ -27,7 +27,7 @@ class Elapsed extends React.Component{
   componentWillUnmount() {
     if (this.interval) clearInterval(this.interval);
   }
-  updateReminderTime() {
+  updateReminderTime = () => {
     const { startAt } = this.props;
     this.setState({ updatedAt: secondsAgo(startAt) })
   }

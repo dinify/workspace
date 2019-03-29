@@ -12,7 +12,7 @@ import withRoot from 'withRoot.js';
 
 
 const Content = styled.div`
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Lato', sans-serif;
   ${media.tablet`max-width: 100%;`}
 `
 

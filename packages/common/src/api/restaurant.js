@@ -124,7 +124,7 @@ export function CallService({ serviceId }) {
 }
 
 export function GetServiceimages() {
-  return Get({ path: `service/images` });
+  return Get({ path: `service/images?limit=100` });
 }
 
 

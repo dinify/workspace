@@ -1,6 +1,6 @@
 // @flow
-import { Observable, of, from } from 'rxjs';
-import { mergeMap, switchMap, map, catchError } from 'rxjs/operators';
+import { of, from } from 'rxjs';
+import { mergeMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import pluck from 'ramda/src/pluck'
 import filter from 'ramda/src/filter'
@@ -9,7 +9,7 @@ import * as API from 'api/restaurant'
 const loadSeatEpic = (action$, state$) =>
   action$.pipe(
     ofType('LOAD_SEATS_INIT'),
-    switchMap(() => {
+    mergeMap(() => {
       const waiterboardId = state$.value.restaurant.selectedWBId;
       return from(API.GetSeats({ waiterboardId })).pipe(
         mergeMap((allSeats) => {
@@ -32,6 +32,17 @@ const loadSeatEpic = (action$, state$) =>
     })
   )
 
+const reloadSeatsEpic = (action$) =>
+  action$.pipe(
+    ofType('SEAT_RECEIVED'),
+    mergeMap(() => {
+      return of({
+        type: 'LOAD_SEATS_INIT'
+      });
+    })
+  )
+
 export default [
-  loadSeatEpic
+  loadSeatEpic,
+  reloadSeatsEpic
 ]

@@ -242,7 +242,7 @@ function CallService(_ref14) {
 
 function GetServiceimages() {
   return (0, _Network.Get)({
-    path: "service/images"
+    path: "service/images?limit=100"
   });
 }
 

@@ -68,7 +68,6 @@ const SwipeButton = styled.button`
   border: none;
   background: rgba(255,255,255,0.2);
   font-size: 12px;
-  font-family: 'Montserrat';
   color: white;
   font-weight: 300;
   cursor: pointer;

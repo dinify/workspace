@@ -43,7 +43,7 @@ const saveReviews = (locID, limit, page, done) => {
 
 const doIt = (limit, page) => {
   Restaurants
-  .find({ranking_geo: 'Berlin'})
+  .find()
   .sort({ _id: -1 })
   .skip(limit*page)
   .limit(limit)
@@ -51,7 +51,6 @@ const doIt = (limit, page) => {
     eachOf(
       restaurants,
       (restaurant, key, cb) => {
-        console.log('//////////////////////////');
         console.log(restaurant.name);
         saveReviews(restaurant.location_id, 50, 0, () => {
           langDistForRestaurant(restaurant, cb);

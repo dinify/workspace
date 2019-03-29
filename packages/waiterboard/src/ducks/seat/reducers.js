@@ -17,10 +17,10 @@ export default function reducer(state = initialState, action) {
       return assoc('all', ListToMap(list))(state);
     }
 
-    case 'SEAT_RECEIVED': {
-      const { seat } = action.payload;
-      return assocPath(['all', seat.id], seat)(state);
-    }
+    // case 'SEAT_RECEIVED': {
+    //   const { seat } = action.payload;
+    //   return assocPath(['all', seat.id], seat)(state);
+    // }
 
     case 'CLEAR_TABLE_DONE': {
       const tableId = action.payload.table.id;
