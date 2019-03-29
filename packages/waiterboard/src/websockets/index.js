@@ -15,6 +15,8 @@ const playChime = () => {
   chime.play();
 }
 
+document.instanceId = `${(new Date).getTime()}.${Math.floor(Math.random() * 1000)}`;
+
 const websockets = (store) => {
   const { dispatch, getState } = store;
 
@@ -22,7 +24,6 @@ const websockets = (store) => {
     let wbId = null;
     if (selectedId) wbId = selectedId;
     else wbId = getState().restaurant.selectedWBId;
-    console.log(wbId, 'wbId');
     if (wbId) socket.emit('init', `waiterboard/${wbId}`);
   }
   window.initSocket = initSocket;
@@ -31,10 +32,6 @@ const websockets = (store) => {
     console.log('ws connected');
     initSocket();
   });
-
-  socket.on('seats', (data) => {
-    console.log('seats', data);
-  })
 
   socket.on('checkin', (payload) => {
     console.log('checkin', payload);
@@ -80,6 +77,18 @@ const websockets = (store) => {
   socket.on('booking-incoming', (data) => {
     console.log('booking-incoming', data);
     playChime();
+  })
+
+  socket.on('confirmation', (data) => {
+    if (data.instanceId !== document.instanceId) {
+      dispatch({
+        type: 'CONFIRMATION_DONE',
+        payload: {
+          stopPropagation: true,
+          ...data
+        }
+    });
+    }
   })
 
 }

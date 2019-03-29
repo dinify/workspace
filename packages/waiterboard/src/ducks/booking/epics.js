@@ -3,7 +3,7 @@ import { Observable, of, from } from 'rxjs';
 import { mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import pluck from 'ramda/src/pluck'
-import * as API from 'api/restaurant'
+import * as API from '@dinify/common/dist/api/restaurant';
 import { ListToMap } from 'lib/FN'
 
 const loadBookingEpic = (action$: Observable) =>

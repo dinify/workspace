@@ -66,6 +66,23 @@ exports.ChangeFoodingredient = ChangeFoodingredient;
 exports.GetTranslations = GetTranslations;
 exports.AddTranslation = AddTranslation;
 exports.RmTranslation = RmTranslation;
+exports.Notify = Notify;
+exports.GetLoggedRestaurant = GetLoggedRestaurant;
+exports.GetTables = GetTables;
+exports.GetSeatsOfWB = GetSeatsOfWB;
+exports.CheckOut = CheckOut;
+exports.CheckOutUser = CheckOutUser;
+exports.GetBookings = GetBookings;
+exports.ConfirmBooking = ConfirmBooking;
+exports.CancelBooking = CancelBooking;
+exports.GetGuests = GetGuests;
+exports.GetCalls = GetCalls;
+exports.ConfirmCall = ConfirmCall;
+exports.GetOrders = GetOrders;
+exports.ConfirmOrder = ConfirmOrder;
+exports.GetBills = GetBills;
+exports.GetTodaybills = GetTodaybills;
+exports.ConfirmBill = ConfirmBill;
 
 var _Network = require("./Network");
 
@@ -692,5 +709,135 @@ function RmTranslation(_ref49) {
     type: type,
     id: id,
     locale: locale
+  });
+}
+
+function Notify(_ref50) {
+  var sendTo = _ref50.sendTo,
+      type = _ref50.type,
+      payload = _ref50.payload;
+  return (0, _Network.Post)({
+    endpoint: 'https://ws.dinify.app/',
+    path: "notify"
+  }, {
+    sendTo: sendTo,
+    type: type,
+    payload: payload
+  });
+}
+
+function GetLoggedRestaurant() {
+  return (0, _Network.Get)({
+    path: "restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices",
+    v3: true
+  });
+}
+
+function GetTables(_ref51) {
+  var waiterboardId = _ref51.waiterboardId;
+  return (0, _Network.Get)({
+    path: "waiterboard/".concat(waiterboardId, "/tables")
+  });
+}
+
+function GetSeatsOfWB(_ref52) {
+  var waiterboardId = _ref52.waiterboardId;
+  return (0, _Network.Get)({
+    path: "waiterboard/".concat(waiterboardId, "/seats/all")
+  });
+}
+
+function CheckOut(_ref53) {
+  var tableId = _ref53.tableId;
+  return (0, _Network.Post)({
+    path: "table/".concat(tableId, "/checkout")
+  });
+}
+
+function CheckOutUser(_ref54) {
+  var userId = _ref54.userId;
+  return (0, _Network.Post)({
+    path: "checkout/user/".concat(userId)
+  });
+}
+
+function GetBookings() {
+  return (0, _Network.Get)({
+    path: "restaurant/my/bookings"
+  });
+}
+
+function ConfirmBooking(_ref55) {
+  var id = _ref55.id;
+  return (0, _Network.Post)({
+    path: "booking/".concat(id, "/confirm")
+  });
+}
+
+function CancelBooking(_ref56) {
+  var id = _ref56.id;
+  return (0, _Network.Post)({
+    path: "booking/".concat(id, "/cancel")
+  }, {
+    reason: 'No seats at given time'
+  });
+}
+
+function GetGuests(_ref57) {
+  var waiterboardId = _ref57.waiterboardId;
+  return (0, _Network.Get)({
+    path: "waiterboard/".concat(waiterboardId, "/guests")
+  });
+}
+
+function GetCalls(_ref58) {
+  var waiterboardId = _ref58.waiterboardId;
+  return (0, _Network.Get)({
+    path: "waiterboard/".concat(waiterboardId, "/calls?with=service.image")
+  });
+}
+
+function ConfirmCall(_ref59) {
+  var callId = _ref59.callId;
+  return (0, _Network.Post)({
+    path: "service/call/".concat(callId, "/confirm")
+  });
+}
+
+function GetOrders(_ref60) {
+  var waiterboardId = _ref60.waiterboardId;
+  return (0, _Network.Get)({
+    path: "waiterboard/".concat(waiterboardId, "/orders/today?with=items.choices,items.addons,items.excludes")
+  });
+}
+
+function ConfirmOrder(_ref61) {
+  var orderId = _ref61.orderId;
+  return (0, _Network.Post)({
+    path: "order/".concat(orderId, "/confirm")
+  });
+}
+
+function GetBills(_ref62) {
+  var waiterboardId = _ref62.waiterboardId;
+  return (0, _Network.Get)({
+    path: "waiterboard/".concat(waiterboardId, "/transactions?with=orders")
+  });
+}
+
+function GetTodaybills(_ref63) {
+  var waiterboardId = _ref63.waiterboardId;
+  return (0, _Network.Get)({
+    path: "waiterboard/".concat(waiterboardId, "/transactions/all?limit=100")
+  });
+}
+
+function ConfirmBill(_ref64) {
+  var billId = _ref64.billId,
+      approvalNumber = _ref64.approvalNumber;
+  return (0, _Network.Post)({
+    path: "transaction/".concat(billId, "/process")
+  }, {
+    approvalNumber: approvalNumber
   });
 }

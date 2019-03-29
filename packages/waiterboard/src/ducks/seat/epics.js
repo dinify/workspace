@@ -4,14 +4,14 @@ import { mergeMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import pluck from 'ramda/src/pluck'
 import filter from 'ramda/src/filter'
-import * as API from 'api/restaurant'
+import * as API from '@dinify/common/dist/api/restaurant';
 
 const loadSeatEpic = (action$, state$) =>
   action$.pipe(
     ofType('LOAD_SEATS_INIT'),
     mergeMap(() => {
       const waiterboardId = state$.value.restaurant.selectedWBId;
-      return from(API.GetSeats({ waiterboardId })).pipe(
+      return from(API.GetSeatsOfWB({ waiterboardId })).pipe(
         mergeMap((allSeats) => {
           const seats = filter((seat) => seat.occupied, allSeats);
           const userIds = pluck('user_id', seats)

@@ -1,6 +1,6 @@
 // @flow
 
 export const confirmCallInit = (payload) => ({
-  type: 'CONFIRM_CALL_INIT',
+  type: 'CALL_CONFIRMATION_INIT',
   payload
 })

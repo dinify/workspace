@@ -21,7 +21,8 @@ export default function reducer(state = initialState, action) {
       return assocPath(['all', order.id], order)(state);
     }
 
-    case 'ORDER_CONFIRMATION_INIT': {
+    case 'CONFIRMATION_DONE': {
+      if (action.payload.type !== 'Order') return state;
       const { orderId } = action.payload;
       return assocPath(['all', orderId, 'status'], 'CONFIRMED')(state);
     }

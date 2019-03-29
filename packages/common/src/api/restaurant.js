@@ -409,3 +409,78 @@ export function AddTranslation({ type, id, locale, name, description }) {
 export function RmTranslation({ type, id, locale }) {
   return Post({ path: 'translation/remove' }, { type, id, locale });
 }
+
+export function Notify({ sendTo, type, payload }) {
+  return Post(
+    {
+      endpoint: 'https://ws.dinify.app/',
+      path: `notify`
+    },
+    { sendTo, type, payload },
+  );
+}
+
+export function GetLoggedRestaurant() {
+  return Get({ path: `restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices`, v3: true })
+}
+
+
+export function GetTables({ waiterboardId }) {
+  return Get({ path: `waiterboard/${waiterboardId}/tables` })
+}
+
+export function GetSeatsOfWB({ waiterboardId }) {
+  return Get({ path: `waiterboard/${waiterboardId}/seats/all` })
+}
+
+export function CheckOut({ tableId }) {
+  return Post({ path: `table/${tableId}/checkout` })
+}
+
+export function CheckOutUser({ userId }) {
+  return Post({ path: `checkout/user/${userId}` })
+}
+
+export function GetBookings() {
+  return Get({ path: `restaurant/my/bookings` })
+}
+
+export function ConfirmBooking({ id }) {
+  return Post({ path: `booking/${id}/confirm` })
+}
+
+export function CancelBooking({ id }) {
+  return Post({ path: `booking/${id}/cancel` }, { reason: 'No seats at given time' })
+}
+
+export function GetGuests({ waiterboardId }) {
+  return Get({ path: `waiterboard/${waiterboardId}/guests` })
+}
+
+export function GetCalls({ waiterboardId }) {
+  return Get({ path: `waiterboard/${waiterboardId}/calls?with=service.image` })
+}
+
+export function ConfirmCall({ callId }) {
+  return Post({ path: `service/call/${callId}/confirm` })
+}
+
+export function GetOrders({ waiterboardId }) {
+  return Get({ path: `waiterboard/${waiterboardId}/orders/today?with=items.choices,items.addons,items.excludes` })
+}
+
+export function ConfirmOrder({ orderId }) {
+  return Post({ path: `order/${orderId}/confirm` })
+}
+
+export function GetBills({ waiterboardId }) {
+  return Get({ path: `waiterboard/${waiterboardId}/transactions?with=orders` })
+}
+
+export function GetTodaybills({ waiterboardId }) {
+  return Get({ path: `waiterboard/${waiterboardId}/transactions/all?limit=100` })
+}
+
+export function ConfirmBill({ billId, approvalNumber }) {
+  return Post({ path: `transaction/${billId}/process`}, { approvalNumber })
+}
