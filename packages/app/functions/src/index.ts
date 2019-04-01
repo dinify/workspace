@@ -81,15 +81,9 @@ export const sendWelcomeEmail = functions
 export const assignRole = functions
 .region('europe-west1')
 .https.onRequest((req, res) => {
-    if (req.body.user_id && req.body.restaurant_id && req.body.role) {
+    if (req.body.roles !== null && req.body.roles !== undefined && req.body.user_id) {
         return admin.auth().setCustomUserClaims(req.body.user_id, {
-            roles: {
-                restaurant: {
-                    type: req.body.role,
-                    id: req.body.restaurant_id,
-                    admin: true
-                }
-            }
+            roles: req.body.roles
         })
         .then((response) => {
           return res.status(200).send(response);
@@ -104,6 +98,6 @@ export const assignRole = functions
     }
     return res.status(400).send({
         code: "required-missing",
-        message: "Required request body parameters: user_id, restaurant_id, role"
+        message: "Required request body parameters: roles"
     });
 });
