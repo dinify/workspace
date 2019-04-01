@@ -2,7 +2,7 @@
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import * as API from 'api/restaurant'
+import * as API from '@dinify/common/dist/api/restaurant';
 
 const clearTableEpic = (action$: Observable) =>
   action$.pipe(

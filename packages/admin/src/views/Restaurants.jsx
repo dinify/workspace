@@ -186,7 +186,10 @@ const useFields = [
 //    Header: "Phone",
 //    accessor: "phone"
 //  }
-];
+].map((o) => {
+  o.minResizeWidth = 40;
+  return o;
+});
 
 const functionsEndpoint = 'https://europe-west1-dinify.cloudfunctions.net';
 
@@ -291,6 +294,7 @@ class ReactTables extends Component {
       cEmails: 0,
       cPrague: 0,
       cBrno: 0,
+      cBerlin: 0,
       chart1title: null,
       chart1labels: [],
       chart1values: [],
@@ -357,6 +361,9 @@ class ReactTables extends Component {
       .catch(err => console.log(err));
     getCount({ ranking_geo: 'Brno' })
       .then(res => this.setState({ cBrno: res.result }))
+      .catch(err => console.log(err));
+    getCount({ ranking_geo: 'Berlin' })
+      .then(res => this.setState({ cBerlin: res.result }))
       .catch(err => console.log(err));
   }
 
@@ -440,6 +447,7 @@ class ReactTables extends Component {
                     <i className="text-muted">{this.state.cTotal}×</i>{' '}Restaurants{' '}
                     <i className="text-muted">{this.state.cPrague}×</i>{' '}Prague{' '}
                     <i className="text-muted">{this.state.cBrno}×</i>{' '}Brno{' '}
+                    <i className="text-muted">{this.state.cBerlin}×</i>{' '}Berlin{' '}
                     <i className="text-muted">{this.state.cEmails}×</i>{' '}Emails{' '}
                   </CardTitle>
                 </CardHeader>

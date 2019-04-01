@@ -9,7 +9,7 @@ import Social from './Social';
 import Location from './Location';
 import Contact from './Contact';
 import Image from './Image';
-import Type from './Type';
+// import Type from './Type';
 import Name from './Name';
 // import Tags from './Tags';
 import Address from './Address';
@@ -27,7 +27,7 @@ const Main = ({ loggedRestaurant }) => {
       <Column>
         <Name name={loggedRestaurant.name} />
         {/*<Tags />*/}
-        <Type type={loggedRestaurant.type} />
+        {/* <Type type={loggedRestaurant.type} /> */}
         <Image loggedRestaurant={loggedRestaurant} />
         <Contact contact={loggedRestaurant.contact} />
       </Column>

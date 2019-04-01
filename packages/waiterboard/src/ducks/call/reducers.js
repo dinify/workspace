@@ -20,7 +20,8 @@ export default function reducer(state = initialState, action) {
       return assocPath(['all', call.id], call)(state);
     }
 
-    case 'CONFIRM_CALL_INIT': {
+    case 'CONFIRMATION_DONE': {
+      if (action.payload.type !== 'Call') return state;
       const { callId } = action.payload;
       return assocPath(['all', callId, 'status'], 'CONFIRMED')(state);
     }

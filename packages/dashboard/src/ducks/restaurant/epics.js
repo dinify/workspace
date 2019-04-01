@@ -67,7 +67,10 @@ const registerRestaurantEpic = (action$: Observable) =>
     ofType('REGISTER_RESTAURANT_INIT'),
     switchMap(({ payload: { restaurantName, subdomain } }) => {
       return from(API.CreateRestaurant({ restaurantName, subdomain })).pipe(
-        map(() => of({ type: 'REGISTER_RESTAURANT_DONE' })),
+        map(() => {
+          window.location.replace('/');
+          return { type: 'REGISTER_RESTAURANT_DONE' };
+        }),
         catchError(error => of({ type: 'REGISTER_RESTAURANT_FAIL', error }))
       );
     })

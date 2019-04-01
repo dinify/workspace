@@ -18,7 +18,6 @@ import { setOHEnabled, setWBidAction } from 'ducks/restaurant/actions'
 import { getGroupedBills } from 'ducks/bill/selectors';
 import { getTableList } from 'ducks/table/selectors';
 
-import Container from './Container'
 import Booking from './Events/Booking'
 import Call from './Events/Call'
 import Order from './Events/Order'
@@ -54,6 +53,27 @@ const Frame = styled.div`
   width: 100%;
   padding-top: 10px;
 `
+
+const Container = styled.div`
+  width: 1200px;
+  min-width: 630px;
+  margin: 0 auto;
+  overflow: auto;
+
+  -webkit-column-count: 2;
+  -moz-column-count: 2;
+  column-count: 2;
+  -webkit-column-gap:20px;
+  -moz-column-gap:20px;
+  column-gap:20px;
+
+  ${(p) => p.noHeight ? '': 'height: 100vh;'}
+  ${(p) => p.noHeight ? '': 'padding-bottom: 200px;'}
+  @media (max-width: 1200px) {
+    width: 100%;
+  }
+  ${(p) => p.flex ? 'column-width: 590px; column-gap: 10px; ': ''}
+`;
 
 const Board = ({
   bookingList,
@@ -108,9 +128,8 @@ const Board = ({
     >
       <OneBoard n={frameIndex}>
         <Frame n={0}>
-          <Container>
             {anyAction ?
-              <div>
+              <Container>
                 {bookingList.map((booking) =>
                   <Booking key={booking.id} booking={booking} />
                 )}
@@ -123,11 +142,11 @@ const Board = ({
                 {billsInitiated.map((bill) =>
                   <Bill key={bill.id} bill={bill} />
                 )}
-              </div>
+              </Container>
               :
               <EventsPlaceholder>Everything is done.</EventsPlaceholder>
             }
-          </Container>
+          
         </Frame>
         <Frame n={1}>
           <FrameOfTables tableList={tableList} seatList={seatList} toggleModal={toggleModal} />

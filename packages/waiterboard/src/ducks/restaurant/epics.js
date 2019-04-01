@@ -2,7 +2,7 @@ import { Observable, of, from } from 'rxjs';
 import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { actionTypes } from 'react-redux-firebase';
-import * as API from 'api/restaurant';
+import * as API from '@dinify/common/dist/api/restaurant';
 import { setCookie } from '@dinify/common/dist/lib/FN';
 import { loggedFetchedAction, appBootstrap, confirmationFail  } from './actions';
 
@@ -97,11 +97,32 @@ const confirmationEpic = (action$) =>
     })
   )
 
+const confirmationSyncEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('CONFIRMATION_DONE'),
+    mergeMap(({ payload }) => {
+      if (payload.stopPropagation) {
+        return of({ type: 'CONFIRMATIONSYNC_DONE' });
+      }
+      const waiterboardId = state$.value.restaurant.selectedWBId;
+      const promise = API.Notify({
+        sendTo: [`waiterboard/${waiterboardId}`],
+        type: 'confirmation',
+        payload: { ...payload, instanceId: document.instanceId }
+      });
+      return from(promise).pipe(
+        map(() => ({ type: 'CONFIRMATIONSYNC_DONE' })),
+        catchError(error => of(confirmationFail(error)))
+      )
+    })
+  )
+
 export default [
   bootstrapEpic,
   getLoggedEpic,
   loadRestaurant,
   guestsPollingEpic,
   confirmationEpic,
+  confirmationSyncEpic,
   setWBEpic
 ];

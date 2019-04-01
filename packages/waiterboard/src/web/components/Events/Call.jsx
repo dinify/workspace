@@ -12,11 +12,12 @@ import { confirmCallInit } from 'ducks/call/actions'
 
 const color = colorsByStages['s4']
 
-const Call = ({ call, confirmCall, removed, timer, services }) => {
+const Call = ({ call, confirmCall, removed, services }) => {
 	let service = null;
-	if (call.service_id && services[call.service_id]) {
+	if (call.service_id && services && services[call.service_id]) {
 		service = services[call.service_id];
 	}
+	if (!service) return <div />;
 	return (
 		<ActionBox className={removed ? 'vhs-zoom vhs-reverse' : ''}>
 	    <Header>

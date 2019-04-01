@@ -28,13 +28,12 @@ const AppLoader = styled.div`
   flex-direction: column;
 `;
 
-type AppProps = {
-  appLoading: boolean,
-};
-
 const SignInWithRoot = withRoot(SignIn);
 
-const App = ({ appLoading, user, history }: AppProps) => {
+const App = ({ appLoading, user, history, ongoingRegistration }) => {
+  if (ongoingRegistration && !window.location.pathname.includes('/register') && !user.isEmpty) {
+    window.location.replace('/register');
+  }
   return (
     <Router>
       <Content>
@@ -42,12 +41,12 @@ const App = ({ appLoading, user, history }: AppProps) => {
         {!appLoading && (
           <Switch>
             <Route path="/signin" component={() => {
-              return user.isEmpty ? <SignInWithRoot user={user}/> :
+              return user.isEmpty ? <SignInWithRoot env="DASHBOARD" user={user}/> :
               <Redirect to="/"/>
             }} />
-            <Route path="/register" component={() => {
-              return (!user.isEmpty || !user.isLoaded) ? <RegisterRestaurant user={user}/> :
-              <Redirect to="/"/>
+            <Route path="/register" component={({location}) => {
+              return (!user.isEmpty || !user.isLoaded) ? <RegisterRestaurant location={location} user={user}/> :
+              <Redirect to="/signin"/>
             }} />
             <Route path="/" component={() => {
               return (!user.isEmpty || !user.isLoaded) ? <Dashboard history={history} /> :
@@ -63,6 +62,7 @@ const App = ({ appLoading, user, history }: AppProps) => {
 }
 
 export default connect(state => ({
+  ongoingRegistration: state.restaurant.ongoingRegistration,
   user: state.firebase.auth,
   appLoading: !appIsRunning(state),
 }))(App);

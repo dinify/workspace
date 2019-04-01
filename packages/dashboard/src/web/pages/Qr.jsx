@@ -16,7 +16,7 @@ const Qr = ({ match, loggedRestaurant }) => {
   return (
     <QRpage>
       <QRCode
-        value={`https://dinify.app/restaurant/${loggedRestaurant.subdomain}?qr=${match.params.code}`}
+        value={`https://m.dinify.app/restaurant/${loggedRestaurant.subdomain}?qr=${match.params.code}`}
         size={256}
       />
     </QRpage>

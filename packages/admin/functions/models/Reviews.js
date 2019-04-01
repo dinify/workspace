@@ -20,6 +20,8 @@ ReviewsSchema.index({ id: 1 }, { unique: true });
 ReviewsSchema.index({ location_id: 1 });
 ReviewsSchema.index({ text: 'text' });
 ReviewsSchema.index({ title: 'text' });
+ReviewsSchema.index({ lang: 1 });
+
 const Reviews = mongoose.model('reviews', ReviewsSchema);
 
 module.exports = Reviews;

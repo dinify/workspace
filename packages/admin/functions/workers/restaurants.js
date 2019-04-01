@@ -4,7 +4,7 @@ import async from 'async';
 
 
 const doIt = (limit, page) => {
-  taAPI.getRestaurants({ locID: 187323, limit, offset: page*limit }).then((res) => {
+  taAPI.getRestaurants({ locID: 274714, limit, offset: page*limit }).then((res) => {
 
     res.data.forEach((restaurant) => {
       console.log(restaurant.email);
@@ -21,7 +21,7 @@ const doIt = (limit, page) => {
 
     });
     if (res.data.length) {
-      setTimeout(() => doIt(limit, page + 1), 100);
+      doIt(limit, page + 1);
     } else {
       console.log('done');
     }

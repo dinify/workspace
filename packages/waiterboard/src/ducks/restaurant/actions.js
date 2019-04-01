@@ -16,7 +16,9 @@ export const confirmService = (payload) => ({ type: 'SERVICE_CONFIRMATION_INIT',
 export const confirmOrder = (payload) => ({ type: 'ORDER_CONFIRMATION_INIT', payload })
 export const confirmOrderAhead = (payload) => ({ type: 'ORDERAHEAD_CONFIRMATION_INIT', payload })
 export const confirmBill = (payload) => ({ type: 'BILL_CONFIRMATION_INIT', payload })
+
 export const confirmationFail = () => ({ type: 'CONFIRMATION_FAIL' })
+
 export const setTimer = (payload) => ({ type: 'SET_TIMER', payload })
 export const setOHEnabled = () => ({ type: 'SET_OHENABLED_INIT' })
 export const getBillsOfUser = (payload) => ({ type: 'GET_BILLSOFUSER_INIT', payload })

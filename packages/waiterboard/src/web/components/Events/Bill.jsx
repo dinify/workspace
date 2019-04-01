@@ -102,11 +102,11 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer }) => {
           </thead>
           <tbody>
   					{orderItems.map((order) =>
-              [<Tr key={order.id} className="headline">
+              [/*<Tr key={order.id} className="headline">
                 <Td>{orderTypes[order.type]} order</Td>
                 <Td>{order.items.length}</Td>
                 <Td>{N(order.subtotal.amount).format('0.000')}KD</Td>
-              </Tr>,
+              </Tr>,*/
               order.items.map((item) =>
                 <Tr key={item.id}>
     	            <Td>{item.menu_item.name}</Td>

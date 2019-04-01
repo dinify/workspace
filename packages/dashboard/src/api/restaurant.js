@@ -1,34 +1,6 @@
 import { Get, Post, PostMultipart } from '@dinify/common/dist/api/Network';
 
-export function RegisterUser({ name, phone, email, password }) {
-  return Post(
-    {
-      path: 'user/register',
-      noToken: true,
-    },
-    {
-      email,
-      password,
-      name,
-      phone,
-      gender: 'OTHER',
-      birth_date: '1990-01-01',
-      registration_type: 'LOCAL',
-    },
-  );
-}
-export function LoginUser({ email, password }) {
-  return Post(
-    {
-      path: 'user/login',
-      noToken: true,
-    },
-    {
-      email,
-      password,
-    },
-  );
-}
+
 export function CreateRestaurant({ restaurantName, subdomain }) {
   return Post(
     {

@@ -26,7 +26,8 @@ export default function reducer(state = initialState, action) {
       return assocPath(['all', payment.id], payment)(state);
     }
 
-    case 'BILL_CONFIRMATION_INIT': {
+    case 'CONFIRMATION_DONE': {
+      if (action.payload.type !== 'Bill') return state;
       const { billId } = action.payload;
       return assocPath(['all', billId, 'status'], 'PROCESSED')(state);
     }

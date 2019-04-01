@@ -34,7 +34,6 @@ const styles = theme => ({
 });
 
 export class SignInForm extends React.Component {
-
   validateEmail = (email) => {
     const errors = {};
     if (!email) {
@@ -109,7 +108,8 @@ export class SignInForm extends React.Component {
       pristine,
       submitting,
       page,
-      setPage
+      setPage,
+      env,
     } = this.props;
 
     const animConfig = { stiffness: 480, damping: 48 };
@@ -121,6 +121,10 @@ export class SignInForm extends React.Component {
     let formTitle = 'Sign in';
     let formSubtitle = 'to access more features, like dining history, reviews and saving your favorites';
     let leftButtonAction = () => setPage(formOpen ? 'default' : 'signUp');
+
+    if (env === 'DASHBOARD') {
+      formSubtitle = 'to start setting things up, sign in with your email or social media account';
+    }
 
     if (page === 'signIn') {
       submitButtonText = 'Sign in';
@@ -223,19 +227,47 @@ export class SignInForm extends React.Component {
   }
 }
 
+SignInForm = reduxForm({
+  form: 'auth/signin',
+  enableReinitialize: true,
+  destroyOnUnmount: false
+})(SignInForm)
+
+class SignInPage extends React.Component {
+  constructor(props) {
+    super(props);
+    const { prefill } = props;
+    let initialValues = {};
+    if (prefill && prefill.email) {
+      initialValues.email = prefill.email;
+    }
+    this.state = {
+      initialValues
+    };
+  }
+  render() {
+    return (
+      <div>
+        <SignInForm
+          initialValues={this.state.initialValues}
+          {...this.props}
+        />
+      </div>
+    )
+  }
+}
+
 export default compose(
   withStyles(styles),
-  reduxForm({
-    form: 'auth/signin',
-  }),
   firebaseConnect(),
   connect(
     state => ({
       page: state.auth.page,
+      prefill: state.restaurant.prefill
     }),
     {
       setPage,
       openDialog: openDialogAction
     }
   )
-)(SignInForm)
+)(SignInPage)
