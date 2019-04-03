@@ -187,7 +187,7 @@ export class SignInForm extends React.Component {
               </Typography>
             </div>
             <div style={{height: 185, overflow: 'hidden'}}>
-              <Fields />
+              <Fields env={env} />
             </div>
 
             <div style={{

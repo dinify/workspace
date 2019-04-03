@@ -12,6 +12,7 @@ exports.supportsScrollSnap = supportsScrollSnap;
 exports.getPlatform = getPlatform;
 exports.setCookie = setCookie;
 exports.getCookie = getCookie;
+exports.getInitials = getInitials;
 exports.UpdateOriginal = exports.MapPath = exports.Identity = exports.ListToMap = exports.MapToList = void 0;
 
 var R = _interopRequireWildcard(require("ramda"));
@@ -209,3 +210,15 @@ function getCookie(cname) {
 
   return '';
 }
+
+function getInitials() {
+  var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var glue = arguments.length > 1 ? arguments[1] : undefined;
+  if (str === '') return '';
+  if (typeof glue === "undefined") glue = true;
+  var initials = str.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g);
+  if (glue) return initials.join('');
+  return initials;
+}
+
+;

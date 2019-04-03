@@ -169,7 +169,8 @@ function (_React$Component) {
           page = _this$props.page,
           showPassword = _this$props.showPassword,
           setPage = _this$props.setPage,
-          setShowPassword = _this$props.setShowPassword;
+          setShowPassword = _this$props.setShowPassword,
+          env = _this$props.env;
       var errors = this.state.errors;
       var animConfig = {
         stiffness: 480,

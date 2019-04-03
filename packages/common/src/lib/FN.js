@@ -160,3 +160,11 @@ export function getCookie(cname) {
   }
   return '';
 }
+
+export function getInitials(str = '', glue) {
+  if (str === '') return '';
+  if (typeof glue === "undefined") glue = true;
+  const initials = str.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g);
+  if (glue) return initials.join('');
+  return initials;
+};

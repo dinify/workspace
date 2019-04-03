@@ -83,6 +83,7 @@ exports.ConfirmOrder = ConfirmOrder;
 exports.GetBills = GetBills;
 exports.GetTodaybills = GetTodaybills;
 exports.ConfirmBill = ConfirmBill;
+exports.GetManagedrestaurants = GetManagedrestaurants;
 
 var _Network = require("./Network");
 
@@ -839,5 +840,11 @@ function ConfirmBill(_ref64) {
     path: "transaction/".concat(billId, "/process")
   }, {
     approvalNumber: approvalNumber
+  });
+}
+
+function GetManagedrestaurants() {
+  return (0, _Network.Get)({
+    path: 'managed?with=images'
   });
 }

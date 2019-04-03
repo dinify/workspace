@@ -52,8 +52,6 @@ let ServiceForm = ({ handleSubmit, classes }) => {
           </Button>
         </Grid>
       </Grid>
-
-
     </form>
   );
 };

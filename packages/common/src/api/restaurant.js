@@ -421,36 +421,36 @@ export function Notify({ sendTo, type, payload }) {
 }
 
 export function GetLoggedRestaurant() {
-  return Get({ path: `restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices`, v3: true })
+  return Get({ path: `restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices`, v3: true });
 }
 
 
 export function GetTables({ waiterboardId }) {
-  return Get({ path: `waiterboard/${waiterboardId}/tables` })
+  return Get({ path: `waiterboard/${waiterboardId}/tables` });
 }
 
 export function GetSeatsOfWB({ waiterboardId }) {
-  return Get({ path: `waiterboard/${waiterboardId}/seats/all` })
+  return Get({ path: `waiterboard/${waiterboardId}/seats/all` });
 }
 
 export function CheckOut({ tableId }) {
-  return Post({ path: `table/${tableId}/checkout` })
+  return Post({ path: `table/${tableId}/checkout` });
 }
 
 export function CheckOutUser({ userId }) {
-  return Post({ path: `checkout/user/${userId}` })
+  return Post({ path: `checkout/user/${userId}` });
 }
 
 export function GetBookings() {
-  return Get({ path: `restaurant/my/bookings` })
+  return Get({ path: `restaurant/my/bookings` });
 }
 
 export function ConfirmBooking({ id }) {
-  return Post({ path: `booking/${id}/confirm` })
+  return Post({ path: `booking/${id}/confirm` });
 }
 
 export function CancelBooking({ id }) {
-  return Post({ path: `booking/${id}/cancel` }, { reason: 'No seats at given time' })
+  return Post({ path: `booking/${id}/cancel` }, { reason: 'No seats at given time' });
 }
 
 export function GetGuests({ waiterboardId }) {
@@ -458,29 +458,33 @@ export function GetGuests({ waiterboardId }) {
 }
 
 export function GetCalls({ waiterboardId }) {
-  return Get({ path: `waiterboard/${waiterboardId}/calls?with=service.image` })
+  return Get({ path: `waiterboard/${waiterboardId}/calls?with=service.image` });
 }
 
 export function ConfirmCall({ callId }) {
-  return Post({ path: `service/call/${callId}/confirm` })
+  return Post({ path: `service/call/${callId}/confirm` });
 }
 
 export function GetOrders({ waiterboardId }) {
-  return Get({ path: `waiterboard/${waiterboardId}/orders/today?with=items.choices,items.addons,items.excludes` })
+  return Get({ path: `waiterboard/${waiterboardId}/orders/today?with=items.choices,items.addons,items.excludes` });
 }
 
 export function ConfirmOrder({ orderId }) {
-  return Post({ path: `order/${orderId}/confirm` })
+  return Post({ path: `order/${orderId}/confirm` });
 }
 
 export function GetBills({ waiterboardId }) {
-  return Get({ path: `waiterboard/${waiterboardId}/transactions?with=orders` })
+  return Get({ path: `waiterboard/${waiterboardId}/transactions?with=orders` });
 }
 
 export function GetTodaybills({ waiterboardId }) {
-  return Get({ path: `waiterboard/${waiterboardId}/transactions/all?limit=100` })
+  return Get({ path: `waiterboard/${waiterboardId}/transactions/all?limit=100` });
 }
 
 export function ConfirmBill({ billId, approvalNumber }) {
-  return Post({ path: `transaction/${billId}/process`}, { approvalNumber })
+  return Post({ path: `transaction/${billId}/process`}, { approvalNumber });
+}
+
+export function GetManagedrestaurants() {
+  return Get({ path: 'managed?with=images' });
 }

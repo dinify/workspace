@@ -297,7 +297,9 @@ function (_React$Component) {
           height: 185,
           overflow: 'hidden'
         }
-      }, _react.default.createElement(_Fields.default, null)), _react.default.createElement("div", {
+      }, _react.default.createElement(_Fields.default, {
+        env: env
+      })), _react.default.createElement("div", {
         style: {
           display: 'flex',
           marginTop: 16

@@ -29,8 +29,9 @@ const AppLoader = styled.div`
 `;
 
 const SignInWithRoot = withRoot(SignIn);
+const RegisterRestaurantWithRoot = withRoot(RegisterRestaurant);
 
-const App = ({ appLoading, user, history, ongoingRegistration }) => {
+const App = ({ appLoading, user, history, ongoingRegistration, selectedRestaurant }) => {
   if (ongoingRegistration && !window.location.pathname.includes('/register') && !user.isEmpty) {
     window.location.replace('/register');
   }
@@ -45,12 +46,14 @@ const App = ({ appLoading, user, history, ongoingRegistration }) => {
               <Redirect to="/"/>
             }} />
             <Route path="/register" component={({location}) => {
-              return (!user.isEmpty || !user.isLoaded) ? <RegisterRestaurant location={location} user={user}/> :
-              <Redirect to="/signin"/>
+              // if (user.isEmpty) return <Redirect to="/signin"/>;
+              // if (selectedRestaurant) return <Redirect to="/"/>;
+              return <RegisterRestaurantWithRoot location={location} user={user}/>;
             }} />
             <Route path="/" component={() => {
-              return (!user.isEmpty || !user.isLoaded) ? <Dashboard history={history} /> :
-              <Redirect to="/signin"/>
+              if (user.isEmpty) return <Redirect to="/signin" />;
+              if (!selectedRestaurant) return <Redirect to="/register" />; 
+              return <Dashboard history={history} />;
             }} />
 
             <Route path="/qr/:code" component={Qr} />
@@ -64,5 +67,6 @@ const App = ({ appLoading, user, history, ongoingRegistration }) => {
 export default connect(state => ({
   ongoingRegistration: state.restaurant.ongoingRegistration,
   user: state.firebase.auth,
+  selectedRestaurant: state.restaurant.selectedRestaurant,
   appLoading: !appIsRunning(state),
 }))(App);

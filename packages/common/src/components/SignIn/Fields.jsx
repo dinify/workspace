@@ -90,6 +90,7 @@ class Fields extends React.Component {
       showPassword,
       setPage,
       setShowPassword,
+      env
     } = this.props;
     const {
       errors

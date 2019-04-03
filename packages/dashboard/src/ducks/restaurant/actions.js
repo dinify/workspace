@@ -186,4 +186,5 @@ export const updateAddonInit = payload => ({
   type: 'UPDATE_ADDON_INIT',
   payload,
 });
-  
+
+export const selectRestaurant = payload => ({ type: 'SELECT_RESTAURANT', payload });

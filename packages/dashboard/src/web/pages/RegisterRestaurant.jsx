@@ -10,15 +10,34 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import { withStyles } from '@material-ui/core/styles';
-import { registerRestaurant, prefillEmail, prefillRestaurantName, setOngoingRegistration } from 'ducks/restaurant/actions';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Avatar from '@material-ui/core/Avatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import { MapToList, getInitials } from '@dinify/common/dist/lib/FN';
+
+
+import {
+  registerRestaurant,
+  prefillEmail,
+  prefillRestaurantName,
+  setOngoingRegistration,
+  selectRestaurant
+} from 'ducks/restaurant/actions';
 
 const styles = {
   card: {
     maxWidth: '500px',
-    margin: '50px auto'
+    margin: '50px auto',
+    background: 'rgba(255,255,255,0.07)',
+    borderRadius: '2px'
   },
   title: {
     fontSize: 18,
+  },
+  listItem: {
+    background: 'rgba(255,255,255,0.07)',
+    borderRadius: '2px'
   }
 };
 
@@ -75,20 +94,46 @@ class RegisterRestaurant extends React.Component {
   }
 
   render() {
-    const { classes, registerRestaurant } = this.props;
+    const { classes, registerRestaurant, managedRestaurants, selectRestaurant } = this.props;    
 
     return (
-      <Card className={classes.card}>
-        <CardContent>
-          <Typography className={classes.title} variant="h1" gutterBottom>
-            Register new restaurant
-          </Typography>
-          <RegistrationForm
-            initialValues={this.state.initialValues}
-            onSubmit={(fields) => registerRestaurant(fields)}
-          />
-        </CardContent>
-      </Card>
+      <div>
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography className={classes.title} variant="h1" gutterBottom>
+              Register new restaurant
+            </Typography>
+            <RegistrationForm
+              initialValues={this.state.initialValues}
+              onSubmit={(fields) => registerRestaurant(fields)}
+            />
+          </CardContent>
+        </Card>
+        {managedRestaurants.length > 0 &&
+          <Card className={classes.card}>
+            <CardContent>
+              <Typography className={classes.title} variant="h1" gutterBottom>
+                You can manage these restaurants
+              </Typography>
+              <List className={classes.root}>
+                {managedRestaurants.map((restaurant) => 
+                  <ListItem className={classes.listItem}>
+                    <Avatar
+                      src={Object.keys(restaurant.images).length  ? MapToList(restaurant.images)[0].url : ''}
+                    >
+                      {getInitials(restaurant.name)}
+                    </Avatar>
+                    <ListItemText primary={restaurant.name} />
+                    <Button color="primary" variant="contained" onClick={() => selectRestaurant({id: restaurant.id})}>
+                      ENTER
+                    </Button>
+                  </ListItem>
+                )}
+              </List>
+            </CardContent>
+          </Card>      
+        }
+      </div>
     );
   }
 }
@@ -98,12 +143,14 @@ const enhance = compose(
   withStyles(styles),
   connect(state => ({
     prefill: state.restaurant.prefill,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    managedRestaurants: state.restaurant.managedRestaurants
   }), {
     registerRestaurant,
     prefillEmail,
     prefillRestaurantName,
-    setOngoingRegistration
+    setOngoingRegistration,
+    selectRestaurant
   })
 )
 

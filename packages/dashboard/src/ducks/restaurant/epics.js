@@ -35,6 +35,7 @@ const getLoggedEpic = (action$: Observable) =>
       return triggerOn.includes(action.type);
     }),
     mergeMap(() => of(
+      {type: 'FETCH_MANAGEDRESTAURANTS_INIT'},
       {type: 'LOAD_RESTAURANT'},
       {type: 'FETCH_TRANSLATIONS_INIT'},
       {type: 'FETCH_SERVICEIMAGES_INIT'}

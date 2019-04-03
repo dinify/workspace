@@ -18,7 +18,9 @@ const initialState = {
     email: null,
     restaurantName: null
   },
-  ongoingRegistration: false
+  ongoingRegistration: false,
+  selectedRestaurant: null,
+  managedRestaurants: []
 };
 
 export default function reducer(state: State = initialState, action) {
@@ -29,6 +31,10 @@ export default function reducer(state: State = initialState, action) {
       return R.assocPath(['prefill', 'email'], action.payload.email)(
         state,
       );
+    case 'SELECT_RESTAURANT':
+      return R.assoc('selectedRestaurant', action.payload.id)(state);
+    case 'FETCH_MANAGEDRESTAURANTS_DONE':
+      return R.assoc('managedRestaurants', action.payload.res)(state);
     case 'PREFILL_RESTAURANTNAME':
       return R.assocPath(['prefill', 'restaurantName'], action.payload.restaurantName)(
         state,
