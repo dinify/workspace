@@ -38,15 +38,14 @@ const App = ({ appLoading, user, history, ongoingRegistration, selectedRestauran
   return (
     <Router>
       <Content>
-        {appLoading && <AppLoader>Dashboard is loading...</AppLoader>}
-        {!appLoading && (
+        {appLoading || !user.isLoaded ? <AppLoader>Dashboard is loading...</AppLoader> :
           <Switch>
             <Route path="/signin" component={() => {
               return user.isEmpty ? <SignInWithRoot env="DASHBOARD" user={user}/> :
               <Redirect to="/"/>
             }} />
             <Route path="/register" component={({location}) => {
-              // if (user.isEmpty) return <Redirect to="/signin"/>;
+              if (user.isEmpty) return <Redirect to="/signin"/>;
               // if (selectedRestaurant) return <Redirect to="/"/>;
               return <RegisterRestaurantWithRoot location={location} user={user}/>;
             }} />
@@ -57,8 +56,8 @@ const App = ({ appLoading, user, history, ongoingRegistration, selectedRestauran
             }} />
 
             <Route path="/qr/:code" component={Qr} />
-          </Switch>
-        )}
+          </Switch>      
+        }
       </Content>
     </Router>
   );

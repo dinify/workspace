@@ -27,6 +27,14 @@ const bootstrapEpic = (action$: Observable) =>
     })
   );
 
+const selectRestaurantEpic = (action$: Observable) =>
+  action$.pipe(
+    ofType('SELECT_RESTAURANT'),
+    mergeMap(() => {
+      window.location.href = '/';
+      return of({ type: 'SELECT_RESTAURANT_REDIRECT' });
+    })
+  );
 
 const getLoggedEpic = (action$: Observable) =>
   action$.pipe(
@@ -128,4 +136,5 @@ export default [
   registerRestaurantEpic,
   reorderEpic,
   editImageEpic,
+  selectRestaurantEpic
 ];
