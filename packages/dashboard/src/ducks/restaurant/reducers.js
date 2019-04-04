@@ -41,10 +41,10 @@ export default function reducer(state: State = initialState, action) {
       );
     case 'SET_ONGOINGREGISTRATION':
       return R.assoc('ongoingRegistration', !!action.payload)(state);
-    case 'LOGGED_FETCHED_DONE': {
+    case 'FETCH_LOGGEDRESTAURANT_DONE': {
       return R.assoc('loggedRestaurant', action.payload)(state);
     }
-    case 'LOGGED_FETCHED_EMPTY': {
+    case 'FETCH_LOGGEDRESTAURANT_FAIL': {
       return R.dissoc('loggedRestaurant')(state);
     }
     case 'UPDATE_NAME_INIT':

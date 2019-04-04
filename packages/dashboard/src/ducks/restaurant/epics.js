@@ -8,13 +8,6 @@ import { setCookie } from '@dinify/common/dist/lib/FN';
 
 import * as API from 'api/restaurant';
 
-export const loggedFetchedAction = payload => {
-  if (payload === null) {
-    return { type: 'LOGGED_FETCHED_EMPTY' };
-  }
-  return { type: 'LOGGED_FETCHED_DONE', payload };
-};
-
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
 
 // Epic
@@ -36,30 +29,30 @@ const selectRestaurantEpic = (action$: Observable) =>
     })
   );
 
-const getLoggedEpic = (action$: Observable) =>
+const getLoggedEpic = (action$, state$) =>
   action$.pipe(
     filter(action => {
       const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE];
       return triggerOn.includes(action.type);
     }),
-    mergeMap(() => of(
-      {type: 'FETCH_MANAGEDRESTAURANTS_INIT'},
-      {type: 'LOAD_RESTAURANT'},
-      {type: 'FETCH_TRANSLATIONS_INIT'},
-      {type: 'FETCH_SERVICEIMAGES_INIT'}
-    ))
+    mergeMap(() => {
+      const reactions = [{type: 'FETCH_MANAGEDRESTAURANTS_INIT'}];
+      const selectedRestaurant = state$.value.restaurant.selectedRestaurant;
+      if (selectedRestaurant) reactions.push({type: 'LOAD_RESTAURANT'});
+      return reactions;
+    })
   );
 
-const loadRestaurant = (action$) =>
+const loadRestaurant = (action$, state$) =>
   action$.pipe(
     ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
-      return from(API.GetLoggedRestaurant()).pipe(
-        map(loggedUser => loggedFetchedAction(loggedUser)),
-        catchError(error => {
-          console.log(error);
-          return of(appBootstrap());
-        })
+      const restaurantId = state$.value.restaurant.selectedRestaurant;
+      const payload = { restaurantId };
+      return of(
+        {type: 'FETCH_LOGGEDRESTAURANT_INIT', payload},
+        {type: 'FETCH_TRANSLATIONS_INIT', payload},
+        {type: 'FETCH_SERVICEIMAGES_INIT'}
       );
     })
   );

@@ -53,7 +53,7 @@ const theme = createMuiTheme({
     type: 'dark',
   },
   typography: {
-    fontFamily: 'Montserrat',
+    fontFamily: 'Lato',
     subheading: {
       fontWeight: 300
     }
@@ -77,9 +77,19 @@ const styles = theme => ({
     margin: 0,
     paddingLeft: theme.spacing.unit * 2
   },
+  navText: {
+    color: 'white',
+    fontSize: '14px',
+    fontWeight: 300,
+    textTransform: 'uppercase',
+    letterSpacing: '1px'
+  },
   nestedText: {
     color: 'white',
-    fontSize: '14px'
+    fontSize: '12px',
+    fontWeight: 300,
+    textTransform: 'uppercase',
+    letterSpacing: '1px'
   }
 });
 
@@ -166,11 +176,11 @@ class Dashboard extends React.Component {
               style={{paddingTop: 0}}
             >
               <Link to="/">
-                <ListItem button divider style={{paddingLeft: 34}}>
-                  <ListItemIcon>
+                <ListItem button divider>
+                  <ListItemIcon className={classes.navIcon}>
                     <img src={require('assets/img/logo.svg')} width={26} height={36} alt="" />
                   </ListItemIcon>
-                  <ListItemText disableTypography inset primary="Dashboard" style={listTextStyle} />
+                  <ListItemText inset primary="Dashboard" disableTypography className={classes.navText} />
                 </ListItem>
               </Link>
 
@@ -180,7 +190,7 @@ class Dashboard extends React.Component {
                     <ListItemIcon className={classes.navIcon}>
                       {!!section.icon && section.icon}
                     </ListItemIcon>
-                    <ListItemText inset primary={section.name} />
+                    <ListItemText inset primary={section.name} disableTypography className={classes.navText} />
                     {section.subsections && (this.state.openedIndex === index ? <ExpandLess /> : <ExpandMore />)}
                   </ListItem>
                   {section.subsections &&

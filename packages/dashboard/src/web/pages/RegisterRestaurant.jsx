@@ -58,7 +58,7 @@ let RegistrationForm = ({ handleSubmit }) => {
           margin: 'normal',
         }}
       />
-      <Button type="submit" fullWidth={true}>
+      <Button type="submit" color="primary" variant="outlined" fullWidth={true} style={{marginTop: 20}}>
         REGISTER
       </Button>
     </form>
@@ -98,17 +98,6 @@ class RegisterRestaurant extends React.Component {
 
     return (
       <div>
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography className={classes.title} variant="h1" gutterBottom>
-              Register new restaurant
-            </Typography>
-            <RegistrationForm
-              initialValues={this.state.initialValues}
-              onSubmit={(fields) => registerRestaurant(fields)}
-            />
-          </CardContent>
-        </Card>
         {managedRestaurants.length > 0 &&
           <Card className={classes.card}>
             <CardContent>
@@ -133,6 +122,17 @@ class RegisterRestaurant extends React.Component {
             </CardContent>
           </Card>      
         }
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography className={classes.title} variant="h1" gutterBottom>
+              Register new restaurant
+            </Typography>
+            <RegistrationForm
+              initialValues={this.state.initialValues}
+              onSubmit={(fields) => registerRestaurant(fields)}
+            />
+          </CardContent>
+        </Card>
       </div>
     );
   }

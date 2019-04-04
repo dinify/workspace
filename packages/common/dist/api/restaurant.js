@@ -67,7 +67,7 @@ exports.GetTranslations = GetTranslations;
 exports.AddTranslation = AddTranslation;
 exports.RmTranslation = RmTranslation;
 exports.Notify = Notify;
-exports.GetLoggedRestaurant = GetLoggedRestaurant;
+exports.GetLoggedrestaurant = GetLoggedrestaurant;
 exports.GetTables = GetTables;
 exports.GetSeatsOfWB = GetSeatsOfWB;
 exports.CheckOut = CheckOut;
@@ -265,18 +265,20 @@ function GetServiceimages() {
 }
 
 function ChangeCategory(_ref15) {
-  var category = _ref15.category;
+  var restaurantId = _ref15.restaurantId,
+      category = _ref15.category;
   return (0, _Network.Post)({
-    path: "restaurant/my"
+    path: "restaurant/".concat(restaurantId)
   }, {
     type: category
   });
 }
 
 function ChangeName(_ref16) {
-  var name = _ref16.name;
+  var name = _ref16.name,
+      restaurantId = _ref16.restaurantId;
   return (0, _Network.Post)({
-    path: "restaurant/my"
+    path: "restaurant/".concat(restaurantId)
   }, {
     name: name
   });
@@ -285,9 +287,10 @@ function ChangeName(_ref16) {
 function ChangeContact(_ref17) {
   var phone = _ref17.phone,
       email = _ref17.email,
-      website = _ref17.website;
+      website = _ref17.website,
+      restaurantId = _ref17.restaurantId;
   return (0, _Network.Post)({
-    path: "restaurant/my"
+    path: "restaurant/".concat(restaurantId)
   }, {
     contact: {
       phone: phone,
@@ -301,9 +304,10 @@ function ChangeBank(_ref18) {
   var bank_name = _ref18.bank_name,
       beneficiary_name = _ref18.beneficiary_name,
       iban = _ref18.iban,
-      bic = _ref18.bic;
+      bic = _ref18.bic,
+      restaurantId = _ref18.restaurantId;
   return (0, _Network.Post)({
-    path: "restaurant/my/payout"
+    path: "restaurant/".concat(restaurantId, "/payout")
   }, {
     bank_name: bank_name,
     beneficiary_name: beneficiary_name,
@@ -313,9 +317,10 @@ function ChangeBank(_ref18) {
 }
 
 function ChangeAddress(payload) {
+  var restaurantId = payload.restaurantId;
   delete payload.restaurantId;
   return (0, _Network.Post)({
-    path: "restaurant/my"
+    path: "restaurant/".concat(restaurantId)
   }, {
     address: {
       business: _objectSpread({}, payload)
@@ -325,9 +330,10 @@ function ChangeAddress(payload) {
 
 function ChangeSocial(_ref19) {
   var facebook = _ref19.facebook,
-      instagram = _ref19.instagram;
+      instagram = _ref19.instagram,
+      restaurantId = _ref19.restaurantId;
   return (0, _Network.Post)({
-    path: "restaurant/my"
+    path: "restaurant/".concat(restaurantId)
   }, {
     social: {
       facebook: facebook,
@@ -338,9 +344,10 @@ function ChangeSocial(_ref19) {
 
 function ChangeLocation(_ref20) {
   var longitude = _ref20.longitude,
-      latitude = _ref20.latitude;
+      latitude = _ref20.latitude,
+      restaurantId = _ref20.restaurantId;
   return (0, _Network.Post)({
-    path: "restaurant/my"
+    path: "restaurant/".concat(restaurantId)
   }, {
     longitude: longitude,
     latitude: latitude
@@ -348,10 +355,11 @@ function ChangeLocation(_ref20) {
 }
 
 function ChangeHours(payload) {
+  var restaurantId = payload.restaurantId;
   delete payload['restaurantId'];
   var openHours = payload;
   return (0, _Network.Post)({
-    path: "restaurant/my"
+    path: "restaurant/".concat(restaurantId)
   }, {
     open_hours: openHours
   });
@@ -361,9 +369,10 @@ function ChangeHours(payload) {
 
 
 function CreateWaiterboard(_ref21) {
-  var name = _ref21.name;
+  var restaurantId = _ref21.restaurantId,
+      name = _ref21.name;
   return (0, _Network.Post)({
-    path: "waiterboard/create"
+    path: "restaurant/".concat(restaurantId, "/waiterboard/add")
   }, {
     name: name
   });
@@ -416,17 +425,19 @@ function RemoveTable(_ref25) {
 // }
 
 
-function GetCategories() {
+function GetCategories(_ref26) {
+  var restaurantId = _ref26.restaurantId;
   return (0, _Network.Get)({
-    path: "restaurant/my/categories"
+    path: "restaurant/".concat(restaurantId, "/categories")
   });
 }
 
-function CreateMenucategory(_ref26) {
-  var name = _ref26.name,
-      precedence = _ref26.precedence;
+function CreateMenucategory(_ref27) {
+  var restaurantId = _ref27.restaurantId,
+      name = _ref27.name,
+      precedence = _ref27.precedence;
   return (0, _Network.Post)({
-    path: "menu/category/create"
+    path: "restaurant/".concat(restaurantId, "/menu/category/add")
   }, {
     name: name,
     precedence: precedence
@@ -442,17 +453,17 @@ function ChangeMenucategory(payload) {
   }, payload);
 }
 
-function RemoveMenucategory(_ref27) {
-  var id = _ref27.id;
+function RemoveMenucategory(_ref28) {
+  var id = _ref28.id;
   return (0, _Network.Post)({
     path: "menu/category/".concat(id, "/delete")
   });
 }
 
-function CreateMenuitem(_ref28) {
-  var name = _ref28.name,
-      precedence = _ref28.precedence,
-      categoryId = _ref28.categoryId;
+function CreateMenuitem(_ref29) {
+  var name = _ref29.name,
+      precedence = _ref29.precedence,
+      categoryId = _ref29.categoryId;
   return (0, _Network.Post)({
     path: "menu/category/".concat(categoryId, "/item/add")
   }, {
@@ -475,19 +486,20 @@ function ChangeMenuitem(payload) {
   }, updObj);
 }
 
-function RemoveMenuitem(_ref29) {
-  var id = _ref29.id;
+function RemoveMenuitem(_ref30) {
+  var id = _ref30.id;
   return (0, _Network.Post)({
     path: "menu/item/".concat(id, "/delete")
   });
 }
 
-function CreateService(_ref30) {
-  var name = _ref30.name,
-      imageId = _ref30.imageId,
-      type = _ref30.type;
+function CreateService(_ref31) {
+  var restaurantId = _ref31.restaurantId,
+      name = _ref31.name,
+      imageId = _ref31.imageId,
+      type = _ref31.type;
   return (0, _Network.Post)({
-    path: "service/create"
+    path: "restaurant/".concat(restaurantId, "/service/add")
   }, {
     name: name,
     image_id: imageId,
@@ -495,19 +507,19 @@ function CreateService(_ref30) {
   });
 }
 
-function RemoveService(_ref31) {
-  var id = _ref31.id;
+function RemoveService(_ref32) {
+  var id = _ref32.id;
   return (0, _Network.Post)({
     path: "service/".concat(id, "/delete")
   });
 }
 
-function ChangeNutrition(_ref32) {
-  var foodId = _ref32.foodId,
-      total = _ref32.total,
-      proteins = _ref32.proteins,
-      fats = _ref32.fats,
-      carbs = _ref32.carbs;
+function ChangeNutrition(_ref33) {
+  var foodId = _ref33.foodId,
+      total = _ref33.total,
+      proteins = _ref33.proteins,
+      fats = _ref33.fats,
+      carbs = _ref33.carbs;
   return (0, _Network.Post)({
     path: "menu/item/".concat(foodId)
   }, {
@@ -520,9 +532,9 @@ function ChangeNutrition(_ref32) {
   });
 }
 
-function ToggleCategory(_ref33) {
-  var categoryId = _ref33.categoryId,
-      enabled = _ref33.enabled;
+function ToggleCategory(_ref34) {
+  var categoryId = _ref34.categoryId,
+      enabled = _ref34.enabled;
   return (0, _Network.Post)({
     path: "menu/category/".concat(categoryId)
   }, {
@@ -530,9 +542,9 @@ function ToggleCategory(_ref33) {
   });
 }
 
-function ToggleFood(_ref34) {
-  var foodId = _ref34.foodId,
-      enabled = _ref34.enabled;
+function ToggleFood(_ref35) {
+  var foodId = _ref35.foodId,
+      enabled = _ref35.enabled;
   return (0, _Network.Post)({
     path: "menu/item/".concat(foodId)
   }, {
@@ -540,17 +552,19 @@ function ToggleFood(_ref34) {
   });
 }
 
-function GetAddons() {
+function GetAddons(_ref36) {
+  var restaurantId = _ref36.restaurantId;
   return (0, _Network.Get)({
-    path: "restaurant/my/addons"
+    path: "restaurant/".concat(restaurantId, "/addons")
   });
 }
 
-function CreateAddon(_ref35) {
-  var name = _ref35.name,
-      price = _ref35.price;
+function CreateAddon(_ref37) {
+  var restaurantId = _ref37.restaurantId,
+      name = _ref37.name,
+      price = _ref37.price;
   return (0, _Network.Post)({
-    path: "menu/addon/create"
+    path: "restaurant/".concat(restaurantId, "/menu/addon/add")
   }, {
     name: name,
     price: {
@@ -560,17 +574,18 @@ function CreateAddon(_ref35) {
   });
 }
 
-function RemoveAddon(_ref36) {
-  var id = _ref36.id;
+function RemoveAddon(_ref38) {
+  var id = _ref38.id;
   return (0, _Network.Post)({
     path: "menu/addon/".concat(id, "/delete")
   });
 }
 
-function CreateIngredient(_ref37) {
-  var name = _ref37.name;
+function CreateIngredient(_ref39) {
+  var restaurantId = _ref39.restaurantId,
+      name = _ref39.name;
   return (0, _Network.Post)({
-    path: "menu/ingredient/create"
+    path: "restaurant/".concat(restaurantId, "/menu/ingredient/add")
   }, {
     name: name
   });
@@ -584,33 +599,34 @@ function ChangeIngredient(payload) {
   }, payload);
 }
 
-function RemoveIngredient(_ref38) {
-  var id = _ref38.id;
+function RemoveIngredient(_ref40) {
+  var id = _ref40.id;
   return (0, _Network.Post)({
     path: "menu/ingredient/".concat(id, "/delete")
   });
 }
 
-function CreateOption(_ref39) {
-  var name = _ref39.name;
+function CreateOption(_ref41) {
+  var restaurantId = _ref41.restaurantId,
+      name = _ref41.name;
   return (0, _Network.Post)({
-    path: "menu/option/create"
+    path: "restaurant/".concat(restaurantId, "/menu/option/add")
   }, {
     name: name
   });
 }
 
-function RemoveOption(_ref40) {
-  var id = _ref40.id;
+function RemoveOption(_ref42) {
+  var id = _ref42.id;
   return (0, _Network.Post)({
     path: "menu/option/".concat(id, "/delete")
   });
 }
 
-function CreateChoice(_ref41) {
-  var name = _ref41.name,
-      price = _ref41.price,
-      optionId = _ref41.optionId;
+function CreateChoice(_ref43) {
+  var name = _ref43.name,
+      price = _ref43.price,
+      optionId = _ref43.optionId;
   return (0, _Network.Post)({
     path: "menu/option/".concat(optionId, "/choice/add")
   }, {
@@ -622,16 +638,16 @@ function CreateChoice(_ref41) {
   });
 }
 
-function RemoveChoice(_ref42) {
-  var id = _ref42.id;
+function RemoveChoice(_ref44) {
+  var id = _ref44.id;
   return (0, _Network.Post)({
     path: "menu/choice/".concat(id, "/delete")
   });
 }
 
-function ChangeItemimage(_ref43) {
-  var file = _ref43.file,
-      id = _ref43.id;
+function ChangeItemimage(_ref45) {
+  var file = _ref45.file,
+      id = _ref45.id;
   return PostMultipart({
     path: "menu/item/".concat(id, "/image/upload")
   }, {
@@ -639,19 +655,20 @@ function ChangeItemimage(_ref43) {
   });
 }
 
-function ChangeImage(_ref44) {
-  var file = _ref44.file;
+function ChangeImage(_ref46) {
+  var file = _ref46.file,
+      restaurantId = _ref46.restaurantId;
   return PostMultipart({
-    path: "restaurant/my/image/upload"
+    path: "restaurant/".concat(restaurantId, "/image/upload")
   }, {
     image: file
   });
 }
 
-function EditImage(_ref45) {
-  var id = _ref45.id,
-      precedence = _ref45.precedence,
-      published = _ref45.published;
+function EditImage(_ref47) {
+  var id = _ref47.id,
+      precedence = _ref47.precedence,
+      published = _ref47.published;
   return (0, _Network.Post)({
     path: "image/".concat(id)
   }, {
@@ -660,9 +677,9 @@ function EditImage(_ref45) {
   });
 }
 
-function ChangeFoodingredient(_ref46) {
-  var foodId = _ref46.foodId,
-      ingredients = _ref46.ingredients;
+function ChangeFoodingredient(_ref48) {
+  var foodId = _ref48.foodId,
+      ingredients = _ref48.ingredients;
   return (0, _Network.Post)({
     path: "menu/item/".concat(foodId)
   }, {
@@ -671,23 +688,25 @@ function ChangeFoodingredient(_ref46) {
 }
 
 function GetTranslations() {
-  var _ref47 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      locale = _ref47.locale;
+  var _ref49 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      locale = _ref49.locale,
+      restaurantId = _ref49.restaurantId;
 
   if (locale) return (0, _Network.Get)({
-    path: "translation/list/".concat(locale)
+    path: "restaurant/".concat(restaurantId, "/translation/list/").concat(locale)
   });
   return (0, _Network.Get)({
-    path: 'translation/list'
+    path: "restaurant/".concat(restaurantId, "/translation/list")
   });
 }
 
-function AddTranslation(_ref48) {
-  var type = _ref48.type,
-      id = _ref48.id,
-      locale = _ref48.locale,
-      name = _ref48.name,
-      description = _ref48.description;
+function AddTranslation(_ref50) {
+  var type = _ref50.type,
+      id = _ref50.id,
+      locale = _ref50.locale,
+      name = _ref50.name,
+      description = _ref50.description,
+      restaurantId = _ref50.restaurantId;
   var body = {
     type: type,
     id: id,
@@ -696,16 +715,17 @@ function AddTranslation(_ref48) {
   };
   if (description) body.description = description;
   return (0, _Network.Post)({
-    path: 'translation/add'
+    path: "restaurant/".concat(restaurantId, "/translation/add")
   }, body);
 }
 
-function RmTranslation(_ref49) {
-  var type = _ref49.type,
-      id = _ref49.id,
-      locale = _ref49.locale;
+function RmTranslation(_ref51) {
+  var type = _ref51.type,
+      id = _ref51.id,
+      locale = _ref51.locale,
+      restaurantId = _ref51.restaurantId;
   return (0, _Network.Post)({
-    path: 'translation/remove'
+    path: "restaurant/".concat(restaurantId, "/translation/remove")
   }, {
     type: type,
     id: id,
@@ -713,10 +733,10 @@ function RmTranslation(_ref49) {
   });
 }
 
-function Notify(_ref50) {
-  var sendTo = _ref50.sendTo,
-      type = _ref50.type,
-      payload = _ref50.payload;
+function Notify(_ref52) {
+  var sendTo = _ref52.sendTo,
+      type = _ref52.type,
+      payload = _ref52.payload;
   return (0, _Network.Post)({
     endpoint: 'https://ws.dinify.app/',
     path: "notify"
@@ -727,36 +747,36 @@ function Notify(_ref50) {
   });
 }
 
-function GetLoggedRestaurant() {
+function GetLoggedrestaurant(_ref53) {
+  var restaurantId = _ref53.restaurantId;
   return (0, _Network.Get)({
-    path: "restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices",
-    v3: true
+    path: "restaurant/".concat(restaurantId, "/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices")
   });
 }
 
-function GetTables(_ref51) {
-  var waiterboardId = _ref51.waiterboardId;
+function GetTables(_ref54) {
+  var waiterboardId = _ref54.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/tables")
   });
 }
 
-function GetSeatsOfWB(_ref52) {
-  var waiterboardId = _ref52.waiterboardId;
+function GetSeatsOfWB(_ref55) {
+  var waiterboardId = _ref55.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/seats/all")
   });
 }
 
-function CheckOut(_ref53) {
-  var tableId = _ref53.tableId;
+function CheckOut(_ref56) {
+  var tableId = _ref56.tableId;
   return (0, _Network.Post)({
     path: "table/".concat(tableId, "/checkout")
   });
 }
 
-function CheckOutUser(_ref54) {
-  var userId = _ref54.userId;
+function CheckOutUser(_ref57) {
+  var userId = _ref57.userId;
   return (0, _Network.Post)({
     path: "checkout/user/".concat(userId)
   });
@@ -768,15 +788,15 @@ function GetBookings() {
   });
 }
 
-function ConfirmBooking(_ref55) {
-  var id = _ref55.id;
+function ConfirmBooking(_ref58) {
+  var id = _ref58.id;
   return (0, _Network.Post)({
     path: "booking/".concat(id, "/confirm")
   });
 }
 
-function CancelBooking(_ref56) {
-  var id = _ref56.id;
+function CancelBooking(_ref59) {
+  var id = _ref59.id;
   return (0, _Network.Post)({
     path: "booking/".concat(id, "/cancel")
   }, {
@@ -784,58 +804,58 @@ function CancelBooking(_ref56) {
   });
 }
 
-function GetGuests(_ref57) {
-  var waiterboardId = _ref57.waiterboardId;
+function GetGuests(_ref60) {
+  var waiterboardId = _ref60.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/guests")
   });
 }
 
-function GetCalls(_ref58) {
-  var waiterboardId = _ref58.waiterboardId;
+function GetCalls(_ref61) {
+  var waiterboardId = _ref61.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/calls?with=service.image")
   });
 }
 
-function ConfirmCall(_ref59) {
-  var callId = _ref59.callId;
+function ConfirmCall(_ref62) {
+  var callId = _ref62.callId;
   return (0, _Network.Post)({
     path: "service/call/".concat(callId, "/confirm")
   });
 }
 
-function GetOrders(_ref60) {
-  var waiterboardId = _ref60.waiterboardId;
+function GetOrders(_ref63) {
+  var waiterboardId = _ref63.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/orders/today?with=items.choices,items.addons,items.excludes")
   });
 }
 
-function ConfirmOrder(_ref61) {
-  var orderId = _ref61.orderId;
+function ConfirmOrder(_ref64) {
+  var orderId = _ref64.orderId;
   return (0, _Network.Post)({
     path: "order/".concat(orderId, "/confirm")
   });
 }
 
-function GetBills(_ref62) {
-  var waiterboardId = _ref62.waiterboardId;
+function GetBills(_ref65) {
+  var waiterboardId = _ref65.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/transactions?with=orders")
   });
 }
 
-function GetTodaybills(_ref63) {
-  var waiterboardId = _ref63.waiterboardId;
+function GetTodaybills(_ref66) {
+  var waiterboardId = _ref66.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/transactions/all?limit=100")
   });
 }
 
-function ConfirmBill(_ref64) {
-  var billId = _ref64.billId,
-      approvalNumber = _ref64.approvalNumber;
+function ConfirmBill(_ref67) {
+  var billId = _ref67.billId,
+      approvalNumber = _ref67.approvalNumber;
   return (0, _Network.Post)({
     path: "transaction/".concat(billId, "/process")
   }, {

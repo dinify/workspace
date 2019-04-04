@@ -129,22 +129,22 @@ export function GetServiceimages() {
 
 
 
-export function ChangeCategory({ category }) {
+export function ChangeCategory({ restaurantId, category }) {
   return Post(
-    { path: `restaurant/my`},
+    { path: `restaurant/${restaurantId}`},
     {
       type: category,
     },
   );
 }
 
-export function ChangeName({ name }) {
-  return Post({ path: `restaurant/my`}, { name });
+export function ChangeName({ name, restaurantId }) {
+  return Post({ path: `restaurant/${restaurantId}`}, { name });
 }
 
-export function ChangeContact({ phone, email, website }) {
+export function ChangeContact({ phone, email, website, restaurantId }) {
   return Post(
-    { path: `restaurant/my`},
+    { path: `restaurant/${restaurantId}`},
     {
       contact: {
         phone,
@@ -155,9 +155,9 @@ export function ChangeContact({ phone, email, website }) {
   );
 }
 
-export function ChangeBank({ bank_name, beneficiary_name, iban, bic }) {
+export function ChangeBank({ bank_name, beneficiary_name, iban, bic, restaurantId }) {
   return Post(
-    { path: `restaurant/my/payout` },
+    { path: `restaurant/${restaurantId}/payout` },
     {
       bank_name,
       beneficiary_name,
@@ -168,9 +168,10 @@ export function ChangeBank({ bank_name, beneficiary_name, iban, bic }) {
 }
 
 export function ChangeAddress(payload) {
+  const restaurantId = payload.restaurantId;
   delete payload.restaurantId;
   return Post(
-    { path: `restaurant/my` },
+    { path: `restaurant/${restaurantId}` },
     {
       address: {
         business: { ...payload },
@@ -179,9 +180,9 @@ export function ChangeAddress(payload) {
   );
 }
 
-export function ChangeSocial({ facebook, instagram }) {
+export function ChangeSocial({ facebook, instagram, restaurantId }) {
   return Post(
-    { path: `restaurant/my` },
+    { path: `restaurant/${restaurantId}` },
     {
       social: {
         facebook,
@@ -191,9 +192,9 @@ export function ChangeSocial({ facebook, instagram }) {
   );
 }
 
-export function ChangeLocation({ longitude, latitude }) {
+export function ChangeLocation({ longitude, latitude, restaurantId }) {
   return Post(
-    { path: `restaurant/my` },
+    { path: `restaurant/${restaurantId}` },
     {
       longitude: longitude,
       latitude: latitude,
@@ -202,17 +203,18 @@ export function ChangeLocation({ longitude, latitude }) {
 }
 
 export function ChangeHours(payload) {
+  const restaurantId = payload.restaurantId;
   delete payload['restaurantId'];
   const openHours = payload;
-  return Post({ path: `restaurant/my` }, { open_hours: openHours });
+  return Post({ path: `restaurant/${restaurantId}` }, { open_hours: openHours });
 }
 
 //export function AddTablet({ restaurantId, login_id, pass_enc, name }) {
 //  return Post({ path: `restaurant/${restaurantId}/shop` }, { login_id, pass_enc, name })
 //}
 
-export function CreateWaiterboard({ name }) {
-  return Post({ path: `waiterboard/create` }, { name });
+export function CreateWaiterboard({ restaurantId, name }) {
+  return Post({ path: `restaurant/${restaurantId}/waiterboard/add` }, { name });
 }
 
 export function RemoveWaiterboard({ id }) {
@@ -237,11 +239,11 @@ export function RemoveTable({ id }) {
 //   return Post({ path: `api/v2/restaurant/billing`, v2: true }, { from, to });
 // }
 
-export function GetCategories() {
-  return Get({ path: `restaurant/my/categories` });
+export function GetCategories({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/categories` });
 }
-export function CreateMenucategory({ name, precedence }) {
-  return Post({ path: `menu/category/create` }, { name, precedence });
+export function CreateMenucategory({ restaurantId, name, precedence }) {
+  return Post({ path: `restaurant/${restaurantId}/menu/category/add` }, { name, precedence });
 }
 export function ChangeMenucategory(payload) {
   const { id } = payload;
@@ -278,9 +280,9 @@ export function RemoveMenuitem({ id }) {
 }
 
 
-export function CreateService({ name, imageId, type }) {
+export function CreateService({ restaurantId, name, imageId, type }) {
   return Post(
-    { path: `service/create` },
+    { path: `restaurant/${restaurantId}/service/add` },
     { name, image_id: imageId, type },
   );
 }
@@ -316,12 +318,12 @@ export function ToggleFood({ foodId, enabled }) {
   );
 }
 
-export function GetAddons() {
-  return Get({ path: `restaurant/my/addons` });
+export function GetAddons({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/addons` });
 }
 
-export function CreateAddon({ name, price }) {
-  return Post({ path: `menu/addon/create` }, {
+export function CreateAddon({ restaurantId, name, price }) {
+  return Post({ path: `restaurant/${restaurantId}/menu/addon/add` }, {
     name,
     price: {
       amount: price,
@@ -334,8 +336,8 @@ export function RemoveAddon({ id }) {
   return Post({ path: `menu/addon/${id}/delete` });
 }
 
-export function CreateIngredient({ name }) {
-  return Post({ path: `menu/ingredient/create` }, { name });
+export function CreateIngredient({ restaurantId, name }) {
+  return Post({ path: `restaurant/${restaurantId}/menu/ingredient/add` }, { name });
 }
 
 export function ChangeIngredient(payload) {
@@ -348,8 +350,8 @@ export function RemoveIngredient({ id }) {
   return Post({ path: `menu/ingredient/${id}/delete` });
 }
 
-export function CreateOption({ name }) {
-  return Post({ path: `menu/option/create` }, { name });
+export function CreateOption({ restaurantId, name }) {
+  return Post({ path: `restaurant/${restaurantId}/menu/option/add` }, { name });
 }
 
 export function RemoveOption({ id }) {
@@ -380,9 +382,9 @@ export function ChangeItemimage({ file, id }) {
   );
 }
 
-export function ChangeImage({ file }) {
+export function ChangeImage({ file, restaurantId }) {
   return PostMultipart(
-    { path: `restaurant/my/image/upload` },
+    { path: `restaurant/${restaurantId}/image/upload` },
     { image: file },
   );
 }
@@ -395,19 +397,19 @@ export function ChangeFoodingredient({ foodId, ingredients }) {
   return Post({ path: `menu/item/${foodId}` }, { ingredients });
 }
 
-export function GetTranslations({ locale } = {}) {
-  if (locale) return Get({ path: `translation/list/${locale}` });
-  return Get({ path: 'translation/list' });
+export function GetTranslations({ locale, restaurantId } = {}) {
+  if (locale) return Get({ path: `restaurant/${restaurantId}/translation/list/${locale}` });
+  return Get({ path: `restaurant/${restaurantId}/translation/list` });
 }
 
-export function AddTranslation({ type, id, locale, name, description }) {
+export function AddTranslation({ type, id, locale, name, description, restaurantId }) {
   const body = { type, id, locale, name };
   if (description) body.description = description;
-  return Post({ path: 'translation/add' }, body);
+  return Post({ path: `restaurant/${restaurantId}/translation/add` }, body);
 }
 
-export function RmTranslation({ type, id, locale }) {
-  return Post({ path: 'translation/remove' }, { type, id, locale });
+export function RmTranslation({ type, id, locale, restaurantId }) {
+  return Post({ path: `restaurant/${restaurantId}/translation/remove` }, { type, id, locale });
 }
 
 export function Notify({ sendTo, type, payload }) {
@@ -420,10 +422,9 @@ export function Notify({ sendTo, type, payload }) {
   );
 }
 
-export function GetLoggedRestaurant() {
-  return Get({ path: `restaurant/my/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices`, v3: true });
+export function GetLoggedrestaurant({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices` });
 }
-
 
 export function GetTables({ waiterboardId }) {
   return Get({ path: `waiterboard/${waiterboardId}/tables` });
