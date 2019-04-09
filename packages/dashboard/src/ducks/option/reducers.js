@@ -9,9 +9,8 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'LOGGED_FETCHED_DONE': {
-      const actualOptions = action.payload.options;
-
+    case 'FETCH_LOGGEDRESTAURANT_DONE': {
+      const actualOptions = action.payload.res.options;
       return R.assoc('all', UpdateOriginal(state.all, actualOptions))(state);
     }
 

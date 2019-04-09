@@ -9,8 +9,8 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'LOGGED_FETCHED_DONE': {
-      const categories = action.payload.categories;
+    case 'FETCH_LOGGEDRESTAURANT_DONE': {
+      const categories = action.payload.res.categories;
       FN.MapToList(categories).forEach(category => {
         if (!category.items) return;
         FN.MapToList(category.items).forEach(item => {

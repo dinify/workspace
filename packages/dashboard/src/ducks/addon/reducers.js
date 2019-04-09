@@ -9,8 +9,8 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'LOGGED_FETCHED_DONE': {
-      const actualAddons = action.payload.addons;
+    case 'FETCH_LOGGEDRESTAURANT_DONE': {
+      const actualAddons = action.payload.res.addons;
       return R.assoc('all', UpdateOriginal(state.all, actualAddons))(state);
     }
 

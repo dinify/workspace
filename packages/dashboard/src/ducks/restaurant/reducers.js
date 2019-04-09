@@ -42,7 +42,7 @@ export default function reducer(state: State = initialState, action) {
     case 'SET_ONGOINGREGISTRATION':
       return R.assoc('ongoingRegistration', !!action.payload)(state);
     case 'FETCH_LOGGEDRESTAURANT_DONE': {
-      return R.assoc('loggedRestaurant', action.payload)(state);
+      return R.assoc('loggedRestaurant', action.payload.res)(state);
     }
     case 'FETCH_LOGGEDRESTAURANT_FAIL': {
       return R.dissoc('loggedRestaurant')(state);

@@ -54,7 +54,7 @@ export const updateHoursInitAction = payload => ({
 });
 
 export const loggedFetchedAction = payload => ({
-  type: 'LOGGED_FETCHED_DONE',
+  type: 'FETCH_LOGGEDRESTAURANT_DONE',
   payload,
 });
 export const signupInitAction = payload => ({ type: 'SIGNUP_INIT', payload });

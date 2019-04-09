@@ -1,3 +1,4 @@
+/* eslint-disable react/no-multi-comp */
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
@@ -148,8 +149,6 @@ class ServiceCalls extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedImage: null,
-      selectedType: 'TABLEWARE', // CONDIMENT
       tabIndex: 0,
     };
   }
@@ -160,7 +159,6 @@ class ServiceCalls extends React.Component {
 
   render() {
     const {
-      createService,
       removeService,
       services,
       images,

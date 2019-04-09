@@ -19,12 +19,16 @@ const filterAction = (type, kind, stage) => {
   return typeOnly.startsWith(`${kind}_`) && typeOnly.endsWith(`_${stage}`);
 };
 
-const createEpic = (action$: Observable) =>
+const createEpic = (action$: Observable, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'CREATE', 'INIT')),
-    mergeMap(({ payload, type }) => {
+    mergeMap(({ payload = {}, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'CREATE', 'INIT');
       const apiFnName = `Create${camel(subject)}`;
+      const state = state$.value;
+      if (state.restaurant && state.restaurant.selectedRestaurant) {
+        payload.restaurantId = state.restaurant.selectedRestaurant;
+      }
       return from(API[apiFnName](payload)).pipe(
         map(res => ({
           type: `${path}CREATE_${subject}_DONE`,
@@ -40,12 +44,16 @@ const createEpic = (action$: Observable) =>
   );
 
 
-const fetchEpic = (action$: Observable) =>
+const fetchEpic = (action$: Observable, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'FETCH', 'INIT')),
-    mergeMap(({ payload, type }) => {
+    mergeMap(({ payload = {}, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'FETCH', 'INIT');
       const apiFnName = `Get${camel(subject)}`;
+      const state = state$.value;
+      if (state.restaurant && state.restaurant.selectedRestaurant) {
+        payload.restaurantId = state.restaurant.selectedRestaurant;
+      }
       return from(API[apiFnName](payload)).pipe(
         map(res => ({
           type: `${path}FETCH_${subject}_DONE`,
@@ -83,12 +91,16 @@ const fetchAllEpic = (action$, state$) =>
     })
   );
 
-const updateEpic = (action$: Observable) =>
+const updateEpic = (action$: Observable, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'UPDATE', 'INIT')),
-    mergeMap(({ payload, type }) => {
+    mergeMap(({ payload = {}, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'UPDATE', 'INIT');
       const apiFnName = `Change${camel(subject)}`;
+      const state = state$.value;
+      if (state.restaurant && state.restaurant.selectedRestaurant) {
+        payload.restaurantId = state.restaurant.selectedRestaurant;
+      }
       return from(API[apiFnName](payload)).pipe(
         map(res => ({
           type: `${path}UPDATE_${subject}_DONE`,
@@ -103,12 +115,16 @@ const updateEpic = (action$: Observable) =>
     })
   );
 
-const removeEpic = (action$: Observable) =>
+const removeEpic = (action$: Observable, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'REMOVE', 'INIT')),
-    mergeMap(({ payload, type }) => {
+    mergeMap(({ payload = {}, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'REMOVE', 'INIT');
       const apiFnName = `Remove${camel(subject)}`;
+      const state = state$.value;
+      if (state.restaurant && state.restaurant.selectedRestaurant) {
+        payload.restaurantId = state.restaurant.selectedRestaurant;
+      }
       return from(API[apiFnName](payload)).pipe(
         map(res => ({
           type: `${path}REMOVE_${subject}_DONE`,

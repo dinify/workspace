@@ -8,8 +8,8 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'LOGGED_FETCHED_DONE': {
-      const categories = action.payload.categories;
+    case 'FETCH_LOGGEDRESTAURANT_DONE': {
+      const categories = action.payload.res.categories;
       state = R.assoc('all', categories)(state);
       return state;
     }

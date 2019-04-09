@@ -42,11 +42,12 @@ var filterAction = function filterAction(type, kind, stage) {
   return typeOnly.startsWith("".concat(kind, "_")) && typeOnly.endsWith("_".concat(stage));
 };
 
-var createEpic = function createEpic(action$) {
+var createEpic = function createEpic(action$, state$) {
   return action$.pipe((0, _operators.filter)(function (action) {
     return filterAction(action.type, 'CREATE', 'INIT');
   }), (0, _operators.mergeMap)(function (_ref) {
-    var payload = _ref.payload,
+    var _ref$payload = _ref.payload,
+        payload = _ref$payload === void 0 ? {} : _ref$payload,
         type = _ref.type;
 
     var _getSubjectAndPath = getSubjectAndPath(type, 'CREATE', 'INIT'),
@@ -54,6 +55,12 @@ var createEpic = function createEpic(action$) {
         path = _getSubjectAndPath.path;
 
     var apiFnName = "Create".concat(camel(subject));
+    var state = state$.value;
+
+    if (state.restaurant && state.restaurant.selectedRestaurant) {
+      payload.restaurantId = state.restaurant.selectedRestaurant;
+    }
+
     return (0, _rxjs.from)(_api.default[apiFnName](payload)).pipe((0, _operators.map)(function (res) {
       return {
         type: "".concat(path, "CREATE_").concat(subject, "_DONE"),
@@ -72,11 +79,12 @@ var createEpic = function createEpic(action$) {
   }));
 };
 
-var fetchEpic = function fetchEpic(action$) {
+var fetchEpic = function fetchEpic(action$, state$) {
   return action$.pipe((0, _operators.filter)(function (action) {
     return filterAction(action.type, 'FETCH', 'INIT');
   }), (0, _operators.mergeMap)(function (_ref2) {
-    var payload = _ref2.payload,
+    var _ref2$payload = _ref2.payload,
+        payload = _ref2$payload === void 0 ? {} : _ref2$payload,
         type = _ref2.type;
 
     var _getSubjectAndPath2 = getSubjectAndPath(type, 'FETCH', 'INIT'),
@@ -84,6 +92,12 @@ var fetchEpic = function fetchEpic(action$) {
         path = _getSubjectAndPath2.path;
 
     var apiFnName = "Get".concat(camel(subject));
+    var state = state$.value;
+
+    if (state.restaurant && state.restaurant.selectedRestaurant) {
+      payload.restaurantId = state.restaurant.selectedRestaurant;
+    }
+
     return (0, _rxjs.from)(_api.default[apiFnName](payload)).pipe((0, _operators.map)(function (res) {
       return {
         type: "".concat(path, "FETCH_").concat(subject, "_DONE"),
@@ -136,11 +150,12 @@ var fetchAllEpic = function fetchAllEpic(action$, state$) {
   }));
 };
 
-var updateEpic = function updateEpic(action$) {
+var updateEpic = function updateEpic(action$, state$) {
   return action$.pipe((0, _operators.filter)(function (action) {
     return filterAction(action.type, 'UPDATE', 'INIT');
   }), (0, _operators.mergeMap)(function (_ref4) {
-    var payload = _ref4.payload,
+    var _ref4$payload = _ref4.payload,
+        payload = _ref4$payload === void 0 ? {} : _ref4$payload,
         type = _ref4.type;
 
     var _getSubjectAndPath4 = getSubjectAndPath(type, 'UPDATE', 'INIT'),
@@ -148,6 +163,12 @@ var updateEpic = function updateEpic(action$) {
         path = _getSubjectAndPath4.path;
 
     var apiFnName = "Change".concat(camel(subject));
+    var state = state$.value;
+
+    if (state.restaurant && state.restaurant.selectedRestaurant) {
+      payload.restaurantId = state.restaurant.selectedRestaurant;
+    }
+
     return (0, _rxjs.from)(_api.default[apiFnName](payload)).pipe((0, _operators.map)(function (res) {
       return {
         type: "".concat(path, "UPDATE_").concat(subject, "_DONE"),
@@ -166,11 +187,12 @@ var updateEpic = function updateEpic(action$) {
   }));
 };
 
-var removeEpic = function removeEpic(action$) {
+var removeEpic = function removeEpic(action$, state$) {
   return action$.pipe((0, _operators.filter)(function (action) {
     return filterAction(action.type, 'REMOVE', 'INIT');
   }), (0, _operators.mergeMap)(function (_ref5) {
-    var payload = _ref5.payload,
+    var _ref5$payload = _ref5.payload,
+        payload = _ref5$payload === void 0 ? {} : _ref5$payload,
         type = _ref5.type;
 
     var _getSubjectAndPath5 = getSubjectAndPath(type, 'REMOVE', 'INIT'),
@@ -178,6 +200,12 @@ var removeEpic = function removeEpic(action$) {
         path = _getSubjectAndPath5.path;
 
     var apiFnName = "Remove".concat(camel(subject));
+    var state = state$.value;
+
+    if (state.restaurant && state.restaurant.selectedRestaurant) {
+      payload.restaurantId = state.restaurant.selectedRestaurant;
+    }
+
     return (0, _rxjs.from)(_api.default[apiFnName](payload)).pipe((0, _operators.map)(function (res) {
       return {
         type: "".concat(path, "REMOVE_").concat(subject, "_DONE"),

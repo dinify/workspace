@@ -9,8 +9,8 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'LOGGED_FETCHED_DONE': {
-      const services = action.payload.services;
+    case 'FETCH_LOGGEDRESTAURANT_DONE': {
+      const services = action.payload.res.services;
       return R.assoc('all', services)(state);
     }
 
