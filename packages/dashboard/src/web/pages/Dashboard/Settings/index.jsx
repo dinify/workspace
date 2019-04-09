@@ -16,7 +16,7 @@ const Settings = () => (
       <Route path="/settings/main" component={MainSection} />
       <Route path="/settings/waiterboards" component={WaiterboardsSection} />
       <Route path="/settings/services" component={ServicesSection} />
-      <Route path="/settings/qrcodes" component={QRsSection} />
+      <Route path="/settings/tablecodes" component={QRsSection} />
       <Route path="/settings/roles" component={RolesSection} />
     </Switch>
   </div>

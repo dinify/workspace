@@ -19,11 +19,13 @@ import Group from '@material-ui/icons/Group';
 import DragHandle from '@material-ui/icons/DragHandle';
 import Delete from '@material-ui/icons/Delete';
 import OpenInBrowser from '@material-ui/icons/OpenInBrowser';
+import Typography from '@dinify/common/dist/components/Typography';
 
 import {
   FormBox,
   FormBoxHead,
   FormBoxBody,
+  ContentWrapper
 } from 'web/components/styled/FormBox';
 import {
   createWaiterboardInitAction,
@@ -38,6 +40,7 @@ const WB = styled.div`
   color: white;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
   margin-bottom: 10px;
+  border-radius: 2px;
   a {
     color: white;
   }
@@ -51,6 +54,9 @@ const WB = styled.div`
   input,
   label {
     color: white !important;
+  }
+  svg {
+    vertical-align: text-top;
   }
 `;
 
@@ -431,11 +437,13 @@ class Waiterboards extends React.Component {
 
     return (
       <div>
+        <Typography style={{marginLeft: 10}} gutterBottom variant="h6">Waiterboards</Typography>
+        <ContentWrapper>
         {waiterboards.map(wb => (
           <WB key={wb.id}>
             <WBheader>
-              <Link
-                to={`https://waiterboard.dinify.com/board/${wb.id}`}
+              <a
+                href={`https://waiterboard.dinify.app/board/${wb.id}`}
                 target="_blank"
               >
                 <WBtitle>
@@ -445,7 +453,7 @@ class Waiterboards extends React.Component {
                     <OpenInBrowser />
                   </div>
                 </WBtitle>
-              </Link>
+              </a>
               <Tooltip placement="top" title="Total Capacity">
                 <WBinfo>
                   {wb.capacity}
@@ -517,6 +525,7 @@ class Waiterboards extends React.Component {
             <CreateWaiterboardForm onSubmit={createWaiterboard} />
           </FormBoxBody>
         </FormBox>
+        </ContentWrapper>
       </div>
     );
   }

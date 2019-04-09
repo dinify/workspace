@@ -14,13 +14,14 @@ import Divider from '@material-ui/core/Divider';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import * as R from 'ramda';
-import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@dinify/common/dist/components/Typography';
+import Paper from '@material-ui/core/Paper';
 
 const formStyles = () => ({
   input: {
@@ -176,8 +177,9 @@ class ServiceCalls extends React.Component {
 
     return (
       <div>
-
-          <Tabs value={tabIndex} onChange={this.handleChange}>
+        <Typography style={{marginLeft: 10}} gutterBottom variant="h6">Services</Typography>
+        <Paper style={{borderRadius: '2px', margin: '14px 10px'}}>
+          <Tabs value={tabIndex} onChange={this.handleChange} style={{ background: 'rgba(0,0,0,0.04)'}}>
             <Tab label="Tableware" />
             <Tab label="Condiments" />
           </Tabs>
@@ -211,6 +213,7 @@ class ServiceCalls extends React.Component {
             <Divider style={{ margin: 8 }} />
             <AddServiceComponent serviceType={'CONDIMENT'} />
           </TabContainer>}
+        </Paper>
       </div>
     );
   }

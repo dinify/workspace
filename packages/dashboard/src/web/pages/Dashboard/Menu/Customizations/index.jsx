@@ -2,19 +2,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@dinify/common/dist/components/Typography';
 
 import Addons from './Addons';
 import Ingredients from './Ingredients';
 import Options from './Options';
 
+
 const SolidContainer = styled.div`
   min-width: 800px;
   padding-bottom: 50px;
+  margin: 14px 10px;
 `;
 const HeadLine = styled.div`
   height: 50px;
   line-height: 50px;
-  padding-left: 15px;
+  padding-left: 0px;
 `;
 const H = styled.div`
   text-transform: uppercase;
@@ -34,6 +37,7 @@ const styles = {
 const Menucontrol = () => {
   return (
     <div>
+      <Typography style={{marginLeft: 10}} gutterBottom variant="h6">Customizations</Typography>
       <SolidContainer>
         <HeadLine>
           <Grid container spacing={8} alignItems="flex-start" justify="center">

@@ -6,6 +6,7 @@ import ListOfCategories from './ListOfCategories';
 import ListOfDishes from './ListOfDishes';
 import ItemDetail from './ItemDetail';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@dinify/common/dist/components/Typography';
 
 const HeadLine = styled.div`
   height: 50px;
@@ -30,6 +31,7 @@ class Menucontrol extends React.Component {
 
     return (
       <div>
+        <Typography style={{marginLeft: 10}} gutterBottom variant="h6">Menu Editor</Typography>
         <HeadLine>
           <Grid container spacing={8} alignItems="flex-start" justify="center">
             <Grid item xs={3}>

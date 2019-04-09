@@ -5,12 +5,14 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import QRCode from 'qrcode.react';
+import Typography from '@dinify/common/dist/components/Typography';
 
 const WB = styled.div`
   background: white;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  border-radius: 2px;
   padding: 10px;
-  margin-bottom: 10px;
+  margin: 14px 10px 0 10px;
   a {
     color: black;
   }
@@ -48,13 +50,15 @@ class QRs extends React.Component {
 
     return (
       <div>
+        <Typography style={{marginLeft: 10}} gutterBottom variant="h6">Table Codes</Typography>
+
         {waiterboards.map(wb => (
           <WB key={wb.id}>
             <Link
               to={`https://waiterboard.dinify.app/board/${wb.id}`}
               target="_blank"
             >
-              <h2>{wb.name}</h2>
+              <Typography gutterBottom variant="subtitle" align="center">{wb.name}</Typography>
             </Link>
             <div>
               {wb.tables.map(table => (

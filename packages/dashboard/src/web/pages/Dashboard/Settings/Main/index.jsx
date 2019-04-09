@@ -13,6 +13,7 @@ import Image from './Image';
 import Name from './Name';
 // import Tags from './Tags';
 import Address from './Address';
+import Typography from '@dinify/common/dist/components/Typography';
 
 const Column = styled.div`
   width: 290px;
@@ -24,29 +25,32 @@ const Main = ({ loggedRestaurant }) => {
   if (!loggedRestaurant) return <div />;
   return (
     <div>
-      <Column>
-        <Name name={loggedRestaurant.name} />
-        {/*<Tags />*/}
-        {/* <Type type={loggedRestaurant.type} /> */}
-        <Image loggedRestaurant={loggedRestaurant} />
-        <Contact contact={loggedRestaurant.contact} />
-      </Column>
+      <Typography style={{marginLeft: 10}} gutterBottom variant="h6">Main Information</Typography>
+      <div>
+        <Column>
+          <Name name={loggedRestaurant.name} />
+          {/*<Tags />*/}
+          {/* <Type type={loggedRestaurant.type} /> */}
+          <Image loggedRestaurant={loggedRestaurant} />
+          <Contact contact={loggedRestaurant.contact} />
+        </Column>
 
-      <Column>
-        <Location loggedRestaurant={loggedRestaurant} />
-        <Social social={loggedRestaurant.social} />
-        <Banking payout={loggedRestaurant.payout} />
-      </Column>
+        <Column>
+          <Location loggedRestaurant={loggedRestaurant} />
+          <Social social={loggedRestaurant.social} />
+          <Banking payout={loggedRestaurant.payout} />
+        </Column>
 
-      <Column>
-        <Address address={
-          loggedRestaurant.address ? loggedRestaurant.address.business : {}
-        } />
-      </Column>
+        <Column>
+          <Address address={
+            loggedRestaurant.address ? loggedRestaurant.address.business : {}
+          } />
+        </Column>
 
-      <Column>
-        <BusinessHours openHours={loggedRestaurant.open_hours} />
-      </Column>
+        <Column>
+          <BusinessHours openHours={loggedRestaurant.open_hours} />
+        </Column>
+      </div>
     </div>
   );
 };

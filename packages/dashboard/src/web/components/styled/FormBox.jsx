@@ -9,6 +9,7 @@ export const FormBox = styled.div`
   margin: ${p => (p.fullWidth ? '10px 0' : '10px')};
   overflow: hidden;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  border-radius: 2px;
 `;
 export const FormBoxHead = styled.div`
   background: rgba(0, 0, 50, 0.03);
@@ -99,4 +100,8 @@ export const CardLabel = styled.div`
   margin-bottom: -4px;
   text-align: center;
   color: #999;
+`;
+
+export const ContentWrapper = styled.div`
+  margin: 14px 10px;
 `;

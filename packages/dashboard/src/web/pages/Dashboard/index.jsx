@@ -45,7 +45,7 @@ const Content = styled.div`
   width: calc(100% - 240px);
   background: #eff3f6;
   color: #354052;
-  padding: 70px 20px 0 20px;
+  padding: 10px 20px 0 20px;
 `;
 
 const theme = createMuiTheme({
@@ -119,8 +119,8 @@ const sections = [
         path: '/settings/waiterboards'
       },
       {
-        name: 'QR Codes',
-        path: '/settings/qrcodes'
+        name: 'Table Codes',
+        path: '/settings/tablecodes'
       },
     ]
   },

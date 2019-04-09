@@ -3,13 +3,10 @@ import React from 'react';
 import { createSelector } from 'reselect'
 import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import { MapToList, ListToMap } from 'lib/FN';
 import { connect } from 'react-redux';
@@ -17,6 +14,8 @@ import * as R from 'ramda';
 import types from './types';
 import Editor from './Editor';
 import languagesArray from '@dinify/common/dist/lib/languages.json'
+import Typography from '@dinify/common/dist/components/Typography';
+
 import Avatar from '@material-ui/core/Avatar';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 import Divider from '@material-ui/core/Divider';
@@ -108,7 +107,9 @@ class Translations extends React.Component {
 
     return (
       <SolidContainer>
-        <Paper>
+        <Typography style={{marginLeft: 10}} gutterBottom variant="h6">Translations</Typography>
+
+        <Paper style={{borderRadius: '2px', margin: '14px 10px'}}>
           <CardContent>
 
               <Typography color="textSecondary" gutterBottom>
