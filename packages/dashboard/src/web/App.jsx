@@ -49,10 +49,10 @@ const App = ({ appLoading, user, history, ongoingRegistration, selectedRestauran
               // if (selectedRestaurant) return <Redirect to="/"/>;
               return <RegisterRestaurantWithRoot location={location} user={user}/>;
             }} />
-            <Route path="/" component={() => {
+            <Route path="/" component={({location}) => {
               if (user.isEmpty) return <Redirect to="/signin" />;
               if (!selectedRestaurant) return <Redirect to="/register" />; 
-              return <Dashboard history={history} />;
+              return <Dashboard history={history} location={location} />;
             }} />
 
             <Route path="/qr/:code" component={Qr} />

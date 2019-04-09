@@ -42,7 +42,7 @@ const getTheme = dark => createMuiTheme(
     typography: {
       useNextVariants: true,
       // System font stack
-      /* fontFamily: [
+      fontFamily: [
         'Lato',
         '-apple-system',
         'BlinkMacSystemFont',
@@ -54,7 +54,7 @@ const getTheme = dark => createMuiTheme(
         '"Apple Color Emoji"',
         '"Segoe UI Emoji"',
         '"Segoe UI Symbol"',
-      ].join(','), */
+      ].join(','),
     },
     overrides: {
       MuiFilledInput: {

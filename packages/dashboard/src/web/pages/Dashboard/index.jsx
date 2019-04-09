@@ -61,7 +61,7 @@ const theme = createMuiTheme({
 });
 const contentTheme = createMuiTheme({
   typography: {
-    fontFamily: 'Montserrat',
+    fontFamily: 'Lato',
     subheading: {
       fontWeight: 300
     }
@@ -150,6 +150,13 @@ const sections = [
   // },
 ]
 
+const shouldOpen = (openedIndex, index, location, section) => {
+  if (openedIndex === -1) {
+    return location.pathname.includes(section.path)
+  }
+  return openedIndex === index;
+}
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -160,12 +167,15 @@ class Dashboard extends React.Component {
 
   toggleSection = (index) => {
     let newIndex = index;
-    if (this.state.openedIndex === index) newIndex = -1;
+    const { openedIndex } = this.state;
+    if (openedIndex === index) newIndex = -2;
     this.setState({ openedIndex: newIndex })
   }
 
   render() {
-    const { firebase, classes } = this.props;
+    const { firebase, classes, location } = this.props;
+    const { openedIndex } = this.state;
+
     return (
       <div>
         <Sidebar>
@@ -191,14 +201,19 @@ class Dashboard extends React.Component {
                       {!!section.icon && section.icon}
                     </ListItemIcon>
                     <ListItemText inset primary={section.name} disableTypography className={classes.navText} />
-                    {section.subsections && (this.state.openedIndex === index ? <ExpandLess /> : <ExpandMore />)}
+                    {section.subsections && (shouldOpen(openedIndex, index, location, section) ? <ExpandLess /> : <ExpandMore />)}
                   </ListItem>
                   {section.subsections &&
-                    <Collapse in={this.state.openedIndex === index} timeout="auto" unmountOnExit>
+                    <Collapse in={shouldOpen(openedIndex, index, location, section)} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
                         {section.subsections.map((subsection, subIndex) =>
                           <Link to={subsection.path}>
-                            <ListItem button key={`nav-section-${index}-${subIndex}`} className={classes.nested}>
+                            <ListItem
+                              selected={location.pathname === subsection.path}
+                              button
+                              key={`nav-section-${index}-${subIndex}`}
+                              className={classes.nested}
+                            >
                               <ListItemIcon>
                                 {!!subsection.icon && subsection.icon}
                               </ListItemIcon>
@@ -216,19 +231,14 @@ class Dashboard extends React.Component {
                   }
                 </div>
               )}
-
               <ListItem button onClick={() => firebase.logout()}>
                 <ListItemIcon className={classes.navIcon}>
                   <ExitToApp />
                 </ListItemIcon>
                 <ListItemText inset primary="Log out" />
               </ListItem>
-        
-
             </List>
           </MuiThemeProvider>
-    
-    
         </Sidebar>
         <Content>
           <MuiThemeProvider theme={contentTheme}>
