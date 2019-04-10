@@ -3,9 +3,9 @@
     <mj-image width="92px" src="https://static.dinify.app/logo/2x/text.png"></mj-image>
   </mj-column>
 </mj-section>
-<mj-section>
+<mj-section padding-top="0px">
   <mj-column>
-    <mj-divider border-color="rgba(0, 0, 0, 0.12)">
+    <mj-divider padding-top="0px" border-color="rgba(0, 0, 0, 0.12)">
     </mj-divider>
   </mj-column>
 </mj-section>

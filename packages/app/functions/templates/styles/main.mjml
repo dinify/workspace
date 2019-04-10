@@ -19,31 +19,25 @@
   .dark {
     color: rgba(255, 255, 255, 0.87);
   }
+  .light-background {
+  	background-color: rgba(0, 0, 0, 0.12);
+  }
+  .dark-background {
+  	background-color: rgba(255, 255, 255, 0.12);
+  }
   .red {
 		background-color: #c13939;
   }
   .blue {
 		background-color: #3f51b5;
   }
-  .button > table a {
-    padding: 0px 16px 0px 16px;
-    display: block;
-    height: 100%;
-  }
-  .button > table tr {
+  .button.filled > table tr td {
     background-color: rgba(0, 0, 0, 0.06);
-    transition: all 0.1s linear;
   }
-  .button > table tr:hover {
-    background-color: rgba(0, 0, 0, 0.12);
-  }
-  .button.dark > table tr {
-    background-color: rgba(255, 255, 255, 0);
-    transition: all 0.1s linear;
-  }
-  .button.dark > table tr:hover {
+  .button.filled.dark > table tr td {
     background-color: rgba(255, 255, 255, 0.06);
   }
+  
   .horizontal {
     padding-left: 16px;
     padding-right: 16px;
@@ -62,7 +56,7 @@
   }
   @media only screen and (min-width: 360px)  {
     .horizontal {
-      padding-left: 32px;
+      padding-left: 3;
       padding-right: 32px;
     }
   }
@@ -122,5 +116,44 @@
   }
   .social > div i:hover {
     color: rgba(0, 0, 0, 0.38);
+  }
+  .button {
+    font-size: 0.910000538262795rem;
+    font-family: Lato;
+    font-weight: 500;
+    line-height: 1rem;
+    padding-top: 0.1875rem;
+    letter-spacing: 0.078125rem;
+    text-transform: uppercase;
+    padding-bottom: 0.0625rem;
+  }
+	.button2 {
+    letter-spacing: .01785714em;
+    font-family: 'Google Sans',Roboto,Arial,sans-serif;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+  }
+  .percentBarContainer {
+  	position:relative;height:24px;color:#fff;
+  }
+  .percentBar {
+  	position:absolute;top:0;bottom:0;left:0;right:0;background-color:rgb(66,133,244);border-radius:4px;width:100%;text-align:right;padding-right:8px;font-size: 0.9126955053060218rem;
+    font-family: Lato;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.015625rem;
+  }
+  .percentBarBackground {
+		color:rgba(0,0,0,0.72);
+  	position:absolute;top:0;bottom:0;left:0;right:0;background-color:rgba(0,0,0,0.12);border-radius:4px;
+  text-align:right;padding-right:8px;font-size: 0.9126955053060218rem;
+    font-family: Lato;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.015625rem;
+  }
+  .accordion {
+    border-bottom: 1px solid rgba(0,0,0,0.12);
   }
 </mj-style>
