@@ -3,7 +3,7 @@ import { Observable, of, from as fromPromise } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import * as R from 'ramda';
-import * as API from 'api/restaurant';
+import * as API from '@dinify/common/dist/api/restaurant';
 import { Post } from '@dinify/common/dist/api/Network';
 import { change as changeForm } from 'redux-form';
 import { MapToList } from 'lib/FN';

@@ -6,7 +6,7 @@ import * as R from 'ramda';
 import { actionTypes } from 'react-redux-firebase';
 import { setCookie } from '@dinify/common/dist/lib/FN';
 
-import * as API from 'api/restaurant';
+import * as API from '@dinify/common/dist/api/restaurant';
 
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
 

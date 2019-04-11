@@ -38,6 +38,9 @@ const getTheme = dark => createMuiTheme(
         primary: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
         secondary: dark ? 'rgba(255, 255, 255, 0.54)' : 'rgba(0, 0, 0, 0.38)',
       },
+      background: {
+        default: 'rgb(27, 36, 49)'
+      },
     },
     typography: {
       useNextVariants: true,
@@ -57,6 +60,18 @@ const getTheme = dark => createMuiTheme(
       ].join(','),
     },
     overrides: {
+      MuiInputBase: {
+        root: {
+          [`& > input:-webkit-autofill,
+            & > input:-webkit-autofill:hover,
+            & > input:-webkit-autofill:focus`]: {
+            WebkitTextFillColor: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
+            WebkitBoxShadow: `0 0 0px 1000px rgba(0,0,0,0) inset !important`,
+            WebkitTransitionDelay: '99999s',
+            caretColor: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
+          }
+        }
+      },
       MuiFilledInput: {
         root: {
           borderRadius: 4,

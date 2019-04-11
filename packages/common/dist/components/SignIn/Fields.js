@@ -90,6 +90,9 @@ var styles = function styles(theme) {
   };
 };
 
+var UP = 1;
+var DOWN = -1;
+
 var Fields =
 /*#__PURE__*/
 function (_React$Component) {
@@ -183,97 +186,47 @@ function (_React$Component) {
         emailLabel = 'Continue with email';
       }
 
-      return _react.default.createElement(_reactMotion.Motion, {
-        defaultStyle: {
-          x: 1
-        },
-        style: {
-          x: (0, _reactMotion.spring)(formOpen ? 0 : 1, animConfig)
+      var direction = env === 'DASHBOARD' ? DOWN : UP;
+
+      var emailField = _react.default.createElement(_reduxForm.Field, {
+        name: "email",
+        component: _Text.default,
+        componentProps: {
+          label: emailLabel,
+          error: errors.email,
+          type: 'email',
+          fullWidth: true,
+          variant: 'filled',
+          name: 'email',
+          autocapitalization: 'none',
+          autoComplete: 'email'
         }
-      }, function (style) {
+      });
+
+      var signupForm = function signupForm(style) {
         return _react.default.createElement("div", {
-          style: {
-            position: 'relative'
-          }
-        }, _react.default.createElement("div", {
-          style: {
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            opacity: style.x
-          }
-        }, _react.default.createElement("div", {
-          style: {
-            paddingBottom: 16
-          }
-        }, _react.default.createElement(_GoogleButton.default, {
-          onClick: function onClick() {
-            return firebase.login({
-              provider: 'google',
-              type: 'popup'
-            });
-          }
-        })), _react.default.createElement("div", {
-          style: {
-            paddingBottom: 16
-          }
-        }, _react.default.createElement(_FacebookButton.default, {
-          onClick: function onClick() {
-            return firebase.login({
-              provider: 'facebook',
-              type: 'popup'
-            });
-          }
-        })), _react.default.createElement("div", {
-          style: {
-            marginBottom: 16
-          },
-          className: classes && classes.flex
-        }, _react.default.createElement(_Divider.default, {
-          className: classes && classes.grow
-        }), _react.default.createElement("div", {
-          style: {
-            height: 0,
-            display: 'flex',
-            alignItems: 'center'
-          }
-        }, _react.default.createElement(_Typography.default, {
-          variant: "caption",
-          component: "span",
-          color: "textSecondary",
-          style: {
-            paddingLeft: 8,
-            paddingRight: 8
-          }
-        }, "or")), _react.default.createElement(_Divider.default, {
-          className: classes && classes.grow
-        }))), _react.default.createElement("div", {
           className: classes && classes.background,
           style: {
             position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
-            transform: "translate3d(0, ".concat(style.x * 129, "px, 0)")
+            zIndex: 50,
+            transform: "translate3d(0, ".concat(style.x * 129 * direction, "px, 0)")
           }
-        }, _react.default.createElement(_reduxForm.Field, {
-          name: "email",
-          component: _Text.default,
-          componentProps: {
-            label: emailLabel,
-            error: errors.email,
-            type: 'email',
-            fullWidth: true,
-            variant: 'filled',
-            name: 'email',
-            autocapitalization: 'none',
-            autoComplete: 'email'
-          }
-        }), ['default', 'signUp'].includes(page) && _react.default.createElement("div", {
+        }, _react.default.createElement("div", {
+          className: classes && classes.background,
           style: {
+            position: 'relative',
+            zIndex: 70,
+            transform: "translate3d(0, ".concat(style.x * 129 * (direction === DOWN ? 1 : 0), "px, 0)")
+          }
+        }, emailField), ['default', 'signUp'].includes(page) && _react.default.createElement("div", {
+          style: {
+            position: 'relative',
             display: 'flex',
-            marginTop: 8
+            marginTop: 8,
+            zIndex: 60
           }
         }, _react.default.createElement(_reduxForm.Field, {
           name: "firstName",
@@ -316,7 +269,12 @@ function (_React$Component) {
             x: (0, _reactMotion.spring)(page === 'forgotPassword' ? 0 : 1, animConfig)
           }
         }, function (style) {
-          return _react.default.createElement("div", null, _react.default.createElement("div", {
+          return _react.default.createElement("div", {
+            style: {
+              position: 'relative',
+              zIndex: 60
+            }
+          }, _react.default.createElement("div", {
             ref: function ref(node) {
               _this2.socialSection = node;
             },
@@ -376,10 +334,83 @@ function (_React$Component) {
             return setPage('forgotPassword');
           },
           style: {
+            position: 'relative',
+            zIndex: 60,
             marginTop: 8,
             opacity: page === 'forgotPassword' ? 0 : 1
           }
-        }, "Forgot password")));
+        }, "Forgot password"));
+      };
+
+      var separator = _react.default.createElement("div", {
+        style: {
+          marginBottom: 16
+        },
+        className: classes && classes.flex
+      }, _react.default.createElement(_Divider.default, {
+        className: classes && classes.grow
+      }), _react.default.createElement("div", {
+        style: {
+          height: 0,
+          display: 'flex',
+          alignItems: 'center'
+        }
+      }, _react.default.createElement(_Typography.default, {
+        variant: "caption",
+        component: "span",
+        color: "textSecondary",
+        style: {
+          paddingLeft: 8,
+          paddingRight: 8
+        }
+      }, "or")), _react.default.createElement(_Divider.default, {
+        className: classes && classes.grow
+      }));
+
+      return _react.default.createElement(_reactMotion.Motion, {
+        defaultStyle: {
+          x: 1
+        },
+        style: {
+          x: (0, _reactMotion.spring)(formOpen ? 0 : 1, animConfig)
+        }
+      }, function (style) {
+        return _react.default.createElement("div", {
+          style: {
+            position: 'relative'
+          }
+        }, direction === DOWN && signupForm(style), _react.default.createElement("div", {
+          style: {
+            position: 'absolute',
+            zIndex: 40,
+            top: direction === DOWN ? 72 : 0,
+            left: 0,
+            right: 0,
+            opacity: style.x
+          }
+        }, direction === DOWN && separator, _react.default.createElement("div", {
+          style: {
+            paddingBottom: 16
+          }
+        }, _react.default.createElement(_GoogleButton.default, {
+          onClick: function onClick() {
+            return firebase.login({
+              provider: 'google',
+              type: 'popup'
+            });
+          }
+        })), _react.default.createElement("div", {
+          style: {
+            paddingBottom: 16
+          }
+        }, _react.default.createElement(_FacebookButton.default, {
+          onClick: function onClick() {
+            return firebase.login({
+              provider: 'facebook',
+              type: 'popup'
+            });
+          }
+        })), direction === UP && separator), direction === UP && signupForm(style));
       });
     }
   }]);
