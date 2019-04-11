@@ -6,7 +6,7 @@ import * as R from 'ramda';
 import { actionTypes } from 'react-redux-firebase';
 import { setCookie } from '@dinify/common/dist/lib/FN';
 
-import * as API from 'api/restaurant';
+import * as API from '@dinify/common/dist/api/restaurant';
 
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
 
@@ -43,15 +43,13 @@ const getLoggedEpic = (action$, state$) =>
     })
   );
 
-const loadRestaurant = (action$, state$) =>
+const loadRestaurant = (action$) =>
   action$.pipe(
     ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
-      const restaurantId = state$.value.restaurant.selectedRestaurant;
-      const payload = { restaurantId };
       return of(
-        {type: 'FETCH_LOGGEDRESTAURANT_INIT', payload},
-        {type: 'FETCH_TRANSLATIONS_INIT', payload},
+        {type: 'FETCH_LOGGEDRESTAURANT_INIT'},
+        {type: 'FETCH_TRANSLATIONS_INIT'},
         {type: 'FETCH_SERVICEIMAGES_INIT'}
       );
     })

@@ -153,7 +153,7 @@ class Translations extends React.Component {
                 centered
               >
                 {types.map((type) =>
-                  <Tab label={`${type.name} ${ getCoverage(byType[type.type],defaultByType[type.type])}`} />
+                  <Tab key={type.name} label={`${type.name} ${ getCoverage(byType[type.type],defaultByType[type.type])}`} />
                 )}
               </Tabs>
               {types.map((type, i) => {

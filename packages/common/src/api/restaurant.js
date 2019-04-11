@@ -213,6 +213,19 @@ export function ChangeHours(payload) {
 //  return Post({ path: `restaurant/${restaurantId}/shop` }, { login_id, pass_enc, name })
 //}
 
+export function CreateRestaurant({ restaurantName, subdomain }) {
+  return Post(
+    {
+      path: 'restaurant/create'
+    },
+    {
+      name: restaurantName,
+      subdomain,
+    },
+  );
+}
+
+
 export function CreateWaiterboard({ restaurantId, name }) {
   return Post({ path: `restaurant/${restaurantId}/waiterboard/add` }, { name });
 }

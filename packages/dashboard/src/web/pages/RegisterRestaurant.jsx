@@ -66,7 +66,7 @@ let RegistrationForm = ({ handleSubmit }) => {
 };
 
 RegistrationForm = reduxForm({
-  form: 'RegisterRestaurant',
+  form: 'RegisterRestaurantForm',
   enableReinitialize: true,
   destroyOnUnmount: false
 })(RegistrationForm);
@@ -106,7 +106,7 @@ class RegisterRestaurant extends React.Component {
               </Typography>
               <List className={classes.root}>
                 {managedRestaurants.map((restaurant) => 
-                  <ListItem className={classes.listItem}>
+                  <ListItem className={classes.listItem} key={`r-item-${restaurant.id}`}>
                     <Avatar
                       src={Object.keys(restaurant.images).length  ? MapToList(restaurant.images)[0].url : ''}
                     >
