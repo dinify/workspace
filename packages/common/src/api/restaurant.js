@@ -500,5 +500,5 @@ export function ConfirmBill({ billId, approvalNumber }) {
 }
 
 export function GetManagedrestaurants() {
-  return Get({ path: 'managed?with=images' });
+  return Get({ path: 'managed?with=images&limit=100' });
 }

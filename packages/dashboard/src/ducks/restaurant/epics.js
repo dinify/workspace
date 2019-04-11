@@ -5,6 +5,7 @@ import { ofType } from 'redux-observable';
 import * as R from 'ramda';
 import { actionTypes } from 'react-redux-firebase';
 import { setCookie } from '@dinify/common/dist/lib/FN';
+import { selectRestaurant } from './actions';
 
 import * as API from '@dinify/common/dist/api/restaurant';
 
@@ -62,18 +63,31 @@ export const createRestaurantDoneAction = ({ email, password }) => {
   //return { type: 'CREATE_RESTAURANT_DONE', payload: res }
 };
 
-const registerRestaurantEpic = (action$: Observable) =>
+const middlePromise = (getFirebase, res) => new Promise((resolve, reject) => {
+  getFirebase().auth().currentUser.getIdTokenResult(true).then((t) => {
+    resolve({ t, res });
+  })
+  .catch(reject)
+})
+
+const registerRestaurantEpic = (action$, state$, { getFirebase }) =>
   action$.pipe(
     ofType('REGISTER_RESTAURANT_INIT'),
-    switchMap(({ payload: { restaurantName, subdomain } }) => {
-      return from(API.CreateRestaurant({ restaurantName, subdomain })).pipe(
-        map(() => {
-          window.location.replace('/');
-          return { type: 'REGISTER_RESTAURANT_DONE' };
-        }),
-        catchError(error => of({ type: 'REGISTER_RESTAURANT_FAIL', error }))
+    switchMap(
+      ({ payload: { restaurantName, subdomain } }) => from(API.CreateRestaurant({ restaurantName, subdomain })),
+      (action, res) => (res)
+    ),
+    switchMap(
+      (res) => from(middlePromise(getFirebase, res)),
+    ),
+    mergeMap(({t, res}) => {
+      setCookie('access_token', t.token, 90);
+      return of(
+        { type: 'REGISTER_RESTAURANT_DONE', payload: { res } },
+        selectRestaurant({ id: res.id })
       );
-    })
+    }),
+    catchError(error => of({ type: 'REGISTER_RESTAURANT_FAIL', error }))
   );
 
 const reorderEpic = (action$: Observable) =>

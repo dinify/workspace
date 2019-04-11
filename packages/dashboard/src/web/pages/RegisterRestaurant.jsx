@@ -41,6 +41,22 @@ const styles = {
   }
 };
 
+const createSubdomain = (subdomain) => {
+  return subdomain.replace(/\W/g, '').toLowerCase();
+}
+
+const renderSubdomainField = (props) => {
+  let subdomain = <span style={{color: '#888'}}> please fill the field above</span>;
+  const value = createSubdomain(props.input.value);
+  if (value !== '') subdomain = value;
+  return (
+    <div>
+      <Text {...props} />
+      <div>m.dinify.app/restaurant/{subdomain}</div>
+    </div>
+  )
+}
+
 let RegistrationForm = ({ handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -51,9 +67,9 @@ let RegistrationForm = ({ handleSubmit }) => {
       />
       <Field
         name="subdomain"
-        component={Text}
+        component={renderSubdomainField}
         componentProps={{
-          label: 'Restaurant ID',
+          label: 'Restaurant URL',
           fullWidth: true,
           margin: 'normal',
         }}
@@ -77,7 +93,10 @@ class RegisterRestaurant extends React.Component {
     super(props);
     const { location, prefillEmail, prefillRestaurantName, prefill, auth, setOngoingRegistration } = props;
     const params = queryString.parse(location.search) || {};
-    const initialValues = params;
+    const initialValues = {
+      restaurantName: params.restaurantName || '',
+      subdomain: params.name || ''
+    };
     if (auth.isEmpty) setOngoingRegistration(true);
     else setOngoingRegistration(false);
     if (params.email) prefillEmail({ email: params.email })
@@ -86,7 +105,7 @@ class RegisterRestaurant extends React.Component {
       initialValues.restaurantName = prefill.restaurantName;
     }
     if (initialValues.restaurantName) {
-      initialValues.subdomain = initialValues.restaurantName.replace(/\W/g, '').toLowerCase();
+      initialValues.subdomain = createSubdomain(initialValues.restaurantName);
     }
     this.state = {
       initialValues
@@ -94,7 +113,12 @@ class RegisterRestaurant extends React.Component {
   }
 
   render() {
-    const { classes, registerRestaurant, managedRestaurants, selectRestaurant } = this.props;    
+    const {
+      classes,
+      registerRestaurant,
+      managedRestaurants,
+      selectRestaurant
+    } = this.props;    
 
     return (
       <div>
@@ -129,7 +153,10 @@ class RegisterRestaurant extends React.Component {
             </Typography>
             <RegistrationForm
               initialValues={this.state.initialValues}
-              onSubmit={(fields) => registerRestaurant(fields)}
+              onSubmit={(fields) => registerRestaurant({
+                restaurantName: fields.restaurantName,
+                subdomain: createSubdomain(fields.subdomain)
+              })}
             />
           </CardContent>
         </Card>
@@ -144,7 +171,7 @@ const enhance = compose(
   connect(state => ({
     prefill: state.restaurant.prefill,
     auth: state.firebase.auth,
-    managedRestaurants: state.restaurant.managedRestaurants
+    managedRestaurants: state.restaurant.managedRestaurants,
   }), {
     registerRestaurant,
     prefillEmail,

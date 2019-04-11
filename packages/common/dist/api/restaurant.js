@@ -877,6 +877,6 @@ function ConfirmBill(_ref68) {
 
 function GetManagedrestaurants() {
   return (0, _Network.Get)({
-    path: 'managed?with=images'
+    path: 'managed?with=images&limit=100'
   });
 }
