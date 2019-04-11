@@ -3,7 +3,7 @@
     <mj-image width="92px" src="https://static.dinify.app/logo/2x/text-white.png"></mj-image>
   </mj-column>
 </mj-section>
-<mj-section css-class="red">
+<mj-section padding-top="0px" css-class="red">
   <mj-column>
     <mj-divider border-color="rgba(255, 255, 255, 0.3)">
     </mj-divider>

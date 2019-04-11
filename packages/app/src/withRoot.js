@@ -58,6 +58,18 @@ const getTheme = dark => createMuiTheme(
       ].join(','), */
     },
     overrides: {
+      MuiInputBase: {
+        root: {
+          [`& > input:-webkit-autofill,
+            & > input:-webkit-autofill:hover,
+            & > input:-webkit-autofill:focus`]: {
+            WebkitTextFillColor: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
+            WebkitBoxShadow: `0 0 0px 1000px rgba(0,0,0,0) inset !important`,
+            WebkitTransitionDelay: '99999s',
+            caretColor: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
+          }
+        }
+      },
       MuiFilledInput: {
         root: {
           borderRadius: 4,
@@ -84,10 +96,8 @@ function withRoot(Component) {
     // thanks to React context.
     // eslint-disable-next-line react/destructuring-assignment
     const theme = props.theme === 'light' ? lightTheme : darkTheme;
-    const stylePath = `/autofill-${props.theme}.css`;
     return (
       <MuiThemeProvider theme={theme}>
-        <link rel="stylesheet" type="text/css" href={stylePath} />
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
