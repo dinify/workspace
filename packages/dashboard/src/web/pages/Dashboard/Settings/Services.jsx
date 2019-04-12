@@ -6,6 +6,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Label } from 'web/components/styled/FormBox';
 import { updateNameInitAction } from 'ducks/restaurant/actions';
 import { createServiceInit, removeServiceInit } from 'ducks/service/actions';
+import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 import * as FN from 'lib/FN';
@@ -22,6 +23,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@dinify/common/dist/components/Typography';
 import Paper from '@material-ui/core/Paper';
+import { switchTab } from 'ducks/ui/actions';
 
 const formStyles = () => ({
   input: {
@@ -29,7 +31,7 @@ const formStyles = () => ({
   }
 })
 
-let ServiceForm = ({ handleSubmit, classes }) => {
+let ServiceForm = ({ handleSubmit, classes, t }) => {
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={8} direction="row" justify="center" alignItems="center">
@@ -40,7 +42,7 @@ let ServiceForm = ({ handleSubmit, classes }) => {
             componentProps={{
               style: {marginTop: 10},
               variant: 'outlined',
-              label: 'Service name',
+              label: t('serviceName'),
               fullWidth: true,
               margin: 'normal',
               InputProps: { classes: { input: classes.input } },
@@ -50,7 +52,7 @@ let ServiceForm = ({ handleSubmit, classes }) => {
         </Grid>
         <Grid item xs={3}>
           <Button type="submit" fullWidth={true} variant="contained" color="primary">
-            ADD
+            {t('add')}
           </Button>
         </Grid>
       </Grid>
@@ -98,8 +100,9 @@ class AddServiceComponent extends React.Component {
       selectedImage: null,
     };
   }
+
   render() {
-    const { images, createService, serviceType } = this.props;
+    const { images, createService, serviceType, t } = this.props;
 
     const filteredImages = R.filter((img) => {
       if (serviceType === 'TABLEWARE') return img.item_type === `Internal\\Service\\Tableware`;
@@ -107,7 +110,7 @@ class AddServiceComponent extends React.Component {
     }, images);
 
     return (<div>
-      <Label className="center">SELECT SERVICE ICON</Label>
+      <Label className="center">{t('selectServiceIcon')}</Label>
       <div style={{marginTop: 8}}>
         {filteredImages.map((image) =>
           <Avatar
@@ -125,6 +128,7 @@ class AddServiceComponent extends React.Component {
         )}
       </div>
       <ServiceForm
+        t={t}
         onSubmit={({ name }) =>
           createService({
             name,
@@ -146,87 +150,70 @@ AddServiceComponent = connect(
   }
 )(AddServiceComponent)
 
-class ServiceCalls extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tabIndex: 0,
-    };
+const ServiceCalls = ({ removeService, services, images, classes, tabIndex, switchTab }) => {
+  const { t } = useTranslation();
+  const servicesList = FN.MapToList(services).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
+  const getImageUrl = (service) => {
+    const img = R.find(R.propEq('id', service.image_id))(images);
+    if (img) return img.url;
+    return service.image.url;
   }
+  const selectedType = tabIndex === 0 ? 'TABLEWARE' : 'CONDIMENT';
+  const selectedServicesList = R.filter((s) => s.type === selectedType, servicesList);
+  return (
+    <div>
+      <Typography style={{marginLeft: 10}} gutterBottom variant="h6">{t('nav.services')}</Typography>
+      <Paper style={{borderRadius: '2px', margin: '14px 10px'}}>
+        <Tabs value={tabIndex} onChange={(e, i) => switchTab(i)} style={{ background: 'rgba(0,0,0,0.04)'}}>
+          <Tab label={t('tableware')} />
+          <Tab label={t('condiments')} />
+        </Tabs>
 
-  handleChange = (event, tabIndex) => {
-    this.setState({ tabIndex });
-  };  
-
-  render() {
-    const {
-      removeService,
-      services,
-      images,
-      classes
-    } = this.props;
-    const { tabIndex } = this.state;
-    const servicesList = FN.MapToList(services).sort((a, b) =>
-      a.name.localeCompare(b.name),
-    );
-    const getImageUrl = (service) => {
-      const img = R.find(R.propEq('id', service.image_id))(images);
-      if (img) return img.url;
-      return service.image.url;
-    }
-
-    return (
-      <div>
-        <Typography style={{marginLeft: 10}} gutterBottom variant="h6">Services</Typography>
-        <Paper style={{borderRadius: '2px', margin: '14px 10px'}}>
-          <Tabs value={tabIndex} onChange={this.handleChange} style={{ background: 'rgba(0,0,0,0.04)'}}>
-            <Tab label="Tableware" />
-            <Tab label="Condiments" />
-          </Tabs>
-          {tabIndex === 0 && <TabContainer>
-            {R.filter((s) => s.type === 'TABLEWARE', servicesList).map(service => (
-              <Card key={service.id} className={classes.card}>
-                <CardContent className={classes.cardContent}>
-                  <Avatar src={getImageUrl(service)} className={classes.avatar} />
-                  <div className={classes.label}>{service.name}</div>
-                  <IconButton aria-label="Remove" onClick={() => removeService({ id: service.id })}>
-                    <DeleteForeverIcon />
-                  </IconButton>
-                </CardContent>
-              </Card>
-            ))}
-            <Divider style={{ margin: 8 }} />
-            <AddServiceComponent serviceType={'TABLEWARE'} />
-          </TabContainer>}
-          {tabIndex === 1 && <TabContainer>
-            {R.filter((s) => s.type === 'CONDIMENT', servicesList).map(service => (
-              <Card key={service.id} className={classes.card}>
-                <CardContent className={classes.cardContent}>
-                  <Avatar src={getImageUrl(service)} className={classes.avatar} />
-                  <div className={classes.label}>{service.name}</div>
-                  <IconButton aria-label="Remove" onClick={() => removeService({ id: service.id })}>
-                    <DeleteForeverIcon />
-                  </IconButton>
-                </CardContent>
-              </Card>
-            ))}
-            <Divider style={{ margin: 8 }} />
-            <AddServiceComponent serviceType={'CONDIMENT'} />
-          </TabContainer>}
-        </Paper>
-      </div>
-    );
-  }
+        <TabContainer>
+          {selectedServicesList.length > 0 ? selectedServicesList.map(service => (
+            <Card key={service.id} className={classes.card}>
+              <CardContent className={classes.cardContent}>
+                <Avatar src={getImageUrl(service)} className={classes.avatar} />
+                <div className={classes.label}>{service.name}</div>
+                <IconButton aria-label="Remove" onClick={() => removeService({ id: service.id })}>
+                  <DeleteForeverIcon />
+                </IconButton>
+              </CardContent>
+            </Card>
+          ))
+          :
+          <div style={{textAlign: 'center', margin: '40px 0 100px 0'}}>
+            <Typography component="h2" variant="display1" gutterBottom>
+              {tabIndex === 0 ? t('services.noTableware') : t('services.noCondiments')}
+            </Typography>
+            <div style={{width: 400, margin: '0 auto'}}>
+              <Typography variant="caption" gutterBottom align="left">
+                <div>{t('services.step1')}</div>
+                <div>{t('services.step2')}</div>
+                <div>{t('services.step3')}</div>
+              </Typography>
+            </div>
+          </div>
+          }
+          <Divider style={{ margin: 8 }} />
+          <AddServiceComponent serviceType={selectedType} t={t} />
+        </TabContainer>
+      </Paper>
+    </div>
+  );
 }
-
 
 export default connect(
   state => ({
     services: state.service.all,
-    images: state.service.images
+    images: state.service.images,
+    tabIndex: state.ui.servicesTabIndex
   }),
   {
     updateName: updateNameInitAction,
     removeService: removeServiceInit,
+    switchTab
   },
 )(withStyles(styles)(ServiceCalls));

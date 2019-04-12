@@ -16,5 +16,23 @@
     "customizations": "Přizpůsobení",
     "translations": "Překlady"
   },
+  "nameOfRestaurant": "Jméno restaurace",
+  "restaurantImage": "Úvodní fotka",
+  "uploadImageGuide": "Přetáhněte sem fotku vaší restaurace nebo kliněte zde a vyberte soubor manuálně.",
+  "uploadImageFormats": "Fotka může mít koncovku .jpg nebo .png",
+  "location": "Poloha",
+  "socialMedia": "Sociální sítě",
+  "tableware": "Nádobí",
+  "condiments": "Dochucovadla",
+  "selectServiceIcon": "Vyberte ikonu",
+  "serviceName": "Název služby",
+  "services": {
+    "noTableware": "Zatím jste nenastavili žádné služby",
+    "noCondiments": "Zatím jste nenastavili žádné služby",
+    "step1": "1. Vyberte ikonu, která nejlépe reprezentuje službu kterou chcete přidat",
+    "step2": "2. Vyplňte název služby",
+    "step3": "3. Klikněte na tlačítko Přidat"
+  },
+  "add": "Přidat",
   "save": "Uložit"
 }
