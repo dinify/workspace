@@ -660,7 +660,7 @@ function RemoveChoice(_ref45) {
 function ChangeItemimage(_ref46) {
   var file = _ref46.file,
       id = _ref46.id;
-  return PostMultipart({
+  return (0, _Network.PostMultipart)({
     path: "menu/item/".concat(id, "/image/upload")
   }, {
     image: file
@@ -670,7 +670,7 @@ function ChangeItemimage(_ref46) {
 function ChangeImage(_ref47) {
   var file = _ref47.file,
       restaurantId = _ref47.restaurantId;
-  return PostMultipart({
+  return (0, _Network.PostMultipart)({
     path: "restaurant/".concat(restaurantId, "/image/upload")
   }, {
     image: file

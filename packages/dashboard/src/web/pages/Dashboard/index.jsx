@@ -5,6 +5,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
+import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
 import SettingsSection from './Settings';
 import MenuSection from './Menu';
@@ -25,6 +27,8 @@ import RestaurantMenu from '@material-ui/icons/RestaurantMenu';
 import AttachMoney from '@material-ui/icons/AttachMoney';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+
+import { toggleSection } from 'ducks/ui/actions';
 
 const Sidebar = styled.div`
   position: fixed;
@@ -100,56 +104,6 @@ const listTextStyle = {
   color: 'white'
 }
 
-const sections = [
-  {
-    name: 'Settings',
-    icon: <Settings />,
-    path: '/settings',
-    subsections: [
-      {
-        name: 'Main Info',
-        path: '/settings/main'
-      },
-      {
-        name: 'Services',
-        path: '/settings/services'
-      },
-      {
-        name: 'Waiterboards',
-        path: '/settings/waiterboards'
-      },
-      {
-        name: 'Table Codes',
-        path: '/settings/tablecodes'
-      },
-    ]
-  },
-  {
-    name: 'Menu',
-    icon: <RestaurantMenu />,
-    path: '/menu',
-    subsections: [
-      {
-        name: 'Menu Editor',
-        path: '/menu/control'
-      },
-      {
-        name: 'Customizations',
-        path: '/menu/customizations'
-      },
-      {
-        name: 'Translations',
-        path: '/menu/translations'
-      },
-    ]
-  },
-  // {
-  //   name: 'Billing',
-  //   icon: <AttachMoney />,
-  //   path: '/billing'
-  // },
-]
-
 const shouldOpen = (openedIndex, index, location, section) => {
   if (openedIndex === -1) {
     return location.pathname.includes(section.path)
@@ -157,111 +111,147 @@ const shouldOpen = (openedIndex, index, location, section) => {
   return openedIndex === index;
 }
 
-class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      openedIndex: -1
-    }
-  }
+const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) => {
+  const { t } = useTranslation();
+  const sections = [
+    {
+      name: t('nav.settings'),
+      icon: <Settings />,
+      path: '/settings',
+      subsections: [
+        {
+          name: t('nav.mainInfo'),
+          path: '/settings/main'
+        },
+        {
+          name: t('nav.services'),
+          path: '/settings/services'
+        },
+        {
+          name: t('nav.waiterboards'),
+          path: '/settings/waiterboards'
+        },
+        {
+          name: t('nav.tableCodes'),
+          path: '/settings/tablecodes'
+        },
+      ]
+    },
+    {
+      name: t('nav.menu'),
+      icon: <RestaurantMenu />,
+      path: '/menu',
+      subsections: [
+        {
+          name: t('nav.menuEditor'),
+          path: '/menu/control'
+        },
+        {
+          name: t('nav.customizations'),
+          path: '/menu/customizations'
+        },
+        {
+          name: t('nav.translations'),
+          path: '/menu/translations'
+        },
+      ]
+    },
+    // {
+    //   name: 'Billing',
+    //   icon: <AttachMoney />,
+    //   path: '/billing'
+    // },
+  ]
+  return (
+    <div>
+      <Sidebar>
 
-  toggleSection = (index) => {
-    let newIndex = index;
-    const { openedIndex } = this.state;
-    if (openedIndex === index) newIndex = -2;
-    this.setState({ openedIndex: newIndex })
-  }
-
-  render() {
-    const { firebase, classes, location } = this.props;
-    const { openedIndex } = this.state;
-
-    return (
-      <div>
-        <Sidebar>
-    
-          <MuiThemeProvider theme={theme}>
-            <List
-              component="nav"
-              style={{paddingTop: 0}}
-            >
-              <Link to="/">
-                <ListItem button divider>
-                  <ListItemIcon className={classes.navIcon}>
-                    <img src={require('assets/img/logo.svg')} width={26} height={36} alt="" />
-                  </ListItemIcon>
-                  <ListItemText inset primary="Dashboard" disableTypography className={classes.navText} />
-                </ListItem>
-              </Link>
-
-              {sections.map((section, index) =>
-                <div key={`nav-section-${index}`}>
-                  <ListItem button onClick={() => this.toggleSection(index)}>
-                    <ListItemIcon className={classes.navIcon}>
-                      {!!section.icon && section.icon}
-                    </ListItemIcon>
-                    <ListItemText inset primary={section.name} disableTypography className={classes.navText} />
-                    {section.subsections && (shouldOpen(openedIndex, index, location, section) ? <ExpandLess /> : <ExpandMore />)}
-                  </ListItem>
-                  {section.subsections &&
-                    <Collapse in={shouldOpen(openedIndex, index, location, section)} timeout="auto" unmountOnExit>
-                      <List component="div" disablePadding>
-                        {section.subsections.map((subsection, subIndex) =>
-                          <Link to={subsection.path}>
-                            <ListItem
-                              selected={location.pathname === subsection.path}
-                              button
-                              key={`nav-section-${index}-${subIndex}`}
-                              className={classes.nested}
-                            >
-                              <ListItemIcon>
-                                {!!subsection.icon && subsection.icon}
-                              </ListItemIcon>
-                              <ListItemText
-                                inset
-                                primary={subsection.name}
-                                disableTypography
-                                className={classes.nestedText}
-                              />
-                            </ListItem>  
-                          </Link>                      
-                        )}
-                      </List>
-                    </Collapse>
-                  }
-                </div>
-              )}
-              <ListItem button onClick={() => firebase.logout()}>
+        <MuiThemeProvider theme={theme}>
+          <List
+            component="nav"
+            style={{paddingTop: 0}}
+          >
+            <Link to="/">
+              <ListItem button divider>
                 <ListItemIcon className={classes.navIcon}>
-                  <ExitToApp />
+                  <img src={require('assets/img/logo.svg')} width={26} height={36} alt="" />
                 </ListItemIcon>
-                <ListItemText inset primary="Log out" />
+                <ListItemText inset primary="Dashboard" disableTypography className={classes.navText} />
               </ListItem>
-            </List>
-          </MuiThemeProvider>
-        </Sidebar>
-        <Content>
-          <MuiThemeProvider theme={contentTheme}>
-            <Switch>
-              <Redirect exact from="/" to="/settings" />
-              <Route path="/settings" component={SettingsSection} />
-              <Route path="/menu" component={MenuSection} />
-              <Route path="/billing" component={BillingSection} />
-              {
-                //  <Route path="/guests" component={GuestsSection} />
-                //  <Route path="/sales" component={SalesSection} />
-                //  <Route path="/engagement" component={EngagementSection} />
-              }
-            </Switch>
-          </MuiThemeProvider>
-        </Content>
-      </div>
-    );
-  }
+            </Link>
+
+            {sections.map((section, index) =>
+              <div key={`nav-section-${index}`}>
+                <ListItem button onClick={() => toggleSection(index)}>
+                  <ListItemIcon className={classes.navIcon}>
+                    {!!section.icon && section.icon}
+                  </ListItemIcon>
+                  <ListItemText inset primary={section.name} disableTypography className={classes.navText} />
+                  {section.subsections && (shouldOpen(openedIndex, index, location, section) ? <ExpandLess /> : <ExpandMore />)}
+                </ListItem>
+                {section.subsections &&
+                  <Collapse in={shouldOpen(openedIndex, index, location, section)} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      {section.subsections.map((subsection, subIndex) =>
+                        <Link to={subsection.path}>
+                          <ListItem
+                            selected={location.pathname === subsection.path}
+                            button
+                            key={`nav-section-${index}-${subIndex}`}
+                            className={classes.nested}
+                          >
+                            <ListItemIcon>
+                              {!!subsection.icon && subsection.icon}
+                            </ListItemIcon>
+                            <ListItemText
+                              inset
+                              primary={subsection.name}
+                              disableTypography
+                              className={classes.nestedText}
+                            />
+                          </ListItem>  
+                        </Link>                      
+                      )}
+                    </List>
+                  </Collapse>
+                }
+              </div>
+            )}
+            <ListItem button onClick={() => firebase.logout()}>
+              <ListItemIcon className={classes.navIcon}>
+                <ExitToApp />
+              </ListItemIcon>
+              <ListItemText inset primary={t('user.logOut')} />
+            </ListItem>
+          </List>
+        </MuiThemeProvider>
+      </Sidebar>
+      <Content>
+        <MuiThemeProvider theme={contentTheme}>
+          <Switch>
+            <Redirect exact from="/" to="/settings" />
+            <Route path="/settings" component={SettingsSection} />
+            <Route path="/menu" component={MenuSection} />
+            <Route path="/billing" component={BillingSection} />
+            {
+              //  <Route path="/guests" component={GuestsSection} />
+              //  <Route path="/sales" component={SalesSection} />
+              //  <Route path="/engagement" component={EngagementSection} />
+            }
+          </Switch>
+        </MuiThemeProvider>
+      </Content>
+    </div>
+  )
 }
 
 export default compose(
   withFirebase,
   withStyles(styles),
+  connect((state) => ({
+    openedIndex: state.ui.navOpenedIndex
+  }), {
+    toggleSection
+  })
 )(Dashboard);
 

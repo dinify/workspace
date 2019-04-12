@@ -77,6 +77,8 @@ var _app18 = _interopRequireDefault(require("./cs/app.json"));
 
 var _common18 = _interopRequireDefault(require("./cs/common.json"));
 
+var _dashboard = _interopRequireDefault(require("./cs/dashboard.json"));
+
 var _app19 = _interopRequireDefault(require("./da/app.json"));
 
 var _common19 = _interopRequireDefault(require("./da/common.json"));
@@ -88,6 +90,8 @@ var _common20 = _interopRequireDefault(require("./nl/common.json"));
 var _app21 = _interopRequireDefault(require("./en/app.json"));
 
 var _common21 = _interopRequireDefault(require("./en/common.json"));
+
+var _dashboard2 = _interopRequireDefault(require("./en/dashboard.json"));
 
 var _app22 = _interopRequireDefault(require("./eo/app.json"));
 
@@ -496,7 +500,8 @@ var _default = {
   },
   'cs': {
     app: _app18.default,
-    common: _common18.default
+    common: _common18.default,
+    dashboard: _dashboard.default
   },
   'da': {
     app: _app19.default,
@@ -508,7 +513,8 @@ var _default = {
   },
   'en': {
     app: _app21.default,
-    common: _common21.default
+    common: _common21.default,
+    dashboard: _dashboard2.default
   },
   'eo': {
     app: _app22.default,

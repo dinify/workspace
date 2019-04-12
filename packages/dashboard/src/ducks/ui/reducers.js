@@ -3,6 +3,7 @@ import * as R from 'ramda';
 const initialState = {
   progressMap: {},
   errorsMap: {},
+  navOpenedIndex: -1
 };
 
 function findNested(obj, key, memo) {
@@ -27,6 +28,12 @@ function findNested(obj, key, memo) {
 }
 
 export default function reducer(state = initialState, action) {
+  if (action.type === 'TOGGLE_NAV_OPENEDINDEX') {
+    let newIndex = action.payload;
+    const { navOpenedIndex } = state;
+    if (navOpenedIndex === action.payload) newIndex = -2;    
+    return R.assoc('navOpenedIndex', newIndex)(state);
+  }
   if (action.type === 'persist/REHYDRATE') {
     return R.assoc('errorsMap', {})(R.assoc('progressMap', {})(state));
   }

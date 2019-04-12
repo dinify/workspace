@@ -64,8 +64,8 @@ const MapComponent = compose(
 
 const Location = ({ updateLocation, loggedRestaurant }) => {
   if (!loggedRestaurant) return <div />;
-  const latitude = loggedRestaurant.latitude || 29.325807;
-  const longitude = loggedRestaurant.longitude || 48.15319;
+  const latitude = loggedRestaurant.latitude || 50.08730075;
+  const longitude = loggedRestaurant.longitude || 14.4207852;
   return (
     <FormBox>
       <FormBoxHead>

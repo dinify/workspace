@@ -1,5 +1,5 @@
 // @flow
-import { Get, Post } from './Network';
+import { Get, Post, PostMultipart } from './Network';
 
 export function GetRestaurants() {
   return Get({ path: `restaurant/list?with=images,tags,services.image` });

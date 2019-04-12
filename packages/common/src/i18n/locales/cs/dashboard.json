@@ -1,0 +1,20 @@
+{
+  "address": {
+    "businessAddress": "Adresa",
+    "street": "Ulice",
+    "city": "Město",
+    "postalCode": "PSČ"
+  },
+  "nav": {
+    "settings": "Nastavení",
+    "mainInfo": "Kontakty",
+    "services": "Služby",
+    "waiterboards": "Waiterboardy",
+    "tableCodes": "Kódy na stoly",
+    "menu": "Menu",
+    "menuEditor": "Menu Editor",
+    "customizations": "Přizpůsobení",
+    "translations": "Překlady"
+  },
+  "save": "Uložit"
+}

@@ -44,10 +44,9 @@ const Image = ({ uploadMainImage, loggedRestaurant }) => {
           <p>
             Try dropping your photo here, or click to select file to upload.
           </p>
-          <p>Only *.jpg and *.png image will be accepted</p>
+          <p>Only .jpg and .png image will be accepted</p>
+          <img src={imageUrl} style={{width: 230, borderRadius: '2px', marginTop: 10 }} alt="" />
         </Dropzone>
-
-        <img src={imageUrl} width="250" alt="" />
       </FormBoxBody>
     </FormBox>
   );

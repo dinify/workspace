@@ -57,7 +57,7 @@ var _default = function _default(_ref) {
     lng: lang,
     // the language to use for translations
     resources: _locales.default,
-    ns: ['common', 'app'],
+    ns: ['common', 'app', 'dashboard'],
     // array of namespaces to load
     defaultNS: namespace || 'common',
     fallbackNS: 'common',

@@ -1,0 +1,20 @@
+{
+  "address": {
+    "businessAddress": "Business Address",
+    "street": "Street",
+    "city": "City",
+    "postalCode": "Postal Code"
+  },
+  "nav": {
+    "settings": "Settings",
+    "mainInfo": "Main Info",
+    "services": "Services",
+    "waiterboards": "Waiterboards",
+    "tableCodes": "Table Codes",
+    "menu": "Menu",
+    "menuEditor": "Menu Editor",
+    "customizations": "Customizations",
+    "translations": "Translations"
+  },
+  "save": "Save"
+}

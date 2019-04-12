@@ -2,8 +2,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import Typography from '@dinify/common/dist/components/Typography';
 
-import BusinessHours from './BusinessHours';
+// import BusinessHours from './BusinessHours';
 import Banking from './Banking';
 import Social from './Social';
 import Location from './Location';
@@ -13,7 +14,6 @@ import Image from './Image';
 import Name from './Name';
 // import Tags from './Tags';
 import Address from './Address';
-import Typography from '@dinify/common/dist/components/Typography';
 
 const Column = styled.div`
   width: 290px;
@@ -48,7 +48,7 @@ const Main = ({ loggedRestaurant }) => {
         </Column>
 
         <Column>
-          <BusinessHours openHours={loggedRestaurant.open_hours} />
+          {/* <BusinessHours openHours={loggedRestaurant.open_hours} /> */}
         </Column>
       </div>
     </div>

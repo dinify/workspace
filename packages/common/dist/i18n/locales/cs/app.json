@@ -75,7 +75,7 @@
     "addOther": "Přidat další jazyk"
   },
   "cart": {
-    "title": "Nákupní košík",
+    "title": "Košík",
     "itemCount": "{{count, number}} kus",
     "itemCount_plural": "{{count, number}} kusy",
     "itemCount_none": "Prázdný",
@@ -84,9 +84,9 @@
   },
   "nutrition": {
     "facts": "Nutriční hodnota",
-    "fats": "Tlustý",
+    "fats": "Tuky",
     "carbs": "Sacharidy",
     "proteins": "Bílkoviny",
-    "calories": "Kalorií"
+    "calories": "Kalorie"
   }
 }
