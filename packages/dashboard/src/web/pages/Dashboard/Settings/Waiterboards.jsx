@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import * as R from 'ramda';
 import * as FN from 'lib/FN';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import 'react-switch-button/dist/react-switch-button.css';
@@ -243,7 +244,7 @@ const ButtonContainer = styled.div`
   display: inline-block;
 `;
 
-let CreateTableForm = ({ handleSubmit }) => {
+let CreateTableForm = ({ handleSubmit, t }) => {
   const style = { height: '64px' };
   return (
     <form onSubmit={handleSubmit} className="center">
@@ -252,7 +253,7 @@ let CreateTableForm = ({ handleSubmit }) => {
           name="number"
           component={Text}
           componentProps={{
-            label: 'Number',
+            label: t('tableNumber'),
             type: 'number',
             min: 1,
             max: 1000,
@@ -266,7 +267,7 @@ let CreateTableForm = ({ handleSubmit }) => {
           name="capacity"
           component={Text}
           componentProps={{
-            label: 'Capacity',
+            label: t('tableCapacity'),
             type: 'number',
             min: 1,
             max: 50,
@@ -277,7 +278,7 @@ let CreateTableForm = ({ handleSubmit }) => {
       </FieldsContainer>
       <ButtonContainer>
         <Button type="submit" style={{ color: 'white' }}>
-          Add Table
+          {t('addTable')}
         </Button>
       </ButtonContainer>
     </form>
@@ -376,159 +377,161 @@ TargetComponent = DropTarget('table', boxTarget, (connect, monitor) => ({
   isOver: monitor.isOver(),
 }))(TargetComponent);
 
-class Waiterboards extends React.Component {
-  render() {
-    let {
-      loggedRestaurant,
-      createWaiterboard,
-      deleteWaiterboard,
-      createTable,
-      deleteTable,
-      updateTable,
-    } = this.props;
+const Waiterboards = ({
+  loggedRestaurant,
+  createWaiterboard,
+  deleteWaiterboard,
+  createTable,
+  deleteTable,
+  updateTable
+}) => {
+  const { t } = useTranslation();
 
-    const waiterboards = FN.MapToList(loggedRestaurant.waiterboards).map(wb => {
-      const tables = FN.MapToList(wb.tables).sort(
-        (a, b) => a.number - b.number,
-      );
-      const xs = R.pluck('x')(tables); // columns
-      const ys = R.pluck('y')(tables); // rows
-      const tableNumbers = R.pluck('number')(tables); // numbers
-      const capacities = R.pluck('capacity')(tables); // numbers
-      wb.capacity = R.sum(capacities);
-      wb.maxX = R.apply(Math.max, xs);
-      wb.maxY = R.apply(Math.max, ys);
-      if (tables.length > 0 && tables.length < 5) {
-        wb.maxX = 4;
-      }
-      wb.lastTableCapacity = R.last(capacities) || 4;
-      if (tableNumbers.length < 1) wb.maxTableNumber = 0;
-      else wb.maxTableNumber = R.apply(Math.max, tableNumbers);
-      wb.tables = tables;
-      const tablesMatrix = R.range(0, wb.maxY + 1).map(() =>
-        R.range(0, wb.maxX + 1).map(() => null),
-      ); // tablesMatrix[y][x]
-      tables.forEach(table => {
-        if (Number.isInteger(table.x) && Number.isInteger(table.y))
-          tablesMatrix[table.y][table.x] = table;
-      });
-
-      wb.suitableY = wb.maxY;
-      const lastRow = R.last(tablesMatrix);
-      if (!lastRow) {
-        wb.suitableX = 0;
-        wb.suitableY = 0;
-      } else if (R.last(lastRow)) {
-        // if last column of last row is full
-        wb.suitableY += 1;
-        wb.maxY += 1;
-        //tablesMatrix[wb.maxY] = R.range(0, wb.maxX+1).map(() => null) // add row
-        wb.suitableX = 0; // new table will be the first of new row
-      } else {
-        for (let i = lastRow.length - 1; i >= 0; i--) {
-          if (lastRow[i]) {
-            wb.suitableX = i + 1;
-            break;
-          }
-        }
-      }
-      return { ...wb, tablesMatrix };
+  const waiterboards = FN.MapToList(loggedRestaurant.waiterboards).map(wb => {
+    const tables = FN.MapToList(wb.tables).sort(
+      (a, b) => a.number - b.number,
+    );
+    const xs = R.pluck('x')(tables); // columns
+    const ys = R.pluck('y')(tables); // rows
+    const tableNumbers = R.pluck('number')(tables); // numbers
+    const capacities = R.pluck('capacity')(tables); // numbers
+    wb.capacity = R.sum(capacities);
+    wb.maxX = R.apply(Math.max, xs);
+    wb.maxY = R.apply(Math.max, ys);
+    if (tables.length > 0 && tables.length < 5) {
+      wb.maxX = 4;
+    }
+    wb.lastTableCapacity = R.last(capacities) || 4;
+    if (tableNumbers.length < 1) wb.maxTableNumber = 0;
+    else wb.maxTableNumber = R.apply(Math.max, tableNumbers);
+    wb.tables = tables;
+    const tablesMatrix = R.range(0, wb.maxY + 1).map(() =>
+      R.range(0, wb.maxX + 1).map(() => null),
+    ); // tablesMatrix[y][x]
+    tables.forEach(table => {
+      if (Number.isInteger(table.x) && Number.isInteger(table.y))
+        tablesMatrix[table.y][table.x] = table;
     });
 
-    return (
-      <div>
-        <Typography style={{marginLeft: 10}} gutterBottom variant="h6">Waiterboards</Typography>
-        <ContentWrapper>
-        {waiterboards.map(wb => (
-          <WB key={wb.id}>
-            <WBheader>
-              <a
-                href={`https://waiterboard.dinify.app/board/${wb.id}`}
-                target="_blank"
+    wb.suitableY = wb.maxY;
+    const lastRow = R.last(tablesMatrix);
+    if (!lastRow) {
+      wb.suitableX = 0;
+      wb.suitableY = 0;
+    } else if (R.last(lastRow)) {
+      // if last column of last row is full
+      wb.suitableY += 1;
+      wb.maxY += 1;
+      //tablesMatrix[wb.maxY] = R.range(0, wb.maxX+1).map(() => null) // add row
+      wb.suitableX = 0; // new table will be the first of new row
+    } else {
+      for (let i = lastRow.length - 1; i >= 0; i--) {
+        if (lastRow[i]) {
+          wb.suitableX = i + 1;
+          break;
+        }
+      }
+    }
+    return { ...wb, tablesMatrix };
+  });
+
+  return (
+    <div>
+      <Typography style={{marginLeft: 10}} gutterBottom variant="h6">{t('nav.waiterboards')}</Typography>
+      <ContentWrapper>
+      {waiterboards.map(wb => (
+        <WB key={wb.id}>
+          <WBheader>
+            <a
+              href={`https://waiterboard.dinify.app/board/${wb.id}`}
+              target="_blank"
+            >
+              <WBtitle>
+                <div className="label">WAITERBOARD</div>
+                <div>
+                  <span>{wb.name}</span>
+                  <OpenInBrowser />
+                </div>
+              </WBtitle>
+            </a>
+            <Tooltip placement="top" title="Total Capacity">
+              <WBinfo>
+                {wb.capacity}
+                <Group />
+              </WBinfo>
+            </Tooltip>
+            <Tooltip placement="top" title="Delete Waiterboard">
+              <DeleteWaiterboard
+                onClick={() => deleteWaiterboard({ id: wb.id })}
               >
-                <WBtitle>
-                  <div className="label">WAITERBOARD</div>
-                  <div>
-                    <span>{wb.name}</span>
-                    <OpenInBrowser />
-                  </div>
-                </WBtitle>
-              </a>
-              <Tooltip placement="top" title="Total Capacity">
-                <WBinfo>
-                  {wb.capacity}
-                  <Group />
-                </WBinfo>
-              </Tooltip>
-              <Tooltip placement="top" title="Delete Waiterboard">
-                <DeleteWaiterboard
-                  onClick={() => deleteWaiterboard({ id: wb.id })}
-                >
-                  <Delete />
-                </DeleteWaiterboard>
-              </Tooltip>
-            </WBheader>
-            <WBbody>
-              <TableTag>
-                <tbody>
-                  {wb.tablesMatrix.map((row, i) => (
-                    <tr key={i}>
-                      {row.map(
-                        (table, j) =>
-                          table ? (
-                            <td key={table.id}>
-                              <TableComponent
-                                table={table}
-                                wb={wb}
-                                deleteTable={deleteTable}
-                              />
-                            </td>
-                          ) : (
-                            <td key={(i + 1) * (j + 1)}>
-                              <TargetComponent
-                                x={j}
-                                y={i}
-                                updateTable={updateTable}
-                              />
-                            </td>
-                          ),
-                      )}
-                    </tr>
-                  ))}
-                </tbody>
-              </TableTag>
-              <CreateTableForm
-                waiterboardId={wb.id}
-                initialValues={{
-                  number: wb.maxTableNumber + 1,
-                  capacity: wb.lastTableCapacity,
-                }}
-                onSubmit={({ capacity, number }) =>
-                  createTable({
-                    capacity,
-                    number,
-                    waiterboardId: wb.id,
-                    x: wb.suitableX,
-                    y: wb.suitableY,
-                  })
-                }
-              />
-            </WBbody>
-          </WB>
-        ))}
-        <FormBox fullWidth>
-          <FormBoxHead>
-            <span>Create Waiterboard</span>
-            <Progress type={'CREATE_WAITERBOARD'} />
-          </FormBoxHead>
-          <FormBoxBody material>
-            <CreateWaiterboardForm onSubmit={createWaiterboard} />
-          </FormBoxBody>
-        </FormBox>
-        </ContentWrapper>
-      </div>
-    );
-  }
+                <Delete />
+              </DeleteWaiterboard>
+            </Tooltip>
+          </WBheader>
+          <WBbody>
+            <TableTag>
+              <tbody>
+                {wb.tablesMatrix.map((row, i) => (
+                  <tr key={i}>
+                    {row.map(
+                      (table, j) =>
+                        table ? (
+                          <td key={table.id}>
+                            <TableComponent
+                              table={table}
+                              wb={wb}
+                              deleteTable={deleteTable}
+                            />
+                          </td>
+                        ) : (
+                          <td key={(i + 1) * (j + 1)}>
+                            <TargetComponent
+                              x={j}
+                              y={i}
+                              updateTable={updateTable}
+                            />
+                          </td>
+                        ),
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </TableTag>
+            <CreateTableForm
+              t={t}
+              waiterboardId={wb.id}
+              initialValues={{
+                number: wb.maxTableNumber + 1,
+                capacity: wb.lastTableCapacity,
+              }}
+              onSubmit={({ capacity, number }) =>
+                createTable({
+                  capacity,
+                  number,
+                  waiterboardId: wb.id,
+                  x: wb.suitableX,
+                  y: wb.suitableY,
+                })
+              }
+            />
+          </WBbody>
+        </WB>
+      ))}
+      {/*
+      <FormBox fullWidth>
+        <FormBoxHead>
+          <span>Create Waiterboard</span>
+          <Progress type={'CREATE_WAITERBOARD'} />
+        </FormBoxHead>
+        <FormBoxBody material>
+          <CreateWaiterboardForm onSubmit={createWaiterboard} />
+        </FormBoxBody>
+      </FormBox>        
+      */}
+
+      </ContentWrapper>
+    </div>
+  );
 }
 
 export default connect(

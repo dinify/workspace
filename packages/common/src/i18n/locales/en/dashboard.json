@@ -33,6 +33,9 @@
     "step2": "2. Fill the name of a new service",
     "step3": "3. Click add button"
   },
+  "tableNumber": "Number of table",
+  "tableCapacity": "Table capacity",
+  "addTable": "Add table",
   "add": "Add",
   "save": "Save"
 }

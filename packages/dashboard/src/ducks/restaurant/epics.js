@@ -6,6 +6,7 @@ import * as R from 'ramda';
 import { actionTypes } from 'react-redux-firebase';
 import { setCookie } from '@dinify/common/dist/lib/FN';
 import { selectRestaurant } from './actions';
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 
 import * as API from '@dinify/common/dist/api/restaurant';
 
@@ -121,7 +122,8 @@ const reorderEpic = (action$: Observable) =>
 const editImageEpic = (action$, state$) =>
   action$.pipe(
     ofType('UPDATE_IMAGE_DONE'),
-    switchMap(({ payload: { id } }) => {
+    switchMap(({ payload: { res } }) => {
+      const { id } = res;
       const images = state$.value.restaurant.loggedRestaurant.images;
       const maxPrecedence = R.sort((a, b) => b.precedence - a.precedence)(
         R.values(images),
@@ -132,7 +134,24 @@ const editImageEpic = (action$, state$) =>
       );
     })
   )
+  snackbar.show({
+    message: 'Archived',
+    action: 'Undo',
+    handleAction: () => {/* do something... */} 
+  })
 
+const onUpdateSnackbarsEpic = (action$, state$) =>
+  action$.pipe(
+    filter(
+      action =>
+        action.type.startsWith('UPDATE_') && action.type.endsWith('_DONE'),
+    ),
+    mergeMap(({ payload, type }) => {
+      return of(snackbar.show({
+        message: 'Updated',
+      }));
+    })
+  );
 
 export default [
   loadRestaurant,
@@ -141,5 +160,6 @@ export default [
   registerRestaurantEpic,
   reorderEpic,
   editImageEpic,
-  selectRestaurantEpic
+  selectRestaurantEpic,
+  onUpdateSnackbarsEpic
 ];

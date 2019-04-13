@@ -33,6 +33,9 @@
     "step2": "2. Vyplňte název služby",
     "step3": "3. Klikněte na tlačítko Přidat"
   },
+  "tableNumber": "Číslo stolu",
+  "tableCapacity": "Počet míst",
+  "addTable": "Přidat stůl",
   "add": "Přidat",
   "save": "Uložit"
 }

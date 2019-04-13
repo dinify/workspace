@@ -120,14 +120,14 @@ class App extends React.Component {
               })()}/>
           }
         </Motion>
-        {FN.MapToList(dialogs).map(dialog => {
-          return dialog.component({
+        {FN.MapToList(dialogs).map(dialog => 
+          dialog.component({
             key: dialog.id,
             id: dialog.id,
             open: dialog.open,
             onClose: () => { closeDialog(dialog.id) }
-          });
-        })}
+          })
+        )}
       </div>
     );
   }
