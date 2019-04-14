@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, withProps } from 'recompose';
+import { useTranslation } from 'react-i18next';
 import {
   withScriptjs,
   withGoogleMap,
@@ -64,12 +65,13 @@ const MapComponent = compose(
 
 const Location = ({ updateLocation, loggedRestaurant }) => {
   if (!loggedRestaurant) return <div />;
-  const latitude = loggedRestaurant.latitude || 29.325807;
-  const longitude = loggedRestaurant.longitude || 48.15319;
+  const { t } = useTranslation();
+  const latitude = loggedRestaurant.latitude || 50.08730075;
+  const longitude = loggedRestaurant.longitude || 14.4207852;
   return (
     <FormBox>
       <FormBoxHead>
-        <span>Location</span>
+        <span>{t('location')}</span>
         <Progress type={'UPDATE_LOCATION'} />
       </FormBoxHead>
       <FormBoxBody>

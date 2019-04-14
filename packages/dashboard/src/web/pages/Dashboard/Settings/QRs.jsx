@@ -4,6 +4,7 @@ import * as FN from 'lib/FN';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode.react';
 import Typography from '@dinify/common/dist/components/Typography';
 
@@ -37,45 +38,43 @@ const Table = styled.div`
   overflow: hidden;
 `;
 
-class QRs extends React.Component {
-  render() {
-    let { loggedRestaurant } = this.props;
+const QRs = ({ loggedRestaurant }) => {
+  const { t } = useTranslation();
 
-    const waiterboards = FN.MapToList(loggedRestaurant.waiterboards).map(wb => {
-      const tables = FN.MapToList(wb.tables).sort(
-        (a, b) => a.number - b.number,
-      );
-      return { ...wb, tables };
-    });
-
-    return (
-      <div>
-        <Typography style={{marginLeft: 10}} gutterBottom variant="h6">Table Codes</Typography>
-
-        {waiterboards.map(wb => (
-          <WB key={wb.id}>
-            <Link
-              to={`https://waiterboard.dinify.app/board/${wb.id}`}
-              target="_blank"
-            >
-              <Typography gutterBottom variant="subtitle" align="center">{wb.name}</Typography>
-            </Link>
-            <div>
-              {wb.tables.map(table => (
-                <Link to={`/qr/${table.qr}`} target="_blank">
-                  <Table fixedWidth key={table.id}>
-                    <div># {table.number}</div>
-                    <QRCode value={`https://m.dinify.app/restaurant/${loggedRestaurant.subdomain}?qr=${table.qr}`} />
-                    <div>CODE: {table.code}</div>
-                  </Table>
-                </Link>
-              ))}
-            </div>
-          </WB>
-        ))}
-      </div>
+  const waiterboards = FN.MapToList(loggedRestaurant.waiterboards).map(wb => {
+    const tables = FN.MapToList(wb.tables).sort(
+      (a, b) => a.number - b.number,
     );
-  }
+    return { ...wb, tables };
+  });
+
+  return (
+    <div>
+      <Typography style={{marginLeft: 10}} gutterBottom variant="h6">{t('nav.tableCodes')}</Typography>
+
+      {waiterboards.map(wb => (
+        <WB key={wb.id}>
+          <Link
+            to={`https://waiterboard.dinify.app/board/${wb.id}`}
+            target="_blank"
+          >
+            <Typography gutterBottom variant="subtitle" align="center">{wb.name}</Typography>
+          </Link>
+          <div>
+            {wb.tables.map(table => (
+              <Link to={`/qr/${table.qr}`} target="_blank">
+                <Table fixedWidth key={table.id}>
+                  <div># {table.number}</div>
+                  <QRCode value={`https://m.dinify.app/restaurant/${loggedRestaurant.subdomain}?qr=${table.qr}`} />
+                  <div>CODE: {table.code}</div>
+                </Table>
+              </Link>
+            ))}
+          </div>
+        </WB>
+      ))}
+    </div>
+  );
 }
 
 export default connect(state => ({

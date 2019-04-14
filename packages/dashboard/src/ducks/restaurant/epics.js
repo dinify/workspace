@@ -5,6 +5,8 @@ import { ofType } from 'redux-observable';
 import * as R from 'ramda';
 import { actionTypes } from 'react-redux-firebase';
 import { setCookie } from '@dinify/common/dist/lib/FN';
+import { selectRestaurant } from './actions';
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 
 import * as API from '@dinify/common/dist/api/restaurant';
 
@@ -43,15 +45,13 @@ const getLoggedEpic = (action$, state$) =>
     })
   );
 
-const loadRestaurant = (action$, state$) =>
+const loadRestaurant = (action$) =>
   action$.pipe(
     ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
-      const restaurantId = state$.value.restaurant.selectedRestaurant;
-      const payload = { restaurantId };
       return of(
-        {type: 'FETCH_LOGGEDRESTAURANT_INIT', payload},
-        {type: 'FETCH_TRANSLATIONS_INIT', payload},
+        {type: 'FETCH_LOGGEDRESTAURANT_INIT'},
+        {type: 'FETCH_TRANSLATIONS_INIT'},
         {type: 'FETCH_SERVICEIMAGES_INIT'}
       );
     })
@@ -64,18 +64,31 @@ export const createRestaurantDoneAction = ({ email, password }) => {
   //return { type: 'CREATE_RESTAURANT_DONE', payload: res }
 };
 
-const registerRestaurantEpic = (action$: Observable) =>
+const middlePromise = (getFirebase, res) => new Promise((resolve, reject) => {
+  getFirebase().auth().currentUser.getIdTokenResult(true).then((t) => {
+    resolve({ t, res });
+  })
+  .catch(reject)
+})
+
+const registerRestaurantEpic = (action$, state$, { getFirebase }) =>
   action$.pipe(
     ofType('REGISTER_RESTAURANT_INIT'),
-    switchMap(({ payload: { restaurantName, subdomain } }) => {
-      return from(API.CreateRestaurant({ restaurantName, subdomain })).pipe(
-        map(() => {
-          window.location.replace('/');
-          return { type: 'REGISTER_RESTAURANT_DONE' };
-        }),
-        catchError(error => of({ type: 'REGISTER_RESTAURANT_FAIL', error }))
+    switchMap(
+      ({ payload: { restaurantName, subdomain } }) => from(API.CreateRestaurant({ restaurantName, subdomain })),
+      (action, res) => (res)
+    ),
+    switchMap(
+      (res) => from(middlePromise(getFirebase, res)),
+    ),
+    mergeMap(({t, res}) => {
+      setCookie('access_token', t.token, 90);
+      return of(
+        { type: 'REGISTER_RESTAURANT_DONE', payload: { res } },
+        selectRestaurant({ id: res.id })
       );
-    })
+    }),
+    catchError(error => of({ type: 'REGISTER_RESTAURANT_FAIL', error }))
   );
 
 const reorderEpic = (action$: Observable) =>
@@ -109,7 +122,8 @@ const reorderEpic = (action$: Observable) =>
 const editImageEpic = (action$, state$) =>
   action$.pipe(
     ofType('UPDATE_IMAGE_DONE'),
-    switchMap(({ payload: { id } }) => {
+    switchMap(({ payload: { res } }) => {
+      const { id } = res;
       const images = state$.value.restaurant.loggedRestaurant.images;
       const maxPrecedence = R.sort((a, b) => b.precedence - a.precedence)(
         R.values(images),
@@ -120,7 +134,24 @@ const editImageEpic = (action$, state$) =>
       );
     })
   )
+  snackbar.show({
+    message: 'Archived',
+    action: 'Undo',
+    handleAction: () => {/* do something... */} 
+  })
 
+const onUpdateSnackbarsEpic = (action$, state$) =>
+  action$.pipe(
+    filter(
+      action =>
+        action.type.startsWith('UPDATE_') && action.type.endsWith('_DONE'),
+    ),
+    mergeMap(({ payload, type }) => {
+      return of(snackbar.show({
+        message: 'Updated',
+      }));
+    })
+  );
 
 export default [
   loadRestaurant,
@@ -129,5 +160,6 @@ export default [
   registerRestaurantEpic,
   reorderEpic,
   editImageEpic,
-  selectRestaurantEpic
+  selectRestaurantEpic,
+  onUpdateSnackbarsEpic
 ];

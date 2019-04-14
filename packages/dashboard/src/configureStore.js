@@ -21,6 +21,8 @@ import translation from 'ducks/translation';
 import firebaseConfig from '@dinify/common/firebaseConfig.json';
 
 import { reducer as formReducer } from 'redux-form';
+import { snackbarReducer } from 'material-ui-snackbar-redux';
+
 
 Raven.config('https://e8c54e0fdec04337b8f4ee65a1164dee@sentry.io/1199917', {
   // options
@@ -37,7 +39,8 @@ const commonReducers = {
   addon,
   service,
   translation,
-  firebase: firebaseReducer
+  firebase: firebaseReducer,
+  snackbar: snackbarReducer
 };
 
 

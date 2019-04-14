@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { useTranslation } from 'react-i18next';
 import {
   FormBox,
   FormBoxHead,
@@ -12,7 +13,7 @@ import Progress from 'web/components/Progress';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 
-let NameForm = ({ handleSubmit }) => {
+let NameForm = ({ handleSubmit, t }) => {
   return (
     <form onSubmit={handleSubmit}>
       <Field
@@ -21,7 +22,7 @@ let NameForm = ({ handleSubmit }) => {
         componentProps={{ fullWidth: true, margin: 'normal' }}
       />
       <Button type="submit" fullWidth={true}>
-        SAVE
+        {t('save')}
       </Button>
     </form>
   );
@@ -33,15 +34,15 @@ NameForm = reduxForm({
 })(NameForm);
 
 const Name = ({ updateName, name }) => {
-  console.log(name);
+  const { t } = useTranslation();
   return (
     <FormBox>
       <FormBoxHead>
-        <span>Restaurant Name</span>
+        <span>{t('nameOfRestaurant')}</span>
         <Progress type={'UPDATE_NAME'} />
       </FormBoxHead>
       <FormBoxBody material>
-        <NameForm onSubmit={updateName} initialValues={{ name }} />
+        <NameForm onSubmit={updateName} initialValues={{ name }} t={t} />
       </FormBoxBody>
     </FormBox>
   );

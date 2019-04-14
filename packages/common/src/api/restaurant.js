@@ -1,5 +1,5 @@
 // @flow
-import { Get, Post } from './Network';
+import { Get, Post, PostMultipart } from './Network';
 
 export function GetRestaurants() {
   return Get({ path: `restaurant/list?with=images,tags,services.image` });
@@ -212,6 +212,19 @@ export function ChangeHours(payload) {
 //export function AddTablet({ restaurantId, login_id, pass_enc, name }) {
 //  return Post({ path: `restaurant/${restaurantId}/shop` }, { login_id, pass_enc, name })
 //}
+
+export function CreateRestaurant({ restaurantName, subdomain }) {
+  return Post(
+    {
+      path: 'restaurant/create'
+    },
+    {
+      name: restaurantName,
+      subdomain,
+    },
+  );
+}
+
 
 export function CreateWaiterboard({ restaurantId, name }) {
   return Post({ path: `restaurant/${restaurantId}/waiterboard/add` }, { name });
@@ -487,5 +500,5 @@ export function ConfirmBill({ billId, approvalNumber }) {
 }
 
 export function GetManagedrestaurants() {
-  return Get({ path: 'managed?with=images' });
+  return Get({ path: 'managed?with=images&limit=100' });
 }

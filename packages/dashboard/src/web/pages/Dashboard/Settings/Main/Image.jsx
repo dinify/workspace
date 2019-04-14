@@ -10,9 +10,11 @@ import {
 } from 'web/components/styled/FormBox';
 import { uploadMainImageInitAction } from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';
+import { useTranslation } from 'react-i18next';
 
 const Image = ({ uploadMainImage, loggedRestaurant }) => {
   if (!loggedRestaurant) return <div />;
+  const { t } = useTranslation();
   let imageUrl = '/static/placeholder.png';
   const images = R.values(loggedRestaurant.images);
   if (images.length > 0) {
@@ -23,7 +25,7 @@ const Image = ({ uploadMainImage, loggedRestaurant }) => {
   return (
     <FormBox>
       <FormBoxHead>
-        <span>Main Image</span>
+        <span>{t('restaurantImage')}</span>
         <Progress type={'UPDATE_IMAGE'} />
       </FormBoxHead>
       <FormBoxBody>
@@ -42,12 +44,11 @@ const Image = ({ uploadMainImage, loggedRestaurant }) => {
           }}
         >
           <p>
-            Try dropping your photo here, or click to select file to upload.
+            {t('uploadImageGuide')}
           </p>
-          <p>Only *.jpg and *.png image will be accepted</p>
+          <p>{t('uploadImageFormats')}</p>
+          <img src={imageUrl} style={{width: 230, borderRadius: '2px', marginTop: 10 }} alt="" />
         </Dropzone>
-
-        <img src={imageUrl} width="250" alt="" />
       </FormBoxBody>
     </FormBox>
   );

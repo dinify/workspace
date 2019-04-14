@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { useTranslation } from 'react-i18next';
 import {
   FormBox,
   FormBoxHead,
@@ -12,7 +13,7 @@ import Progress from 'web/components/Progress';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 
-let SocialForm = ({ handleSubmit }) => {
+let SocialForm = ({ handleSubmit, t }) => {
   return (
     <form onSubmit={handleSubmit}>
       <Field
@@ -34,7 +35,7 @@ let SocialForm = ({ handleSubmit }) => {
         }}
       />
       <Button type="submit" fullWidth={true}>
-        SAVE
+        {t('save')}
       </Button>
     </form>
   );
@@ -46,15 +47,15 @@ SocialForm = reduxForm({
 })(SocialForm);
 
 const Social = ({ updateSocial, social }) => {
-  //if (!social) return <div />;
+  const { t } = useTranslation();
   return (
     <FormBox>
       <FormBoxHead>
-        <span>Social Media</span>
+        <span>{t('socialMedia')}</span>
         <Progress type={'UPDATE_SOCIAL'} />
       </FormBoxHead>
       <FormBoxBody material>
-        <SocialForm onSubmit={updateSocial} initialValues={social} />
+        <SocialForm onSubmit={updateSocial} initialValues={social} t={t} />
       </FormBoxBody>
     </FormBox>
   );

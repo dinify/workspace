@@ -1,0 +1,41 @@
+{
+  "address": {
+    "businessAddress": "Business Address",
+    "street": "Street",
+    "city": "City",
+    "postalCode": "Postal Code"
+  },
+  "nav": {
+    "settings": "Settings",
+    "mainInfo": "Main Info",
+    "services": "Services",
+    "waiterboards": "Waiterboards",
+    "tableCodes": "Table Codes",
+    "menu": "Menu",
+    "menuEditor": "Menu Editor",
+    "customizations": "Customizations",
+    "translations": "Translations"
+  },
+  "nameOfRestaurant": "Restaurant Name",
+  "restaurantImage": "Main Image",
+  "uploadImageGuide": "Try dropping your photo here, or click to select file to upload.",
+  "uploadImageFormats": "Only .jpg and .png image will be accepted",
+  "location": "Location",
+  "socialMedia": "Social Media",
+  "tableware": "Tableware",
+  "condiments": "Condiments",
+  "selectServiceIcon": "Select service icon",
+  "serviceName": "Service Name",
+  "services": {
+    "noTableware": "No tableware services set yet",
+    "noCondiments": "No condiment services set yet",
+    "step1": "1. Select icon which is the most coresponding with service you want to add",
+    "step2": "2. Fill the name of a new service",
+    "step3": "3. Click add button"
+  },
+  "tableNumber": "Number of table",
+  "tableCapacity": "Table capacity",
+  "addTable": "Add table",
+  "add": "Add",
+  "save": "Save"
+}
