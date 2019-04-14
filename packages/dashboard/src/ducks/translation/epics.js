@@ -69,7 +69,7 @@ const suggestTranslationEpic = (action$: Observable, state$) =>
     mergeMap(({ payload: {form, text, field, from, to} }) => {
 
       const promise = Post(
-        {endpoint: 'https://us-central1-tabb-global.cloudfunctions.net/', path: 'translate'},
+        {endpoint: 'https://europe-west1-dinify.cloudfunctions.net/', path: 'translate'},
         {text: text.toLowerCase(), from, to}
       );
 
