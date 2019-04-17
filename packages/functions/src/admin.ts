@@ -11,9 +11,7 @@ const translateClient = new Translate({ projectId });
 const cors = require('cors')({
   origin: true,
 });
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
+
 exports.dbFind = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {

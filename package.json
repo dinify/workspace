@@ -17,7 +17,7 @@
     "common:build": "cd packages/common && yarn build",
     "landing:dev": "cd packages/landing && yarn start-dev",
     "landing:deploy": "cd packages/landing && yarn deploy",
-    "functions:deploy": "cd packages/app && yarn deploy:functions",
+    "functions:deploy": "cd packages/functions && yarn deploy",
     "dash:dev": "cd packages/dashboard && yarn start-dev",
     "dash:deploy": "cd packages/dashboard && yarn deploy",
     "waiter:dev": "cd packages/waiterboard && yarn start-dev",
