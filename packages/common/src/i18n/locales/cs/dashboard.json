@@ -37,5 +37,21 @@
   "tableCapacity": "Počet míst",
   "addTable": "Přidat stůl",
   "add": "Přidat",
-  "save": "Uložit"
+  "save": "Uložit",
+  "goToWaiterboard": "Přejít na waiterboard",
+  "menu": {
+    "categories": "Kategorie",
+    "dishes": "Jídla",
+    "dishDetail": "Detail jídla",
+    "newCategoryName": "Název nové kategorie",
+    "newCategoryPlaceholder": "např. Předkrmy",
+    "addCategory": "Přidat kategorii",
+    "startWithCategory": "Začněte vytvářet menu přidáním první z kategorií",
+    "dishName": "Název jídla",
+    "description": "Popis",
+    "price": "Cena"
+  },
+  "delete": "Smazat",
+  "published": "Zobrazené",
+  "unpublished": "Skryté"
 }

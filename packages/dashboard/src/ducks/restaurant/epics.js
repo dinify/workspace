@@ -52,7 +52,8 @@ const loadRestaurant = (action$) =>
       return of(
         {type: 'FETCH_LOGGEDRESTAURANT_INIT'},
         {type: 'FETCH_TRANSLATIONS_INIT'},
-        {type: 'FETCH_SERVICEIMAGES_INIT'}
+        {type: 'FETCH_SERVICEIMAGES_INIT'},
+        {type: 'FETCH_RESTAURANTSETTINGS_INIT'}
       );
     })
   );

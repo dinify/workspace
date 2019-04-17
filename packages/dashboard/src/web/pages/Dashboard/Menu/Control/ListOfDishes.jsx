@@ -35,9 +35,6 @@ import {
   selectFoodAction,
 } from 'ducks/restaurant/actions';
 
-const FoodList = styled.div`
-  margin: 0 10px;
-`;
 const FoodItem = styled.div`
   position: relative;
   background: black;
@@ -200,7 +197,7 @@ const ListOfDishes = ({
   ).sort((a, b) => a.precedence - b.precedence);
   const categoryName = categoriesMap[selectedCategoryId].name;
   return (
-    <FoodList>
+    <div>
       <Card>
         <CardContent>
           <CreateItemForm
@@ -233,7 +230,7 @@ const ListOfDishes = ({
           deleteItem,
         }}
       />
-    </FoodList>
+    </div>
   );
 };
 

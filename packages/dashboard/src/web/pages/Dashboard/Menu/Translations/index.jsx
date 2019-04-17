@@ -34,7 +34,7 @@ const languages = R.mergeAll(
     }
   }})
 );
-
+console.log(languages);
 
 const brackets = (str) => `(${str})`
 
@@ -48,6 +48,7 @@ const autocompleteData = MapToList(languages)
     if(a.label > b.label) { return 1; }
     return 0;
   });
+console.log(autocompleteData);
 
 const SolidContainer = styled.div`
   min-width: 800px;

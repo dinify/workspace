@@ -37,5 +37,18 @@
   "tableCapacity": "Table capacity",
   "addTable": "Add table",
   "add": "Add",
-  "save": "Save"
+  "save": "Save",
+  "goToWaiterboard": "Go to waiterboard",
+  "menu": {
+    "categories": "Categories",
+    "dishes": "Dishes",
+    "dishDetail": "Dish Detail",
+    "newCategoryName": "Name of new category",
+    "newCategoryPlaceholder": "e.g. Appetizers",
+    "addCategory": "Add Category",
+    "startWithCategory": "Start creating your menu with adding category"
+  },
+  "delete": "Delete",
+  "published": "Published",
+  "unpublished": "Unpublished"
 }

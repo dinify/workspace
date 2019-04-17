@@ -193,11 +193,10 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
                   <Collapse in={shouldOpen(openedIndex, index, location, section)} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                       {section.subsections.map((subsection, subIndex) =>
-                        <Link to={subsection.path}>
+                        <Link to={subsection.path} key={`nav-section-${index}-${subIndex}`}>
                           <ListItem
                             selected={location.pathname === subsection.path}
                             button
-                            key={`nav-section-${index}-${subIndex}`}
                             className={classes.nested}
                           >
                             <ListItemIcon>

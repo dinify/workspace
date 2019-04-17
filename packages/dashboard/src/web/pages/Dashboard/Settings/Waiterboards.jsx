@@ -6,13 +6,11 @@ import * as FN from 'lib/FN';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import 'react-switch-button/dist/react-switch-button.css';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 import { Field, reduxForm } from 'redux-form';
-import Progress from 'web/components/Progress';
 import { DragSource, DropTarget } from 'react-dnd';
 import PropTypes from 'prop-types';
 
@@ -23,9 +21,6 @@ import OpenInBrowser from '@material-ui/icons/OpenInBrowser';
 import Typography from '@dinify/common/dist/components/Typography';
 
 import {
-  FormBox,
-  FormBoxHead,
-  FormBoxBody,
   ContentWrapper
 } from 'web/components/styled/FormBox';
 import {
@@ -237,15 +232,17 @@ CreateWaiterboardForm = reduxForm({
 })(CreateWaiterboardForm);
 
 const FieldsContainer = styled.div`
-  width: 60px;
+  width: 80px;
   display: inline-block;
 `;
 const ButtonContainer = styled.div`
-  display: inline-block;
+  width: 160px;
+  margin: 0 auto;
 `;
 
 let CreateTableForm = ({ handleSubmit, t }) => {
   const style = { height: '64px' };
+  const inputStyle = { textAlign: 'center' };
   return (
     <form onSubmit={handleSubmit} className="center">
       <FieldsContainer>
@@ -259,6 +256,7 @@ let CreateTableForm = ({ handleSubmit, t }) => {
             max: 1000,
             fullWidth: true,
             style,
+            inputProps: {style: inputStyle}
           }}
         />
       </FieldsContainer>
@@ -273,11 +271,12 @@ let CreateTableForm = ({ handleSubmit, t }) => {
             max: 50,
             fullWidth: true,
             style,
+            inputProps: {style: inputStyle}
           }}
         />
       </FieldsContainer>
       <ButtonContainer>
-        <Button type="submit" style={{ color: 'white' }}>
+        <Button type="submit" variant="outlined" style={{ color: 'white' }}>
           {t('addTable')}
         </Button>
       </ButtonContainer>
@@ -449,7 +448,7 @@ const Waiterboards = ({
               <WBtitle>
                 <div className="label">WAITERBOARD</div>
                 <div>
-                  <span>{wb.name}</span>
+                  <span>{t('goToWaiterboard')}</span>
                   <OpenInBrowser />
                 </div>
               </WBtitle>

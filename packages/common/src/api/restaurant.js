@@ -275,8 +275,8 @@ export function CreateMenuitem({ name, precedence, categoryId }) {
       name,
       precedence,
       price: {
-        amount: 2,
-        currency: 'KWD',
+        amount: 10,
+        currency: 'CZK',
       },
     },
   );
@@ -340,7 +340,7 @@ export function CreateAddon({ restaurantId, name, price }) {
     name,
     price: {
       amount: price,
-      currency: 'KWD'
+      currency: 'CZK'
     }
   });
 }
@@ -435,8 +435,25 @@ export function Notify({ sendTo, type, payload }) {
   );
 }
 
+const loggedRestaurantWith = [
+  'images',
+  'services.image',
+  'waiterboards.tables',
+  'categories.items.images',
+  'categories.items.addons',
+  'categories.items.ingredients',
+  'categories.items.options',
+  'addons.price',
+  'ingredients',
+  'options.choices'
+].join(',');
+
 export function GetLoggedrestaurant({ restaurantId }) {
-  return Get({ path: `restaurant/${restaurantId}/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices` });
+  return Get({ path: `restaurant/${restaurantId}/all?with=${loggedRestaurantWith}` });
+}
+
+export function GetRestaurantsettings({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/settings` });
 }
 
 export function GetTables({ waiterboardId }) {

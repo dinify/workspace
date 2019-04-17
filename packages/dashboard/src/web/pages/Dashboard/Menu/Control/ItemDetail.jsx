@@ -11,6 +11,7 @@ import Progress from 'web/components/Progress';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
+import { useTranslation } from 'react-i18next';
 
 import ItemIngredients from './ItemIngredients';
 import ItemAddons from './ItemAddons';
@@ -30,13 +31,14 @@ import { withStyles } from '@material-ui/core/styles';
 
 let DetailForm = ({ handleSubmit }) => {
   const style = { height: '64px' };
+  const { t } = useTranslation();
   return (
     <form onSubmit={handleSubmit}>
       <Field
         name="name"
         component={Text}
         componentProps={{
-          label: 'Name',
+          label: t('menu.dishName'),
           fullWidth: true,
           margin: 'normal',
         }}
@@ -45,7 +47,7 @@ let DetailForm = ({ handleSubmit }) => {
         name="description"
         component={Text}
         componentProps={{
-          label: 'Description',
+          label: t('menu.description'),
           multiline: true,
           fullWidth: true,
           rows: 4,
@@ -57,16 +59,16 @@ let DetailForm = ({ handleSubmit }) => {
         component={Text}
         componentProps={{
           type: 'number',
-          min: 0.0,
-          label: 'Price (KD)',
+          min: 0,
+          label: t('menu.price'),
           fullWidth: true,
-          step: 0.05,
+          step: 1,
           margin: 'normal',
           style,
         }}
       />
       <Button variant="contained" color="primary" type="submit" fullWidth>
-        Save
+        {t('save')}
       </Button>
     </form>
   );

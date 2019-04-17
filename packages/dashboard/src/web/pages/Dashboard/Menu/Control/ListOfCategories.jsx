@@ -9,7 +9,7 @@ import {
   SortableElement,
   arrayMove,
 } from 'react-sortable-hoc';
-import * as FN from 'lib/FN';
+import { useTranslation } from 'react-i18next';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -31,11 +31,6 @@ import {
   selectCategoryAction,
   reorderCategoriesAction,
 } from 'ducks/restaurant/actions';
-
-const CategoriesList = styled.ul`
-  list-style: none;
-  margin: 0 10px;
-`;
 
 const ToggleContainer = styled.div`
   position: absolute;
@@ -77,6 +72,7 @@ const CategoryItem = styled.div`
 `;
 
 let CreateCategoryForm = ({ handleSubmit, progress, errorMessage }) => {
+  const { t } = useTranslation();
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
       <FormControl
@@ -91,18 +87,18 @@ let CreateCategoryForm = ({ handleSubmit, progress, errorMessage }) => {
               component={Text}
               componentProps={{
                 style: {whiteSpace: 'nowrap'},
-                label: 'Name of new category',
+                label: t('menu.newCategoryName'),
                 fullWidth: true,
                 InputLabelProps: {
                   shrink: true,
                 },
-                placeholder: 'e.g. Appetizers'
+                placeholder: t('menu.newCategoryPlaceholder')
               }}
             />
           </Grid>
           <Grid item xs={2}>
-            <Tooltip placement="top" title="Add category">
-              <IconButton type="submit" aria-label="Add category">
+            <Tooltip placement="top" title={t('menu.addCategory')}>
+              <IconButton type="submit" aria-label={t('menu.addCategory')}>
                 <AddCircle />
               </IconButton>
             </Tooltip>
@@ -128,6 +124,7 @@ const SortableItem = SortableElement(
     selectCategory,
     updateCategory,
     deleteCategory,
+    t,
   }) => (
     <CategoryItem
       selected={category.id === selectedCategoryId}
@@ -137,9 +134,9 @@ const SortableItem = SortableElement(
       <span>{category.name}</span>
       <BinContainer>
         {!category.published ? (
-          <Tooltip placement="left" title="Delete">
+          <Tooltip placement="left" title={t('delete')}>
             <IconButton
-              aria-label="Delete"
+              aria-label={t('delete')}
               onClick={() => deleteCategory({ id: category.id })}
             >
               <DeleteIcon />
@@ -152,7 +149,7 @@ const SortableItem = SortableElement(
       <ToggleContainer category>
         <Tooltip
           placement="left"
-          title={category.published ? 'Published' : 'Unpublished'}
+          title={category.published ? t('published') : t('unpublished')}
         >
           <Checkbox
             checkedIcon={<Visibility />}
@@ -170,11 +167,13 @@ const SortableItem = SortableElement(
 );
 
 const SortableList = SortableContainer(({ categories, deps }) => {
+  const { t } = useTranslation();
   return (
     <div>
       {categories.map((category, index) => (
         <SortableItem
           key={`menucategory-${index}-${category.id}`}
+          t={t}
           index={index}
           category={category}
           {...deps}
@@ -185,7 +184,7 @@ const SortableList = SortableContainer(({ categories, deps }) => {
 });
 
 const ListOfCategories = ({
-  categoriesMap,
+  categoriesList,
   selectedCategoryId,
   createCategory,
   updateCategory,
@@ -195,11 +194,8 @@ const ListOfCategories = ({
   progressMap,
   errorsMap,
 }) => {
-  const categoriesList = FN.MapToList(categoriesMap).sort(
-    (a, b) => a.precedence - b.precedence,
-  );
   return (
-    <CategoriesList>
+    <div>
       <Card>
         <CardContent>
           <CreateCategoryForm
@@ -230,13 +226,12 @@ const ListOfCategories = ({
           deleteCategory,
         }}
       />
-    </CategoriesList>
+    </div>
   );
 };
 
 export default connect(
   state => ({
-    categoriesMap: state.menuCategory.all,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
   }),

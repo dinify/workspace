@@ -5,7 +5,9 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 import rootEpic from 'configureEpics.js';
 import Raven from 'raven-js';
 import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
 
 import auth from '@dinify/common/dist/ducks/auth';
 import restaurant from 'ducks/restaurant';

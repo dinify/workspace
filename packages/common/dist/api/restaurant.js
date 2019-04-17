@@ -69,6 +69,7 @@ exports.AddTranslation = AddTranslation;
 exports.RmTranslation = RmTranslation;
 exports.Notify = Notify;
 exports.GetLoggedrestaurant = GetLoggedrestaurant;
+exports.GetRestaurantsettings = GetRestaurantsettings;
 exports.GetTables = GetTables;
 exports.GetSeatsOfWB = GetSeatsOfWB;
 exports.CheckOut = CheckOut;
@@ -759,36 +760,45 @@ function Notify(_ref53) {
   });
 }
 
+var loggedRestaurantWith = ['images', 'services.image', 'waiterboards.tables', 'categories.items.images', 'categories.items.addons', 'categories.items.ingredients', 'categories.items.options', 'addons.price', 'ingredients', 'options.choices'].join(',');
+
 function GetLoggedrestaurant(_ref54) {
   var restaurantId = _ref54.restaurantId;
   return (0, _Network.Get)({
-    path: "restaurant/".concat(restaurantId, "/all?with=images,services.image,waiterboards.tables,categories.items.images,categories.items.addons,categories.items.ingredients,categories.items.options,addons.price,ingredients,options.choices")
+    path: "restaurant/".concat(restaurantId, "/all?with=").concat(loggedRestaurantWith)
   });
 }
 
-function GetTables(_ref55) {
-  var waiterboardId = _ref55.waiterboardId;
+function GetRestaurantsettings(_ref55) {
+  var restaurantId = _ref55.restaurantId;
+  return (0, _Network.Get)({
+    path: "restaurant/".concat(restaurantId, "/settings")
+  });
+}
+
+function GetTables(_ref56) {
+  var waiterboardId = _ref56.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/tables")
   });
 }
 
-function GetSeatsOfWB(_ref56) {
-  var waiterboardId = _ref56.waiterboardId;
+function GetSeatsOfWB(_ref57) {
+  var waiterboardId = _ref57.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/seats/all")
   });
 }
 
-function CheckOut(_ref57) {
-  var tableId = _ref57.tableId;
+function CheckOut(_ref58) {
+  var tableId = _ref58.tableId;
   return (0, _Network.Post)({
     path: "table/".concat(tableId, "/checkout")
   });
 }
 
-function CheckOutUser(_ref58) {
-  var userId = _ref58.userId;
+function CheckOutUser(_ref59) {
+  var userId = _ref59.userId;
   return (0, _Network.Post)({
     path: "checkout/user/".concat(userId)
   });
@@ -800,15 +810,15 @@ function GetBookings() {
   });
 }
 
-function ConfirmBooking(_ref59) {
-  var id = _ref59.id;
+function ConfirmBooking(_ref60) {
+  var id = _ref60.id;
   return (0, _Network.Post)({
     path: "booking/".concat(id, "/confirm")
   });
 }
 
-function CancelBooking(_ref60) {
-  var id = _ref60.id;
+function CancelBooking(_ref61) {
+  var id = _ref61.id;
   return (0, _Network.Post)({
     path: "booking/".concat(id, "/cancel")
   }, {
@@ -816,58 +826,58 @@ function CancelBooking(_ref60) {
   });
 }
 
-function GetGuests(_ref61) {
-  var waiterboardId = _ref61.waiterboardId;
+function GetGuests(_ref62) {
+  var waiterboardId = _ref62.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/guests")
   });
 }
 
-function GetCalls(_ref62) {
-  var waiterboardId = _ref62.waiterboardId;
+function GetCalls(_ref63) {
+  var waiterboardId = _ref63.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/calls?with=service.image")
   });
 }
 
-function ConfirmCall(_ref63) {
-  var callId = _ref63.callId;
+function ConfirmCall(_ref64) {
+  var callId = _ref64.callId;
   return (0, _Network.Post)({
     path: "service/call/".concat(callId, "/confirm")
   });
 }
 
-function GetOrders(_ref64) {
-  var waiterboardId = _ref64.waiterboardId;
+function GetOrders(_ref65) {
+  var waiterboardId = _ref65.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/orders/today?with=items.choices,items.addons,items.excludes")
   });
 }
 
-function ConfirmOrder(_ref65) {
-  var orderId = _ref65.orderId;
+function ConfirmOrder(_ref66) {
+  var orderId = _ref66.orderId;
   return (0, _Network.Post)({
     path: "order/".concat(orderId, "/confirm")
   });
 }
 
-function GetBills(_ref66) {
-  var waiterboardId = _ref66.waiterboardId;
+function GetBills(_ref67) {
+  var waiterboardId = _ref67.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/transactions?with=orders")
   });
 }
 
-function GetTodaybills(_ref67) {
-  var waiterboardId = _ref67.waiterboardId;
+function GetTodaybills(_ref68) {
+  var waiterboardId = _ref68.waiterboardId;
   return (0, _Network.Get)({
     path: "waiterboard/".concat(waiterboardId, "/transactions/all?limit=100")
   });
 }
 
-function ConfirmBill(_ref68) {
-  var billId = _ref68.billId,
-      approvalNumber = _ref68.approvalNumber;
+function ConfirmBill(_ref69) {
+  var billId = _ref69.billId,
+      approvalNumber = _ref69.approvalNumber;
   return (0, _Network.Post)({
     path: "transaction/".concat(billId, "/process")
   }, {
