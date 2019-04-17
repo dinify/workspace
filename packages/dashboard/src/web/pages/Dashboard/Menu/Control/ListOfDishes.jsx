@@ -9,6 +9,7 @@ import {
   SortableElement,
   arrayMove,
 } from 'react-sortable-hoc';
+import { useTranslation } from 'react-i18next';
 import * as FN from 'lib/FN';
 import * as R from 'ramda';
 import Visibility from '@material-ui/icons/Visibility';
@@ -34,6 +35,7 @@ import {
   reorderItemsAction,
   selectFoodAction,
 } from 'ducks/restaurant/actions';
+import Typography from '@dinify/common/dist/components/Typography';
 
 const FoodItem = styled.div`
   position: relative;
@@ -76,6 +78,7 @@ const BinContainer = styled.div`
 `;
 
 let CreateItemForm = ({ handleSubmit, categoryName, progress, errorMessage }) => {
+  const { t } = useTranslation();
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
       <FormControl
@@ -90,18 +93,18 @@ let CreateItemForm = ({ handleSubmit, categoryName, progress, errorMessage }) =>
               component={Text}
               componentProps={{
                 style: {whiteSpace: 'nowrap'},
-                label: `A dish of ${categoryName}`,
+                label: `${t('menu.dishOf')} ${categoryName}`,
                 fullWidth: true,
                 InputLabelProps: {
                   shrink: true,
                 },
-                placeholder: 'e.g. Fried chicken'
+                placeholder: t('menu.newDishPlaceholder')
               }}
             />
           </Grid>
           <Grid item xs={2}>
-            <Tooltip placement="top" title="Add dish">
-              <IconButton type="submit" aria-label="Add dish">
+            <Tooltip placement="top" title={t('menu.addDish')}>
+              <IconButton type="submit" aria-label={t('menu.addDish')}>
                 <AddCircle />
               </IconButton>
             </Tooltip>
@@ -121,7 +124,7 @@ CreateItemForm = reduxForm({
 })(CreateItemForm);
 
 const SortableItem = SortableElement(
-  ({ item, selectedFoodId, selectFood, updateItem, deleteItem }) => (
+  ({ t, item, selectedFoodId, selectFood, updateItem, deleteItem }) => (
     <FoodItem
       selected={item.id === selectedFoodId}
       disabled={!item.published}
@@ -130,9 +133,9 @@ const SortableItem = SortableElement(
       <span>{item.name}</span>
       <BinContainer>
         {!item.published ? (
-          <Tooltip placement="left" title="Delete">
+          <Tooltip placement="left" title={t('delete')}>
             <IconButton
-              aria-label="Delete"
+              aria-label={t('delete')}
               onClick={() => deleteItem({ id: item.id })}
             >
               <DeleteIcon />
@@ -145,7 +148,7 @@ const SortableItem = SortableElement(
       <ToggleContainer item>
         <Tooltip
           placement="left"
-          title={item.published ? 'Published' : 'Unpublished'}
+          title={item.published ? t('published') : t('unpublished')}
         >
           <Checkbox
             checkedIcon={<Visibility />}
@@ -196,6 +199,7 @@ const ListOfDishes = ({
     FN.MapToList(menuItemsMap),
   ).sort((a, b) => a.precedence - b.precedence);
   const categoryName = categoriesMap[selectedCategoryId].name;
+  const { t } = useTranslation();
   return (
     <div>
       <Card>
@@ -215,10 +219,13 @@ const ListOfDishes = ({
           />
         </CardContent>
       </Card>
+      {menuItemsList.length < 1 && <div style={{margin: '10px 0'}}>
+        <Typography variant="caption">{t('menu.categoryEmpty')}</Typography>
+      </div>}
       <SortableList
         distance={1}
-        axis={'y'}
-        lockAxis={'y'}
+        axis="y"
+        lockAxis="y"
         items={menuItemsList}
         onSortEnd={({ oldIndex, newIndex }) => {
           reorderItems(arrayMove(menuItemsList, oldIndex, newIndex));
@@ -228,6 +235,7 @@ const ListOfDishes = ({
           selectFood,
           updateItem,
           deleteItem,
+          t
         }}
       />
     </div>
@@ -237,7 +245,6 @@ const ListOfDishes = ({
 export default connect(
   state => ({
     menuItemsMap: state.menuItem.all,
-    categoriesMap: state.menuCategory.all,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
   }),

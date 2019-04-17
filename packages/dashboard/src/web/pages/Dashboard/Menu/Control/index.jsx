@@ -13,12 +13,16 @@ import * as FN from 'lib/FN';
 const Menucontrol = ({
   selectedCategoryId,
   selectedFoodId,
-  categoriesMap
+  categoriesMap,
+  menuItems
 }) => {
   const { t } = useTranslation();
   const categoriesList = FN.MapToList(categoriesMap).sort(
     (a, b) => a.precedence - b.precedence,
   );
+  if (categoriesList.length === 1) {
+    selectedCategoryId = categoriesList[0].id;
+  }
   return (
     <div>
       <Typography gutterBottom variant="h6">{t('nav.menuEditor')}</Typography>
@@ -40,13 +44,16 @@ const Menucontrol = ({
             [<Grid item xs={3}>
               <Typography gutterBottom variant="caption">{t('menu.dishes')}</Typography>
               <ListOfDishes
+                categoriesMap={categoriesMap}
                 selectedFoodId={selectedFoodId}
                 selectedCategoryId={selectedCategoryId}
               />
             </Grid>,
             <Grid item xs={6}>
-              <Typography gutterBottom variant="caption">{t('menu.dishDetail')}</Typography>
-              <ItemDetail selectedFoodId={selectedFoodId} />
+              {(selectedCategoryId && categoriesMap[selectedCategoryId] && menuItems[selectedFoodId]) && [
+                <Typography gutterBottom variant="caption">{t('menu.dishDetail')}</Typography>,
+                <ItemDetail menuItems={menuItems} selectedFoodId={selectedFoodId} />
+              ]}
             </Grid>]    
           }
 

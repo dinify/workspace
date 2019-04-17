@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 import { updateFoodNutritionInit } from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';
@@ -9,7 +10,7 @@ import { Field, reduxForm } from 'redux-form';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 
-let NutritionForm = ({ handleSubmit }) => {
+let NutritionForm = ({ handleSubmit, t }) => {
   const style = { height: '56px' };
   return (
     <form onSubmit={handleSubmit}>
@@ -19,7 +20,7 @@ let NutritionForm = ({ handleSubmit }) => {
         componentProps={{
           type: 'number',
           min: 1,
-          label: 'Calories (Kcal)',
+          label: t('nutrition.calories'),
           fullWidth: true,
           InputLabelProps: {
             shrink: true,
@@ -33,7 +34,7 @@ let NutritionForm = ({ handleSubmit }) => {
         componentProps={{
           type: 'number',
           min: 1,
-          label: 'Proteins (g)',
+          label: t('nutrition.proteins'),
           fullWidth: true,
           InputLabelProps: {
             shrink: true,
@@ -47,7 +48,7 @@ let NutritionForm = ({ handleSubmit }) => {
         componentProps={{
           type: 'number',
           min: 1,
-          label: 'Fats (g)',
+          label: t('nutrition.fats'),
           fullWidth: true,
           InputLabelProps: {
             shrink: true,
@@ -61,7 +62,7 @@ let NutritionForm = ({ handleSubmit }) => {
         componentProps={{
           type: 'number',
           min: 1,
-          label: 'Carbohydrates (g)',
+          label: t('nutrition.carbs'),
           fullWidth: true,
           InputLabelProps: {
             shrink: true,
@@ -70,7 +71,7 @@ let NutritionForm = ({ handleSubmit }) => {
         }}
       />
       <Button type="submit" fullWidth={true}>
-        Save
+        {t('save')}
         <Progress type={'UPDATE_NUTRITION'} />
       </Button>
     </form>
@@ -119,6 +120,7 @@ const NutritionContainer = styled.div`
 const ItemNutrition = ({ selectedFoodId, menuItems, updateFoodNutrition }) => {
   const selectedFood = menuItems[selectedFoodId];
   console.log(selectedFood.calories, 'cals');
+  const { t } = useTranslation();
   return (
     <NutritionContainer>
       <NutritionForm
@@ -126,6 +128,7 @@ const ItemNutrition = ({ selectedFoodId, menuItems, updateFoodNutrition }) => {
           updateFoodNutrition({ foodId: selectedFoodId, ...nutritions })
         }
         initialValues={selectedFood.calories}
+        t={t}
       />
     </NutritionContainer>
   );

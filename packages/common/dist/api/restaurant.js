@@ -483,8 +483,8 @@ function CreateMenuitem(_ref30) {
     name: name,
     precedence: precedence,
     price: {
-      amount: 2,
-      currency: 'KWD'
+      amount: 10,
+      currency: 'CZK'
     }
   });
 }
@@ -582,7 +582,7 @@ function CreateAddon(_ref38) {
     name: name,
     price: {
       amount: price,
-      currency: 'KWD'
+      currency: 'CZK'
     }
   });
 }

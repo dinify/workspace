@@ -19,6 +19,7 @@
   "nameOfRestaurant": "Restaurant Name",
   "restaurantImage": "Main Image",
   "uploadImageGuide": "Try dropping your photo here, or click to select file to upload.",
+  "uploadImageGuideDish": "Try dropping photo of the dish here, or click to select file to upload.",
   "uploadImageFormats": "Only .jpg and .png image will be accepted",
   "location": "Location",
   "socialMedia": "Social Media",
@@ -46,7 +47,18 @@
     "newCategoryName": "Name of new category",
     "newCategoryPlaceholder": "e.g. Appetizers",
     "addCategory": "Add Category",
-    "startWithCategory": "Start creating your menu with adding category"
+    "startWithCategory": "Start creating your menu with adding category",
+    "addDish": "Add Dish",
+    "newDishPlaceholder": "e.g. Fried chicken",
+    "dishOf": "A new dish of",
+    "categoryEmpty": "Selected category is empty, you can add a dish into it"
+  },
+  "nutrition": {
+    "facts": "Nutrition facts",
+    "fats": "Fats (g)",
+    "carbs": "Sacharidy (g)",
+    "proteins": "Proteins (g)",
+    "calories": "Calories (kcal)"
   },
   "delete": "Delete",
   "published": "Published",

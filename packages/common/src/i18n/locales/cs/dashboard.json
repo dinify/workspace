@@ -19,6 +19,7 @@
   "nameOfRestaurant": "Jméno restaurace",
   "restaurantImage": "Úvodní fotka",
   "uploadImageGuide": "Přetáhněte sem fotku vaší restaurace nebo kliněte zde a vyberte soubor manuálně.",
+  "uploadImageGuideDish": "Přetáhněte sem fotku jídla nebo kliněte zde a vyberte soubor manuálně.",
   "uploadImageFormats": "Fotka může mít koncovku .jpg nebo .png",
   "location": "Poloha",
   "socialMedia": "Sociální sítě",
@@ -49,7 +50,18 @@
     "startWithCategory": "Začněte vytvářet menu přidáním první z kategorií",
     "dishName": "Název jídla",
     "description": "Popis",
-    "price": "Cena"
+    "price": "Cena",
+    "addDish": "Přidat jídlo",
+    "newDishPlaceholder": "např. Svíčková na smetaně",
+    "dishOf": "Nové jídlo z kategorie",
+    "categoryEmpty": "Vybraná kategorie je prázdná, můžete do ní přidat jídlo"
+  },
+  "nutrition": {
+    "facts": "Nutriční údaje",
+    "fats": "Tuky (g)",
+    "carbs": "Cukry (g)",
+    "proteins": "Bílkoviny (g)",
+    "calories": "Kalorie (kcal)"
   },
   "delete": "Smazat",
   "published": "Zobrazené",
