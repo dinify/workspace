@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as FN from 'lib/FN';
 import { Field, reduxForm } from 'redux-form';
+import { useTranslation } from 'react-i18next';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -22,7 +23,7 @@ import Text from 'web/components/MaterialInputs/Text';
 
 import { createAddonInit, removeAddonInit } from 'ducks/addon/actions';
 
-let AddAddonForm = ({ handleSubmit, progress, errorMessage  }) => {
+let AddAddonForm = ({ t, handleSubmit, progress, errorMessage  }) => {
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
       <FormControl
@@ -36,12 +37,12 @@ let AddAddonForm = ({ handleSubmit, progress, errorMessage  }) => {
               name="name"
               component={Text}
               componentProps={{
-                label: 'Name of new addon',
+                label: t('menu.newAddon'),
                 fullWidth: true,
                 InputLabelProps: {
                   shrink: true,
                 },
-                placeholder: 'e.g. Extra cheese'
+                placeholder: t('menu.newAddonPlaceholder')
               }}
             />
           </Grid>
@@ -50,15 +51,15 @@ let AddAddonForm = ({ handleSubmit, progress, errorMessage  }) => {
               name="price"
               component={Text}
               componentProps={{
-                label: 'Price',
+                label: t('menu.price'),
                 fullWidth: true,
                 type: 'number'
               }}
             />
           </Grid>
           <Grid item xs={1}>
-            <Tooltip placement="top" title="Add addon">
-              <IconButton type="submit" aria-label="Add addon">
+            <Tooltip placement="top" title={t('menu.addAddon')}>
+              <IconButton type="submit" aria-label={t('menu.addAddon')}>
                 <AddCircle />
               </IconButton>
             </Tooltip>
@@ -85,11 +86,13 @@ const Addons = ({
   const addonsList = FN.MapToList(addons).sort((a, b) =>
     a.name.localeCompare(b.name),
   );
+  const { t } = useTranslation();
   return (
     <div>
       <Card square>
         <CardContent>
           <AddAddonForm
+            t={t}
             progress={progressMap['CREATE_ADDON']}
             errorMessage={errorsMap['CREATE_ADDON']}
             onSubmit={({ name, price }) => createAddon({
@@ -105,10 +108,10 @@ const Addons = ({
           <div key={addon.id}>
             <ListItem dense style={styles.ListItem}>
               <ListItemText primary={addon.name} />
-              {addon.price.amount}KD
-              <Tooltip placement="left" title="Delete">
+              {addon.price.amount} Kč
+              <Tooltip placement="left" title={t('delete')}>
                 <IconButton
-                  aria-label="Delete addon"
+                  aria-label={t('delete')}
                   onClick={() => removeAddon({ id: addon.id })}
                 >
                   <DeleteIcon />

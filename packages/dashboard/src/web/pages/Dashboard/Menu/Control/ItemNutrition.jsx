@@ -96,17 +96,17 @@ const NutritionContainer = styled.div`
     left,
     rgba(0, 0, 0, 0) 0%,
     rgba(0, 0, 0, 0.79) 100%
-  ); /* FF3.6-15 */
+  );
   background: -webkit-linear-gradient(
     left,
     rgba(0, 0, 0, 0) 0%,
     rgba(0, 0, 0, 0.79) 100%
-  ); /* Chrome10-25,Safari5.1-6 */
+  ); 
   background: linear-gradient(
     to right,
     rgba(0, 0, 0, 0) 0%,
     rgba(0, 0, 0, 0.79) 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  );
   label,
   input,
   button {
@@ -119,7 +119,6 @@ const NutritionContainer = styled.div`
 
 const ItemNutrition = ({ selectedFoodId, menuItems, updateFoodNutrition }) => {
   const selectedFood = menuItems[selectedFoodId];
-  console.log(selectedFood.calories, 'cals');
   const { t } = useTranslation();
   return (
     <NutritionContainer>

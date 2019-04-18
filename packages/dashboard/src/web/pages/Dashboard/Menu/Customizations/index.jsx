@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@dinify/common/dist/components/Typography';
+import { useTranslation } from 'react-i18next';
 
 import Addons from './Addons';
 import Ingredients from './Ingredients';
@@ -19,12 +20,6 @@ const HeadLine = styled.div`
   line-height: 50px;
   padding-left: 0px;
 `;
-const H = styled.div`
-  text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 1px;
-  margin-right: 20px;
-`;
 
 const styles = {
   ListItem: {
@@ -35,35 +30,29 @@ const styles = {
 };
 
 const Menucontrol = () => {
+  const { t } = useTranslation();
   return (
     <div>
-      <Typography style={{marginLeft: 10}} gutterBottom variant="h6">Customizations</Typography>
+      <Typography style={{marginLeft: 10}} gutterBottom variant="h6">{t('nav.customizations')}</Typography>
       <SolidContainer>
         <HeadLine>
           <Grid container spacing={8} alignItems="flex-start" justify="center">
             <Grid item xs={4}>
-              <H>Addons</H>
+              <Typography gutterBottom variant="caption">{t('menu.ingredients')}</Typography>
+              <Ingredients styles={styles} />
             </Grid>
+
             <Grid item xs={4}>
-              <H>Ingredients</H>
+              <Typography gutterBottom variant="caption">{t('menu.addons')}</Typography>
+              <Addons styles={styles} />
             </Grid>
+
             <Grid item xs={4}>
-              <H>Option groups</H>
+              <Typography gutterBottom variant="caption">{t('menu.optionGroups')}</Typography>
+              <Options styles={styles} />
             </Grid>
           </Grid>
         </HeadLine>
-
-        <Grid container spacing={8} alignItems="flex-start" justify="center">
-          <Grid item xs={4}>
-            <Addons styles={styles} />
-          </Grid>
-          <Grid item xs={4}>
-            <Ingredients styles={styles} />
-          </Grid>
-          <Grid item xs={4}>
-            <Options styles={styles} />
-          </Grid>
-        </Grid>
       </SolidContainer>
     </div>
   );

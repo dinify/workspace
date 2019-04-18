@@ -54,7 +54,22 @@
     "addDish": "Přidat jídlo",
     "newDishPlaceholder": "např. Svíčková na smetaně",
     "dishOf": "Nové jídlo z kategorie",
-    "categoryEmpty": "Vybraná kategorie je prázdná, můžete do ní přidat jídlo"
+    "categoryEmpty": "Vybraná kategorie je prázdná, můžete do ní přidat jídlo",
+    "ingredients": "Ingredience",
+    "addons": "Extra položky",
+    "optionGroups": "Varianty",
+    "newIngredient": "Název nové ingredience",
+    "newIngredientPlaceholder": "např. Rýže",
+    "addIngredient": "Přidat ingredienci",
+    "newAddon": "Název nové položky",
+    "newAddonPlaceholder": "např. Sýr navíc",
+    "addAddon": "Přidat položku",
+    "newOption": "Název nové skupiny variant",
+    "newOptionPlaceholder": "např. Pečivo",
+    "addOption": "Přidat skupinu variant",
+    "newChoice": "Název nové varianty",
+    "newChoicePlaceholder": "např. Chléb",
+    "addChoice": "Přidat variantu"
   },
   "nutrition": {
     "facts": "Nutriční údaje",

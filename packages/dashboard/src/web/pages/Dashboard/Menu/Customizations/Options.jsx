@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as FN from 'lib/FN';
 import { Field, reduxForm } from 'redux-form';
+import { useTranslation } from 'react-i18next';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -32,7 +33,7 @@ import {
   removeChoiceInit,
 } from 'ducks/option/actions';
 
-let AddChoiceForm = ({ handleSubmit, progress, errorMessage }) => {
+let AddChoiceForm = ({ t, handleSubmit, progress, errorMessage }) => {
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
       <FormControl
@@ -46,12 +47,12 @@ let AddChoiceForm = ({ handleSubmit, progress, errorMessage }) => {
             name="name"
             component={Text}
             componentProps={{
-              label: 'Name of choice',
+              label: t('menu.newChoice'),
               fullWidth: true,
               InputLabelProps: {
                 shrink: true,
               },
-              placeholder: 'e.g. White bread'
+              placeholder: t('menu.newChoicePlaceholder')
             }}
           />
         </Grid>
@@ -60,15 +61,15 @@ let AddChoiceForm = ({ handleSubmit, progress, errorMessage }) => {
             name="price"
             component={Text}
             componentProps={{
-              label: 'Price',
+              label: t('menu.price'),
               fullWidth: true,
               type: 'number'
             }}
           />
         </Grid>
         <Grid item xs={2}>
-          <Tooltip placement="top" title="Add choice">
-            <IconButton type="submit" aria-label="Add choice">
+          <Tooltip placement="top" title={t('menu.addChoice')}>
+            <IconButton type="submit" aria-label={t('menu.addChoice')}>
               <AddCircle />
             </IconButton>
           </Tooltip>
@@ -87,7 +88,7 @@ AddChoiceForm = reduxForm({
   form: 'customizations/option/choice',
 })(AddChoiceForm);
 
-let AddOptionForm = ({ handleSubmit }) => {
+let AddOptionForm = ({ handleSubmit, t }) => {
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
       <Grid container spacing={0} alignItems="flex-end" justify="center">
@@ -96,18 +97,18 @@ let AddOptionForm = ({ handleSubmit }) => {
             name="name"
             component={Text}
             componentProps={{
-              label: 'Name of new option group',
+              label: t('menu.newOption'),
               fullWidth: true,
               InputLabelProps: {
                 shrink: true,
               },
-              placeholder: 'e.g. Breads'
+              placeholder: t('menu.newOptionPlaceholder')
             }}
           />
         </Grid>
         <Grid item xs={1}>
-          <Tooltip placement="top" title="Add option group">
-            <IconButton type="submit" aria-label="Add option">
+          <Tooltip placement="top" title={t('menu.addOption')}>
+            <IconButton type="submit" aria-label={t('menu.addOption')}>
               <AddCircle />
             </IconButton>
           </Tooltip>
@@ -121,7 +122,6 @@ AddOptionForm = reduxForm({
 })(AddOptionForm);
 
 const Options = ({
-  loggedRestaurant,
   createOption,
   createChoice,
   optionsMap,
@@ -135,11 +135,12 @@ const Options = ({
   const optionsList = FN.MapToList(optionsMap).sort((a, b) =>
     a.name.localeCompare(b.name),
   );
+  const { t } = useTranslation();
   return (
     <div>
       <Card square>
         <CardContent>
-          <AddOptionForm onSubmit={({ name }) => createOption({
+          <AddOptionForm t={t} onSubmit={({ name }) => createOption({
             name,
             form: 'customizations/option'
           })} />
@@ -155,9 +156,9 @@ const Options = ({
               style={styles.ListItem}
             >
               <ListItemText primary={option.name} />
-              <Tooltip placement="left" title="Delete">
+              <Tooltip placement="left" title={t('delete')}>
                 <IconButton
-                  aria-label="Delete option"
+                  aria-label={t('delete')}
                   onClick={() => removeOption({ id: option.id })}
                 >
                   <DeleteIcon />
@@ -178,13 +179,13 @@ const Options = ({
                       secondary={
                         <span>
                           {choice.name}{' '}
-                          {choice.difference ? choice.difference.amount : ''}KD
+                          {choice.difference ? Number.parseFloat(choice.difference.amount).toFixed(2) : ''} Kč
                         </span>
                       }
                     />
-                    <Tooltip placement="left" title="Delete">
+                    <Tooltip placement="left" title={t('delete')}>
                       <IconButton
-                        aria-label="Delete choice"
+                        aria-label={t('delete')}
                         onClick={() =>
                           removeChoice({ id: choice.id, optionId: option.id })
                         }
@@ -199,6 +200,7 @@ const Options = ({
                     <Card square>
                       <CardContent>
                         <AddChoiceForm
+                          t={t}
                           progress={progressMap['CREATE_CHOICE']}
                           errorMessage={errorsMap['CREATE_CHOICE']}
                           onSubmit={({ name, price }) =>

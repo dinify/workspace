@@ -51,7 +51,22 @@
     "addDish": "Add Dish",
     "newDishPlaceholder": "e.g. Fried chicken",
     "dishOf": "A new dish of",
-    "categoryEmpty": "Selected category is empty, you can add a dish into it"
+    "categoryEmpty": "Selected category is empty, you can add a dish into it",
+    "ingredients": "Ingredients",
+    "addons": "Addons",
+    "optionGroups": "Options",
+    "newIngredient": "Name of new ingredient",
+    "newIngredientPlaceholder": "e.g. Glass noodles",
+    "addIngredient": "Add Ingredient",
+    "newAddon": "Name of new addon",
+    "newAddonPlaceholder": "e.g. Extra cheese",
+    "addAddon": "Add Addon",
+    "newOption": "Name of new option group",
+    "newOptionPlaceholder": "e.g. Breads",
+    "addOption": "Add Option group",
+    "newChoice": "Name of new choice",
+    "newChoicePlaceholder": "e.g. White bread",
+    "addChoice": "Add Choice"
   },
   "nutrition": {
     "facts": "Nutrition facts",

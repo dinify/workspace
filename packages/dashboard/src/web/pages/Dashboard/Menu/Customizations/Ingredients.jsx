@@ -3,10 +3,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as FN from 'lib/FN';
 import { Field, reduxForm } from 'redux-form';
+import { useTranslation } from 'react-i18next';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-
 import AddCircle from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
@@ -26,7 +27,7 @@ import {
   updateIngredientInit,
 } from 'ducks/ingredient/actions';
 
-let AddIngredientForm = ({ handleSubmit, progress, errorMessage }) => {
+let AddIngredientForm = ({ handleSubmit, progress, errorMessage, t }) => {
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
       <FormControl
@@ -40,18 +41,18 @@ let AddIngredientForm = ({ handleSubmit, progress, errorMessage }) => {
               name="name"
               component={Text}
               componentProps={{
-                label: 'Name of new ingredient',
+                label: t('menu.newIngredient'),
                 fullWidth: true,
                 InputLabelProps: {
                   shrink: true,
                 },
-                placeholder: 'e.g. Glass noodles'
+                placeholder: t('menu.newIngredientPlaceholder')
               }}
             />
           </Grid>
           <Grid item xs={1}>
-            <Tooltip placement="top" title="Add ingredient">
-              <IconButton type="submit" aria-label="Add ingredient">
+            <Tooltip placement="top" title={t('menu.addIngredient')}>
+              <IconButton type="submit" aria-label={t('menu.addIngredient')}>
                 <AddCircle />
               </IconButton>
             </Tooltip>
@@ -74,7 +75,7 @@ const Ingredients = ({
   createIngredient,
   ingredients,
   removeIngredient,
-  updateIngredient,
+  // updateIngredient,
   styles,
   progressMap,
   errorsMap,
@@ -82,11 +83,13 @@ const Ingredients = ({
   const ingredientsList = FN.MapToList(ingredients).sort((a, b) =>
     a.name.localeCompare(b.name),
   );
+  const { t } = useTranslation();
   return (
     <div>
       <Card square>
         <CardContent>
           <AddIngredientForm
+            t={t}
             onSubmit={({ name }) => createIngredient({
               name,
               form: 'customizations/ingredient'
@@ -101,9 +104,9 @@ const Ingredients = ({
           <div key={ingredient.id}>
             <ListItem dense style={styles.ListItem}>
               <ListItemText primary={ingredient.name} />
-              <Tooltip placement="left" title="Delete">
+              <Tooltip placement="left" title={t('delete')}>
                 <IconButton
-                  aria-label="Delete ingredient"
+                  aria-label={t('delete')}
                   onClick={() => removeIngredient({ id: ingredient.id })}
                 >
                   <DeleteIcon />
