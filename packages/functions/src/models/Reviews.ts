@@ -24,4 +24,4 @@ ReviewsSchema.index({ lang: 1 });
 
 const Reviews = mongoose.model('reviews', ReviewsSchema);
 
-module.exports = Reviews;
+export default Reviews;

@@ -35,8 +35,7 @@
   "scripts": {
     "start-dev": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "react-scripts build && firebase deploy --only hosting:dinify-admin-c0e7b",
-    "deploy:functions": "firebase deploy --only functions",
+    "deploy": "react-scripts build && firebase deploy --only hosting:admin",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",

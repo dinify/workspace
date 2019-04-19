@@ -1,0 +1,61 @@
+[debug] [2019-04-19T07:26:50.790Z] ----------------------------------------------------------------------
+[debug] [2019-04-19T07:26:50.793Z] Command:       /usr/local/Cellar/node/11.11.0/bin/node /Users/Mate/Development/dinify/packages/app/node_modules/.bin/firebase deploy --only hosting:app
+[debug] [2019-04-19T07:26:50.794Z] CLI Version:   6.4.0
+[debug] [2019-04-19T07:26:50.794Z] Platform:      darwin
+[debug] [2019-04-19T07:26:50.794Z] Node Version:  v11.11.0
+[debug] [2019-04-19T07:26:50.804Z] Time:          Fri Apr 19 2019 17:26:50 GMT+1000 (Australian Eastern Standard Time)
+[debug] [2019-04-19T07:26:50.804Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-04-19T07:26:50.820Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-04-19T07:26:50.820Z] > authorizing via signed-in user
+[debug] [2019-04-19T07:26:50.820Z] [iam] checking project dinify for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-04-19T07:26:50.823Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/dinify:testIamPermissions  
+
+[debug] [2019-04-19T07:26:50.884Z] Error: getaddrinfo ENOTFOUND cloudresourcemanager.googleapis.com cloudresourcemanager.googleapis.com:443
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:58:26)
+[error] 
+[error] Error: Server Error. getaddrinfo ENOTFOUND cloudresourcemanager.googleapis.com cloudresourcemanager.googleapis.com:443
+[debug] [2019-04-19T07:27:43.033Z] ----------------------------------------------------------------------
+[debug] [2019-04-19T07:27:43.037Z] Command:       /usr/local/Cellar/node/11.11.0/bin/node /usr/local/bin/firebase deploy --only hosting:app
+[debug] [2019-04-19T07:27:43.037Z] CLI Version:   6.7.0
+[debug] [2019-04-19T07:27:43.037Z] Platform:      darwin
+[debug] [2019-04-19T07:27:43.037Z] Node Version:  v11.11.0
+[debug] [2019-04-19T07:27:43.038Z] Time:          Fri Apr 19 2019 17:27:43 GMT+1000 (Australian Eastern Standard Time)
+[debug] [2019-04-19T07:27:43.038Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-04-19T07:27:43.055Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-04-19T07:27:43.055Z] > authorizing via signed-in user
+[debug] [2019-04-19T07:27:43.056Z] [iam] checking project dinify for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-04-19T07:27:43.058Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/dinify:testIamPermissions  
+
+[debug] [2019-04-19T07:27:43.104Z] Error: getaddrinfo ENOTFOUND cloudresourcemanager.googleapis.com cloudresourcemanager.googleapis.com:443
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:58:26)
+[error] 
+[error] Error: Server Error. getaddrinfo ENOTFOUND cloudresourcemanager.googleapis.com cloudresourcemanager.googleapis.com:443
+[debug] [2019-04-19T07:32:45.602Z] ----------------------------------------------------------------------
+[debug] [2019-04-19T07:32:45.605Z] Command:       /usr/local/Cellar/node/11.11.0/bin/node /usr/local/bin/firebase deploy --only hosting:app
+[debug] [2019-04-19T07:32:45.605Z] CLI Version:   6.7.0
+[debug] [2019-04-19T07:32:45.605Z] Platform:      darwin
+[debug] [2019-04-19T07:32:45.605Z] Node Version:  v11.11.0
+[debug] [2019-04-19T07:32:45.616Z] Time:          Fri Apr 19 2019 17:32:45 GMT+1000 (Australian Eastern Standard Time)
+[debug] [2019-04-19T07:32:45.616Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-04-19T07:32:45.632Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-04-19T07:32:45.633Z] > authorizing via signed-in user
+[debug] [2019-04-19T07:32:45.633Z] [iam] checking project dinify for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-04-19T07:32:45.635Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-04-19T07:32:45.635Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-04-19T07:32:46.982Z] <<< HTTP RESPONSE 200
+[debug] [2019-04-19T07:32:47.005Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/dinify:testIamPermissions  
+
+[debug] [2019-04-19T07:32:48.997Z] <<< HTTP RESPONSE 200
+[debug] [2019-04-19T07:32:48.999Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/dinify  
+ 
+[debug] [2019-04-19T07:32:50.036Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'dinify'...
+[info] 
+[info] i  deploying hosting
+[debug] [2019-04-19T07:32:53.582Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/dinify-app-8ab42/versions  
+

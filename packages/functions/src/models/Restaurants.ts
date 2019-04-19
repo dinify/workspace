@@ -65,4 +65,4 @@ RestaurantsSchema.index({ 'langGroups.eastAsia.countRel': -1 });
 const Restaurants = mongoose.model('restaurants', RestaurantsSchema);
 
 
-module.exports = Restaurants;
+export default Restaurants;

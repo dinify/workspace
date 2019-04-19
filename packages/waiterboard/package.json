@@ -9,7 +9,7 @@
     "start-dev": "react-scripts start",
     "start": "serve -s build",
     "build": "react-scripts build",
-    "deploy": "react-scripts build && firebase deploy --only hosting:dinify-waiterboard-8b8f4",
+    "deploy": "react-scripts build && firebase deploy --only hosting:waiterboard",
     "test": "jest --watch --env=jsdom",
     "coverage": "jest --coverage --env=jsdom",
     "lint": "eslint --ext=jsx --ext=js src/",
