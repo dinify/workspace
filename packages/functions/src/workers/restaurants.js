@@ -1,4 +1,4 @@
-import * as taAPI from '../api/ta';
+import * as taAPI from 'clients/ta';
 import Restaurants from '../models/Restaurants';
 import async from 'async';
 
