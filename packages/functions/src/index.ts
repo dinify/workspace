@@ -41,7 +41,7 @@ export const sendWelcomeEmail = functions
     // TODO: post message to slack webhook
     console.log("New user joined", user);
 
-    const link = await admin.auth().generateEmailVerificationLink(user.email, {
+    const link = await admin.auth().generateEmailVerificationLink(user.email || "", {
         url: `https://www.dinify.app/verified?email=${user.email}`
     });
 

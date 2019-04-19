@@ -20,6 +20,8 @@
     "landing:dev": "cd packages/landing && yarn start-dev",
     "landing:build": "cd packages/landing && yarn build",
     "landing:deploy": "cd packages/landing && yarn deploy",
+    "functions:dev": "cd packages/functions && yarn start",
+    "functions:build": "cd packages/functions && yarn build",
     "functions:deploy": "cd packages/functions && yarn deploy",
     "dash:dev": "cd packages/dashboard && yarn start-dev",
     "dash:build": "cd packages/dashboard && yarn build",

@@ -1,5 +1,5 @@
 import { Strategy as BearerStrategy } from "passport-http-bearer";
-import { AuthedRequest } from "./request";
+import { Request, Response } from 'express';
 import * as passport from "passport";
 import * as cors from "cors";
 import * as bodyParser from "body-parser";
@@ -50,7 +50,7 @@ export default (admin) => {
       (req, res, next) => {
         auth(req, res, next);
       },
-      (request: AuthedRequest, response) => {
+      (request: Request, response) => {
         if (!request.params.uid) response.sendStatus(400);
         const uid = request.params.uid === 'me' ? request.locals.user.uid : request.params.uid;
         admin.auth().getUser(uid)
@@ -82,7 +82,7 @@ export default (admin) => {
       (req, res, next) => {
         auth(req, res, next);
       },
-      (request: AuthedRequest, response) => {
+      (request: Request, response) => {
         const uid = request.locals.user.uid;
         db.collection('profiles').doc(uid).set(request.body).then(writeResult => {
           response.sendStatus(200);
