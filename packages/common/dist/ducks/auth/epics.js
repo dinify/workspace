@@ -5,26 +5,34 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var _react = _interopRequireDefault(require("react"));
+
 var _rxjs = require("rxjs");
 
 var _operators = require("rxjs/operators");
 
 var _reduxObservable = require("redux-observable");
 
+var _reactReduxFirebase = require("react-redux-firebase");
+
+var _AccountExistsDialog = _interopRequireDefault(require("../../components/dialogs/AccountExistsDialog"));
+
 var API = _interopRequireWildcard(require("../../api/user"));
 
 var _FN = require("../../lib/FN");
-
-var _reactReduxFirebase = require("react-redux-firebase");
 
 var _reduxForm = require("redux-form");
 
 var _actions = require("./actions");
 
+var _actions2 = require("../ui/actions");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-// import { checkinInit } from 'ducks/restaurant/actions';
-// import { loadUserData } from 'ducks/app/actions';
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 var accessTokenEpic = function accessTokenEpic(action$, state$) {
   return action$.pipe((0, _operators.filter)(function (action) {
     var triggerOn = [_reactReduxFirebase.actionTypes.LOGIN, _reactReduxFirebase.actionTypes.AUTH_EMPTY_CHANGE];
@@ -57,6 +65,12 @@ var loginErrorHandled = function loginErrorHandled(error) {
   });
 };
 
+var loginLinkHandled = function loginLinkHandled() {
+  return (0, _rxjs.of)({
+    type: 'LOGIN_LINK_HANDLED'
+  });
+};
+
 var loginLinkEpic = function loginLinkEpic(action$, state$) {
   return action$.pipe((0, _reduxObservable.ofType)(_reactReduxFirebase.actionTypes.LOGIN), (0, _operators.mergeMap)(function (_ref) {
     var auth = _ref.auth;
@@ -74,24 +88,37 @@ var loginLinkEpic = function loginLinkEpic(action$, state$) {
       }));
     }
 
-    return loginErrorHandled();
+    return loginLinkHandled();
   }));
 };
 
-var loginErrorEpic = function loginErrorEpic(action$, _ref2) {
-  var getFirebase = _ref2.getFirebase;
-  return action$.pipe((0, _reduxObservable.ofType)(_reactReduxFirebase.actionTypes.LOGIN_ERROR), (0, _operators.mergeMap)(function (_ref3) {
-    var authError = _ref3.authError;
+var loginErrorEpic = function loginErrorEpic(action$) {
+  return action$.pipe((0, _reduxObservable.ofType)(_reactReduxFirebase.actionTypes.LOGIN_ERROR), (0, _operators.mergeMap)(function (_ref2) {
+    var authError = _ref2.authError;
     if (!authError) return loginErrorHandled();
 
     if (authError.code === 'auth/account-exists-with-different-credential') {
-      var firebase = getFirebase();
+      var firebase = (0, _reactReduxFirebase.getFirebase)();
       var promise = firebase.auth().fetchSignInMethodsForEmail(authError.email);
-      return (0, _rxjs.from)(promise).pipe((0, _operators.map)(function (methods) {
+      return (0, _rxjs.from)(promise).pipe((0, _operators.mergeMap)(function (methods) {
         if (methods.includes('password')) {
           return (0, _rxjs.of)((0, _actions.setPage)('signIn'), (0, _reduxForm.change)('auth/signin', 'email', authError.email), (0, _actions.setLinkProviders)({
             linkProviders: true,
             credential: authError.credential
+          }));
+        } else {
+          return (0, _rxjs.of)((0, _actions.setLinkProviders)({
+            linkProviders: true,
+            credential: authError.credential
+          }), (0, _actions2.openDialog)({
+            id: 'account-exists',
+            component: function component(props) {
+              return _react.default.createElement(_AccountExistsDialog.default, _extends({
+                providerName: authError.credential.providerId,
+                email: authError.email,
+                methods: methods
+              }, props));
+            }
           }));
         }
 

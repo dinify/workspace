@@ -1,6 +1,6 @@
 {
     "apiKey": "AIzaSyDbAs09Zy_b2owf21P158aYFbS9Oqn6swY",
-    "authDomain": "dinify-ce07f.firebaseapp.com",
+    "authDomain": "auth.dinify.app",
     "databaseURL": "https://dinify-ce07f.firebaseio.com",
     "projectId": "dinify",
     "storageBucket": "dinify.appspot.com",

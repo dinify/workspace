@@ -45,6 +45,8 @@ var _actions = require("../../ducks/auth/actions");
 
 var _actions2 = require("../../ducks/ui/actions");
 
+var _FN = require("../../lib/FN");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -367,6 +369,7 @@ function (_React$Component) {
         className: classes && classes.grow
       }));
 
+      var mobile = (0, _FN.getPlatform)() !== 'desktop';
       return _react.default.createElement(_reactMotion.Motion, {
         defaultStyle: {
           x: 1
@@ -396,7 +399,7 @@ function (_React$Component) {
           onClick: function onClick() {
             return firebase.login({
               provider: 'google',
-              type: 'popup'
+              type: mobile ? 'redirect' : 'popup'
             });
           }
         })), _react.default.createElement("div", {
@@ -407,7 +410,7 @@ function (_React$Component) {
           onClick: function onClick() {
             return firebase.login({
               provider: 'facebook',
-              type: 'popup'
+              type: mobile ? 'redirect' : 'popup'
             });
           }
         })), direction === UP && separator), direction === UP && signupForm(style));

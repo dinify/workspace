@@ -22,6 +22,7 @@ import FacebookButton from '../FacebookButton';
 
 import { setPage, setShowPassword } from '../../ducks/auth/actions';
 import { openDialog as openDialogAction } from '../../ducks/ui/actions';
+import { getPlatform } from '../../lib/FN';
 
 const styles = theme => ({
   grow: {
@@ -264,6 +265,7 @@ class Fields extends React.Component {
       </div>
     );
 
+    const mobile = getPlatform() !== 'desktop';
     return (
       <Motion
         defaultStyle={{x: 1}}
@@ -284,10 +286,10 @@ class Fields extends React.Component {
               }}>
                 {direction === DOWN && separator}
                 <div style={{ paddingBottom: 16 }}>
-                  <GoogleButton onClick={() => firebase.login({ provider: 'google', type: 'popup' })} />
+                  <GoogleButton onClick={() => firebase.login({ provider: 'google', type: mobile ? 'redirect' : 'popup' })} />
                 </div>
                 <div style={{ paddingBottom: 16 }}>
-                  <FacebookButton onClick={() => firebase.login({ provider: 'facebook', type: 'popup' })} />
+                  <FacebookButton onClick={() => firebase.login({ provider: 'facebook', type: mobile ? 'redirect' : 'popup' })} />
                 </div>
                 {direction === UP && separator}
               </div>

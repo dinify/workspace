@@ -1,7 +1,10 @@
 // @flow
+import React from 'react';
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
+import { getFirebase } from 'react-redux-firebase';
+import AccountExistsDialog from '../../components/dialogs/AccountExistsDialog';
 
 import * as API from '../../api/user';
 // import { checkinInit } from 'ducks/restaurant/actions';
@@ -10,6 +13,7 @@ import { setCookie } from '../../lib/FN';
 import { actionTypes } from 'react-redux-firebase';
 import { change as changeForm } from 'redux-form';
 import { setPage, setLinkProviders } from './actions';
+import { openDialog } from '../ui/actions';
 
 const accessTokenEpic = (action$, state$) =>
   action$.pipe(
@@ -40,6 +44,10 @@ const loginErrorHandled = (error) => of(
   { type: 'LOGIN_ERROR_HANDLED', error }
 )
 
+const loginLinkHandled = () => of(
+  { type: 'LOGIN_LINK_HANDLED' }
+)
+
 const loginLinkEpic = (action$, state$) =>
   action$.pipe(
     ofType(actionTypes.LOGIN),
@@ -57,12 +65,12 @@ const loginLinkEpic = (action$, state$) =>
           catchError(error => loginErrorHandled(error))
         )
       }
-      return loginErrorHandled();
+      return loginLinkHandled();
     })
   );
 
 
-const loginErrorEpic = (action$: Observable, { getFirebase }) =>
+const loginErrorEpic = (action$: Observable) =>
   action$.pipe(
     ofType(actionTypes.LOGIN_ERROR),
     mergeMap(({ authError }) => {
@@ -71,7 +79,7 @@ const loginErrorEpic = (action$: Observable, { getFirebase }) =>
         const firebase = getFirebase();
         const promise = firebase.auth().fetchSignInMethodsForEmail(authError.email);
         return from(promise).pipe(
-          map((methods) => {
+          mergeMap((methods) => {
             if (methods.includes('password')) {
               return of(
                 setPage('signIn'),
@@ -79,6 +87,22 @@ const loginErrorEpic = (action$: Observable, { getFirebase }) =>
                 setLinkProviders({
                   linkProviders: true,
                   credential: authError.credential
+                })
+              );
+            }
+            else {
+              return of(
+                setLinkProviders({
+                  linkProviders: true,
+                  credential: authError.credential
+                }),
+                openDialog({
+                  id: 'account-exists',
+                  component: (props) => <AccountExistsDialog
+                    providerName={authError.credential.providerId}
+                    email={authError.email}
+                    methods={methods}
+                    {...props}/>
                 })
               );
             }
