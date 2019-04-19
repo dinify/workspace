@@ -2,6 +2,7 @@ node_modules
 .elasticbeanstalk
 .DS_Store
 /build
+.firebase/*
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
