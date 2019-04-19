@@ -1,9 +1,15 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
     "lib": ["es6"],
     "module": "commonjs",
     "noImplicitReturns": true,
-    "outDir": "lib",
+    "outDir": "dist",
     "sourceMap": true,
     "target": "es6",
     "allowSyntheticDefaultImports": true

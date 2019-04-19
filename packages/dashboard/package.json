@@ -9,7 +9,7 @@
     "start-dev": "react-scripts start",
     "start": "serve -s build",
     "build": "react-scripts build && cp build/index.html build/200.html",
-    "deploy": "react-scripts build && firebase deploy --only hosting:dinify-dashboard-0a2dc",
+    "deploy": "react-scripts build && firebase deploy --only hosting:dashboard",
     "test": "CI=true react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "coverage": "jest --coverage --env=jsdom",

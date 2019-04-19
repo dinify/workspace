@@ -1,4 +1,7 @@
 node_modules
+.firebase
+dist
 build/
 .DS_Store
 yarn.lock
+*.log

@@ -1,0 +1,26 @@
+{
+  "projects": {
+    "default": "dinify"
+  },
+  "targets": {
+    "dinify": {
+      "hosting": {
+        "admin": [
+          "dinify-admin-c0e7b"
+        ],
+        "dashboard": [
+          "dinify-dashboard-0a2dc"
+        ],
+        "landing": [
+          "dinify-ce07f"
+        ],
+        "waiterboard": [
+          "dinify-waiterboard-8b8f4"
+        ],
+        "app": [
+          "dinify-app-8ab42"
+        ]
+      }
+    }
+  }
+}
