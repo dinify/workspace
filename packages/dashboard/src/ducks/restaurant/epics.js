@@ -2,6 +2,7 @@
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
+import { reset } from 'redux-form';
 import * as R from 'ramda';
 import { actionTypes } from 'react-redux-firebase';
 import { setCookie } from '@dinify/common/dist/lib/FN';
@@ -156,6 +157,18 @@ const onUpdateSnackbarsEpic = (action$, state$) =>
     })
   );
 
+const resetCategoriesEpic = (action$: Observable) =>
+  action$.pipe(
+    ofType('CREATE_MENUCATEGORY_DONE'),
+    map(() => reset('menu/createCategory'))
+  );
+
+const resetMenuItemEpic = (action$: Observable) =>
+  action$.pipe(
+    ofType('CREATE_MENUITEM_DONE'),
+    map(() => reset('menu/createItem'))
+  );
+
 export default [
   loadRestaurant,
   bootstrapEpic,
@@ -164,5 +177,7 @@ export default [
   reorderEpic,
   editImageEpic,
   selectRestaurantEpic,
-  onUpdateSnackbarsEpic
+  onUpdateSnackbarsEpic,
+  resetCategoriesEpic,
+  resetMenuItemEpic
 ];
