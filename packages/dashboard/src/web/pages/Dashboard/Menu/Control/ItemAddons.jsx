@@ -33,18 +33,18 @@ const ItemAddons = ({
           }
         />
       ) : (
-        'No addon'
+        t('menu.noAddons')
       )}
       <AutoComplete
         dataSource={dataSource}
-        placeholder="Select addons here"
-        onChange={addonId =>
+        placeholder={(t('menu.selectAddons'))}
+        onChange={addon =>
           updateCusomizations({
             menuItemId: selectedFoodId,
             actionKind: 'ADD',
             custKey: 'addons',
-            custId: addonId,
-            cust: addonsMap[addonId],
+            custId: addon.value,
+            cust: addonsMap[addon.value],
           })
         }
       />

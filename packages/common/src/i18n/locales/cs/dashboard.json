@@ -69,7 +69,13 @@
     "addOption": "Přidat skupinu variant",
     "newChoice": "Název nové varianty",
     "newChoicePlaceholder": "např. Chléb",
-    "addChoice": "Přidat variantu"
+    "addChoice": "Přidat variantu",
+    "noIngredients": "Zatím žádné ingredience",
+    "noAddons": "Zatím žádné extra položky",
+    "noOptionGroups": "Zatím žádné varianty",
+    "selectIngredients": "Vyberte ingredience",
+    "selectAddons": "Vyberte extra položky",
+    "selectOptionGroups": "Vyberte varianty"
   },
   "nutrition": {
     "facts": "Nutriční údaje",

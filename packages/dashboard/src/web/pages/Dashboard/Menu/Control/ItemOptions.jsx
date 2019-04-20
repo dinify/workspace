@@ -61,21 +61,21 @@ const ItemOptions = ({
           ))}
         </div>
       ) : (
-        'No options'
+        t('menu.noOptions')
       )}
 
       <AutoComplete
         label="Options"
-        placeholder="Select options here"
+        placeholder={(t('menu.selectOptionGroups'))}
         dataSource={dataSource}
-        onChange={optionId =>
+        onChange={option =>
           updateCusomizations({
             menuItemId: selectedFoodId,
             actionKind: 'ADD',
             custKey: 'options',
-            custId: optionId,
+            custId: option.value,
             cust: {
-              ...R.find(R.propEq('id', optionId))(optionsList),
+              ...R.find(R.propEq('id', option.value))(optionsList),
               difference: { amount: '0', currency: 'KWD' },
             },
           })

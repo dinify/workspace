@@ -67,18 +67,18 @@ const ItemIngredients = ({
           ActionComponent={Excludability({ selectedFoodId, updateCusomizations })}
         />
       ) : (
-        'No ingredients'
+        t('menu.noIngredients')
       )}
       <AutoComplete
         dataSource={dataSource}
-        placeholder="Select ingredients here"
-        onChange={ingredientId =>
+        placeholder={(t('menu.selectIngredients'))}
+        onChange={ingredient =>
           updateCusomizations({
             menuItemId: selectedFoodId,
             actionKind: 'ADD',
             custKey: 'ingredients',
-            custId: ingredientId,
-            cust: ingredientsMap[ingredientId],
+            custId: ingredient.value,
+            cust: ingredientsMap[ingredient.value],
           })
         }
       />

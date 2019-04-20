@@ -34,7 +34,7 @@
     "step2": "2. Fill the name of a new service",
     "step3": "3. Click add button"
   },
-  "tableNumber": "Number of table",
+  "tableNumber": "Table number",
   "tableCapacity": "Table capacity",
   "addTable": "Add table",
   "add": "Add",
@@ -66,7 +66,13 @@
     "addOption": "Add Option group",
     "newChoice": "Name of new choice",
     "newChoicePlaceholder": "e.g. White bread",
-    "addChoice": "Add Choice"
+    "addChoice": "Add Choice",
+    "noIngredients": "No ingredients yet",
+    "noAddons": "No addons yet",
+    "noOptionGroups": "No option groups yet",
+    "selectIngredients": "Select ingredients",
+    "selectAddons": "Select addons",
+    "selectOptionGroups": "Vyberte option groups"
   },
   "nutrition": {
     "facts": "Nutrition facts",
