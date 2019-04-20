@@ -42,6 +42,11 @@ const RestaurantsSchema = new mongoose.Schema({
   langGroups: Object,
   targetLang: Number,
   targetLangRel: Number,
+
+  targetingFlags: {
+    type: Array,
+    default: []
+  },
   emailStatus: {
     type: String,
     enum : [

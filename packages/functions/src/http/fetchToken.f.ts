@@ -13,6 +13,9 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     const {
       restaurantId
     } = req.body;
+    if (!restaurantId) {
+      res.json({ error: 'required field missing' })  
+    } 
     Tokens.findOne({ restaurantId }, (err, token) => {
       if (err) res.json({ error: err });
       if (token) {
