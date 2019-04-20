@@ -41,7 +41,27 @@ const RestaurantsSchema = new mongoose.Schema({
   langDist: Object,
   langGroups: Object,
   targetLang: Number,
-  targetLangRel: Number
+  targetLangRel: Number,
+  emailStatus: {
+    type: String,
+    enum : [
+      'NULL',
+      'EMAIL_SENT',
+      'EMAIL_OPENED',
+      'EMAIL_CLICKED'
+    ],
+    default: 'NULL'
+  },
+  onboardingStatus: {
+    type: String,
+    enum : [
+      'NULL',
+      'LANDED',
+      'SIGNEDUP',
+      'REGISTERED'
+    ],
+    default: 'NULL'
+  }
 });
 RestaurantsSchema.index({ location_id: 1 }, { unique: true });
 RestaurantsSchema.index({ name: 'text' });
