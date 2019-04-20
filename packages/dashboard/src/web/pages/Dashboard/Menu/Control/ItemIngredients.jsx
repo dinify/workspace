@@ -44,14 +44,15 @@ const ItemIngredients = ({
   selectedFoodId,
   ingredientsMap,
   menuItems,
-  updateCusomizations
+  updateCusomizations,
+  t
 }) => {
   const ingredientsList = FN.MapToList(ingredientsMap);
   const dataSource = ingredientsList.map(o => ({ value: o.id, label: o.name }));
   const selectedFood = menuItems[selectedFoodId];
   return (
     <div style={{ marginBottom: 30 }}>
-      <Label>Ingredients</Label>
+      <Label>{t('menu.ingredients')}</Label>
       {selectedFood.ingredients ? (
         <ListOfCustomizations
           list={FN.MapToList(selectedFood.ingredients)}

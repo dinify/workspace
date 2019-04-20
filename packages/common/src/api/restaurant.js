@@ -213,7 +213,7 @@ export function ChangeHours(payload) {
 //  return Post({ path: `restaurant/${restaurantId}/shop` }, { login_id, pass_enc, name })
 //}
 
-export function CreateRestaurant({ restaurantName, subdomain }) {
+export function CreateRestaurant({ restaurantName, subdomain, language }) {
   return Post(
     {
       path: 'restaurant/create'
@@ -221,6 +221,7 @@ export function CreateRestaurant({ restaurantName, subdomain }) {
     {
       name: restaurantName,
       subdomain,
+      language
     },
   );
 }

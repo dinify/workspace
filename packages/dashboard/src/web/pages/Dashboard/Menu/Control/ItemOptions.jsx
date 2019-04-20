@@ -24,6 +24,7 @@ const ItemOptions = ({
   selectedFoodId,
   updateCusomizations,
   menuItems,
+  t
 }) => {
   const optionsList = FN.MapToList(optionsMap);
   const dataSource = optionsList.map(o => ({ value: o.id, label: o.name }));
@@ -31,7 +32,7 @@ const ItemOptions = ({
   console.log(selectedFood.options, 'optionsList');
   return (
     <div style={{ marginBottom: 30 }}>
-      <Label>Options</Label>
+      <Label>{t('menu.optionGroups')}</Label>
 
       {selectedFood.options ? (
         <div>

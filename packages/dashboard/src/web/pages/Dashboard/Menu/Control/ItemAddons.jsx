@@ -11,14 +11,15 @@ const ItemAddons = ({
   addonsMap,
   menuItems,
   selectedFoodId,
-  updateCusomizations
+  updateCusomizations,
+  t
 }) => {
   const addonsList = FN.MapToList(addonsMap);
   const dataSource = addonsList.map(o => ({ value: o.id, label: o.name }));
   const selectedFood = menuItems[selectedFoodId];
   return (
     <div>
-      <Label>Addons</Label>
+      <Label>{t('menu.addons')}</Label>
       {selectedFood.addons ? (
         <ListOfCustomizations
           list={FN.MapToList(selectedFood.addons)}

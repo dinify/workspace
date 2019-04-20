@@ -6,8 +6,9 @@ import { Field, reduxForm } from 'redux-form';
 import queryString from 'query-string';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
+import Select from 'web/components/MaterialInputs/Select';
 import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@dinify/common/dist/components/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -15,7 +16,6 @@ import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import { MapToList, getInitials } from '@dinify/common/dist/lib/FN';
-
 
 import {
   registerRestaurant,
@@ -74,6 +74,23 @@ let RegistrationForm = ({ handleSubmit }) => {
           margin: 'normal',
         }}
       />
+      <div style={{height: 20}}></div> 
+      <Field
+        name="language"
+        component={Select}
+        options={ [
+          {label: 'English', value: 'en'},
+          {label: 'Čeština', value: 'cs'},
+        ]}
+        componentProps={{
+          label: 'We will translate your menu from this language', 
+          fullWidth: true,
+          margin: 'normal'
+        }}
+      />
+      <Typography variant="caption">
+        If you can create your menu in English, we recommend to keep English here to ensure more accurate translations
+      </Typography>   
       <Button type="submit" color="primary" variant="outlined" fullWidth={true} style={{marginTop: 20}}>
         REGISTER
       </Button>
@@ -95,7 +112,8 @@ class RegisterRestaurant extends React.Component {
     const params = queryString.parse(location.search) || {};
     const initialValues = {
       restaurantName: params.restaurantName || '',
-      subdomain: params.name || ''
+      subdomain: params.name || '',
+      language: 'en'
     };
     if (auth.isEmpty) setOngoingRegistration(true);
     else setOngoingRegistration(false);
@@ -155,7 +173,8 @@ class RegisterRestaurant extends React.Component {
               initialValues={this.state.initialValues}
               onSubmit={(fields) => registerRestaurant({
                 restaurantName: fields.restaurantName,
-                subdomain: createSubdomain(fields.subdomain)
+                subdomain: createSubdomain(fields.subdomain),
+                language: fields.language
               })}
             />
           </CardContent>

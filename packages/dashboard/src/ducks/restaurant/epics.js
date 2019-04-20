@@ -77,7 +77,8 @@ const registerRestaurantEpic = (action$, state$, { getFirebase }) =>
   action$.pipe(
     ofType('REGISTER_RESTAURANT_INIT'),
     switchMap(
-      ({ payload: { restaurantName, subdomain } }) => from(API.CreateRestaurant({ restaurantName, subdomain })),
+      ({ payload: { restaurantName, subdomain, language } }) => 
+        from(API.CreateRestaurant({ restaurantName, subdomain, language })),
       (action, res) => (res)
     ),
     switchMap(
