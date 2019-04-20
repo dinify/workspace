@@ -25,7 +25,6 @@ import diff from 'object-diff'
 const languages = R.mergeAll(
   languagesArray.map((el) => {
     let key = el[0];
-    if (key === 'zh-Hans') key = 'zh-cn';
     return {[key]: {
       code: el[0],
       langEn: el[1],
@@ -34,21 +33,8 @@ const languages = R.mergeAll(
     }
   }})
 );
-console.log(languages);
 
 const brackets = (str) => `(${str})`
-
-const autocompleteData = MapToList(languages)
-  .map(o => ({
-    value: o.code,
-    label: `${o.langEn} ${o.langLoc !== o.langEn ? brackets(o.langLoc) : ''}`
-  }))
-  .sort((a, b) => {
-    if(a.label < b.label) { return -1; }
-    if(a.label > b.label) { return 1; }
-    return 0;
-  });
-console.log(autocompleteData);
 
 const SolidContainer = styled.div`
   min-width: 800px;
@@ -102,9 +88,26 @@ class Translations extends React.Component {
       locales,
       byType,
       defaultByType
-    }, classes, addLocale, selectLocale, selectedLocale, pushTranslation } = this.props;
+    }, classes, addLocale, selectLocale, selectedLocale, pushTranslation, supportedLanguages } = this.props;
     const { tabIndex } = this.state;
 
+    const autocompleteData = supportedLanguages
+    .map(o => {
+      const l = languages[o];
+      if (!l) return {};
+      return {
+        value: o,
+        langEn: l.langEn,
+        langLoc: l.langLoc,
+        label: `${l.langEn} ${l.langLoc !== l.langEn ? brackets(l.langLoc) : ''}`
+      }
+    })
+    .filter((o) => o.value)
+    .sort((a, b) => {
+      if (a.label < b.label) return -1;
+      if (a.label > b.label) return 1;
+      return 0;
+    });
 
     return (
       <SolidContainer>
@@ -138,7 +141,7 @@ class Translations extends React.Component {
                   placeholder="Select language"
                   outlined
                   onChange={locale =>
-                    locale && addLocale({locale})
+                    locale && addLocale({locale: locale.value})
                   }
                 />
               </div>
@@ -225,7 +228,8 @@ const translationsSelector = createSelector(
 export default connect(
   state => ({
     translations: translationsSelector(state),
-    selectedLocale: state.translation.selectedLocale
+    selectedLocale: state.translation.selectedLocale,
+    supportedLanguages: state.restaurant.languages
   }),
   {
     addLocale,

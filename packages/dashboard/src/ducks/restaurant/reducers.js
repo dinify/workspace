@@ -20,7 +20,8 @@ const initialState = {
   },
   ongoingRegistration: false,
   selectedRestaurant: null,
-  managedRestaurants: []
+  managedRestaurants: [],
+  languages: ['en', 'cs']
 };
 
 export default function reducer(state: State = initialState, action) {
@@ -33,6 +34,8 @@ export default function reducer(state: State = initialState, action) {
       );
     case 'SELECT_RESTAURANT':
       return R.assoc('selectedRestaurant', action.payload.id)(state);
+    case 'FETCH_LANGUAGES_DONE':
+      return R.assoc('languages', action.payload.res)(state);
     case 'FETCH_MANAGEDRESTAURANTS_DONE':
       return R.assoc('managedRestaurants', action.payload.res)(state);
     case 'PREFILL_RESTAURANTNAME':
