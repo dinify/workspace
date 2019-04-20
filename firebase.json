@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "admin",
-      "public": "build",
+      "public": "packages/admin/build",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -32,7 +32,7 @@
     },
     {
       "target": "dashboard",
-      "public": "build",
+      "public": "packages/dashboard/build",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -47,7 +47,7 @@
     },
     {
       "target": "landing",
-      "public": "build",
+      "public": "packages/landing/build",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -62,7 +62,7 @@
     },
     {
       "target": "waiterboard",
-      "public": "build",
+      "public": "packages/waiterboard/build",
       "ignore": [
         "firebase.json",
         "**/.*",

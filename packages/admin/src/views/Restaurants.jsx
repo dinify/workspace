@@ -130,14 +130,14 @@ const useFields = [
     filterable: false
   },
   {
-    Header: "Ko",
+    Header: "KO",
     accessor: "langDist.ko.count",
-    filterable: false
+    filterable: false,
   },
   {
     Header: "CN",
     accessor: "langDist.zhCN.count",
-    filterable: false
+    filterable: false,
   },
   {
     Header: "TW",
@@ -170,8 +170,8 @@ const useFields = [
     filterable: false
   },
   {
-    Header: "Rating",
-    accessor: "rating",
+    Header: "Email",
+    accessor: "email",
     filterable: false
   },
 //  {
@@ -187,7 +187,8 @@ const useFields = [
 //    accessor: "phone"
 //  }
 ].map((o) => {
-  o.minResizeWidth = 40;
+  if (!o.minResizeWidth) o.minResizeWidth = 40;
+  if (o.accessor.includes('langDist')) o.width = 50;
   return o;
 });
 
@@ -223,6 +224,19 @@ const getCount = async (query) => {
     },
     body: JSON.stringify({
       query
+    })
+  });
+  const body = await response.json();
+  return body;
+}
+const assignFlag = async ({ restaurantId, flag, unassign}) => {
+  const response = await fetch(`${functionsEndpoint}/assignFlag`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      restaurantId, flag, unassign
     })
   });
   const body = await response.json();
@@ -367,15 +381,47 @@ class ReactTables extends Component {
       .catch(err => console.log(err));
   }
 
+
   componentDidMount() {
     this.loadData();
+  }
+
+  handleFlag = ({ restaurantId, flag, unassign }) => {
+    
+    assignFlag({ restaurantId, flag, unassign })
+      .then(res => {
+        console.log(res)
+        let data = this.state.data;
+        const i = _.findIndex(data, {_id: restaurantId});
+        if (!unassign) data[i].targetingFlags = ['SELECTION1'];
+        else data[i].targetingFlags = []
+        this.setState({data})
+      })
+      .catch(err => console.log(err));    
   }
 
   makeTableData = (data, useFields) => {
     return data.map((prop, key) => {
       const values = _.pick(prop, _.map(useFields,'accessor'));
+      let flagged = false;
+      if (prop.targetingFlags && prop.targetingFlags.includes('SELECTION1')) {
+        flagged = true;
+      }
       const obj = {
         id: prop._id || key,
+        flags: (
+        <Button
+          color={flagged ? "success" : "default"}
+          size="sm"            
+          onClick={() => this.handleFlag({
+            restaurantId: prop._id,
+            flag: 'SELECTION1',
+            unassign: flagged ? true : false
+          })}
+        >
+          {flagged ? "Flagged" : "Flag"}
+        </Button>
+        ),
         actions: (
           // we've added some custom button actions
           <div className="actions-right">
@@ -454,13 +500,19 @@ class ReactTables extends Component {
                 <CardBody>
                   <ReactTable
                     columns={[
-                      ...useFields,
                       {
                         Header: "Actions",
                         accessor: "actions",
                         sortable: false,
                         filterable: false
-                      }
+                      },
+                      {
+                        Header: "Flags",
+                        accessor: "flags",
+                        sortable: false,
+                        filterable: false
+                      },
+                      ...useFields
                     ]}
                     manual // Forces table not to paginate or sort automatically, so we can handle it server-side
                     data={this.makeTableData(data, useFields)}

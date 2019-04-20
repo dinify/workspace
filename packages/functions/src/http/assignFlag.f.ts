@@ -10,7 +10,8 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
   cors(req, res, () => {
     const {
       restaurantId,
-      flag
+      flag,
+      unassign = false
     } = req.body;
 
     if (!restaurantId || !flag) {
@@ -24,11 +25,15 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       (e) => {
         if (e) console.log(e);
 
+        let updObj = {};
+        if (unassign) updObj = { $pull: { targetingFlags: flag } };
+        else updObj = { $push: { targetingFlags: flag } };
+
         Restaurants.update(
-          { _id: restaurantId }, 
-          { $push: { targetingFlags: flag } },
-          (e) => {
-            res.json({ error: e })        
+          { _id: restaurantId },
+          updObj,
+          (err) => {
+            res.json({ error: err })
           }
         );        
 
