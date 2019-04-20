@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import Tokens from "../models/Tokens";
-import UIDGenerator from 'uid-generator';
 
+const UIDGenerator = require('uid-generator');
 const uidgen = new UIDGenerator();
 
 const cors = require('cors')({
