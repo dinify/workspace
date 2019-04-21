@@ -17,9 +17,8 @@ import { openDialog } from '../ui/actions';
 
 const accessTokenEpic = (action$, state$) =>
   action$.pipe(
-    filter(action => {
-      const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE];
-      return triggerOn.includes(action.type);
+    filter(({ type }) => {
+      return type.includes('@@reactReduxFirebase');
     }),
     mergeMap(() => {
       const auth = state$.value.firebase.auth;

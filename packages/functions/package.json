@@ -9,7 +9,8 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "worker": "npm run build && node src/workers/index"
+    "worker": "npm run build && node src/workers/index",
+    "script": "ts-node src/workers/script.ts"
   },
   "engines": {
     "node": "8"
