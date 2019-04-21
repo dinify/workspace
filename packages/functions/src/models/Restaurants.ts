@@ -47,6 +47,10 @@ const RestaurantsSchema = new mongoose.Schema({
     type: Array,
     default: []
   },
+  emailStatuses: {
+    type: Array,
+    default: [] // array of objects {event, timestamp}
+  }
   emailStatus: {
     type: String,
     enum : [
