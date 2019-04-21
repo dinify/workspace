@@ -37,7 +37,7 @@
   .button.filled.dark > table tr td {
     background-color: rgba(255, 255, 255, 0.06);
   }
-  
+
   .horizontal {
     padding-left: 16px;
     padding-right: 16px;
@@ -143,6 +143,7 @@
     font-weight: 400;
     line-height: 24px;
     letter-spacing: 0.015625rem;
+    min-width: 42px;
   }
   .percentBarBackground {
 		color:rgba(0,0,0,0.72);

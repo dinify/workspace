@@ -8,7 +8,7 @@
       <mj-accordion-title padding="0px"/>
       <mj-accordion-text mj-class="body1" padding="0px"/>
     </mj-attributes>
-    <mj-preview></mj-preview>
+    <mj-preview>${preview}</mj-preview>
   </mj-head>
   <mj-body width="480px" background-color="transparent">
 		<mj-wrapper css-class="card">
@@ -19,7 +19,7 @@
         </mj-column>
         <mj-column width="64%">
           <mj-text mj-class="headline6" color="#fff">A restaurant menu that speaks multiple languages</mj-text>
-          <mj-button href="https://google.com/" 
+          <mj-button href="${link}"
                      align="left"
                      mj-class="outlined"
                      padding-bottom="8px"
@@ -31,10 +31,10 @@
       <mj-section>
         <mj-column>
           <mj-text mj-class="body1">
-            Dear Korea Grill,
+            Dear ${restaurant.name},
           </mj-text>
           <mj-text mj-class="body2">
-            Did you know, that as of today you have <b>2,793 reviews</b> on TripAdvisor and <b>58%</b> of them are written in many different languages other than Czech or English?
+            Did you know, that as of today you have <b>${stats.targetCount} reviews</b> on TripAdvisor and <b>${stats.targetPercent}</b> of them are written in many different languages other than Czech or English?
           </mj-text>
         </mj-column>
       </mj-section>
@@ -51,68 +51,68 @@
       <mj-section>
         <mj-column>
         	<mj-text mj-class="body2">
-        		Here is what we found among all your reviews at Korea Grill. The following chart shows the ditribution of languages and the corresponding count of reviews.
+        		Here is what we found among all your reviews at ${restaurant.name}. The following chart shows the ditribution of languages and the corresponding count of reviews.
           </mj-text>
-          <mj-table padding="0px" padding-top="16px">	
+          <mj-table padding="0px" padding-top="16px">
             <col width="32">
-            <col width="64">
+            <col width="72">
             <tr style="border-bottom: 8px solid transparent">
-              <td style="font-size: 24px">🇮🇹</td>
-							<td>Italian</td>
+              <td style="font-size: 24px">${stats.langDist[0].emoji}</td>
+							<td>${stats.langDist[0].language}</td>
               <td class="percentBarContainer">
               	<div class="percentBarBackground">
-                	657
+                	${stats.langDist[0].count}
                 </div>
-                <div style="width:80%" class="percentBar">
-                   24%
+                <div style="width:${stats.langDist[0].ratio}" class="percentBar">
+                   ${stats.langDist[0].percent}
                 </div>
               </td>
             </tr>
             <tr style="border-bottom: 8px solid transparent">
-              <td style="font-size: 24px">🇪🇸</td>
-              <td>Spanish</td>
+              <td style="font-size: 24px">${stats.langDist[1].emoji}</td>
+							<td>${stats.langDist[1].language}</td>
               <td class="percentBarContainer">
               	<div class="percentBarBackground">
-                	438
+                	${stats.langDist[1].count}
                 </div>
-                <div style="width:53%" class="percentBar">
-                   16%
+                <div style="width:${stats.langDist[1].ratio}" class="percentBar">
+                   ${stats.langDist[1].percent}
                 </div>
               </td>
             </tr>
             <tr style="border-bottom: 8px solid transparent">
-              <td style="font-size: 24px">🇩🇪</td>
-              <td>German</td>
+              <td style="font-size: 24px">${stats.langDist[2].emoji}</td>
+							<td>${stats.langDist[2].language}</td>
               <td class="percentBarContainer">
               	<div class="percentBarBackground">
-                	274
+                	${stats.langDist[2].count}
                 </div>
-                <div style="width:33%" class="percentBar">
-                   10%
+                <div style="width:${stats.langDist[2].ratio}" class="percentBar">
+                   ${stats.langDist[2].percent}
                 </div>
               </td>
             </tr>
             <tr style="border-bottom: 8px solid transparent">
-              <td style="font-size: 24px">🇵🇹</td>
-              <td>Portugese</td>
+              <td style="font-size: 24px">${stats.langDist[3].emoji}</td>
+							<td>${stats.langDist[3].language}</td>
               <td class="percentBarContainer">
               	<div class="percentBarBackground">
-                	219
+                	${stats.langDist[3].count}
                 </div>
-                <div style="width:27%" class="percentBar">
-                   8%
+                <div style="width:${stats.langDist[3].ratio}" class="percentBar">
+                   ${stats.langDist[3].percent}
                 </div>
               </td>
             </tr>
             <tr style="border-bottom: 8px solid transparent">
-              <td style="font-size: 24px">🇨🇳</td>
-              <td>Chinese</td>
+              <td style="font-size: 24px">${stats.langDist[4].emoji}</td>
+							<td>${stats.langDist[4].language}</td>
               <td class="percentBarContainer">
               	<div class="percentBarBackground">
-                	137
+                	${stats.langDist[4].count}
                 </div>
-                <div style="width:10%" class="percentBar">
-                   5%
+                <div style="width:${stats.langDist[4].ratio}" class="percentBar">
+                   ${stats.langDist[4].percent}
                 </div>
               </td>
             </tr>
@@ -125,7 +125,7 @@
         </mj-column>
       </mj-section>
       <mj-section>
-        
+
         <mj-column>
           <mj-accordion>
           <mj-accordion-element>

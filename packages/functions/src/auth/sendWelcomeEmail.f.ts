@@ -2,6 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as path from "path";
 import { readFileSync } from "fs";
+import * as mail from '../util/mail';
 
 const mjml2html = require("mjml");
 const sendgrid = require("@sendgrid/mail");
@@ -30,22 +31,12 @@ exports = module.exports = functions
     };
     const variables = {
         user,
-        verification_link: link,
-        ...msg
+        verification_link: link
     };
 
-    const templatePath = path.resolve("templates", "Verification.mjml");
-    const template = readFileSync(templatePath).toString();
-
-    const html = mjml2html(template, {
-        filePath: templatePath
-    }).html;
-
-    // Use ES6 template literals
-    const substituted = new Function("return `" + html.split("${").join("${this.") + "`;").call(variables);
-
-    return sendgrid.send({
-        html: substituted,
-        ...msg
+    const html = mail.generate(msg, variables, "Verification");
+    return mail.send({
+      html,
+      ...msg
     });
 });
