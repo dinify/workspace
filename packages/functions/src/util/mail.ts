@@ -10,7 +10,7 @@ export function send(msg){
 
 export function generate(msg, substitutions, templateName) {
   // Use ES6 template literals
-  const substitute = (string, variables) => new Function("return `" + string.split("${").join("${this.") + "`;").call(variables);
+  const substitute = (string, vars) => new Function("return `" + string.split("${").join("${this.") + "`;").call(vars);
 
   const variables = {
       ...substitutions,

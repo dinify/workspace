@@ -25,7 +25,7 @@ const doIt = (limit, page) => {
     } else {
       console.log('done');
     }
-  })
+  }).catch(console.log)
 }
 
 

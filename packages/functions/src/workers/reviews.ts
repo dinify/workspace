@@ -56,7 +56,7 @@ const doIt = (limit, page) => {
           langDistForRestaurant(restaurant, cb);
         });
       },
-      (e) => {
+      (err) => {
         if (restaurants.length) {
           doIt(limit, page + 1)
         } else {

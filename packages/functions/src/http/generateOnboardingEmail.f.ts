@@ -11,6 +11,8 @@ const cors = require('cors')({
   origin: true,
 });
 
+const formatPercent = (percent, decimals = 1) => `${Math.floor(percent * Math.pow(10, decimals + 2)) / Math.pow(10, decimals)}%`;
+
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {
@@ -22,7 +24,6 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     Restaurants.find(query).sort(sort).skip(skip).limit(limit).exec((e, result) => {
       if (!e) {
         const process = result[req.query.offset];
-        const formatPercent = (percent, decimals = 1) => `${Math.floor(percent * Math.pow(10, decimals + 2)) / Math.pow(10, decimals)}%`;
         let langDist = Object.keys(process.langDist).map(key => {
           return {
             lang: key,
@@ -45,25 +46,25 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         }));
 
         const msg = {
-            to: {
-                email: "hello@dinify.app" // process.email
-            },
-            from: {
-                email: "hello@dinify.app",
-                name: "Dinify"
-            },
-            subject: "Get started with Dinify"
+          to: {
+              email: "hello@dinify.app" // process.email
+          },
+          from: {
+              email: "hello@dinify.app",
+              name: "Dinify"
+          },
+          subject: "Get started with Dinify"
         };
         const variables = {
-            restaurant: {
-              name: process.name,
-            },
-            stats: {
-              langDist,
-              targetCount: process.targetLang,
-              targetPercent: formatPercent(process.targetLangRel)
-            },
-            link: 'https://dashboard.dinify.app'
+          restaurant: {
+            name: process.name,
+          },
+          stats: {
+            langDist,
+            targetCount: process.targetLang,
+            targetPercent: formatPercent(process.targetLangRel)
+          },
+          link: 'https://dashboard.dinify.app'
         };
         const html = mail.generate(msg, variables, "RestaurantOnboarding");
 

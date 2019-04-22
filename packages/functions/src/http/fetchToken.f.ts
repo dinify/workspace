@@ -8,30 +8,30 @@ const cors = require('cors')({
   origin: true,
 });
 
+const fetchToken = ({ restaurantId }) => new Promise((resolve, reject) => {
+  if (!restaurantId) reject('restaurantId required');
+  Tokens.findOne({ restaurantId }, (err, token) => {
+    if (err) reject(err);
+    if (token) resolve(token);
+    else {
+      Tokens.create({
+        restaurantId,
+        token: uidgen.generateSync()
+      }, (e, result) => {
+        if (result) resolve(result)
+        else reject(e)
+      });
+    }
+  });
+})
+
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
-    const {
-      restaurantId
-    } = req.body;
-    if (!restaurantId) {
-      res.json({ error: 'required field missing' })  
-    } 
-    Tokens.findOne({ restaurantId }, (err, token) => {
-      if (err) res.json({ error: err });
-      if (token) {
-        res.json({ error: null, result: token })
-      } else {
-        Tokens.create({
-          restaurantId,
-          token: uidgen.generateSync()
-        }, (e, result) => {
-          if (e) {
-            res.json({ error: e })
-          } else {
-            res.json({ error: null, result: result })
-          }
-        });
-      }
-    });
+    const { restaurantId } = req.body;
+
+    fetchToken({ restaurantId })
+      .then((token) => res.json({ error: null, result: token }))
+      .catch((e) => res.json({ error: e }))
+
   });
 });
