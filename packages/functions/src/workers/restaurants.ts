@@ -1,4 +1,4 @@
-import * as taAPI from 'clients/ta';
+import * as taAPI from '../clients/ta';
 import Restaurants from '../models/Restaurants';
 import async from 'async';
 
@@ -25,7 +25,7 @@ const doIt = (limit, page) => {
     } else {
       console.log('done');
     }
-  })
+  }).catch(console.log)
 }
 
 

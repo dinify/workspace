@@ -1,4 +1,4 @@
-import * as taAPI from 'clients/ta';
+import * as taAPI from '../clients/ta';
 import Restaurants from '../models/Restaurants';
 import Reviews from '../models/Reviews';
 import async from 'async';
@@ -60,8 +60,8 @@ export const langDistForRestaurant = (restaurant, cb) => {
     Restaurants.update(
       {location_id: restaurant.location_id},
       updObj,
-      (e) => {
-        if (e) console.log(e);
+      (err) => {
+        if (err) console.log(err);
         //else console.log('saved');
         cb();
       }
@@ -79,7 +79,7 @@ const doIt = (limit, page) => {
     eachOf(
       restaurants,
       (restaurant, key, cb) => langDistForRestaurant(restaurant, cb),
-      (e) => {
+      (err) => {
         if (restaurants.length) {
           doIt(limit, page + 1)
         } else {

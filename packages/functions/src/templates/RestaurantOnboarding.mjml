@@ -31,10 +31,10 @@
       <mj-section>
         <mj-column>
           <mj-text mj-class="body1">
-            Dear ${restaurant.name},
+            Zdravíme do ${restaurant.name},
           </mj-text>
           <mj-text mj-class="body2">
-            Did you know, that as of today you have <b>${stats.targetCount} reviews</b> on TripAdvisor and <b>${stats.targetPercent}</b> of them are written in many different languages other than Czech or English?
+            Věděli jste, že ${stats.targetPercent} rece TripAdvisoru je od zahraničních návštěvníků, kteří nemluví česky ani anglicky?
           </mj-text>
         </mj-column>
       </mj-section>
@@ -45,13 +45,13 @@
       </mj-section>
 			<mj-section>
         <mj-column>
-        	<mj-text mj-class="headline5" align="center">A little more insights</mj-text>
+        	<mj-text mj-class="headline5" align="center">Když se podíváme hlouběji…s</mj-text>
         </mj-column>
       </mj-section>
       <mj-section>
         <mj-column>
         	<mj-text mj-class="body2">
-        		Here is what we found among all your reviews at ${restaurant.name}. The following chart shows the ditribution of languages and the corresponding count of reviews.
+            Zde je přehled jazyků, které se v recenzích vaší restaurace nejčastěji objevují:
           </mj-text>
           <mj-table padding="0px" padding-top="16px">
             <col width="32">
@@ -129,26 +129,26 @@
         <mj-column>
           <mj-accordion>
           <mj-accordion-element>
-            <mj-accordion-title mj-class="subtitle1" color="#c13939">What does this mean?</mj-accordion-title>
+            <mj-accordion-title mj-class="subtitle1" color="#c13939">Co to pro vás znamená?</mj-accordion-title>
             <mj-accordion-text mj-class="body2">
               <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-                The large number of reviews tells you that your restaurant is already popular internationally and on the want-to-go list of many travelers to Prague. So, it's time to think how to make your business even better.
+                Velký počet hodnocení naznačuje, že je vaše restaurace mezinárodně známá, a je žádaným místem pro spoustu zahraničních hostů. Přicházíme s řešením, které vylepší jejich zážitek u vás, a vaší restauraci výrazně zvýší prestiž.
               </span>
             </mj-accordion-text>
           </mj-accordion-element>
           <mj-accordion-element>
-            <mj-accordion-title mj-class="subtitle1" color="#c13939">What would you do?</mj-accordion-title>
+            <mj-accordion-title mj-class="subtitle1" color="#c13939">Jak?</mj-accordion-title>
             <mj-accordion-text mj-class="body2">
               <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-                Giving them a <b>delightful experience</b> with <b>great food</b>, which you already have, and <b>great service</b> will enable you to continue your successful business journey. That's why we want to come and help you achieve more and further improve customer service.
+                Servírováním <b>příjemného zážitku</b> v podobě <b>skvělého menu</b>, které už máte, a <b>perfektních služeb</b>, vám dovolí pokračovat na vaší úspěšné cestě. Chceme s vámi spolupracovat právě proto, abychom tyto služby zdokonalili.
               </span>
             </mj-accordion-text>
           </mj-accordion-element>
           <mj-accordion-element>
-            <mj-accordion-title mj-class="subtitle1" color="#c13939">Build an awesome first impression</mj-accordion-title>
+            <mj-accordion-title mj-class="subtitle1" color="#c13939">Vytvořte dokonalý první dojem</mj-accordion-title>
             <mj-accordion-text mj-class="body2">
               <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-                You always try to give a nice first impressions to your guests. Great decoration, comfortable chair, smiling wait staff and lovely music.
+                Zákazníci vždy dají na první dojem. Příjemné prostředí, pohodlné židle, usměvavý personál, líbivá hudba, vše v harmonii. My přidáváme k této zkušenosti něco navíc. Představte si, že cestujete do zahraničí, řekněme Shanghai, nebo Istanbul. Posadíte se v restauraci s místní kuchyní, přijde za vámi číšník a se slovy „Dobrý den!“ vám podá jídelní lístek, psaný v češtině! Váš zážitek by musel začít hodnocením pěti hvězdiček.
               </span>
             </mj-accordion-text>
           </mj-accordion-element>
@@ -162,7 +162,7 @@
       </mj-section>
       <mj-section>
         <mj-column>
-        	<mj-text mj-class="caption" align="center">Dinify is an interactive multilingual menu app.</mj-text>
+        	<mj-text mj-class="caption" align="center">Dinify je chytré multijazyčné menu ve vašem smartphonu.</mj-text>
         </mj-column>
       </mj-section>
       <mj-section>
@@ -172,7 +172,7 @@
       </mj-section>
       <mj-section>
         <mj-column>
-        	<mj-text mj-class="headline4" align="left">Partner with us</mj-text>
+        	<mj-text mj-class="headline4" align="left">Připojte se k restauracím, které díky Dinify dobře rozumí svým hostům</mj-text>
         </mj-column>
       </mj-section>
       <mj-section>

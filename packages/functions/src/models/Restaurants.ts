@@ -47,25 +47,37 @@ const RestaurantsSchema = new mongoose.Schema({
     type: Array,
     default: []
   },
+  emailStatuses: {
+    type: Array,
+    default: [] // array of objects {event, timestamp}
+  },
   emailStatus: {
     type: String,
     enum : [
-      'NULL',
-      'EMAIL_SENT',
-      'EMAIL_OPENED',
-      'EMAIL_CLICKED'
+      'null',
+      'processed',
+      'dropped',
+      'delivered',
+      'deferred',
+      'bounce',
+      'open',
+      'click',
+      'spamreport',
+      'unsubscribe',
+      'group_unsubscribe',
+      'group_resubscribe'
     ],
-    default: 'NULL'
+    default: 'null'
   },
   onboardingStatus: {
     type: String,
     enum : [
-      'NULL',
-      'LANDED',
-      'SIGNEDUP',
-      'REGISTERED'
+      'null',
+      'landed',
+      'signedup',
+      'registered'
     ],
-    default: 'NULL'
+    default: 'null'
   }
 });
 RestaurantsSchema.index({ location_id: 1 }, { unique: true });
