@@ -9,9 +9,11 @@
   <mj-column padding="0px 16px" />
   <mj-section padding="8px 0px" />
   <mj-button padding="0px"
+             css-class="btn-link"
              border-radius="4px"
-             inner-padding="0px 16px"
-             height="36px"/>
+             line-height="36px"
+             height="36px"
+             inner-padding="0px 16px"/>
   <mj-class name="logo-text"
             letter-spacing="2px"
             font-size="16px"/>
@@ -35,17 +37,25 @@
             container-background-color="transparent"
             border="1px solid rgba(255, 255, 255, 0.38)"
             color="#fff"/>
+  <mj-class name="primary"
+            background-color="#c13939"
+            color="#fff"/>
   <mj-class name="filled"
             background-color="transparent"
             container-background-color="transparent"
             color="rgba(0, 0, 0, 0.72)"
             css-class="button filled"/>
+  <mj-class name="surface"
+            border="1px solid rgba(0, 0, 0, 0.12)"
+            background-color="#fff"
+            border-radius="4px"/>
   
   <mj-class 
         name="headline4"
         font-size="2.201334635416666rem"
         font-family="Google Sans"
         font-weight="500"
+        line-height="45px"
         letter-spacing="0.015625rem"
         padding-top="0.125rem"
         padding-bottom="0.0625rem"/>
@@ -54,12 +64,14 @@
         font-size="1.5538832720588232rem"
         font-family="Google Sans"
         font-weight="700"
+        line-height="32px"
         letter-spacing="0rem"/>
       <mj-class 
         name="headline6"
         font-size="1.2949027267156863rem"
         font-family="Google Sans"
         font-weight="700"
+        line-height="26px"
         letter-spacing="0.015625rem"
         padding-bottom="0.125rem"/>
       <mj-class 
@@ -82,7 +94,7 @@
         name="subtitle1"
         font-size="1.0430805774925962rem"
         font-family="Lato"
-        font-weight="600"
+        font-weight="400"
         letter-spacing="0.009375000372529032rem"
         line-height="1.5rem"
         padding-top="0.125rem"
@@ -103,6 +115,13 @@
         font-weight="500"
         letter-spacing=".01785714em"
         line-height="1.25rem"/>
+  <mj-class 
+        name="button2-nowrap"
+        font-size=".875rem"
+        font-family="Google Sans"
+        font-weight="500"
+        letter-spacing=".01785714em"
+        line-height="36px"/>
       <mj-class 
         name="overline"
         font-size="0.78000046136811rem"

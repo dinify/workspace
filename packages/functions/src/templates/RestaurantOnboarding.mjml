@@ -10,21 +10,21 @@
     </mj-attributes>
     <mj-preview>${preview}</mj-preview>
   </mj-head>
-  <mj-body width="480px" background-color="transparent">
+  <mj-body width="560px" background-color="transparent">
 		<mj-wrapper css-class="card">
       <mj-include path="./components/header-red.mjml" />
       <mj-section text-align="left" css-class="red" direction="rtl">
         <mj-column width="150px" padding padding-bottom="8px">
-        	<mj-image width="150px" src="https://via.placeholder.com/150"/>
+        	<mj-image width="150px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-header-1.png"/>
         </mj-column>
         <mj-column width="64%">
           <mj-text mj-class="headline6" color="#fff">A restaurant menu that speaks multiple languages</mj-text>
           <mj-button href="${link}"
                      align="left"
-                     mj-class="outlined"
+                     mj-class="outlined button2-nowrap"
                      padding-bottom="8px"
                      padding-top="16px">
-						<span class="button2">Start for free</span>
+						Start for free
           </mj-button>
         </mj-column>
       </mj-section>
@@ -157,7 +157,7 @@
       </mj-section>
       <mj-section padding>
         <mj-column>
-        	<mj-image width="480px" src="https://via.placeholder.com/480x240"/>
+        	<mj-image width="480px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-middle.png"/>
         </mj-column>
       </mj-section>
       <mj-section>
@@ -176,30 +176,49 @@
         </mj-column>
       </mj-section>
       <mj-section>
-        <mj-column>
-        	<mj-text mj-class="headline6">Have your menu in over 50 languages</mj-text>
-        </mj-column>
-      </mj-section>
-      <mj-section text-align="left">
-        <mj-column width="166px" padding>
-        	<mj-image padding-left="16px" align="left" width="150px" src="https://via.placeholder.com/150"/>
-        </mj-column>
-        <mj-column width="64%">
+        <mj-column padding-bottom="32px">
+        	<mj-image padding-bottom="8px" width="134px" height="150px"  src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-1.png"/>
+          <mj-text mj-class="headline6">Have your menu in over 50 languages</mj-text>
         	<mj-text mj-class="body2">Empower your foreign guests to order in their own language wuth confidence - no matter where they are from and no matter what language they speak.</mj-text>
         </mj-column>
-      </mj-section>
-      <mj-section>
-        <mj-column>
-        	<mj-text mj-class="headline6">Delight your foreign guests</mj-text>
-        </mj-column>
-      </mj-section>
-      <mj-section text-align="left">
-        <mj-column width="166px" padding>
-        	<mj-image padding-left="16px" align="left" width="150px" src="https://via.placeholder.com/150"/>
-        </mj-column>
-        <mj-column width="64%">
+        <mj-column padding-bottom="32px">
+          <mj-image padding-bottom="8px" width="196px" height="150px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-2.png"/>
+          <mj-text mj-class="headline6">Delight your foreign guests</mj-text>
           <mj-text mj-class="body2">Wouldn't you be happy if you were given a restaurant menu in Czech when traveling to Tokyo or Istanbul? That's what your guests would feel.</mj-text>
         </mj-column>
+      </mj-section>
+          <mj-section padding-bottom="0px">
+        <mj-column padding-bottom="32px">
+        	<mj-image padding-bottom="8px" height="150px" width="179px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-3.png"/>
+          <mj-text mj-class="headline6">Seamless dining experience</mj-text>
+          <mj-text mj-class="body2">Enable your guests to read and order with confidence. Not only with language, but also with the power of your interactive menu that streamlines the ordering process.</mj-text>
+        </mj-column>
+        <mj-column padding-bottom="32px">
+          <mj-image padding-bottom="8px" height="150px" width="200px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-4.png"/>
+          <mj-text mj-class="headline6">Improve employee efficiency</mj-text>
+          <mj-text mj-class="body2">Make your staff work smarter. Taking orders from foreign guests and serving them usually takes longer, killing your operation efficiency.</mj-text>
+        </mj-column>
+      </mj-section>
+      </mj-section>
+      <mj-section padding-bottom="0px">
+        <mj-column width="50%" padding="0px 0px 32px 16px">
+          <mj-image padding-bottom="8px" height="150px" width="197px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-5.png"/>
+          <mj-text mj-class="headline6">Serve more guests</mj-text>
+          <mj-text mj-class="body2">Improve the average meal duration of your foreign guests by more than 20%. Being able to serve more guests generates more revenue.</mj-text>
+        </mj-column>
+				<mj-group>
+          <mj-column css-class="card-light">
+          	<mj-text padding-top="16px" mj-class="headline6">All for ${price} per month</mj-text>
+            <mj-text mj-class="subtitle1">Improve the average meal duration of your foreign guests by more than 20%. Being able to serve more guests generates more revenue.</mj-text>
+          	<mj-button href="${link}"
+                     align="left"
+                     mj-class="primary button2-nowrap"
+                     padding-bottom="16px"
+                     padding-top="8px">
+					  	Start for free
+            </mj-button>
+            
+          </mj-group>
       </mj-section>
       <mj-include path="./components/footer.mjml" />
   </mj-body>

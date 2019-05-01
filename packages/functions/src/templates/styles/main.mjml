@@ -42,6 +42,11 @@
     padding-left: 16px;
     padding-right: 16px;
   }
+  
+  .btn-link a {
+  	display: inline-block;
+  }
+  
   @media only screen and (min-width: 0px)  {
     .horizontal {
       padding-left: 0px;
@@ -71,6 +76,16 @@
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.12);
     overflow: hidden;
+  }
+  .card-light {
+  	background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+		margin: -1px;
+    overflow: hidden;
+  }
+  .card-margins {
+    margin: 0px 16px 0px 16px;
   }
   .nopad {
     margin: 0;

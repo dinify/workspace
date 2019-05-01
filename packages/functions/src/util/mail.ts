@@ -9,23 +9,23 @@ export function send(msg){
 }
 
 export function generate(msg, substitutions, templateName) {
-  // Use ES6 template literals
-  const substitute = (string, variables) => new Function("return `" + string.split("${").join("${this.") + "`;").call(variables);
-
   const variables = {
       ...substitutions,
       ...msg
   };
 
+  // Use ES6 template literals
+  const substitute = (string) => new Function("return `" + string.split("${").join("${this.") + "`;").call(variables);
+
   const templatePath = path.resolve("src/templates", `${templateName}.mjml`);
   const template = readFileSync(templatePath).toString();
 
-  let substituted = substitute(template, variables);
+  let substituted = substitute(template);
 
   const html = mjml2html(substituted, {
       filePath: templatePath
   }).html;
 
-  substituted = substitute(html, variables);
+  substituted = substitute(html);
   return substituted;
 }
