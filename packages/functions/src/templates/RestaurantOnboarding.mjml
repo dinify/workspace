@@ -18,13 +18,13 @@
         	<mj-image width="150px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-header-1.png"/>
         </mj-column>
         <mj-column width="64%">
-          <mj-text mj-class="headline6" color="#fff">A restaurant menu that speaks multiple languages</mj-text>
+          <mj-text mj-class="headline6" color="#fff">Naše menu mluví všemi jazyky</mj-text>
           <mj-button href="${link}"
                      align="left"
                      mj-class="outlined button2-nowrap"
                      padding-bottom="8px"
                      padding-top="16px">
-						Start for free
+						Vaše může také
           </mj-button>
         </mj-column>
       </mj-section>
@@ -34,7 +34,7 @@
             Zdravíme do ${restaurant.name},
           </mj-text>
           <mj-text mj-class="body2">
-            Věděli jste, že ${stats.targetPercent} rece TripAdvisoru je od zahraničních návštěvníků, kteří nemluví česky ani anglicky?
+            Zjistili jsme, že ${restaurant.name} má na TripAdvisoru ${stats.targetPercent} recenzí od zahraničních návštěvníků, kteří nemluví česky ani anglicky.
           </mj-text>
         </mj-column>
       </mj-section>
@@ -45,7 +45,7 @@
       </mj-section>
 			<mj-section>
         <mj-column>
-        	<mj-text mj-class="headline5" align="center">Když se podíváme hlouběji…s</mj-text>
+        	<mj-text mj-class="headline5" align="center">Jsou to tyto jazyky</mj-text>
         </mj-column>
       </mj-section>
       <mj-section>
@@ -124,8 +124,8 @@
         	<mj-divider/>
         </mj-column>
       </mj-section>
-      <mj-section>
 
+      <mj-section>
         <mj-column>
           <mj-accordion>
           <mj-accordion-element>
@@ -140,7 +140,7 @@
             <mj-accordion-title mj-class="subtitle1" color="#c13939">Jak?</mj-accordion-title>
             <mj-accordion-text mj-class="body2">
               <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-                Servírováním <b>příjemného zážitku</b> v podobě <b>skvělého menu</b>, které už máte, a <b>perfektních služeb</b>, vám dovolí pokračovat na vaší úspěšné cestě. Chceme s vámi spolupracovat právě proto, abychom tyto služby zdokonalili.
+                Servírováním <b>skvělého menu</b>, které už máte, v kombinaci s naší platformou <b>Dinify</b>, která vaše služby posune na ještě vyšší úroveň.
               </span>
             </mj-accordion-text>
           </mj-accordion-element>
@@ -148,13 +148,14 @@
             <mj-accordion-title mj-class="subtitle1" color="#c13939">Vytvořte dokonalý první dojem</mj-accordion-title>
             <mj-accordion-text mj-class="body2">
               <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-                Zákazníci vždy dají na první dojem. Příjemné prostředí, pohodlné židle, usměvavý personál, líbivá hudba, vše v harmonii. My přidáváme k této zkušenosti něco navíc. Představte si, že cestujete do zahraničí, řekněme Shanghai, nebo Istanbul. Posadíte se v restauraci s místní kuchyní, přijde za vámi číšník a se slovy „Dobrý den!“ vám podá jídelní lístek, psaný v češtině! Váš zážitek by musel začít hodnocením pěti hvězdiček.
+                Naše aplikace zajistí plynulý a ničím nerušený gastronimický zážitek, ať už je váš host z Čech nebo z Číny.
               </span>
             </mj-accordion-text>
           </mj-accordion-element>
           </mj-accordion>
         </mj-column>
       </mj-section>
+
       <mj-section padding>
         <mj-column>
         	<mj-image width="480px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-middle.png"/>
@@ -178,46 +179,58 @@
       <mj-section>
         <mj-column padding-bottom="32px">
         	<mj-image padding-bottom="8px" width="134px" height="150px"  src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-1.png"/>
-          <mj-text mj-class="headline6">Have your menu in over 50 languages</mj-text>
-        	<mj-text mj-class="body2">Empower your foreign guests to order in their own language wuth confidence - no matter where they are from and no matter what language they speak.</mj-text>
+          <mj-text mj-class="headline6">Mějte své menu ve všech světových jazycích</mj-text>
+        	<mj-text mj-class="body2">Když máte hlad, nemáte zrovna náladu složitě luštit menu v jazyce kterému nerozumíte, ani číšník nebude v lehké situaci, a snadno může dojít k nedorozumění. Dinify umožňuje objednat si kdekoliv ve vaší mateřštině, pohodlně.</mj-text>
         </mj-column>
         <mj-column padding-bottom="32px">
           <mj-image padding-bottom="8px" width="196px" height="150px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-2.png"/>
-          <mj-text mj-class="headline6">Delight your foreign guests</mj-text>
-          <mj-text mj-class="body2">Wouldn't you be happy if you were given a restaurant menu in Czech when traveling to Tokyo or Istanbul? That's what your guests would feel.</mj-text>
+          <mj-text mj-class="headline6">Okouzlíte své zahraniční hosty</mj-text>
+          <mj-text mj-class="body2">
+            Představte si, že cestujete do zahraničí, řekněme Shanghai. Posadíte se v restauraci s místní kuchyní, přijde za vámi číšník a se slovy „Dobrý den!“ vám podá jídelní lístek, psaný v češtině! Přesně to nabízí naše aplikace.
+          </mj-text>
         </mj-column>
       </mj-section>
-          <mj-section padding-bottom="0px">
+
+
+      <mj-section padding-bottom="0px">
         <mj-column padding-bottom="32px">
         	<mj-image padding-bottom="8px" height="150px" width="179px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-3.png"/>
-          <mj-text mj-class="headline6">Seamless dining experience</mj-text>
-          <mj-text mj-class="body2">Enable your guests to read and order with confidence. Not only with language, but also with the power of your interactive menu that streamlines the ordering process.</mj-text>
+          <mj-text mj-class="headline6">Dokonalý gastronomický zážitek</mj-text>
+          <mj-text mj-class="body2">
+            Vaši hosté si budou moci objednat pohodlně a s jistotou.
+            Nejen díky tomu, že si vaše menu projdou v jejich mateřštině, ale také proto, že budou přesně vědět co dostanou, a také si budou moci objednávku přizpůsobit tak,
+            aby vyhovovala jejich nutričním preferencím. To jak moc dovolíte hostům přizpůsobovat samozřejmě můžete snadno nastavit, a samotné objednání pak bude rychlé a plynulé.
+          </mj-text>
         </mj-column>
         <mj-column padding-bottom="32px">
           <mj-image padding-bottom="8px" height="150px" width="200px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-4.png"/>
-          <mj-text mj-class="headline6">Improve employee efficiency</mj-text>
-          <mj-text mj-class="body2">Make your staff work smarter. Taking orders from foreign guests and serving them usually takes longer, killing your operation efficiency.</mj-text>
+          <mj-text mj-class="headline6">Zvýšíme efektivitu vašeho personálu</mj-text>
+          <mj-text mj-class="body2">
+            Vaše obsluha může fungovat ještě lépe! Jazykové bariéry způsobují prodlevy a nepřesnosti v příjímání objednávek. Naše aplikace tyto bariéry odbourává a vede tak k vyšší efektivitě vašeho personálu.
+          </mj-text>
         </mj-column>
       </mj-section>
       </mj-section>
       <mj-section padding-bottom="0px">
         <mj-column width="50%" padding="0px 0px 32px 16px">
           <mj-image padding-bottom="8px" height="150px" width="197px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-5.png"/>
-          <mj-text mj-class="headline6">Serve more guests</mj-text>
-          <mj-text mj-class="body2">Improve the average meal duration of your foreign guests by more than 20%. Being able to serve more guests generates more revenue.</mj-text>
+          <mj-text mj-class="headline6">Více hostů, více tržeb</mj-text>
+          <mj-text mj-class="body2">
+          Zlepšete výnosnost od vašich zahraničních hostů o více než 20%. Díky naší aplikaci oslovíte více návštěvníků a zvýšíte i jejich čas strávený ve vaší restauraci. 
         </mj-column>
 				<mj-group>
           <mj-column css-class="card-light">
-          	<mj-text padding-top="16px" mj-class="headline6">All for ${price} per month</mj-text>
-            <mj-text mj-class="subtitle1">Improve the average meal duration of your foreign guests by more than 20%. Being able to serve more guests generates more revenue.</mj-text>
+          	<mj-text padding-top="16px" mj-class="headline6">Vše je za ${price} / měsíc</mj-text>
+            <mj-text mj-class="subtitle1">
+              Dinify vám zajistí výrazné zvýšení tržeb nejen od zahraničních hostů. Kontaktujte nás a společně se podíváme na všechny benefity, které Vám můžeme nabídnout.
+            </mj-text>
           	<mj-button href="${link}"
                      align="left"
                      mj-class="primary button2-nowrap"
                      padding-bottom="16px"
                      padding-top="8px">
-					  	Start for free
+					  	Začněte zdarma
             </mj-button>
-            
           </mj-group>
       </mj-section>
       <mj-include path="./components/footer.mjml" />
