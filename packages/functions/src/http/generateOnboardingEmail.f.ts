@@ -64,6 +64,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             targetCount: process.targetLang,
             targetPercent: formatPercent(process.targetLangRel)
           },
+          price: '€19.95',
           link: 'https://dashboard.dinify.app'
         };
         const html = mail.generate(msg, variables, "RestaurantOnboarding");

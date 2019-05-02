@@ -216,7 +216,8 @@
           <mj-image padding-bottom="8px" height="150px" width="197px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-5.png"/>
           <mj-text mj-class="headline6">Více hostů, více tržeb</mj-text>
           <mj-text mj-class="body2">
-          Zlepšete výnosnost od vašich zahraničních hostů o více než 20%. Díky naší aplikaci oslovíte více návštěvníků a zvýšíte i jejich čas strávený ve vaší restauraci. 
+            Zlepšete výnosnost od vašich zahraničních hostů o více než 20%. Díky naší aplikaci oslovíte více návštěvníků a zvýšíte i jejich čas strávený ve vaší restauraci.
+          </mj-text>
         </mj-column>
 				<mj-group>
           <mj-column css-class="card-light">
