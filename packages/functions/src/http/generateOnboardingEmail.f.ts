@@ -3,7 +3,7 @@ import Restaurants from "../models/Restaurants";
 import * as path from "path";
 import emojis from "../data/emojis";
 import likelySubtags from "../data/likelySubtags";
-import localeDisplayNames from "../data/localeDisplayNames";
+import localeDisplayNames from "../data/cs/localeDisplayNames";
 import * as mail from '../util/mail';
 import { readFileSync } from "fs";
 
