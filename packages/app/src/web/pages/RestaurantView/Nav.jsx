@@ -27,7 +27,7 @@ let Nav = ({
   return (
     <Grid container style={{marginLeft: -16}} spacing={8}>
 
-      {!!social.facebook &&
+      {!!social && !!social.facebook &&
         <Grid item>
           <a href={social.facebook} target="_blank" rel="noopener noreferrer">
             <IconButton>
@@ -37,7 +37,7 @@ let Nav = ({
         </Grid>
       }
 
-      {!!social.instagram &&
+      {!!social && !!social.instagram &&
         <Grid item>
           <a href={social.instagram} target="_blank" rel="noopener noreferrer">
             <IconButton>
