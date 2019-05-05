@@ -12,14 +12,18 @@ class StaticMap extends React.Component {
   }
 
   componentDidMount() {
-    const width = this.container.clientWidth;
-    const height = this.container.clientHeight;
-    this.setState({ width, height });
+    if (this.container) {
+      const width = this.container.clientWidth;
+      const height = this.container.clientHeight;
+      this.setState({ width, height });
+    }
   }
 
   render() {
     const { width, height } = this.state;
     let { style, zoom, restaurant, aspectRatio } = this.props;
+
+    if (restaurant.longitude === undefined || restaurant.latitude === undefined) return null;
 
     if (!style) style = 'mapbox/light-v9';
     if (!zoom) zoom = 12.5;

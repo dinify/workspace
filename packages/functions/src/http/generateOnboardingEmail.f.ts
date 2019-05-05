@@ -3,7 +3,7 @@ import Restaurants from "../models/Restaurants";
 import * as path from "path";
 import emojis from "../data/emojis";
 import likelySubtags from "../data/likelySubtags";
-import localeDisplayNames from "../data/localeDisplayNames";
+import localeDisplayNames from "../data/cs/localeDisplayNames";
 import * as mail from '../util/mail';
 import { readFileSync } from "fs";
 
@@ -64,6 +64,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             targetCount: process.targetLang,
             targetPercent: formatPercent(process.targetLangRel)
           },
+          price: '€19.95',
           link: 'https://dashboard.dinify.app'
         };
         const html = mail.generate(msg, variables, "RestaurantOnboarding");

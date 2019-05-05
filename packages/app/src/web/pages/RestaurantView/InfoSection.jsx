@@ -74,54 +74,56 @@ const InfoSection = ({
         }
       </a>
 
-      <ExpansionPanel classes={{root: classes.expansionRoot, expanded: classes.nopad}}>
-        <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-          <ListItem disableGutters classes={{default: classes.nopad}}>
-            <ListItemIcon>
-              <Schedule className={classes.secondary}/>
-            </ListItemIcon>
-            <ListItemText
-              primary={restaurant.open_now ? t('hours.open') : t('hours.closed')}
-              secondary={t((restaurant.open_now ? 'hours.closes_at' : 'hours.opens_at'), {time: new Date(`1970-01-01 ${currentHours[0][restaurant.open_now ? 1 : 0]}`)})}
-              primaryTypographyProps={{variant: 'body1'}}
-              secondaryTypographyProps={{variant: 'caption'}}/>
-          </ListItem>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails >
-          <table style={{borderSpacing: 0, paddingLeft: 56}}>
-            <tbody>
-              {[...Array(6).keys()].map(index => {
-                const weekDayKey = days[(currentWeekDayIndex + index) % 7];
-                const localizedDay = i18n.format(weekDayKey, 'weekDayName:wide');
+      {restaurant.open_hours !== undefined && currentHours !== undefined && (
+        <ExpansionPanel classes={{root: classes.expansionRoot, expanded: classes.nopad}}>
+          <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+            <ListItem disableGutters classes={{default: classes.nopad}}>
+              <ListItemIcon>
+                <Schedule className={classes.secondary}/>
+              </ListItemIcon>
+              <ListItemText
+                primary={restaurant.open_now ? t('hours.open') : t('hours.closed')}
+                secondary={t((restaurant.open_now ? 'hours.closes_at' : 'hours.opens_at'), {time: new Date(`1970-01-01 ${currentHours[0][restaurant.open_now ? 1 : 0]}`)})}
+                primaryTypographyProps={{variant: 'body1'}}
+                secondaryTypographyProps={{variant: 'caption'}}/>
+            </ListItem>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails >
+            <table style={{borderSpacing: 0, paddingLeft: 56}}>
+              <tbody>
+                {[...Array(6).keys()].map(index => {
+                  const weekDayKey = days[(currentWeekDayIndex + index) % 7];
+                  const localizedDay = i18n.format(weekDayKey, 'weekDayName:wide');
 
-                return (
-                  <tr key={uniqueId()}>
-                    <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
-                      <Typography color={index === 0 ? 'textPrimary' : 'textSecondary'} >
-                        {index === 0 ? <b>{localizedDay}</b> : localizedDay}
-                      </Typography>
-                    </td>
-                    <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
-                      {restaurant.open_hours[weekDayKey].map(value => {
-                        // TODO: better time respresentation (?)
-                        const formatted = i18n.format({
-                          start: new Date(`1970-01-01 ${value[0]}`),
-                          end: new Date(`1970-01-01 ${value[1]}`)
-                        }, 'dateTimeInterval');
-                        return (
-                          <Typography key={uniqueId()} style={{paddingLeft: 24}} >
-                            {index === 0 ? <b>{formatted}</b> : formatted}
-                          </Typography>
-                        );
-                      })}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+                  return (
+                    <tr key={uniqueId()}>
+                      <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
+                        <Typography color={index === 0 ? 'textPrimary' : 'textSecondary'} >
+                          {index === 0 ? <b>{localizedDay}</b> : localizedDay}
+                        </Typography>
+                      </td>
+                      <td style={{padding: 0, verticalAlign: 'top', textAlign: 'left'}}>
+                        {restaurant.open_hours[weekDayKey].map(value => {
+                          // TODO: better time respresentation (?)
+                          const formatted = i18n.format({
+                            start: new Date(`1970-01-01 ${value[0]}`),
+                            end: new Date(`1970-01-01 ${value[1]}`)
+                          }, 'dateTimeInterval');
+                          return (
+                            <Typography key={uniqueId()} style={{paddingLeft: 24}} >
+                              {index === 0 ? <b>{formatted}</b> : formatted}
+                            </Typography>
+                          );
+                        })}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      )}
 
       {restaurant.contact && restaurant.contact.phone && <a rel="noopener noreferrer" target="_blank" href={`tel:${restaurant.contact.phone}`}
         style={{textDecoration: 'none', display: 'block'}}>
