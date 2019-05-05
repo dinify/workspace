@@ -55,7 +55,8 @@ const loadRestaurant = (action$) =>
         {type: 'FETCH_LANGUAGES_INIT'},
         {type: 'FETCH_TRANSLATIONS_INIT'},
         {type: 'FETCH_SERVICEIMAGES_INIT'},
-        {type: 'FETCH_RESTAURANTSETTINGS_INIT'}
+        {type: 'FETCH_RESTAURANTSETTINGS_INIT'},
+        {type: 'FETCH_MENULANGUAGES_INIT'}
       );
     })
   );

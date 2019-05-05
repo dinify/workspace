@@ -21,7 +21,8 @@ const initialState = {
   ongoingRegistration: false,
   selectedRestaurant: null,
   managedRestaurants: [],
-  languages: ['en', 'cs']
+  languages: ['en', 'cs'],
+  menuLanguages: []
 };
 
 export default function reducer(state: State = initialState, action) {
@@ -44,6 +45,9 @@ export default function reducer(state: State = initialState, action) {
       );
     case 'SET_ONGOINGREGISTRATION':
       return R.assoc('ongoingRegistration', !!action.payload)(state);
+    case 'FETCH_MENULANGUAGES_DONE': {
+      return R.assoc('menuLanguages', action.payload.res)(state);
+    }
     case 'FETCH_LOGGEDRESTAURANT_DONE': {
       return R.assoc('loggedRestaurant', action.payload.res)(state);
     }

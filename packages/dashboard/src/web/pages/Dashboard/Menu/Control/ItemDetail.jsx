@@ -115,7 +115,7 @@ let ItemDetail = ({
   console.log(foodImageUrl);
   return (
     <div>
-    <Card>
+    <Card style={{overflow: 'inherit', marginBottom: 50}}>
       <CardMedia
         className={classes.media}
         image={foodImageUrl}

@@ -88,7 +88,7 @@ class Translations extends React.Component {
       locales,
       byType,
       defaultByType
-    }, classes, addLocale, selectLocale, selectedLocale, pushTranslation, supportedLanguages } = this.props;
+    }, classes, addLocale, selectLocale, selectedLocale, pushTranslation, supportedLanguages, menuLanguages } = this.props;
     const { tabIndex } = this.state;
 
     const autocompleteData = supportedLanguages
@@ -120,14 +120,14 @@ class Translations extends React.Component {
                 Select one of defined languages
               </Typography>
               <div>
-                {locales.map((locale) =>
+                {menuLanguages.map((l) =>
                   <Chip
-                    key={locale}
+                    key={l.languages}
                     className={classes.chip}
-                    avatar={<Avatar>{locale.toUpperCase()}</Avatar>}
-                    label={languages[locale.toLowerCase()] && languages[locale.toLowerCase()].langEn}
-                    onClick={() => selectLocale({ selectedLocale: locale })}
-                    color={selectedLocale === locale ? 'primary' : 'default'}
+                    avatar={<Avatar>{l.language.toUpperCase()}</Avatar>}
+                    label={languages[l.language.toLowerCase()] && languages[l.language.toLowerCase()].langEn}
+                    onClick={() => selectLocale({ selectedLocale: l.language })}
+                    color={selectedLocale === l.language ? 'primary' : 'default'}
                   />
                 )}
               </div>
@@ -229,7 +229,8 @@ export default connect(
   state => ({
     translations: translationsSelector(state),
     selectedLocale: state.translation.selectedLocale,
-    supportedLanguages: state.restaurant.languages
+    supportedLanguages: state.restaurant.languages,
+    menuLanguages: state.restaurant.menuLanguages
   }),
   {
     addLocale,

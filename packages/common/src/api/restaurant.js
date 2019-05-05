@@ -524,3 +524,15 @@ export function GetManagedrestaurants() {
 export function GetLanguages() {
   return Get({ path: 'languages' });
 }
+
+export function GetMenulanguages({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/menu/languages` });
+}
+
+export function CreateMenulanguage({ restaurantId, language }) { // language = 'de'
+  return Post({ path: `restaurant/${restaurantId}/menu/language/add` }, { language });
+}
+
+export function TranslateAll({ restaurantId }) {
+  return Post({ path: `restaurant/${restaurantId}/menu/translate/all` });
+}

@@ -80,7 +80,7 @@ let NutritionForm = ({ handleSubmit, t }) => {
 NutritionForm = reduxForm({
   form: 'menu/nutritions',
   enableReinitialize: true,
-  destroyOnUnmount: false
+  destroyOnUnmount: true
 })(NutritionForm);
 
 const NutritionContainer = styled.div`

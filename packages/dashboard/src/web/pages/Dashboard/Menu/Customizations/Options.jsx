@@ -171,9 +171,6 @@ const Options = ({
               <List component="div">
                 {FN.MapToList(option.choices).map(choice => (
                   <ListItem key={choice.id} style={styles.ListItem}>
-                    <ListItemIcon>
-                      <ChevronRight />
-                    </ListItemIcon>
                     <ListItemText
                       inset
                       secondary={

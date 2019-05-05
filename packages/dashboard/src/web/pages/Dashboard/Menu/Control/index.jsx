@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@dinify/common/dist/components/Typography';
+import Button from '@material-ui/core/Button';
 import ListOfCategories from './ListOfCategories';
 import ListOfDishes from './ListOfDishes';
 import ItemDetail from './ItemDetail';
@@ -31,6 +32,13 @@ const Menucontrol = ({
             {t('menu.startWithCategory')}
           </Typography>
         </div>}
+        {categoriesList.length > 0 && <Button variant="contained" color="primary" type="submit" style={{
+          position: 'absolute',
+          top: 16,
+          right: 20
+        }}>
+          Translate menu
+        </Button>}
         <Grid container spacing={8} alignItems="flex-start" justify="center">
           <Grid item xs={3}>
             <Typography gutterBottom variant="caption">{t('menu.categories')}</Typography>
