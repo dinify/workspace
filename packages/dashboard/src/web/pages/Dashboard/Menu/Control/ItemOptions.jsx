@@ -76,7 +76,7 @@ const ItemOptions = ({
             custId: option.value,
             cust: {
               ...R.find(R.propEq('id', option.value))(optionsList),
-              difference: { amount: '0', currency: 'KWD' },
+              difference: { amount: '0', currency: 'CZK' },
             },
           })
         }

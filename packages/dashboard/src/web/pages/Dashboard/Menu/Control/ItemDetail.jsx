@@ -153,7 +153,7 @@ let ItemDetail = ({
               ...fields,
               price: {
                 amount: Number.parseFloat(fields.price).toFixed(0),
-                currency: 'KWD',
+                currency: 'CZK',
               },
             });
           }}

@@ -53,7 +53,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
               email: "hello@dinify.app",
               name: "Dinify"
           },
-          subject: "Get started with Dinify"
+          subject: "Lepší recenze, vyšší zisk, zkuste Dinify"
         };
         const variables = {
           restaurant: {

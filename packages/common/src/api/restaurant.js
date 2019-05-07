@@ -379,7 +379,7 @@ export function CreateChoice({ name, price, optionId }) {
       name,
       difference: {
         amount: price,
-        currency: "KWD"
+        currency: "CZK"
       }
     },
   );
