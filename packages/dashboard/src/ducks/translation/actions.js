@@ -1,6 +1,6 @@
 
-export const addLocale = payload => ({
-  type: 'ADD_LOCALE',
+export const addLanguage = payload => ({
+  type: 'CREATE_MENULANGUAGE_INIT',
   payload,
 });
 

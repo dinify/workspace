@@ -170,6 +170,21 @@ const resetMenuItemEpic = (action$: Observable) =>
     map(() => reset('menu/createItem'))
   );
 
+const addLangSnackbar = (action$) =>
+  action$.pipe(
+    filter(
+      action =>
+        action.type.startsWith('CREATE_MENULANGUAGE'),
+    ),
+    map(({ type }) => {
+      let message = '';
+      if (type.endsWith('DONE')) message = 'New language has been added';
+      if (type.endsWith('FAIL')) message = 'Adding language failed';
+      return snackbar.show({ message });
+    })
+  );
+
+
 export default [
   loadRestaurant,
   bootstrapEpic,
@@ -180,5 +195,6 @@ export default [
   selectRestaurantEpic,
   onUpdateSnackbarsEpic,
   resetCategoriesEpic,
-  resetMenuItemEpic
+  resetMenuItemEpic,
+  addLangSnackbar
 ];

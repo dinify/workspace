@@ -2,8 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import Typography from '@dinify/common/dist/components/Typography';
-import { useTranslation } from 'react-i18next';
 
 // import BusinessHours from './BusinessHours';
 import Banking from './Banking';
@@ -24,10 +22,8 @@ const Column = styled.div`
 
 const Main = ({ loggedRestaurant }) => {
   if (!loggedRestaurant) return <div />;
-  const { t } = useTranslation();
   return (
     <div>
-      <Typography style={{marginLeft: 10}} gutterBottom variant="h6">{t('nav.mainInfo')}</Typography>
       <div>
         <Column>
           <Name name={loggedRestaurant.name} />

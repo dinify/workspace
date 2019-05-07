@@ -9,13 +9,20 @@ import ListOfCategories from './ListOfCategories';
 import ListOfDishes from './ListOfDishes';
 import ItemDetail from './ItemDetail';
 import * as FN from 'lib/FN';
+import styled from 'styled-components';
 
+const SolidContainer = styled.div`
+  min-width: 800px;
+  padding-bottom: 50px;
+  margin: 14px 10px;
+`;
 
 const Menucontrol = ({
   selectedCategoryId,
   selectedFoodId,
   categoriesMap,
-  menuItems
+  menuItems,
+  classes
 }) => {
   const { t } = useTranslation();
   const categoriesList = FN.MapToList(categoriesMap).sort(
@@ -24,21 +31,18 @@ const Menucontrol = ({
   if (categoriesList.length === 1) {
     selectedCategoryId = categoriesList[0].id;
   }
+  console.log(classes, 'sdsd');
   return (
     <div>
-      <Typography gutterBottom variant="h6">{t('nav.menuEditor')}</Typography>
+      <SolidContainer>
         {categoriesList.length < 1 && <div style={{textAlign: 'center', margin: '20px 0 40px 0'}}>
           <Typography component="h2" variant="display1" gutterBottom>
             {t('menu.startWithCategory')}
           </Typography>
         </div>}
-        {categoriesList.length > 0 && <Button variant="contained" color="primary" type="submit" style={{
-          position: 'absolute',
-          top: 16,
-          right: 20
-        }}>
+        {/*categoriesList.length > 0 && <Button variant="contained" color="primary" type="submit">
           Translate menu
-        </Button>}
+  </Button>*/}
         <Grid container spacing={8} alignItems="flex-start" justify="center">
           <Grid item xs={3}>
             <Typography gutterBottom variant="caption">{t('menu.categories')}</Typography>
@@ -66,6 +70,7 @@ const Menucontrol = ({
           }
 
         </Grid>
+      </SolidContainer>
     </div>
   );
 }

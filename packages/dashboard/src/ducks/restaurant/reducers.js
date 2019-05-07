@@ -48,6 +48,11 @@ export default function reducer(state: State = initialState, action) {
     case 'FETCH_MENULANGUAGES_DONE': {
       return R.assoc('menuLanguages', action.payload.res)(state);
     }
+    case 'CREATE_MENULANGUAGE_DONE': {
+      const language = action.payload.prePayload.language;
+      const menuLanguage = { language };
+      return R.assoc('menuLanguages', [...state.menuLanguages, menuLanguage])(state);
+    }
     case 'FETCH_LOGGEDRESTAURANT_DONE': {
       return R.assoc('loggedRestaurant', action.payload.res)(state);
     }

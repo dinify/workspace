@@ -164,7 +164,6 @@ const ServiceCalls = ({ removeService, services, images, classes, tabIndex, swit
   const selectedServicesList = R.filter((s) => s.type === selectedType, servicesList);
   return (
     <div>
-      <Typography style={{marginLeft: 10}} gutterBottom variant="h6">{t('nav.services')}</Typography>
       <Paper style={{borderRadius: '2px', margin: '14px 10px'}}>
         <Tabs value={tabIndex} onChange={(e, i) => switchTab(i)} style={{ background: 'rgba(0,0,0,0.04)'}}>
           <Tab label={t('tableware')} />

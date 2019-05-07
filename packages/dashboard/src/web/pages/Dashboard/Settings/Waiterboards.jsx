@@ -436,7 +436,6 @@ const Waiterboards = ({
 
   return (
     <div>
-      <Typography style={{marginLeft: 10}} gutterBottom variant="h6">{t('nav.waiterboards')}</Typography>
       <ContentWrapper>
       {waiterboards.map(wb => (
         <WB key={wb.id}>

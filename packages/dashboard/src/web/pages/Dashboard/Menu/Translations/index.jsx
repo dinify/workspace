@@ -19,7 +19,7 @@ import Typography from '@dinify/common/dist/components/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 import Divider from '@material-ui/core/Divider';
-import { addLocale, selectLocale, pushTranslation } from 'ducks/translation/actions';
+import { addLanguage, selectLocale, pushTranslation } from 'ducks/translation/actions';
 import diff from 'object-diff'
 
 const languages = R.mergeAll(
@@ -85,11 +85,13 @@ class Translations extends React.Component {
 
   render() {
     const { translations: {
-      locales,
       byType,
       defaultByType
-    }, classes, addLocale, selectLocale, selectedLocale, pushTranslation, supportedLanguages, menuLanguages } = this.props;
+    }, classes, addLanguage, selectLocale, selectedLocale, pushTranslation, supportedLanguages, menuLanguages } = this.props;
     const { tabIndex } = this.state;
+    const defaultLanguage = 'en';
+
+    let menuLanguagesList = menuLanguages.map((l) => l.language);
 
     const autocompleteData = supportedLanguages
     .map(o => {
@@ -102,16 +104,17 @@ class Translations extends React.Component {
         label: `${l.langEn} ${l.langLoc !== l.langEn ? brackets(l.langLoc) : ''}`
       }
     })
-    .filter((o) => o.value)
+    .filter((o) => o.value && !menuLanguagesList.includes(o.value))
     .sort((a, b) => {
       if (a.label < b.label) return -1;
       if (a.label > b.label) return 1;
       return 0;
     });
 
+    menuLanguagesList = menuLanguagesList.filter((l) => l !== defaultLanguage);
+
     return (
       <SolidContainer>
-        <Typography style={{marginLeft: 10}} gutterBottom variant="h6">Translations</Typography>
 
         <Paper style={{borderRadius: '2px', margin: '14px 10px'}}>
           <CardContent>
@@ -120,14 +123,14 @@ class Translations extends React.Component {
                 Select one of defined languages
               </Typography>
               <div>
-                {menuLanguages.map((l) =>
+                {menuLanguagesList.map((l) =>
                   <Chip
-                    key={l.languages}
+                    key={l}
                     className={classes.chip}
-                    avatar={<Avatar>{l.language.toUpperCase()}</Avatar>}
-                    label={languages[l.language.toLowerCase()] && languages[l.language.toLowerCase()].langEn}
-                    onClick={() => selectLocale({ selectedLocale: l.language })}
-                    color={selectedLocale === l.language ? 'primary' : 'default'}
+                    avatar={<Avatar>{l.toUpperCase()}</Avatar>}
+                    label={languages[l.toLowerCase()] && languages[l.toLowerCase()].langEn}
+                    onClick={() => selectLocale({ selectedLocale: l })}
+                    color={selectedLocale === l ? 'primary' : 'default'}
                   />
                 )}
               </div>
@@ -140,8 +143,8 @@ class Translations extends React.Component {
                   dataSource={autocompleteData}
                   placeholder="Select language"
                   outlined
-                  onChange={locale =>
-                    locale && addLocale({locale: locale.value})
+                  onChange={l =>
+                    l && addLanguage({language: l.value})
                   }
                 />
               </div>
@@ -233,7 +236,7 @@ export default connect(
     menuLanguages: state.restaurant.menuLanguages
   }),
   {
-    addLocale,
+    addLanguage,
     selectLocale,
     pushTranslation
   }

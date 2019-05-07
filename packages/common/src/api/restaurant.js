@@ -526,7 +526,7 @@ export function GetLanguages() {
 }
 
 export function GetMenulanguages({ restaurantId }) {
-  return Get({ path: `restaurant/${restaurantId}/menu/languages` });
+  return Get({ path: `restaurant/${restaurantId}/menu/languages?limit=100` });
 }
 
 export function CreateMenulanguage({ restaurantId, language }) { // language = 'de'

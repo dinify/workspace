@@ -19,6 +19,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
+import Typography from '@dinify/common/dist/components/Typography';
 
 
 import ExitToApp from '@material-ui/icons/ExitToApp';
@@ -41,16 +42,27 @@ const Sidebar = styled.div`
   }
 `;
 
-const Content = styled.div`
-  position: absolute;
+const ContentBG = styled.div`
+  position: fixed;
   left: 240px;
   top: 0;
-  min-height: 100vh;
+  height: 100%;
+  z-index: 1;
   width: calc(100% - 240px);
   background: #eff3f6;
+`
+
+const Content = styled.div`
+  position: relative;
+  z-index: 2;
+  margin-left: 240px;
+  margin-top: 50px;
+  width: calc(100% - 240px);
   color: #354052;
-  padding: 10px 20px 0 20px;
+  padding: 10px 35px 0 35px;
 `;
+
+
 
 const theme = createMuiTheme({
   palette: {
@@ -73,36 +85,56 @@ const contentTheme = createMuiTheme({
 });
 
 const styles = theme => ({
+  header: {
+    position: 'fixed',
+    zIndex: 10,
+    background: 'white',
+    top: 0,
+    right: 0,
+    height: '50px',
+    width: 'calc(100% - 240px)',
+    padding: '0 30px'
+  },
   nested: {
     paddingLeft: 40,
     background: 'rgba(0,0,0,0.3)',
   },
+  anchor: {
+    color: 'rgba(255,255,255,0.8)'
+  },
+  homeSection: {
+    background: '#C13939 !important',
+    height: '50px'
+  },
+  homeIcon: {
+    margin: 0,
+    paddingLeft: theme.spacing.unit * 2,
+    color: 'white'
+  },
+  homeText: {
+    fontSize: '15px',
+    fontWeight: 300,
+    color: 'white'
+  },
+  navItem: {
+    height: '50px'
+  },
   navIcon: {
     margin: 0,
-    paddingLeft: theme.spacing.unit * 2
+    paddingLeft: theme.spacing.unit * 2,
+    color: 'rgba(255,255,255,0.85)'
   },
   navText: {
-    color: 'white',
-    fontSize: '14px',
+    fontSize: '15px',
     fontWeight: 300,
-    textTransform: 'uppercase',
-    letterSpacing: '1px'
+    color: 'rgba(255,255,255,0.85)'
   },
   nestedText: {
-    color: 'white',
-    fontSize: '12px',
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: '14px',
     fontWeight: 300,
-    textTransform: 'uppercase',
-    letterSpacing: '1px'
   }
 });
-
-const listTextStyle = {
-  textTransform: 'uppercase',
-  fontSize: '12px',
-  letterSpacing: '1.5px',
-  color: 'white'
-}
 
 const shouldOpen = (openedIndex, index, location, section) => {
   if (openedIndex === -1) {
@@ -162,6 +194,12 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
     //   path: '/billing'
     // },
   ]
+  let subsectionNames = [];
+  sections.forEach((section) => {
+    subsectionNames = [...subsectionNames, ...section.subsections]
+  })
+  const activeSubsection = subsectionNames.filter((s) => location.pathname.includes(s.path))[0];
+  
   return (
     <div>
       <Sidebar>
@@ -172,22 +210,24 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
             style={{paddingTop: 0}}
           >
             <Link to="/">
-              <ListItem button divider>
-                <ListItemIcon className={classes.navIcon}>
+              <ListItem button className={classes.homeSection}>
+                <ListItemIcon className={classes.homeIcon}>
                   <img src={require('assets/img/logo.svg')} width={26} height={36} alt="" />
                 </ListItemIcon>
-                <ListItemText inset primary="Dashboard" disableTypography className={classes.navText} />
+                <ListItemText inset primary="Dashboard" disableTypography className={classes.homeText} />
               </ListItem>
             </Link>
 
             {sections.map((section, index) =>
               <div key={`nav-section-${index}`}>
-                <ListItem button onClick={() => toggleSection(index)}>
+                <ListItem className={classes.navItem} button onClick={() => toggleSection(index)}>
                   <ListItemIcon className={classes.navIcon}>
                     {!!section.icon && section.icon}
                   </ListItemIcon>
                   <ListItemText inset primary={section.name} disableTypography className={classes.navText} />
-                  {section.subsections && (shouldOpen(openedIndex, index, location, section) ? <ExpandLess /> : <ExpandMore />)}
+                  {section.subsections && (shouldOpen(openedIndex, index, location, section) ? 
+                    <ExpandLess className={classes.anchor} /> : <ExpandMore className={classes.anchor} />
+                  )}
                 </ListItem>
                 {section.subsections &&
                   <Collapse in={shouldOpen(openedIndex, index, location, section)} timeout="auto" unmountOnExit>
@@ -220,13 +260,20 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
               <ListItemIcon className={classes.navIcon}>
                 <ExitToApp />
               </ListItemIcon>
-              <ListItemText inset primary={t('user.logOut')} />
+              <ListItemText className={classes.navText} disableTypography inset primary={t('user.logOut')} />
             </ListItem>
           </List>
         </MuiThemeProvider>
       </Sidebar>
-      <Content>
-        <MuiThemeProvider theme={contentTheme}>
+      <ContentBG />
+      <MuiThemeProvider theme={contentTheme}>
+        <div className={classes.header}>
+          <Typography style={{marginLeft: 10, marginTop: 7}} variant="h6">
+            {activeSubsection && activeSubsection.name}
+          </Typography> 
+        </div>
+        <Content>
+          
           <Switch>
             <Redirect exact from="/" to="/settings" />
             <Route path="/settings" component={SettingsSection} />
@@ -238,8 +285,9 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
               //  <Route path="/engagement" component={EngagementSection} />
             }
           </Switch>
-        </MuiThemeProvider>
-      </Content>
+          
+        </Content>
+      </MuiThemeProvider>
     </div>
   )
 }

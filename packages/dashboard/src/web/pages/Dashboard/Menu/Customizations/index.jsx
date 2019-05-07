@@ -33,7 +33,6 @@ const Menucontrol = () => {
   const { t } = useTranslation();
   return (
     <div>
-      <Typography style={{marginLeft: 10}} gutterBottom variant="h6">{t('nav.customizations')}</Typography>
       <SolidContainer>
         <HeadLine>
           <Grid container spacing={8} alignItems="flex-start" justify="center">

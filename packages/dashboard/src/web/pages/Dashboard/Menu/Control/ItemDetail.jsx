@@ -112,7 +112,6 @@ let ItemDetail = ({
     );
     if (images.length > 0) foodImageUrl = images[0].url;
   }
-  console.log(foodImageUrl);
   return (
     <div>
     <Card style={{overflow: 'inherit', marginBottom: 50}}>
@@ -148,7 +147,6 @@ let ItemDetail = ({
         <DetailForm
           onSubmit={fields => {
             fields.id = selectedFoodId;
-            console.log(fields);
             updateFood({
               ...fields,
               price: {

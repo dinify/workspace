@@ -50,7 +50,6 @@ const QRs = ({ loggedRestaurant }) => {
 
   return (
     <div>
-      <Typography style={{marginLeft: 10}} gutterBottom variant="h6">{t('nav.tableCodes')}</Typography>
 
       {waiterboards.map(wb => (
         <WB key={wb.id}>

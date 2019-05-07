@@ -229,6 +229,7 @@ class IntegrationReactSelect extends React.Component {
             onChange={value => {
               this.handleSingleChange(value);
               onChange(value);
+              setTimeout(() => this.handleSingleChange(null), 500);
             }}
             placeholder={placeholder}
             id="react-select-single"
