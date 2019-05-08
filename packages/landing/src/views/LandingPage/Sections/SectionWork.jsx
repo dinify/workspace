@@ -1,6 +1,7 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import Typography from "@material-ui/core/Typography";
 import { Form, Text, Field, TextArea, Radio, RadioGroup, Select, Checkbox } from 'react-form';
 
 // @material-ui/icons
@@ -69,11 +70,11 @@ class SectionWork extends React.Component {
         <div className={classes.container}>
           <GridContainer justify="center">
             <GridItem cs={12} sm={8} md={8}>
-              <h2 className={classes.title}>Are you a restaurant?</h2>
-              <h4 className={classes.description}>
+              <Typography variant="h4">Are you a restaurant?</Typography>
+              <Typography variant="subtitle1">
                 Show your interest by contacting us.
                 We will help you understand the value propositions better.
-              </h4>
+              </Typography>
               <form>
                 <GridContainer>
                   <GridItem xs={12} sm={6} md={6}>
@@ -104,7 +105,7 @@ class SectionWork extends React.Component {
                         </form>
                       )}
                     </Form>
-                    
+
                   </GridItem>
                 </GridContainer>
               </form>

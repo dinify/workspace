@@ -6,6 +6,7 @@
   "homepage": "https://www.dinify.app",
   "private": true,
   "dependencies": {
+    "@dinify/common": "^0.1.1",
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
     "animate.css": "^3.7.0",

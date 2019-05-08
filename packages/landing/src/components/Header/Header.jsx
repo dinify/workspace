@@ -17,6 +17,7 @@ import Menu from "@material-ui/icons/Menu";
 import Close from "@material-ui/icons/Close";
 // core components
 import headerStyle from "./headerStyle.jsx";
+import Typography from "@dinify/common/dist/components/Typography";
 
 class Header extends React.Component {
   constructor(props) {
@@ -86,7 +87,13 @@ class Header extends React.Component {
             className={classes.navButton}
             round
           >
-            Go to app
+            <Typography
+              variant="button2"
+              style={{ color: "inherit" }}
+              baseline="center"
+            >
+              Go to app
+            </Typography>
           </Button>
         </Toolbar>
 
