@@ -4,7 +4,8 @@ const initialState = {
   progressMap: {},
   errorsMap: {},
   navOpenedIndex: -1,
-  servicesTabIndex: 0
+  servicesTabIndex: 0,
+  translationsTabIndex: 0,
 };
 
 function findNested(obj, key, memo) {
@@ -37,6 +38,9 @@ export default function reducer(state = initialState, action) {
   }
   if (action.type === 'SWITCH_SERVICESTAB') {
     return R.assoc('servicesTabIndex', action.payload)(state);
+  }
+  if (action.type === 'SWITCH_TRANSLATIONSTAB') {
+    return R.assoc('translationsTabIndex', action.payload)(state);
   }
   if (action.type === 'persist/REHYDRATE') {
     return R.assoc('errorsMap', {})(R.assoc('progressMap', {})(state));

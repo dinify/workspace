@@ -3,6 +3,7 @@ import React from 'react';
 import { createSelector } from 'reselect'
 import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import Paper from '@material-ui/core/Paper';
 import CardContent from '@material-ui/core/CardContent';
 import Tabs from '@material-ui/core/Tabs';
@@ -19,7 +20,9 @@ import Typography from '@dinify/common/dist/components/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 import Divider from '@material-ui/core/Divider';
-import { addLanguage, selectLocale, pushTranslation } from 'ducks/translation/actions';
+import { addLanguage, selectLocale, pushTranslation,  } from 'ducks/translation/actions';
+import { switchTranslationsTab as switchTab } from 'ducks/ui/actions';
+
 import diff from 'object-diff'
 
 const languages = R.mergeAll(
@@ -71,138 +74,141 @@ const getCoverage = (t, o) => {
   return `(${tCount}/${oCount})`;
 }
 
-class Translations extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tabIndex: 0,
-    };
+const tNameToi18Key = (str) => {
+  let name = str.toLowerCase();
+  if (name === 'options') name = 'optionGroups';
+  if (name === 'menu items') name = 'dishes';
+
+  if (name === 'services') name = 'nav.services';
+  else {
+    name = `menu.${name}`;
   }
+  return name;
+}
 
-  handleChange = (event, tabIndex) => {
-    this.setState({ tabIndex });
-  };
+const Translations = ({
+  translations: {
+    byType,
+    defaultByType
+  }, classes, addLanguage, selectLocale, selectedLocale, pushTranslation, supportedLanguages, menuLanguages,
+  tabIndex,
+  switchTab
+}) => {
+  const defaultLanguage = 'en';
+  const { t } = useTranslation();
 
-  render() {
-    const { translations: {
-      byType,
-      defaultByType
-    }, classes, addLanguage, selectLocale, selectedLocale, pushTranslation, supportedLanguages, menuLanguages } = this.props;
-    const { tabIndex } = this.state;
-    const defaultLanguage = 'en';
 
-    let menuLanguagesList = menuLanguages.map((l) => l.language);
+  let menuLanguagesList = menuLanguages.map((l) => l.language);
 
-    const autocompleteData = supportedLanguages
-    .map(o => {
-      const l = languages[o];
-      if (!l) return {};
-      return {
-        value: o,
-        langEn: l.langEn,
-        langLoc: l.langLoc,
-        label: `${l.langEn} ${l.langLoc !== l.langEn ? brackets(l.langLoc) : ''}`
-      }
-    })
-    .filter((o) => o.value && !menuLanguagesList.includes(o.value))
-    .sort((a, b) => {
-      if (a.label < b.label) return -1;
-      if (a.label > b.label) return 1;
-      return 0;
-    });
+  const autocompleteData = supportedLanguages
+  .map(o => {
+    const l = languages[o];
+    if (!l) return {};
+    return {
+      value: o,
+      langEn: l.langEn,
+      langLoc: l.langLoc,
+      label: `${l.langEn} ${l.langLoc !== l.langEn ? brackets(l.langLoc) : ''}`
+    }
+  })
+  .filter((o) => o.value && !menuLanguagesList.includes(o.value))
+  .sort((a, b) => {
+    if (a.label < b.label) return -1;
+    if (a.label > b.label) return 1;
+    return 0;
+  });
 
-    menuLanguagesList = menuLanguagesList.filter((l) => l !== defaultLanguage);
+  menuLanguagesList = menuLanguagesList.filter((l) => l !== defaultLanguage);
 
-    return (
-      <SolidContainer>
+  return (
+    <SolidContainer>
 
-        <Paper style={{borderRadius: '2px', margin: '14px 10px'}}>
-          <CardContent>
+      <Paper style={{borderRadius: '2px', margin: '14px 10px'}}>
+        <CardContent>
 
-              <Typography color="textSecondary" gutterBottom>
-                Select one of defined languages
-              </Typography>
-              <div>
-                {menuLanguagesList.map((l) =>
-                  <Chip
-                    key={l}
-                    className={classes.chip}
-                    avatar={<Avatar>{l.toUpperCase()}</Avatar>}
-                    label={languages[l.toLowerCase()] && languages[l.toLowerCase()].langEn}
-                    onClick={() => selectLocale({ selectedLocale: l })}
-                    color={selectedLocale === l ? 'primary' : 'default'}
-                  />
-                )}
-              </div>
-              <Divider style={{marginBottom: '10px'}} />
-              <Typography color="textSecondary" gutterBottom>
-                Add language
-              </Typography>
-              <div style={{maxWidth: '300px'}} className={classes.chip}>
-                <AutoComplete
-                  dataSource={autocompleteData}
-                  placeholder="Select language"
-                  outlined
-                  onChange={l =>
-                    l && addLanguage({language: l.value})
-                  }
-                />
-              </div>
-            </CardContent>
-            <Divider style={{marginBottom: '10px'}} />
-          {defaultLocale !== selectedLocale ?
+            <Typography color="textSecondary" gutterBottom>
+              {t('selectLanguage')}
+            </Typography>
             <div>
-              <Tabs
-                value={tabIndex}
-                onChange={this.handleChange}
-                indicatorColor="primary"
-                textColor="primary"
-                centered
-              >
-                {types.map((type) =>
-                  <Tab key={type.name} label={`${type.name} ${ getCoverage(byType[type.type],defaultByType[type.type])}`} />
-                )}
-              </Tabs>
-              {types.map((type, i) => {
-                const translationsMap = ListToMap(byType[type.type] || []);
-                const initialValues = makeInitalValues(translationsMap);
-                //console.log(initialValues,'ss');
-                return (tabIndex === i &&
-                    <Editor
-                      key={`${selectedLocale}-${type.type}`}
-                      originalsList={defaultByType[type.type] || []}
-                      initialValues={initialValues}
-                      onSubmit={(submitValues, dispatch, props) => {
-                        const { initialValues } = props
-                        const changedValues = diff(initialValues, submitValues)
-                        pushTranslation({
-                          changes: changedValues,
-                          locale: selectedLocale,
-                          type: type.type,
-                        });
-                      }}
-                      type={type.type}
-                      selectedLocale={selectedLocale}
-                      defaultLocale={defaultLocale}
-                      languageName={languages[selectedLocale] && languages[selectedLocale].langLoc}
-                    />
-                  )
-              })}
+              {menuLanguagesList.map((l) =>
+                <Chip
+                  key={l}
+                  className={classes.chip}
+                  avatar={<Avatar>{l.toUpperCase()}</Avatar>}
+                  label={languages[l.toLowerCase()] && languages[l.toLowerCase()].langEn}
+                  onClick={() => selectLocale({ selectedLocale: l })}
+                  color={selectedLocale === l ? 'primary' : 'default'}
+                />
+              )}
             </div>
-          :
+            <Divider style={{marginBottom: '10px'}} />
+            <Typography color="textSecondary" gutterBottom>
+              {t('addLanguage')}
+            </Typography>
+            <div style={{maxWidth: '300px'}} className={classes.chip}>
+              <AutoComplete
+                dataSource={autocompleteData}
+                placeholder={t('selectLanguagePlaceholder')}
+                outlined
+                onChange={l =>
+                  l && addLanguage({language: l.value})
+                }
+              />
+            </div>
+          </CardContent>
+          <Divider style={{marginBottom: '10px'}} />
+        {defaultLocale !== selectedLocale ?
           <div>
-            <Typography variant="h6" align="center">
-              {languages[selectedLocale].langLoc} is your default language
-            </Typography>
-            <Typography variant="subtitle1" align="center">
-              Select any other language above
-            </Typography>
+            <Tabs
+              value={tabIndex}
+              onChange={(e, i) => switchTab(i)}
+              indicatorColor="primary"
+              textColor="primary"
+              centered
+            >
+              {types.map((type) =>
+                <Tab key={type.name} label={`${t(tNameToi18Key(type.name))} ${ getCoverage(byType[type.type],defaultByType[type.type])}`} />
+              )}
+            </Tabs>
+            {types.map((type, i) => {
+              const translationsMap = ListToMap(byType[type.type] || []);
+              const initialValues = makeInitalValues(translationsMap);
+              return (tabIndex === i &&
+                  <Editor
+                    t={t}
+                    key={`${selectedLocale}-${type.type}`}
+                    originalsList={defaultByType[type.type] || []}
+                    initialValues={initialValues}
+                    onSubmit={(submitValues, dispatch, props) => {
+                      const { initialValues } = props
+                      const changedValues = diff(initialValues, submitValues)
+                      pushTranslation({
+                        changes: changedValues,
+                        locale: selectedLocale,
+                        type: type.type,
+                      });
+                    }}
+                    type={type.type}
+                    selectedLocale={selectedLocale}
+                    defaultLocale={defaultLocale}
+                    languageName={languages[selectedLocale] && languages[selectedLocale].langLoc}
+                  />
+                )
+            })}
           </div>
-        }
-        </Paper>
-      </SolidContainer>
-    );
-  }
+        :
+        <div style={{padding: '20px 0 40px 0', textAlign: 'center'}}>
+          <Typography component="h3" variant="display1" gutterBottom>
+            {languages[selectedLocale].langLoc} is your default language
+          </Typography>
+          <Typography variant="caption">
+            Select any other language
+          </Typography>
+        </div>
+      }
+      </Paper>
+    </SolidContainer>
+  );
 }
 
 const translationsSelector = createSelector(
@@ -233,11 +239,13 @@ export default connect(
     translations: translationsSelector(state),
     selectedLocale: state.translation.selectedLocale,
     supportedLanguages: state.restaurant.languages,
-    menuLanguages: state.restaurant.menuLanguages
+    menuLanguages: state.restaurant.menuLanguages,
+    tabIndex: state.ui.translationsTabIndex
   }),
   {
     addLanguage,
     selectLocale,
-    pushTranslation
+    pushTranslation,
+    switchTab
   }
 )(withStyles(styles)(Translations));

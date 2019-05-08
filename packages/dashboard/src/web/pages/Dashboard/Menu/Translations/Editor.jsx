@@ -55,163 +55,141 @@ const styles = theme => ({
   }
 });
 
+let Editor = ({
+  originalsList,
+  type,
+  classes = {},
+  handleSubmit,
+  progressMap,
+  selectedLocale,
+  defaultLocale,
+  suggestTranslation,
+  suggestAllTranslations,
+  languageName,
+  t
+}) => {
 
+  const loading = progressMap['SAVE_TRANSLATION'] === 'PENDING';
 
-class Editor extends React.Component {
-
-  render() {
-    const {
-      originalsList,
-      type,
-      classes = {},
-      handleSubmit,
-      progressMap,
-      selectedLocale,
-      defaultLocale,
-      suggestTranslation,
-      suggestAllTranslations,
-      languageName
-    } = this.props;
-
-    const loading = progressMap['SAVE_TRANSLATION'] === 'PENDING';
-
-    return (
-      <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-      <Tooltip title="Suggest all translations" aria-label="Save">
-        <Button
-          style={{margin: '10px 20px'}}
-          component="span"
-          type="button"
-          variant="outlined"
-          onClick={() => suggestAllTranslations({
-            form: `translations/editor/${selectedLocale}/${type}`,
-            from: defaultLocale,
-            to: selectedLocale,
-            originalsList
-          })}
-        >
-          <span>
-            Suggest all translations
-          </span>
-        </Button>
-      </Tooltip>
-        <Table className={classes.table} padding="none">
-          <TableHead>
-            <TableRow>
-              <TableCell className={classes.firstCell}>Original Name</TableCell>
-              <TableCell></TableCell>
-              <TableCell className={classes.cell}>{languageName}</TableCell>
-              {type === 'MenuItem' && <TableCell className={classes.cell}>Description</TableCell>}
-              {type === 'MenuItem' && <TableCell></TableCell>}
-              {type === 'MenuItem' && <TableCell className={classes.cell}>{languageName}</TableCell>}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {originalsList.map(original => (
-              <TableRow key={original.id}>
-                <TableCell className={classes.firstCell} style={{fontSize: 14}} scope="row">
-                  {original.name}
-                </TableCell>
-                <TableCell style={{width: '50px'}}>
-                  {original.name && original.name.length > 0 ?
-                    <Tooltip title="Suggest Translation" aria-label="Save">
-                      <IconButton
-                        component="span"
-                        type="button"
-                        onClick={() => original.name && suggestTranslation({
-                          form: `translations/editor/${selectedLocale}/${type}`,
-                          field: original.id,
-                          text: original.name,
-                          from: defaultLocale,
-                          to: selectedLocale
-                        })}
-                      >
-                        <GTranslate />
-                      </IconButton>
-                    </Tooltip>
-                    : ''
-                  }
-                </TableCell>
+  return (
+    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+      <Table className={classes.table} padding="none">
+        <TableHead>
+          <TableRow>
+            <TableCell className={classes.firstCell}>{t('menu.dishName')}</TableCell>
+            <TableCell></TableCell>
+            <TableCell className={classes.cell}>{languageName}</TableCell>
+            {type === 'MenuItem' && <TableCell className={classes.cell}>{t('menu.description')}</TableCell>}
+            {type === 'MenuItem' && <TableCell></TableCell>}
+            {type === 'MenuItem' && <TableCell className={classes.cell}>{languageName}</TableCell>}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {originalsList.map(original => (
+            <TableRow key={original.id}>
+              <TableCell className={classes.firstCell} style={{fontSize: 14}} scope="row">
+                {original.name}
+              </TableCell>
+              <TableCell style={{width: '50px'}}>
+                {original.name && original.name.length > 0 ?
+                  <Tooltip title="Suggest Translation" aria-label="Save">
+                    <IconButton
+                      component="span"
+                      type="button"
+                      onClick={() => original.name && suggestTranslation({
+                        form: `translations/editor/${selectedLocale}/${type}`,
+                        field: original.id,
+                        text: original.name,
+                        from: defaultLocale,
+                        to: selectedLocale
+                      })}
+                    >
+                      <GTranslate />
+                    </IconButton>
+                  </Tooltip>
+                  : ''
+                }
+              </TableCell>
+              <TableCell className={classes.cell}>
+                <Field
+                  name={original.id}
+                  component={Text}
+                  componentProps={{
+                    //fullWidth: true,
+                    variant: 'outlined',
+                    placeholder: '',
+                    style: {
+                      minWidth: '150px',
+                      maxWidth: '500px',
+                      width: '100%'
+                    },
+                    inputProps: {
+                      style: { padding: '10px' }
+                    }
+                  }}
+                />
+              </TableCell>
+              {type === 'MenuItem' &&
                 <TableCell className={classes.cell}>
+                  {original.description}
+                </TableCell>
+              }
+              {type === 'MenuItem' &&
+              <TableCell style={{width: '50px'}}>
+                {original.description && original.description.length > 0 ?
+                  <Tooltip title="Suggest Translation" aria-label="Save">
+                    <IconButton
+                      component="span"
+                      type="button"
+                      onClick={() => suggestTranslation({
+                        form: `translations/editor/${selectedLocale}/${type}`,
+                        field: original.id+'_description',
+                        text: original.description,
+                        from: defaultLocale,
+                        to: selectedLocale
+                      })}
+                    >
+                      <GTranslate />
+                    </IconButton>
+                  </Tooltip>
+                  : ''
+                }
+              </TableCell>
+              }
+              {type === 'MenuItem' &&
+                <TableCell className={classes.lastCell}>
                   <Field
-                    name={original.id}
+                    name={original.id+'_description'}
                     component={Text}
                     componentProps={{
-                      //fullWidth: true,
+                      multiline: true,
+                      rows: 6,
                       variant: 'outlined',
+                      //fullWidth: true,
                       placeholder: '',
-                      style: {
-                        minWidth: '150px',
-                        maxWidth: '500px',
-                        width: '100%'
-                      },
-                      inputProps: {
-                        style: { padding: '10px' }
+                      style: {minWidth: '300px', margin: '10px'},
+                      InputProps: {
+                        style: { padding: '14px' }
                       }
                     }}
                   />
                 </TableCell>
-                {type === 'MenuItem' &&
-                  <TableCell className={classes.cell}>
-                    {original.description}
-                  </TableCell>
-                }
-                {type === 'MenuItem' &&
-                <TableCell style={{width: '50px'}}>
-                  {original.description && original.description.length > 0 ?
-                    <Tooltip title="Suggest Translation" aria-label="Save">
-                      <IconButton
-                        component="span"
-                        type="button"
-                        onClick={() => suggestTranslation({
-                          form: `translations/editor/${selectedLocale}/${type}`,
-                          field: original.id+'_description',
-                          text: original.description,
-                          from: defaultLocale,
-                          to: selectedLocale
-                        })}
-                      >
-                        <GTranslate />
-                      </IconButton>
-                    </Tooltip>
-                    : ''
-                  }
-                </TableCell>
-                }
-                {type === 'MenuItem' &&
-                  <TableCell className={classes.lastCell}>
-                    <Field
-                      name={original.id+'_description'}
-                      component={Text}
-                      componentProps={{
-                        multiline: true,
-                        rows: 6,
-                        variant: 'outlined',
-                        //fullWidth: true,
-                        placeholder: '',
-                        style: {minWidth: '300px', margin: '10px'},
-                        InputProps: {
-                          style: { padding: '14px' }
-                        }
-                      }}
-                    />
-                  </TableCell>
-                }
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <Tooltip title={loading ? 'Saving...' : 'Save'} aria-label="Save">
-          <div className={classes.wrapper}>
-            <Fab className={classes.fab} color="primary" type="submit">
-              {loading ? <Save /> : <Done />}
-            </Fab>
-            {loading && <CircularProgress size={68} className={classes.fabProgress} />}
-          </div>
-        </Tooltip>
-      </form>
-    );
-  }
+              }
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <Tooltip title={loading ? 'Saving...' : 'Save'} aria-label="Save">
+        <div className={classes.wrapper}>
+          <Fab className={classes.fab} color="primary" type="submit">
+            {loading ? <Save /> : <Done />}
+          </Fab>
+          {loading && <CircularProgress size={68} className={classes.fabProgress} />}
+        </div>
+      </Tooltip>
+    </form>
+  );
+
 }
 
 

@@ -70,6 +70,7 @@
     "newChoice": "Name of new choice",
     "newChoicePlaceholder": "e.g. White bread",
     "addChoice": "Add Choice",
+    "choices": "Choices",
     "noIngredients": "No ingredients yet",
     "noAddons": "No addons yet",
     "noOptionGroups": "No option groups yet",
@@ -77,6 +78,9 @@
     "selectAddons": "Select addons",
     "selectOptionGroups": "Vyberte option groups"
   },
+  "addLanguage": "Add language",
+  "selectLanguage": "Select one of defined languages",
+  "selectLanguagePlaceholder": "Select language",
   "nutrition": {
     "facts": "Nutrition facts",
     "fats": "Fats (g)",

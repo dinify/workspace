@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@dinify/common/dist/components/Typography';
 import Button from '@material-ui/core/Button';
@@ -10,6 +9,8 @@ import ListOfDishes from './ListOfDishes';
 import ItemDetail from './ItemDetail';
 import * as FN from 'lib/FN';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
+
 
 const SolidContainer = styled.div`
   min-width: 800px;
@@ -24,13 +25,13 @@ const Menucontrol = ({
   menuItems,
   classes
 }) => {
-  const { t } = useTranslation();
   const categoriesList = FN.MapToList(categoriesMap).sort(
     (a, b) => a.precedence - b.precedence,
   );
   if (categoriesList.length === 1) {
     selectedCategoryId = categoriesList[0].id;
   }
+  const { t } = useTranslation();
   console.log(classes, 'sdsd');
   return (
     <div>

@@ -57,7 +57,7 @@
     "categoryEmpty": "Vybraná kategorie je prázdná, můžete do ní přidat jídlo",
     "ingredients": "Ingredience",
     "addons": "Extra položky",
-    "optionGroups": "Varianty",
+    "optionGroups": "Skupiny variant",
     "newIngredient": "Název nové ingredience",
     "newIngredientPlaceholder": "např. Rýže",
     "addIngredient": "Přidat ingredienci",
@@ -70,6 +70,7 @@
     "newChoice": "Název nové varianty",
     "newChoicePlaceholder": "např. Chléb",
     "addChoice": "Přidat variantu",
+    "choices": "Varianty",
     "noIngredients": "Zatím žádné ingredience",
     "noAddons": "Zatím žádné extra položky",
     "noOptionGroups": "Zatím žádné varianty",
@@ -77,6 +78,9 @@
     "selectAddons": "Vyberte extra položky",
     "selectOptionGroups": "Vyberte varianty"
   },
+  "addLanguage": "Přidat jazyk",
+  "selectLanguage": "Zvolte jeden z vybraných jazyků",
+  "selectLanguagePlaceholder": "Vybrat jazyk",
   "nutrition": {
     "facts": "Nutriční údaje",
     "fats": "Tuky (g)",
