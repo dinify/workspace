@@ -94,13 +94,13 @@ export function getTypographyVariants({
     let merge;
     switch (variant) {
       case 'headline1':
-      case 'button':
+      // case 'button':
       case 'subtitle2':
         merge = {
           transform: 'translate(0, -1px)'
         };
         break;
-      case 'button2':
+      // case 'button2':
       case 'body2':
       case 'headline4':
       case 'headline6':

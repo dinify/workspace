@@ -53,6 +53,9 @@ const getTheme = ({type = 'light'}) => {
           secondary: dark ? 'rgba(255, 255, 255, 0.54)' : 'rgba(0, 0, 0, 0.38)',
         },
       },
+      shape: {
+        borderRadius: 8
+      },
       typography: {
         useNextVariants: true,
         ...nextVariants
