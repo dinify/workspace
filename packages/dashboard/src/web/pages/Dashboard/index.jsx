@@ -32,6 +32,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import { toggleSection } from 'ducks/ui/actions';
+import { publishRestaurant } from 'ducks/restaurant/actions';
 import SettingsSection from './Settings';
 import MenuSection from './Menu';
 import BillingSection from './Billing';
@@ -162,7 +163,7 @@ const shouldOpen = (openedIndex, index, location, section) => {
   return openedIndex === index;
 }
 
-const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) => {
+const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection, loggedRestaurant, publishRestaurant }) => {
   const { t } = useTranslation();
   const sections = [
     {
@@ -231,7 +232,8 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
       path: '/menu/control',
       label: t('createMenu')
     }
-  ];  
+  ];
+  const publishable = true;
   return (
     <div>
       <Sidebar>
@@ -297,7 +299,7 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
             </ListItem>
           </List>
 
-          <Stepper orientation="vertical" style={{
+          {!loggedRestaurant.published ? <Stepper orientation="vertical" style={{
             background: 'transparent',
             paddingLeft: '32px',
             borderTop: '1px solid rgba(255,255,255,0.1)'
@@ -316,16 +318,27 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
               </Step>
             )}
 
-            <Step disabled={true}>
+            <Step disabled={!publishable}>
               <StepLabel>
-              <Tooltip placement="bottom" title={t('completePrevious')}>
-                <div className={classes.stepLabel}>
-                  <Button variant="contained" color="primary" disabled={true}>{t('publish')}</Button>
-                </div>
+                <Tooltip placement="bottom" title={!publishable ? t('completePrevious') : 'Publish your restaurant'}>
+                  <div className={classes.stepLabel}>
+                    <Button
+                      variant="contained" 
+                      color="primary"
+                      disabled={!publishable}
+                      onClick={() => publishRestaurant({ published: true})}
+                    >
+                      {t('publish')}
+                    </Button>
+                  </div>
                 </Tooltip>
               </StepLabel>
             </Step>
-          </Stepper>
+          </Stepper> :
+          <div>
+            Published
+          </div>
+        }
 
         </MuiThemeProvider>
       </Sidebar>
@@ -360,9 +373,11 @@ export default compose(
   withFirebase,
   withStyles(styles),
   connect((state) => ({
-    openedIndex: state.ui.navOpenedIndex
+    openedIndex: state.ui.navOpenedIndex,
+    loggedRestaurant: state.restaurant.loggedRestaurant
   }), {
-    toggleSection
+    toggleSection,
+    publishRestaurant
   })
 )(Dashboard);
 

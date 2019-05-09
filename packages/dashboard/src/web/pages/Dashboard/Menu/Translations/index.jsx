@@ -27,7 +27,8 @@ import {
   selectLocale,
   pushTranslation,
   selectLanguage,
-  confirmPreferredLanguages
+  confirmPreferredLanguages,
+  translateAll
 } from 'ducks/translation/actions';
 import { switchTranslationsTab as switchTab } from 'ducks/ui/actions';
 import { withStateHandlers } from 'recompose';
@@ -113,7 +114,8 @@ const Translations = ({
   toggleLanguagesSetup,
   selectLanguage,
   preSelectedLanguages,
-  confirmPreferredLanguages
+  confirmPreferredLanguages,
+  translateAll
 }) => {
   const defaultLanguage = 'en';
   const { t } = useTranslation();
@@ -192,6 +194,9 @@ const Translations = ({
   return (
     <Paper style={{borderRadius: '2px', margin: '14px 10px'}}>
       <CardContent>
+          <div style={{textAlign: 'right'}}>
+            <Button variant="contained" color="primary" onClick={() => translateAll()}>Translate all</Button>
+          </div>
           <Typography color="textSecondary" gutterBottom>
             {t('selectLanguage')}
           </Typography>
@@ -329,7 +334,8 @@ const enhance = compose(
       pushTranslation,
       switchTab,
       selectLanguage,
-      confirmPreferredLanguages
+      confirmPreferredLanguages,
+      translateAll
     }
   )
 );

@@ -7,6 +7,7 @@ import * as API from '@dinify/common/dist/api/restaurant';
 import { Post } from '@dinify/common/dist/api/Network';
 import { change as changeForm } from 'redux-form';
 import { MapToList } from 'lib/FN';
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 
 const saveTranslationDone = () => {
   return { type: 'PUSH_TRANSLATION_DONE'}
@@ -127,10 +128,27 @@ const confirmPreferredEpic = (action$, state$) =>
     })
   );
 
+const translateAllEpic = (action$: Observable, state$) =>
+  action$.pipe(
+    ofType('TRANSLATE_ALL_INIT'),
+    mergeMap(() => {
+      const promise = API.TranslateAll({
+        restaurantId: state$.value.restaurant.selectedRestaurant
+      })
+      return fromPromise(promise).pipe(
+        mergeMap(() => {
+          const message = 'Translated successfully';
+          return of({type: 'TRANSLATE_ALL_DONE'}, snackbar.show({ message }));
+        }),
+        catchError(error => of({type: 'TRANSLATE_ALL_FAIL', error}))
+      );
+    })
+  );
 export default [
   pushTranslationEpic,
   suggestTranslationEpic,
   suggestAllEpic,
   saveTranslationEpic,
-  confirmPreferredEpic
+  confirmPreferredEpic,
+  translateAllEpic
 ];

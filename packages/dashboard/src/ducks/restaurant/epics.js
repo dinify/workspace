@@ -185,6 +185,7 @@ const addLangSnackbar = (action$) =>
   );
 
 
+
 export default [
   loadRestaurant,
   bootstrapEpic,
@@ -196,5 +197,5 @@ export default [
   onUpdateSnackbarsEpic,
   resetCategoriesEpic,
   resetMenuItemEpic,
-  addLangSnackbar
+  addLangSnackbar,
 ];

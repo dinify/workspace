@@ -32,3 +32,5 @@ export const selectLanguage = payload => ({
 export const confirmPreferredLanguages = () => ({
   type: 'CONFIRM_PREFERRED_LANGUAGES',
 })
+
+export const translateAll = () => ({ type: 'TRANSLATE_ALL_INIT'})

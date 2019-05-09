@@ -142,6 +142,10 @@ export function ChangeName({ name, restaurantId }) {
   return Post({ path: `restaurant/${restaurantId}`}, { name });
 }
 
+export function ChangePublished({ published, restaurantId }) {
+  return Post({ path: `restaurant/${restaurantId}`}, { published });
+}
+
 export function ChangeContact({ phone, email, website, restaurantId }) {
   return Post(
     { path: `restaurant/${restaurantId}`},

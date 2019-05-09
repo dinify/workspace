@@ -188,3 +188,8 @@ export const updateAddonInit = payload => ({
 });
 
 export const selectRestaurant = ({id}) => ({ type: 'SELECT_RESTAURANT', payload: { id } });
+
+export const publishRestaurant = ({ published }) => ({
+  type: 'UPDATE_PUBLISHED_INIT',
+  payload: { published }
+});
