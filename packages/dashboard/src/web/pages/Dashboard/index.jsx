@@ -7,10 +7,8 @@ import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-import SettingsSection from './Settings';
-import MenuSection from './Menu';
-import BillingSection from './Billing';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -20,16 +18,23 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import Typography from '@dinify/common/dist/components/Typography';
-
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
+import StepConnector from '@material-ui/core/StepConnector';
 
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import Settings from '@material-ui/icons/Settings';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenu';
-import AttachMoney from '@material-ui/icons/AttachMoney';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import { toggleSection } from 'ducks/ui/actions';
+import SettingsSection from './Settings';
+import MenuSection from './Menu';
+import BillingSection from './Billing';
 
 const Sidebar = styled.div`
   position: fixed;
@@ -37,6 +42,7 @@ const Sidebar = styled.div`
   top: 0;
   height: 100vh;
   width: 240px;
+  overflow: auto;
   @media print {
     display: none;
   }
@@ -67,6 +73,11 @@ const Content = styled.div`
 const theme = createMuiTheme({
   palette: {
     type: 'dark',
+    primary: {
+      light: '#E14846', // primary_600
+      main: '#C13939', // primary_800
+      dark: '#B1312F', // primary_900
+    },
   },
   typography: {
     fontFamily: 'Lato',
@@ -113,7 +124,7 @@ const styles = theme => ({
   },
   homeText: {
     fontSize: '15px',
-    fontWeight: 300,
+    fontWeight: 500,
     color: 'white'
   },
   navItem: {
@@ -133,7 +144,10 @@ const styles = theme => ({
     color: 'rgba(255,255,255,0.7)',
     fontSize: '14px',
     fontWeight: 300,
-  }
+  },
+  stepLabel: {
+    marginLeft: 10,
+  },
 });
 
 const shouldOpen = (openedIndex, index, location, section) => {
@@ -160,8 +174,8 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
           path: '/settings/services'
         },
         {
-          name: t('nav.waiterboards'),
-          path: '/settings/waiterboards'
+          name: t('nav.tables'),
+          path: '/settings/tables'
         },
         {
           name: t('nav.tableCodes'),
@@ -199,12 +213,26 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
     subsectionNames = [...subsectionNames, ...section.subsections]
   })
   const activeSubsection = subsectionNames.filter((s) => location.pathname.includes(s.path))[0];
-  
+  const sectionSteps = [
+    {
+      path: '/settings/main',
+      label: t('contactsIn')
+    },
+    {
+      path: '/settings/tables',
+      label: t('addTables')
+    },
+    {
+      path: '/menu/control',
+      label: t('createMenu')
+    }
+  ];  
   return (
     <div>
       <Sidebar>
 
         <MuiThemeProvider theme={theme}>
+          <CssBaseline />
           <List
             component="nav"
             style={{paddingTop: 0}}
@@ -212,7 +240,7 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
             <Link to="/">
               <ListItem button className={classes.homeSection}>
                 <ListItemIcon className={classes.homeIcon}>
-                  <img src={require('assets/img/logo.svg')} width={26} height={36} alt="" />
+                  <img src={'/tile-icon-150x150.png'} width={24} height={24} alt="Dinify" />
                 </ListItemIcon>
                 <ListItemText inset primary="Dashboard" disableTypography className={classes.homeText} />
               </ListItem>
@@ -263,6 +291,37 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
               <ListItemText className={classes.navText} disableTypography inset primary={t('user.logOut')} />
             </ListItem>
           </List>
+
+          <Stepper orientation="vertical" style={{
+            background: 'transparent',
+            paddingLeft: '32px',
+            borderTop: '1px solid rgba(255,255,255,0.1)'
+          }}
+          connector={
+            <StepConnector style={{padding: '5px 0'}} />
+          }>
+
+            {sectionSteps.map((step) => 
+              <Step>
+                <StepLabel active={location.pathname === step.path}>
+                  <div className={classes.stepLabel}>
+                    <Link style={{color: 'inherit'}} to={step.path}>{step.label}</Link>
+                  </div>
+                </StepLabel>
+              </Step>
+            )}
+
+            <Step disabled={true}>
+              <StepLabel>
+              <Tooltip placement="bottom" title={t('completePrevious')}>
+                <div className={classes.stepLabel}>
+                  <Button variant="contained" color="primary" disabled={true}>{t('publish')}</Button>
+                </div>
+                </Tooltip>
+              </StepLabel>
+            </Step>
+          </Stepper>
+
         </MuiThemeProvider>
       </Sidebar>
       <ContentBG />

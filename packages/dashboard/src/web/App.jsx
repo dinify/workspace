@@ -40,6 +40,7 @@ const App = ({ appLoading, user, history, ongoingRegistration, selectedRestauran
       <Content>
         {appLoading || !user.isLoaded ? <AppLoader>Dashboard is loading...</AppLoader> :
           <Switch>
+            <Route path="/qr/:code" component={Qr} />
             <Route path="/signin" component={() => {
               return user.isEmpty ? <SignInWithRoot env="DASHBOARD" user={user}/> :
               <Redirect to="/"/>
@@ -55,7 +56,7 @@ const App = ({ appLoading, user, history, ongoingRegistration, selectedRestauran
               return <Dashboard history={history} location={location} />;
             }} />
 
-            <Route path="/qr/:code" component={Qr} />
+            
           </Switch>      
         }
       </Content>

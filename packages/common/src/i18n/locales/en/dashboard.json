@@ -9,6 +9,7 @@
     "settings": "Settings",
     "mainInfo": "Main Info",
     "services": "Services",
+    "tables": "Tables",
     "waiterboards": "Waiterboards",
     "tableCodes": "Table Codes",
     "menu": "Menu",
@@ -90,5 +91,10 @@
   },
   "delete": "Delete",
   "published": "Published",
-  "unpublished": "Unpublished"
+  "unpublished": "Unpublished",
+  "contactsIn": "Put contacts in",
+  "addTables": "Add tables",
+  "createMenu": "Create menu",
+  "publish": "Publish",
+  "completePrevious": "Complete previous steps first"
 }

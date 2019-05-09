@@ -9,6 +9,7 @@
     "settings": "Nastavení",
     "mainInfo": "Kontakty",
     "services": "Služby",
+    "tables": "Stoly",
     "waiterboards": "Waiterboardy",
     "tableCodes": "Kódy na stoly",
     "menu": "Menu",
@@ -90,5 +91,10 @@
   },
   "delete": "Smazat",
   "published": "Zobrazené",
-  "unpublished": "Skryté"
+  "unpublished": "Skryté",
+  "contactsIn": "Vyplňte kontakty",
+  "addTables": "Přidejte stoly",
+  "createMenu": "Vytvořte menu",
+  "publish": "Publikovat",
+  "completePrevious": "Dokončete předchozí kroky"
 }

@@ -14,7 +14,7 @@ const Settings = () => (
     <Switch>
       <Redirect exact from="/settings" to="/settings/main" />
       <Route path="/settings/main" component={MainSection} />
-      <Route path="/settings/waiterboards" component={WaiterboardsSection} />
+      <Route path="/settings/tables" component={WaiterboardsSection} />
       <Route path="/settings/services" component={ServicesSection} />
       <Route path="/settings/tablecodes" component={QRsSection} />
       <Route path="/settings/roles" component={RolesSection} />

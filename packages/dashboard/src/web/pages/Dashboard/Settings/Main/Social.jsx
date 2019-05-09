@@ -1,4 +1,5 @@
 // @flow
+import * as R from 'ramda';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
@@ -13,12 +14,24 @@ import Progress from 'web/components/Progress';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 
+const renderSocialField = (props) => {
+  let subdomain = <span style={{color: '#888'}}> </span>;
+  const value = props.input.value;
+  if (value !== '') subdomain = value;
+  return (
+    <div>
+      <Text {...props} />
+      <div>{props.input.name}.com/{subdomain}</div>
+    </div>
+  )
+}
+
 let SocialForm = ({ handleSubmit, t }) => {
   return (
     <form onSubmit={handleSubmit}>
       <Field
         name="facebook"
-        component={Text}
+        component={renderSocialField}
         componentProps={{
           label: 'Facebook URL',
           fullWidth: true,
@@ -27,7 +40,7 @@ let SocialForm = ({ handleSubmit, t }) => {
       />
       <Field
         name="instagram"
-        component={Text}
+        component={renderSocialField}
         componentProps={{
           label: 'Instagram URL',
           fullWidth: true,
@@ -46,8 +59,22 @@ SocialForm = reduxForm({
   destroyOnUnmount: false
 })(SocialForm);
 
+
 const Social = ({ updateSocial, social }) => {
   const { t } = useTranslation();
+  const initialValues = {facebook: '', instagram: ''};
+  if (social) {
+    if (social.facebook) initialValues.facebook = R.last(social.facebook.split('/'));
+    if (social.instagram) initialValues.instagram = R.last(social.instagram.split('/'));
+  }
+  const onSubmit = ({facebook, instagram}) => {
+    if (facebook) facebook = `https://www.facebook.com/${facebook}`;
+    if (instagram) instagram = `https://www.instagram.com/${instagram}`;
+    const obj = {};
+    if (facebook.length > 0) obj.facebook = facebook;
+    if (instagram.length > 0) obj.instagram = instagram;
+    updateSocial(obj);
+  }
   return (
     <FormBox>
       <FormBoxHead>
@@ -55,7 +82,7 @@ const Social = ({ updateSocial, social }) => {
         <Progress type={'UPDATE_SOCIAL'} />
       </FormBoxHead>
       <FormBoxBody material>
-        <SocialForm onSubmit={updateSocial} initialValues={social} t={t} />
+        <SocialForm onSubmit={onSubmit} initialValues={initialValues} t={t} />
       </FormBoxBody>
     </FormBox>
   );

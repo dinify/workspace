@@ -458,13 +458,16 @@ const Waiterboards = ({
                 <Group />
               </WBinfo>
             </Tooltip>
+            {/*
             <Tooltip placement="top" title="Delete Waiterboard">
               <DeleteWaiterboard
                 onClick={() => deleteWaiterboard({ id: wb.id })}
               >
                 <Delete />
               </DeleteWaiterboard>
-            </Tooltip>
+            </Tooltip>            
+            */}
+
           </WBheader>
           <WBbody>
             <TableTag>
