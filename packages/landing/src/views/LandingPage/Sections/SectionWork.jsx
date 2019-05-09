@@ -1,6 +1,8 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import { Form, Text, Field, TextArea, Radio, RadioGroup, Select, Checkbox } from 'react-form';
 
 // @material-ui/icons
@@ -8,8 +10,7 @@ import { Form, Text, Field, TextArea, Radio, RadioGroup, Select, Checkbox } from
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
-import Button from "components/CustomButtons/Button.jsx";
+import TextField from "@material-ui/core/TextField";
 
 import workStyle from "./productStyle.jsx";
 import signupImage from "assets/img/signup.png";
@@ -17,18 +18,17 @@ import signupImage from "assets/img/signup.png";
 const CustomText = props => (
   <Field field={props.field}>
     { fieldApi => {
-      const { onChange, onBlur, field, ...rest } = props
+      const { onChange, onBlur, field, labelText, ...rest } = props
       const { value, error, warning, success, setValue, setTouched } = fieldApi
       return (
-        <div>
-
-          <CustomInput
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
+        <div style={{ marginBottom: 8 }}>
+          <TextField
+            variant="filled"
+            fullWidth={true}
+            label={labelText}
+            helperText=" "
+            InputProps={{
               onChange: e => {
-                console.log('ssx')
                 setValue(e.target.value)
                 if (onChange) {
                   onChange(e.target.value, e)
@@ -69,21 +69,20 @@ class SectionWork extends React.Component {
         <div className={classes.container}>
           <GridContainer justify="center">
             <GridItem cs={12} sm={8} md={8}>
-              <h2 className={classes.title}>Are you a restaurant?</h2>
-              <h4 className={classes.description}>
+              <Typography variant="h4">Are you a restaurant?</Typography>
+              <Typography variant="subtitle1">
                 Show your interest by contacting us.
                 We will help you understand the value propositions better.
-              </h4>
+              </Typography>
               <form>
-                <GridContainer>
+                <GridContainer style={{ marginTop: 16 }}>
                   <GridItem xs={12} sm={6} md={6}>
                     <img
                       style={{width: "100%"}}
                       src={signupImage}
                       alt="Signup"
                     />                </GridItem>
-                  <GridItem xs={12} sm={6} md={6}>
-
+                  <GridItem style={{ marginTop: 16 }} xs={12} sm={6} md={6}>
                     <Form onSubmit={submittedValues => registerRedirect(submittedValues)}>
                       {formApi => (
                         <form onSubmit={formApi.submitForm} id="form2">
@@ -100,11 +99,18 @@ class SectionWork extends React.Component {
                             id="email"
                           />
 
-                          <Button type="submit" style={{float: 'right'}} color="primary">Register</Button>
+                          <Button
+                            type="submit"
+                            variant="outlined"
+                            style={{ float: "right", height: 40 }}
+                            color="primary"
+                          >
+                            Next
+                          </Button>
                         </form>
                       )}
                     </Form>
-                    
+
                   </GridItem>
                 </GridContainer>
               </form>

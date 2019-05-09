@@ -8,6 +8,7 @@ import Camera from "@material-ui/icons/CameraAlt";
 import ViewList from "@material-ui/icons/ViewList";
 
 import Restaurant from "@material-ui/icons/Restaurant";
+import Typography from "@material-ui/core/Typography";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -28,11 +29,11 @@ class SectionFeatures extends React.Component {
         <div className={classes.container}>
           <GridContainer justify="center">
             <GridItem xs={12} sm={8} md={8}>
-              <h2 className={classes.title}>and something beyond</h2>
-              <h5 className={classes.description}>
+              <Typography variant="h4">and something beyond</Typography>
+              <Typography variant="subtitle1">
                 Self-order, service call, payment with clicks to avoid having to converse
                 with your waiter in awkward foreign language as well as wait times in crowd.
-              </h5>
+              </Typography>
             </GridItem>
           </GridContainer>
           <div>

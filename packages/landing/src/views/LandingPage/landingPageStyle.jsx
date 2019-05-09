@@ -8,7 +8,7 @@ import {
 
 const landingPageStyle = {
   container: {
-    color: whiteColor,
+    color: "rgba(255, 255, 255, 1)",
     ...container,
     zIndex: "2"
   },

@@ -10,10 +10,12 @@ import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import Button from "components/CustomButtons/Button.jsx";
+
 import Parallax from "components/Parallax/Parallax.jsx";
 import landingPageStyle from "./landingPageStyle.jsx";
 import LogoText from "@dinify/common/dist/icons/LogoText";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
 // Sections for this page
 import SectionFeatures from "./Sections/SectionFeatures.jsx";
@@ -32,7 +34,9 @@ class LandingPage extends React.Component {
       <div>
         <Header
           color="transparent"
-          brand={<LogoText className={classes.contrastText} />}
+          brand={props => (
+            <LogoText className={classes.contrastText} {...props} />
+          )}
           fixed
           changeColorOnScroll={{
             height: 100,
@@ -40,29 +44,35 @@ class LandingPage extends React.Component {
           }}
           {...rest}
         />
-        <Parallax image={require("assets/img/restaurantHero.jpg")} filter="dark">
+        <Parallax
+          image={require("assets/img/restaurantHero.jpg")}
+          filter="dark"
+        >
           <div className={classes.container}>
             <GridContainer>
               <GridItem xs={12} sm={6} md={6}>
-                <h1 className={classes.title}>
-                  Order in restaurants<br />
-                  in your own language.
-                  Anywhere.
-                </h1>
-                <h4>
-                  We break barriers on your way to explore new cuisines.
-                </h4>
-                <br />
+                <Typography variant="h4" style={{ color: "inherit" }}>
+                  Order at restaurants in your own language, anywhere.
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  style={{ color: "inherit", marginTop: 8 }}
+                >
+                  We break barriers on your way to explore new cuisines. No matter where you go or what language you speak, you will never stop exploring new food experiences only because you don't speak a foreign language while traveling.
+                </Typography>
                 <Button
+                  variant="contained"
                   color="primary"
-                  style={{background: "linear-gradient(60deg, #c13939, #ff005e)"}}
-                  size="lg"
+                  style={{ height: 40, marginTop: 16 }}
                   href="https://m.dinify.app"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  EXPERIENCE
+                  Experience
                 </Button>
+              </GridItem>
+              <GridItem xs={12} sm={6} md={6}>
+                <img src="https://storage.googleapis.com/static.dinify.app/landing/girl-languages.svg"/>
               </GridItem>
             </GridContainer>
           </div>

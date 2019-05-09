@@ -17,6 +17,7 @@ import Menu from "@material-ui/icons/Menu";
 import Close from "@material-ui/icons/Close";
 // core components
 import headerStyle from "./headerStyle.jsx";
+import Typography from "@dinify/common/dist/components/Typography";
 
 class Header extends React.Component {
   constructor(props) {
@@ -62,6 +63,7 @@ class Header extends React.Component {
     });
     const AppBarStyle = {
       boxShadow: "none",
+      height: 56,
       borderRadius: 0
     };
     const subBrandStyle = {
@@ -69,24 +71,45 @@ class Header extends React.Component {
       //fontSize: 20,
       marginLeft: 5
     };
-    if (colorName === "primary") AppBarStyle.background = "linear-gradient(60deg, rgb(193, 57, 57), rgb(195, 0, 72))";
+    if (colorName === "primary") {
+      AppBarStyle.background = "#fafafa";
+      AppBarStyle.borderBottom = "1px solid rgba(0, 0, 0, 0.12)";
+      AppBarStyle.color = "rgba(0, 0, 0, 0.72)";
+    }
+    const logo = brand({style: {fill: colorName === "primary" ? "rgba(0, 0, 0, 0.72)" : "#ffffff"}});
     return (
       <AppBar className={appBarClasses} style={AppBarStyle}>
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 4,
+            background: (colorName === "primary") ? "linear-gradient(60deg, rgb(193, 57, 57), rgb(195, 0, 72))" : "none"
+          }}
+        />
         <Toolbar className={classes.container}>
           <Button className={classes.title}>
             <Link to="/">
-              {brand}
+              {logo}
               <span style={subBrandStyle}>{subBrand && ` | ${subBrand}`}</span>
             </Link>
           </Button>
           <Button
+            variant="outlined"
             href="https://m.dinify.app"
-            color={window.innerWidth < 960 ? "info" : "white"}
+            style={{height: 36}}
+            color="inherit"
             target="_blank"
-            className={classes.navButton}
-            round
           >
-            Go to app
+            <Typography
+              variant="button2"
+              style={{ color: "inherit" }}
+              baseline="center"
+            >
+              Go to app
+            </Typography>
           </Button>
         </Toolbar>
 

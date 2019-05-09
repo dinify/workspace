@@ -11,6 +11,7 @@ import productStyle from "./productStyle.jsx";
 import presentationiPhone from "assets/img/appscreen1.jpg";
 import "flag-icon-css/css/flag-icon.min.css";
 import CountryLanguage from 'country-language';
+import Typography from "@material-ui/core/Typography";
 
 import translations from './translations.json';
 
@@ -127,10 +128,12 @@ class SectionProduct extends React.Component {
 
         <GridContainer justify="center">
           <GridItem xs={12} sm={8} md={8}>
-            <h2 className={classes.title}>So, we built multilingual menu</h2>
-            <h5 className={classes.description}>
+            <Typography variant="h4">
+              So, we built multilingual menu
+            </Typography>
+            <Typography variant="subtitle1">
               in order for you to order in your language anywhere.
-            </h5>
+            </Typography>
           </GridItem>
         </GridContainer>
         <GridContainer>

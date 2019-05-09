@@ -1,6 +1,7 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import Typography from "@material-ui/core/Typography";
 import Accordion from "components/Accordion/Accordion.jsx";
 import classNames from "classnames";
 
@@ -15,9 +16,9 @@ class SectionProduct extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classNames(classes.section, classes.container)} style={{textAlign: "left"}}>
-        <div className={classes.title}>
-          <h2 className={classes.title}>FAQ</h2>
-        </div>
+        <Typography variant="h2" align="center" style={{width: '100%'}}>
+          FAQ
+        </Typography>
         <GridContainer justify="center">
           <GridItem xs={12} sm={8} md={8}>
             <Accordion

@@ -8,6 +8,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 
 // @material-ui/icons
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import Typography from "@material-ui/core/Typography";
 
 import accordionStyle from "assets/jss/material-kit-pro-react/components/accordionStyle.jsx";
 
@@ -82,10 +83,10 @@ class Accordion extends React.Component {
                   expandIcon: classes.expansionPanelSummaryExpandIcon
                 }}
               >
-                <h4 className={classes.title}>{prop.title}</h4>
+                <Typography variant="h6">{prop.title}</Typography>
               </ExpansionPanelSummary>
-              <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-                {prop.content}
+              <ExpansionPanelDetails style={{ padding: "16px 0px 8px 0px" }}>
+                <Typography variant="body2">{prop.content}</Typography>
               </ExpansionPanelDetails>
             </ExpansionPanel>
           );
