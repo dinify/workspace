@@ -102,9 +102,10 @@ const styles = theme => ({
     background: 'white',
     top: 0,
     right: 0,
-    height: '50px',
+    height: '51px',
     width: 'calc(100% - 240px)',
-    padding: '0 30px'
+    padding: '0 30px',
+    borderBottom: '1px solid #ebeef1'
   },
   nested: {
     paddingLeft: 40,
@@ -148,6 +149,10 @@ const styles = theme => ({
   stepLabel: {
     marginLeft: 10,
   },
+  solidContainer: {
+    minWidth: '800px',
+    paddingBottom: '100px',
+  }
 });
 
 const shouldOpen = (openedIndex, index, location, section) => {
@@ -332,19 +337,19 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection }) 
           </Typography> 
         </div>
         <Content>
-          
-          <Switch>
-            <Redirect exact from="/" to="/settings" />
-            <Route path="/settings" component={SettingsSection} />
-            <Route path="/menu" component={MenuSection} />
-            <Route path="/billing" component={BillingSection} />
-            {
-              //  <Route path="/guests" component={GuestsSection} />
-              //  <Route path="/sales" component={SalesSection} />
-              //  <Route path="/engagement" component={EngagementSection} />
-            }
-          </Switch>
-          
+          <div className={classes.solidContainer}>
+            <Switch>
+              <Redirect exact from="/" to="/settings" />
+              <Route path="/settings" component={SettingsSection} />
+              <Route path="/menu" component={MenuSection} />
+              <Route path="/billing" component={BillingSection} />
+              {
+                //  <Route path="/guests" component={GuestsSection} />
+                //  <Route path="/sales" component={SalesSection} />
+                //  <Route path="/engagement" component={EngagementSection} />
+              }
+            </Switch>
+          </div>
         </Content>
       </MuiThemeProvider>
     </div>

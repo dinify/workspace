@@ -12,9 +12,6 @@
     "worker": "npm run build && node src/workers/index",
     "script": "ts-node src/workers/script.ts"
   },
-  "engines": {
-    "node": "8"
-  },
   "main": "dist/index.js",
   "dependencies": {
     "@google-cloud/translate": "^2.1.3",

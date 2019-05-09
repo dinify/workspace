@@ -24,3 +24,11 @@ export const suggestAllTranslations = payload => ({
   payload,
 });
 
+export const selectLanguage = payload => ({
+  type: 'SELECT_LANGUAGE',
+  payload,
+});
+
+export const confirmPreferredLanguages = () => ({
+  type: 'CONFIRM_PREFERRED_LANGUAGES',
+})

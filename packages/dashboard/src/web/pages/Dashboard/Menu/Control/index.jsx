@@ -8,15 +8,8 @@ import ListOfCategories from './ListOfCategories';
 import ListOfDishes from './ListOfDishes';
 import ItemDetail from './ItemDetail';
 import * as FN from 'lib/FN';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-
-const SolidContainer = styled.div`
-  min-width: 800px;
-  padding-bottom: 50px;
-  margin: 14px 10px;
-`;
 
 const Menucontrol = ({
   selectedCategoryId,
@@ -35,7 +28,6 @@ const Menucontrol = ({
   console.log(classes, 'sdsd');
   return (
     <div>
-      <SolidContainer>
         {categoriesList.length < 1 && <div style={{textAlign: 'center', margin: '20px 0 40px 0'}}>
           <Typography component="h2" variant="display1" gutterBottom>
             {t('menu.startWithCategory')}
@@ -71,7 +63,6 @@ const Menucontrol = ({
           }
 
         </Grid>
-      </SolidContainer>
     </div>
   );
 }

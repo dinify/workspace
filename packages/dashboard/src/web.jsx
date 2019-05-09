@@ -8,8 +8,16 @@ import i18n from '@dinify/common/dist/i18n';
 import { SnackbarProvider } from 'material-ui-snackbar-redux'
 import { getCookie } from '@dinify/common/dist/lib/FN';
 import AppComponent from 'web/App';
-import store from './configureStore';
+import { PersistGate } from 'redux-persist/integration/react'
+import configureStore from './configureStore';
 import './index.css';
+
+const { store, persistor} = configureStore({
+  initialState: {},
+  platformDeps: {},
+  platformEpics: [],
+  platformReducers: {},
+});
 
 let language = { primary: navigator.language, other: [] };
 const langCookie = getCookie('language');
@@ -39,7 +47,9 @@ const App = () => (
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById('root'),
 );

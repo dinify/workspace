@@ -8,6 +8,12 @@ type State = {
   selectedFoodId: ?String,
 };
 
+const preferredLanguagesInitial = [
+  'cs', 'en', 'de', 'it',
+  'fr', 'ru', 'es', 'pl', 'pt',
+  'ja', 'ko', 'zh-Hans', 'zh-Hant'
+];
+
 const initialState = {
   appRun: false,
   loggedRestaurant: null,
@@ -22,13 +28,25 @@ const initialState = {
   selectedRestaurant: null,
   managedRestaurants: [],
   languages: ['en', 'cs'],
-  menuLanguages: []
+  menuLanguages: [],
+  preferredLanguagesInitial,
+  preferredLanguages: preferredLanguagesInitial
 };
 
 export default function reducer(state: State = initialState, action) {
   switch (action.type) {
     case 'BOOTSTRAP':
       return R.assoc('appRun', true)(state);
+    case 'SELECT_LANGUAGE': {
+      const l = action.payload.language;
+      if (state.preferredLanguages.includes(l)) {
+        return R.assoc(
+          'preferredLanguages',
+          state.preferredLanguages.filter((x) => x !== l)
+        )(state);
+      }
+      return R.assoc('preferredLanguages', [...state.preferredLanguages, l])(state);
+    }
     case 'PREFILL_EMAIL':
       return R.assocPath(['prefill', 'email'], action.payload.email)(
         state,

@@ -9,12 +9,6 @@ import Addons from './Addons';
 import Ingredients from './Ingredients';
 import Options from './Options';
 
-
-const SolidContainer = styled.div`
-  min-width: 800px;
-  padding-bottom: 50px;
-  margin: 14px 10px;
-`;
 const HeadLine = styled.div`
   height: 50px;
   line-height: 50px;
@@ -33,26 +27,24 @@ const Menucontrol = () => {
   const { t } = useTranslation();
   return (
     <div>
-      <SolidContainer>
-        <HeadLine>
-          <Grid container spacing={8} alignItems="flex-start" justify="center">
-            <Grid item xs={4}>
-              <Typography gutterBottom variant="caption">{t('menu.ingredients')}</Typography>
-              <Ingredients styles={styles} />
-            </Grid>
-
-            <Grid item xs={4}>
-              <Typography gutterBottom variant="caption">{t('menu.addons')}</Typography>
-              <Addons styles={styles} />
-            </Grid>
-
-            <Grid item xs={4}>
-              <Typography gutterBottom variant="caption">{t('menu.optionGroups')}</Typography>
-              <Options styles={styles} />
-            </Grid>
+      <HeadLine>
+        <Grid container spacing={8} alignItems="flex-start" justify="center">
+          <Grid item xs={4}>
+            <Typography gutterBottom variant="caption">{t('menu.ingredients')}</Typography>
+            <Ingredients styles={styles} />
           </Grid>
-        </HeadLine>
-      </SolidContainer>
+
+          <Grid item xs={4}>
+            <Typography gutterBottom variant="caption">{t('menu.addons')}</Typography>
+            <Addons styles={styles} />
+          </Grid>
+
+          <Grid item xs={4}>
+            <Typography gutterBottom variant="caption">{t('menu.optionGroups')}</Typography>
+            <Options styles={styles} />
+          </Grid>
+        </Grid>
+      </HeadLine>
     </div>
   );
 };

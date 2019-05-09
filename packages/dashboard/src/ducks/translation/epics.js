@@ -111,10 +111,26 @@ const suggestAllEpic = (action$, state$) =>
     })
   );
 
+const confirmPreferredEpic = (action$, state$) =>
+  action$.pipe(
+    ofType('CONFIRM_PREFERRED_LANGUAGES'),
+    mergeMap(() => {
+      const preferredLanguages = state$.value.restaurant.preferredLanguages;
+      return preferredLanguages.map((language) => {
+        return {
+          type: 'CREATE_MENULANGUAGE_INIT',
+          payload: {
+            language
+          }
+        }
+      });
+    })
+  );
 
 export default [
   pushTranslationEpic,
   suggestTranslationEpic,
   suggestAllEpic,
-  saveTranslationEpic
+  saveTranslationEpic,
+  confirmPreferredEpic
 ];
