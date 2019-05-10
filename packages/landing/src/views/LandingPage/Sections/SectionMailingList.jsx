@@ -24,7 +24,7 @@ class SectionMailingList extends React.Component {
       <div className={classNames(classes.themedBg)}>
         <div
           className={classNames(classes.section, classes.container)}
-          style={{ maxWidth: 560 }}
+          style={{ maxWidth: 640 }}
         >
           <Typography variant="h3" align="center" style={{ width: "100%" }}>
             Stay up to date
@@ -34,7 +34,8 @@ class SectionMailingList extends React.Component {
             align="center"
             style={{ width: "100%", marginTop: 8 }}
           >
-            Don't miss out on anything by entering your email below to get notified of important updates.
+            Hey travelers, please make sure to keep in touch with us for updates.
+            Don't miss out on anything by entering your email below to get notified of important news.
           </Typography>
           <Form
             onSubmit={submittedValues => {
@@ -51,7 +52,7 @@ class SectionMailingList extends React.Component {
                   }}
                 >
                   <CustomText
-                    style={{ minWidth: 280 }}
+                    style={{ minWidth: 320 }}
                     labelText="Email address"
                     field="email"
                     id="email"

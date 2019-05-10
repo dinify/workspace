@@ -25,25 +25,52 @@ class SectionProduct extends React.Component {
               active={0}
               collapses={[
                 {
-                  title: "Do I need to download an app?",
-                  content: "No. Dinify is built as a Progressive Web App, meaning it runs in your web browser while still giving native app-like user experience.  When you add the app to your home screen, it’s exactly same as you have downloaded and installed a native app."
+                  title: "Where can I download the app?",
+                  content: "You don't have to download or install anything. Our app runs in your browser with a native user experience. You can add the app icon to your homescreen to use it offline."
                 },
                 {
-                  title: "How can I use the app?",
-                  content: "Every table in our partnering venues has a unique QR code for you to scan and open the menu in the language set default in your smartphone.  If there is no matching language available, the menu will be in English."
+                  title: "How do I get started?",
+                  content: "Every table in our partnering venues has a unique QR code for you to scan and open the menu in the language set default in your account settings. The selected menu is always available in English, but some languages may not be."
                 },
                 {
-                  title: "Do I need internet connection?",
-                  content: "Yes, you do.  If you don’t have mobile data, simply scan the Wifi QR code on the table you’re seated to get the connection."
+                  title: "Do I need an internet connection?",
+                  content: "Only if the app icon is not added to your homescreen. To get connected in case you don’t have mobile data, simply scan the WiFi QR code on the table you’re seated at."
                 },
                 {
-                  title: "What is mobile ordering?",
-                  content: "Mobile ordering is exactly the same as how you order online for delivery, which we believe you’re already familiar with.  So, you can enjoy the contactless ordering even for dine-in for faster, simpler and better experience."
+                  title: "How do I scan the QR code?",
+                  content: (
+                    <span>
+                      {
+                        "On iOS, the camera app does it out of the box. On Android, the Google Lens app or any other scanner app will do. Or you can simply visit the "
+                      }
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://m.dinify.app/checkin"
+                      >
+                        checkin page
+                      </a>
+                      {" to scan the code from your browser."}
+                    </span>
+                  )
                 },
                 {
-                  title: "How much does it cost for the service?",
-                  content: "It won’t cost anything for only reading menus in your native language.  However, if you want to enjoy the maximal convenience and place order through Dinify app, there is a small transaction fee for 1% of your total ordered amount (€0.1 for €10 order).  You can purchase the credit in the app and the transaction fee will be subtracted from your balance upon placing an order."
-                }
+                  title: "Why is this useful exactly?",
+                  content: `The whole idea behind Dinify is that no one should have trouble exploring new food experiences
+                  while they travel overseas simply because they cannot speak either the local language or English. You can
+                  read and order from local restaurant menus in your preferred language anywhere in the world.
+                  Enjoy a seamless dining experience without having to say a word in foreign languages.`
+                },
+                {
+                  title: "Is this free?",
+                  content: "Yes, everything is free while we are in beta. We are making sure everything fits together, and encourage you to experience the whole new way of dining in restaurants abroad."
+                },
+                {
+                  title: "What locations are available?",
+                  content: `We are a startup based in Prague, Czech Republic. We are currently only available in selected restaurants in Prague
+                  but we are expanding fast. Please make sure to keep in touch with us for updates.`
+                },
+
               ]}
             />
           </GridItem>
