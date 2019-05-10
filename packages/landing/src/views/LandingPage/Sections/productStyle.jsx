@@ -6,7 +6,7 @@ import {
 
 const productStyle = theme => ({
   section: {
-    padding: "70px 0",
+    padding: "56px 0",
     textAlign: "center"
   },
   container: {
@@ -16,8 +16,8 @@ const productStyle = theme => ({
     textAlign: "center"
   },
   textArea: {
-    marginRight: "15px",
-    marginLeft: "15px"
+    marginRight: "16px",
+    marginLeft: "16px"
   },
   title: {
     ...title,

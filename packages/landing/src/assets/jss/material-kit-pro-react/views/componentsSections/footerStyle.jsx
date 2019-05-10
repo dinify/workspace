@@ -56,7 +56,7 @@ const style = {
     display: "block"
   },
   right: {
-    padding: "15px 0",
+    padding: "16px 0",
     margin: "0",
     float: "right"
   },
@@ -77,10 +77,10 @@ const style = {
   },
   footerBrand: {
     height: "50px",
-    padding: "15px 15px",
+    padding: "16px 16px",
     fontSize: "18px",
     lineHeight: "50px",
-    marginLeft: "-15px",
+    marginLeft: "-16px",
     color: grayColor[1],
     textDecoration: "none",
     fontWeight: 700,
@@ -155,7 +155,7 @@ const style = {
     position: "relative"
   },
   copyRight: {
-    padding: "15px 0px"
+    padding: "16px 0px"
   },
   socialButtons: {
     "& li": {

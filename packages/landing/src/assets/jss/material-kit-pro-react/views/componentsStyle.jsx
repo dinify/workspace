@@ -93,7 +93,7 @@ const componentsStyle = {
     display: "block"
   },
   right: {
-    padding: "15px 0",
+    padding: "16px 0",
     margin: "0",
     float: "right"
   },

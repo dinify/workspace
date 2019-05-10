@@ -150,8 +150,8 @@ const transition = {
 };
 
 const containerFluid = {
-  paddingRight: "15px",
-  paddingLeft: "15px",
+  paddingRight: "16px",
+  paddingLeft: "16px",
   marginRight: "auto",
   marginLeft: "auto",
   width: "100%"
@@ -303,9 +303,9 @@ const cardActions = {
 };
 
 const cardHeader = {
-  margin: "-30px 15px 0",
+  margin: "-30px 16px 0",
   borderRadius: "3px",
-  padding: "15px"
+  padding: "16px"
 };
 
 const defaultBoxShadow = {

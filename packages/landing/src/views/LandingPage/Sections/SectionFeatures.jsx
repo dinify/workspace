@@ -93,12 +93,12 @@ class SectionFeatures extends React.Component {
     return (
       <div
         className={classNames(classes.section, classes.sectionDark)}
-        style={{background: 'rgb(251,251,251)', paddingBottom: 0}}
+        style={{ background: "#fafafa" }}
       >
         <div className={classes.container}>
           <GridContainer justify="center">
             <GridItem xs={12} sm={8} md={8}>
-              <Typography variant="h4">
+              <Typography variant="h5">
                 Forget about awkward conversations
               </Typography>
               <Typography

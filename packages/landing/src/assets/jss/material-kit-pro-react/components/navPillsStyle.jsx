@@ -41,7 +41,7 @@ const navPillsStyle = theme => ({
     minWidth: "100px",
     textAlign: "center",
     transition: "all .3s",
-    padding: "10px 15px",
+    padding: "10px 16px",
     color: grayColor[15],
     height: "auto",
     opacity: "1",
@@ -56,7 +56,7 @@ const navPillsStyle = theme => ({
     width: "30px",
     height: "30px",
     display: "block",
-    margin: "15px 0"
+    margin: "16px 0"
   },
   horizontalPills: {
     width: "100%",
@@ -81,8 +81,8 @@ const navPillsStyle = theme => ({
   contentWrapper: {
     marginTop: "20px",
     "& .react-swipeable-view-container > div > div": {
-      paddingLeft: "15px",
-      paddingRight: "15px"
+      paddingLeft: "16px",
+      paddingRight: "16px"
     }
   },
   primary: {

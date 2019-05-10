@@ -71,7 +71,7 @@ const javascriptStyles = theme => ({
     marginTop: "-40px",
     padding: "20px 0",
     width: "100%",
-    marginBottom: "15px"
+    marginBottom: "16px"
   },
   cardLoginBody: {
     paddingTop: "0",

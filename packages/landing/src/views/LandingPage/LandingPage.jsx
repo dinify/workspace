@@ -4,7 +4,9 @@ import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
-import Favorite from "@material-ui/icons/Favorite";
+import Favorite from "@material-ui/icons/FavoriteRounded";
+import Explore from "@material-ui/icons/ExploreOutlined";
+
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -22,6 +24,7 @@ import SectionFeatures from "./Sections/SectionFeatures.jsx";
 import SectionMultilingual from "./Sections/SectionMultilingual.jsx";
 import SectionFAQ from "./Sections/SectionFAQ.jsx";
 import SectionWork from "./Sections/SectionWork.jsx";
+import SectionProduct from "./Sections/SectionProduct.jsx";
 
 class LandingPage extends React.Component {
   componentDidMount() {
@@ -63,11 +66,12 @@ class LandingPage extends React.Component {
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ height: 40, marginTop: 16 }}
+                  style={{ height: 48, marginTop: 16 }}
                   href="https://m.dinify.app"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <Explore style={{ marginRight: 8 }}/>
                   Explore
                 </Button>
               </GridItem>
@@ -77,9 +81,10 @@ class LandingPage extends React.Component {
             </GridContainer>
           </div>
         </Parallax>
-        <div className={classNames(classes.main, classes.mainRaised)}>
+        <div className={classNames(classes.main)}>
           <SectionMultilingual />
           <SectionFeatures />
+          <SectionProduct />
           <SectionWork />
           <SectionFAQ />
         </div>
@@ -88,7 +93,7 @@ class LandingPage extends React.Component {
             <div>
               <div className={classes.right}>
                 &copy; {1900 + new Date().getYear()} , made with{" "}
-                <Favorite className={classes.icon} /> by{" "}
+                <Favorite style={{ fontSize: 12 }} /> by{" "}
                 <a href="https://www.dinify.app/s">Dinify</a>
               </div>
             </div>

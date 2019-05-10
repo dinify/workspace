@@ -21,7 +21,7 @@ const snackbarContentStyle = {
   root: {
     ...defaultFont,
     position: "relative",
-    padding: "20px 15px",
+    padding: "20px 16px",
     lineHeight: "20px",
     marginBottom: "20px",
     fontSize: "14px",

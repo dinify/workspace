@@ -124,7 +124,7 @@ const accordionStyle = theme => ({
   },
   expansionPanelSummaryExpandIconExpanded: {},
   title: {
-    fontSize: "15px",
+    fontSize: "16px",
     fontWeight: "bolder",
     marginTop: "0",
     marginBottom: "0",
@@ -132,7 +132,7 @@ const accordionStyle = theme => ({
   },
   expansionPanelDetails: {
     display: "block",
-    padding: "15px 0px 5px",
+    padding: "16px 0px 5px",
     fontSize: ".875rem"
   }
 });

@@ -18,7 +18,7 @@ const styles = {
   description,
   card: {},
   cardBody: {
-    padding: "15px",
+    padding: "16px",
     "& form": {
       marginBottom: "0"
     }

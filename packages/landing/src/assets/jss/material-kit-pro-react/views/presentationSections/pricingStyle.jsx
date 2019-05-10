@@ -87,7 +87,7 @@ const pricingStyle = {
     }
   },
   cardBody: {
-    padding: "15px"
+    padding: "16px"
   },
   navPillsContent: {
     padding: "20px 0px 50px 0px"

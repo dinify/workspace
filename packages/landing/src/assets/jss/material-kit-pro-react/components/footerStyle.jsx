@@ -16,7 +16,7 @@ const footerStyle = {
     display: "block"
   },
   right: {
-    padding: "15px 0",
+    padding: "16px 0",
     margin: "0",
     float: "right"
   },
@@ -53,7 +53,7 @@ const footerStyle = {
     "& h5, & h4": {
       fontWeight: 700,
       fontFamily: "Roboto Slab,Times New Roman,serif",
-      marginBottom: "15px"
+      marginBottom: "16px"
     },
     "& p": {
       color: grayColor[0]
@@ -152,10 +152,10 @@ const footerStyle = {
   },
   footerBrand: {
     height: "50px",
-    padding: "15px 15px",
+    padding: "16px 16px",
     fontSize: "18px",
     lineHeight: "50px",
-    marginLeft: "-15px",
+    marginLeft: "-16px",
     color: grayColor[1],
     textDecoration: "none",
     fontWeight: 700,
