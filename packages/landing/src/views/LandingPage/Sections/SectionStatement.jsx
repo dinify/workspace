@@ -19,10 +19,10 @@ class SectionStatement extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classNames(classes.themedBg, classes.wrapper)}>
+      <div id="statement" className={classNames(classes.themedBg, classes.wrapper)}>
         <div className={classNames(classes.section, classes.container)}>
           <Typography variant="h6" align="center" style={{ width: "100%" }}>
-            
+
           </Typography>
         </div>
       </div>

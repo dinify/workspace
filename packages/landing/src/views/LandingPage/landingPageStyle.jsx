@@ -16,24 +16,7 @@ const landingPageStyle = theme => ({
     color: '#ffffff',
     fill: '#ffffff'
   },
-  title: {
-    ...title,
-    fontWeight: 600,
-    display: "inline-block",
-    position: "relative",
-    marginTop: "30px",
-    minHeight: "32px",
-    color: whiteColor,
-    textDecoration: "none",
-    '@media (max-width: 1200px)': {
-      fontSize: "2.3125rem"
-    }
-  },
-  subtitle: {
-    fontSize: "1.313rem",
-    maxWidth: "500px",
-    margin: "10px auto 0"
-  },
+  button2: theme.typography.button2,
   main: {
     ...main
   },

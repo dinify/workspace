@@ -21,7 +21,9 @@ class SectionMailingList extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classNames(classes.themedBg)}>
+      <div 
+        id="mailing-list"
+        className={classNames(classes.themedBg)}>
         <div
           className={classNames(classes.section, classes.container)}
           style={{ maxWidth: 640 }}

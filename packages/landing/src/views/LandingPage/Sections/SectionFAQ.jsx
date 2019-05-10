@@ -15,7 +15,11 @@ class SectionProduct extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classNames(classes.section, classes.container)} style={{textAlign: "left"}}>
+      <div
+        id="faq"
+        className={classNames(classes.section, classes.container)}
+        style={{ textAlign: "left" }}
+      >
         <Typography variant="h2" align="center" style={{width: '100%'}}>
           FAQ
         </Typography>

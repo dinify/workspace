@@ -7,7 +7,7 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 
 // @material-ui/icons
-import ExpandMore from "@material-ui/icons/ExpandMore";
+import ExpandMore from "@material-ui/icons/ArrowDropDownRounded";
 import Typography from "@material-ui/core/Typography";
 
 import accordionStyle from "assets/jss/material-kit-pro-react/components/accordionStyle.jsx";
@@ -74,8 +74,8 @@ class Accordion extends React.Component {
                 expandIcon={<ExpandMore />}
                 classes={{
                   root: `${classes.expansionPanelSummary} ${
-                    classes[activeColor + "ExpansionPanelSummary"]
-                  }`,
+                    key > 0 ? classes.dividerTop : ""
+                  } ${classes[activeColor + "ExpansionPanelSummary"]}`,
                   expanded: `${classes.expansionPanelSummaryExpaned} ${
                     classes[activeColor + "ExpansionPanelSummaryExpaned"]
                   }`,

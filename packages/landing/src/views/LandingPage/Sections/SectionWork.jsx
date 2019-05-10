@@ -27,10 +27,8 @@ class SectionWork extends React.Component {
     const { classes } = this.props;
     return (
       <div
-        style={{
-          backgroundColor: "#fafafa",
-          margin: 24
-        }}
+        id="restaurants"
+        className={[classes.wrapper, classes.themedBg].join(" ")}
       >
         <div className={classes.section}>
           <div className={classes.container}>

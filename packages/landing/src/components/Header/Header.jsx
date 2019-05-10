@@ -5,7 +5,7 @@ import classNames from "classnames";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
+import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -17,7 +17,8 @@ import Menu from "@material-ui/icons/Menu";
 import Close from "@material-ui/icons/Close";
 // core components
 import headerStyle from "./headerStyle.jsx";
-import Typography from "@dinify/common/dist/components/Typography";
+import HeaderLinks from "./HeaderLinks.jsx";
+import getTheme from "@dinify/common/dist/theme";
 
 class Header extends React.Component {
   constructor(props) {
@@ -52,7 +53,17 @@ class Header extends React.Component {
     }
   }
   render() {
-    const { classes, color, links, brand, subBrand, fixed, absolute, changeColorOnScroll } = this.props;
+    const {
+      classes,
+      color,
+      links,
+      brand,
+      subBrand,
+      fixed,
+      absolute,
+      changeColorOnScroll,
+      children
+    } = this.props;
     const { scrolled } = this.state;
     const colorName = scrolled ? changeColorOnScroll.color : color;
     const appBarClasses = classNames({
@@ -71,49 +82,38 @@ class Header extends React.Component {
       //fontSize: 20,
       marginLeft: 5
     };
+    const currentTheme = getTheme({ type: colorName === "primary" ? "light" : "dark" });
     if (colorName === "primary") {
-      AppBarStyle.background = "#fafafa";
-      AppBarStyle.borderBottom = "1px solid rgba(0, 0, 0, 0.12)";
-      AppBarStyle.color = "rgba(0, 0, 0, 0.72)";
+      AppBarStyle.background = currentTheme.palette.background.paper;
+      AppBarStyle.borderBottom = `1px solid ${currentTheme.palette.divider}`;
     }
     const logo = brand({style: {fill: colorName === "primary" ? "rgba(0, 0, 0, 0.72)" : "#ffffff"}});
-    return (
-      <AppBar className={appBarClasses} style={AppBarStyle}>
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 4,
-            background: (colorName === "primary") ? "linear-gradient(60deg, rgb(193, 57, 57), rgb(195, 0, 72))" : "none"
-          }}
-        />
-        <Toolbar className={classes.container}>
-          <Button className={classes.title}>
-            <Link to="/">
-              {logo}
-              <span style={subBrandStyle}>{subBrand && ` | ${subBrand}`}</span>
-            </Link>
-          </Button>
-          <Button
-            variant="outlined"
-            href="https://m.dinify.app"
-            style={{height: 36}}
-            color="inherit"
-            target="_blank"
-          >
-            <Typography
-              variant="button2"
-              style={{ color: "inherit" }}
-              baseline="center"
-            >
-              Go to app
-            </Typography>
-          </Button>
-        </Toolbar>
 
-      </AppBar>
+    return (
+      <MuiThemeProvider theme={currentTheme}>
+        <AppBar className={appBarClasses} style={AppBarStyle}>
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 4,
+              background: (colorName === "primary") ? "linear-gradient(60deg, rgb(193, 57, 57), rgb(195, 0, 72))" : "none"
+            }}
+          />
+          <Toolbar className={classes.container}>
+            <Button disableRipple style={{ marginRight: "auto" }}>
+              <Link to="/">
+                {logo}
+                <span style={subBrandStyle}>{subBrand && ` | ${subBrand}`}</span>
+              </Link>
+            </Button>
+            {children}
+            <HeaderLinks />
+          </Toolbar>
+        </AppBar>
+      </MuiThemeProvider>
     );
   }
 }
@@ -162,8 +162,6 @@ Header.propTypes = {
 };
 
 export default withStyles(headerStyle)(Header);
-
-
 
 // WEBPACK FOOTER //
 // ./src/components/Header/Header.jsx

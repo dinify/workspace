@@ -55,12 +55,13 @@ class LandingPage extends React.Component {
           <div className={classes.container}>
             <GridContainer>
               <GridItem xs={12} sm={6} md={6}>
-                <Typography variant="h4" style={{ color: "inherit" }}>
+                <Typography variant="h4" color="inherit">
                   Order at restaurants in your own language, anywhere.
                 </Typography>
                 <Typography
+                  color="inherit"
                   variant="subtitle1"
-                  style={{ color: "inherit", marginTop: 8 }}
+                  style={{ marginTop: 8 }}
                 >
                   Our mission is to connect travelers with local restaurants by breaking language barriers. No matter where you go or what language you speak, explore new food experiences and cuisines while on the move.
                 </Typography>

@@ -123,7 +123,11 @@ class SectionProduct extends React.Component {
     const { selectedIndex } = this.state;
     const selected = countryCodes[selectedIndex];
     return (
-      <div className={classNames(classes.section)} style={{paddingBottom: 0}}>
+      <div
+        id="features"
+        className={classNames(classes.section)}
+        style={{paddingBottom: 0}}
+      >
         <div className={classes.container}>
 
         <GridContainer justify="center">

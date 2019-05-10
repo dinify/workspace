@@ -44,7 +44,7 @@ class SectionProduct extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classNames(classes.themedBg, classes.wrapper)}>
+      <div id="steps" className={classNames(classes.themedBg, classes.wrapper)}>
         <div
           className={classNames(
             classes.section,
