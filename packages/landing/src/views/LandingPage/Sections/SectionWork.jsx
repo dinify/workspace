@@ -70,7 +70,7 @@ class SectionWork extends React.Component {
           <GridContainer justify="center">
             <GridItem cs={12} sm={8} md={8}>
               <Typography variant="h4">Are you a restaurant?</Typography>
-              <Typography variant="subtitle1">
+              <Typography variant="subtitle1" style={{ marginTop: 8 }}>
                 Show your interest by contacting us.
                 We will help you understand the value propositions better.
               </Typography>

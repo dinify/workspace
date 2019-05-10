@@ -58,7 +58,7 @@ class LandingPage extends React.Component {
                   variant="subtitle1"
                   style={{ color: "inherit", marginTop: 8 }}
                 >
-                  We break barriers on your way to explore new cuisines. No matter where you go or what language you speak, you will never stop exploring new food experiences only because you don't speak a foreign language while traveling.
+                  We break barriers on your way to explore new cuisines. No matter where you go or what language you speak, explore new food experiences while traveling.
                 </Typography>
                 <Button
                   variant="contained"
@@ -68,7 +68,7 @@ class LandingPage extends React.Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Experience
+                  Explore
                 </Button>
               </GridItem>
               <GridItem xs={12} sm={6} md={6}>

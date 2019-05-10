@@ -4,7 +4,7 @@ import {
   grayColor
 } from "assets/jss/material-kit-pro-react.jsx";
 
-const productStyle = {
+const productStyle = theme => ({
   section: {
     padding: "70px 0",
     textAlign: "center"
@@ -43,6 +43,12 @@ const productStyle = {
     top: 0,
     left: 0
   },
+  featureImg: {
+    height: "600px",
+    width: "293.6px",
+    top: 0,
+    left: 0
+  },
   demoDescription: {
     position: "absolute",
     background: "#fafafa",
@@ -58,6 +64,6 @@ const productStyle = {
   featuresImg: {
     width: "100%"
   }
-};
+});
 
 export default productStyle;

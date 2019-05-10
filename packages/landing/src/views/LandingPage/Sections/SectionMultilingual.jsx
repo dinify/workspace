@@ -129,26 +129,14 @@ class SectionProduct extends React.Component {
         <GridContainer justify="center">
           <GridItem xs={12} sm={8} md={8}>
             <Typography variant="h4">
-              So, we built multilingual menu
+              Digital menu in 77 languages
             </Typography>
-            <Typography variant="subtitle1">
-              in order for you to order in your language anywhere.
+            <Typography variant="subtitle1" style={{ marginTop: 8 }}>
+              We strive to support as many languages as we can, so everybody can have a seamless culinary experience. Understand how much you spend by showing prices in your local currency, along with the original.
             </Typography>
           </GridItem>
         </GridContainer>
         <GridContainer>
-          <GridItem md={5} className={classes.mlAuto}>
-            <div className={classes.demoContainer}>
-              <img
-                className={classes.iphoneImg}
-                src={presentationiPhone}
-                alt="Multilingual menu"
-              />
-              <div className={classes.demoDescription}>
-                {translations[selected] || descriptionEn}
-              </div>
-            </div>
-          </GridItem>
           <GridItem md={6}>
             <div className={classes.sectionDescription}>
               <div style={{width: '345px', margin: '20px auto', textAlign: 'left'}}>
@@ -160,6 +148,18 @@ class SectionProduct extends React.Component {
                     className={`flag-icon flag-icon-${code}`}
                   />
                 )}
+              </div>
+            </div>
+          </GridItem>
+          <GridItem md={5} className={classes.mlAuto}>
+            <div className={classes.demoContainer}>
+              <img
+                className={classes.iphoneImg}
+                src={presentationiPhone}
+                alt="Multilingual menu"
+              />
+              <div className={classes.demoDescription}>
+                {translations[selected] || descriptionEn}
               </div>
             </div>
           </GridItem>
