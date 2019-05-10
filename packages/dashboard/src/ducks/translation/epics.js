@@ -48,11 +48,12 @@ const pushTranslationEpic = (action$: Observable) =>
     })
   );
 
-const saveTranslationEpic = (action$: Observable) =>
+const saveTranslationEpic = (action$: Observable, state$) =>
   action$.pipe(
     ofType('SAVE_TRANSLATION_INIT'),
     mergeMap(({ payload }) => {
-      return fromPromise(API.AddTranslation(payload)).pipe(
+      const restaurantId = state$.value.restaurant.selectedRestaurant;
+      return fromPromise(API.AddTranslation({...payload, restaurantId})).pipe(
         map(() => ({
           type: 'SAVE_TRANSLATION_DONE',
           payload: { prePayload: payload }

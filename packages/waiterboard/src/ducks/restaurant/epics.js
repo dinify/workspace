@@ -23,7 +23,6 @@ const bootstrapEpic = (action$: Observable) =>
   action$.pipe(
     ofType('persist/REHYDRATE'),
     mergeMap(() => {
-      setCookie('lang', 'en', 30);
       return of(appBootstrap());
     })
   );
@@ -44,7 +43,7 @@ const loadRestaurant = (action$) =>
   action$.pipe(
     ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
-      return from(API.GetLoggedRestaurant()).pipe(
+      return from(API.GetLoggedrestaurant({ restaurantId: '' })).pipe(
         mergeMap(loggedUser => [
           loggedFetchedAction(loggedUser),
           { type: 'LOAD_STATE_INIT' }

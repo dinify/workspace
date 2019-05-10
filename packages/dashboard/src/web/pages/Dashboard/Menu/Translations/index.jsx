@@ -64,8 +64,6 @@ const styles = theme => ({
   },
 });
 
-const defaultLocale = 'en';
-
 const makeInitalValues = (translationsMap) => {
   const names = R.mapObjIndexed((t) => t.name, translationsMap);
   const descriptions = {};
@@ -115,9 +113,9 @@ const Translations = ({
   selectLanguage,
   preSelectedLanguages,
   confirmPreferredLanguages,
-  translateAll
+  translateAll,
+  defaultLanguage
 }) => {
-  const defaultLanguage = 'en';
   const { t } = useTranslation();
   let menuLanguagesList = menuLanguages.map((l) => l.language);
   const autocompleteData = supportedLanguages
@@ -228,7 +226,7 @@ const Translations = ({
           </div>
         </CardContent>
         <Divider style={{marginBottom: '10px'}} />
-      {defaultLocale !== selectedLocale ?
+      {defaultLanguage !== selectedLocale ?
         <div>
           <Tabs
             value={tabIndex}
@@ -261,7 +259,7 @@ const Translations = ({
                   }}
                   type={type.type}
                   selectedLocale={selectedLocale}
-                  defaultLocale={defaultLocale}
+                  defaultLocale={defaultLanguage}
                   languageName={languages[selectedLocale] && languages[selectedLocale].langLoc}
                 />
               )
@@ -284,20 +282,21 @@ const Translations = ({
 const translationsSelector = createSelector(
   [
     (state) => state.translation.all,
-    (state) => state.translation.selectedLocale
+    (state) => state.translation.selectedLocale,
+    (state) => state.restaurant.defaultLanguage
   ],
-  (translations, selectedLocale) => {
-    const locales = Object.keys(translations).filter((l) => l !== defaultLocale);
+  (translations, selectedLocale, defaultLanguage) => {
+    const locales = Object.keys(translations).filter((l) => l !== defaultLanguage);
 
     const ofLocale = MapToList(translations[selectedLocale]);
-    const ofDefaultLocale = MapToList(translations[defaultLocale]);
+    const ofDefaultLanguage = MapToList(translations[defaultLanguage]);
 
     const byType = R.groupBy((o) => o.type)(ofLocale);
-    const defaultByType = R.groupBy((o) => o.type)(ofDefaultLocale);
+    const defaultByType = R.groupBy((o) => o.type)(ofDefaultLanguage);
     return {
       locales,
       ofLocale,
-      ofDefaultLocale,
+      ofDefaultLanguage,
       byType,
       defaultByType
     }
@@ -326,7 +325,8 @@ const enhance = compose(
       menuLanguages: state.restaurant.menuLanguages,
       tabIndex: state.ui.translationsTabIndex,
       preferredLanguages: state.restaurant.preferredLanguages,
-      preSelectedLanguages: state.restaurant.preferredLanguagesInitial
+      preSelectedLanguages: state.restaurant.preferredLanguagesInitial,
+      defaultLanguage: state.restaurant.defaultLanguage
     }),
     {
       addLanguage,

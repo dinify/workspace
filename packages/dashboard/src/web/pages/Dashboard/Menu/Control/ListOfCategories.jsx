@@ -125,13 +125,14 @@ const SortableItem = SortableElement(
     updateCategory,
     deleteCategory,
     t,
+    lang = 'en'
   }) => (
     <CategoryItem
       selected={category.id === selectedCategoryId}
       disabled={!category.published}
       onClick={() => selectCategory({ categoryId: category.id })}
     >
-      <span>{category.name}</span>
+      <span>{category.translations[lang].name}</span>
       <BinContainer>
         {!category.published ? (
           <Tooltip placement="left" title={t('delete')}>
@@ -193,6 +194,7 @@ const ListOfCategories = ({
   reorderCategories,
   progressMap,
   errorsMap,
+  lang
 }) => {
   return (
     <div>
@@ -224,6 +226,7 @@ const ListOfCategories = ({
           selectCategory,
           updateCategory,
           deleteCategory,
+          lang
         }}
       />
     </div>
@@ -234,6 +237,7 @@ export default connect(
   state => ({
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
+    lang: state.restaurant.defaultLanguage
   }),
   {
     updateCategory: updateMenucategoryInitAction,

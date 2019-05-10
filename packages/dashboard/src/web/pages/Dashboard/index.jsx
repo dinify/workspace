@@ -234,6 +234,7 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection, lo
     }
   ];
   const publishable = true;
+  const publised = loggedRestaurant && loggedRestaurant.published;
   return (
     <div>
       <Sidebar>
@@ -299,7 +300,7 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection, lo
             </ListItem>
           </List>
 
-          {!loggedRestaurant.published ? <Stepper orientation="vertical" style={{
+          {!publised ? <Stepper orientation="vertical" style={{
             background: 'transparent',
             paddingLeft: '32px',
             borderTop: '1px solid rgba(255,255,255,0.1)'

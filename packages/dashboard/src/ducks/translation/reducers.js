@@ -30,8 +30,10 @@ export default function reducer(state = initialState, action) {
       const updObj = { id, type };
       if (description) updObj.description = description;
       if (name) updObj.name = name;
-      const newTranslation = R.merge(state.all[locale][id], updObj);
-      return R.assocPath(['all', locale, id], newTranslation)(state);
+      const newState = state;
+      if (!newState.all[locale]) newState.all[locale] = {};
+      const newTranslation = R.merge(newState.all[locale][id], updObj);
+      return R.assocPath(['all', locale, id], newTranslation)(newState);
     }
     default:
       return state;

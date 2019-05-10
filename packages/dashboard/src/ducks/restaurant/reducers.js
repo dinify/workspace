@@ -1,5 +1,6 @@
 // @flow
 import * as R from 'ramda';
+import { MapToList, setCookie } from '@dinify/common/dist/lib/FN';
 
 type State = {
   appRun: boolean,
@@ -30,7 +31,8 @@ const initialState = {
   languages: ['en', 'cs'],
   menuLanguages: [],
   preferredLanguagesInitial,
-  preferredLanguages: preferredLanguagesInitial
+  preferredLanguages: preferredLanguagesInitial,
+  defaultLanguage: 'en'
 };
 
 export default function reducer(state: State = initialState, action) {
@@ -72,7 +74,14 @@ export default function reducer(state: State = initialState, action) {
       return R.assoc('menuLanguages', [...state.menuLanguages, menuLanguage])(state);
     }
     case 'FETCH_LOGGEDRESTAURANT_DONE': {
-      return R.assoc('loggedRestaurant', action.payload.res)(state);
+      const restaurant = action.payload.res;
+      let defaultLanguage = 'en';
+      const menuLanguages = restaurant.menu_languages || {};
+      const defaultMenuLanguages = MapToList(menuLanguages).filter(lang => lang.default);
+      if (defaultMenuLanguages.length > 0) defaultLanguage = defaultMenuLanguages[0].language;
+      const newState = R.assoc('defaultLanguage', defaultLanguage)(state);
+      setCookie('lang', defaultLanguage, 30);
+      return R.assoc('loggedRestaurant', restaurant)(newState);
     }
     case 'FETCH_LOGGEDRESTAURANT_FAIL': {
       return R.dissoc('loggedRestaurant')(state);

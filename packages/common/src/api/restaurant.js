@@ -450,7 +450,8 @@ const loggedRestaurantWith = [
   'categories.items.options',
   'addons.price',
   'ingredients',
-  'options.choices'
+  'options.choices',
+  'menu_languages'
 ].join(',');
 
 export function GetLoggedrestaurant({ restaurantId }) {
