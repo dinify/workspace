@@ -48,7 +48,7 @@ const headerLinksStyle = theme => ({
           content: '""',
           display: "block",
           height: "1px",
-          marginLeft: "15px",
+          marginLeft: "16px",
           backgroundColor: grayColor[14]
         }
       }
@@ -81,7 +81,7 @@ const headerLinksStyle = theme => ({
     },
     [theme.breakpoints.down("sm")]: {
       width: "calc(100% - 30px)",
-      marginLeft: "15px",
+      marginLeft: "16px",
       marginBottom: "8px",
       marginTop: "8px",
       textAlign: "left",
@@ -120,7 +120,7 @@ const headerLinksStyle = theme => ({
     display: "inline-flex",
     [theme.breakpoints.down("sm")]: {
       width: "calc(100% - 30px)",
-      marginLeft: "15px",
+      marginLeft: "16px",
       marginBottom: "5px",
       marginTop: "5px",
       textAlign: "left",

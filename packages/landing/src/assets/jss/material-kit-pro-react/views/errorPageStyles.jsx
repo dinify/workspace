@@ -14,7 +14,7 @@ const errorPageStyles = {
     transform: "translate(-50%,-50%)",
     textAlign: "center",
     color: whiteColor,
-    padding: "0 15px",
+    padding: "0 16px",
     width: "100%",
     maxWidth: "880px"
   },
@@ -87,7 +87,7 @@ const errorPageStyles = {
     }
   },
   right: {
-    padding: "15px 0",
+    padding: "16px 0",
     margin: "0",
     float: "right",
     "&,& *,& *:hover,& *:focus": {

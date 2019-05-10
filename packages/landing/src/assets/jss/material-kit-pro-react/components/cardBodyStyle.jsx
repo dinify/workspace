@@ -20,14 +20,14 @@ const cardBodyStyle = {
     paddingRight: "5px"
   },
   cardBodyFormHorizontal: {
-    paddingLeft: "15px",
-    paddingRight: "15px",
+    paddingLeft: "16px",
+    paddingRight: "16px",
     "& form": {
       margin: "0"
     }
   },
   cardPricing: {
-    padding: "15px!important",
+    padding: "16px!important",
     margin: "0px!important"
   },
   cardSignup: {

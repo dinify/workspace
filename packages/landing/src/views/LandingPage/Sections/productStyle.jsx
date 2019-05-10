@@ -4,9 +4,19 @@ import {
   grayColor
 } from "assets/jss/material-kit-pro-react.jsx";
 
-const productStyle = {
+const productStyle = theme => ({
+  wrapper: {
+    margin: 24
+  },
+  themedBg: {
+    backgroundColor: theme.palette.background.default
+  },
+  outlinedIconButton: {
+    color: theme.palette.text.primary,
+    border: `2px solid ${theme.palette.text.primary}`
+  },
   section: {
-    padding: "70px 0",
+    padding: "56px 0",
     textAlign: "center"
   },
   container: {
@@ -16,8 +26,8 @@ const productStyle = {
     textAlign: "center"
   },
   textArea: {
-    marginRight: "15px",
-    marginLeft: "15px"
+    marginRight: "16px",
+    marginLeft: "16px"
   },
   title: {
     ...title,
@@ -43,6 +53,12 @@ const productStyle = {
     top: 0,
     left: 0
   },
+  featureImg: {
+    height: "600px",
+    width: "293.6px",
+    top: 0,
+    left: 0
+  },
   demoDescription: {
     position: "absolute",
     background: "#fafafa",
@@ -58,6 +74,6 @@ const productStyle = {
   featuresImg: {
     width: "100%"
   }
-};
+});
 
 export default productStyle;

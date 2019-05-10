@@ -4,10 +4,16 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import classNames from "classnames";
 
 // @material-ui/icons
-import Camera from "@material-ui/icons/CameraAlt";
-import ViewList from "@material-ui/icons/ViewList";
+import Typography from "@material-ui/core/Typography";
 
-import Restaurant from "@material-ui/icons/Restaurant";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Avatar from "@material-ui/core/Avatar";
+import CenterFocusStrong from "@material-ui/icons/CenterFocusStrongRounded";
+import ViewList from "@material-ui/icons/ViewList";
+import RestaurantMenu from "@material-ui/icons/RestaurantMenuRounded";
+import LocalCafe from "@material-ui/icons/LocalCafeRounded";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -16,49 +22,76 @@ import InfoArea from "components/InfoArea/InfoArea.jsx";
 
 import productStyle from "./productStyle.jsx";
 
+const steps = [
+  {
+    icon: <CenterFocusStrong />,
+    title: "Scan code",
+    description: "Get started by scanning the QR code in a restaurant near you to check in and open their menu."
+  },
+  {
+    icon: <RestaurantMenu />,
+    title: "Browse and order",
+    description: "To avoid bad surprises, you can always read the menu in your own language. Customize your order to your liking."
+  },
+  {
+    icon: <LocalCafe />,
+    title: "Streamline",
+    description: "Control your experience, forget interruptions. No matter what you need, it's just one tap away."
+  }
+];
+
 class SectionProduct extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classNames(classes.section, classes.sectionDark, classes.container)}>
-        <GridContainer justify="center">
-          <GridItem xs={12} sm={8} md={8}>
-            <h2 className={classes.title}>It's easy as 1 2 3</h2>
-            <h5 className={classes.description}>
-              We simplified the process to its max for you. No installation. No registration.
-            </h5>
-          </GridItem>
-        </GridContainer>
-        <div>
-          <GridContainer>
-            <GridItem xs={12} sm={4} md={4}>
-              <InfoArea
-                title="Scan code"
-                description="Instead of guessing what should you order from a menu you don't understand, just scan a code at the table to see menu in your native language."
-                icon={Camera}
-                iconColor="primary"
-                vertical
-              />
-            </GridItem>
-            <GridItem xs={12} sm={4} md={4}>
-              <InfoArea
-                title="Browse menu"
-                description="Don't ever get negatively suprprised by meal you'll get. With Dinify you can always see what you're ordering and you can even customize your dish to fit your dietary needs."
-                icon={ViewList}
-                iconColor="primary"
-                vertical
-              />
-            </GridItem>
-            <GridItem xs={12} sm={4} md={4}>
-              <InfoArea
-                title="Enjoy your meal"
-                description="After choosing your desired dish, just tap on 'Order' and your meal is on its way. Easy as that."
-                icon={Restaurant}
-                iconColor="primary"
-                vertical
-              />
-            </GridItem>
-          </GridContainer>
+      <div id="steps" className={classNames(classes.themedBg, classes.wrapper)}>
+        <div
+          className={classNames(
+            classes.section,
+            classes.sectionDark,
+            classes.container
+          )}
+        >
+          <div>
+            <GridContainer justify="center">
+              <GridItem xs={12} sm={8} md={8}>
+                <Typography variant="h3">How it works</Typography>
+                <Typography variant="subtitle1" style={{ marginTop: 8, marginBottom: 16 }}>
+                  We simplified the process to its max for you. No installation. No registration.
+                </Typography>
+              </GridItem>
+            </GridContainer>
+            <GridContainer justify="center">
+              <GridItem xs={12} lg={8}>
+                <List className={classes.root}>
+                  {steps.map(step => {
+                    return (
+                      <ListItem
+                        key={step.title.split(" ").join("-")}
+                        style={{ marginBottom: 16 }}
+                      >
+                        <Avatar
+                          style={{
+                            width: 72,
+                            height: 72,
+                            background: "#ffffff",
+                            border: '1px solid rgba(0, 0, 0, 0.12)',
+                            color: "#c13939"
+                          }}
+                        >
+                          {step.icon}
+                        </Avatar>
+                        <ListItemText
+                          primary={step.title}
+                          secondary={step.description}
+                        />
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              </GridItem>
+            </GridContainer>
+          </div>
         </div>
       </div>
     );

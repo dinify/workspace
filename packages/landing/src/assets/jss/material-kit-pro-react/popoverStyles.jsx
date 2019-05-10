@@ -42,7 +42,7 @@ const popoverStyles = {
   },
   popoverHeader: {
     border: "none",
-    padding: "15px 15px 5px",
+    padding: "16px 16px 5px",
     fontSize: "1.125rem",
     margin: "0",
     color: whiteColor,
@@ -50,7 +50,7 @@ const popoverStyles = {
     borderTopRightRadius: "calc(0.3rem - 1px)"
   },
   popoverBody: {
-    padding: "10px 15px 15px",
+    padding: "10px 16px 16px",
     lineHeight: "1.4",
     color: whiteColor
   }

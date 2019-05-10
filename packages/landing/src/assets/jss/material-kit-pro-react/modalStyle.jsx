@@ -61,7 +61,7 @@ const modalStyle = theme => ({
     overflow: "visible"
   },
   modalFooter: {
-    padding: "15px",
+    padding: "16px",
     textAlign: "right",
     paddingTop: "0",
     margin: "0"

@@ -7,7 +7,7 @@ const cardFooterStyle = {
     paddingTop: "0"
   },
   cardFooterProfile: {
-    marginTop: "-15px"
+    marginTop: "-16px"
   },
   cardFooterPlain: {
     paddingLeft: "5px",

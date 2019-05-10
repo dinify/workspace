@@ -28,6 +28,7 @@ const headerLinksStyle = theme => ({
     listStyle: "none",
     padding: "0"
   },
+  button2: theme.typography.button2,
   listItem: {
     float: "left",
     color: "inherit",
@@ -36,6 +37,7 @@ const headerLinksStyle = theme => ({
     width: "auto",
     margin: "0",
     padding: "0",
+    paddingLeft: "16px",
     [theme.breakpoints.down("sm")]: {
       "& ul": {
         maxHeight: "400px",

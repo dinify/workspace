@@ -29,7 +29,7 @@ const mediaStyle = {
     height: "64px",
     overflow: "hidden",
     borderRadius: "50%",
-    marginRight: "15px",
+    marginRight: "16px",
     boxShadow:
       "0 6px 10px 0 rgba(" +
       hexToRgb(blackColor) +

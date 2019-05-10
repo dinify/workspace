@@ -21,16 +21,18 @@ const accordionStyle = theme => ({
     }
   },
   expansionPanelExpanded: {
-    margin: "0"
+    margin: "0",
+    marginBottom: "16px"
   },
   expansionPanelSummary: {
     minHeight: "auto !important",
     backgroundColor: "transparent",
-    borderBottom: "1px solid " + grayColor[6],
-    padding: "25px 10px 5px 0px",
-    borderTopLeftRadius: "3px",
-    borderTopRightRadius: "3px",
-    color: grayColor[1]
+    padding: "16px 16px 16px 0px",
+    borderTopLeftRadius: "4px",
+    borderTopRightRadius: "4px"
+  },
+  dividerTop: {
+    borderTop: "1px solid " + theme.palette.divider
   },
   primaryExpansionPanelSummary: {
     "&:hover": {
@@ -124,7 +126,7 @@ const accordionStyle = theme => ({
   },
   expansionPanelSummaryExpandIconExpanded: {},
   title: {
-    fontSize: "15px",
+    fontSize: "16px",
     fontWeight: "bolder",
     marginTop: "0",
     marginBottom: "0",
@@ -132,7 +134,7 @@ const accordionStyle = theme => ({
   },
   expansionPanelDetails: {
     display: "block",
-    padding: "15px 0px 5px",
+    padding: "16px 0px 5px",
     fontSize: ".875rem"
   }
 });

@@ -22,7 +22,7 @@ const freeDemoStyle = {
   cardTitle,
   title: {
     ...title,
-    marginTop: "15px",
+    marginTop: "16px",
     marginBottom: "1rem"
   },
   section: {

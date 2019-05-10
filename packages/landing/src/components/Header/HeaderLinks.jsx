@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 import withStyles from "@material-ui/core/styles/withStyles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
+import Typography from "@material-ui/core/Typography";
 
 // @material-ui/icons
 import Apps from "@material-ui/icons/Apps";
@@ -35,11 +37,11 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import PersonAdd from "@material-ui/icons/PersonAdd";
 import Layers from "@material-ui/icons/Layers";
 import ShoppingBasket from "@material-ui/icons/ShoppingBasket";
-import LineStyle from "@material-ui/icons/LineStyle";
+
+import OpenInNew from "@material-ui/icons/OpenInNewRounded";
 
 // core components
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
-import Button from "components/CustomButtons/Button.jsx";
 
 import headerLinksStyle from "./headerLinksStyle.jsx";
 
@@ -52,7 +54,16 @@ function HeaderLinks({ ...props }) {
   };
 
   const smoothScroll = (e, target) => {
-    if (window.location.pathname === "/sections") {
+    var targetScroll = document.getElementById(target);
+    var to = targetScroll.offsetTop + window.innerHeight - 56;
+    if (window.scrollTo !== undefined) {
+      e.preventDefault();
+      window.scrollTo({
+        top: to,
+        behavior: 'smooth'
+      });
+    }
+    else {
       var isMobile = navigator.userAgent.match(
         /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
       );
@@ -60,23 +71,34 @@ function HeaderLinks({ ...props }) {
         // if we are on mobile device the scroll into view will be managed by the browser
       } else {
         e.preventDefault();
-        var targetScroll = document.getElementById(target);
-        scrollGo(document.documentElement, targetScroll.offsetTop, 1250);
+        scrollSpeed(to);
       }
     }
   };
+
+  const scrollSpeed = (to) => {
+    const speed = 4; // px / ms
+    const pixels = Math.abs(document.documentElement.scrollTop - to);
+    scrollGo(document.documentElement, to, pixels / speed);
+  }
+
   const scrollGo = (element, to, duration) => {
     var start = element.scrollTop,
       change = to - start,
-      currentTime = 0,
-      increment = 20;
+      startTime = new Date().getTime(),
+      delta = 0,
+      currentTime = new Date().getTime();
 
     var animateScroll = function() {
-      currentTime += increment;
-      var val = easeInOutQuad(currentTime, start, change, duration);
+      currentTime = new Date().getTime();
+      delta = currentTime - startTime;
+      var val = easeInOutQuad(delta, start, change, duration);
       element.scrollTop = val;
-      if (currentTime < duration) {
-        setTimeout(animateScroll, increment);
+      if (delta < duration) {
+        requestAnimationFrame(animateScroll);
+      }
+      else {
+        element.scrollTop = to;
       }
     };
     animateScroll();
@@ -85,14 +107,72 @@ function HeaderLinks({ ...props }) {
 
   const { classes, dropdownHoverColor } = props;
   return (
-    <List className={classes.list + " " + classes.mlAuto}>
+    <List className={classes.list}>
       <ListItem className={classes.listItem}>
         <Button
-          href="https://m.dinify.app"
-          color={window.innerWidth < 960 ? "info" : "white"}
+          className={classes.button2}
+          href="#features"
+          onClick={(e) => {smoothScroll(e, 'features')}}
+          disableRipple
+        >
+          Features
+        </Button>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Button
+          className={classes.button2}
+          href="#steps"
+          onClick={(e) => {smoothScroll(e, 'steps')}}
+          disableRipple
+        >
+          How it works
+        </Button>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Button
+          className={classes.button2}
+          href="#mailing-list"
+          onClick={(e) => {smoothScroll(e, 'mailing-list')}}
+          disableRipple
+        >
+          Contact us
+        </Button>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Typography color="textSecondary">•</Typography>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Button
+          className={classes.button2}
+          href="https://blog.dinify.app"
           target="_blank"
-          className={classes.navButton}
-          round
+          rel="noopener noreferrer"
+          disableRipple
+        >
+          Blog
+          <OpenInNew style={{ marginLeft: 4, fontSize: 16 }}/>
+        </Button>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Button
+          className={classes.button2}
+          href="https://dashboard.dinify.app/signin"
+          target="_blank"
+          rel="noopener noreferrer"
+          disableRipple
+        >
+          Business login
+          <OpenInNew style={{ marginLeft: 4, fontSize: 16 }}/>
+        </Button>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Button
+          variant="outlined"
+          href="https://m.dinify.app"
+          style={{ height: 36 }}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={classes.button2}
         >
           Go to app
         </Button>

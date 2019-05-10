@@ -12,9 +12,9 @@ import {
 const cardHeaderStyle = {
   cardHeader: {
     borderRadius: "3px",
-    padding: "1rem 15px",
-    marginLeft: "15px",
-    marginRight: "15px",
+    padding: "1rem 16px",
+    marginLeft: "16px",
+    marginRight: "16px",
     marginTop: "-30px",
     border: "0",
     marginBottom: "0"
@@ -30,8 +30,8 @@ const cardHeaderStyle = {
     position: "relative",
     padding: "0",
     zIndex: "1",
-    marginLeft: "15px",
-    marginRight: "15px",
+    marginLeft: "16px",
+    marginRight: "16px",
     marginTop: "-30px",
     borderRadius: "6px",
     "& img": {
@@ -39,7 +39,7 @@ const cardHeaderStyle = {
       borderRadius: "6px",
       pointerEvents: "none",
       boxShadow:
-        "0 5px 15px -8px rgba(" +
+        "0 5px 16px -8px rgba(" +
         hexToRgb(blackColor) +
         ", 0.24), 0 8px 10px -5px rgba(" +
         hexToRgb(blackColor) +
@@ -55,7 +55,7 @@ const cardHeaderStyle = {
     }
   },
   cardHeaderContact: {
-    margin: "0 15px",
+    margin: "0 16px",
     marginTop: "-20px"
   },
   cardHeaderSignup: {
@@ -64,7 +64,7 @@ const cardHeaderStyle = {
     marginTop: "-40px",
     padding: "20px 0",
     width: "100%",
-    marginBottom: "15px"
+    marginBottom: "16px"
   },
   warningCardHeader,
   successCardHeader,

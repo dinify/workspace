@@ -4,7 +4,9 @@ import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
-import Favorite from "@material-ui/icons/Favorite";
+import Favorite from "@material-ui/icons/FavoriteRounded";
+import Explore from "@material-ui/icons/ExploreOutlined";
+
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -22,6 +24,8 @@ import SectionFeatures from "./Sections/SectionFeatures.jsx";
 import SectionMultilingual from "./Sections/SectionMultilingual.jsx";
 import SectionFAQ from "./Sections/SectionFAQ.jsx";
 import SectionWork from "./Sections/SectionWork.jsx";
+import SectionProduct from "./Sections/SectionProduct.jsx";
+import SectionMailingList from "./Sections/SectionMailingList.jsx";
 
 class LandingPage extends React.Component {
   componentDidMount() {
@@ -51,24 +55,26 @@ class LandingPage extends React.Component {
           <div className={classes.container}>
             <GridContainer>
               <GridItem xs={12} sm={6} md={6}>
-                <Typography variant="h4" style={{ color: "inherit" }}>
+                <Typography variant="h4" color="inherit">
                   Order at restaurants in your own language, anywhere.
                 </Typography>
                 <Typography
+                  color="inherit"
                   variant="subtitle1"
-                  style={{ color: "inherit", marginTop: 8 }}
+                  style={{ marginTop: 8 }}
                 >
-                  We break barriers on your way to explore new cuisines. No matter where you go or what language you speak, you will never stop exploring new food experiences only because you don't speak a foreign language while traveling.
+                  Our mission is to connect travelers with local restaurants by breaking language barriers. No matter where you go or what language you speak, explore new food experiences and cuisines while on the move.
                 </Typography>
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ height: 40, marginTop: 16 }}
+                  style={{ height: 48, marginTop: 16 }}
                   href="https://m.dinify.app"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Experience
+                  <Explore style={{ marginRight: 8 }}/>
+                  Explore
                 </Button>
               </GridItem>
               <GridItem xs={12} sm={6} md={6}>
@@ -77,18 +83,24 @@ class LandingPage extends React.Component {
             </GridContainer>
           </div>
         </Parallax>
-        <div className={classNames(classes.main, classes.mainRaised)}>
+        <div className={classNames(classes.main, classes.mainBottomSheet)}>
+          <div
+            className={classes.bottomSheetGrip}
+            style={{ paddingTop: 16, marginBottom: -(16 + 4) }}
+          />
           <SectionMultilingual />
           <SectionFeatures />
-          <SectionWork />
+          <SectionProduct />
+          <SectionMailingList />
           <SectionFAQ />
+          <SectionWork />
         </div>
         <Footer
           content={
             <div>
               <div className={classes.right}>
                 &copy; {1900 + new Date().getYear()} , made with{" "}
-                <Favorite className={classes.icon} /> by{" "}
+                <Favorite style={{ fontSize: 12 }} /> by{" "}
                 <a href="https://www.dinify.app/s">Dinify</a>
               </div>
             </div>

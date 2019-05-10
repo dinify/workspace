@@ -47,7 +47,7 @@ const customTabsStyle = theme => ({
     borderRadius: "3px",
     opacity: "1",
     height: "auto",
-    padding: "10px 15px",
+    padding: "10px 16px",
     display: "block",
     minHeight: "unset"
   },

@@ -51,8 +51,8 @@ const styles = {
     position: "relative",
     padding: "0",
     zIndex: "1",
-    marginLeft: "15px",
-    marginRight: "15px",
+    marginLeft: "16px",
+    marginRight: "16px",
     marginTop: "-30px",
     borderRadius: "6px",
     "& img": {
@@ -82,8 +82,8 @@ const styles = {
     margin: "-3px 0"
   },
   cardBodyRefine: {
-    paddingLeft: "15px",
-    paddingRight: "15px"
+    paddingLeft: "16px",
+    paddingRight: "16px"
   },
   textLeft: {
     textAlign: "left"

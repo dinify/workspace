@@ -29,7 +29,7 @@ const contentStyle = theme => ({
   description: {
     color: grayColor[0],
     marginTop: "35px",
-    marginBottom: "15px"
+    marginBottom: "16px"
   },
   imageContainer: {
     maxWidth: "900px",

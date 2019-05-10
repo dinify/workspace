@@ -6,7 +6,7 @@ import {
   mainRaised
 } from "assets/jss/material-kit-pro-react.jsx";
 
-const landingPageStyle = {
+const landingPageStyle = theme => ({
   container: {
     color: "rgba(255, 255, 255, 1)",
     ...container,
@@ -16,26 +16,25 @@ const landingPageStyle = {
     color: '#ffffff',
     fill: '#ffffff'
   },
-  title: {
-    ...title,
-    fontWeight: 600,
-    display: "inline-block",
-    position: "relative",
-    marginTop: "30px",
-    minHeight: "32px",
-    color: whiteColor,
-    textDecoration: "none",
-    '@media (max-width: 1200px)': {
-      fontSize: "2.3125rem"
-    }
-  },
-  subtitle: {
-    fontSize: "1.313rem",
-    maxWidth: "500px",
-    margin: "10px auto 0"
-  },
+  button2: theme.typography.button2,
   main: {
     ...main
+  },
+  mainBottomSheet: {
+    marginTop: -40,
+    borderRadius: theme.shape.borderRadius
+  },
+  bottomSheetGrip: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    "&:after": {
+      content: '""',
+      width: 48,
+      height: 6,
+      borderRadius: 3,
+      backgroundColor: theme.palette.divider
+    }
   },
   mainRaised: {
     ...mainRaised
@@ -76,6 +75,6 @@ const landingPageStyle = {
     top: "3px",
     position: "relative"
   }
-};
+});
 
 export default landingPageStyle;

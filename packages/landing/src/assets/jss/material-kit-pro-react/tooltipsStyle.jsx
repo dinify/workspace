@@ -7,7 +7,7 @@ import {
 
 const tooltipsStyle = {
   tooltip: {
-    padding: "10px 15px",
+    padding: "10px 16px",
     minWidth: "130px",
     color: whiteColor,
     lineHeight: "1.7em",

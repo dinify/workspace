@@ -161,9 +161,9 @@ const customCheckboxRadioSwitch = {
   },
   switchBar: {
     width: "30px",
-    height: "15px",
+    height: "16px",
     backgroundColor: "rgb(" + hexToRgb(grayColor[24]) + ")",
-    borderRadius: "15px",
+    borderRadius: "16px",
     opacity: "0.7!important"
   },
   switchChecked: {
