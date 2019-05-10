@@ -5,6 +5,16 @@ import {
 } from "assets/jss/material-kit-pro-react.jsx";
 
 const productStyle = theme => ({
+  wrapper: {
+    margin: 24
+  },
+  themedBg: {
+    backgroundColor: theme.palette.background.default
+  },
+  outlinedIconButton: {
+    color: theme.palette.text.primary,
+    border: `2px solid ${theme.palette.text.primary}`
+  },
   section: {
     padding: "56px 0",
     textAlign: "center"

@@ -25,6 +25,8 @@ import SectionMultilingual from "./Sections/SectionMultilingual.jsx";
 import SectionFAQ from "./Sections/SectionFAQ.jsx";
 import SectionWork from "./Sections/SectionWork.jsx";
 import SectionProduct from "./Sections/SectionProduct.jsx";
+import SectionStatement from "./Sections/SectionStatement.jsx";
+import SectionMailingList from "./Sections/SectionMailingList.jsx";
 
 class LandingPage extends React.Component {
   componentDidMount() {
@@ -61,7 +63,7 @@ class LandingPage extends React.Component {
                   variant="subtitle1"
                   style={{ color: "inherit", marginTop: 8 }}
                 >
-                  We break barriers on your way to explore new cuisines. No matter where you go or what language you speak, explore new food experiences while traveling.
+                  Our mission is to connect travelers with local restaurants by breaking language barriers. No matter where you go or what language you speak, explore new food experiences and cuisines while on the move.
                 </Typography>
                 <Button
                   variant="contained"
@@ -85,8 +87,9 @@ class LandingPage extends React.Component {
           <SectionMultilingual />
           <SectionFeatures />
           <SectionProduct />
-          <SectionWork />
+          <SectionMailingList />
           <SectionFAQ />
+          <SectionWork />
         </div>
         <Footer
           content={

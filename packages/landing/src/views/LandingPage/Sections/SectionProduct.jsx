@@ -44,12 +44,7 @@ class SectionProduct extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div
-        style={{
-          backgroundColor: "#fafafa",
-          margin: 24
-        }}
-      >
+      <div className={classNames(classes.themedBg, classes.wrapper)}>
         <div
           className={classNames(
             classes.section,
@@ -61,7 +56,7 @@ class SectionProduct extends React.Component {
             <GridContainer justify="center">
               <GridItem xs={12} sm={8} md={8}>
                 <Typography variant="h3">How it works</Typography>
-                <Typography variant="subtitle1" style={{ marginBottom: 16 }}>
+                <Typography variant="subtitle1" style={{ marginTop: 8, marginBottom: 16 }}>
                   We simplified the process to its max for you. No installation. No registration.
                 </Typography>
               </GridItem>

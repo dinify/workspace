@@ -34,6 +34,9 @@ primary_900    #B1312F
 
 const getTheme = ({type = 'light'}) => {
   const dark = type === 'dark';
+
+  // Rounded corners
+  const shapeBorderRadius = 8;
   return createMuiTheme(
     {
       palette: {
@@ -52,17 +55,35 @@ const getTheme = ({type = 'light'}) => {
           primary: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
           secondary: dark ? 'rgba(255, 255, 255, 0.54)' : 'rgba(0, 0, 0, 0.38)',
         },
+        background: {
+          paper: dark ? "#1d1d1d" : "#ffffff",
+          default: dark ? "#212121" : "#fafafa"
+        }
       },
       shape: {
-        borderRadius: 8
+        borderRadius: shapeBorderRadius
       },
       typography: {
         useNextVariants: true,
+        fontFamily: [
+          'Lato',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(','),
         ...nextVariants
       },
       overrides: {
         MuiInputBase: {
           root: {
+            ...nextVariants['body2'],
             [`& > input:-webkit-autofill,
               & > input:-webkit-autofill:hover,
               & > input:-webkit-autofill:focus`]: {
@@ -73,9 +94,21 @@ const getTheme = ({type = 'light'}) => {
             }
           }
         },
+        MuiInputLabel: {
+          root: nextVariants['caption'],
+          filled: {
+            transform: 'translate(12px, 18px) scale(1.333)',
+            '&$shrink': {
+              transform: 'translate(12px, 10px) scale(1)',
+              '&$marginDense': {
+                transform: 'translate(12px, 7px) scale(1)'
+              }
+            }
+          }
+        },
         MuiFilledInput: {
           root: {
-            borderRadius: 4,
+            borderRadius: shapeBorderRadius,
             overflow: 'hidden'
           },
           underline: {

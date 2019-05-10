@@ -3,56 +3,17 @@ import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { Form, Text, Field, TextArea, Radio, RadioGroup, Select, Checkbox } from 'react-form';
+import { Form } from "react-form";
 
 // @material-ui/icons
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import TextField from "@material-ui/core/TextField";
+import CustomText from "components/CustomText/CustomText.jsx";
 
 import workStyle from "./productStyle.jsx";
 import signupImage from "assets/img/signup.png";
-
-const CustomText = props => (
-  <Field field={props.field}>
-    { fieldApi => {
-      const { onChange, onBlur, field, labelText, ...rest } = props
-      const { value, error, warning, success, setValue, setTouched } = fieldApi
-      return (
-        <div style={{ marginBottom: 8 }}>
-          <TextField
-            variant="filled"
-            fullWidth={true}
-            label={labelText}
-            helperText=" "
-            InputProps={{
-              onChange: e => {
-                setValue(e.target.value)
-                if (onChange) {
-                  onChange(e.target.value, e)
-                }
-              },
-              onBlur: e => {
-                setTouched()
-                if (onBlur) {
-                  onBlur(e)
-                }
-              },
-              value: value || '',
-              ...rest
-            }}
-            {...rest}
-          />
-          {/*error ? <Message color="red" message={error} /> : null}
-          {!error && warning ? <Message color="orange" message={warning} /> : null}
-          {!error && !warning && success ? <Message color="green" message={success} /> : null*/}
-        </div>
-      )
-    }}
-  </Field>
-)
 
 const registerRedirect = (obj) => {
   const params = Object.keys(obj)
@@ -94,12 +55,14 @@ class SectionWork extends React.Component {
                           <form onSubmit={formApi.submitForm} id="form2">
 
                             <CustomText
+                              style={{ marginBottom: 8 }}
                               labelText="Restaurant name"
                               field="restaurantName"
                               id="restaurantName"
                             />
 
                             <CustomText
+                              style={{ marginBottom: 8 }}
                               labelText="Email address"
                               field="email"
                               id="email"
