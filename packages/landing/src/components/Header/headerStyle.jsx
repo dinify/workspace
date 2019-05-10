@@ -19,11 +19,7 @@ import {
 const headerStyle = theme => ({
   appBar: {
     display: "flex",
-    border: "0",
-    borderRadius: "3px",
-    padding: "0.625rem 0",
-    marginBottom: "20px",
-    color: grayColor[15],
+    height: 56,
     width: "100%",
     backgroundColor: whiteColor,
     transition: "all 150ms ease 0s",
@@ -214,7 +210,8 @@ const headerStyle = theme => ({
     flexGrow: "1",
     WebkitBoxAlign: "center",
     MsFlexAlign: "center",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "flex-end"
   },
   closeButtonDrawer: {
     position: "absolute",

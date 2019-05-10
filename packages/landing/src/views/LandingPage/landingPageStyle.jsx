@@ -39,6 +39,11 @@ const landingPageStyle = theme => ({
   mainRaised: {
     ...mainRaised
   },
+  hideSmall: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
+  },
   block: {
     color: "inherit",
     padding: "0.9375rem",
