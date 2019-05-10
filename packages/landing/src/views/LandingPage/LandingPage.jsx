@@ -25,7 +25,6 @@ import SectionMultilingual from "./Sections/SectionMultilingual.jsx";
 import SectionFAQ from "./Sections/SectionFAQ.jsx";
 import SectionWork from "./Sections/SectionWork.jsx";
 import SectionProduct from "./Sections/SectionProduct.jsx";
-import SectionStatement from "./Sections/SectionStatement.jsx";
 import SectionMailingList from "./Sections/SectionMailingList.jsx";
 
 class LandingPage extends React.Component {
@@ -83,7 +82,11 @@ class LandingPage extends React.Component {
             </GridContainer>
           </div>
         </Parallax>
-        <div className={classNames(classes.main)}>
+        <div className={classNames(classes.main, classes.mainBottomSheet)}>
+          <div
+            className={classes.bottomSheetGrip}
+            style={{ paddingTop: 16, marginBottom: -(16 + 4) }}
+          />
           <SectionMultilingual />
           <SectionFeatures />
           <SectionProduct />
