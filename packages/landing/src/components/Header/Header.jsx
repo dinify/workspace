@@ -13,12 +13,15 @@ import Button from "@material-ui/core/Button";
 import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
 // @material-ui/icons
-import Menu from "@material-ui/icons/Menu";
-import Close from "@material-ui/icons/Close";
+import Menu from "@material-ui/icons/MenuRounded";
+import Close from "@material-ui/icons/CloseRounded";
 // core components
 import headerStyle from "./headerStyle.jsx";
 import HeaderLinks from "./HeaderLinks.jsx";
 import getTheme from "@dinify/common/dist/theme";
+
+const lightTheme = getTheme({ type: "light" });
+const darkTheme = getTheme({ type: "dark" });
 
 class Header extends React.Component {
   constructor(props) {
@@ -82,7 +85,7 @@ class Header extends React.Component {
       //fontSize: 20,
       marginLeft: 5
     };
-    const currentTheme = getTheme({ type: colorName === "primary" ? "light" : "dark" });
+    const currentTheme = colorName === "primary" ? lightTheme : darkTheme;
     if (colorName === "primary") {
       AppBarStyle.background = currentTheme.palette.background.paper;
       AppBarStyle.borderBottom = `1px solid ${currentTheme.palette.divider}`;
@@ -103,15 +106,54 @@ class Header extends React.Component {
             }}
           />
           <Toolbar className={classes.container}>
-            <Button disableRipple style={{ marginRight: "auto" }}>
-              <Link to="/">
+            <Button disableRipple style={{ justifyContent: "center" }}>
+              <Link to="/" style={{ height: 24 }}>
                 {logo}
                 <span style={subBrandStyle}>{subBrand && ` | ${subBrand}`}</span>
               </Link>
             </Button>
-            {children}
-            <HeaderLinks />
+
+            <Hidden smDown implementation="css" className={classes.hidden}>
+              <div className={classes.collapse}>
+                {children}
+                <HeaderLinks />
+              </div>
+            </Hidden>
+            <Hidden mdUp>
+              <IconButton
+                aria-label="open drawer"
+                onClick={this.handleDrawerToggle}
+              >
+                <Menu />
+              </IconButton>
+            </Hidden>
           </Toolbar>
+          <Hidden mdUp implementation="css">
+            <Drawer
+              variant="temporary"
+              anchor="right"
+              open={this.state.mobileOpen}
+              classes={{
+                paper: classes.drawerPaper
+              }}
+              onClose={this.handleDrawerToggle}
+            >
+              <IconButton
+                aria-label="open drawer"
+                onClick={this.handleDrawerToggle}
+                className={classes.closeButtonDrawer}
+              >
+                <Close />
+              </IconButton>
+              <div
+                onClick={this.handleDrawerToggle}
+                className={classes.appResponsive}
+              >
+                {children}
+                <HeaderLinks />
+              </div>
+            </Drawer>
+          </Hidden>
         </AppBar>
       </MuiThemeProvider>
     );

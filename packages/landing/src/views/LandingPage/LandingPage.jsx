@@ -54,11 +54,23 @@ class LandingPage extends React.Component {
         >
           <div className={classes.container}>
             <GridContainer>
-              <GridItem xs={12} sm={6} md={6}>
-                <Typography variant="h4" color="inherit">
+              <GridItem
+                xs={12}
+                sm={12}
+                md={8}
+                lg={6}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Typography variant="h4" color="inherit" align="center">
                   Order at restaurants in your own language, anywhere.
                 </Typography>
                 <Typography
+                  align="center"
                   color="inherit"
                   variant="subtitle1"
                   style={{ marginTop: 8 }}
@@ -77,8 +89,20 @@ class LandingPage extends React.Component {
                   Explore
                 </Button>
               </GridItem>
-              <GridItem xs={12} sm={6} md={6}>
-                <img src="https://storage.googleapis.com/static.dinify.app/landing/girl-languages.svg"/>
+              <GridItem style={{ flex: 1 }} className={classes.hideSmall}>
+                <img
+                  alt="Girl standing in front of languages"
+                  src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif"
+                  style={{
+                    height: 400,
+                    border: "none",
+                    width: "100%",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center center",
+                    backgroundImage: `url("https://storage.googleapis.com/static.dinify.app/landing/girl-languages.svg")`
+                  }}
+                />
               </GridItem>
             </GridContainer>
           </div>

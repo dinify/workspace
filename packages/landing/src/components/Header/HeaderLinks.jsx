@@ -6,12 +6,14 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
+import { withStyles } from "@material-ui/core/styles";
+import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 
 // @material-ui/icons
 import Apps from "@material-ui/icons/Apps";
@@ -39,6 +41,7 @@ import Layers from "@material-ui/icons/Layers";
 import ShoppingBasket from "@material-ui/icons/ShoppingBasket";
 
 import OpenInNew from "@material-ui/icons/OpenInNewRounded";
+import LogoIcon from "@dinify/common/dist/icons/Logo";
 
 // core components
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
@@ -105,7 +108,70 @@ function HeaderLinks({ ...props }) {
   };
   var onClickSections = {};
 
-  const { classes, dropdownHoverColor } = props;
+  const { classes, width, dropdownHoverColor } = props;
+
+  if (isWidthDown('sm', width)) {
+    return (
+      <List style={{ marginTop: 4 }}>
+        <ListItem
+          button
+          style={{ borderRadius: 8 }}
+          href="#features"
+          onClick={(e) => {smoothScroll(e, 'features')}}
+          disableRipple
+        >
+          <Typography className={classes.button2}>
+            Features
+          </Typography>
+        </ListItem>
+        <ListItem
+          button
+          style={{ borderRadius: 8 }}
+          href="#steps"
+          onClick={(e) => {smoothScroll(e, 'steps')}}
+          disableRipple
+        >
+          <Typography className={classes.button2}>
+            How it works
+          </Typography>
+        </ListItem>
+        <ListItem
+          button
+          style={{ borderRadius: 8 }}
+          href="#mailing-list"
+          onClick={(e) => {smoothScroll(e, 'mailing-list')}}
+          disableRipple
+        >
+          <Typography className={classes.button2}>
+            Contact us
+          </Typography>
+        </ListItem>
+        <Divider color="textSecondary" style={{ marginTop: 16, marginBottom: 16 }} />
+        <ListItem
+          button
+          style={{ borderRadius: 8 }}
+          onClick={() => {window.open("https://blog.dinify.app", "_blank")}}
+          disableRipple
+        >
+          <OpenInNew className={classes.textSecondary} style={{ marginRight: 8, fontSize: 16 }}/>
+          <Typography className={classes.button2}>
+            Blog
+          </Typography>
+        </ListItem>
+        <ListItem
+          button
+          style={{ borderRadius: 8 }}
+          variant="outlined"
+          onClick={() => {window.open("https://dashboard.dinify.app/signin", "_blank")}}
+        >
+          <LogoIcon style={{ marginRight: 8, fontSize: 16 }} className={classes.textSecondary}/>
+          <Typography className={classes.button2}>
+            Dashboard
+          </Typography>
+        </ListItem>
+      </List>
+    );
+  }
   return (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
@@ -138,7 +204,7 @@ function HeaderLinks({ ...props }) {
           Contact us
         </Button>
       </ListItem>
-      <ListItem className={classes.listItem}>
+      <ListItem className={classes.listItem} style={{ paddingLeft: 8, paddingRight: 8, marginRight: -16 }}>
         <Typography color="textSecondary">•</Typography>
       </ListItem>
       <ListItem className={classes.listItem}>
@@ -155,26 +221,14 @@ function HeaderLinks({ ...props }) {
       </ListItem>
       <ListItem className={classes.listItem}>
         <Button
+          variant="outlined"
           className={classes.button2}
           href="https://dashboard.dinify.app/signin"
           target="_blank"
           rel="noopener noreferrer"
-          disableRipple
         >
-          Business login
-          <OpenInNew style={{ marginLeft: 4, fontSize: 16 }}/>
-        </Button>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Button
-          variant="outlined"
-          href="https://m.dinify.app"
-          style={{ height: 36 }}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={classes.button2}
-        >
-          Go to app
+          <LogoIcon style={{ marginRight: 8, fontSize: 16 }} />
+          Dashboard
         </Button>
       </ListItem>
     </List>
@@ -197,7 +251,7 @@ HeaderLinks.propTypes = {
   ])
 };
 
-export default withStyles(headerLinksStyle)(HeaderLinks);
+export default withWidth()(withStyles(headerLinksStyle)(HeaderLinks));
 
 
 

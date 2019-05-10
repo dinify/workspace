@@ -29,6 +29,9 @@ const headerLinksStyle = theme => ({
     padding: "0"
   },
   button2: theme.typography.button2,
+  textSecondary: {
+    color: theme.palette.text.secondary
+  },
   listItem: {
     float: "left",
     color: "inherit",
@@ -205,7 +208,8 @@ const headerLinksStyle = theme => ({
     flexGrow: "1",
     WebkitBoxAlign: "center",
     MsFlexAlign: "center",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "flex-end"
   },
   mlAuto
 });
