@@ -108,10 +108,7 @@ class LandingPage extends React.Component {
           </div>
         </Parallax>
         <div className={classNames(classes.main, classes.mainBottomSheet)}>
-          <div
-            className={classes.bottomSheetGrip}
-            style={{ paddingTop: 16, marginBottom: -(16 + 4) }}
-          />
+          <div className={classes.bottomSheetGrip} />
           <SectionMultilingual />
           <SectionFeatures />
           <SectionProduct />

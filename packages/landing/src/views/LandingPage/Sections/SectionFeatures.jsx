@@ -108,8 +108,8 @@ class SectionFeatures extends React.Component {
                 Forget about awkward conversations
               </Typography>
               <Typography
-                style={{ marginTop: 8, marginBottom: 24 }}
                 variant="subtitle1"
+                style={{ marginTop: 8, marginBottom: 56 }}
               >
                 Avoid having to talk to your server in a foreign language, and skip wait times in busy hours.
               </Typography>

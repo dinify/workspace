@@ -21,7 +21,7 @@ const landingPageStyle = theme => ({
     ...main
   },
   mainBottomSheet: {
-    marginTop: -40,
+    marginTop: -20,
     borderRadius: theme.shape.borderRadius,
     overflow: "hidden"
   },
@@ -29,12 +29,15 @@ const landingPageStyle = theme => ({
     width: "100%",
     display: "flex",
     justifyContent: "center",
+    paddingTop: 8,
+    paddingBottom: 8,
+    marginBottom: -24,
     "&:after": {
       content: '""',
-      width: 48,
-      height: 6,
-      borderRadius: 3,
-      backgroundColor: theme.palette.divider
+      width: 40,
+      height: 4,
+      borderRadius: 2,
+      backgroundColor: theme.palette.action.disabled
     }
   },
   mainRaised: {

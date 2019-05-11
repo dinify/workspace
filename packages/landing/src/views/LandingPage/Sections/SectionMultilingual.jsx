@@ -136,7 +136,7 @@ class SectionProduct extends React.Component {
               <Typography variant="h4">Digital menu in 77 languages</Typography>
               <Typography
                 variant="subtitle1"
-                style={{ marginTop: 8, marginBottom: 24 }}
+                style={{ marginTop: 8, marginBottom: 56 }}
               >
                 We strive to support as many languages as we can, so everybody
                 can have a seamless culinary experience. Understand how much you
