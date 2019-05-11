@@ -92,8 +92,8 @@ class SectionFeatures extends React.Component {
     const { currentFeature } = this.state;
     return (
       <div
-        className={classNames(classes.section, classes.sectionDark)}
-        style={{ background: "#fafafa" }}
+        className={classNames(classes.section, classes.themedBg)}
+        style={{ marginTop: 24 }}
       >
         <div className={classes.container}>
           <GridContainer justify="center">

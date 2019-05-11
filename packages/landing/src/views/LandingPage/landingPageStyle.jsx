@@ -22,7 +22,8 @@ const landingPageStyle = theme => ({
   },
   mainBottomSheet: {
     marginTop: -40,
-    borderRadius: theme.shape.borderRadius
+    borderRadius: theme.shape.borderRadius,
+    overflow: "hidden"
   },
   bottomSheetGrip: {
     width: "100%",

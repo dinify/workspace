@@ -29,29 +29,9 @@ const productStyle = theme => ({
     marginRight: "16px",
     marginLeft: "16px"
   },
-  title: {
-    ...title,
-    textAlign: "center",
-    marginBottom: "1rem",
-    marginTop: "30px",
-    minHeight: "32px",
-    textDecoration: "none"
-  },
+  button2: theme.typography.button2,
   description: {
     color: grayColor[0],
-  },
-  demoContainer: {
-    position: "relative",
-    height: "600px",
-    width: "355px",
-    margin: "0 auto"
-  },
-  iphoneImg: {
-    position: "absolute",
-    height: "600px",
-    width: "355px",
-    top: 0,
-    left: 0
   },
   featureImg: {
     height: "600px",
@@ -65,14 +45,30 @@ const productStyle = theme => ({
     textAlign: "left",
     top: "310px",
     left: "70px",
-    width: '232px',
-    height: '193px',
-    fontSize: "10px",
-    lineHeight: "12px",
+    width: "232px",
+    height: "193px",
     padding: "10px"
   },
   featuresImg: {
     width: "100%"
+  },
+  flag: {
+    display: "flex",
+    flexDirection: "column",
+    width: 56,
+    height: 56,
+    justifyContent: "center",
+    borderRadius: "50%",
+    overflow: "hidden",
+    border: `1px solid transparent`,
+    transition: theme.transitions.create(["all"], {
+      duration: theme.transitions.duration.shortest / 2,
+      easing: "linear"
+    })
+  },
+  flagSelected: {
+    border: `1px solid ${theme.palette.action.selected}`,
+    backgroundColor: theme.palette.background.paper
   }
 });
 

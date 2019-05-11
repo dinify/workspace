@@ -75,7 +75,7 @@ const customCheckboxRadioSwitch = {
     fontWeight: "400",
     paddingTop: "39px",
     marginRight: "0",
-    "@media (min-width: 992px)": {
+    "@media (min-width: 960px)": {
       float: "right"
     }
   },
