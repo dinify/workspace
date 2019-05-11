@@ -113,6 +113,23 @@ export function supportsScrollSnap() {
   );
 }
 
+export function supportsWebp() {
+  if (!self.createImageBitmap) return new Promise((resolve, reject) => { resolve(false); });
+  
+  const webpData = 'data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=';
+  return new Promise((resolve, reject) => {
+    fetch(webpData)
+      .then(r => r.blob())
+      .then(blob => {
+        createImageBitmap(blob).then(() => {
+          resolve(true);
+        }, () => {
+          resolve(false);
+        });
+      });
+  });
+}
+
 /**
  * Determine the mobile operating system.
  * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'other'.

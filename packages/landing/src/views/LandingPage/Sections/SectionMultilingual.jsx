@@ -165,7 +165,7 @@ class SectionProduct extends React.Component {
               ))}
             </Grid>
             <Typography
-              style={{ marginTop: 16 }}
+              style={{ marginTop: 16, marginBottom: 16 }}
               variant="caption"
               color="textSecondary"
             >

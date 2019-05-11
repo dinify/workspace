@@ -7,10 +7,9 @@ import PhoneFrame from "./PhoneFrame";
 import Favorite from "@material-ui/icons/FavoriteRounded";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
+import { supportsWebp } from "@dinify/common/dist/lib/FN";
 
 import translations from "../translations.json";
 
@@ -31,14 +30,27 @@ const styles = theme => ({
 });
 
 class PhoneRestaurantMenu extends Component {
+  state = {
+    webpSupported: false
+  };
+
+  componentDidMount() {
+    supportsWebp().then(supported => {
+      this.setState({ webpSupported: supported });
+    });
+  }
+
   render() {
     const { classes, selected } = this.props;
+    const { webpSupported } = this.state;
     return (
       <PhoneFrame>
         <img
           className={classes.mainImage}
           alt="Food on the menu"
-          src="https://storage.googleapis.com/static.dinify.app/landing/menu-item-burger.webp"
+          src={`https://storage.googleapis.com/static.dinify.app/landing/menu-item-burger.${
+            webpSupported ? "webp" : "jpg"
+          }`}
         />
         <div className={classes.themedBg} style={{ height: "100%" }}>
           <List disablePadding>

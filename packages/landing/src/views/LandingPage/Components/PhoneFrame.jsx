@@ -6,6 +6,7 @@ import NetworkWifi from "@material-ui/icons/NetworkWifiRounded";
 import NetworkCell from "@material-ui/icons/NetworkCellRounded";
 import BatteryFull from "@material-ui/icons/BatteryFullRounded";
 import Lens from "@material-ui/icons/LensRounded";
+import { supportsWebp } from "@dinify/common/dist/lib/FN";
 import classNames from "classnames";
 
 import getTheme from "@dinify/common/dist/theme";
@@ -33,7 +34,6 @@ const styles = theme => ({
     top: 0,
     left: 0,
     border: "none",
-    background: `url("https://storage.googleapis.com/static.dinify.app/landing/phone-frame.webp")`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center center"
@@ -100,8 +100,15 @@ const styles = theme => ({
 
 class PhoneFrame extends Component {
   state = {
-    dark: false
+    dark: false,
+    webpSupported: false
   };
+
+  componentDidMount() {
+    supportsWebp().then(supported => {
+      this.setState({ webpSupported: supported });
+    });
+  }
 
   toggleTheme = () => {
     this.setState({ dark: !this.state.dark });
@@ -109,11 +116,22 @@ class PhoneFrame extends Component {
 
   render() {
     const { classes, children, alt } = this.props;
-    const { dark } = this.state;
+    const { dark, webpSupported } = this.state;
     return (
       <MuiThemeProvider theme={dark ? darkTheme : lightTheme}>
         <div className={classes.demoContainer}>
           <div className={classes.phoneBg}>
+            <div className={classNames(classes.statusBar, classes.section)}>
+              <div style={{ flex: 1 }}/>
+              <NetworkWifi className={classes.statusIcon}/>
+              <NetworkCell className={classes.statusIcon}/>
+              <BatteryFull className={classes.statusIcon}/>
+              <span className={classes.statusTime}>12:40 PM</span>
+            </div>
+            <div className={classNames(classes.appBar, classes.section)}>
+              <LogoText style={{ width: 78 * (18 / 24) }}/>
+            </div>
+            {children}
             <div className={classes.bottomNavigation}>
               <div className={classes.bottomNavItem}>
                 <Lens className={classes.bottomNavIconSelected}/>
@@ -134,21 +152,15 @@ class PhoneFrame extends Component {
                 </Typography>
               </div>
             </div>
-            <div className={classNames(classes.statusBar, classes.section)}>
-              <div style={{ flex: 1 }}/>
-              <NetworkWifi className={classes.statusIcon}/>
-              <NetworkCell className={classes.statusIcon}/>
-              <BatteryFull className={classes.statusIcon}/>
-              <span className={classes.statusTime}>
-                12:40 PM
-              </span>
-            </div>
-            <div className={classNames(classes.appBar, classes.section)}>
-              <LogoText style={{ width: 78 * (18 / 24) }}/>
-            </div>
-            {children}
           </div>
-          <div className={classes.phoneImg}/>
+          <div
+            className={classes.phoneImg}
+            style={{
+              backgroundImage: `url("https://storage.googleapis.com/static.dinify.app/landing/phone-frame.${
+                webpSupported ? "webp" : "png"
+              }")`
+            }}
+          />
         </div>
       </MuiThemeProvider>
     );
