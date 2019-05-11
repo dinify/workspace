@@ -33,7 +33,20 @@ const productStyle = theme => ({
   description: {
     color: grayColor[0],
   },
+  featureImgContainer: {
+    height: 600 - 32,
+    width: 293.6 - 32,
+    overflow: "hidden",
+    borderRadius: 16,
+    border: `1px solid ${theme.palette.divider}`,
+    backgroundColor: theme.palette.background.paper,
+    margin: "0 0 0 auto",
+    [theme.breakpoints.down("sm")]: {
+      margin: "0 auto"
+    }
+  },
   featureImg: {
+    margin: -16,
     height: "600px",
     width: "293.6px",
     top: 0,

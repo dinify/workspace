@@ -108,7 +108,7 @@ class SectionFeatures extends React.Component {
                 Forget about awkward conversations
               </Typography>
               <Typography
-                style={{ marginTop: 8, marginBottom: 16 }}
+                style={{ marginTop: 8, marginBottom: 24 }}
                 variant="subtitle1"
               >
                 Avoid having to talk to your server in a foreign language, and skip wait times in busy hours.
@@ -117,12 +117,14 @@ class SectionFeatures extends React.Component {
           </GridContainer>
           <GridContainer justify="left">
             <GridItem xs={12} sm={6} md={6}>
-              <img
-                key={features[currentFeature].image}
-                className={classes.featureImg}
-                src={`https://storage.googleapis.com/static.dinify.app/landing/en/${features[currentFeature].image}.${webpSupported ? "webp" : "jpg"}`}
-                alt={features[currentFeature].alt}
-              />
+              <div className={classes.featureImgContainer}>
+                <img
+                  key={features[currentFeature].image}
+                  className={classes.featureImg}
+                  src={`https://storage.googleapis.com/static.dinify.app/landing/en/${features[currentFeature].image}.${webpSupported ? "webp" : "jpg"}`}
+                  alt={features[currentFeature].alt}
+                />
+              </div>
             </GridItem>
             <GridItem xs={12} sm={6} md={6} style={{ marginTop: 32 }}>
 
