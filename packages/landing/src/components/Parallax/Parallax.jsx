@@ -8,6 +8,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // core components
 import parallaxStyle from "assets/jss/material-kit-pro-react/components/parallaxStyle.jsx";
+import initParallax from "./parallax.js";
 
 class Parallax extends React.Component {
   constructor(props) {
@@ -24,13 +25,7 @@ class Parallax extends React.Component {
     this.resetTransform = this.resetTransform.bind(this);
   }
   componentDidMount() {
-    if (window.innerWidth >= 768) {
-      var windowScrollTop = window.pageYOffset / 3;
-      this.setState({
-        transform: "translate3d(0," + windowScrollTop + "px,0)"
-      });
-      window.addEventListener("scroll", this.resetTransform);
-    }
+    initParallax(this.root);
   }
   componentWillUnmount() {
     if (window.innerWidth >= 768) {
@@ -61,13 +56,16 @@ class Parallax extends React.Component {
     });
     return (
       <div
-        className={parallaxClasses}
         style={{
-          ...style,
-          backgroundImage: "url(" + image + ")",
-          ...this.state
+          height: "100%",
+          overflowX: "hidden",
+          overflowY: "auto",
+          position: "relative",
+          webkitOverflowScrolling: "touch"
         }}
-        ref="parallax"
+        ref={node => {
+          this.root = node;
+        }}
       >
         {children}
       </div>

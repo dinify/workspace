@@ -23,35 +23,76 @@ import Button from "@material-ui/core/Button";
 import SectionFeatures from "./Sections/SectionFeatures.jsx";
 import SectionMultilingual from "./Sections/SectionMultilingual.jsx";
 import SectionFAQ from "./Sections/SectionFAQ.jsx";
-import SectionWork from "./Sections/SectionWork.jsx";
 import SectionProduct from "./Sections/SectionProduct.jsx";
 import SectionMailingList from "./Sections/SectionMailingList.jsx";
 
+const headerToggleOffset = 100;
+
 class LandingPage extends React.Component {
+  state = {
+    headerScrolled: false
+  };
+
   componentDidMount() {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
+
+    this.parallaxContainer.addEventListener("scroll", this.onScroll);
   }
+  componentWillUnmount() {
+    this.parallaxContainer.removeEventListener("scroll", this.onScroll);
+  }
+
+  onScroll = (e) => {
+    const newVal = e.target.scrollTop > headerToggleOffset;
+    if (this.state.headerScrolled !== newVal)
+      this.setState({ headerScrolled: newVal });
+  }
+
   render() {
     const { classes, ...rest } = this.props;
+    const { headerScrolled } = this.state;
     return (
       <div>
+        <div style={{
+            position: "fixed",
+            top: "0px",
+            width: "1px",
+            height: "1px",
+            zIndex: 1
+          }}
+        />
+      <div>
         <Header
+          scrolled={headerScrolled}
           color="transparent"
           brand={props => (
             <LogoText className={classes.contrastText} {...props} />
           )}
-          fixed
           changeColorOnScroll={{
             height: 100,
             color: "primary"
           }}
           {...rest}
         />
-        <Parallax
-          image={require("assets/img/restaurantHero.jpg")}
-          filter="dark"
-        >
+      </div>
+      <div
+        ref={node => {
+          this.parallaxContainer = node;
+        }}
+        className={classNames(classes.perspective, classes.overflow)}
+        style={{
+          marginTop: -56
+        }}>
+        <div className={classNames(classes.perspective, classes.preserve)}>
+        <div className={classNames(classes.heroSection, classes.parallaxSpeed1, classes.stickyFix)}>
+          <div
+            className={classNames(classes.heroImg, classes.darkScrim)}
+            alt="Restaurant atmoshpere"
+            style={{
+              backgroundImage: `url("${require("assets/img/restaurantHero.jpg")}")`
+            }}
+          />
           <div className={classes.container}>
             <GridContainer>
               <GridItem
@@ -106,17 +147,17 @@ class LandingPage extends React.Component {
               </GridItem>
             </GridContainer>
           </div>
-        </Parallax>
-        <div className={classNames(classes.main, classes.mainBottomSheet)}>
+        </div>
+        <div className={classNames(classes.main, classes.mainBottomSheet, classes.stickyFix)}>
           <div className={classes.bottomSheetGrip} />
           <SectionMultilingual />
           <SectionFeatures />
           <SectionProduct />
           <SectionMailingList />
           <SectionFAQ />
-          <SectionWork />
         </div>
         <Footer
+          className={classes.stickyFix}
           content={
             <div>
               <div className={classes.right}>
@@ -127,6 +168,8 @@ class LandingPage extends React.Component {
             </div>
           }
         />
+      </div>
+      </div>
       </div>
     );
   }

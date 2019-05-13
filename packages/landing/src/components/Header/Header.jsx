@@ -38,7 +38,7 @@ class Header extends React.Component {
   }
   componentDidMount() {
     if (this.props.changeColorOnScroll) {
-      window.addEventListener("scroll", this.headerColorChange);
+      // window.addEventListener("scroll", this.headerColorChange);
     }
   }
   headerColorChange() {
@@ -52,7 +52,7 @@ class Header extends React.Component {
   }
   componentWillUnmount() {
     if (this.props.changeColorOnScroll) {
-      window.removeEventListener("scroll", this.headerColorChange);
+      // window.removeEventListener("scroll", this.headerColorChange);
     }
   }
   render() {
@@ -65,9 +65,11 @@ class Header extends React.Component {
       fixed,
       absolute,
       changeColorOnScroll,
-      children
+      children,
+      scrolled: scrolledProp
     } = this.props;
-    const { scrolled } = this.state;
+    let { scrolled } = this.state;
+    if (scrolledProp) scrolled = scrolledProp;
     const colorName = scrolled ? changeColorOnScroll.color : color;
     const appBarClasses = classNames({
       [classes.appBar]: true,

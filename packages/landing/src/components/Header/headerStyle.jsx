@@ -26,7 +26,8 @@ const headerStyle = theme => ({
     alignItems: "center",
     flexFlow: "row nowrap",
     justifyContent: "flex-start",
-    position: "relative"
+    position: "relative",
+    borderBottom: "1px solid transparent"
   },
   absolute: {
     position: "absolute",
@@ -148,7 +149,6 @@ const headerStyle = theme => ({
   transparent: {
     backgroundColor: "transparent !important",
     boxShadow: "none",
-    paddingTop: "25px",
     color: whiteColor
   },
   dark: {
