@@ -65,6 +65,7 @@ class Header extends React.Component {
       fixed,
       absolute,
       changeColorOnScroll,
+      scrollingElement,
       children,
       scrolled: scrolledProp
     } = this.props;
@@ -118,7 +119,7 @@ class Header extends React.Component {
             <Hidden smDown implementation="css" className={classes.hidden}>
               <div className={classes.collapse}>
                 {children}
-                <HeaderLinks />
+                <HeaderLinks scrollingElement={scrollingElement}/>
               </div>
             </Hidden>
             <Hidden mdUp>
@@ -152,7 +153,7 @@ class Header extends React.Component {
                 className={classes.appResponsive}
               >
                 {children}
-                <HeaderLinks />
+                <HeaderLinks scrollingElement={scrollingElement} />
               </div>
             </Drawer>
           </Hidden>

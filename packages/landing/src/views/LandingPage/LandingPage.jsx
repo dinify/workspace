@@ -30,14 +30,15 @@ const headerToggleOffset = 100;
 
 class LandingPage extends React.Component {
   state = {
-    headerScrolled: false
+    headerScrolled: false,
+    parallaxContainerState: null
   };
   rafPending = false;
 
   componentDidMount() {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
-
+    this.setState({ parallaxContainerState: this.parallaxContainer });
     this.parallaxContainer.addEventListener("scroll", this.onScroll);
   }
   componentWillUnmount() {
@@ -97,7 +98,7 @@ class LandingPage extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
-    const { headerScrolled } = this.state;
+    const { headerScrolled, parallaxContainerState } = this.state;
     return (
       <div>
         <div style={{
@@ -111,6 +112,7 @@ class LandingPage extends React.Component {
       <div>
         <Header
           scrolled={headerScrolled}
+          scrollingElement={parallaxContainerState}
           color="transparent"
           brand={props => (
             <LogoText className={classes.contrastText} {...props} />

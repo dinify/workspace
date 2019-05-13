@@ -49,6 +49,8 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
 import headerLinksStyle from "./headerLinksStyle.jsx";
 
 function HeaderLinks({ ...props }) {
+  const { classes, width, dropdownHoverColor, scrollingElement } = props;
+
   const easeInOutQuad = (t, b, c, d) => {
     t /= d / 2;
     if (t < 1) return c / 2 * t * t + b;
@@ -59,9 +61,9 @@ function HeaderLinks({ ...props }) {
   const smoothScroll = (e, target) => {
     var targetScroll = document.getElementById(target);
     var to = targetScroll.offsetTop + window.innerHeight - 56;
-    if (window.scrollTo !== undefined && false) {
+    if (scrollingElement.scrollTo !== undefined && 'scrollBehavior' in document.documentElement.style) {
       e.preventDefault();
-      window.scrollTo({
+      scrollingElement.scrollTo({
         top: to,
         behavior: 'smooth'
       });
@@ -70,20 +72,29 @@ function HeaderLinks({ ...props }) {
       var isMobile = navigator.userAgent.match(
         /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
       );
-      if (isMobile) {
-        // if we are on mobile device the scroll into view will be managed by the browser
-      } else {
+      if (!isMobile) {
         e.preventDefault();
-        scrollSpeed(to, targetScroll);
+        const speed = 4; // px / ms
+        const pixels = Math.abs(scrollingElement.scrollTop - to);
+        // copied from material-ui/src/styles/transitions.js theme.transitions.getAutoHeightDuration
+        const getAutoHeightDuration = height => {
+          if (!height) {
+            return 0;
+          }
+
+          const constant = height / 36;
+
+          // https://www.wolframalpha.com/input/?i=(4+%2B+15+*+(x+%2F+36+)+**+0.25+%2B+(x+%2F+36)+%2F+5)+*+10
+          return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
+        }
+        if (pixels > 0) {
+          const duration = getAutoHeightDuration(pixels);
+          scrollGo(scrollingElement, to, pixels / speed);
+        }
       }
+      else window.location.hash = '#' + target
     }
   };
-
-  const scrollSpeed = (to, targetScroll) => {
-    const speed = 4; // px / ms
-    const pixels = Math.abs(targetScroll.scrollTop - to);
-    scrollGo(targetScroll, to, pixels / speed);
-  }
 
   const scrollGo = (element, to, duration) => {
     var start = element.scrollTop,
@@ -108,7 +119,7 @@ function HeaderLinks({ ...props }) {
   };
   var onClickSections = {};
 
-  const { classes, width, dropdownHoverColor } = props;
+
 
   if (isWidthDown('sm', width)) {
     return (
