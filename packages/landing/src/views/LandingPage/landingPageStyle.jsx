@@ -21,7 +21,7 @@ const landingPageStyle = theme => ({
     ...main
   },
   mainBottomSheet: {
-    marginTop: -20,
+    marginTop: -56,
     borderRadius: theme.shape.borderRadius,
     overflow: "hidden"
   },
@@ -136,14 +136,17 @@ const landingPageStyle = theme => ({
     WebkitTransformStyle: "preserve-3d",
     position: "relative"
   },
-  stickyFix: {
+  stickyFixA: {
+    position: "sticky"
+  },
+  stickyFixB: {
     position: "-webkit-sticky",
     top: "0px"
   },
   parallaxSpeed1: {
     transformOrigin: "0 0",
-    transform: "translate3d(0, 0, -2px) scale(5)",
-    WebkitTransform: "translate3d(0, 0, -2px) scale(5)"
+    transform: "translate3d(0, 0, -1px) scale(2)",
+    WebkitTransform: "translate3d(0, 0, -1px) scale(2)"
   },
   stickyOffset: {
     position: "-webkit-sticky",

@@ -22,7 +22,7 @@ const headerStyle = theme => ({
     height: 56,
     width: "100%",
     backgroundColor: whiteColor,
-    transition: "all 150ms ease 0s",
+    transition: `all ${theme.transitions.duration.shortest}ms linear`,
     alignItems: "center",
     flexFlow: "row nowrap",
     justifyContent: "flex-start",

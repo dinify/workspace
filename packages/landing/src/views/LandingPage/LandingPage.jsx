@@ -32,6 +32,7 @@ class LandingPage extends React.Component {
   state = {
     headerScrolled: false
   };
+  rafPending = false;
 
   componentDidMount() {
     window.scrollTo(0, 0);
@@ -43,10 +44,55 @@ class LandingPage extends React.Component {
     this.parallaxContainer.removeEventListener("scroll", this.onScroll);
   }
 
-  onScroll = (e) => {
-    const newVal = e.target.scrollTop > headerToggleOffset;
-    if (this.state.headerScrolled !== newVal)
-      this.setState({ headerScrolled: newVal });
+  onScroll = e => {
+    const onAnimFrame = () => {
+      if(!this.rafPending) {
+        return;
+      }
+
+      const newVal = e.target.scrollTop > headerToggleOffset;
+      const ratio = e.target.scrollTop / window.innerHeight;
+      const offset = 0.1 * window.innerHeight;
+
+      const opacity = Math.max(0, Math.min(1, (1 - ratio) * 4 - 2));
+      const position = ratio < 0.25 ? 0 : 4 * Math.pow(ratio - 0.25, 2);
+      this.heroContainer.style.opacity = opacity;
+      this.heroContainer.style.transform = `translate3d(0, -${position * offset}px, 0)`;
+      if (
+        opacity <= 0.12 &&
+        this.heroContainer.style["pointer-events"] !== "none"
+      ) {
+        this.heroContainer.style["pointer-events"] = "none";
+      }
+      if (
+        opacity > 0.12 &&
+        this.heroContainer.style["pointer-events"] !== "auto"
+      ) {
+        this.heroContainer.style["pointer-events"] = "auto";
+      }
+      if (
+        e.target.scrollTop >= window.innerHeight - (56 * 2) &&
+        this.state.headerScrolled !== true
+      ) {
+        this.setState({ headerScrolled: true });
+      }
+
+      if (
+        e.target.scrollTop < window.innerHeight - (56 * 2) &&
+        this.state.headerScrolled !== false
+      ) {
+        this.setState({ headerScrolled: false });
+      }
+      this.rafPending = false;
+    }
+
+    if(this.rafPending) {
+      return;
+    }
+
+    this.rafPending = true;
+
+    window.requestAnimationFrame(onAnimFrame);
   }
 
   render() {
@@ -80,12 +126,13 @@ class LandingPage extends React.Component {
         ref={node => {
           this.parallaxContainer = node;
         }}
-        className={classNames(classes.perspective, classes.overflow)}
+        className={classNames(classes.overflow)}
         style={{
           marginTop: -56
-        }}>
+        }}
+        >
         <div className={classNames(classes.perspective, classes.preserve)}>
-        <div className={classNames(classes.heroSection, classes.parallaxSpeed1, classes.stickyFix)}>
+        <div className={classNames(classes.heroSection, classes.parallaxSpeed1, classes.stickyFixA, classes.stickyFixB)}>
           <div
             className={classNames(classes.heroImg, classes.darkScrim)}
             alt="Restaurant atmoshpere"
@@ -93,7 +140,12 @@ class LandingPage extends React.Component {
               backgroundImage: `url("${require("assets/img/restaurantHero.jpg")}")`
             }}
           />
-          <div className={classes.container}>
+            <div
+              ref={node => {
+                this.heroContainer = node;
+              }}
+              className={classes.container}
+            >
             <GridContainer>
               <GridItem
                 xs={12}
@@ -148,7 +200,7 @@ class LandingPage extends React.Component {
             </GridContainer>
           </div>
         </div>
-        <div className={classNames(classes.main, classes.mainBottomSheet, classes.stickyFix)}>
+        <div className={classNames(classes.main, classes.mainBottomSheet)}>
           <div className={classes.bottomSheetGrip} />
           <SectionMultilingual />
           <SectionFeatures />

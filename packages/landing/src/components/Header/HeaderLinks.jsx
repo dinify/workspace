@@ -59,7 +59,7 @@ function HeaderLinks({ ...props }) {
   const smoothScroll = (e, target) => {
     var targetScroll = document.getElementById(target);
     var to = targetScroll.offsetTop + window.innerHeight - 56;
-    if (window.scrollTo !== undefined) {
+    if (window.scrollTo !== undefined && false) {
       e.preventDefault();
       window.scrollTo({
         top: to,
@@ -74,15 +74,15 @@ function HeaderLinks({ ...props }) {
         // if we are on mobile device the scroll into view will be managed by the browser
       } else {
         e.preventDefault();
-        scrollSpeed(to);
+        scrollSpeed(to, targetScroll);
       }
     }
   };
 
-  const scrollSpeed = (to) => {
+  const scrollSpeed = (to, targetScroll) => {
     const speed = 4; // px / ms
-    const pixels = Math.abs(document.documentElement.scrollTop - to);
-    scrollGo(document.documentElement, to, pixels / speed);
+    const pixels = Math.abs(targetScroll.scrollTop - to);
+    scrollGo(targetScroll, to, pixels / speed);
   }
 
   const scrollGo = (element, to, duration) => {
