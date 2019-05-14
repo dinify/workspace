@@ -1,25 +1,12 @@
-import { Observable, of, from } from 'rxjs';
+import { of, from } from 'rxjs';
 import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { actionTypes } from 'react-redux-firebase';
 import * as API from '@dinify/common/dist/api/restaurant';
 import { setCookie } from '@dinify/common/dist/lib/FN';
-import { loggedFetchedAction, appBootstrap, confirmationFail  } from './actions';
+import { appBootstrap, confirmationFail  } from './actions';
 
-const setWBEpic = (action$) =>
-  action$.pipe(
-    ofType('SET_WBID'),
-    mergeMap(({ payload: { id } }) => {
-      return of({
-        type: 'LOAD_STATE_INIT',
-        payload: {
-          waiterboardId: id
-        }
-      });
-    })
-  )
-
-const bootstrapEpic = (action$: Observable) =>
+const bootstrapEpic = (action$) =>
   action$.pipe(
     ofType('persist/REHYDRATE'),
     mergeMap(() => {
@@ -27,31 +14,43 @@ const bootstrapEpic = (action$: Observable) =>
     })
   );
 
-
-const getLoggedEpic = (action$: Observable) =>
+const selectWaiterboardEpic = (action$) =>
   action$.pipe(
-    filter(action => {
-      const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE];
-      return triggerOn.includes(action.type);
-    }),
-    mergeMap(() => of(
-      {type: 'LOAD_RESTAURANT'}
-    ))
+    ofType('SELECT_WAITERBOARD'),
+    mergeMap(() => {
+      window.location.href = '/board';
+      return of({ type: 'SELECT_WAITERBOARD_REDIRECT' });
+    })
   );
 
 const loadRestaurant = (action$) =>
   action$.pipe(
     ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
-      return from(API.GetLoggedrestaurant({ restaurantId: '' })).pipe(
-        mergeMap(loggedUser => [
-          loggedFetchedAction(loggedUser),
-          { type: 'LOAD_STATE_INIT' }
-        ]),
-        catchError(error => {
-          return of(appBootstrap());
-        })
+      return of(
+        {type: 'FETCH_LOGGEDRESTAURANT_INIT'},
+        // {type: 'FETCH_LANGUAGES_INIT'},
+        // {type: 'FETCH_TRANSLATIONS_INIT'},
+        // {type: 'FETCH_SERVICEIMAGES_INIT'},
+        // {type: 'FETCH_RESTAURANTSETTINGS_INIT'},
+        // {type: 'FETCH_MENULANGUAGES_INIT'}
       );
+    })
+  );
+
+const getLoggedEpic = (action$, state$) =>
+  action$.pipe(
+    filter(action => {
+      const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE];
+      return triggerOn.includes(action.type);
+    }),
+    mergeMap(() => {
+      const reactions = [{type: 'FETCH_MANAGEDRESTAURANTS_INIT'}];
+      const selectedRestaurant = state$.value.restaurant.selectedRestaurant;
+      if (selectedRestaurant) reactions.push({type: 'LOAD_RESTAURANT'});
+      const waiterboardId = state$.value.restaurant.selectedWBId;
+      if (waiterboardId) reactions.push({type: 'LOAD_STATE_INIT'});
+      return reactions;
     })
   );
 
@@ -123,5 +122,5 @@ export default [
   guestsPollingEpic,
   confirmationEpic,
   confirmationSyncEpic,
-  setWBEpic
+  selectWaiterboardEpic
 ];

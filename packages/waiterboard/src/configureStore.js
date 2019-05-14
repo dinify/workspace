@@ -1,9 +1,12 @@
 import { createEpicMiddleware } from 'redux-observable';
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import { createLogger } from 'redux-logger';
-import { persistStore, autoRehydrate } from 'redux-persist';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
 import rootEpic from 'configureEpics.js';
 
 import auth from '@dinify/common/dist/ducks/auth';
@@ -20,11 +23,26 @@ import seat from 'ducks/seat'
 
 import firebaseConfig from '@dinify/common/firebaseConfig.json';
 
+const rootPersistConfig = {
+  key: 'root',
+  storage,
+  whitelist: []
+}
+
+const restaurantPersistConfig = {
+  key: 'restaurant',
+  storage,
+  whitelist: [
+    'selectedRestaurant',
+    'selectedWBId'
+  ]
+}
+
 const commonReducers = {
   auth,
   table,
   ui,
-  restaurant,
+  restaurant: persistReducer(restaurantPersistConfig, restaurant),
   user,
   booking,
   call,
@@ -42,7 +60,7 @@ const rrfConfig = {
 }
 firebase.initializeApp(firebaseConfig)
 
-const configureStore = (options, storage) => {
+export default (options) => {
   const {
     initialState,
     platformReducers = {}
@@ -50,11 +68,13 @@ const configureStore = (options, storage) => {
 
   const epicMiddleware = createEpicMiddleware();
 
-  const reducers = combineReducers({
+  const rootReducer = combineReducers({
     ...commonReducers,
     ...platformReducers
   });
 
+  const reducers = persistReducer(rootPersistConfig, rootReducer);
+ 
   const middlewares = [
     epicMiddleware
   ];
@@ -66,22 +86,16 @@ const configureStore = (options, storage) => {
   const createStoreWithFirebase = compose(
     reactReduxFirebase(firebase, rrfConfig), // firebase instance as first argument
     applyMiddleware(...middlewares),
-    autoRehydrate(),
   )(createStore);
 
   const store = createStoreWithFirebase(reducers, initialState);
 
   epicMiddleware.run(rootEpic);
 
-  // let the magic happen :–)
-  persistStore(store, { blacklist: ['guests', 'tables', 'restaurant', 'seat'], storage }); // .purge() // in case you want to purge the store
+  const persistor = persistStore(store);
 
-  return store;
+  return {
+    store,
+    persistor
+  };
 };
-
-export default configureStore({
-  initialState: {},
-  platformDeps: {},
-  platformEpics: [],
-  platformReducers: {},
-});

@@ -1,12 +1,17 @@
 // @flow
 import React from 'react'
-import values from 'ramda/src/values'
-import keys from 'ramda/src/keys'
+import { compose } from 'redux';
+import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import { setWBidAction } from 'ducks/restaurant/actions';
-import { FormBox, FormBoxHead, FormBoxBody, FormBoxChoice } from './styled/FormBox'
+import { selectWaiterboard } from 'ducks/restaurant/actions';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Avatar from '@material-ui/core/Avatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
+import { MapToList, getInitials } from '@dinify/common/dist/lib/FN';
+import { FormBox, FormBoxHead, FormBoxBody } from './styled/FormBox'
 
 const Content = styled.div`
   position: relative;
@@ -17,29 +22,70 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
-const SelectWB = ({ lastError, logged, setWBid }) =>
+const styles = {
+  card: {
+    maxWidth: '500px',
+    margin: '50px auto',
+    background: 'rgba(255,255,255,0.07)',
+    borderRadius: '2px'
+  },
+  title: {
+    fontSize: 18,
+  },
+  listItem: {
+    background: 'rgba(255,255,255,0.07)',
+    borderRadius: '2px'
+  }
+};
+
+const SelectWB = ({ 
+  selectWaiterboard,
+  managedRestaurants,
+  
+  classes
+}) =>
   (<Content>
     <FormBox className="vhs-pop">
       <FormBoxHead>
         Select waiterboard
       </FormBoxHead>
-      <FormBoxBody className="modry">
-        {values(logged.waiterboards).map((wb, i) =>
-          <Link to={`/board/${keys(logged.waiterboards)[i]}`} onClick={() => setWBid(keys(logged.waiterboards)[i])} key={i}>
-            <FormBoxChoice>
-              {wb.name}
-            </FormBoxChoice>
-          </Link>
-        )}
+      <FormBoxBody>
+
+        <List className={classes.root}>
+          {managedRestaurants.map((restaurant) => 
+            <ListItem className={classes.listItem} key={`r-item-${restaurant.id}`}>
+              <Avatar
+                src={Object.keys(restaurant.images).length  ? MapToList(restaurant.images)[0].url : ''}
+              >
+                {getInitials(restaurant.name)}
+              </Avatar>
+              <ListItemText primary={restaurant.name} />
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => selectWaiterboard({
+                  id: MapToList(restaurant.waiterboards)[0].id,
+                  restaurantId: restaurant.id
+                })}
+              >
+                ENTER
+              </Button>
+            </ListItem>
+          )}
+        </List>
+
       </FormBoxBody>
     </FormBox>
   </Content>);
 
-export default connect(
-  state => ({
-    logged: state.restaurant.loggedUser
-  }),
-  {
-    setWBid: setWBidAction
-  },
-)(SelectWB);
+const enhance = compose(
+  withStyles(styles),
+  connect(state => ({
+    logged: state.restaurant.loggedUser,
+    managedRestaurants: state.restaurant.managedRestaurants
+  }), {
+    selectWaiterboard
+  })
+)
+
+export default enhance(SelectWB);

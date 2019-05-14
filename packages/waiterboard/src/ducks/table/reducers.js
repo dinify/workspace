@@ -12,9 +12,9 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
 
-    case 'LOGGED_FETCHED_DONE': {
-      const restaurant = action.payload
-      const waiterboards = restaurant.waiterboards
+    case 'FETCH_LOGGEDRESTAURANT_DONE': {
+      const restaurant = action.payload.res;
+      const waiterboards = restaurant.waiterboards;
       const selectedWBid = keys(waiterboards)[0]
       const wb = waiterboards[selectedWBid]
       return assoc('all', UpdateOriginal(state.all, wb.tables))(state)

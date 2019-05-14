@@ -176,7 +176,7 @@ const Header = ({
 
             </Grid>
             <Grid item xs={8} style={{textAlign: 'right'}}>
-              <Link to="/board/">
+              <Link to="/select">
                 <Label>Section</Label><Value>{waiterboardName}</Value>
               </Link>
               <Label>Tables</Label><Value>{tablesCount}</Value>

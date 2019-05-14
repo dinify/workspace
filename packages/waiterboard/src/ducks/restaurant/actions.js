@@ -1,8 +1,11 @@
 import types from './types';
 
-export function loggedFetchedAction(res) {
-  return { type: 'LOGGED_FETCHED_DONE', payload: res };
-}
+
+export const selectWaiterboard = ({ id, restaurantId }) => ({
+  type: 'SELECT_WAITERBOARD',
+  payload: { id, restaurantId }
+});
+
 
 export function appBootstrap() {
   return { type: types.BOOTSTRAP };

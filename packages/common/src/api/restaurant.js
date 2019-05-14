@@ -523,7 +523,7 @@ export function ConfirmBill({ billId, approvalNumber }) {
 }
 
 export function GetManagedrestaurants() {
-  return Get({ path: 'managed?with=images&limit=100' });
+  return Get({ path: 'managed?with=images,waiterboards&limit=100' });
 }
 
 export function GetLanguages() {

@@ -88,17 +88,7 @@ const Board = ({
   modalPayload,
   toggleFrames,
   toggleModal,
-  selectedWBId,
-  setWBidAction
 }) => {
-
-  if (!selectedWBId) {
-    const path = window.location.pathname;
-    if (path.includes('/board/') && path.length > 20) {
-      const id = path.replace('/board/','').replace('/','');
-      setWBidAction(id);
-    }
-  }
 
   const closeModal = (e) => {
     if (e.target.className.indexOf('modal-area') > -1) toggleModal({ open: false });

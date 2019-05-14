@@ -12,7 +12,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from './configureStore';
 import './index.css';
 
-const { store, persistor} = configureStore({
+const { store, persistor } = configureStore({
   initialState: {},
   platformDeps: {},
   platformEpics: [],
