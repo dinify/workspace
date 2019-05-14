@@ -3,17 +3,20 @@ import React from "react";
 import classNames from "classnames";
 
 import withStyles from "@material-ui/core/styles/withStyles";
+import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
+import PhoneRestaurantMenu from "../Components/PhoneRestaurantMenu.jsx";
 
 import productStyle from "./productStyle.jsx";
 import presentationiPhone from "assets/img/appscreen1.jpg";
 import "flag-icon-css/css/flag-icon.min.css";
 import CountryLanguage from 'country-language';
 import Typography from "@material-ui/core/Typography";
-
-import translations from './translations.json';
+import IconButton from "@material-ui/core/IconButton";
+import Grid from "@material-ui/core/Grid";
+import Flag from "@dinify/common/dist/components/Flag";
 
 const countryCodes = [
   "us",
@@ -26,6 +29,7 @@ const countryCodes = [
   "fr",
   "nl",
   "it",
+  "gb",
   "fi",
   "cz",
   "kr",
@@ -39,29 +43,22 @@ const countryCodes = [
   "hu",
   "sa",
   "in",
+  "ca",
   "ir",
   "vn",
   "lv",
   "et",
   "lt",
   "pl",
+  "co",
   "ua",
   "ml",
   "my",
   "is"
-]
-
-const descriptionEn = "Rolled seasoned rice in thin sea sweed sheet with a variety of inserts - yellow radish, egg, cucumber, carrots, sesame oil and sesame seeds. There are three varieties depending on the main ingredients : beef, tuna or kimchi. 2 Rolls per order.";
+];
 
 const flagStyle = (selected) => ({
-  width: '49px',
-  height: '38px',
-  marginLeft: '20px',
-  marginBottom: '16px',
-  borderRadius: '6px',
-  border: selected ? '3px solid #777' : '3px solid white',
-  cursor: 'pointer',
-  filter: 'brightness(132%) saturate(60%) contrast(90%)'
+  cursor: 'pointer'
 })
 
 const functionsEndpoint = 'https://us-central1-tabb-global.cloudfunctions.net';
@@ -119,53 +116,67 @@ class SectionProduct extends React.Component {
     // }
   }
   render() {
-    const { classes } = this.props;
+    const { classes, width } = this.props;
     const { selectedIndex } = this.state;
+
     const selected = countryCodes[selectedIndex];
+    const isLarge = isWidthUp("lg", width);
+    const clipped = isLarge
+      ? countryCodes.filter((code, i) => i < countryCodes.length - 1)
+      : countryCodes;
     return (
       <div
         id="features"
-        className={classNames(classes.section)}
-        style={{paddingBottom: 0}}
+        className={classNames(classes.section, classes.themedBg)}
+        style={{ paddingBottom: 0 }}
       >
         <div className={classes.container}>
-
-        <GridContainer justify="center">
-          <GridItem xs={12} sm={8} md={8}>
-            <Typography variant="h4">
-              Digital menu in 77 languages
-            </Typography>
-            <Typography variant="subtitle1" style={{ marginTop: 8 }}>
-              We strive to support as many languages as we can, so everybody can have a seamless culinary experience. Understand how much you spend by showing prices in your local currency, along with the original.
-            </Typography>
-          </GridItem>
-        </GridContainer>
+          <GridContainer justify="center">
+            <GridItem xs={12} sm={8} md={8}>
+              <Typography variant="h4">Digital menu in 77 languages</Typography>
+              <Typography
+                variant="subtitle1"
+                style={{ marginTop: 8, marginBottom: 56 }}
+              >
+                We strive to support as many languages as we can, so everybody
+                can have a seamless culinary experience. Understand how much you
+                spend by showing prices in your local currency, along with the
+                original.
+              </Typography>
+            </GridItem>
+          </GridContainer>
         <GridContainer>
-          <GridItem md={6}>
-            <div className={classes.sectionDescription}>
-              <div style={{width: '345px', margin: '20px auto', textAlign: 'left'}}>
-                {countryCodes.map((code, i) =>
-                  <span
-                    onClick={() => this.selectLanguage(i)}
+          <GridItem md={6} style={{ alignSelf: "center" }}>
+            <Grid container spacing={16} justify="center">
+              {clipped.map((code, i) => (
+                <Grid item key={code}>
+                  <IconButton
                     key={code}
-                    style={flagStyle(code === selected)}
-                    className={`flag-icon flag-icon-${code}`}
-                  />
-                )}
-              </div>
-            </div>
+                      onClick={() => this.selectLanguage(i)}
+                      className={
+                      classes.flag +
+                      " " +
+                        (code === selected ? classes.flagSelected : "")
+                      }
+                    >
+                    <Flag country={code.toUpperCase()} />
+                  </IconButton>
+                </Grid>
+              ))}
+            </Grid>
+            <Typography
+              style={{ marginTop: 16, marginBottom: 16 }}
+              variant="caption"
+              color="textSecondary"
+            >
+              <i>Note:</i> Not all languages are listed here.
+              <a href="#" style={{ marginLeft: 8 }}>
+                Learn More
+              </a>
+            </Typography>
           </GridItem>
           <GridItem md={5} className={classes.mlAuto}>
-            <div className={classes.demoContainer}>
-              <img
-                className={classes.iphoneImg}
-                src={presentationiPhone}
-                alt="Multilingual menu"
-              />
-              <div className={classes.demoDescription}>
-                {translations[selected] || descriptionEn}
-              </div>
-            </div>
+            <PhoneRestaurantMenu selected={selected} />
           </GridItem>
         </GridContainer>
       </div>
@@ -174,4 +185,4 @@ class SectionProduct extends React.Component {
   }
 }
 
-export default withStyles(productStyle)(SectionProduct);
+export default withWidth()(withStyles(productStyle)(SectionProduct));

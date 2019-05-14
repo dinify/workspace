@@ -54,19 +54,21 @@ class SectionProduct extends React.Component {
         >
           <div>
             <GridContainer justify="center">
-              <GridItem xs={12} sm={8} md={8}>
+              <GridItem xs={12} sm={12} md={8}>
                 <Typography variant="h3">How it works</Typography>
-                <Typography variant="subtitle1" style={{ marginTop: 8, marginBottom: 16 }}>
-                  We simplified the process to its max for you. No installation. No registration.
+                <Typography variant="subtitle1" style={{ marginTop: 8, marginBottom: 56 }}>
+                  We simplified the process to so it's easy to get started. You do not need to download or install anything on your phone.
                 </Typography>
               </GridItem>
             </GridContainer>
             <GridContainer justify="center">
-              <GridItem xs={12} lg={8}>
+              <GridItem xs={12} sm={12} md={8}>
                 <List className={classes.root}>
                   {steps.map(step => {
                     return (
                       <ListItem
+                        disableGutters
+                        alignItems="flex-start"
                         key={step.title.split(" ").join("-")}
                         style={{ marginBottom: 16 }}
                       >

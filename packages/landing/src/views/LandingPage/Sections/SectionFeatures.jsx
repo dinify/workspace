@@ -20,6 +20,7 @@ import InfoArea from "components/InfoArea/InfoArea.jsx";
 
 import productStyle from "./productStyle.jsx";
 import featuresImage from "assets/img/features.jpg";
+import { supportsWebp } from "@dinify/common/dist/lib/FN";
 
 const features = [
   {
@@ -53,12 +54,17 @@ const pauseSpeed = 8000; // ms
 
 class SectionFeatures extends React.Component {
   state = {
+    webpSupported: false,
     currentFeature: 0,
     currentTimeout: 0,
     playing: true
   };
 
   componentDidMount() {
+    supportsWebp().then(supported => {
+      this.setState({ webpSupported: supported });
+    });
+
     this.nextFeature = () => {
       let updated = this.state.currentFeature + 1;
       if (updated >= features.length) updated = 0;
@@ -89,11 +95,11 @@ class SectionFeatures extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { currentFeature } = this.state;
+    const { currentFeature, webpSupported } = this.state;
     return (
       <div
-        className={classNames(classes.section, classes.sectionDark)}
-        style={{ background: "#fafafa" }}
+        className={classNames(classes.section, classes.themedBg)}
+        style={{ marginTop: 24 }}
       >
         <div className={classes.container}>
           <GridContainer justify="center">
@@ -102,8 +108,8 @@ class SectionFeatures extends React.Component {
                 Forget about awkward conversations
               </Typography>
               <Typography
-                style={{ marginTop: 8, marginBottom: 16 }}
                 variant="subtitle1"
+                style={{ marginTop: 8, marginBottom: 56 }}
               >
                 Avoid having to talk to your server in a foreign language, and skip wait times in busy hours.
               </Typography>
@@ -111,12 +117,14 @@ class SectionFeatures extends React.Component {
           </GridContainer>
           <GridContainer justify="left">
             <GridItem xs={12} sm={6} md={6}>
-              <img
-                key={features[currentFeature].image}
-                className={classes.featureImg}
-                src={`https://storage.googleapis.com/static.dinify.app/landing/en/${features[currentFeature].image}.webp`}
-                alt={features[currentFeature].alt}
-              />
+              <div className={classes.featureImgContainer}>
+                <img
+                  key={features[currentFeature].image}
+                  className={classes.featureImg}
+                  src={`https://storage.googleapis.com/static.dinify.app/landing/en/${features[currentFeature].image}.${webpSupported ? "webp" : "jpg"}`}
+                  alt={features[currentFeature].alt}
+                />
+              </div>
             </GridItem>
             <GridItem xs={12} sm={6} md={6} style={{ marginTop: 32 }}>
 

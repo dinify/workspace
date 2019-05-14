@@ -48,7 +48,11 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
 
 import headerLinksStyle from "./headerLinksStyle.jsx";
 
+let currentAnimFrame = null;
+
 function HeaderLinks({ ...props }) {
+  const { classes, width, dropdownHoverColor, scrollingElement, onScrollFrame } = props;
+
   const easeInOutQuad = (t, b, c, d) => {
     t /= d / 2;
     if (t < 1) return c / 2 * t * t + b;
@@ -56,12 +60,12 @@ function HeaderLinks({ ...props }) {
     return -c / 2 * (t * (t - 2) - 1) + b;
   };
 
-  const smoothScroll = (e, target) => {
+  const smoothScroll = (e, target, offs = 0) => {
     var targetScroll = document.getElementById(target);
-    var to = targetScroll.offsetTop + window.innerHeight - 56;
-    if (window.scrollTo !== undefined) {
+    var to = targetScroll.offsetTop + window.innerHeight - 56 + offs;
+    if (scrollingElement.scrollTo !== undefined && 'scrollBehavior' in document.documentElement.style) {
       e.preventDefault();
-      window.scrollTo({
+      scrollingElement.scrollTo({
         top: to,
         behavior: 'smooth'
       });
@@ -70,45 +74,59 @@ function HeaderLinks({ ...props }) {
       var isMobile = navigator.userAgent.match(
         /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
       );
-      if (isMobile) {
-        // if we are on mobile device the scroll into view will be managed by the browser
-      } else {
+      if (!isMobile) {
         e.preventDefault();
-        scrollSpeed(to);
+        const pixels = Math.abs(scrollingElement.scrollTop - to);
+        // copied from material-ui/src/styles/transitions.js theme.transitions.getAutoHeightDuration
+        const getAutoHeightDuration = height => {
+          if (!height) {
+            return 0;
+          }
+
+          const constant = height / 36;
+
+          // https://www.wolframalpha.com/input/?i=(4+%2B+15+*+(x+%2F+36+)+**+0.25+%2B+(x+%2F+36)+%2F+5)+*+10
+          return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
+        }
+        if (pixels > 0) {
+          const duration = getAutoHeightDuration(pixels);
+          scrollGo(scrollingElement, to, duration);
+        }
       }
+      else window.location.hash = '#' + target
     }
   };
 
-  const scrollSpeed = (to) => {
-    const speed = 4; // px / ms
-    const pixels = Math.abs(document.documentElement.scrollTop - to);
-    scrollGo(document.documentElement, to, pixels / speed);
-  }
-
   const scrollGo = (element, to, duration) => {
-    var start = element.scrollTop,
+    if (currentAnimFrame !== null) {
+      cancelAnimationFrame(currentAnimFrame);
+    }
+    let start = element.scrollTop,
       change = to - start,
       startTime = new Date().getTime(),
       delta = 0,
       currentTime = new Date().getTime();
 
-    var animateScroll = function() {
+    const animateScroll = () => {
       currentTime = new Date().getTime();
       delta = currentTime - startTime;
-      var val = easeInOutQuad(delta, start, change, duration);
-      element.scrollTop = val;
+      let val = easeInOutQuad(delta, 0, 1, duration);
+      const offset = val * change;
+      // element.scrollTop = val;
+      if (onScrollFrame) onScrollFrame("transform", offset);
       if (delta < duration) {
-        requestAnimationFrame(animateScroll);
+        currentAnimFrame = requestAnimationFrame(animateScroll);
       }
       else {
-        element.scrollTop = to;
+        if (onScrollFrame) onScrollFrame("scroll", to);
+        currentAnimFrame = null;
       }
     };
     animateScroll();
   };
   var onClickSections = {};
 
-  const { classes, width, dropdownHoverColor } = props;
+
 
   if (isWidthDown('sm', width)) {
     return (
@@ -117,7 +135,7 @@ function HeaderLinks({ ...props }) {
           button
           style={{ borderRadius: 8 }}
           href="#features"
-          onClick={(e) => {smoothScroll(e, 'features')}}
+          onClick={(e) => {smoothScroll(e, 'features', -20)}}
           disableRipple
         >
           <Typography className={classes.button2}>
@@ -178,7 +196,7 @@ function HeaderLinks({ ...props }) {
         <Button
           className={classes.button2}
           href="#features"
-          onClick={(e) => {smoothScroll(e, 'features')}}
+          onClick={(e) => {smoothScroll(e, 'features', -20)}}
           disableRipple
         >
           Features

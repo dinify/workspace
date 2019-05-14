@@ -89,7 +89,7 @@ const projectsSection = {
   projects4: {
     "& hr": {
       margin: "70px auto",
-      maxWidth: "970px"
+      maxWidth: "960px"
     }
   }
 };

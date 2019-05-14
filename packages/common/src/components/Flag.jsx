@@ -16,11 +16,12 @@ const styles = theme => ({
 const Flag = ({
   classes,
   country = 'us',
+  ...props
 }) => {
   const flag = flags[country];
-  if (!flag) return <Public style={{opacity: 0.54}}/>;
+  if (!flag) return <Public style={{ opacity: 0.54 }} {...props}/>;
   return (
-    <img alt={country} className={classes.root} src={flag} />
+    <img alt={country} className={classes.root} src={flag} {...props}/>
   );
 };
 

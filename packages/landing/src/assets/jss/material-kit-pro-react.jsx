@@ -164,10 +164,10 @@ const container = {
   "@media (min-width: 768px)": {
     maxWidth: "720px"
   },
-  "@media (min-width: 992px)": {
+  "@media (min-width: 960px)": {
     maxWidth: "960px"
   },
-  "@media (min-width: 1200px)": {
+  "@media (min-width: 1280px)": {
     maxWidth: "1140px"
   }
 };

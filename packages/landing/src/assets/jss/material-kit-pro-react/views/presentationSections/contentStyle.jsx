@@ -32,7 +32,7 @@ const contentStyle = theme => ({
     marginBottom: "16px"
   },
   imageContainer: {
-    maxWidth: "900px",
+    maxWidth: "960px",
     position: "relative"
   },
   ipadImg: {

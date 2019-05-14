@@ -38,7 +38,7 @@ class Header extends React.Component {
   }
   componentDidMount() {
     if (this.props.changeColorOnScroll) {
-      window.addEventListener("scroll", this.headerColorChange);
+      // window.addEventListener("scroll", this.headerColorChange);
     }
   }
   headerColorChange() {
@@ -52,7 +52,7 @@ class Header extends React.Component {
   }
   componentWillUnmount() {
     if (this.props.changeColorOnScroll) {
-      window.removeEventListener("scroll", this.headerColorChange);
+      // window.removeEventListener("scroll", this.headerColorChange);
     }
   }
   render() {
@@ -65,35 +65,37 @@ class Header extends React.Component {
       fixed,
       absolute,
       changeColorOnScroll,
-      children
+      scrollingElement,
+      onScrollFrame,
+      children,
+      scrolled: scrolledProp
     } = this.props;
-    const { scrolled } = this.state;
-    const colorName = scrolled ? changeColorOnScroll.color : color;
-    const appBarClasses = classNames({
-      [classes.appBar]: true,
-      [classes[colorName]]: color,
-      [classes.absolute]: absolute,
-      [classes.fixed]: fixed
-    });
-    const AppBarStyle = {
-      boxShadow: "none",
-      height: 56,
-      borderRadius: 0
-    };
-    const subBrandStyle = {
-      fontFamily: "Lato",
-      //fontSize: 20,
-      marginLeft: 5
-    };
-    const currentTheme = colorName === "primary" ? lightTheme : darkTheme;
-    if (colorName === "primary") {
-      AppBarStyle.background = currentTheme.palette.background.paper;
-      AppBarStyle.borderBottom = `1px solid ${currentTheme.palette.divider}`;
-    }
-    const logo = brand({style: {fill: colorName === "primary" ? "rgba(0, 0, 0, 0.72)" : "#ffffff"}});
-
-    return (
-      <MuiThemeProvider theme={currentTheme}>
+    const completeAppBar = (scrolled, opacity) => {
+      const colorName = scrolled ? changeColorOnScroll.color : color;
+      const appBarClasses = classNames({
+        [classes.appBar]: true,
+        [classes[colorName]]: color,
+        [classes.absolute]: absolute,
+        [classes.fixed]: fixed
+      });
+      const AppBarStyle = {
+        opacity,
+        boxShadow: "none",
+        height: 56,
+        borderRadius: 0
+      };
+      const subBrandStyle = {
+        fontFamily: "Lato",
+        //fontSize: 20,
+        marginLeft: 5
+      };
+      const currentTheme = colorName === "primary" ? lightTheme : darkTheme;
+      if (colorName === "primary") {
+        AppBarStyle.background = currentTheme.palette.background.paper;
+        AppBarStyle.borderBottom = `1px solid ${currentTheme.palette.divider}`;
+      }
+      const logo = brand({style: {fill: colorName === "primary" ? "rgba(0, 0, 0, 0.72)" : "#ffffff"}});
+      return (
         <AppBar className={appBarClasses} style={AppBarStyle}>
           <div
             style={{
@@ -116,7 +118,7 @@ class Header extends React.Component {
             <Hidden smDown implementation="css" className={classes.hidden}>
               <div className={classes.collapse}>
                 {children}
-                <HeaderLinks />
+                <HeaderLinks scrollingElement={scrollingElement} onScrollFrame={onScrollFrame} />
               </div>
             </Hidden>
             <Hidden mdUp>
@@ -150,12 +152,43 @@ class Header extends React.Component {
                 className={classes.appResponsive}
               >
                 {children}
-                <HeaderLinks />
+                <HeaderLinks scrollingElement={scrollingElement} onScrollFrame={onScrollFrame} />
               </div>
             </Drawer>
           </Hidden>
         </AppBar>
-      </MuiThemeProvider>
+      );
+    }
+
+    return (
+      <div style={{
+        position: "relative"
+      }}
+      >
+        <div style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+        }}>
+          <MuiThemeProvider theme={darkTheme}>
+            {completeAppBar(false, 1)}
+          </MuiThemeProvider>
+        </div>
+        <div style={{
+          transition: lightTheme.transitions.create(["opacity"], {
+            duration: lightTheme.transitions.duration.shortest
+          }),
+          WebkitTransition: lightTheme.transitions.create(["opacity"], {
+            duration: lightTheme.transitions.duration.shortest
+          }),
+          pointerEvents: scrolledProp ? "auto" : "none"
+        }}>
+          <MuiThemeProvider theme={lightTheme}>
+            {completeAppBar(true, scrolledProp ? 1 : 0)}
+          </MuiThemeProvider>
+        </div>
+      </div>
     );
   }
 }
