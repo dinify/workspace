@@ -48,8 +48,10 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
 
 import headerLinksStyle from "./headerLinksStyle.jsx";
 
+let currentAnimFrame = null;
+
 function HeaderLinks({ ...props }) {
-  const { classes, width, dropdownHoverColor, scrollingElement } = props;
+  const { classes, width, dropdownHoverColor, scrollingElement, onScrollFrame } = props;
 
   const easeInOutQuad = (t, b, c, d) => {
     t /= d / 2;
@@ -58,9 +60,9 @@ function HeaderLinks({ ...props }) {
     return -c / 2 * (t * (t - 2) - 1) + b;
   };
 
-  const smoothScroll = (e, target) => {
+  const smoothScroll = (e, target, offs = 0) => {
     var targetScroll = document.getElementById(target);
-    var to = targetScroll.offsetTop + window.innerHeight - 56;
+    var to = targetScroll.offsetTop + window.innerHeight - 56 + offs;
     if (scrollingElement.scrollTo !== undefined && 'scrollBehavior' in document.documentElement.style) {
       e.preventDefault();
       scrollingElement.scrollTo({
@@ -74,7 +76,6 @@ function HeaderLinks({ ...props }) {
       );
       if (!isMobile) {
         e.preventDefault();
-        const speed = 4; // px / ms
         const pixels = Math.abs(scrollingElement.scrollTop - to);
         // copied from material-ui/src/styles/transitions.js theme.transitions.getAutoHeightDuration
         const getAutoHeightDuration = height => {
@@ -89,7 +90,7 @@ function HeaderLinks({ ...props }) {
         }
         if (pixels > 0) {
           const duration = getAutoHeightDuration(pixels);
-          scrollGo(scrollingElement, to, pixels / speed);
+          scrollGo(scrollingElement, to, duration);
         }
       }
       else window.location.hash = '#' + target
@@ -97,22 +98,28 @@ function HeaderLinks({ ...props }) {
   };
 
   const scrollGo = (element, to, duration) => {
-    var start = element.scrollTop,
+    if (currentAnimFrame !== null) {
+      cancelAnimationFrame(currentAnimFrame);
+    }
+    let start = element.scrollTop,
       change = to - start,
       startTime = new Date().getTime(),
       delta = 0,
       currentTime = new Date().getTime();
 
-    var animateScroll = function() {
+    const animateScroll = () => {
       currentTime = new Date().getTime();
       delta = currentTime - startTime;
-      var val = easeInOutQuad(delta, start, change, duration);
-      element.scrollTop = val;
+      let val = easeInOutQuad(delta, 0, 1, duration);
+      const offset = val * change;
+      // element.scrollTop = val;
+      if (onScrollFrame) onScrollFrame("transform", offset);
       if (delta < duration) {
-        requestAnimationFrame(animateScroll);
+        currentAnimFrame = requestAnimationFrame(animateScroll);
       }
       else {
-        element.scrollTop = to;
+        if (onScrollFrame) onScrollFrame("scroll", to);
+        currentAnimFrame = null;
       }
     };
     animateScroll();
@@ -128,7 +135,7 @@ function HeaderLinks({ ...props }) {
           button
           style={{ borderRadius: 8 }}
           href="#features"
-          onClick={(e) => {smoothScroll(e, 'features')}}
+          onClick={(e) => {smoothScroll(e, 'features', -20)}}
           disableRipple
         >
           <Typography className={classes.button2}>
@@ -189,7 +196,7 @@ function HeaderLinks({ ...props }) {
         <Button
           className={classes.button2}
           href="#features"
-          onClick={(e) => {smoothScroll(e, 'features')}}
+          onClick={(e) => {smoothScroll(e, 'features', -20)}}
           disableRipple
         >
           Features

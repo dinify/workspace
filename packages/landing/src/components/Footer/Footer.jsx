@@ -5,13 +5,18 @@ import PropTypes from "prop-types";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
+import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import Typography from "@material-ui/core/Typography";
 // @material-ui/icons
-import Favorite from "@material-ui/icons/Favorite";
+import Copyright from "@material-ui/icons/CopyrightTwoTone";
+import Favorite from "@material-ui/icons/FavoriteTwoTone";
 
 import footerStyle from "assets/jss/material-kit-pro-react/components/footerStyle.jsx";
+import getTheme from "@dinify/common/dist/theme";
+
+const darkTheme = getTheme({ type: "dark" });
 
 function Footer(props) {
   const { children, content, classes, theme, big, className } = props;
@@ -39,6 +44,12 @@ function Footer(props) {
           " "
         )}
         {content}
+        <Typography variant="caption" color="textSecondary">
+          <Copyright className={classes.smallCopyright} />
+          {1900 + new Date().getYear()}{", made with"}
+          <Favorite className={classes.smallHeart}/>{"by "}
+          <a className={classes.textSecondary} href="https://www.dinify.app/">Dinify</a>
+        </Typography>
         <div className={classes.clearFix} />
       </div>
     </footer>
@@ -52,7 +63,15 @@ Footer.propTypes = {
   content: PropTypes.node.isRequired
 };
 
-export default withStyles(footerStyle)(Footer);
+const WithStyles = withStyles(footerStyle)(Footer);
+
+const WrappedSection = ({...props}) => (
+  <MuiThemeProvider theme={darkTheme}>
+    <WithStyles {...props}/>
+  </MuiThemeProvider>
+);
+
+export default WrappedSection;
 
 
 

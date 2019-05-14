@@ -26,6 +26,12 @@ const landingPageStyle = theme => ({
     overflow: "hidden"
   },
   bottomSheetGrip: {
+    transition: theme.transitions.create(["opacity"], {
+      duration: theme.transitions.duration.shortest / 2
+    }),
+    WebkitTransition: theme.transitions.create(["opacity"], {
+      duration: theme.transitions.duration.shortest / 2
+    }),
     width: "100%",
     display: "flex",
     justifyContent: "center",

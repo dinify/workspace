@@ -10,7 +10,7 @@ import {
   hexToRgb
 } from "assets/jss/material-kit-pro-react.jsx";
 
-const footerStyle = {
+const footerStyle = theme => ({
   left: {
     float: "left!important",
     display: "block"
@@ -19,6 +19,9 @@ const footerStyle = {
     padding: "16px 0",
     margin: "0",
     float: "right"
+  },
+  textSecondary: {
+    color: theme.palette.text.secondary
   },
   rightLinks: {
     float: "right!important",
@@ -37,7 +40,8 @@ const footerStyle = {
     }
   },
   footer: {
-    padding: "0.9375rem 0",
+    background: theme.palette.background.default,
+    padding: "16px 0",
     textAlign: "center",
     display: "flex",
     zIndex: "2",
@@ -167,6 +171,19 @@ const footerStyle = {
   },
   clearFix: {
     clear: "both"
+  },
+  smallCopyright: {
+    fontSize: 12,
+    transform: "translateY(1px)",
+    marginLeft: 4,
+    marginRight: 4
+  },
+  smallHeart: {
+    fontSize: 12,
+    transform: "translateY(2px)",
+    marginLeft: 4,
+    marginRight: 4
   }
-};
+});
+
 export default footerStyle;
