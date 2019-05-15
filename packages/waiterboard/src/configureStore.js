@@ -8,6 +8,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import rootEpic from 'configureEpics.js';
+import { reducer as formReducer } from 'redux-form';
 
 import auth from '@dinify/common/dist/ducks/auth';
 import table from 'ducks/table'
@@ -50,7 +51,8 @@ const commonReducers = {
   bill,
   service,
   seat,
-  firebase: firebaseReducer
+  firebase: firebaseReducer,
+  form: formReducer,
 }
 
 // react-redux-firebase config
