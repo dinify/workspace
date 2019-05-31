@@ -1,9 +1,9 @@
 // @flow
-import React from 'react'
+import React from 'react';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux'
-import styled from 'styled-components'
+import { connect } from 'react-redux';
+import styled from 'styled-components';
 import { selectWaiterboard } from 'ducks/restaurant/actions';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,7 +11,10 @@ import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import { MapToList, getInitials } from '@dinify/common/dist/lib/FN';
-import { FormBox, FormBoxHead, FormBoxBody } from './styled/FormBox'
+import { FormBox, FormBoxHead, FormBoxBody } from './styled/FormBox';
+import IconButton from '@material-ui/core/IconButton';
+import ExitToApp from '@material-ui/icons/ExitToApp';
+import { withFirebase } from 'react-redux-firebase';
 
 const Content = styled.div`
   position: relative;
@@ -35,13 +38,21 @@ const styles = {
   listItem: {
     background: 'rgba(255,255,255,0.07)',
     borderRadius: '2px'
+  },
+  actionItem: {
+    background: 'rgba(255,255,255,0.07)',
+    borderTop: '1px solid rgba(255,255,255,0.1)',
+
+    '& button': {
+      margin: '0 auto'
+    }
   }
 };
 
 const SelectWB = ({ 
   selectWaiterboard,
   managedRestaurants,
-  
+  firebase,
   classes
 }) =>
   (<Content>
@@ -72,6 +83,15 @@ const SelectWB = ({
               </Button>
             </ListItem>
           )}
+          <ListItem className={classes.actionItem}>
+            <Button
+                color="default"
+                variant="outlined"
+                onClick={() => firebase.logout()}
+              >
+                Log out
+            </Button>
+          </ListItem>
         </List>
 
       </FormBoxBody>
@@ -79,6 +99,7 @@ const SelectWB = ({
   </Content>);
 
 const enhance = compose(
+  withFirebase,
   withStyles(styles),
   connect(state => ({
     logged: state.restaurant.loggedUser,

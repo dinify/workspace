@@ -1,4 +1,4 @@
-// @flow
+
 import io from 'socket.io-client';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import types from './types';

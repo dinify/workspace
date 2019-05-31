@@ -1,4 +1,4 @@
-// @flow
+
 import * as R from 'ramda';
 import types from './types';
 

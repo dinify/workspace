@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { openDialog, closeDialog } from 'ducks/ui/actions';
@@ -6,6 +5,7 @@ import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 import { Motion, spring } from 'react-motion';
 
+import * as routes from 'web/routes';
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
 import MenuItemView from 'web/pages/MenuItemView';
@@ -25,10 +25,8 @@ import * as FN from '@dinify/common/dist/lib/FN';
 
 import withRoot from 'withRoot.js';
 
-const HOMEPAGE = '/';
-
 class App extends React.Component {
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const { history } = this.props;
     if (history.action === 'PUSH') {
       window.scrollTo(0, 0);
@@ -37,11 +35,13 @@ class App extends React.Component {
 
   onNavigate = (evt, val) => {
     const { history, checkedInRestaurant } = this.props;
-    if (val === 0) history.push('/');
-    else if (val === 1) history.push('/eat');
+    if (val === 0) history.push(routes.HOMEPAGE);
+    else if (val === 1) history.push(routes.EAT);
     else if (val === 2) {
-      if (checkedInRestaurant || process.env.REACT_APP_CAMERA_SCANNER_ENABLED === 'false') history.push('/services');
-      else history.push('/checkin');
+      if (checkedInRestaurant || process.env.REACT_APP_CAMERA_SCANNER_ENABLED === 'false') {
+        history.push(routes.SERVICES);
+      }
+      else history.push(routes.CHECKIN);
     }
   }
 
@@ -62,7 +62,6 @@ class App extends React.Component {
 
   render() {
     const {
-      location,
       checkedInRestaurant,
       dialogs,
       closeDialog,
@@ -72,40 +71,36 @@ class App extends React.Component {
 
     return (
       <div>
-        <AppBar>
-          <AccountSignIn visible={!this.match(['/signin', '/account'])} history={history}/>
+        <AppBar history={history}>
+          <AccountSignIn visible={!this.match([routes.SIGNIN, routes.ACCOUNT])} history={history}/>
         </AppBar>
         <div style={{marginBottom: 56}}>
-          <Switch location={location}>
-            <Route exact path="/" render={() => (
-              HOMEPAGE !== '/' ? (
-                <Redirect to={HOMEPAGE}/>
-              ) : (
-                <Main/>
-              )
+          <Switch>
+            <Route exact path={routes.HOMEPAGE} render={() => (
+              <Main/>
             )}/>
-            <Route path="/signin" component={() => {
+            <Route path={routes.SIGNIN} component={() => {
               return user.isEmpty ? <SignIn user={user}/> :
-              <Redirect to={HOMEPAGE}/>
+              <Redirect to={routes.HOMEPAGE}/>
             }} />
-            <Route path="/account" component={() => {
+            <Route path={routes.ACCOUNT} component={() => {
               return (!user.isEmpty || !user.isLoaded) ? <Account history={history}/> :
-              <Redirect to="/signin"/>
+              <Redirect to={routes.SIGNIN}/>
             }} />
 
-            <Route path="/checkin" component={Checkin} />
-            <Route path="/restaurant/:subdomain" component={RestaurantView} />
-            <Route path="/menu/item/:id" component={MenuItemView} />
+            <Route path={routes.CHECKIN} component={Checkin} />
+            <Route path={routes.RESTAURANT} component={RestaurantView} />
+            <Route path={routes.MENUITEM} component={MenuItemView} />
 
-            <Route path="/eat" component={Eat} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/receipt" component={Receipt} />
-            <Route path="/services" component={Services} />
+            <Route path={routes.EAT}  component={Eat} />
+            <Route path={routes.CART}  component={Cart} />
+            <Route path={routes.RECEIPT} component={Receipt} />
+            <Route path={routes.SERVICES} component={Services} />
           </Switch>
         </div>
         <Motion
           defaultStyle={{x: 0}}
-          style={{x: spring(this.match(['/signin', '/account']) ? 1 : 0)}}>
+          style={{x: spring(this.match([routes.SIGNIN, routes.ACCOUNT]) ? 1 : 0)}}>
           {style =>
             <Navigation
               style={{
@@ -114,8 +109,8 @@ class App extends React.Component {
               handleChange={this.onNavigate}
               checkedInRestaurant={checkedInRestaurant}
               value={(() => {
-                if (this.match('/eat')) return 1;
-                if (this.match('/checkin') || this.match('/services')) return 2;
+                if (this.match(routes.EAT)) return 1;
+                if (this.match(routes.CHECKIN) || this.match(routes.SERVICES)) return 2;
                 return 0;
               })()}/>
           }
@@ -137,7 +132,8 @@ App = connect(
   (state) => ({
     user: state.firebase.auth,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
-    dialogs: state.ui.dialogs
+    dialogs: state.ui.dialogs,
+    location: state.router.location
   }),
   {
     openDialog,
@@ -145,12 +141,4 @@ App = connect(
   }
 )(App);
 
-const AppWrapper = () => (
-  <div>
-    <Router>
-      <Route component={App} />
-    </Router>
-  </div>
-);
-
-export default withRoot(AppWrapper);
+export default withRoot(App);

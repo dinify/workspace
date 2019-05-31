@@ -1,4 +1,4 @@
-// @flow
+
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';

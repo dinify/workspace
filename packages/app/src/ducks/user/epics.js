@@ -1,4 +1,4 @@
-// @flow
+
 import { Observable } from 'rxjs';
 import { ignoreElements, tap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';

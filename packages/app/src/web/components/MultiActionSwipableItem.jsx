@@ -1,4 +1,4 @@
-// @flow
+
 import React from 'react';
 import times from 'lodash.times';
 import { withStyles } from '@material-ui/core/styles';

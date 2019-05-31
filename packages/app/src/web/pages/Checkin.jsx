@@ -1,4 +1,4 @@
-// @flow
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { checkinInit } from 'ducks/restaurant/actions';

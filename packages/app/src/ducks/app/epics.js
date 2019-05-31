@@ -1,4 +1,4 @@
-// @flow
+
 import { of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';

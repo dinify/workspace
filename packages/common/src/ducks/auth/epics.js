@@ -3,7 +3,6 @@ import React from 'react';
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { getFirebase } from 'react-redux-firebase';
 import AccountExistsDialog from '../../components/dialogs/AccountExistsDialog';
 
 import * as API from '../../api/user';
@@ -69,13 +68,12 @@ const loginLinkEpic = (action$, state$) =>
   );
 
 
-const loginErrorEpic = (action$: Observable) =>
+const loginErrorEpic = (action$, state$, { firebase }) =>
   action$.pipe(
     ofType(actionTypes.LOGIN_ERROR),
     mergeMap(({ authError }) => {
       if (!authError) return loginErrorHandled();
       if (authError.code === 'auth/account-exists-with-different-credential') {
-        const firebase = getFirebase();
         const promise = firebase.auth().fetchSignInMethodsForEmail(authError.email);
         return from(promise).pipe(
           mergeMap((methods) => {

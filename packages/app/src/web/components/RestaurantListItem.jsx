@@ -1,4 +1,4 @@
-// @flow
+
 import React from 'react';
 import * as R from 'ramda';
 import * as FN from '@dinify/common/dist/lib/FN';

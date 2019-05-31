@@ -10,7 +10,6 @@ import { billEpics as bill } from 'ducks/bill';
 import { seatEpics as seat } from 'ducks/seat';
 import { uiEpics as ui } from 'ducks/ui';
 import { serviceEpics as service } from 'ducks/service';
-import { getFirebase } from 'react-redux-firebase';
 
 import language from 'ducks/auth/epics';
 
@@ -21,7 +20,7 @@ import { appEpics as app } from 'ducks/app';
 //    ...epics.map(epic => epic(...args))
 //  );
 
-const rootEpic = (action$, state$, ...rest) => {
+const rootEpic = (action$, state$, firebase, ...rest) => {
   const epic = combineEpics(
     ...app,
     ...crud,
@@ -36,15 +35,12 @@ const rootEpic = (action$, state$, ...rest) => {
     ...ui,
     ...service
   );
-  // action$ and state$ are converted from Observables to Most.js streams
   const output = epic(
     action$,
     state$,
-    { getFirebase },
+    { firebase },
     ...rest
   );
-
-  // convert Most.js stream back to Observable
   return output;
 };
 

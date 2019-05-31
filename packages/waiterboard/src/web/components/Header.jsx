@@ -122,7 +122,7 @@ const styles = {
 const Header = ({
   tablesCount = 0,
   salesVolume = 0,
-  loggedUser,
+  restaurant,
   selectedWBId,
   firebase,
   toggleFrames,
@@ -133,9 +133,11 @@ const Header = ({
   orders
 }) => {
   const frames = ['actions','tables']
-  let waiterboardName = ''
-  if (loggedUser.waiterboards && loggedUser.waiterboards[selectedWBId]) {
-    waiterboardName = loggedUser.waiterboards[selectedWBId].name
+  let restaurantName = '';
+  if (restaurant) restaurantName = restaurant.name;
+  let waiterboardName = '';
+  if (restaurant.waiterboards && restaurant.waiterboards[selectedWBId]) {
+    waiterboardName = restaurant.waiterboards[selectedWBId].name
   }
   const bookingsList = MapToList(bookings)
   const acceptedBookings = bookingsList.filter((b) => b.status === 'CONFIRMED')
@@ -176,12 +178,14 @@ const Header = ({
 
             </Grid>
             <Grid item xs={8} style={{textAlign: 'right'}}>
+            
               <Link to="/select">
-                <Label>Section</Label><Value>{waiterboardName}</Value>
+                <Value>{restaurantName}</Value>
               </Link>
+
               <Label>Tables</Label><Value>{tablesCount}</Value>
               <Label>Orders</Label><Value>{ordersList.length}</Value>
-              <Label>Sales</Label><Value>{numeral(salesVolume).format('0.000')}KD</Value>
+              <Label>Sales</Label><Value>{numeral(salesVolume).format('0')}Kč</Value>
 
               <IconButton onClick={() => firebase.logout()}>
                 <ExitToApp />
@@ -197,7 +201,7 @@ const Header = ({
 
 export default connect(
   state => ({
-    loggedUser: state.restaurant.loggedUser,
+    restaurant: state.restaurant.loggedUser,
     selectedWBId: state.restaurant.selectedWBId,
     frameIndex: state.ui.frameIndex,
     bookings: state.booking.all,

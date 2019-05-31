@@ -1,4 +1,4 @@
-// @flow
+
 import * as R from 'ramda';
 import { selectedBillItems } from 'ducks/seat/selectors';
 import types from './types';

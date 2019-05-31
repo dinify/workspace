@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -55,7 +54,7 @@ const AppBar = ({
   setAnchor,
   toggleTheme,
   theme,
-  router,
+  history,
 }) => {
   const logoWithText = true;
   const logo = (
@@ -65,7 +64,7 @@ const AppBar = ({
     </Link>
   );
   const iosInstalled = FN.isInstalled() && FN.getPlatform() === 'ios';
-  const root = router.history.location.pathname === '/';
+  const root = history.location.pathname === '/';
 
   return (
     <MuiAppBar
@@ -76,7 +75,7 @@ const AppBar = ({
         {iosInstalled &&
           <IconButton
             style={{marginLeft: -16}}
-            onClick={root ? () => { /* Open drawer */ } : router.history.goBack}>
+            onClick={root ? () => { /* Open drawer */ } : history.goBack}>
             {root ? <Menu /> : <ChevronLeft />}
           </IconButton>
         }

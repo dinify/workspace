@@ -1,4 +1,4 @@
-// @flow
+
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Motion, spring } from 'react-motion';

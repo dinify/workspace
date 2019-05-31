@@ -1,10 +1,13 @@
 import { createEpicMiddleware } from 'redux-observable';
-import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
-import { persistStore, autoRehydrate } from 'redux-persist';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 import { reducer as formReducer } from 'redux-form';
 import { snackbarReducer } from 'material-ui-snackbar-redux';
-import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase';
+import { firebaseReducer } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
@@ -19,15 +22,28 @@ import booking from 'ducks/booking';
 import cart from 'ducks/cart';
 import bill from 'ducks/bill';
 import seat from 'ducks/seat';
+import firebaseConfig from '@dinify/common/firebaseConfig.json';
 import rootEpic from './configureEpics';
 
-import firebaseConfig from '@dinify/common/firebaseConfig.json';
+firebase.initializeApp(firebaseConfig);
+
+const rootPersistConfig = {
+  key: 'root',
+  storage,
+  whitelist: []
+}
+
+const restaurantPersistConfig = {
+  key: 'restaurant',
+  storage,
+  whitelist: []
+}
 
 const commonReducers = {
   auth,
   ui,
   user,
-  restaurant,
+  restaurant: persistReducer(restaurantPersistConfig, restaurant),
   menuCategory,
   menuItem,
   booking,
@@ -38,66 +54,37 @@ const commonReducers = {
   firebase: firebaseReducer,
 };
 
-// react-redux-firebase config
-const rrfConfig = {
-  userProfile: 'profiles',
-  updateProfileOnLogin: true,
-  useFirestoreForProfile: true,
-  profileFactory: (userData, profileData) => {
-    // make sure default profile values are populated
-    return {
-      ...profileData,
-      language: {
-        primary: navigator.language,
-        other: [],
-        ...profileData.language
-      }
-    };
-  }
-}
-firebase.initializeApp(firebaseConfig)
+const epicMiddleware = createEpicMiddleware();
 
-const configureStore = (options, storage) => {
-  const {
-    initialState,
-    platformReducers = {},
-  } = options;
-
-  const reducers = combineReducers({
+export default (history) => {
+  const rootReducer = combineReducers({
     form: formReducer,
+    router: connectRouter(history),
     ...commonReducers,
-    ...platformReducers,
   });
 
-  const epicMiddleware = createEpicMiddleware();
+  const persistedReducers = persistReducer(rootPersistConfig, rootReducer);
 
   const middlewares = [
-    epicMiddleware
+    epicMiddleware,
+    routerMiddleware(history)
   ];
 
   if (process.env.NODE_ENV === 'development') {
     middlewares.push(createLogger({ diff: true, collapsed: true }));
   }
 
-  const createStoreWithFirebase = compose(
-    reactReduxFirebase(firebase, rrfConfig), // firebase instance as first argument
-    applyMiddleware(...middlewares),
-    autoRehydrate(),
-  )(createStore)
+  const store = createStore(
+    persistedReducers,
+    applyMiddleware(...middlewares)
+  );
 
-  const store = createStoreWithFirebase(reducers, initialState);
+  epicMiddleware.run((action$, state$, ...rest) => rootEpic(action$, state$, firebase, ...rest));
 
-  epicMiddleware.run(rootEpic);
+  const persistor = persistStore(store);
 
-  // let the magic happen :–)
-  persistStore(store, { blacklist: ['progress', 'routing', 'notifications', 'firebase', 'auth'], storage }); // .purge() // in case you want to purge the store
-
-  return store;
+  return {
+    store,
+    persistor
+  };
 };
-
-export default configureStore({
-  initialState: {},
-  platformDeps: {},
-  platformEpics: [],
-  platformReducers: {},
-});

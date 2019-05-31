@@ -1,4 +1,4 @@
-// @flow
+
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import API from '@dinify/common/dist/api';
