@@ -1,7 +1,10 @@
 import { Get, Post, PostMultipart } from './Network';
 
-export function GetRestaurants() {
-  return Get({ path: `restaurant/list?with=images,tags,services.image` });
+export function GetRestaurants({ populateWith }) {
+  let populateQuery = '';
+  if (populateWith) populateQuery = `&with=${populateWith}`;
+  else populateQuery = `&with=images,tags,services.image`;
+  return Get({ path: `restaurant/list?limit=100${populateQuery}` });
 }
 
 export function GetRestaurant({ subdomain }) {

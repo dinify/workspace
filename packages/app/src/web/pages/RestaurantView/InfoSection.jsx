@@ -49,7 +49,8 @@ const InfoSection = ({
   classes,
   restaurant
 }) => {
-  const addr = restaurant.address.postal;
+  let addr = false;
+  if (restaurant && restaurant.address) addr = restaurant.address.postal;
   const { t, i18n } = useTranslation();
   const currentWeekDayIndex = new Date().getDay();
   const currentHours = restaurant.open_hours[days[currentWeekDayIndex]];
