@@ -1,7 +1,6 @@
 import React from 'react';
 import { withTranslation } from "react-i18next";
 import { connect } from 'react-redux';
-import AppBar from 'web/components/AppBar';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';

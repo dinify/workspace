@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';

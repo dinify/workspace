@@ -1,12 +1,7 @@
-
-import { Observable } from 'rxjs';
 import { ignoreElements, tap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 
-import types from './types';
-// import { logoutInit } from 'ducks/auth/actions';
-
-const meFetchedEpic = (action$: Observable) =>
+const meFetchedEpic = (action$) =>
   action$.pipe(
     ofType('ACCESSTOKEN_HANDLED'),
     tap(() => {
@@ -14,7 +9,6 @@ const meFetchedEpic = (action$: Observable) =>
     }),
     ignoreElements()
   );
-
 
 export default [
   meFetchedEpic

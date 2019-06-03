@@ -201,7 +201,7 @@ class Eat extends React.Component {
                   }
 
                   const gratitudeAmount = subtotalAmount * (gratitude / 100);
-                  const totalAmount = subtotalAmount + gratitudeAmount;
+                  // const totalAmount = subtotalAmount + gratitudeAmount;
 
                   const cartCount = seat.cart ? seat.cart.count : 0;
                   const billCount = seat.bill ? seat.bill.count : 0;

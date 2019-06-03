@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { openDialog, closeDialog } from 'ducks/ui/actions';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
