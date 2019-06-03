@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { appIsRunning } from 'selectors/restaurant';
 
 import SignIn from '@dinify/common/dist/components/SignIn';
-
 import Dashboard from 'web/pages/Dashboard';
 import Qr from 'web/pages/Qr';
 import RegisterRestaurant from 'web/pages/RegisterRestaurant';
@@ -55,8 +54,6 @@ const App = ({ appLoading, user, history, ongoingRegistration, selectedRestauran
               if (!selectedRestaurant) return <Redirect to="/register" />; 
               return <Dashboard history={history} location={location} />;
             }} />
-
-            
           </Switch>      
         }
       </Content>

@@ -1,44 +1,37 @@
-// @flow
 import { Get, Post, PostMultipart } from './Network';
 
 export function GetRestaurants() {
   return Get({ path: `restaurant/list?with=images,tags,services.image` });
 }
 
-type GetRestaurantById = { id: string, subdomain?: null };
-type GetRestaurantBySubdomain = { id?: null, subdomain: string };
-
-export function GetRestaurant({ subdomain }: GetRestaurantById | GetRestaurantBySubdomain) {
+export function GetRestaurant({ subdomain }) {
   return Get({ path: `restaurant/${subdomain}?with=images,tags,services.image` });
 }
 
-type GetCategoriesArgs = { subdomain: string };
 const populateCategoriesWith = [
   'categories.items.images',
   'categories.items.addons.price',
   'categories.items.ingredients',
   'categories.items.options.choices',
 ].join(',');
-export function GetMenucategories({ subdomain }: GetCategoriesArgs) {
-  return Get({ path: `restaurant/${subdomain}/categories?with=${populateCategoriesWith}&limit=100` });
+export function GetMenucategories({ subdomain, populateWith }) {
+  let populateQuery = '';
+  
+  if (populateWith) populateQuery = `&with=${populateWith}`;
+  else populateQuery = `&with=${populateCategoriesWith}`;
+
+  return Get({ path: `restaurant/${subdomain}/categories?limit=100${populateQuery}` });
 }
 
-type GetMenuitemsArgs = { categoryId: string };
-
-export function GetMenuitems({ categoryId }: GetMenuitemsArgs) {
+export function GetMenuitems({ categoryId }) {
   return Get({ path: `menu/category/${categoryId}/items` });
 }
 
-type GetMenuitemArgs = { id: string };
-
-export function GetMenuitem({ id }: GetMenuitemArgs) {
+export function GetMenuitem({ id }) {
   return Get({ path: `menu/item/${id}?with=images,addons.price,ingredients,options.choices` });
 }
 
-type CheckinWithQr = { qr: string, code?: null };
-type CheckinWithCode = { qr?: null, code: string };
-
-export function Checkin({ qr, code }: CheckinWithQr | CheckinWithCode) {
+export function Checkin({ qr, code }) {
   const payload = {}
   if (qr) payload.qr = qr
   if (code) payload.code = code
@@ -49,15 +42,11 @@ export function GetStatus() {
   return Get({ path: `table/status` });
 }
 
-type FavRestaurantArgs = { id: string, fav: boolean  };
-
-export function FavRestaurant({ id, fav }: FavRestaurantArgs) {
+export function FavRestaurant({ id, fav }) {
   return Post({ path: `restaurant/${id}/favorite` }, { favorite: fav });
 }
 
-type FavMenuitemArgs = { id: string, fav: boolean  };
-
-export function FavMenuitem({ id, fav }: FavMenuitemArgs) {
+export function FavMenuitem({ id, fav }) {
   return Post({ path: `menu/item/${id}/favorite` }, { favorite: fav });
 }
 
@@ -65,14 +54,7 @@ export function GetCart() {
   return Get({ path: `cart?with=addons.price,excludes,choices.difference,menu_item.images` });
 }
 
-type AddToCartArgs = {
-  menuItemId: string,
-  choices: array,
-  excludes?: array,
-  addons?: array,
-};
-
-export function AddToCart({ menuItemId, choices, excludes, addons }: AddToCartArgs) {
+export function AddToCart({ menuItemId, choices, excludes, addons }) {
   return Post({ path: `menu/item/${menuItemId}/cart/add` },
     {
     	choices, excludes, addons
@@ -80,10 +62,7 @@ export function AddToCart({ menuItemId, choices, excludes, addons }: AddToCartAr
   );
 }
 
-type RmFromCartArgs = {
-  orderItemId: string,
-};
-export function RemoveOrderitem({ orderItemId }: RmFromCartArgs) {
+export function RemoveOrderitem({ orderItemId }) {
   return Post({ path: `order/item/${orderItemId}/delete` });
 }
 
@@ -103,11 +82,7 @@ export function GetSeats() {
   return Get({ path: 'seat/list?with=addons,choices,excludes,menu_item.images'})
 }
 
-type SplitMultipleArgs = {
-  orderItems: array,
-  withIds: array
-};
-export function SplitMultiple({ orderItems, withIds }: SplitMultipleArgs) {
+export function SplitMultiple({ orderItems, withIds }) {
   return Post({ path: `bill/split` }, { order_items: orderItems, with: withIds });
 }
 

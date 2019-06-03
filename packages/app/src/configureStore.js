@@ -39,13 +39,25 @@ const restaurantPersistConfig = {
   whitelist: []
 }
 
+const menuCategoryPersistConfig = {
+  key: 'menuCategory',
+  storage,
+  whitelist: ['all']
+}
+
+const menuItemPersistConfig = {
+  key: 'menuItem',
+  storage,
+  whitelist: ['all']
+}
+
 const commonReducers = {
   auth,
   ui,
   user,
   restaurant: persistReducer(restaurantPersistConfig, restaurant),
-  menuCategory,
-  menuItem,
+  menuCategory: persistReducer(menuCategoryPersistConfig, menuCategory),
+  menuItem: persistReducer(menuItemPersistConfig, menuItem),
   booking,
   cart,
   bill,
