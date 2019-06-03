@@ -21,7 +21,8 @@ export default function reducer(state = initialState, action) {
       // don't touch categories of other restaurants, redefine all categories of specified restaurant
       const currentList = FN.MapToList(state.all);
       const grouped = R.groupBy((c) => c.subdomain === subdomain ? 'updating': 'otherRestaurants')(currentList);
-      const updatedCategories = FN.ListToMap([...newCategories, ...grouped.otherRestaurants]);
+      const other = grouped.otherRestaurants || [];
+      const updatedCategories = FN.ListToMap([...newCategories, ...other]);
 
       return R.assoc('all', updatedCategories)(state);
     }
