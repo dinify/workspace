@@ -278,7 +278,12 @@ class LandingPage extends React.Component {
               />
               <SectionMultilingual />
               <SectionProduct />
-              <SectionMailingList />
+
+              { /*
+                TODO: uncomment this
+                <SectionMailingList />
+              */ }
+
               <SectionFAQ />
             </div>
             <Footer ref={node => { this.footer = node; }} style={{
