@@ -40,8 +40,8 @@
     },
     "scan": {
       "title": "Jak mám naskenovat QR kód?",
-      "start": "Pokud máte iPhone, stačí jen spustit fotoaparát a namířit kameru na kód. Pokud používate Android, můžete použít aplikaci Google Lens nebo jinou apliakci pro skenování QR kódů. Nebo můžete použít skener.",
-      "checkinPage": "zde, v naší apliakci",
+      "start": "Pokud máte iPhone, stačí jen spustit fotoaparát a namířit kameru na kód. Pokud používate Android, můžete použít aplikaci Google Lens nebo jinou apliakci pro skenování QR kódů. Nebo můžete použít skener ",
+      "checkinPage": "zde, v naší aplikaci",
       "end": "."
     },
     "useful": {

@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import i18n from '@dinify/common/dist/i18n';
-import { getCookie } from '@dinify/common/dist/lib/FN';
+import { getCookie, setCookie } from '@dinify/common/dist/lib/FN';
 
 // import ReactPixel from "react-facebook-pixel";
 
@@ -44,16 +44,17 @@ import getTheme from "@dinify/common/dist/theme";
 
 const lightTheme = getTheme({ type: "light" });
 
-let language = { primary: navigator.language, other: [] };
+let language = navigator.language;
 const langCookie = getCookie('language');
-if (langCookie) language = JSON.parse(langCookie);
+if (langCookie) {
+  language = langCookie;
+} else {
+  setCookie('language', language, 30);
+}
 
-console.log(language)
-
-i18n({
+window.i18nInstance = i18n({
   namespace: 'landing',
-  lang: language.primary,
-  fallback: language.other
+  lang: language,
 });
 
 ReactDOM.render(
