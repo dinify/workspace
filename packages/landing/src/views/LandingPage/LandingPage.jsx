@@ -72,6 +72,20 @@ class LandingPage extends React.Component {
     const { classes, t, ...rest } = this.props;
     const { headerScrolled, parallaxContainerState, scroll } = this.state;
     let selectedLanguage = getCookie('language');
+    const menuItems = [
+      {
+        name: t('features'),
+        anchor: 'features',
+      },
+      {
+        name: t('sectionProduct.header'),
+        anchor: 'howitworks',
+      },
+      {
+        name: 'FAQ',
+        anchor: 'faq',
+      },
+    ];
     return (
       <div>
         <div style={{
@@ -86,6 +100,7 @@ class LandingPage extends React.Component {
         <Header
           scrolled={headerScrolled}
           scrollingElement={parallaxContainerState}
+          menuItems={menuItems}
           color="transparent"
           brand={props => (
             <LogoText className={classes.contrastText} {...props} />

@@ -51,121 +51,30 @@ import headerLinksStyle from "./headerLinksStyle.jsx";
 let currentAnimFrame = null;
 
 function HeaderLinks({ ...props }) {
-  const { classes, width, dropdownHoverColor, scrollingElement, onScrollFrame } = props;
+  const { classes, width, dropdownHoverColor, scrollingElement, onScrollFrame, menuItems } = props;
 
-  const easeInOutQuad = (t, b, c, d) => {
-    t /= d / 2;
-    if (t < 1) return c / 2 * t * t + b;
-    t--;
-    return -c / 2 * (t * (t - 2) - 1) + b;
-  };
-
-  const smoothScroll = (e, target, offs = 0) => {
-    var targetScroll = document.getElementById(target);
-    var to = targetScroll.offsetTop + window.innerHeight - 56 + offs;
-    if (scrollingElement.scrollTo !== undefined && 'scrollBehavior' in document.documentElement.style) {
-      e.preventDefault();
-      scrollingElement.scrollTo({
-        top: to,
-        behavior: 'smooth'
-      });
-    }
-    else {
-      var isMobile = navigator.userAgent.match(
-        /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
-      );
-      if (!isMobile) {
-        e.preventDefault();
-        const pixels = Math.abs(scrollingElement.scrollTop - to);
-        // copied from material-ui/src/styles/transitions.js theme.transitions.getAutoHeightDuration
-        const getAutoHeightDuration = height => {
-          if (!height) {
-            return 0;
-          }
-
-          const constant = height / 36;
-
-          // https://www.wolframalpha.com/input/?i=(4+%2B+15+*+(x+%2F+36+)+**+0.25+%2B+(x+%2F+36)+%2F+5)+*+10
-          return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
-        }
-        if (pixels > 0) {
-          const duration = getAutoHeightDuration(pixels);
-          scrollGo(scrollingElement, to, duration);
-        }
-      }
-      else window.location.hash = '#' + target
-    }
-  };
-
-  const scrollGo = (element, to, duration) => {
-    if (currentAnimFrame !== null) {
-      cancelAnimationFrame(currentAnimFrame);
-    }
-    let start = element.scrollTop,
-      change = to - start,
-      startTime = new Date().getTime(),
-      delta = 0,
-      currentTime = new Date().getTime();
-
-    const animateScroll = () => {
-      currentTime = new Date().getTime();
-      delta = currentTime - startTime;
-      let val = easeInOutQuad(delta, 0, 1, duration);
-      const offset = val * change;
-      // element.scrollTop = val;
-      if (onScrollFrame) onScrollFrame("transform", offset);
-      if (delta < duration) {
-        currentAnimFrame = requestAnimationFrame(animateScroll);
-      }
-      else {
-        if (onScrollFrame) onScrollFrame("scroll", to);
-        currentAnimFrame = null;
-      }
-    };
-    animateScroll();
-  };
   var onClickSections = {};
-
-
 
   if (isWidthDown('sm', width)) {
     return (
       <List style={{ marginTop: 4 }}>
-        <ListItem
-          button
-          style={{ borderRadius: 8 }}
-          href="#features"
-          onClick={(e) => {smoothScroll(e, 'features', -20)}}
-          disableRipple
-        >
-          <Typography className={classes.button2}>
-            Features
-          </Typography>
-        </ListItem>
-        <ListItem
-          button
-          style={{ borderRadius: 8 }}
-          href="#steps"
-          onClick={(e) => {smoothScroll(e, 'steps')}}
-          disableRipple
-        >
-          <Typography className={classes.button2}>
-            How it works
-          </Typography>
-        </ListItem>
-        <ListItem
-          button
-          style={{ borderRadius: 8 }}
-          href="#mailing-list"
-          onClick={(e) => {smoothScroll(e, 'mailing-list')}}
-          disableRipple
-        >
-          <Typography className={classes.button2}>
-            Contact us
-          </Typography>
-        </ListItem>
+
+        {menuItems.map((item, i) => 
+          <ListItem
+            button
+            style={{ borderRadius: 8 }}
+            href={'#' + item.anchor}
+            disableRipple
+          >
+            <Typography className={classes.button2}>
+              {item.name}
+            </Typography>
+          </ListItem>          
+        )}
+
         <Divider color="textSecondary" style={{ marginTop: 16, marginBottom: 16 }} />
-        <ListItem
+
+        {/*<ListItem
           button
           style={{ borderRadius: 8 }}
           onClick={() => {window.open("https://blog.dinify.app", "_blank")}}
@@ -175,7 +84,8 @@ function HeaderLinks({ ...props }) {
           <Typography className={classes.button2}>
             Blog
           </Typography>
-        </ListItem>
+        </ListItem>*/}
+
         <ListItem
           button
           style={{ borderRadius: 8 }}
@@ -192,37 +102,24 @@ function HeaderLinks({ ...props }) {
   }
   return (
     <List className={classes.list}>
-      <ListItem className={classes.listItem}>
-        <Button
-          className={classes.button2}
-          href="#features"
-          onClick={(e) => {smoothScroll(e, 'features', -20)}}
-          disableRipple
+
+      {menuItems.map((item, i) => 
+        <ListItem
+          className={classes.listItem}
         >
-          Features
-        </Button>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Button
-          className={classes.button2}
-          href="#steps"
-          onClick={(e) => {smoothScroll(e, 'steps')}}
-          disableRipple
-        >
-          How it works
-        </Button>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Button
-          className={classes.button2}
-          href="#mailing-list"
-          onClick={(e) => {smoothScroll(e, 'mailing-list')}}
-          disableRipple
-        >
-          Contact us
-        </Button>
-      </ListItem>
-      <ListItem className={classes.listItem} style={{ paddingLeft: 8, paddingRight: 8, marginRight: -16 }}>
+          <Button
+            className={classes.button2}
+            href={'#' + item.anchor}
+            disableRipple
+          >
+            {item.name}
+          </Button>
+        </ListItem>          
+      )}
+
+      {/*
+
+            <ListItem className={classes.listItem} style={{ paddingLeft: 8, paddingRight: 8, marginRight: -16 }}>
         <Typography color="textSecondary">•</Typography>
       </ListItem>
       <ListItem className={classes.listItem}>
@@ -236,7 +133,10 @@ function HeaderLinks({ ...props }) {
           Blog
           <OpenInNew style={{ marginLeft: 4, fontSize: 16 }}/>
         </Button>
-      </ListItem>
+      </ListItem>      
+      */}
+
+
       <ListItem className={classes.listItem}>
         <Button
           variant="outlined"

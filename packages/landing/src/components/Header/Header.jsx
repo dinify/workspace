@@ -68,7 +68,8 @@ class Header extends React.Component {
       scrollingElement,
       onScrollFrame,
       children,
-      scrolled: scrolledProp
+      scrolled: scrolledProp,
+      menuItems = []
     } = this.props;
     const completeAppBar = (scrolled, opacity) => {
       const colorName = scrolled ? changeColorOnScroll.color : color;
@@ -118,7 +119,7 @@ class Header extends React.Component {
             <Hidden smDown implementation="css" className={classes.hidden}>
               <div className={classes.collapse}>
                 {children}
-                <HeaderLinks scrollingElement={scrollingElement} onScrollFrame={onScrollFrame} />
+                <HeaderLinks menuItems={menuItems} scrollingElement={scrollingElement} onScrollFrame={onScrollFrame} />
               </div>
             </Hidden>
             <Hidden mdUp>

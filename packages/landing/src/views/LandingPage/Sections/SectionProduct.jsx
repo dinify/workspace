@@ -44,7 +44,7 @@ const SectionProduct = ({
     ];
 
     return (
-      <div id="steps" className={classNames(classes.themedBg, classes.wrapper)}>
+      <div id="howitworks" className={classNames(classes.themedBg, classes.wrapper)}>
         <div
           className={classNames(
             classes.section,
