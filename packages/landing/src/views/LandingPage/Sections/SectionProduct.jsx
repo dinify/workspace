@@ -22,27 +22,27 @@ import InfoArea from "components/InfoArea/InfoArea.jsx";
 
 import productStyle from "./productStyle.jsx";
 
-const steps = [
-  {
-    icon: <CenterFocusStrong />,
-    title: "Scan code",
-    description: "Get started by scanning the QR code in a restaurant near you to check in and open their menu."
-  },
-  {
-    icon: <RestaurantMenu />,
-    title: "Browse and order",
-    description: "To avoid bad surprises, you can always read the menu in your own language. Customize your order to your liking."
-  },
-  {
-    icon: <LocalCafe />,
-    title: "Streamline",
-    description: "Control your experience, forget interruptions. No matter what you need, it's just one tap away."
-  }
-];
+const SectionProduct = ({
+  classes, t
+}) => {
+    const steps = [
+      {
+        icon: <CenterFocusStrong />,
+        title: t('sectionProduct.step1.title'),
+        description: t('sectionProduct.step1.description')
+      },
+      {
+        icon: <RestaurantMenu />,
+        title: t('sectionProduct.step2.title'),
+        description: t('sectionProduct.step2.description')
+      },
+      {
+        icon: <LocalCafe />,
+        title: t('sectionProduct.step3.title'),
+        description: t('sectionProduct.step3.description')
+      }
+    ];
 
-class SectionProduct extends React.Component {
-  render() {
-    const { classes } = this.props;
     return (
       <div id="steps" className={classNames(classes.themedBg, classes.wrapper)}>
         <div
@@ -55,9 +55,9 @@ class SectionProduct extends React.Component {
           <div>
             <GridContainer justify="center">
               <GridItem xs={12} sm={12} md={8}>
-                <Typography variant="h3">How it works</Typography>
+                <Typography variant="h3">{t('sectionProduct.header')}</Typography>
                 <Typography variant="subtitle1" style={{ marginTop: 8, marginBottom: 56 }}>
-                  We simplified the process to so it's easy to get started. You do not need to download or install anything on your phone.
+                  {t('sectionProduct.subtitle')}
                 </Typography>
               </GridItem>
             </GridContainer>
@@ -97,7 +97,7 @@ class SectionProduct extends React.Component {
         </div>
       </div>
     );
-  }
+
 }
 
 export default withStyles(productStyle)(SectionProduct);

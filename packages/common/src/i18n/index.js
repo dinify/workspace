@@ -40,7 +40,7 @@ export default ({namespace, lang, fallback}) => {
   const options = {
     lng: lang, // the language to use for translations
     resources: locales,
-    ns: [ 'common', 'app', 'dashboard' ], // array of namespaces to load
+    ns: [ 'common', 'app', 'dashboard', 'landing' ], // array of namespaces to load
     defaultNS: namespace || 'common',
     fallbackNS: 'common',
     fallbackLng: defaultFallback,

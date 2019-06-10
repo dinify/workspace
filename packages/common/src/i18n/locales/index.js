@@ -39,6 +39,7 @@ import hrCommon from './hr/common.json';
 import csApp from './cs/app.json';
 import csCommon from './cs/common.json';
 import csDashboard from './cs/dashboard.json';
+import csLanding from './cs/landing.json';
 import daApp from './da/app.json';
 import daCommon from './da/common.json';
 import nlApp from './nl/app.json';
@@ -46,6 +47,7 @@ import nlCommon from './nl/common.json';
 import enApp from './en/app.json';
 import enCommon from './en/common.json';
 import enDashboard from './en/dashboard.json';
+import enLanding from './en/landing.json';
 import eoApp from './eo/app.json';
 import eoCommon from './eo/common.json';
 import etApp from './et/app.json';
@@ -285,7 +287,8 @@ export default {
   'cs': {
     app: csApp,
     common: csCommon,
-    dashboard: csDashboard
+    dashboard: csDashboard,
+    landing: csLanding
   },
   'da': {
     app: daApp,
@@ -298,7 +301,8 @@ export default {
   'en': {
     app: enApp,
     common: enCommon,
-    dashboard: enDashboard
+    dashboard: enDashboard,
+    landing: enLanding
   },
   'eo': {
     app: eoApp,

@@ -14,7 +14,6 @@ const rootEpic = (action$, state$, ...rest) => {
   const epic = combineEpics(
     ...auth,
     ...crud,
-
     ...restaurantEpics,
     ...bookingEpics,
     ...callEpics,

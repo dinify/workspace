@@ -1,0 +1,60 @@
+{
+  "hero": {
+    "header": "Order at restaurants in your own language, anywhere.",
+    "subtitle": "Our mission is to connect travelers with local restaurants by breaking language barriers. No matter where you go or what language you speak, explore new food experiences and cuisines while on the move.",
+    "cta": "Explore"
+  },
+  "sectionMultilingual": {
+    "header": "Digital menu in 77 languages",
+    "subtitle": "We strive to support as many languages as we can, so everybody can have a seamless culinary experience. Understand how much you spend by showing prices in your local currency, along with the original.",
+    "note": "Note: Not all languages are listed here."
+  },
+  "sectionProduct": {
+    "header": "How it works",
+    "subtitle": "We simplified the process to so it's easy to get started. You do not need to download or install anything on your phone.",
+    "step1": {
+      "title": "Scan code",
+      "description": "Get started by scanning the QR code in a restaurant near you to check in and open their menu."
+    },
+    "step2": {
+      "title": "Browse and order",
+      "description": "To avoid bad surprises, you can always read the menu in your own language. Customize your order to your liking."
+    },
+    "step3": {
+      "title": "Streamline",
+      "description": "Control your experience, forget interruptions. No matter what you need, it's just one tap away."
+    }
+  },
+  "sectionFAQ": {
+    "download": {
+      "title": "Where can I download the app?",
+      "content": "You don't have to download or install anything. Our app runs in your browser with a native user experience. You can add the app icon to your homescreen to use it offline."
+    },
+    "started": {
+      "title": "How do I get started?",
+      "content": "Every table in our partnering venues has a unique QR code for you to scan and open the menu in the language set default in your account settings. The selected menu is always available in English, but some languages may not be."
+    },
+    "internet": {
+      "title": "Do I need an internet connection?",
+      "content": "Only if the app icon is not added to your homescreen. To get connected in case you don’t have mobile data, simply scan the WiFi QR code on the table you’re seated at."
+    },
+    "scan": {
+      "title": "How do I scan the QR code?",
+      "start": "On iOS, the camera app does it out of the box. On Android, the Google Lens app or any other scanner app will do. Or you can simply visit the ",
+      "checkinPage": "checkin page",
+      "end": " to scan the code from your browser."
+    },
+    "useful": {
+      "title": "Why is this useful exactly?",
+      "content": "The whole idea behind Dinify is that no one should have trouble exploring new food experiences while they travel overseas simply because they cannot speak either the local language or English. You can read and order from local restaurant menus in your preferred language anywhere in the world. Enjoy a seamless dining experience without having to say a word in foreign languages."
+    },
+    "free": {
+      "title": "Is this free?",
+      "content": "Yes, everything is free while we are in beta. We are making sure everything fits together, and encourage you to experience the whole new way of dining in restaurants abroad."
+    },
+    "available": {
+      "title": "What locations are available?",
+      "content": "We are a startup based in Prague, Czech Republic. We are currently only available in selected restaurants in Prague but we are expanding fast. Please make sure to keep in touch with us for updates."
+    }
+  }
+}

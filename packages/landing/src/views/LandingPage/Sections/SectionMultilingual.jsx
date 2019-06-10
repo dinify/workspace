@@ -116,7 +116,7 @@ class SectionProduct extends React.Component {
     // }
   }
   render() {
-    const { classes, width } = this.props;
+    const { classes, width, t } = this.props;
     const { selectedIndex } = this.state;
 
     const selected = countryCodes[selectedIndex];
@@ -133,15 +133,12 @@ class SectionProduct extends React.Component {
         <div className={classes.container}>
           <GridContainer justify="center">
             <GridItem xs={12} sm={8} md={8}>
-              <Typography variant="h4">Digital menu in 77 languages</Typography>
+              <Typography variant="h4">{t('sectionMultilingual.header')}</Typography>
               <Typography
                 variant="subtitle1"
                 style={{ marginTop: 8, marginBottom: 56 }}
               >
-                We strive to support as many languages as we can, so everybody
-                can have a seamless culinary experience. Understand how much you
-                spend by showing prices in your local currency, along with the
-                original.
+                {t('sectionMultilingual.subtitle')}
               </Typography>
             </GridItem>
           </GridContainer>
@@ -169,10 +166,10 @@ class SectionProduct extends React.Component {
               variant="caption"
               color="textSecondary"
             >
-              <i>Note:</i> Not all languages are listed here.
-              <a href="#" style={{ marginLeft: 8 }}>
+              {t('sectionMultilingual.note')}
+              {/*<a href="#" style={{ marginLeft: 8 }}>
                 Learn More
-              </a>
+                    </a>*/}
             </Typography>
           </GridItem>
           <GridItem md={5} className={classes.mlAuto}>

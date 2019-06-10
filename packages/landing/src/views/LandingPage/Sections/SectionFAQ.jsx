@@ -13,7 +13,7 @@ import productStyle from "./productStyle.jsx";
 
 class SectionProduct extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, t } = this.props;
     return (
       <div
         id="faq"
@@ -29,50 +29,44 @@ class SectionProduct extends React.Component {
               active={0}
               collapses={[
                 {
-                  title: "Where can I download the app?",
-                  content: "You don't have to download or install anything. Our app runs in your browser with a native user experience. You can add the app icon to your homescreen to use it offline."
+                  title: t('sectionFAQ.download.title'),
+                  content: t('sectionFAQ.download.content')
                 },
                 {
-                  title: "How do I get started?",
-                  content: "Every table in our partnering venues has a unique QR code for you to scan and open the menu in the language set default in your account settings. The selected menu is always available in English, but some languages may not be."
+                  title: t('sectionFAQ.started.title'),
+                  content: t('sectionFAQ.started.content')
                 },
                 {
-                  title: "Do I need an internet connection?",
-                  content: "Only if the app icon is not added to your homescreen. To get connected in case you don’t have mobile data, simply scan the WiFi QR code on the table you’re seated at."
+                  title: t('sectionFAQ.internet.title'),
+                  content: t('sectionFAQ.internet.content')
                 },
                 {
-                  title: "How do I scan the QR code?",
+                  title: t('sectionFAQ.scan.title'),
                   content: (
                     <span>
-                      {
-                        "On iOS, the camera app does it out of the box. On Android, the Google Lens app or any other scanner app will do. Or you can simply visit the "
-                      }
+                      {t('sectionFAQ.scan.start')}
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
                         href="https://m.dinify.app/checkin"
                       >
-                        checkin page
+                        {t('sectionFAQ.scan.checkinPage')}
                       </a>
-                      {" to scan the code from your browser."}
+                      {t('sectionFAQ.scan.end')}
                     </span>
                   )
                 },
                 {
-                  title: "Why is this useful exactly?",
-                  content: `The whole idea behind Dinify is that no one should have trouble exploring new food experiences
-                  while they travel overseas simply because they cannot speak either the local language or English. You can
-                  read and order from local restaurant menus in your preferred language anywhere in the world.
-                  Enjoy a seamless dining experience without having to say a word in foreign languages.`
+                  title: t('sectionFAQ.useful.title'),
+                  content: t('sectionFAQ.useful.content')
                 },
                 {
-                  title: "Is this free?",
-                  content: "Yes, everything is free while we are in beta. We are making sure everything fits together, and encourage you to experience the whole new way of dining in restaurants abroad."
+                  title: t('sectionFAQ.free.title'),
+                  content: t('sectionFAQ.free.content')
                 },
                 {
-                  title: "What locations are available?",
-                  content: `We are a startup based in Prague, Czech Republic. We are currently only available in selected restaurants in Prague
-                  but we are expanding fast. Please make sure to keep in touch with us for updates.`
+                  title: t('sectionFAQ.available.title'),
+                  content: t('sectionFAQ.available.content')
                 },
 
               ]}

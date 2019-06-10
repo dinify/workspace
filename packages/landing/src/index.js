@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 // import { createHashHistory } from "history";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
+import i18n from '@dinify/common/dist/i18n';
+import { getCookie } from '@dinify/common/dist/lib/FN';
 
 // import ReactPixel from "react-facebook-pixel";
 
@@ -41,6 +43,18 @@ import LandingPage from "views/LandingPage/LandingPage.jsx";
 import getTheme from "@dinify/common/dist/theme";
 
 const lightTheme = getTheme({ type: "light" });
+
+let language = { primary: navigator.language, other: [] };
+const langCookie = getCookie('language');
+if (langCookie) language = JSON.parse(langCookie);
+
+console.log(language)
+
+i18n({
+  namespace: 'landing',
+  lang: language.primary,
+  fallback: language.other
+});
 
 ReactDOM.render(
   <MuiThemeProvider theme={lightTheme}>
