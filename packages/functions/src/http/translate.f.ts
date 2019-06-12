@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import { Translate } from "@google-cloud/translate";
-import Restaurants from "../models/Restaurants";
+import Restaurants from "../schema/Restaurants";
 
 const translateClient = new Translate({ projectId: process.env.GCLOUD_PROJECT });
 

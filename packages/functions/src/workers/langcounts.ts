@@ -1,6 +1,6 @@
 import * as taAPI from '../clients/ta';
-import Restaurants from '../models/Restaurants';
-import Reviews from '../models/Reviews';
+import Restaurants from '../schema/Restaurants';
+import Reviews from '../schema/Reviews';
 import async from 'async';
 import eachOf from 'async/eachOf';
 import _ from 'lodash';

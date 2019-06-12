@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import Reviews from "../models/Reviews";
+import Reviews from "../schema/Reviews";
 
 const cors = require('cors')({
   origin: true,

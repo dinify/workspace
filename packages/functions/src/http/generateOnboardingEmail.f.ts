@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import Restaurants from "../models/Restaurants";
+import Restaurants from "../schema/Restaurants";
 import * as path from "path";
 import emojis from "../data/emojis";
 import likelySubtags from "../data/likelySubtags";

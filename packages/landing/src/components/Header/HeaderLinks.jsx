@@ -51,7 +51,7 @@ import headerLinksStyle from "./headerLinksStyle.jsx";
 let currentAnimFrame = null;
 
 function HeaderLinks({ ...props }) {
-  const { classes, width, dropdownHoverColor, scrollingElement, onScrollFrame, menuItems } = props;
+  const { classes, width, dropdownHoverColor, scrollingElement, onScrollFrame, menuItems = [] } = props;
 
   var onClickSections = {};
 

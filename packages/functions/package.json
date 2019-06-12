@@ -33,6 +33,7 @@
     "mongoose": "^5.4.5",
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
+    "sequelize": "^5.8.9",
     "uid-generator": "^1.0.0"
   },
   "workspaces": {

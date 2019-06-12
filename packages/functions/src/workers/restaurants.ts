@@ -1,5 +1,5 @@
 import * as taAPI from '../clients/ta';
-import Restaurants from '../models/Restaurants';
+import Restaurants from '../schema/Restaurants';
 import async from 'async';
 
 

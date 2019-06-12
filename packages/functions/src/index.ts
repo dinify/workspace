@@ -5,6 +5,8 @@ import * as glob from "glob";
 // Standard commonJS imports required
 require('dotenv').config();
 require('./mongo.config');
+require('./mysql.config');
+
 const sendgrid = require("@sendgrid/mail");
 
 admin.initializeApp(functions.config().firebase);

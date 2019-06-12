@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import Restaurants from "../models/Restaurants";
+import Restaurants from "../schema/Restaurants";
 
 const cors = require('cors')({
   origin: true,

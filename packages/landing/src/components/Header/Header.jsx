@@ -153,7 +153,11 @@ class Header extends React.Component {
                 className={classes.appResponsive}
               >
                 {children}
-                <HeaderLinks scrollingElement={scrollingElement} onScrollFrame={onScrollFrame} />
+                <HeaderLinks
+                  menuItems={menuItems}
+                  scrollingElement={scrollingElement}
+                  onScrollFrame={onScrollFrame}
+                />
               </div>
             </Drawer>
           </Hidden>
