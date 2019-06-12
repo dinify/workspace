@@ -22,7 +22,8 @@ import {
   prefillEmail,
   prefillRestaurantName,
   setOngoingRegistration,
-  selectRestaurant
+  selectRestaurant,
+  setOnboardingToken
 } from 'ducks/restaurant/actions';
 
 const styles = {
@@ -117,8 +118,9 @@ class RegisterRestaurant extends React.Component {
     };
     if (auth.isEmpty) setOngoingRegistration(true);
     else setOngoingRegistration(false);
-    if (params.email) prefillEmail({ email: params.email })
-    if (params.restaurantName) prefillRestaurantName({ restaurantName: params.restaurantName })
+    if (params.t) setOnboardingToken({ token: params.t });
+    if (params.email) prefillEmail({ email: params.email });
+    if (params.restaurantName) prefillRestaurantName({ restaurantName: params.restaurantName });
     if (prefill.restaurantName) {
       initialValues.restaurantName = prefill.restaurantName;
     }
@@ -196,7 +198,8 @@ const enhance = compose(
     prefillEmail,
     prefillRestaurantName,
     setOngoingRegistration,
-    selectRestaurant
+    selectRestaurant,
+    setOnboardingToken
   })
 )
 

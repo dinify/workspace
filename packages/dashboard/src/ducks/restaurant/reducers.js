@@ -25,6 +25,7 @@ const initialState = {
     email: null,
     restaurantName: null
   },
+  onboardingToken: null,
   ongoingRegistration: false,
   selectedRestaurant: null,
   managedRestaurants: [],
@@ -36,11 +37,14 @@ const initialState = {
 };
 
 export default function reducer(state: State = initialState, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case 'BOOTSTRAP':
       return R.assoc('appRun', true)(state);
+    case 'SET_ONBOARDINGTOKEN':
+      return R.assoc('onboardingToken', payload.token)(state);
     case 'SELECT_LANGUAGE': {
-      const l = action.payload.language;
+      const l = payload.language;
       if (state.preferredLanguages.includes(l)) {
         return R.assoc(
           'preferredLanguages',
@@ -50,31 +54,31 @@ export default function reducer(state: State = initialState, action) {
       return R.assoc('preferredLanguages', [...state.preferredLanguages, l])(state);
     }
     case 'PREFILL_EMAIL':
-      return R.assocPath(['prefill', 'email'], action.payload.email)(
+      return R.assocPath(['prefill', 'email'], payload.email)(
         state,
       );
     case 'SELECT_RESTAURANT':
-      return R.assoc('selectedRestaurant', action.payload.id)(state);
+      return R.assoc('selectedRestaurant', payload.id)(state);
     case 'FETCH_LANGUAGES_DONE':
-      return R.assoc('languages', action.payload.res)(state);
+      return R.assoc('languages', payload.res)(state);
     case 'FETCH_MANAGEDRESTAURANTS_DONE':
-      return R.assoc('managedRestaurants', action.payload.res)(state);
+      return R.assoc('managedRestaurants', payload.res)(state);
     case 'PREFILL_RESTAURANTNAME':
-      return R.assocPath(['prefill', 'restaurantName'], action.payload.restaurantName)(
+      return R.assocPath(['prefill', 'restaurantName'], payload.restaurantName)(
         state,
       );
     case 'SET_ONGOINGREGISTRATION':
-      return R.assoc('ongoingRegistration', !!action.payload)(state);
+      return R.assoc('ongoingRegistration', !!payload)(state);
     case 'FETCH_MENULANGUAGES_DONE': {
-      return R.assoc('menuLanguages', action.payload.res)(state);
+      return R.assoc('menuLanguages', payload.res)(state);
     }
     case 'CREATE_MENULANGUAGE_DONE': {
-      const language = action.payload.prePayload.language;
+      const language = payload.prePayload.language;
       const menuLanguage = { language };
       return R.assoc('menuLanguages', [...state.menuLanguages, menuLanguage])(state);
     }
     case 'FETCH_LOGGEDRESTAURANT_DONE': {
-      const restaurant = action.payload.res;
+      const restaurant = payload.res;
       let defaultLanguage = 'en';
       const menuLanguages = restaurant.menu_languages || {};
       const defaultMenuLanguages = MapToList(menuLanguages).filter(lang => lang.default);
@@ -87,40 +91,40 @@ export default function reducer(state: State = initialState, action) {
       return R.dissoc('loggedRestaurant')(state);
     }
     case 'UPDATE_NAME_INIT':
-      return R.assocPath(['loggedRestaurant', 'name'], action.payload.name)(
+      return R.assocPath(['loggedRestaurant', 'name'], payload.name)(
         state,
       );
     case 'UPDATE_IMAGE_DONE':
       return R.assocPath(
         ['loggedRestaurant', 'uploadedImage'],
-        action.payload.res.url,
+        payload.res.url,
       )(state);
     case 'UPDATE_CATEGORY_INIT':
       return R.assocPath(
         ['loggedRestaurant', 'category'],
-        action.payload.category,
+        payload.category,
       )(state);
     case 'UPDATE_LOCATION_INIT': {
       state = R.assocPath(
         ['loggedRestaurant', 'longitude'],
-        Number(action.payload.longitude),
+        Number(payload.longitude),
       )(state);
       return R.assocPath(
         ['loggedRestaurant', 'latitude'],
-        Number(action.payload.latitude),
+        Number(payload.latitude),
       )(state);
     }
     case 'UPDATE_BANK_INIT': {
-      return R.assocPath(['loggedRestaurant', 'bank'], action.payload)(state);
+      return R.assocPath(['loggedRestaurant', 'bank'], payload)(state);
     }
     case 'GET_BILLS_DONE':
-      return R.assoc('bills', action.payload)(state);
+      return R.assoc('bills', payload)(state);
     case 'SELECT_CATEGORY':
-      return R.assoc('selectedCategoryId', action.payload.categoryId)(state);
+      return R.assoc('selectedCategoryId', payload.categoryId)(state);
     case 'SELECT_FOOD':
-      return R.assoc('selectedFoodId', action.payload.foodId)(state);
+      return R.assoc('selectedFoodId', payload.foodId)(state);
     case 'CREATE_WAITERBOARD_DONE': {
-      const newWaiterboard = action.payload.res;
+      const newWaiterboard = payload.res;
       return R.assocPath(
         ['loggedRestaurant', 'waiterboards', newWaiterboard.id],
         newWaiterboard,
@@ -130,12 +134,12 @@ export default function reducer(state: State = initialState, action) {
       return R.dissocPath([
         'loggedRestaurant',
         'waiterboards',
-        action.payload.id,
+        payload.id,
       ])(state);
     }
     case 'CREATE_TABLE_DONE': {
-      const newTable = action.payload.res;
-      const waiterboardId = action.payload.prePayload.waiterboardId;
+      const newTable = payload.res;
+      const waiterboardId = payload.prePayload.waiterboardId;
       return R.assocPath(
         [
           'loggedRestaurant',
@@ -153,13 +157,13 @@ export default function reducer(state: State = initialState, action) {
       return R.dissocPath([
         'loggedRestaurant',
         'waiterboards',
-        action.payload.waiterboardId,
+        payload.waiterboardId,
         'tables',
-        action.payload.id,
+        payload.id,
       ])(state);
     }
     case 'UPDATE_TABLE_INIT': {
-      const prePayload = action.payload;
+      const prePayload = payload;
       state = R.assocPath(
         [
           'loggedRestaurant',
@@ -186,17 +190,17 @@ export default function reducer(state: State = initialState, action) {
     case 'ADD_DAY_TO_BUSINESSHOURS': {
       return R.assocPath(
         ['loggedRestaurant', 'open_hours'],
-        R.assoc(action.payload.dayName, [['10:00', '22:00']])(
+        R.assoc(payload.dayName, [['10:00', '22:00']])(
           state.loggedRestaurant.open_hours,
         ),
       )(state);
     }
     case 'ADD_RANGE_TO_BUSINESSHOURS': {
       return R.assocPath(
-        ['loggedRestaurant', 'open_hours', action.payload.dayName],
+        ['loggedRestaurant', 'open_hours', payload.dayName],
         [
-          ...state.loggedRestaurant.open_hours[action.payload.dayName],
-          [action.payload.from, '23:59'],
+          ...state.loggedRestaurant.open_hours[payload.dayName],
+          [payload.from, '23:59'],
         ],
       )(state);
     }

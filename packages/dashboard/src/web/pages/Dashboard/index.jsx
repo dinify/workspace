@@ -69,8 +69,6 @@ const Content = styled.div`
   padding: 10px 35px 0 35px;
 `;
 
-
-
 const theme = createMuiTheme({
   palette: {
     type: 'dark',
@@ -381,4 +379,3 @@ export default compose(
     publishRestaurant
   })
 )(Dashboard);
-

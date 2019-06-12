@@ -5,12 +5,14 @@ export const selectCategoryAction = payload => ({
     type: 'SELECT_CATEGORY',
     payload,
   });
-
 export const registerRestaurant = payload => ({
   type: 'REGISTER_RESTAURANT_INIT',
   payload
 })
-
+export const setOnboardingToken = ({ token }) => ({
+  type: 'SET_ONBOARDINGTOKEN',
+  payload: { token }
+});
 export const prefillEmail = payload => ({ type: 'PREFILL_EMAIL', payload });
 export const prefillRestaurantName = payload => ({ type: 'PREFILL_RESTAURANTNAME', payload });
 export const setOngoingRegistration = payload => ({ type: 'SET_ONGOINGREGISTRATION', payload })

@@ -127,7 +127,5 @@ Accordion.propTypes = {
 
 export default withStyles(accordionStyle)(Accordion);
 
-
-
 // WEBPACK FOOTER //
 // ./src/components/Accordion/Accordion.jsx

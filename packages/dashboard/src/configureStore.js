@@ -46,7 +46,13 @@ const rootPersistConfig = {
 const restaurantPersistConfig = {
   key: 'restaurant',
   storage,
-  whitelist: ['loggedRestaurant', 'selectedRestaurant', 'prefill', 'ongoingRegistration']
+  whitelist: [
+    'loggedRestaurant',
+    'selectedRestaurant',
+    'prefill',
+    'ongoingRegistration',
+    'onboardingToken'
+  ]
 }
 
 const commonReducers = {

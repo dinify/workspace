@@ -61,6 +61,7 @@ function HeaderLinks({ ...props }) {
 
         {menuItems.map((item, i) => 
           <ListItem
+            key={i}
             button
             style={{ borderRadius: 8 }}
             href={'#' + item.anchor}
@@ -106,6 +107,7 @@ function HeaderLinks({ ...props }) {
       {menuItems.map((item, i) => 
         <ListItem
           className={classes.listItem}
+          key={i}
         >
           <Button
             className={classes.button2}

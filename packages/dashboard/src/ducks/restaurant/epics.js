@@ -79,8 +79,14 @@ const registerRestaurantEpic = (action$, state$, { getFirebase }) =>
   action$.pipe(
     ofType('REGISTER_RESTAURANT_INIT'),
     switchMap(
-      ({ payload: { restaurantName, subdomain, language } }) => 
-        from(API.CreateRestaurant({ restaurantName, subdomain, language })),
+      ({ payload: { restaurantName, subdomain, language } }) => {
+        const onboardingToken = state$.value.restaurant.onboardingToken;
+        const createRestaurantPayload = { restaurantName, subdomain, language };
+        if (onboardingToken) {
+          createRestaurantPayload.token = onboardingToken;
+        }
+        return from(API.CreateRestaurant(createRestaurantPayload));
+      },
       (action, res) => (res)
     ),
     switchMap(

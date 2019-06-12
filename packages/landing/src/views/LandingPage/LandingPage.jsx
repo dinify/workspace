@@ -42,16 +42,6 @@ const changeLanguage = (lang) => {
   setCookie('language', lang, 30);
 }
 
-const decodeURLParams = search => {
-  const hashes = search.slice(search.indexOf("?") + 1).split("&");
-  return hashes.reduce((params, hash) => {
-    const split = hash.indexOf("=");
-    const key = hash.slice(0, split);
-    const val = hash.slice(split + 1);
-    return Object.assign(params, { [key]: decodeURIComponent(val) });
-  }, {});
-}
-
 class LandingPage extends React.Component {
   state = {
     headerScrolled: false,
@@ -80,9 +70,7 @@ class LandingPage extends React.Component {
     const { classes, t, location, ...rest } = this.props;
     const { headerScrolled, parallaxContainerState, scroll } = this.state;
 
-    const params = decodeURLParams(location.search);
-
-    console.log(params);
+    const registrationURL = `https://dashboard.dinify.app/signup${location.search}`
 
     let selectedLanguage = getCookie('language');
     const menuItems = [
