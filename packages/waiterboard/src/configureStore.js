@@ -1,14 +1,14 @@
 import { createEpicMiddleware } from 'redux-observable';
-import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase';
+import { firebaseReducer } from 'react-redux-firebase';
+import { reducer as formReducer } from 'redux-form';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
-import rootEpic from 'configureEpics.js';
-import { reducer as formReducer } from 'redux-form';
 
 import auth from '@dinify/common/dist/ducks/auth';
 import table from 'ducks/table'
@@ -23,6 +23,9 @@ import service from 'ducks/service'
 import seat from 'ducks/seat'
 
 import firebaseConfig from '@dinify/common/firebaseConfig.json';
+import rootEpic from 'configureEpics.js';
+
+firebase.initializeApp(firebaseConfig);
 
 const rootPersistConfig = {
   key: 'root',
@@ -55,44 +58,32 @@ const commonReducers = {
   form: formReducer,
 }
 
-// react-redux-firebase config
-const rrfConfig = {
-  userProfile: 'profiles',
-  useFirestoreForProfile: true,
-}
-firebase.initializeApp(firebaseConfig)
+const epicMiddleware = createEpicMiddleware();
 
-export default (options) => {
-  const {
-    initialState,
-    platformReducers = {}
-  } = options;
-
-  const epicMiddleware = createEpicMiddleware();
-
+export default (history) => {
   const rootReducer = combineReducers({
+    form: formReducer,
+    router: connectRouter(history),
     ...commonReducers,
-    ...platformReducers
   });
 
-  const reducers = persistReducer(rootPersistConfig, rootReducer);
- 
+  const persistedReducers = persistReducer(rootPersistConfig, rootReducer);
+
   const middlewares = [
-    epicMiddleware
+    epicMiddleware,
+    routerMiddleware(history)
   ];
 
   if (process.env.NODE_ENV === 'development') {
     middlewares.push(createLogger({ diff: true, collapsed: true }));
   }
 
-  const createStoreWithFirebase = compose(
-    reactReduxFirebase(firebase, rrfConfig), // firebase instance as first argument
-    applyMiddleware(...middlewares),
-  )(createStore);
+  const store = createStore(
+    persistedReducers,
+    applyMiddleware(...middlewares)
+  );
 
-  const store = createStoreWithFirebase(reducers, initialState);
-
-  epicMiddleware.run(rootEpic);
+  epicMiddleware.run((action$, state$, ...rest) => rootEpic(action$, state$, firebase, ...rest));
 
   const persistor = persistStore(store);
 

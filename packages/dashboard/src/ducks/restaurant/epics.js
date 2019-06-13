@@ -1,13 +1,15 @@
 // @flow
 import { Observable, of, from } from 'rxjs';
-import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
+import { mergeMap, switchMap, map, catchError, filter, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
+import { push } from 'connected-react-router';
 import { reset } from 'redux-form';
 import * as R from 'ramda';
 import { actionTypes } from 'react-redux-firebase';
 import { setCookie } from '@dinify/common/dist/lib/FN';
 import { selectRestaurant } from './actions';
-import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
+
 
 import * as API from '@dinify/common/dist/api/restaurant';
 
@@ -26,16 +28,13 @@ const bootstrapEpic = (action$: Observable) =>
 const selectRestaurantEpic = (action$: Observable) =>
   action$.pipe(
     ofType('SELECT_RESTAURANT'),
-    mergeMap(() => {
-      window.location.href = '/';
-      return of({ type: 'SELECT_RESTAURANT_REDIRECT' });
-    })
+    mapTo(push('/'))
   );
 
 const getLoggedEpic = (action$, state$) =>
   action$.pipe(
     filter(action => {
-      const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE];
+      const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE, 'SELECT_RESTAURANT'];
       return triggerOn.includes(action.type);
     }),
     mergeMap(() => {

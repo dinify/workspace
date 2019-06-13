@@ -1,6 +1,7 @@
 import { of, from } from 'rxjs';
-import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
+import { mergeMap, switchMap, map, catchError, filter, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
+import { push } from 'connected-react-router';
 import { actionTypes } from 'react-redux-firebase';
 import * as API from '@dinify/common/dist/api/restaurant';
 import { setCookie } from '@dinify/common/dist/lib/FN';
@@ -14,13 +15,10 @@ const bootstrapEpic = (action$) =>
     })
   );
 
-const selectWaiterboardEpic = (action$) =>
+const selectWBRedirectEpic = (action$) =>
   action$.pipe(
     ofType('SELECT_WAITERBOARD'),
-    mergeMap(() => {
-      window.location.href = '/board';
-      return of({ type: 'SELECT_WAITERBOARD_REDIRECT' });
-    })
+    mapTo(push('/board'))
   );
 
 const loadRestaurant = (action$) =>
@@ -41,7 +39,7 @@ const loadRestaurant = (action$) =>
 const getLoggedEpic = (action$, state$) =>
   action$.pipe(
     filter(action => {
-      const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE];
+      const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE, 'SELECT_WAITERBOARD'];
       return triggerOn.includes(action.type);
     }),
     mergeMap(() => {
@@ -122,5 +120,5 @@ export default [
   guestsPollingEpic,
   confirmationEpic,
   confirmationSyncEpic,
-  selectWaiterboardEpic
+  selectWBRedirectEpic
 ];

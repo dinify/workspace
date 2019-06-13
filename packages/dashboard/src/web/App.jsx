@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { appIsRunning } from 'selectors/restaurant';
 
@@ -35,29 +35,27 @@ const App = ({ appLoading, user, history, ongoingRegistration, selectedRestauran
     window.location.replace('/register');
   }
   return (
-    <Router>
-      <Content>
-        {appLoading || !user.isLoaded ? <AppLoader>Dashboard is loading...</AppLoader> :
-          <Switch>
-            <Route path="/qr/:code" component={Qr} />
-            <Route path="/signin" component={() => {
-              return user.isEmpty ? <SignInWithRoot env="DASHBOARD" user={user}/> :
-              <Redirect to="/"/>
-            }} />
-            <Route path="/register" component={({location}) => {
-              if (user.isEmpty) return <Redirect to="/signin"/>;
-              // if (selectedRestaurant) return <Redirect to="/"/>;
-              return <RegisterRestaurantWithRoot location={location} user={user}/>;
-            }} />
-            <Route path="/" component={({location}) => {
-              if (user.isEmpty) return <Redirect to="/signin" />;
-              if (!selectedRestaurant) return <Redirect to="/register" />; 
-              return <Dashboard history={history} location={location} />;
-            }} />
-          </Switch>      
-        }
-      </Content>
-    </Router>
+    <Content>
+      {appLoading || !user.isLoaded ? <AppLoader>Dashboard is loading...</AppLoader> :
+        <Switch>
+          <Route path="/qr/:code" component={Qr} />
+          <Route path="/signin" component={() => {
+            return user.isEmpty ? <SignInWithRoot env="DASHBOARD" user={user}/> :
+            <Redirect to="/"/>
+          }} />
+          <Route path="/register" component={({location}) => {
+            if (user.isEmpty) return <Redirect to="/signin"/>;
+            // if (selectedRestaurant) return <Redirect to="/"/>;
+            return <RegisterRestaurantWithRoot location={location} user={user}/>;
+          }} />
+          <Route path="/" component={({location}) => {
+            if (user.isEmpty) return <Redirect to="/signin" />;
+            if (!selectedRestaurant) return <Redirect to="/register" />; 
+            return <Dashboard history={history} location={location} />;
+          }} />
+        </Switch>      
+      }
+    </Content>
   );
 }
 

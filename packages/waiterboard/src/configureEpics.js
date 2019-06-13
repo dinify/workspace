@@ -1,5 +1,4 @@
 import { combineEpics } from 'redux-observable';
-import { getFirebase } from 'react-redux-firebase';
 import { authEpics as auth } from '@dinify/common/dist/ducks/auth';
 import { epics as crud } from '@dinify/common/dist/ducks/crudEpics';
 import { restaurantEpics } from 'ducks/restaurant';
@@ -10,7 +9,7 @@ import { orderEpics } from 'ducks/order';
 import { seatEpics } from 'ducks/seat';
 import { billEpics } from 'ducks/bill';
 
-const rootEpic = (action$, state$, ...rest) => {
+const rootEpic = (action$, state$, firebase, ...rest) => {
   const epic = combineEpics(
     ...auth,
     ...crud,
@@ -25,7 +24,7 @@ const rootEpic = (action$, state$, ...rest) => {
   const output = epic(
     action$,
     state$,
-    { getFirebase },
+    { firebase },
     ...rest
   );
   return output;
