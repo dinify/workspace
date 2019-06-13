@@ -9,7 +9,7 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "worker": "npm run build && node src/workers/index",
+    "worker": "ts-node src/workers/index",
     "script": "ts-node src/workers/script.ts"
   },
   "main": "dist/index.js",
@@ -31,6 +31,7 @@
     "lodash": "*",
     "mjml": "^4.3.1",
     "mongoose": "^5.4.5",
+    "mysql2": "^1.6.5",
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
     "sequelize": "^5.8.9",

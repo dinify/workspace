@@ -1,12 +1,13 @@
 import Sequelize from 'sequelize';
-import sequelize from '../mysql.config';
+const sequelize = require('../mysql.config');
 const Model = Sequelize.Model;
 
 class RestaurantsTa extends Model {}
 
 RestaurantsTa.init({
-  id: { type: Sequelize.STRING, allowNull: true },
-  location_id: { type: Sequelize.INTEGER, allowNull: true },
+  id: { type: Sequelize.STRING, primaryKey: true, allowNull: false },
+  location_id: { type: Sequelize.STRING, unique: true, allowNull: false },
+  restaurant_id: { type: Sequelize.STRING, unique: true, allowNull: true },
   name: { type: Sequelize.STRING, allowNull: true },
   email: { type: Sequelize.STRING, allowNull: true },
   phone: { type: Sequelize.STRING, allowNull: true },
@@ -21,8 +22,11 @@ RestaurantsTa.init({
   ranking_position: { type: Sequelize.INTEGER, allowNull: true },
   web_url: { type: Sequelize.STRING, allowNull: true },
   website: { type: Sequelize.STRING, allowNull: true },
-  language_distribution: { type: Sequelize.JSON, allowNull: true }
+  language_distribution: { type: Sequelize.JSON, allowNull: true },
+  createdAt: { type: Sequelize.DATE, field: 'created_at' },
+  updatedAt: { type: Sequelize.DATE, field: 'updated_at' }
 }, {
+  timestamps: true,
   sequelize,
   modelName: 'restaurants_ta'
 });

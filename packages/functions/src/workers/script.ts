@@ -1,6 +1,9 @@
-import mongoconnect from '../mongo.config';
+import '../mongo.config';
+//import '../mysql.config';
 import Restaurants from '../schema/Restaurants';
+import RestaurantsTa from '../models/RestaurantsTa';
 
-Restaurants.create({email: "example@test.com"}, (e) => {
-    console.log(e, 'ok')
-})
+// testing
+RestaurantsTa.findOne({}).then((r) => {
+  console.log(r.get());
+});
