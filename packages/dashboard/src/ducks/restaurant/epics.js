@@ -65,7 +65,7 @@ export const FailAction = (err: Error) => ({ type: 'FAIL', payload: err });
 
 export const createRestaurantDoneAction = ({ email, password }) => {
   return { type: 'LOGIN_INIT', payload: { email, password } };
-  //return { type: 'CREATE_RESTAURANT_DONE', payload: res }
+  // return { type: 'CREATE_RESTAURANT_DONE', payload: res }
 };
 
 const middlePromise = (getFirebase, res) => new Promise((resolve, reject) => {
