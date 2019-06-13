@@ -4,6 +4,7 @@ import Restaurants from '../schema/Restaurants';
 import Reviews from '../schema/Reviews';
 import async from 'async';
 import eachOf from 'async/eachOf';
+import RestaurantsTa from '../models/RestaurantsTa';
 
 const getLangDist = (location_id, cb) => {
   Reviews.aggregate([
@@ -57,6 +58,7 @@ export const langDistForRestaurant = (restaurant, cb) => {
       targetLang,
       targetLangRel
     };
+
     Restaurants.update(
       {location_id: restaurant.location_id},
       updObj,
@@ -66,6 +68,16 @@ export const langDistForRestaurant = (restaurant, cb) => {
         cb();
       }
     );
+
+    RestaurantsTa.update({
+      language_distribution: updObj.langDist,
+      num_reviews: updObj.num_reviews
+    }, {
+      where: {location_id: restaurant.location_id}
+    }).then(() => {
+      console.log('RestaurantsTa langDist & num_reviews updated');
+    });
+
   })
 }
 
@@ -89,7 +101,6 @@ const doIt = (limit, page) => {
     )
   })
 }
-
 
 const run = () => {
   doIt(100, 0);

@@ -1,7 +1,7 @@
 import '../mongo.config';
 import restaurants from './restaurants';
 import reviews from './reviews';
-// import langcounts from './langcounts';
+import langcounts from './langcounts';
 // import mongoconnect from '../../mongoconnect';
 // 
 // import Reviews from '../models/Reviews';
@@ -20,4 +20,4 @@ import reviews from './reviews';
 
 // restaurants();
 reviews(); // previous restaurants() run needed
-// langcounts(); // previous reviews() run needed
+//langcounts(); // previous reviews() run needed

@@ -63,7 +63,7 @@ const doStuff = (restaurant, cb) => {
 const doIt = (limit, page) => {
   MongoRestaurants
   .find()
-  .sort({ _id: -1 })
+  .sort({ _id: 1 })
   .skip(limit*page)
   .limit(limit)
   .exec((e, restaurants) => {
@@ -75,7 +75,7 @@ const doIt = (limit, page) => {
         RestaurantsTa
         .findOne({where: {location_id: restaurant.location_id}})
         .then((sqlRestaurant) => {
-          if (!sqlRestaurant) {
+          if (!sqlRestaurant) { // if a restaurant is missing in SQL, copy it from mongo
             let restaurantForSQL = taRestaurantForSQL(restaurant);
             restaurantForSQL.id = restaurant._id.toString();
             RestaurantsTa.create(restaurantForSQL).then(() => {

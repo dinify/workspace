@@ -10,6 +10,9 @@ const locations = {
 
 export const taRestaurantForSQL = (restaurant) => {
   restaurant.city = restaurant.ranking_geo
+  if (!restaurant.city || restaurant.city.length < 1) {
+    restaurant.city = restaurant.location_string
+  }
   if (restaurant.longitude && restaurant.latitude) {
     restaurant.location = {
       type: 'Point', coordinates: [restaurant.longitude, restaurant.latitude]
