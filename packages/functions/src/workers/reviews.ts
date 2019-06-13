@@ -1,25 +1,40 @@
-import * as taAPI from '../clients/ta';
-import Restaurants from '../schema/Restaurants';
-import Reviews from '../schema/Reviews';
 import async from 'async';
-import eachOfSeries from 'async/eachOfSeries';
-import eachOf from 'async/eachOf';
+import * as taAPI from '../clients/ta';
+import MongoRestaurants from '../schema/Restaurants';
+import MongoReviews from '../schema/Reviews';
+import RestaurantsTa from '../models/RestaurantsTa';
+import ReviewsTa from '../models/ReviewsTa';
+import { taRestaurantForSQL } from './restaurants';
 
 import { langDistForRestaurant } from './langcounts';
 
 const saveReviews = (locID, limit, page, done) => {
   taAPI.getReviews({ locID, limit, offset: page*limit }).then((res) => {
-
-    eachOf(
+    async.eachOf(
       res.data,
       (review, key, cb) => {
-        Reviews.update(
+        MongoReviews.update(
           {id: review.id},
           review,
           {upsert: true, setDefaultsOnInsert: true},
           (e) => {
-            if (e) console.log(e);
-            cb()
+            if (e) console.log(e, 'MongoReviews update fail');
+            else {
+              MongoReviews.findOne({id: review.id}).exec((e2, mongoReview) => {
+                ReviewsTa.findOne({ where: {review_id: review.id} })
+                .then((reviewTa) => {
+                  cb();
+                  if(reviewTa) { // update
+                    return reviewTa.update(review);
+                  } else { // insert
+                    review.review_id = review.id;
+                    review.id = mongoReview._id.toString();
+                    review.language = review.lang;
+                    return ReviewsTa.create(review);
+                  }
+                });
+              })
+            }
           }
         );
       },
@@ -33,28 +48,43 @@ const saveReviews = (locID, limit, page, done) => {
         }
       }
     )
-
-
   }).catch((err) => {
     console.log('404');
     done();
   });
 }
 
+const doStuff = (restaurant, cb) => {
+  saveReviews(restaurant.location_id, 50, 0, () => { // max limit 50
+    langDistForRestaurant(restaurant, cb);
+  });
+}
+
 const doIt = (limit, page) => {
-  Restaurants
+  MongoRestaurants
   .find()
   .sort({ _id: -1 })
   .skip(limit*page)
   .limit(limit)
   .exec((e, restaurants) => {
-    eachOf(
+    async.eachOf(
       restaurants,
       (restaurant, key, cb) => {
         console.log(restaurant.name);
-        saveReviews(restaurant.location_id, 50, 0, () => {
-          langDistForRestaurant(restaurant, cb);
-        });
+
+        RestaurantsTa
+        .findOne({where: {location_id: restaurant.location_id}})
+        .then((sqlRestaurant) => {
+          if (!sqlRestaurant) {
+            let restaurantForSQL = taRestaurantForSQL(restaurant);
+            restaurantForSQL.id = restaurant._id.toString();
+            RestaurantsTa.create(restaurantForSQL).then(() => {
+              doStuff(restaurant, cb);
+            });
+          } else {
+            doStuff(restaurant, cb);
+          }
+        })
       },
       (err) => {
         if (restaurants.length) {

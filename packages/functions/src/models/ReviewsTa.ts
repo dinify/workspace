@@ -10,7 +10,7 @@ ReviewsTa.init({
   location_id: { type: Sequelize.STRING, allowNull: false },
   language: { type: Sequelize.STRING, allowNull: true },
   helpful_votes: { type: Sequelize.NUMBER, allowNull: true },
-  publised_date: { type: Sequelize.DATE, allowNull: true },
+  published_date: { type: Sequelize.DATE, allowNull: true },
   rating: { type: Sequelize.NUMBER, allowNull: true },
   travel_date: { type: Sequelize.DATE, allowNull: true },
   url: { type: Sequelize.STRING, allowNull: true },

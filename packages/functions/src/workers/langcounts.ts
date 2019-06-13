@@ -1,9 +1,9 @@
+import _ from 'lodash';
 import * as taAPI from '../clients/ta';
 import Restaurants from '../schema/Restaurants';
 import Reviews from '../schema/Reviews';
 import async from 'async';
 import eachOf from 'async/eachOf';
-import _ from 'lodash';
 
 const getLangDist = (location_id, cb) => {
   Reviews.aggregate([

@@ -1,6 +1,6 @@
 import '../mongo.config';
-// import reviews from './reviews';
 import restaurants from './restaurants';
+import reviews from './reviews';
 // import langcounts from './langcounts';
 // import mongoconnect from '../../mongoconnect';
 // 
@@ -18,6 +18,6 @@ import restaurants from './restaurants';
 //    console.log(locations);
 //})
 
-restaurants();
-// reviews();
-// langcounts();
+// restaurants();
+reviews(); // previous restaurants() run needed
+// langcounts(); // previous reviews() run needed
