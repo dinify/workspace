@@ -1,9 +1,9 @@
 import { Strategy as BearerStrategy } from "passport-http-bearer";
-import * as passport from "passport";
-import * as cors from "cors";
-import * as bodyParser from "body-parser";
-import * as express from "express";
-import * as admin from "firebase-admin";
+import passport from "passport";
+import cors from "cors";
+import bodyParser from "body-parser";
+import express from "express";
+import admin from "firebase-admin";
 import * as functions from "firebase-functions";
 import auth from "./authMiddleware";
 

@@ -22,6 +22,7 @@ export const taRestaurantForSQL = (restaurant) => {
   if (restaurant.photo && restaurant.photo.images && restaurant.photo.images.large) {
     restaurant.photo_url = restaurant.photo.images.large.url
   }
+  if (restaurant.website) restaurant.website = restaurant.website.substring(0, 254);
   return restaurant;
 }
 
@@ -41,14 +42,14 @@ const doIt = (limit, page) => {
           else {
             MongoRestaurants.findOne(query).exec((e2, mongoR) => {
               // mysql
-              restaurant = taRestaurantForSQL(restaurant);
+              const restaurantTa = taRestaurantForSQL(restaurant);
               RestaurantsTa.findOne({ where: query })
               .then((rTa) => {
                 if(rTa) { // update
-                  return rTa.update(restaurant);
+                  return rTa.update(restaurantTa);
                 } else { // insert
-                  restaurant.id = mongoR._id.toString();
-                  return RestaurantsTa.create(restaurant);
+                  restaurantTa.id = mongoR._id.toString();
+                  return RestaurantsTa.create(restaurantTa);
                 }
               })
             })

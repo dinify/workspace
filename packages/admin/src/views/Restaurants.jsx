@@ -101,7 +101,7 @@ const useFields = [
   },
   {
     Header: "City",
-    accessor: "ranking_geo"
+    accessor: "city"
   },
   {
     Header: "Reviews",
@@ -109,64 +109,64 @@ const useFields = [
   },
   {
     Header: "Target",
-    accessor: "targetLang",
+    accessor: "target_languages",
     filterable: false
   },
   {
     Header: "T.Rel.",
     Cell: props => props.value ? (props.value*100).toFixed(2)+'%' : 0,
-    accessor: "targetLangRel",
+    accessor: "target_languages_rel",
     filterable: false
   },
   {
     Header: "E.Asia",
     Cell: props => props.value ? (props.value*100).toFixed(2)+'%' : 0,
-    accessor: "langGroups.eastAsia.countRel",
+    accessor: "language_groups.eastAsia.countRel",
     filterable: false
   },
   {
     Header: "Jap",
-    accessor: "langDist.ja.count",
+    accessor: "language_distribution.ja.count",
     filterable: false
   },
   {
     Header: "KO",
-    accessor: "langDist.ko.count",
+    accessor: "language_distribution.ko.count",
     filterable: false,
   },
   {
     Header: "CN",
-    accessor: "langDist.zhCN.count",
+    accessor: "language_distribution.zhCN.count",
     filterable: false,
   },
   {
     Header: "TW",
-    accessor: "langDist.zhTW.count",
+    accessor: "language_distribution.zhTW.count",
     filterable: false
   },
   {
     Header: "RU",
-    accessor: "langDist.ru.count",
+    accessor: "language_distribution.ru.count",
     filterable: false
   },
   {
     Header: "IT",
-    accessor: "langDist.it.count",
+    accessor: "language_distribution.it.count",
     filterable: false
   },
   {
     Header: "ES",
-    accessor: "langDist.es.count",
+    accessor: "language_distribution.es.count",
     filterable: false
   },
   {
     Header: "FR",
-    accessor: "langDist.fr.count",
+    accessor: "language_distribution.fr.count",
     filterable: false
   },
   {
     Header: "TR",
-    accessor: "langDist.tr.count",
+    accessor: "language_distribution.tr.count",
     filterable: false
   },
   {
@@ -195,7 +195,7 @@ const useFields = [
 const functionsEndpoint = 'https://europe-west1-dinify.cloudfunctions.net';
 
 const getData = async (props) => {
-  const response = await fetch(`${functionsEndpoint}/dbFind`, {
+  const response = await fetch(`${functionsEndpoint}/listRestaurantsTa`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -255,7 +255,13 @@ const requestData = (pageSize, page, sorted, filtered) => {
       const totalCount = cRes.result;
       let sort = {};
       sorted.forEach((s) => sort[s.id] = s.desc ? -1 : 1);
-      getData({query, sort, limit: pageSize, skip: pageSize*page })
+
+      getData({
+        query,
+        order: sorted.map((o) => ([o.id, o.desc ? 'DESC' : 'ASC'])),
+        limit: pageSize,
+        skip: pageSize*page
+      })
       .then((res) => {
         const rawData = res.result;
         let filteredData = rawData;

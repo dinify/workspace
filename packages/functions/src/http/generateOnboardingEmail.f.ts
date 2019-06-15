@@ -47,11 +47,11 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
 
         const msg = {
           to: {
-              email: "hello@dinify.app" // process.email
+            email: "hello@dinify.app" // process.email
           },
           from: {
-              email: "hello@dinify.app",
-              name: "Dinify"
+            email: "hello@dinify.app",
+            name: "Dinify"
           },
           subject: "Lepší recenze, vyšší zisk, zkuste Dinify"
         };

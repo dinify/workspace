@@ -23,6 +23,9 @@ RestaurantsTa.init({
   web_url: { type: Sequelize.STRING, allowNull: true },
   website: { type: Sequelize.STRING, allowNull: true },
   language_distribution: { type: Sequelize.JSON, allowNull: true },
+  language_groups: { type: Sequelize.JSON, allowNull: true },
+  target_languages: { type: Sequelize.NUMBER, allowNull: true },
+  target_languages_rel: { type: Sequelize.FLOAT, allowNull: true },
   createdAt: { type: Sequelize.DATE, field: 'created_at' },
   updatedAt: { type: Sequelize.DATE, field: 'updated_at' }
 }, {

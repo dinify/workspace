@@ -71,7 +71,10 @@ export const langDistForRestaurant = (restaurant, cb) => {
 
     RestaurantsTa.update({
       language_distribution: updObj.langDist,
-      num_reviews: updObj.num_reviews
+      num_reviews: updObj.num_reviews,
+      language_groups: updObj.langGroups,
+      target_languages: updObj.targetLang,
+      target_languages_rel: updObj.targetLangRel
     }, {
       where: {location_id: restaurant.location_id}
     }).then(() => {
