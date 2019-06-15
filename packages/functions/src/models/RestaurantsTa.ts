@@ -37,10 +37,4 @@ RestaurantsTa.init({
   modelName: 'restaurants_ta'
 });
 
-RestaurantsTa.belongsToMany(TargetingTags, {
-  foreignKey: 'item_id',
-  constraints: false,
-  through: TargetingTaggables
-})
-
 export default RestaurantsTa;

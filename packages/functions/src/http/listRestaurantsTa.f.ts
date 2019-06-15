@@ -39,19 +39,27 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
                   TargetingTags.findOne({
                     where: {id: taggable.get().targeting_tag_id}
                   }).then((targetingTag) => {
-                    cb2(null, targetingTag.label)
-                  })
+                    cb2(null, targetingTag.get().label)
+                  }).catch((error) => cb2(error));
                 }, (err2, targetingLabels) => {
-                  const enhancedRestaurant = restaurant.get();
-                  enhancedRestaurant.targetingTags = targetingLabels;
-                  cb(null, enhancedRestaurant);
+                  if (err2) {
+                    cb(err2)
+                  } else {
+                    const enhancedRestaurant = restaurant.get();
+                    enhancedRestaurant.targetingTags = targetingLabels;
+                    cb(null, enhancedRestaurant);
+                  }
                 }
               )
             }
-          })
+          }).catch((error) => cb(error));
         },
         (err, enhancedResults) => {
-          res.json({ error: null, result: enhancedResults })
+          if (err) {
+            res.json({ error: err });
+          } else {
+            res.json({ error: null, result: enhancedResults })
+          }
         }
       )
     })
