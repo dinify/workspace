@@ -19,11 +19,26 @@ const createTaggable = (tt, locationId, res) => {
   }).catch((err) => res.json({ error: err }));
 }
 
+const removeTaggable = (tt, locationId, res) => {
+  const ttId = tt.id;
+  TargetingTaggables.destroy({
+    where: {
+      targeting_tag_id: ttId,
+      item_type: 'App/Models/RestaurantTa',
+      item_id: locationId,
+    }
+  }).then(() => {
+    console.log('Targeting taggable deleted');
+    res.json({ error: null, result: 'deleted' });
+  }).catch((err) => res.json({ error: err }));
+}
+
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {
       tagLabel,
-      locationId
+      locationId,
+      unassign = false
     } = req.body;
 
     if (!tagLabel || !locationId) {
@@ -39,19 +54,21 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           where: { label: tagLabel }
         }).then((tt) => {
           if (!tt) {
-            TargetingTags.create({
-              label: tagLabel
-            }).then((newTt) => {
-              console.log('New targeting tag created');
-              createTaggable(newTt.get(), locationId, res);
-            })
+            if (unassign) res.json({ error: 'Targeting tag doesnt exist' });
+            else {
+              TargetingTags.create({
+                label: tagLabel
+              }).then((newTt) => {
+                console.log('New targeting tag created');
+                createTaggable(newTt.get(), locationId, res);
+              })
+            }
           } else {
-            createTaggable(tt, locationId, res);
+            if (unassign) removeTaggable(tt.get(), locationId, res);
+            else createTaggable(tt, locationId, res);
           }
         }).catch((err) => res.json({ error: err }));
       }
     }).catch((err) => res.json({ error: err }));
-
-
   });
 });
