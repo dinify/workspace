@@ -15,6 +15,8 @@ import {
 import { Bar } from "react-chartjs-2";
 import ISO6391 from 'iso-639-1';
 
+const selectionTagLabel = 'selection-1';
+
 let makeChartData = ({labels, data}) => {
   return {
     data: canvas => {
@@ -229,14 +231,14 @@ const getCount = async (query) => {
   const body = await response.json();
   return body;
 }
-const assignFlag = async ({ restaurantId, flag, unassign}) => {
-  const response = await fetch(`${functionsEndpoint}/assignFlag`, {
+const assignTargetingTag = async ({ locationId, tagLabel, unassign}) => {
+  const response = await fetch(`${functionsEndpoint}/assignTargetingTag`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      restaurantId, flag, unassign
+      locationId, tagLabel, unassign
     })
   });
   const body = await response.json();
@@ -392,15 +394,15 @@ class ReactTables extends Component {
     this.loadData();
   }
 
-  handleFlag = ({ restaurantId, flag, unassign }) => {
+  handleFlag = ({ locationId, tagLabel, unassign }) => {
     
-    assignFlag({ restaurantId, flag, unassign })
+    assignTargetingTag({ locationId, tagLabel, unassign })
       .then(res => {
-        console.log(res)
+        console.log(res);
         let data = this.state.data;
-        const i = _.findIndex(data, {_id: restaurantId});
-        if (!unassign) data[i].targetingFlags = ['SELECTION1'];
-        else data[i].targetingFlags = []
+        const i = _.findIndex(data, {location_id: locationId});
+        if (!unassign) data[i].targetingTags = [selectionTagLabel];
+        else data[i].targetingTags = []
         this.setState({data})
       })
       .catch(err => console.log(err));    
@@ -409,23 +411,23 @@ class ReactTables extends Component {
   makeTableData = (data, useFields) => {
     return data.map((prop, key) => {
       const values = _.pick(prop, _.map(useFields,'accessor'));
-      let flagged = false;
-      if (prop.targetingFlags && prop.targetingFlags.includes('SELECTION1')) {
-        flagged = true;
+      let tagged = false;
+      if (prop.targetingTags && prop.targetingTags.includes(selectionTagLabel)) {
+        tagged = true;
       }
       const obj = {
         id: prop._id || key,
         flags: (
         <Button
-          color={flagged ? "success" : "default"}
+          color={tagged ? "success" : "default"}
           size="sm"            
           onClick={() => this.handleFlag({
-            restaurantId: prop._id,
-            flag: 'SELECTION1',
-            unassign: flagged ? true : false
+            locationId: prop.location_id,
+            tagLabel: selectionTagLabel,
+            unassign: tagged ? true : false
           })}
         >
-          {flagged ? "Flagged" : "Flag"}
+          {tagged ? "Tagged" : "Tag"}
         </Button>
         ),
         actions: (

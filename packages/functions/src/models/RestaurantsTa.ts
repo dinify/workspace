@@ -1,4 +1,7 @@
 import Sequelize from 'sequelize';
+import TargetingTaggables from './TargetingTaggables';
+import TargetingTags from './TargetingTags';
+
 const sequelize = require('../mysql.config');
 const Model = Sequelize.Model;
 
@@ -33,5 +36,11 @@ RestaurantsTa.init({
   sequelize,
   modelName: 'restaurants_ta'
 });
+
+RestaurantsTa.belongsToMany(TargetingTags, {
+  foreignKey: 'item_id',
+  constraints: false,
+  through: TargetingTaggables
+})
 
 export default RestaurantsTa;

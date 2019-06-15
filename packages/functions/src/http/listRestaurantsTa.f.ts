@@ -1,5 +1,7 @@
 import * as functions from "firebase-functions";
 import RestaurantsTa from "../models/RestaurantsTa";
+import TargetingTaggables from '../models/TargetingTaggables';
+import TargetingTags from '../models/TargetingTags';
 
 const cors = require('cors')({
   origin: true,
@@ -20,7 +22,9 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       limit,
       order
     })
-    .then((result) => res.json({ error: null, result: result }))
+    .then((result) => {
+      res.json({ error: null, result: result })
+    })
     .catch((error) => res.json({ error }));
   });
 });
