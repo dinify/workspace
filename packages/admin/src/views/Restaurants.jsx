@@ -446,7 +446,7 @@ class ReactTables extends Component {
               color="info"
               size="sm"
               onClick={() => {
-                this.loadAgg(prop.location_id)
+                this.loadAgg(Number(prop.location_id))
                 this.setState({chart1title: prop.name})
               }}
               className={classNames("btn-icon btn-link like", {

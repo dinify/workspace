@@ -9,20 +9,24 @@ const locations = {
 }
 
 export const taRestaurantForSQL = (restaurant) => {
-  restaurant.city = restaurant.ranking_geo
+  restaurant.city = restaurant.ranking_geo;
   if (!restaurant.city || restaurant.city.length < 1) {
-    restaurant.city = restaurant.location_string
+    restaurant.city = restaurant.location_string;
   }
   if (restaurant.longitude && restaurant.latitude) {
     restaurant.location = {
       type: 'Point', coordinates: [restaurant.longitude, restaurant.latitude]
-    }
+    };
   }
-  restaurant.photo_url = ''
+  restaurant.photo_url = '';
   if (restaurant.photo && restaurant.photo.images && restaurant.photo.images.large) {
-    restaurant.photo_url = restaurant.photo.images.large.url
+    restaurant.photo_url = restaurant.photo.images.large.url;
   }
   if (restaurant.website) restaurant.website = restaurant.website.substring(0, 254);
+  if (restaurant.langDist) restaurant.language_distribution = restaurant.langDist; 
+  if (restaurant.langGroups) restaurant.language_groups = restaurant.langGroups; 
+  if (restaurant.targetLang) restaurant.target_languages = restaurant.targetLang; 
+  if (restaurant.targetLangRel) restaurant.target_languages_rel = restaurant.targetLangRel; 
   return restaurant;
 }
 
