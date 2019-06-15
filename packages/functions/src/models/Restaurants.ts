@@ -10,7 +10,8 @@ Restaurants.init({
   price_category: { type: Sequelize.TINYINT, allowNull: true },
   rating: { type: Sequelize.DECIMAL, allowNull: true },
   rating_count: { type: Sequelize.INTEGER, allowNull: true },
-  type: { 
+  name: { type: Sequelize.STRING, allowNull: true },
+  type: {
     type: Sequelize.ENUM,
     values: ['CLASSIC', 'QLESS'],
     allowNull: false

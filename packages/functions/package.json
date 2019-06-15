@@ -10,7 +10,7 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "worker": "ts-node src/workers/index",
-    "script": "ts-node src/workers/script.ts"
+    "script": "ts-node src/workers/script"
   },
   "main": "dist/index.js",
   "dependencies": {
@@ -35,7 +35,8 @@
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
     "sequelize": "^5.8.9",
-    "uid-generator": "^1.0.0"
+    "uid-generator": "^1.0.0",
+    "uuid-base62": "^0.1.0"
   },
   "workspaces": {
     "nohoist": [
