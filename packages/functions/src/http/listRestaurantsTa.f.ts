@@ -1,4 +1,5 @@
 import * as functions from "firebase-functions";
+import map from 'async/map';
 import RestaurantsTa from "../models/RestaurantsTa";
 import TargetingTaggables from '../models/TargetingTaggables';
 import TargetingTags from '../models/TargetingTags';
@@ -22,8 +23,37 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       limit,
       order
     })
-    .then((result) => {
-      res.json({ error: null, result: result })
+    .then((results) => {
+      map(
+        results,
+        (restaurant, cb) => {
+          TargetingTaggables.findAll({
+            where: {item_id: restaurant.location_id}
+          }).then((taggables) => {
+            if (!taggables || taggables.length < 1) {
+              cb(null, restaurant);
+            } else {
+              map(
+                taggables,
+                (taggable, cb2) => {
+                  TargetingTags.findOne({
+                    where: {id: taggable.get().targeting_tag_id}
+                  }).then((targetingTag) => {
+                    cb2(null, targetingTag.label)
+                  })
+                }, (err2, targetingLabels) => {
+                  const enhancedRestaurant = restaurant.get();
+                  enhancedRestaurant.targetingTags = targetingLabels;
+                  cb(null, enhancedRestaurant);
+                }
+              )
+            }
+          })
+        },
+        (err, enhancedResults) => {
+          res.json({ error: null, result: enhancedResults })
+        }
+      )
     })
     .catch((error) => res.json({ error }));
   });
