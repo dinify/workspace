@@ -8,25 +8,32 @@ const cors = require('cors')({
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {
-      targetId,
+      token,
       type = 'default',
       status,
       campaign = 'default'
     } = req.body;
 
     if (!targetId || !status) {
-      res.json({ error: 'required field missing' })  
+      res.json({ error: 'required field missing' })
     }
 
-    CampaignStatuses.create({
-      target_id: targetId,
-      type,
-      status,
-      campaign
-    })
-    .then((o) => {
-      res.json({ error: null, result: o.get() })
-    })
-    .catch((error) => res.json({ error }));
+    // get taget id from token in url
+    Token.findOne({
+      where: {
+        id: token
+      }
+    }).then((o) => {
+      CampaignStatuses.create({
+        target_id: o.target_id,
+        type,
+        status,
+        campaign
+      })
+      .then((o) => {
+        res.json({ error: null, result: o.get() })
+      })
+      .catch((error) => res.json({ error }));
+    }).catch((error) => res.json({ error }));
   });
 });
