@@ -11,19 +11,22 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     const events = req.body || [];
 
     events.map((eventObject) => {
-      const { email, event, timestamp } = eventObject;
+      const { email, event, timestamp, sg_message_id } = eventObject;
 
-      Restaurants.findOne({ email }).exec((e, restaurant) => {
-        if (!restaurant) res.sendStatus(404);
-        else {
-          restaurant.emailStatus = event;
-          restaurant.emailStatuses.push({ event, timestamp });
-          restaurant.save(() => {
-            res.sendStatus(200);
-          });
+      Emails.findOne({
+        where: {
+          sg_message_id
         }
-      })
-    })
+      }).then((email) => {
+        const emailId = email.id;
 
+        EventSg.create({
+          email_id: email.id,
+          ...eventObject
+        }).then((o) => {
+          res.sendStatus(200);
+        }).catch((error) => res.json({ error }));
+      }).catch((error) => res.json({ error }));
+    })
   });
 });

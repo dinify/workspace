@@ -32,8 +32,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       })
       .then((o) => {
         res.json({ error: null, result: o.get() })
-      })
-      .catch((error) => res.json({ error }));
+      }).catch((error) => res.json({ error }));
     }).catch((error) => res.json({ error }));
   });
 });
