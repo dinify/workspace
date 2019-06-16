@@ -1,4 +1,5 @@
 import * as functions from "firebase-functions";
+import map from 'async/map';
 import RestaurantsTa from '../models/RestaurantsTa';
 import TargetingTags from '../models/TargetingTags';
 import TargetingTaggables from '../models/TargetingTaggables';
@@ -14,9 +15,9 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       segment = 'default', // segment-1
       campaign = 'default', // rp-onboarding
       filter: {
-          campaignStatuses: [],
-          emailStatuses: [],
-          targetingTagLabels: []
+          campaignStatuses: [], // ['landed:landing', 'authorized'] campaign_statuses
+          emailStatuses: [], // ['dispatched', 'clicked'] events_sg
+          targetingTagLabels: [] // ['seelction-1'] targeting_taggables, targeting_tags
       }
     } = req.body;
 
@@ -33,17 +34,86 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
 
       }
     */
+    TargetBatch.create({
+      filter, segment, campaign
+    }).then((r) => {
 
-    // query RestaurantTa with filter
+      sequelize.query("").then(([results, metadata]) => {
+        // Results will be an empty array and metadata will contain the number of affected rows.
+      })
 
-    // for each restaurant_ta in results
+      // query RestaurantTa with filter
+      RestaurantsTa
+      .findAll({
+        where: query,
+        offset: skip,
+        limit,
+        order
+      })
+      .then((results) => {
+        map(
+          results,
+          (restaurant, cb) => {
+            // for each restaurant_ta in results
+            cb(null, restaurant); // use original element
+            cb(null, null); // skip element
+            cb(null, enhancedRestaurant); // enhance element
 
-      // process data for target
-      let processedData = {};
-      Object.entries(data).forEach(([key, value]) => {
-        processedData[key] = restaurant_ta[value];
-      });
+            // if any of targetingLabels in filter.targetingTagLabels
 
-      // create target with data
+            TargetingTaggables.findAll({
+              where: {item_id: restaurant.location_id}
+            }).then((taggables) => {
+              if (!taggables || taggables.length < 1) {
+                cb(null, restaurant);
+              } else {
+                map(
+                  taggables,
+                  (taggable, cb2) => {
+                    TargetingTags.findOne({
+                      where: {id: taggable.get().targeting_tag_id}
+                    }).then((targetingTag) => {
+                      cb2(null, targetingTag.get().label)
+                    }).catch((error) => cb2(error));
+                  }, (err2, targetingLabels) => {
+                    if (err2) {
+                      cb(err2)
+                    } else {
+                      const enhancedRestaurant = restaurant.get();
+                      enhancedRestaurant.targetingTags = targetingLabels;
+                      cb(null, enhancedRestaurant);
+                    }
+                  }
+                )
+              }
+            }).catch((error) => cb(error));
+          },
+          (err, enhancedResults) => {
+            if (err) {
+              res.json({ error: err });
+            } else {
+              // for each result in enhancedResults into
+              enhancedResults
+              .filter(e => e !== null)
+              .map(result => {
+                // process data for target
+                let processedData = {};
+                Object.entries(data).forEach(([key, value]) => {
+                  processedData[key] = restaurant[value];
+                });
+
+                // create target with data
+                Target.create({
+                  data: processedData,
+                  item_id: restaurant.location_id,
+                  item_type: 'App\\Models\\RestaurantTa'
+                  target_batch_id: r.id
+                });
+              })
+            }
+          }
+        ) // map
+      }).catch((err) => res.json({ error: err }));
+    }).catch((err) => res.json({ error: err }));
   });
 });
