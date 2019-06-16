@@ -31,7 +31,7 @@ export const taRestaurantForSQL = (restaurant) => {
 }
 
 const doIt = (limit, page) => {
-  taAPI.getRestaurants({ locID: locations.berlin, limit, offset: page*limit }).then((res) => {
+  taAPI.getRestaurants({ locID: locations.brno, limit, offset: page*limit }).then((res) => {
 
     res.data.forEach((restaurant) => {
       console.log(restaurant.email);
