@@ -1,4 +1,5 @@
 import * as functions from "firebase-functions";
+import Tokens from '../models/Tokens';
 import CampaignStatuses from '../models/CampaignStatuses';
 
 const cors = require('cors')({
@@ -14,16 +15,17 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       campaign = 'default'
     } = req.body;
 
-    if (!targetId || !status) {
+    if (!token || !status) {
       return res.json({ error: 'required field missing' })
     }
 
     // get taget id from token in url
-    Token.findOne({
+    Tokens.findOne({
       where: {
         id: token
       }
     }).then((o) => {
+      
       CampaignStatuses.create({
         target_id: o.target_id,
         type,
@@ -33,6 +35,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       .then((o) => {
         res.json({ error: null, result: o.get() })
       }).catch((error) => res.json({ error }));
+
     }).catch((error) => res.json({ error }));
   });
 });
