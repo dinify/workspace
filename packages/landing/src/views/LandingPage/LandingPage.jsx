@@ -1,6 +1,7 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
+import queryString from "query-string";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
@@ -25,6 +26,8 @@ import SectionProduct from "./Sections/SectionProduct.jsx";
 // import SectionMailingList from "./Sections/SectionMailingList.jsx";
 import { useTranslation } from 'react-i18next';
 import { getCookie, setCookie } from '@dinify/common/dist/lib/FN';
+import { ReportCampaignAction } from '@dinify/common/dist/api/restaurant';
+
 
 
 const headerToggleOffset = 100;
@@ -54,6 +57,17 @@ class LandingPage extends React.Component {
     //window.scrollTo(0, 0);
     //document.body.scrollTop = 0;
     window.addEventListener('scroll', this.handleScroll, true);
+    const { location } = this.props;
+    const parsed = queryString.parse(location.search);
+    const token = parsed.token;
+    if (token) {
+      ReportCampaignAction({
+        token,
+        status: 'landed:landing'
+      })
+      .then(() => console.log('status updated'))
+      .catch(() => console.log('status update failed'));
+    }
   }
 
   componentWillUnmount() {
