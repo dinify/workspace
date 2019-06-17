@@ -15,7 +15,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     } = req.body;
 
     if (!targetId || !status) {
-      res.json({ error: 'required field missing' })
+      return res.json({ error: 'required field missing' })
     }
 
     // get taget id from token in url

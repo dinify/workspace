@@ -16,14 +16,17 @@ const formatPercent = (percent, decimals = 1) => `${Math.floor(percent * Math.po
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {
-      query = {},
-      skip = 0,
-      limit = 100,
-      sort = {}
+      targetId = null,
+      targetBatchId = null
     } = req.body;
-    Restaurants.find(query).sort(sort).skip(skip).limit(limit).exec((e, result) => {
-      if (!e) {
-        const process = result[req.query.offset];
+
+    if (!target_id || !target_batch_id) {
+      return res.json({ error: 'required field missing' })
+    }
+
+    const next = (targets) => {
+      eachOf(targets, (process, cb) => {
+        // process data from external source
         let langDist = Object.keys(process.langDist).map(key => {
           return {
             lang: key,
@@ -44,6 +47,8 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           ratio: formatPercent(Math.max(val.countRel * (target / maxRatio), 0.1), 0),
           percent: formatPercent(val.countRel)
         }));
+
+        Token.create({}).then();
 
         const msg = {
           to: {
@@ -69,12 +74,44 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         };
         const html = mail.generate(msg, variables, "RestaurantOnboarding");
 
+        // save email object into emails table
+        Email.create({
+          target_id: ,
+          sg_message_id: null, // null at the time of generating, defined at the time of sending
+        }).then((o) => {
+
+        })
+
+
         return res.send(html);
 
         /* return sendgrid.send({
             html: substituted,
             ...msg
         }); */
+      }
+    }
+
+    if (target_id) {
+      Targets.findOne({
+        where: {
+          id: targetId
+        }
+      }).then((o) => {
+        next([o]);
+      })
+    }
+    else if (target_batch_id) {
+      Targets.findAll({
+        where: {
+          target_batch_id: targetBatchId
+        }
+      })
+    }
+
+    RestaurantsTa.find(query).exec((e, result) => {
+      if (!e) {
+
 
       } else {
         return res.json({ error: e });
