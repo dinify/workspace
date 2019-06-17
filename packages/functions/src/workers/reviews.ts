@@ -47,7 +47,7 @@ const doStuff = (restaurant, cb) => {
 const doIt = (limit, page) => {
   MongoRestaurants
   .find()
-  .sort({ _id: 1 })
+  .sort({ _id: -1 })
   .skip(limit*page)
   .limit(limit)
   .exec((e, restaurants) => {

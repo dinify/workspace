@@ -12,25 +12,20 @@ Emails.init({
     primaryKey: true,
     defaultValue: () => uuidBase62.v4()
   },
-
-  target_id: { type: Sequelize.STRING, allowNull: false },
-  message_id: { type: Sequelize.STRING, allowNull: true },
-  message_key: { type: Sequelize.STRING, allowNull: true },
-
-  type: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: 'default'
-  },
-
-  message: { type: Sequelize.JSON, allowNull: false },
-
+  email_id: { type: Sequelize.UUID, allowNull: false },
+  email: { type: Sequelize.STRING, allowNull: false },
+  timestamp: { type: Sequelize.DATE, allowNull: false },
+  smtp_id: { type: Sequelize.STRING, allowNull: false },
+  event: { type: Sequelize.STRING, allowNull: false },
+  category: { type: Sequelize.STRING, allowNull: false },
+  sg_event_id: { type: Sequelize.STRING, allowNull: false },
+  sg_message_id: { type: Sequelize.STRING, allowNull: false },
   createdAt: { type: Sequelize.DATE, field: 'created_at' },
   updatedAt: { type: Sequelize.DATE, field: 'updated_at' }
 }, {
   timestamps: true,
   sequelize,
-  modelName: 'emails'
+  modelName: 'events_sg'
 });
 
 export default Emails;

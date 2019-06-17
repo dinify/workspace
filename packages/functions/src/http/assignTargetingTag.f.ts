@@ -24,7 +24,7 @@ const removeTaggable = (tt, locationId, res) => {
   TargetingTaggables.destroy({
     where: {
       targeting_tag_id: ttId,
-      item_type: 'App/Models/RestaurantTa',
+      item_type: 'App\\Models\\RestaurantTa',
       item_id: locationId,
     }
   }).then(() => {
