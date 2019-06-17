@@ -25,16 +25,20 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         id: token
       }
     }).then((o) => {
-      
-      CampaignStatuses.create({
-        target_id: o.target_id,
-        type,
-        status,
-        campaign
-      })
-      .then((o) => {
-        res.json({ error: null, result: o.get() })
-      }).catch((error) => res.json({ error }));
+
+      if (!o) {
+        res.json({ error: 404 });
+      } else {
+        CampaignStatuses.create({
+          target_id: o.target_id,
+          type,
+          status,
+          campaign
+        })
+        .then((o) => {
+          res.json({ error: null, result: o.get() })
+        }).catch((error) => res.json({ error }));
+      }
 
     }).catch((error) => res.json({ error }));
   });

@@ -1,5 +1,7 @@
 import { Get, Post, PostMultipart } from './Network';
 
+const googleFunctionsEndpoint = 'https://europe-west1-dinify.cloudfunctions.net/';
+
 export function GetRestaurants({ populateWith }) {
   let populateQuery = '';
   if (populateWith) populateQuery = `&with=${populateWith}`;
@@ -104,8 +106,6 @@ export function CallService({ serviceId }) {
 export function GetServiceimages() {
   return Get({ path: `service/images?limit=100` });
 }
-
-
 
 export function ChangeCategory({ restaurantId, category }) {
   return Post(
@@ -518,4 +518,21 @@ export function CreateMenulanguage({ restaurantId, language }) { // language = '
 
 export function TranslateAll({ restaurantId }) {
   return Post({ path: `restaurant/${restaurantId}/menu/translate/all` });
+}
+
+export function ReportCampaignAction({
+  token,
+  status,
+  type = 'default',
+  campaign = 'default'
+}) {
+  return Post({
+    endpoint: 'https://europe-west1-dinify.cloudfunctions.net/',
+    path: 'googleFunctionsEndpoint'
+  }, {
+    token,
+    status,
+    type,
+    campaign
+  });
 }
