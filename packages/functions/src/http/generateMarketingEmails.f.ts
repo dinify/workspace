@@ -58,37 +58,29 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           percent: formatPercent(val.countRel)
         }));
 
-        const recipient = "hello@dinify.app";
-        if (config.env === "production") {
-          const recipient = JSON.parse(target.data).email;
-        }
-
-        const dataStr = JSON.stringify({
-          e: recipient
-        });
-        const dataEnc = uuidBase62.encode(dataStr);
+        const recipient = JSON.parse(target.data).email;
+        const data = { e: recipient };
+        const template = "RestaurantOnboarding";
+        const msg = {
+          to: {
+            email: recipient
+          },
+          from: {
+            email: "hello@dinify.app",
+            name: "Dinify"
+          },
+          subject: "Lepší recenze, vyšší zisk, zkuste Dinify"
+        };
 
         Tokens.create({
           item_id: target.id,
           item_type: 'App\\Models\\Target',
           type: 'signup',
           status: 'pending',
-          data: dataStr,
+          data: JSON.stringify(data),
           expires_at: new Date()
         }).then((token) => {
-
-
-          const template = "RestaurantOnboarding";
-          const msg = {
-            to: {
-              email: recipient
-            },
-            from: {
-              email: "hello@dinify.app",
-              name: "Dinify"
-            },
-            subject: "Lepší recenze, vyšší zisk, zkuste Dinify"
-          };
+          const dataEnc = uuidBase62.encode(JSON.stringify(dataStr));
           const variables = {
             restaurant: {
               name: target.name,

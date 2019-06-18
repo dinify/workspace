@@ -5,7 +5,6 @@ import { readFileSync } from "fs";
 import * as mail from '../util/mail';
 
 const mjml2html = require("mjml");
-const sendgrid = require("@sendgrid/mail");
 
 exports = module.exports = functions
 .region('europe-west1')
