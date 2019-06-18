@@ -1,5 +1,10 @@
 import * as functions from "firebase-functions";
-import Restaurants from "../schema/Restaurants";
+
+import RestaurantsTa from "../models/RestaurantsTa";
+import TargetingTags from '../models/TargetingTags';
+import TargetingTaggables from '../models/TargetingTaggables';
+import Cohorts from '../models/Cohorts';
+
 import * as path from "path";
 import emojis from "../data/emojis";
 import likelySubtags from "../data/likelySubtags";
@@ -29,6 +34,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     const next = (targets) => {
       eachOf(targets, (target, cb) => {
         // process data from external source
+        let extData = RestaurantsTa.findOne()
         let langDist = Object.keys(target.langDist).map(key => {
           return {
             lang: key,
@@ -112,9 +118,9 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       })
     }
     else if (cohort_id) {
-      Cohorts.findAll({
+      Targets.findAll({
         where: {
-          id: cohortId
+          cohort_id: cohortId
         }
       })
     }
