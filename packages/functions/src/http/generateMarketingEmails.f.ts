@@ -3,7 +3,9 @@ import * as functions from "firebase-functions";
 import RestaurantsTa from "../models/RestaurantsTa";
 import TargetingTags from '../models/TargetingTags';
 import TargetingTaggables from '../models/TargetingTaggables';
+import Targets from '../models/Targets';
 import Cohorts from '../models/Cohorts';
+import uuidBase62 from 'uuid-base62';
 
 import * as path from "path";
 import emojis from "../data/emojis";
@@ -56,23 +58,30 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           percent: formatPercent(val.countRel)
         }));
 
+        const recipient = "hello@dinify.app";
+        if (config.env === "production") {
+          const recipient = JSON.parse(target.data).email;
+        }
+
+        const dataStr = JSON.stringify({
+          e: recipient
+        });
+        const dataEnc = uuidBase62.encode(dataStr);
+
         Tokens.create({
           item_id: target.id,
           item_type: 'App\\Models\\Target',
           type: 'signup',
           status: 'pending',
-          data: JSON.stringify({}),
+          data: dataStr,
           expires_at: new Date()
         }).then((token) => {
-          const receipent = "hello@dinify.app";
-          if (config.env === "production") {
-            const receipent = JSON.parse(target.data).email;
-          }
+
 
           const template = "RestaurantOnboarding";
           const msg = {
             to: {
-              email: receipent
+              email: recipient
             },
             from: {
               email: "hello@dinify.app",
@@ -90,7 +99,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
               targetPercent: formatPercent(target.targetLangRel)
             },
             price: '€19.95',
-            link: `https://www.dinify.app?t=${token.id}&e=${receipent}`
+            link: `https://www.dinify.app/landing?d=${dataEnc}`
           };
           const html = mail.generate(msg, variables, template);
 
