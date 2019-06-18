@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
-import TargetingFlags from "../schema/TargetingFlags";
-import Restaurants from "../schema/Restaurants";
+import Emails from "../models/Emails";
+import EventSg from "../models/EventSg";
 
 const cors = require('cors')({
   origin: true,
