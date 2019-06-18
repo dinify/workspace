@@ -1,9 +1,13 @@
 import * as functions from "firebase-functions";
+import sequelize from '../mysql.config';
 import map from 'async/map';
 import RestaurantsTa from '../models/RestaurantsTa';
 import TargetingTags from '../models/TargetingTags';
 import TargetingTaggables from '../models/TargetingTaggables';
 import Cohorts from '../models/Cohorts';
+import Target from '../models/Target';
+import eachOf from 'async/eachOf';
+import _ from 'lodash';
 
 const cors = require('cors')({
   origin: true,
@@ -14,10 +18,10 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     const {
       segment = 'default', // segment-1
       campaign = 'default', // rp-onboarding
-      filter: {
-          campaignStatuses: [], // ['landed:landing', 'authorized'] campaign_statuses
-          emailStatuses: [], // ['dispatched', 'clicked'] events_sg
-          targetingTagLabels: [] // ['seelction-1'] targeting_taggables, targeting_tags
+      filter = {
+        campaignStatuses: [], // ['landed:landing', 'authorized'] campaign_statuses
+        emailStatuses: [], // ['dispatched', 'clicked'] events_sg
+        targetingTagLabels: [] // ['seelction-1'] targeting_taggables, targeting_tags
       }
     } = req.body;
 
@@ -66,7 +70,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           eachOf(results, (result, cb) => {
             // process data for target
             let processedData = {};
-            Object.entries(data).forEach(([key, value]) => {
+            _.values(extPersistData).forEach(([key, value]) => {
               processedData[key] = result[value];
             });
 

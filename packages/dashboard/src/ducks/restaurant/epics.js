@@ -152,7 +152,7 @@ const editImageEpic = (action$, state$) =>
     handleAction: () => {/* do something... */} 
   })
 
-const onUpdateSnackbarsEpic = (action$, state$) =>
+const onUpdateSnackbarsEpic = (action$) =>
   action$.pipe(
     filter(
       action =>
