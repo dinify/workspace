@@ -9,7 +9,7 @@ import { actionTypes } from 'react-redux-firebase';
 import { setCookie } from '@dinify/common/dist/lib/FN';
 import { selectRestaurant } from './actions';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
-
+import { reportCampaignAction } from '@dinify/common/dist/ducks/reporting/actions';
 
 import * as API from '@dinify/common/dist/api/restaurant';
 
@@ -93,9 +93,11 @@ const registerRestaurantEpic = (action$, state$, { getFirebase }) =>
     ),
     mergeMap(({t, res}) => {
       setCookie('access_token', t.token, 90);
+      const onboardingToken = state$.value.restaurant.onboardingToken;
       return of(
         { type: 'REGISTER_RESTAURANT_DONE', payload: { res } },
-        selectRestaurant({ id: res.id })
+        selectRestaurant({ id: res.id }),
+        reportCampaignAction({ token: onboardingToken, status: 'restaurant:created'})
       );
     }),
     catchError(error => of({ type: 'REGISTER_RESTAURANT_FAIL', error }))
@@ -188,8 +190,6 @@ const addLangSnackbar = (action$) =>
       return snackbar.show({ message });
     })
   );
-
-
 
 export default [
   loadRestaurant,

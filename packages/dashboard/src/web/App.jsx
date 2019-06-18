@@ -13,7 +13,6 @@ import RegisterRestaurant from 'web/pages/RegisterRestaurant';
 import { reportCampaignAction } from '@dinify/common/dist/ducks/reporting/actions';
 import withRoot from 'withRoot.js';
 
-
 const Content = styled.div`
   background-color: rgb(27, 36, 49);
   color: white;
@@ -61,10 +60,10 @@ const App = ({
           }} />
           <Route path="/" component={({location}) => {
             if (user.isEmpty) return <Redirect to="/signin" />;
-            if (!selectedRestaurant) return <Redirect to="/register" />; 
+            if (!selectedRestaurant) return <Redirect to="/register" />;
             return <Dashboard history={history} location={location} />;
           }} />
-        </Switch>      
+        </Switch>
       }
     </Content>
   );

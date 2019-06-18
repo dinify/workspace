@@ -28,8 +28,6 @@ import { useTranslation } from 'react-i18next';
 import { getCookie, setCookie } from '@dinify/common/dist/lib/FN';
 import { ReportCampaignAction } from '@dinify/common/dist/api/restaurant';
 
-
-
 const headerToggleOffset = 100;
 const initialHeight = window.innerHeight;
 
