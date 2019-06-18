@@ -3,26 +3,24 @@ import uuidBase62 from 'uuid-base62';
 import sequelize from '../mysql.config';
 const Model = Sequelize.Model;
 
-class TargetingTags extends Model {}
+class Cohorts extends Model {}
 
-TargetingTags.init({
+Cohorts.init({
   id: {
     type: Sequelize.UUID,
     allowNull: false,
     primaryKey: true,
     defaultValue: () => uuidBase62.v4()
   },
-  
-  item_id: { type: Sequelize.UUID, allowNull: false },
-  item_type: { type: Sequelize.STRING, allowNull: false },
-  cohort_id: { type: Sequelize.UUID, allowNull: false },
-
+  filter: { type: Sequelize.JSON, allowNull: false },
+  label: { type: Sequelize.STRING, allowNull: false },
+  campaign: { type: Sequelize.STRING, allowNull: false },
   createdAt: { type: Sequelize.DATE, field: 'created_at' },
   updatedAt: { type: Sequelize.DATE, field: 'updated_at' }
 }, {
   timestamps: true,
   sequelize,
-  modelName: 'targeting_taggables'
+  modelName: 'cohorts'
 });
 
-export default TargetingTags;
+export default Cohorts;

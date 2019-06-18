@@ -3,6 +3,7 @@ import map from 'async/map';
 import RestaurantsTa from '../models/RestaurantsTa';
 import TargetingTags from '../models/TargetingTags';
 import TargetingTaggables from '../models/TargetingTaggables';
+import Cohorts from '../models/Cohorts';
 
 const cors = require('cors')({
   origin: true,
@@ -59,9 +60,9 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         return res.json({ error: 'no results for the filter specified' });
       }
       else {
-        TargetBatch.create({
+        Cohorts.create({
           filter, segment, campaign
-        }).then((targetBatch) => {
+        }).then((cohort) => {
           eachOf(results, (result, cb) => {
             // process data for target
             let processedData = {};
@@ -74,7 +75,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
               data: JSON.stringify(processedData),
               item_id: result[extKey],
               item_type: extType,
-              target_batch_id: targetBatch.id
+              cohort_id: cohort.id
             });
           })
         })
