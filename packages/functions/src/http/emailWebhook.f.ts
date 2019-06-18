@@ -17,11 +17,9 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         where: {
           sg_message_id
         }
-      }).then((email) => {
-        const emailId = email.id;
-
+      }).then((emailResult) => {
         EventSg.create({
-          email_id: email.id,
+          email_id: emailResult.id,
           ...eventObject
         }).then((o) => {
           res.sendStatus(200);

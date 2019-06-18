@@ -24,13 +24,13 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     if (!targetId || !cohortId) {
       return res.json({ error: 'required field missing' })
     }
-
+x
     const next = (targets) => {
       eachOf(targets, (target, cb) => {
-        const recipient = "hello@dinify.app";
+        let recipient = "hello@dinify.app";
         if (config.env === "production") {
           // dangerous line
-          const recipient = JSON.parse(target.data).email_address;
+          recipient = JSON.parse(target.data).email_address;
         }
 
         Emails.findOne({

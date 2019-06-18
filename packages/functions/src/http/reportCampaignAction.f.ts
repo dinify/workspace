@@ -35,8 +35,8 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           status,
           campaign
         })
-        .then((o) => {
-          res.json({ error: null, result: o.get() })
+        .then((campaignStatus) => {
+          res.json({ error: null, result: campaignStatus.get() })
         }).catch((error) => res.json({ error }));
       }
 

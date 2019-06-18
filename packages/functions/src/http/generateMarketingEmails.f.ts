@@ -102,11 +102,11 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             message_key: 'sg_message_id',
             type: template,
             message: JSON.stringify({...msg, html, variables})
-          }).then((o) => {
-            res.json({ ...o, token });
+          }).then((emailResult) => {
+            res.json({ ...emailResult.get(), token });
           })
         });
-      }
+      })
     }
 
     if (target_id) {
