@@ -1,6 +1,8 @@
 import * as functions from "firebase-functions";
-import TargetingFlags from "../schema/TargetingFlags";
-import Restaurants from "../schema/Restaurants";
+import TargetingFlags from "../models/TargetingFlags";
+import Restaurants from "../models/Restaurants";
+import Emails from "../models/Emails";
+import EventsSg from "../models/EventsSg";
 
 const cors = require('cors')({
   origin: true,
@@ -18,7 +20,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           sg_message_id
         }
       }).then((emailResult) => {
-        EventSg.create({
+        EventsSg.create({
           email_id: emailResult.id,
           ...eventObject
         }).then((o) => {

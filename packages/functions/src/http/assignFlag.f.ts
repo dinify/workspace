@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
-import TargetingFlags from "../schema/TargetingFlags";
-import Restaurants from "../schema/Restaurants";
+import TargetingFlags from "../models/TargetingFlags";
+import Restaurants from "../models/Restaurants";
 
 const cors = require('cors')({
   origin: true,
@@ -15,7 +15,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     } = req.body;
 
     if (!restaurantId || !flag) {
-      res.json({ error: 'required field missing' })  
+      res.json({ error: 'required field missing' })
     }
 
     TargetingFlags.update(
@@ -35,7 +35,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           (err) => {
             res.json({ error: err })
           }
-        );        
+        );
 
       }
     );
