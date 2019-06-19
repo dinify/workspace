@@ -70,7 +70,7 @@ export class SignInForm extends React.Component {
       }
     )
   }
-
+  
   decide = ({ email }) => {
     this.validateEmail(email);
     const { firebase, openDialog, setPage } = this.props;

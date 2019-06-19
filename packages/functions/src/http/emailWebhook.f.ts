@@ -1,6 +1,4 @@
 import * as functions from "firebase-functions";
-import TargetingFlags from "../models/TargetingFlags";
-import Restaurants from "../models/Restaurants";
 import Emails from "../models/Emails";
 import EventsSg from "../models/EventsSg";
 

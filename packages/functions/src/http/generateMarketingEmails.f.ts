@@ -3,9 +3,10 @@ import * as functions from "firebase-functions";
 import RestaurantsTa from "../models/RestaurantsTa";
 import TargetingTags from '../models/TargetingTags';
 import TargetingTaggables from '../models/TargetingTaggables';
-import Targets from '../models/Targets';
+import Target from '../models/Target';
 import Cohorts from '../models/Cohorts';
 import uuidBase62 from 'uuid-base62';
+import eachOf from 'async/eachOf';
 
 import * as path from "path";
 import emojis from "../data/emojis";
@@ -13,6 +14,7 @@ import likelySubtags from "../data/likelySubtags";
 import localeDisplayNames from "../data/cs/localeDisplayNames";
 import * as mail from '../util/mail';
 import { readFileSync } from "fs";
+
 
 const cors = require('cors')({
   origin: true,
@@ -110,7 +112,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     }
 
     if (target_id) {
-      Targets.findOne({
+      Target.findOne({
         where: {
           id: targetId
         }
@@ -119,7 +121,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       })
     }
     else if (cohort_id) {
-      Targets.findAll({
+      Target.findAll({
         where: {
           cohort_id: cohortId
         }

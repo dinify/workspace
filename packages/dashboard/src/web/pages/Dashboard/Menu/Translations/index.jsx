@@ -51,7 +51,7 @@ const languages = R.mergeAll(
   }})
 );
 
-const brackets = (str) => `(${str})`
+const brackets = (str) => `(${str})`;
 
 const styles = theme => ({
   root: {
@@ -199,12 +199,12 @@ const Translations = ({
             {t('selectLanguage')}
           </Typography>
           <div>
-            {menuLanguagesList.map((l) =>
+            {menuLanguagesList.map((l) => 
               <Chip
                 key={l}
                 className={classes.chip}
-                avatar={<Avatar>{l.toUpperCase()}</Avatar>}
-                label={languages[l.toLowerCase()] && languages[l.toLowerCase()].langEn}
+                avatar={<Avatar>{l.substring(0,2).toUpperCase()}</Avatar>}
+                label={languages[l] && languages[l].langEn}
                 onClick={() => selectLocale({ selectedLocale: l })}
                 color={selectedLocale === l ? 'primary' : 'default'}
               />
