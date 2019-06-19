@@ -1,6 +1,6 @@
 // @flow
 import { Observable, of} from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import * as R from 'ramda';
 import * as FN from 'lib/FN';
@@ -8,7 +8,7 @@ import * as FN from 'lib/FN';
 const updateCusomizationsEpic = (action$: Observable, state$) =>
   action$.pipe(
     ofType('UPDATECUSOMIZATIONS_INIT'),
-    switchMap(({ payload: { menuItemId, actionKind, custKey, custId, cust, updateObj } }) => {
+    mergeMap(({ payload: { menuItemId, actionKind, custKey, custId, cust, updateObj } }) => {
 
       const menuItem = state$.value.menuItem.all[menuItemId];
       if (!menuItem) return { type: 'UPDATECUSOMIZATIONS_FAIL' };

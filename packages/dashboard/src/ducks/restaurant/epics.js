@@ -1,6 +1,6 @@
 // @flow
 import { Observable, of, from } from 'rxjs';
-import { mergeMap, switchMap, map, catchError, filter, mapTo } from 'rxjs/operators';
+import { mergeMap, map, catchError, filter, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { push } from 'connected-react-router';
 import { reset } from 'redux-form';
@@ -77,7 +77,7 @@ const middlePromise = (getFirebase, res) => new Promise((resolve, reject) => {
 const registerRestaurantEpic = (action$, state$, { getFirebase }) =>
   action$.pipe(
     ofType('REGISTER_RESTAURANT_INIT'),
-    switchMap(
+    mergeMap(
       ({ payload: { restaurantName, subdomain, language } }) => {
         const onboardingToken = state$.value.restaurant.onboardingToken;
         const createRestaurantPayload = { restaurantName, subdomain, language };
@@ -88,7 +88,7 @@ const registerRestaurantEpic = (action$, state$, { getFirebase }) =>
       },
       (action, res) => (res)
     ),
-    switchMap(
+    mergeMap(
       (res) => from(middlePromise(getFirebase, res)),
     ),
     mergeMap(({t, res}) => {
@@ -134,7 +134,7 @@ const reorderEpic = (action$: Observable) =>
 const editImageEpic = (action$, state$) =>
   action$.pipe(
     ofType('UPDATE_IMAGE_DONE'),
-    switchMap(({ payload: { res } }) => {
+    mergeMap(({ payload: { res } }) => {
       const { id } = res;
       const images = state$.value.restaurant.loggedRestaurant.images;
       const maxPrecedence = R.sort((a, b) => b.precedence - a.precedence)(

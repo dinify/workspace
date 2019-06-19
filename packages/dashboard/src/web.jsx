@@ -26,7 +26,7 @@ if (langCookie) {
   try {
     language = JSON.parse(langCookie);
   } catch {
-    console.error('langCookie JSON.parse');
+    console.log('langCookie is not JSON');
   }
 }
 
