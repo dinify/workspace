@@ -42,7 +42,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     } = req.body;
 
     if (!tagLabel || !locationId) {
-      res.json({ error: 'required field missing' })  
+      res.json({ error: 'required field missing' })
     }
 
     RestaurantsTa.findOne({
