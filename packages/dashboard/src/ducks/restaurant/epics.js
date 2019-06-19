@@ -1,5 +1,5 @@
 // @flow
-import { Observable, of, from } from 'rxjs';
+import { Observable, of, from, merge } from 'rxjs';
 import { mergeMap, map, catchError, filter, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { push } from 'connected-react-router';
@@ -67,40 +67,44 @@ export const createRestaurantDoneAction = ({ email, password }) => {
   // return { type: 'CREATE_RESTAURANT_DONE', payload: res }
 };
 
-const middlePromise = (getFirebase, res) => new Promise((resolve, reject) => {
-  getFirebase().auth().currentUser.getIdTokenResult(true).then((t) => {
+const middlePromise = (firebase, res) => new Promise((resolve, reject) => {
+  console.log(res,'res');
+  firebase.auth().currentUser.getIdTokenResult(true).then((t) => {
+    console.log('2')
     resolve({ t, res });
   })
   .catch(reject)
 })
 
-const registerRestaurantEpic = (action$, state$, { getFirebase }) =>
+const registerRestaurantEpic = (action$, state$, { firebase }) =>
   action$.pipe(
     ofType('REGISTER_RESTAURANT_INIT'),
-    mergeMap(
-      ({ payload: { restaurantName, subdomain, language } }) => {
-        const onboardingToken = state$.value.restaurant.onboardingToken;
-        const createRestaurantPayload = { restaurantName, subdomain, language };
-        if (onboardingToken) {
-          createRestaurantPayload.token = onboardingToken;
-        }
-        return from(API.CreateRestaurant(createRestaurantPayload));
-      },
-      (action, res) => (res)
-    ),
-    mergeMap(
-      (res) => from(middlePromise(getFirebase, res)),
-    ),
-    mergeMap(({t, res}) => {
-      setCookie('access_token', t.token, 90);
+    mergeMap(({ payload: { restaurantName, subdomain, language } }) => {
+      console.log('1')
       const onboardingToken = state$.value.restaurant.onboardingToken;
-      return of(
-        { type: 'REGISTER_RESTAURANT_DONE', payload: { res } },
-        selectRestaurant({ id: res.id }),
-        reportCampaignAction({ token: onboardingToken, status: 'restaurant:created'})
+      const createRestaurantPayload = { restaurantName, subdomain, language };
+      if (onboardingToken) {
+        createRestaurantPayload.token = onboardingToken;
+      }
+      return from(API.CreateRestaurant(createRestaurantPayload)).pipe(
+        mergeMap((res) => {
+          return from(middlePromise(firebase, res)).pipe(
+            mergeMap(({t, res}) => {
+              console.log('3');
+              setCookie('access_token', t.token, 90);
+              const onboardingToken = state$.value.restaurant.onboardingToken;
+              return of(
+                { type: 'REGISTER_RESTAURANT_DONE', payload: { res } },
+                selectRestaurant({ id: res.id }),
+                reportCampaignAction({ token: onboardingToken, status: 'restaurant:created'})
+              );
+            }),
+            catchError(error => of({ type: 'REGISTER_RESTAURANT_FAIL', error }))
+          );
+        }),
+        catchError(error => of({ type: 'REGISTER_RESTAURANT_FAIL', error }))
       );
-    }),
-    catchError(error => of({ type: 'REGISTER_RESTAURANT_FAIL', error }))
+    })
   );
 
 const reorderEpic = (action$: Observable) =>
