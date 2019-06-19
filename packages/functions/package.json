@@ -44,6 +44,7 @@
       "**"
     ]
   },
+  "engines": {"node": "8"},
   "devDependencies": {
     "@types/lodash": "^4.14.134",
     "tslint": "~5.8.0",

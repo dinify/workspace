@@ -21,7 +21,7 @@ sendgrid.setApiKey(functions.config().sendgrid.key);
  *     https://github.com/firebase/functions-samples/issues/170
  */
 let allFunctions = {};
-const files = glob.sync('./**/*.f.js', { cwd: __dirname });
+const files = glob.sync('./**/*.f.[tj]s', { cwd: __dirname });
 
 for(let f=0,fl=files.length; f<fl; f++){
   const file = files[f];
