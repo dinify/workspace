@@ -5,7 +5,7 @@ import RestaurantsTa from '../models/RestaurantsTa';
 import TargetingTags from '../models/TargetingTags';
 import TargetingTaggables from '../models/TargetingTaggables';
 import Cohorts from '../models/Cohorts';
-import Target from '../models/Target';
+import Targets from '../models/Targets';
 import eachOf from 'async/eachOf';
 import _ from 'lodash';
 
@@ -61,12 +61,12 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       )
     `).then(([results, metadata]) => {
       if (!results.length) {
-        return res.json({ error: 'no results for the filter specified' });
+        res.json({ error: 'no results for the filter specified' });
       }
       else {
         Cohorts.create({
           filter, segment, campaign
-        }).then((cohort) => {
+        }).then((cohort: any) => {
           eachOf(results, (result, cb) => {
             // process data for target
             let processedData = {};
@@ -75,7 +75,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             });
 
             // create target with data
-            Target.create({
+            Targets.create({
               data: JSON.stringify(processedData),
               item_id: result[extKey],
               item_type: extType,

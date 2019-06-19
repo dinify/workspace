@@ -38,8 +38,11 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
                 (taggable, cb2) => {
                   TargetingTags.findOne({
                     where: {id: taggable.get().targeting_tag_id}
-                  }).then((targetingTag) => {
-                    cb2(null, targetingTag.get().label)
+                  }).then((targetingTag: any) => {
+                    if (targetingTag) {
+                      cb2(null, targetingTag.get().label)
+                    }
+                    else cb(null, restaurant);
                   }).catch((error) => cb2(error));
                 }, (err2, targetingLabels) => {
                   if (err2) {

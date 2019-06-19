@@ -1,11 +1,11 @@
 import Sequelize from 'sequelize'
-import uuidBase62 from 'uuid-base62';;
+import uuidBase62 from 'uuid-base62';
 import sequelize from '../mysql.config';
 const Model = Sequelize.Model;
 
-class Emails extends Model {}
+class EventsSg extends Model {}
 
-Emails.init({
+EventsSg.init({
   id: {
     type: Sequelize.UUID,
     allowNull: false,
@@ -28,4 +28,4 @@ Emails.init({
   modelName: 'events_sg'
 });
 
-export default Emails;
+export default EventsSg;
