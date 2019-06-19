@@ -3,9 +3,9 @@ import uuidBase62 from 'uuid-base62';
 import sequelize from '../mysql.config';
 const Model = Sequelize.Model;
 
-class Target extends Model {}
+class Targets extends Model {}
 
-Target.init({
+Targets.init({
   id: {
     type: Sequelize.UUID,
     allowNull: false,
@@ -24,4 +24,4 @@ Target.init({
   modelName: 'targets'
 });
 
-export default Target;
+export default Targets;

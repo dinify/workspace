@@ -3,7 +3,9 @@ import * as functions from "firebase-functions";
 import RestaurantsTa from "../models/RestaurantsTa";
 import TargetingTags from '../models/TargetingTags';
 import TargetingTaggables from '../models/TargetingTaggables';
-import Target from '../models/Target';
+import Targets from '../models/Targets';
+import Tokens from '../models/Tokens';
+import Emails from '../models/Emails';
 import Cohorts from '../models/Cohorts';
 import uuidBase62 from 'uuid-base62';
 import eachOf from 'async/eachOf';
@@ -27,12 +29,12 @@ const formatPercent = (percent, decimals = 1) => `${Math.floor(percent * Math.po
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {
-      targetId = null,
-      cohortId = null
+      targetId,
+      cohortId
     } = req.body;
 
     if (!targetId || !cohortId) {
-      return res.json({ error: 'required field missing' })
+      res.json({ error: 'required field missing' })
     }
 
     const next = (targets) => {
@@ -50,18 +52,18 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         })
         .filter(val => ['en', 'cs'].indexOf(val.lang) === -1)
         .splice(0, 5);
-        const target = 0.85;
+        const targetPercent = 0.85;
         const maxRatio = langDist[0].countRel;
         langDist = langDist.map(val => ({
           emoji: emojis[likelySubtags[val.lang].split('-')[2]],
           language: localeDisplayNames.languages[val.lang],
           count: val.count,
-          ratio: formatPercent(Math.max(val.countRel * (target / maxRatio), 0.1), 0),
+          ratio: formatPercent(Math.max(val.countRel * (targetPercent / maxRatio), 0.1), 0),
           percent: formatPercent(val.countRel)
         }));
 
         const recipient = JSON.parse(target.data).email;
-        const data = { e: recipient };
+        const tokenData = { e: recipient };
         const template = "RestaurantOnboarding";
         const msg = {
           to: {
@@ -79,10 +81,10 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           item_type: 'App\\Models\\Target',
           type: 'signup',
           status: 'pending',
-          data: JSON.stringify(data),
+          data: JSON.stringify(tokenData),
           expires_at: new Date()
         }).then((token) => {
-          const dataEnc = uuidBase62.encode(JSON.stringify(dataStr));
+          const dataEnc = uuidBase62.encode(JSON.stringify(tokenData));
           const variables = {
             restaurant: {
               name: target.name,
@@ -111,8 +113,8 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       })
     }
 
-    if (target_id) {
-      Target.findOne({
+    if (targetId) {
+      Targets.findOne({
         where: {
           id: targetId
         }
@@ -120,8 +122,8 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         next([o]);
       })
     }
-    else if (cohort_id) {
-      Target.findAll({
+    else if (cohortId) {
+      Targets.findAll({
         where: {
           cohort_id: cohortId
         }

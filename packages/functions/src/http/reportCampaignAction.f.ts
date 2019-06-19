@@ -16,7 +16,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     } = req.body;
 
     if (!token || !status) {
-      return res.json({ error: 'required field missing' })
+      res.json({ error: 'required field missing' })
     }
 
     // get taget id from token in url
@@ -24,7 +24,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       where: {
         id: token
       }
-    }).then((o) => {
+    }).then((o: any) => {
 
       if (!o) {
         res.json({ error: 404 });

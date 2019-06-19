@@ -17,13 +17,16 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         where: {
           sg_message_id
         }
-      }).then((emailResult) => {
-        EventsSg.create({
-          email_id: emailResult.id,
-          ...eventObject
-        }).then((o) => {
-          res.sendStatus(200);
-        }).catch((error) => res.json({ error }));
+      }).then((emailResult: any) => {
+        if (emailResult) {
+          EventsSg.create({
+            email_id: emailResult.id,
+            ...eventObject
+          }).then((o) => {
+            res.sendStatus(200);
+          }).catch((error) => res.json({ error }));
+        }
+
       }).catch((error) => res.json({ error }));
     })
   });
