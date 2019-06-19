@@ -15,7 +15,7 @@ TargetingTags.init({
   
   item_id: { type: Sequelize.UUID, allowNull: false },
   item_type: { type: Sequelize.STRING, allowNull: false },
-  cohort_id: { type: Sequelize.UUID, allowNull: false },
+  targeting_tag_id: { type: Sequelize.UUID, allowNull: false },
 
   createdAt: { type: Sequelize.DATE, field: 'created_at' },
   updatedAt: { type: Sequelize.DATE, field: 'updated_at' }

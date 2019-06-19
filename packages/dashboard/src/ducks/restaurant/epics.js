@@ -68,10 +68,9 @@ export const createRestaurantDoneAction = ({ email, password }) => {
 };
 
 const middlePromise = (firebase, res) => new Promise((resolve, reject) => {
-  console.log(res,'res');
   firebase.auth().currentUser.getIdTokenResult(true).then((t) => {
-    console.log('2')
-    resolve({ t, res });
+    console.log('2');
+    resolve({ t });
   })
   .catch(reject)
 })
@@ -89,10 +88,9 @@ const registerRestaurantEpic = (action$, state$, { firebase }) =>
       return from(API.CreateRestaurant(createRestaurantPayload)).pipe(
         mergeMap((res) => {
           return from(middlePromise(firebase, res)).pipe(
-            mergeMap(({t, res}) => {
+            mergeMap(({ t }) => {
               console.log('3');
               setCookie('access_token', t.token, 90);
-              const onboardingToken = state$.value.restaurant.onboardingToken;
               return of(
                 { type: 'REGISTER_RESTAURANT_DONE', payload: { res } },
                 selectRestaurant({ id: res.id }),
