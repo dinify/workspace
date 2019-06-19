@@ -1,11 +1,17 @@
 import Sequelize from 'sequelize';
 import sequelize from '../mysql.config';
+import uuidBase62 from 'uuid-base62';
 const Model = Sequelize.Model;
 
 class Restaurants extends Model {}
 
 Restaurants.init({
-  id: { type: Sequelize.UUID, allowNull: false },
+  id: {
+    type: Sequelize.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: () => uuidBase62.v4()
+  },
   subdomain: { type: Sequelize.STRING, allowNull: false },
   price_category: { type: Sequelize.TINYINT, allowNull: true },
   rating: { type: Sequelize.DECIMAL, allowNull: true },

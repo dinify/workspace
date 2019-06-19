@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import TargetingTaggables from './TargetingTaggables';
 import TargetingTags from './TargetingTags';
+import uuidBase62 from 'uuid-base62';
 
 const sequelize = require('../mysql.config');
 const Model = Sequelize.Model;
@@ -8,7 +9,12 @@ const Model = Sequelize.Model;
 class RestaurantsTa extends Model {}
 
 RestaurantsTa.init({
-  id: { type: Sequelize.STRING, primaryKey: true, allowNull: false },
+  id: {
+    type: Sequelize.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: () => uuidBase62.v4()
+  },
   location_id: { type: Sequelize.STRING, unique: true, allowNull: false },
   restaurant_id: { type: Sequelize.STRING, unique: true, allowNull: true },
   name: { type: Sequelize.STRING, allowNull: true },
