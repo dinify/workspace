@@ -27,17 +27,21 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     }).then((o: any) => {
 
       if (!o) {
-        res.json({ error: 404 });
+        res.json({ error: 'Token not found' });
       } else {
-        CampaignStatuses.create({
-          target_id: o.target_id,
-          type,
-          status,
-          campaign
-        })
-        .then((campaignStatus) => {
-          res.json(campaignStatus.get())
-        }).catch((error) => res.json({ error }));
+        if (o.item_type === 'App\\Models\\Target' && o.type === 'signup') {
+          // token -> target -> cohort -> campaign
+          CampaignStatuses.create({
+            target_id: o.item_id,
+            type,
+            status,
+            campaign
+          })
+          .then((campaignStatus) => {
+            res.json(campaignStatus.get())
+          }).catch((error) => res.json({ error }));
+        }
+        else res.json({ error: 'Invalid token' });
       }
 
     }).catch((error) => res.json({ error }));
