@@ -34,6 +34,10 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     const extKey = 'location_id';
     const extType = 'App\\Models\\RestaurantTa';
 
+    const filterTargetingTagLabels = filter.targetingTagLabels || [];
+    const filterCampaignStatuses = filter.campaignStatuses || [];
+    const filterEmailStatuses = filter.emailStatuses || [];
+
     sequelize.query(`
       select *
       from ${extTable}
@@ -42,14 +46,14 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       	from ${extTable} as ext
       	join targeting_taggables as ttg on ext.${extKey}=ttg.item_id
       	join targeting_tags as tta on ttg.targeting_tag_id=tta.id
-      	where label in ('${filter.targetingTagLabels.join("','")}')
+      	where label in ('${filterTargetingTagLabels.join("','")}')
       )
       or ${extKey} in (
         select ${extKey}
         from ${extTable} as ext
         join targets on ext.${extKey}=targets.target_id
         join campaign_statuses as cps on targets.id=cps.target_id
-        where cps.status in ('${filter.campaignStatuses.join("','")}')
+        where cps.status in ('${filterCampaignStatuses.join("','")}')
       )
       or ${extKey} in (
         select ${extKey}
@@ -57,7 +61,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         join targets on ext.${extKey}=targets.target_id
         join emails on targets.id=emails.target_id
         join events_sg as sg on emails.message_id=sg.sg_message_id
-        where sg.event in ('${filter.emailStatuses.join("','")}')
+        where sg.event in ('${filterEmailStatuses.join("','")}')
         and emails.message_key="sg_message_id"
       )
     `).then(([results, metadata]) => {
