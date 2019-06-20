@@ -15,7 +15,8 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
 
       Emails.findOne({
         where: {
-          sg_message_id
+          message_id: sg_message_id,
+          message_key: 'sg_message_id'
         }
       }).then((emailResult: any) => {
         if (emailResult) {
