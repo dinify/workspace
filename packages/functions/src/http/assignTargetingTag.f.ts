@@ -11,7 +11,7 @@ const createTaggable = (tt, locationId, res) => {
   const ttId = tt.id;
   TargetingTaggables.create({
     targeting_tag_id: ttId,
-    item_type: 'App/Models/RestaurantTa',
+    item_type: 'App\\Models\\RestaurantTa',
     item_id: locationId,
   }).then((taggable) => {
     console.log('New targeting taggable created');

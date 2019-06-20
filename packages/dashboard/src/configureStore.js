@@ -32,10 +32,6 @@ Raven.config('https://e8c54e0fdec04337b8f4ee65a1164dee@sentry.io/1199917', {
 }).install();
 
 // react-redux-firebase config
-const rrfConfig = {
-  userProfile: 'profiles',
-  useFirestoreForProfile: true,
-}
 firebase.initializeApp(firebaseConfig);
 
 const rootPersistConfig = {

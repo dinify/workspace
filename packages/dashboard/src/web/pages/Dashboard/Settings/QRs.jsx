@@ -39,8 +39,6 @@ const Table = styled.div`
 `;
 
 const QRs = ({ loggedRestaurant }) => {
-  const { t } = useTranslation();
-
   const waiterboards = FN.MapToList(loggedRestaurant.waiterboards).map(wb => {
     const tables = FN.MapToList(wb.tables).sort(
       (a, b) => a.number - b.number,

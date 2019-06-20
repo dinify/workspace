@@ -3,12 +3,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@dinify/common/dist/components/Typography';
-import Button from '@material-ui/core/Button';
+import { useTranslation } from 'react-i18next';
+import * as FN from 'lib/FN';
 import ListOfCategories from './ListOfCategories';
 import ListOfDishes from './ListOfDishes';
 import ItemDetail from './ItemDetail';
-import * as FN from 'lib/FN';
-import { useTranslation } from 'react-i18next';
 
 
 const Menucontrol = ({
@@ -16,7 +15,6 @@ const Menucontrol = ({
   selectedFoodId,
   categoriesMap,
   menuItems,
-  classes
 }) => {
   const categoriesList = FN.MapToList(categoriesMap).sort(
     (a, b) => a.precedence - b.precedence,
@@ -25,7 +23,6 @@ const Menucontrol = ({
     selectedCategoryId = categoriesList[0].id;
   }
   const { t } = useTranslation();
-  console.log(classes, 'sdsd');
   return (
     <div>
         {categoriesList.length < 1 && <div style={{textAlign: 'center', margin: '20px 0 40px 0'}}>
@@ -33,9 +30,9 @@ const Menucontrol = ({
             {t('menu.startWithCategory')}
           </Typography>
         </div>}
-        {/*categoriesList.length > 0 && <Button variant="contained" color="primary" type="submit">
+        {/* categoriesList.length > 0 && <Button variant="contained" color="primary" type="submit">
           Translate menu
-  </Button>*/}
+          </Button> */}
         <Grid container spacing={8} alignItems="flex-start" justify="center">
           <Grid item xs={3}>
             <Typography gutterBottom variant="caption">{t('menu.categories')}</Typography>

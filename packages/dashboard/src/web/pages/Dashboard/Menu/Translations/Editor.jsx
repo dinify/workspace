@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import Text from 'web/components/MaterialInputs/Text';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
 
 import Fab from '@material-ui/core/Fab';
 import Done from '@material-ui/icons/Done';
@@ -64,7 +63,6 @@ let Editor = ({
   selectedLocale,
   defaultLocale,
   suggestTranslation,
-  suggestAllTranslations,
   languageName,
   t
 }) => {
@@ -115,7 +113,7 @@ let Editor = ({
                   name={original.id}
                   component={Text}
                   componentProps={{
-                    //fullWidth: true,
+                    // fullWidth: true,
                     variant: 'outlined',
                     placeholder: '',
                     style: {
@@ -143,7 +141,7 @@ let Editor = ({
                       type="button"
                       onClick={() => suggestTranslation({
                         form: `translations/editor/${selectedLocale}/${type}`,
-                        field: original.id+'_description',
+                        field: `${original.id}_description`,
                         text: original.description,
                         from: defaultLocale,
                         to: selectedLocale
@@ -159,13 +157,13 @@ let Editor = ({
               {type === 'MenuItem' &&
                 <TableCell className={classes.lastCell}>
                   <Field
-                    name={original.id+'_description'}
+                    name={`${original.id}_description`}
                     component={Text}
                     componentProps={{
                       multiline: true,
                       rows: 6,
                       variant: 'outlined',
-                      //fullWidth: true,
+                      // fullWidth: true,
                       placeholder: '',
                       style: {minWidth: '300px', margin: '10px'},
                       InputProps: {
@@ -212,6 +210,7 @@ class DynamicEditorComponent extends React.Component {
       enableReinitialize: true
     })(Editor)
   }
+
   render() {
     const EditorComponent = this.EditorComponent
     return <EditorComponent {...this.props} />
