@@ -72,23 +72,34 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         Cohorts.create({
           filter, segment, campaign
         }).then((cohort: any) => {
+
+
           eachOf(results, (result, cb) => {
             // process data for target
             let processedData = {};
             _.values(extPersistData).forEach(([key, value]) => {
               processedData[key] = result[value];
             });
-
             // create target with data
             Targets.create({
               data: JSON.stringify(processedData),
               item_id: result[extKey],
               item_type: extType,
               cohort_id: cohort.id
-            });
-          })
-        })
+            }).then(() => {
+              cb(null);
+            }).catch((err) => cb(err));
+          }, (error) => {
+            if (error) {
+              res.json({ error });
+            } else {
+              res.json({ error: null });
+            }
+          });
+
+
+        }).catch((err) => res.json({ error: err }));
       }
-    })
+    }).catch((err) => res.json({ error: err }));
   });
 });
