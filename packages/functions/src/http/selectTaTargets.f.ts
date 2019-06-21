@@ -16,7 +16,7 @@ const cors = require('cors')({
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {
-      segment = 'default', // segment-1
+      label = 'default', // segment-1
       campaign = 'default', // rp-onboarding
       filter = {
         campaignStatuses: [], // ['landed:landing', 'authorized'] campaign_statuses
@@ -70,7 +70,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       }
       else {
         Cohorts.create({
-          filter, segment, campaign
+          filter, label, campaign
         }).then((cohort: any) => {
 
 
