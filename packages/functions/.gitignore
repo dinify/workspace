@@ -4,4 +4,7 @@ dist
 # Typescript v1 declaration files
 typings/
 
-.env
+# Firebase config specific
+.runtimeconfig.json
+.firebaserc
+functions/lib
