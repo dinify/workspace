@@ -12,8 +12,8 @@ Targets.init({
     primaryKey: true,
     defaultValue: () => uuidBase62.v4()
   },
-  target_id: { type: Sequelize.UUID, allowNull: false },
-  target_type: { type: Sequelize.STRING, allowNull: false },
+  item_id: { type: Sequelize.UUID, allowNull: false },
+  item_type: { type: Sequelize.STRING, allowNull: false },
   cohort_id: { type: Sequelize.UUID, allowNull: false },
   data: { type: Sequelize.JSON, allowNull: true },
   createdAt: { type: Sequelize.DATE, field: 'created_at' },
