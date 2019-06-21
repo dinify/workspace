@@ -62,7 +62,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           percent: formatPercent(val.countRel)
         }));
 
-        const recipient = JSON.parse(target.data).email;
+        const recipient = target.data.email_address;
         const tokenData = { e: recipient };
         const template = "RestaurantOnboarding";
         const msg = {
@@ -81,7 +81,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           item_type: 'App\\Models\\Target',
           type: 'signup',
           status: 'pending',
-          data: JSON.stringify(tokenData),
+          data: tokenData,
           expires_at: new Date()
         }).then((token) => {
           const dataEnc = uuidBase62.encode(JSON.stringify(tokenData));
@@ -105,7 +105,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             message_id: null, // null at the time of generating, defined at the time of sending
             message_key: 'sg_message_id',
             type: template,
-            message: JSON.stringify({...msg, html, variables})
+            message: {...msg, html, variables}
           }).then((emailResult) => {
             res.json({ ...emailResult.get(), token });
           })
