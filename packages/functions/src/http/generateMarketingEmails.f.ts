@@ -8,7 +8,7 @@ import Tokens from '../models/Tokens';
 import Emails from '../models/Emails';
 import Cohorts from '../models/Cohorts';
 import uuidBase62 from 'uuid-base62';
-import eachOf from 'async/eachOf';
+import map from 'async/map';
 
 import * as path from "path";
 import emojis from "../data/emojis";
@@ -38,9 +38,9 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     }
 
     const next = (targets) => {
-      eachOf(targets, (target, cb) => {
+      map(targets, (target, cb) => {
         // process data from external source
-        let extData = RestaurantsTa.findOne()
+        
         let langDist = Object.keys(target.langDist).map(key => {
           return {
             lang: key,
@@ -107,10 +107,14 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             type: template,
             message: {...msg, html, variables}
           }).then((emailResult) => {
-            res.json({ ...emailResult.get(), token });
-          })
-        });
-      })
+            cb(null, { email: emailResult.get(), token });
+          }).catch((error) => cb(error));
+
+        }).catch((error) => cb(error));
+      }, (error, results) => {
+        if (!error) res.json({ error: null, results });
+        else res.json({ error });
+      });
     }
 
     if (targetId) {
@@ -120,14 +124,16 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         }
       }).then((o) => {
         next([o]);
-      })
+      }).catch((err) => res.json({ error: err }));
     }
     else if (cohortId) {
       Targets.findAll({
         where: {
           cohort_id: cohortId
         }
-      })
+      }).then((targets) => {
+        next(targets);
+      }).catch((err) => res.json({ error: err }));
     }
   });
 });
