@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 const instance = 'dinify:europe-west1:api';
-const dbName = 'production';
+let dbName = 'production';
 const dbUser = 'api';
 const dbPass = '7XWsCgpqqEPWLFL';
 
@@ -17,8 +17,10 @@ if ((process.env.NODE_ENV || '').trim() === 'production') { // prod
     }
   });
 } else { // dev
+  dbName = 'production';
   sequelize = new Sequelize(dbName, dbUser, dbPass, {
     dialect: 'mysql',
+    port: 3307,
     host: '127.0.0.1',
     logging: console.log
   });

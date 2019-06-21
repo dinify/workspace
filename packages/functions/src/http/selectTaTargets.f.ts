@@ -85,7 +85,6 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             _.keys(extPersistData).forEach((key) => {
               processedData[key] = resultData[extPersistData[key]];
             });
-            console.log(processedData, resultData);
             // create target with data
             Targets.create({
               data: processedData,

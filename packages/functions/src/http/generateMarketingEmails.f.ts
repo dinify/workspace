@@ -16,6 +16,7 @@ import likelySubtags from "../data/likelySubtags";
 import localeDisplayNames from "../data/cs/localeDisplayNames";
 import * as mail from '../util/mail';
 import { readFileSync } from "fs";
+import _ from 'lodash';
 
 
 const cors = require('cors')({
@@ -33,83 +34,98 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       cohortId
     } = req.body;
 
-    if (!targetId || !cohortId) {
+    if (targetId ? cohortId : !cohortId) {
       res.json({ error: 'required field missing' })
+      return;
     }
 
     const next = (targets) => {
+      console.log(targets.length);
       map(targets, (target, cb) => {
+        console.log('goat');
         // process data from external source
-        
-        let langDist = Object.keys(target.langDist).map(key => {
-          return {
-            lang: key,
-            ...target.langDist[key]
+
+        // type inferred from target.item_type
+        RestaurantsTa.findOne({ where: { location_id: target.item_id }}).then((restaurant: any) => {
+          if (!restaurant) {
+            cb('External data not found for target: ' + target.item_id);
+            return;
           }
-        })
-        .sort((a, b) => {
-          return b.count - a.count;
-        })
-        .filter(val => ['en', 'cs'].indexOf(val.lang) === -1)
-        .splice(0, 5);
-        const targetPercent = 0.85;
-        const maxRatio = langDist[0].countRel;
-        langDist = langDist.map(val => ({
-          emoji: emojis[likelySubtags[val.lang].split('-')[2]],
-          language: localeDisplayNames.languages[val.lang],
-          count: val.count,
-          ratio: formatPercent(Math.max(val.countRel * (targetPercent / maxRatio), 0.1), 0),
-          percent: formatPercent(val.countRel)
-        }));
 
-        const recipient = target.data.email_address;
-        const tokenData = { e: recipient };
-        const template = "RestaurantOnboarding";
-        const msg = {
-          to: {
-            email: recipient
-          },
-          from: {
-            email: "hello@dinify.app",
-            name: "Dinify"
-          },
-          subject: "Lepší recenze, vyšší zisk, zkuste Dinify"
-        };
+          let langDist = _.keys(restaurant.language_distribution).map(key => {
+            return {
+              lang: key,
+              ...restaurant.language_distribution[key]
+            }
+          })
+          .sort((a, b) => {
+            return b.count - a.count;
+          })
+          .filter(val => ['en', 'cs'].indexOf(val.lang) === -1)
+          .splice(0, 5);
 
-        Tokens.create({
-          item_id: target.id,
-          item_type: 'App\\Models\\Target',
-          type: 'signup',
-          status: 'pending',
-          data: tokenData,
-          expires_at: new Date()
-        }).then((token) => {
-          const dataEnc = uuidBase62.encode(JSON.stringify(tokenData));
-          const variables = {
-            restaurant: {
-              name: target.name,
+          console.log(restaurant.language_distribution, langDist);
+
+          const targetPercent = 0.85;
+          const maxRatio = langDist[0].countRel;
+          langDist = langDist.map(val => ({
+            emoji: emojis[likelySubtags[val.lang].split('-')[2]],
+            language: localeDisplayNames.languages[val.lang],
+            count: val.count,
+            ratio: formatPercent(Math.max(val.countRel * (targetPercent / maxRatio), 0.1), 0),
+            percent: formatPercent(val.countRel)
+          }));
+
+          console.log(targetPercent);
+
+          const recipient = target.data.email_address;
+          const tokenData = { e: recipient };
+          const template = "RestaurantOnboarding";
+          const msg = {
+            to: {
+              email: recipient
             },
-            stats: {
-              langDist,
-              targetCount: target.targetLang,
-              targetPercent: formatPercent(target.targetLangRel)
+            from: {
+              email: "hello@dinify.app",
+              name: "Dinify"
             },
-            price: '€19.95',
-            link: `https://www.dinify.app/landing?d=${dataEnc}`
+            subject: "Lepší recenze, vyšší zisk, zkuste Dinify"
           };
-          const html = mail.generate(msg, variables, template);
 
-          // save email object into emails table
-          Emails.create({
-            target_id: target.id,
-            message_id: null, // null at the time of generating, defined at the time of sending
-            message_key: 'sg_message_id',
-            type: template,
-            message: {...msg, html, variables}
-          }).then((emailResult) => {
-            cb(null, { email: emailResult.get(), token });
+          Tokens.create({
+            item_id: target.id,
+            item_type: 'App\\Models\\Target',
+            type: 'signup',
+            status: 'pending',
+            data: tokenData,
+            expires_at: new Date()
+          }).then((token: any) => {
+            const variables = {
+              restaurant: {
+                name: target.name,
+              },
+              stats: {
+                langDist,
+                targetCount: target.targetLang,
+                targetPercent: formatPercent(target.targetLangRel)
+              },
+              price: '€19.95',
+              link: `https://www.dinify.app/landing?t=${token.id}&email=${recipient}`
+            };
+            const html = mail.generate(msg, variables, template);
+
+            // save email object into emails table
+            Emails.create({
+              target_id: target.id,
+              message_id: null, // null at the time of generating, defined at the time of sending
+              message_key: 'sg_message_id',
+              type: template,
+              message: {...msg, html, variables}
+            }).then((emailResult) => {
+              cb(null, { email: emailResult.get(), token });
+            }).catch((error) => cb(error));
+
           }).catch((error) => cb(error));
-
         }).catch((error) => cb(error));
       }, (error, results) => {
         if (!error) res.json({ error: null, results });
@@ -123,6 +139,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           id: targetId
         }
       }).then((o) => {
+        if (!o) res.json({ error: 404 });
         next([o]);
       }).catch((err) => res.json({ error: err }));
     }
@@ -132,6 +149,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           cohort_id: cohortId
         }
       }).then((targets) => {
+        if (targets.length === 0) res.json({ error: 404 });
         next(targets);
       }).catch((err) => res.json({ error: err }));
     }
