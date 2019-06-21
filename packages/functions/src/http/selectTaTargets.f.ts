@@ -38,33 +38,40 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     const filterCampaignStatuses = filter.campaignStatuses || [];
     const filterEmailStatuses = filter.emailStatuses || [];
 
+    const sqlQueries: string[] = [];
+    if (filterTargetingTagLabels.length > 0) sqlQueries.push(`${extKey} in (
+      select ${extKey}
+      from ${extTable} as ext
+      join targeting_taggables as ttg on ext.${extKey}=ttg.item_id
+      join targeting_tags as tta on ttg.targeting_tag_id=tta.id
+      where label in ('${filterTargetingTagLabels.join("','")}')
+    )`);
+    if (filterCampaignStatuses.length > 0) sqlQueries.push(`${extKey} in (
+      select ${extKey}
+      from ${extTable} as ext
+      join targets on ext.${extKey}=targets.item_id
+      join campaign_statuses as cps on targets.id=cps.target_id
+      where cps.status in ('${filterCampaignStatuses.join("','")}')
+    )`);
+    if (filterEmailStatuses.length > 0) sqlQueries.push(`${extKey} in (
+      select ${extKey}
+      from ${extTable} as ext
+      join targets on ext.${extKey}=targets.item_id
+      join emails on targets.id=emails.target_id
+      join events_sg as sg on emails.message_id=sg.sg_message_id
+      where sg.event in ('${filterEmailStatuses.join("','")}')
+      and emails.message_key="sg_message_id"
+    )`);
+
     sequelize.query(`
       select *
       from ${extTable}
-      where ${extKey} in (
-      	select ${extKey}
-      	from ${extTable} as ext
-      	join targeting_taggables as ttg on ext.${extKey}=ttg.item_id
-      	join targeting_tags as tta on ttg.targeting_tag_id=tta.id
-      	where label in ('${filterTargetingTagLabels.join("','")}')
-      )
-      or ${extKey} in (
-        select ${extKey}
-        from ${extTable} as ext
-        join targets on ext.${extKey}=targets.item_id
-        join campaign_statuses as cps on targets.id=cps.target_id
-        where cps.status in ('${filterCampaignStatuses.join("','")}')
-      )
-      or ${extKey} in (
-        select ${extKey}
-        from ${extTable} as ext
-        join targets on ext.${extKey}=targets.item_id
-        join emails on targets.id=emails.item_id
-        join events_sg as sg on emails.message_id=sg.sg_message_id
-        where sg.event in ('${filterEmailStatuses.join("','")}')
-        and emails.message_key="sg_message_id"
-      )
-    `).then(([results, metadata]) => {
+      where ${sqlQueries.join(' or ')}
+    `, {
+      model: RestaurantsTa,
+      mapToModel: true // pass true here if you have any mapped fields
+    }).then((results: any[]) => {
+      console.log(results);
       if (!results.length) {
         res.json({ error: 'no results for the filter specified' });
       }
@@ -72,8 +79,6 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         Cohorts.create({
           filter, label, campaign
         }).then((cohort: any) => {
-
-
           each(results, (result, cb) => {
             // process data for target
             let processedData = {};
@@ -82,7 +87,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             });
             // create target with data
             Targets.create({
-              data: JSON.stringify(processedData),
+              data: processedData,
               item_id: result[extKey],
               item_type: extType,
               cohort_id: cohort.id
