@@ -71,7 +71,6 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       model: RestaurantsTa,
       mapToModel: true // pass true here if you have any mapped fields
     }).then((results: any[]) => {
-      console.log(results);
       if (!results.length) {
         res.json({ error: 'no results for the filter specified' });
       }
@@ -80,11 +79,13 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           filter, label, campaign
         }).then((cohort: any) => {
           each(results, (result, cb) => {
+            const resultData = result.get();
             // process data for target
-            let processedData = {};
-            _.values(extPersistData).forEach(([key, value]) => {
-              processedData[key] = result[value];
+            const processedData = {};
+            _.keys(extPersistData).forEach((key) => {
+              processedData[key] = resultData[extPersistData[key]];
             });
+            console.log(processedData, resultData);
             // create target with data
             Targets.create({
               data: processedData,
