@@ -52,7 +52,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         select ${extKey}
         from ${extTable} as ext
         join targets on ext.${extKey}=targets.item_id
-        join campaign_statuses as cps on targets.id=cps.item_id
+        join campaign_statuses as cps on targets.id=cps.target_id
         where cps.status in ('${filterCampaignStatuses.join("','")}')
       )
       or ${extKey} in (
