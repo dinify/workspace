@@ -28,12 +28,6 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
 
     const next = (targets) => {
       eachOf(targets, (target, cb) => {
-        let recipient = "hello@dinify.app";
-        if (config.env === "production") {
-          // dangerous line
-          recipient = JSON.parse(target.data).email_address;
-        }
-
         Emails.findOne({
           where: {
             target_id: target.id
@@ -43,7 +37,14 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           if (!email) {
             res.json({ error: 404, message: `Email not found with target id: ${target.id}` });
           }
-          const message = JSON.parse(email.message);
+          const message = email.message;
+          const originalRecipient = message.to.email;
+          message.to.email = "hello@dinify.app";
+          if (config.env === "production") {
+            // dangerous line
+            message.to.email = originalRecipient;
+          }
+
           mail.send(message).then(([response, body]) => {
             email.message_id = response.headers['X-Message-ID'];
             email.save();
