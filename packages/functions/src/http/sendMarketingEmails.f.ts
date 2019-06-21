@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 
 import Targets from '../models/Targets';
 import Emails from '../models/Cohorts';
-import eachOf from 'async/eachOf';
+import each from 'async/each';
 
 import * as mail from '../util/mail';
 import { readFileSync } from "fs";
@@ -27,30 +27,40 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     }
 
     const next = (targets) => {
-      eachOf(targets, (target, cb) => {
-        Emails.findOne({
-          where: {
-            target_id: target.id
-          },
-          order: [['createdAt','DESC']]
-        }).then((email: any) => {
-          if (!email) {
-            res.json({ error: 404, message: `Email not found with target id: ${target.id}` });
-          }
-          const message = email.message;
-          const originalRecipient = message.to.email;
-          message.to.email = "hello@dinify.app";
-          if (config.env === "production") {
-            // dangerous line
-            message.to.email = originalRecipient;
-          }
+      each(
+        targets,
+        (target, cb) => {
+          Emails.findOne({
+            where: {
+              target_id: target.id
+            },
+            order: [['createdAt','DESC']]
+          }).then((email: any) => {
+            if (!email) {
+              cb(`Email not found with target id: ${target.id}`);
+              return;
+            }
+            const message = email.message;
+            const originalRecipient = message.to.email;
+            message.to.email = "hello@dinify.app";
+            if (config.env === "production") {
+              // dangerous line
+              message.to.email = originalRecipient;
+            }
 
-          mail.send(message).then(([response, body]) => {
-            email.message_id = response.headers['X-Message-ID'];
-            email.save();
-          })
-        })
-      })
+            mail.send(message).then(([response, body]) => {
+              email.message_id = response.headers['X-Message-ID'];
+              email
+                .save()
+                .then(() =>  cb(null))
+                .catch((e) =>  cb(e));
+            })
+          }).catch((e) => cb(e));
+        }, (error) => {
+          if (!error) res.json({ error: null });
+          else res.json({ error });
+        }
+      )
     }
 
     if (targetId) {
@@ -59,17 +69,20 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           id: targetId
         }
       }).then((o) => {
+        if (!o) res.json({ error: 404 });
         next([o]);
-      })
+      }).catch((err) => res.json({ error: err }));
     }
     else if (cohortId) {
       Targets.findAll({
         where: {
           cohort_id: cohortId
         }
-      })
+      }).then((targets) => {
+        if (targets.length === 0) res.json({ error: 404 });
+        next(targets);
+      }).catch((err) => res.json({ error: err }));
     }
 
-    res.sendStatus(200);
   });
 });
