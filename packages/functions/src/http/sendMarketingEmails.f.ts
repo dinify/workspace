@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 
 import Targets from '../models/Targets';
-import Emails from '../models/Cohorts';
+import Emails from '../models/Emails';
 import each from 'async/each';
 
 import * as mail from '../util/mail';
@@ -22,7 +22,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       cohortId
     } = req.body;
 
-    if (!targetId || !cohortId) {
+    if (targetId ? cohortId : !cohortId) {
       res.json({ error: 'required field missing' })
     }
 
@@ -30,6 +30,8 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       each(
         targets,
         (target, cb) => {
+          // TODO: only send unsent emails
+          // using latest for now
           Emails.findOne({
             where: {
               target_id: target.id
@@ -42,7 +44,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             }
             const message = email.message;
             const originalRecipient = message.to.email;
-            message.to.email = "hello@dinify.app";
+            message.to.email = "test@dinify.app";
             if (config.env === "production") {
               // dangerous line
               message.to.email = originalRecipient;
