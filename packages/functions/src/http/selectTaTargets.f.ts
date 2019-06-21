@@ -6,7 +6,7 @@ import TargetingTags from '../models/TargetingTags';
 import TargetingTaggables from '../models/TargetingTaggables';
 import Cohorts from '../models/Cohorts';
 import Targets from '../models/Targets';
-import eachOf from 'async/eachOf';
+import each from 'async/each';
 import _ from 'lodash';
 
 const cors = require('cors')({
@@ -74,7 +74,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         }).then((cohort: any) => {
 
 
-          eachOf(results, (result, cb) => {
+          each(results, (result, cb) => {
             // process data for target
             let processedData = {};
             _.values(extPersistData).forEach(([key, value]) => {
@@ -89,6 +89,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             }).then(() => {
               cb(null);
             }).catch((err) => cb(err));
+
           }, (error) => {
             if (error) {
               res.json({ error });
