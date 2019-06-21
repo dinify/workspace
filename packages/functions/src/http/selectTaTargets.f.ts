@@ -51,15 +51,15 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       or ${extKey} in (
         select ${extKey}
         from ${extTable} as ext
-        join targets on ext.${extKey}=targets.target_id
-        join campaign_statuses as cps on targets.id=cps.target_id
+        join targets on ext.${extKey}=targets.item_id
+        join campaign_statuses as cps on targets.id=cps.item_id
         where cps.status in ('${filterCampaignStatuses.join("','")}')
       )
       or ${extKey} in (
         select ${extKey}
         from ${extTable} as ext
-        join targets on ext.${extKey}=targets.target_id
-        join emails on targets.id=emails.target_id
+        join targets on ext.${extKey}=targets.item_id
+        join emails on targets.id=emails.item_id
         join events_sg as sg on emails.message_id=sg.sg_message_id
         where sg.event in ('${filterEmailStatuses.join("','")}')
         and emails.message_key="sg_message_id"
