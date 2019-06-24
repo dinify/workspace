@@ -28,6 +28,10 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           return;
         }
         const messageId = sg_message_id.split('.')[0];
+        let timestamp = new Date();
+        if (eventObject.timestamp) {
+          timestamp = new Date(Number(eventObject.timestamp)*1000)
+        }
         Emails.findOne({
           where: {
             message_id: messageId,
@@ -39,7 +43,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
               email_id: emailResult.id,
               message_id: messageId,
               email: eventObject.email,
-              timestamp: eventObject.timestamp,
+              timestamp,
               smtp_id: eventObject['smtp-id'],
               event: eventObject.event,
               sg_event_id: eventObject.sg_event_id,
