@@ -16,9 +16,10 @@ const handleError = (errorMessage, cb, error?) => {
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const events = req.body || [];
-
-    console.log(events);
-
+    if (!Array.isArray(events)) {
+      res.json({ error: 'body is not array' });
+      return;
+    }
     each(
       events,
       (eventObject: any, cb) => {
@@ -31,6 +32,10 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         let timestamp = new Date();
         if (eventObject.timestamp) {
           timestamp = new Date(Number(eventObject.timestamp)*1000)
+        }
+        let event = eventObject.event;
+        if (eventObject.useragent && eventObject.useragent.includes('GoogleImageProxy')) {
+          event = `${event}.amp`;
         }
         Emails.findOne({
           where: {
@@ -45,7 +50,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
               email: eventObject.email,
               timestamp,
               smtp_id: eventObject['smtp-id'],
-              event: eventObject.event,
+              event,
               sg_event_id: eventObject.sg_event_id,
               sg_message_id: eventObject.sg_message_id,
               category: eventObject.category,

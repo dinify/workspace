@@ -38,12 +38,18 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             campaign
           })
           .then((campaignStatus) => {
-            res.json(campaignStatus.get())
-          }).catch((error) => res.json({ error }));
+            res.json(campaignStatus.get());
+          }).catch((error) => {
+            res.json({ error: 'CampaignStatuses create error' });
+            console.error(error);
+          });
         }
         else res.json({ error: 'Invalid token' });
       }
 
-    }).catch((error) => res.json({ error }));
+    }).catch((error) => {
+      res.json({ error: 'Tokens findOne error' });
+      console.error(error);
+    });
   });
 });
