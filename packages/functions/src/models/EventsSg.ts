@@ -18,6 +18,7 @@ EventsSg.init({
   smtp_id: { type: Sequelize.STRING, allowNull: false },
   event: { type: Sequelize.STRING, allowNull: false },
   category: { type: Sequelize.STRING, allowNull: false },
+  message_id: { type: Sequelize.STRING, allowNull: false },
   sg_event_id: { type: Sequelize.STRING, allowNull: false },
   sg_message_id: { type: Sequelize.STRING, allowNull: false },
   createdAt: { type: Sequelize.DATE, field: 'created_at' },

@@ -22,11 +22,16 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     each(
       events,
       (eventObject: any, cb) => {
-        const { sg_message_id } = eventObject;=
+        const { sg_message_id } = eventObject;
+        if (!sg_message_id) {
+          cb('no sg_message_id');
+          return;
+        }
+        const messageId = sg_message_id.split('.')[0];
         Emails.findOne({
           where: {
-            message_id: sg_message_id,
-            message_key: 'sg_message_id'
+            message_id: messageId,
+            message_key: 'events_sg.message_id'
           }
         }).then((emailResult: any) => {
           if (emailResult) {
@@ -38,7 +43,8 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
               event: eventObject.event,
               category: eventObject.category,
               sg_event_id: eventObject.sg_event_id,
-              sg_message_id: eventObject.sg_message_id
+              sg_message_id: eventObject.sg_message_id,
+              message_id: messageId
             }).then(() => {
               cb(null);
             }).catch((error) =>

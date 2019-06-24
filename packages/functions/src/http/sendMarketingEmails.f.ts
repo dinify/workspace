@@ -51,7 +51,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             }
 
             mail.send(message).then(([response, body]) => {
-              email.message_id = response.headers['X-Message-ID'];
+              email.message_id = response.headers['x-message-id'];
               email
                 .save()
                 .then(() =>  cb(null))

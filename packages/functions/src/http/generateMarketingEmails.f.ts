@@ -116,7 +116,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             Emails.create({
               target_id: target.id,
               message_id: null, // null at the time of generating, defined at the time of sending
-              message_key: 'sg_message_id',
+              message_key: 'events_sg.message_id',
               type: template,
               message: {...msg, html, variables}
             }).then((emailResult) => {
