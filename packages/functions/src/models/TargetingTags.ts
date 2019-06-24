@@ -18,7 +18,7 @@ TargetingTags.init({
 }, {
   timestamps: true,
   sequelize,
-  modelName: 'targeting_tags'
+  tableName: 'targeting_tags'
 });
 
 export default TargetingTags;

@@ -30,7 +30,7 @@ Emails.init({
 }, {
   timestamps: true,
   sequelize,
-  modelName: 'emails'
+  tableName: 'emails'
 });
 
 export default Emails;

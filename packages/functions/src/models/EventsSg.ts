@@ -29,7 +29,7 @@ EventsSg.init({
 }, {
   timestamps: true,
   sequelize,
-  modelName: 'events_sg'
+  tableName: 'events_sg'
 });
 
 export default EventsSg;

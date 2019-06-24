@@ -20,7 +20,7 @@ Cohorts.init({
 }, {
   timestamps: true,
   sequelize,
-  modelName: 'cohorts'
+  tableName: 'cohorts'
 });
 
 export default Cohorts;

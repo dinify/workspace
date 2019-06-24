@@ -21,7 +21,7 @@ Targets.init({
 }, {
   timestamps: true,
   sequelize,
-  modelName: 'targets'
+  tableName: 'targets'
 });
 
 export default Targets;

@@ -23,7 +23,7 @@ Tokens.init({
 }, {
   timestamps: true,
   sequelize,
-  modelName: 'tokens'
+  tableName: 'tokens'
 });
 
 export default Tokens;

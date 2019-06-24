@@ -35,7 +35,7 @@ CampaignStatuses.init({
 }, {
   timestamps: true,
   sequelize,
-  modelName: 'campaign_statuses'
+  tableName: 'campaign_statuses'
 });
 
 export default CampaignStatuses;

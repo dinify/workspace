@@ -47,7 +47,7 @@ Restaurants.init({
 }, {
   timestamps: true,
   sequelize,
-  modelName: 'restaurants'
+  tableName: 'restaurants'
 });
 
 export default Restaurants;

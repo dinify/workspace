@@ -22,7 +22,7 @@ TargetingTags.init({
 }, {
   timestamps: true,
   sequelize,
-  modelName: 'targeting_taggables'
+  tableName: 'targeting_taggables'
 });
 
 export default TargetingTags;
