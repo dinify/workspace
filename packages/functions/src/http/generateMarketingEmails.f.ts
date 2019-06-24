@@ -39,10 +39,12 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
       return;
     }
 
+    const capitalizeFirst = string => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     const next = (targets) => {
-      console.log(targets.length);
       map(targets, (target, cb) => {
-        console.log('goat');
         // process data from external source
 
         // type inferred from target.item_type
@@ -64,19 +66,15 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           .filter(val => ['en', 'cs'].indexOf(val.lang) === -1)
           .splice(0, 5);
 
-          console.log(restaurant.language_distribution, langDist);
-
           const targetPercent = 0.85;
           const maxRatio = langDist[0].countRel;
           langDist = langDist.map(val => ({
             emoji: emojis[likelySubtags[val.lang].split('-')[2]],
-            language: localeDisplayNames.languages[val.lang],
+            language: capitalizeFirst(localeDisplayNames.languages[val.lang]),
             count: val.count,
             ratio: formatPercent(Math.max(val.countRel * (targetPercent / maxRatio), 0.1), 0),
             percent: formatPercent(val.countRel)
           }));
-
-          console.log(targetPercent);
 
           const recipient = target.data.email_address;
           const tokenData = { e: recipient };
@@ -102,12 +100,12 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           }).then((token: any) => {
             const variables = {
               restaurant: {
-                name: target.name,
+                name: restaurant.name,
               },
               stats: {
                 langDist,
-                targetCount: target.targetLang,
-                targetPercent: formatPercent(target.targetLangRel)
+                targetCount: restaurant.target_languages,
+                targetPercent: formatPercent(restaurant.target_languages_rel)
               },
               price: '€19.95',
               link: `https://www.dinify.app/landing?t=${token.id}&email=${recipient}`
