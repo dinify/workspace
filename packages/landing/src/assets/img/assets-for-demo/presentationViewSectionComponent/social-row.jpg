@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/social-row.282010ec.jpg";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/assets-for-demo/presentationViewSectionComponent/social-row.jpg
-// module id = 1070
-// module chunks = 0

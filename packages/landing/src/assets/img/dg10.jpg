@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/dg10.38704689.jpg";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/dg10.jpg
-// module id = 1043
-// module chunks = 0

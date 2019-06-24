@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/card-profile1-square.3122abf4.jpg";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/faces/card-profile1-square.jpg
-// module id = 78
-// module chunks = 0

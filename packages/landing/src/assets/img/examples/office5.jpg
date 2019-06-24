@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/office5.99ffc11c.jpg";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/examples/office5.jpg
-// module id = 690
-// module chunks = 0

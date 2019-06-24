@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/laptop-basics.e342eac6.png";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/assets-for-demo/presentationViewSectionComponent/laptop-basics.png
-// module id = 1065
-// module chunks = 0

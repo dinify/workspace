@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/table.777ec84b.jpg";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/assets-for-demo/presentationViewSectionComponent/table.jpg
-// module id = 1066
-// module chunks = 0

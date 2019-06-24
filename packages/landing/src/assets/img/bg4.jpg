@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/bg4.199e9ec1.jpg";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/bg4.jpg
-// module id = 429
-// module chunks = 0

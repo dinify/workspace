@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/clark-street-merc.4e443266.jpg";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/examples/clark-street-merc.jpg
-// module id = 1048
-// module chunks = 0

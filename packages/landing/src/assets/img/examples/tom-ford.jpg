@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/tom-ford.404803b0.jpg";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/examples/tom-ford.jpg
-// module id = 1031
-// module chunks = 0

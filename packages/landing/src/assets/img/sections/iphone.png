@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/iphone.ba7def66.png";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/sections/iphone.png
-// module id = 1177
-// module chunks = 0

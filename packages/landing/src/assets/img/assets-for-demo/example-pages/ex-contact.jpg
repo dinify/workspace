@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/ex-contact.de31d6a3.jpg";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/assets-for-demo/example-pages/ex-contact.jpg
-// module id = 1122
-// module chunks = 0
