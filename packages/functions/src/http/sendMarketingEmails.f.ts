@@ -42,21 +42,27 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
               cb(`Email not found with target id: ${target.id}`);
               return;
             }
-            const message = email.message;
-            const originalRecipient = message.to.email;
-            message.to.email = "test@dinify.app";
-            if (config.env === "production") {
-              // dangerous line
-              message.to.email = originalRecipient;
-            }
+            if (!email.message_id) {
+              const message = email.message;
+              const originalRecipient = message.to.email;
+              message.to.email = "test@dinify.app";
+              if (config.env === "production") {
+                // dangerous line
+                message.to.email = originalRecipient;
+              }
 
-            mail.send(message).then(([response, body]) => {
-              email.message_id = response.headers['x-message-id'];
-              email
-                .save()
-                .then(() =>  cb(null))
-                .catch((e) =>  cb(e));
-            })
+              mail.send(message).then(([response, body]) => {
+                email.message_id = response.headers['x-message-id'];
+                email
+                  .save()
+                  .then(() =>  cb(null))
+                  .catch((e) =>  cb(e));
+              })
+            }
+            else {
+              console.log('Email already sent with message_id: ' + email.message_id)
+              cb(null);
+            }
           }).catch((e) => cb(e));
         }, (error) => {
           if (!error) res.json({ error: null });
