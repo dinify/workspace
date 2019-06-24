@@ -37,14 +37,15 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           if (emailResult) {
             EventsSg.create({
               email_id: emailResult.id,
+              message_id: messageId,
               email: eventObject.email,
               timestamp: eventObject.timestamp,
               smtp_id: eventObject['smtp-id'],
               event: eventObject.event,
-              category: eventObject.category,
               sg_event_id: eventObject.sg_event_id,
               sg_message_id: eventObject.sg_message_id,
-              message_id: messageId
+              category: eventObject.category,
+              content: eventObject
             }).then(() => {
               cb(null);
             }).catch((error) =>

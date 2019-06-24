@@ -13,14 +13,17 @@ EventsSg.init({
     defaultValue: () => uuidBase62.v4()
   },
   email_id: { type: Sequelize.UUID, allowNull: false },
-  email: { type: Sequelize.STRING, allowNull: false },
-  timestamp: { type: Sequelize.DATE, allowNull: false },
-  smtp_id: { type: Sequelize.STRING, allowNull: false },
-  event: { type: Sequelize.STRING, allowNull: false },
-  category: { type: Sequelize.STRING, allowNull: false },
   message_id: { type: Sequelize.STRING, allowNull: false },
-  sg_event_id: { type: Sequelize.STRING, allowNull: false },
-  sg_message_id: { type: Sequelize.STRING, allowNull: false },
+
+  email: { type: Sequelize.STRING, allowNull: false },
+  timestamp: { type: Sequelize.DATE, allowNull: true },
+  smtp_id: { type: Sequelize.STRING, allowNull: true },
+  event: { type: Sequelize.STRING, allowNull: true },
+  category: { type: Sequelize.STRING, allowNull: true },
+  sg_event_id: { type: Sequelize.STRING, allowNull: true },
+  sg_message_id: { type: Sequelize.STRING, allowNull: true },
+  content: { type: Sequelize.JSON, allowNull: true },
+
   createdAt: { type: Sequelize.DATE, field: 'created_at' },
   updatedAt: { type: Sequelize.DATE, field: 'updated_at' }
 }, {
