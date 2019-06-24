@@ -57,7 +57,7 @@ class LandingPage extends React.Component {
     window.addEventListener('scroll', this.handleScroll, true);
     const { location } = this.props;
     const parsed = queryString.parse(location.search);
-    const token = parsed.token;
+    const token = parsed.t;
     if (token) {
       ReportCampaignAction({
         token,

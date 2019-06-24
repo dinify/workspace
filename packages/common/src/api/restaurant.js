@@ -528,7 +528,7 @@ export function ReportCampaignAction({
 }) {
   return Post({
     endpoint: 'https://europe-west1-dinify.cloudfunctions.net/',
-    path: 'googleFunctionsEndpoint'
+    path: 'reportCampaignAction'
   }, {
     token,
     status,

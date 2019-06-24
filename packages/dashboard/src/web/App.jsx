@@ -42,7 +42,7 @@ const App = ({
     window.location.replace('/register');
   }
   const parsed = queryString.parse(history.location.search);
-  const token = parsed.token;
+  const token = parsed.t;
   if (token) reportCampaignAction({ token, status: 'landed:dashboard'});
   return (
     <Content>
