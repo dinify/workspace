@@ -5,12 +5,14 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import { appIsRunning } from 'selectors/restaurant';
+import { withStyles } from '@material-ui/core/styles';
 
 import SignIn from '@dinify/common/dist/components/SignIn';
 import Dashboard from 'web/pages/Dashboard';
 import Qr from 'web/pages/Qr';
 import RegisterRestaurant from 'web/pages/RegisterRestaurant';
 import { reportCampaignAction } from '@dinify/common/dist/ducks/reporting/actions';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import withRoot from 'withRoot.js';
 
 const Content = styled.div`
@@ -30,13 +32,20 @@ const AppLoader = styled.div`
 const SignInWithRoot = withRoot(SignIn);
 const RegisterRestaurantWithRoot = withRoot(RegisterRestaurant);
 
+const styles = theme => ({
+  progress: {
+    color: 'rgba(255,255,255,0.4)'
+  },
+});
+
 const App = ({
   appLoading,
   user,
   history,
   ongoingRegistration,
   selectedRestaurant,
-  reportCampaignAction
+  reportCampaignAction,
+  classes
 }) => {
   if (ongoingRegistration && !window.location.pathname.includes('/register') && !user.isEmpty) {
     window.location.replace('/register');
@@ -46,7 +55,11 @@ const App = ({
   if (token) reportCampaignAction({ token, status: 'landed:dashboard'});
   return (
     <Content>
-      {appLoading || !user.isLoaded ? <AppLoader>Dashboard is loading...</AppLoader> :
+      {appLoading || !user.isLoaded ?
+        <AppLoader>
+          <CircularProgress className={classes.progress} />
+        </AppLoader>
+        :
         <Switch>
           <Route path="/qr/:code" component={Qr} />
           <Route path="/signin" component={() => {
@@ -69,11 +82,11 @@ const App = ({
   );
 }
 
-export default connect(state => ({
+export default withStyles(styles)(connect(state => ({
   ongoingRegistration: state.restaurant.ongoingRegistration,
   user: state.firebase.auth,
   selectedRestaurant: state.restaurant.selectedRestaurant,
   appLoading: !appIsRunning(state),
 }), {
   reportCampaignAction
-})(App);
+})(App));

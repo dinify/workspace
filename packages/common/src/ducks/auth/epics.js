@@ -13,8 +13,6 @@ import { actionTypes } from 'react-redux-firebase';
 import { change as changeForm } from 'redux-form';
 import { setPage, setLinkProviders } from './actions';
 import { openDialog } from '../ui/actions';
-import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
-import { setFlagsFromString } from 'v8';
 
 const accessTokenEpic = (action$, state$) =>
   action$.pipe(
