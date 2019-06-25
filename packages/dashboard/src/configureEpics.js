@@ -19,7 +19,7 @@ const rootEpic = (action$, state$, firebase, ...rest) => {
   const output = epic(
     action$,
     state$,
-    { firebase },
+    { firebase},
     ...rest
   );
   return output;

@@ -19,5 +19,7 @@
   "select": "Vybrat",
   "clear": "Zrušit výběr",
   "search": "Vyhledávání",
-  "loadingEllipsis": "Načítání..."
+  "loadingEllipsis": "Načítání...",
+  "saved": "Úspěšně uloženo ✅",
+  "saveFailed": "Ukládání se nezdařilo, zkontrolujte zadané údaje"
 }

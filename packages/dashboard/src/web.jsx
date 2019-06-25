@@ -12,7 +12,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import i18n from '@dinify/common/dist/i18n';
-import { getCookie } from '@dinify/common/dist/lib/FN';
+import { getCookie, setCookie } from '@dinify/common/dist/lib/FN';
 import App from 'web/App';
 import configureStore from './configureStore';
 import './index.css';
@@ -20,20 +20,17 @@ import './index.css';
 const history = createBrowserHistory();
 const { store, persistor } = configureStore(history);
 
-let language = { primary: navigator.language, other: [] };
+let language = navigator.language;
 const langCookie = getCookie('language');
 if (langCookie) {
-  try {
-    language = JSON.parse(langCookie);
-  } catch {
-    console.log('langCookie is not JSON');
-  }
+  language = langCookie;
+} else {
+  setCookie('language', language, 30);
 }
 
-i18n({
+window.i18nInstance = i18n({
   namespace: 'dashboard',
-  lang: language.primary,
-  fallback: language.other
+  lang: language,
 });
 
 const snackbarProps = {

@@ -11,6 +11,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
+import IconButton from "@material-ui/core/IconButton";
+import Grid from "@material-ui/core/Grid";
+import Flag from "@dinify/common/dist/components/Flag";
+import { getCookie, setCookie } from '@dinify/common/dist/lib/FN';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -94,6 +98,18 @@ const contentTheme = createMuiTheme({
   }
 });
 
+const langs = [{
+  lang:'en', country: 'gb',
+ },
+ {
+  lang: 'cs', country: 'cz'
+}];
+
+const changeLanguage = (lang) => {
+  window.i18nInstance.changeLanguage(lang);
+  setCookie('language', lang, 30);
+}
+
 const styles = theme => ({
   header: {
     position: 'fixed',
@@ -151,6 +167,23 @@ const styles = theme => ({
   solidContainer: {
     minWidth: '800px',
     paddingBottom: '100px',
+  },
+  flag: {
+    display: "flex",
+    flexDirection: "column",
+    width: 56,
+    height: 56,
+    justifyContent: "center",
+    borderRadius: "50%",
+    overflow: "hidden",
+    border: `1px solid transparent`,
+    transition: theme.transitions.create(["all"], {
+      duration: theme.transitions.duration.shortest / 2,
+      easing: "linear"
+    })
+  },
+  flagSelected: {
+    backgroundColor: 'rgba(255,255,255,0.2)'
   }
 });
 
@@ -161,7 +194,9 @@ const shouldOpen = (openedIndex, index, location, section) => {
   return openedIndex === index;
 }
 
-const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection, loggedRestaurant, publishRestaurant }) => {
+const Dashboard = ({
+  firebase, classes, location, openedIndex, toggleSection, loggedRestaurant, publishRestaurant
+}) => {
   const { t } = useTranslation();
   const sections = [
     {
@@ -233,6 +268,7 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection, lo
   ];
   const publishable = true;
   const publised = loggedRestaurant && loggedRestaurant.published;
+  let selectedLanguage = getCookie('language');
   return (
     <div>
       <Sidebar>
@@ -338,6 +374,23 @@ const Dashboard = ({ firebase, classes, location, openedIndex, toggleSection, lo
             Published
           </div>
         }
+
+        <Grid container justify="center">
+          {langs.map((l) => (
+            <Grid item key={l.lang}>
+              <IconButton
+                onClick={() => changeLanguage(l.lang)}
+                className={
+                classes.flag +
+                " " +
+                  (l.lang === selectedLanguage ? classes.flagSelected : "")
+                }
+              >
+                <Flag country={l.country.toUpperCase()} />
+              </IconButton>
+            </Grid>
+          ))}
+        </Grid>        
 
         </MuiThemeProvider>
       </Sidebar>

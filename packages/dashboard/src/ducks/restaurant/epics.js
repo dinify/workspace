@@ -154,15 +154,28 @@ const editImageEpic = (action$, state$) =>
     handleAction: () => {/* do something... */} 
   })
 
-const onUpdateSnackbarsEpic = (action$) =>
+const onUpdateDoneSnackbarsEpic = (action$) =>
   action$.pipe(
     filter(
       action =>
         action.type.startsWith('UPDATE_') && action.type.endsWith('_DONE'),
     ),
-    mergeMap(({ payload, type }) => {
+    mergeMap(() => {
       return of(snackbar.show({
-        message: 'Updated',
+        message: window.i18nInstance.t('saved'),
+      }));
+    })
+  );
+
+const onUpdateFailSnackbarsEpic = (action$) =>
+  action$.pipe(
+    filter(
+      action =>
+        action.type.startsWith('UPDATE_') && action.type.endsWith('_FAIL'),
+    ),
+    mergeMap(() => {
+      return of(snackbar.show({
+        message: window.i18nInstance.t('saveFailed'),
       }));
     })
   );
@@ -201,7 +214,8 @@ export default [
   reorderEpic,
   editImageEpic,
   selectRestaurantEpic,
-  onUpdateSnackbarsEpic,
+  onUpdateDoneSnackbarsEpic,
+  onUpdateFailSnackbarsEpic,
   resetCategoriesEpic,
   resetMenuItemEpic,
   addLangSnackbar,

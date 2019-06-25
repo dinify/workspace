@@ -19,5 +19,7 @@
   "select": "Select",
   "clear": "Clear",
   "search": "Search",
-  "loadingEllipsis": "Loading..."
+  "loadingEllipsis": "Loading...",
+  "saved": "Saved successfully ✅",
+  "saveFailed": "Updating failed, check entered information"
 }
