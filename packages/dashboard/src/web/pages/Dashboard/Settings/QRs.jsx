@@ -4,7 +4,6 @@ import * as FN from 'lib/FN';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode.react';
 import Typography from '@dinify/common/dist/components/Typography';
 
@@ -55,12 +54,12 @@ const QRs = ({ loggedRestaurant }) => {
             to={`https://waiterboard.dinify.app/board/${wb.id}`}
             target="_blank"
           >
-            <Typography gutterBottom variant="subtitle" align="center">{wb.name}</Typography>
+            <Typography gutterBottom variant="subtitle1" align="center">{wb.name}</Typography>
           </Link>
           <div>
             {wb.tables.map(table => (
-              <Link to={`/qr/${table.qr}`} target="_blank">
-                <Table fixedWidth key={table.id}>
+              <Link to={`/qr/${table.qr}`} target="_blank" key={table.id}>
+                <Table fixedWidth>
                   <div># {table.number}</div>
                   <QRCode value={`https://m.dinify.app/restaurant/${loggedRestaurant.subdomain}?qr=${table.qr}`} />
                   <div>CODE: {table.code}</div>

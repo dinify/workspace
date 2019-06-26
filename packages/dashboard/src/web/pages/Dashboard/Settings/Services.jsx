@@ -46,12 +46,12 @@ let ServiceForm = ({ handleSubmit, classes, t }) => {
               fullWidth: true,
               margin: 'normal',
               InputProps: { classes: { input: classes.input } },
-              InputLabelProps: {shrink: 'true'}
+              InputLabelProps: {shrink: true}
             }}
           />
         </Grid>
         <Grid item xs={3}>
-          <Button type="submit" fullWidth={true} variant="contained" color="primary">
+          <Button type="submit" fullWidth variant="contained" color="primary">
             {t('add')}
           </Button>
         </Grid>
@@ -103,6 +103,7 @@ class AddServiceComponent extends React.Component {
 
   render() {
     const { images, createService, serviceType, t } = this.props;
+    const { selectedImage } = this.state;
 
     const filteredImages = R.filter((img) => {
       if (serviceType === 'TABLEWARE') return img.item_type === `Internal\\Service\\Tableware`;
@@ -114,13 +115,14 @@ class AddServiceComponent extends React.Component {
       <div style={{marginTop: 8}}>
         {filteredImages.map((image) =>
           <Avatar
+            key={image.id}
             style={{
               display: 'inline-block',
               margin: '5px',
               height: 60,
               width: 60,
               cursor: 'pointer',
-              border: this.state.selectedImage === image.id ? '3px solid red' : 'none'
+              border: selectedImage === image.id ? '3px solid red' : 'none'
             }}
             onClick={() => this.setState({ selectedImage: image.id })}
             src={image.url}
@@ -132,7 +134,7 @@ class AddServiceComponent extends React.Component {
         onSubmit={({ name }) =>
           createService({
             name,
-            imageId: this.state.selectedImage || '587334ad-91f4-4179-8bd8-39b0abb1390c',
+            imageId: selectedImage || '587334ad-91f4-4179-8bd8-39b0abb1390c',
             type: serviceType
           })
         }

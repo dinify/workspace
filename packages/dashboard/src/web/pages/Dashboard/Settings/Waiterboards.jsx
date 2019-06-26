@@ -18,7 +18,6 @@ import Group from '@material-ui/icons/Group';
 import DragHandle from '@material-ui/icons/DragHandle';
 import Delete from '@material-ui/icons/Delete';
 import OpenInBrowser from '@material-ui/icons/OpenInBrowser';
-import Typography from '@dinify/common/dist/components/Typography';
 
 import {
   ContentWrapper
@@ -63,22 +62,6 @@ const WBheader = styled.div`
   height: 50px;
 `;
 
-const DeleteWaiterboard = styled.button`
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 50px;
-  width: 50px;
-  cursor: pointer;
-  font-size: 24px;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.5);
-  border: none;
-  outline: none;
-  &:hover {
-    color: #e74c3c;
-  }
-`;
 const WBinfo = styled.div`
   position: absolute;
   top: 0;
@@ -209,27 +192,27 @@ const TableTag = styled.table`
   }
 `;
 
-let CreateWaiterboardForm = ({ handleSubmit }) => {
-  return (
-    <form onSubmit={handleSubmit} className="center">
-      <Field
-        name="name"
-        component={Text}
-        componentProps={{
-          placeholder: 'Waiterboard Name',
-          fullWidth: true,
-        }}
-      />
-      <Button type="submit" fullWidth={true}>
-        Create
-      </Button>
-    </form>
-  );
-};
-CreateWaiterboardForm = reduxForm({
-  form: 'waiterboards/createWaiterboard',
-  enableReinitialize: true,
-})(CreateWaiterboardForm);
+// let CreateWaiterboardForm = ({ handleSubmit }) => {
+//   return (
+//     <form onSubmit={handleSubmit} className="center">
+//       <Field
+//         name="name"
+//         component={Text}
+//         componentProps={{
+//           placeholder: 'Waiterboard Name',
+//           fullWidth: true,
+//         }}
+//       />
+//       <Button type="submit" fullWidth>
+//         Create
+//       </Button>
+//     </form>
+//   );
+// };
+// CreateWaiterboardForm = reduxForm({
+//   form: 'waiterboards/createWaiterboard',
+//   enableReinitialize: true,
+// })(CreateWaiterboardForm);
 
 const FieldsContainer = styled.div`
   width: 80px;
@@ -378,8 +361,8 @@ TargetComponent = DropTarget('table', boxTarget, (connect, monitor) => ({
 
 const Waiterboards = ({
   loggedRestaurant,
-  createWaiterboard,
-  deleteWaiterboard,
+  // createWaiterboard,
+  // deleteWaiterboard,
   createTable,
   deleteTable,
   updateTable
@@ -443,6 +426,7 @@ const Waiterboards = ({
             <a
               href={`https://waiterboard.dinify.app/board/${wb.id}`}
               target="_blank"
+              rel="noopener noreferrer"
             >
               <WBtitle>
                 <div className="label">WAITERBOARD</div>

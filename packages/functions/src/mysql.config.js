@@ -20,7 +20,7 @@ if ((process.env.NODE_ENV || '').trim() === 'production') { // prod
   dbName = 'production';
   sequelize = new Sequelize(dbName, dbUser, dbPass, {
     dialect: 'mysql',
-    port: 3307,
+    port: 3306,
     host: '127.0.0.1',
     logging: console.log
   });

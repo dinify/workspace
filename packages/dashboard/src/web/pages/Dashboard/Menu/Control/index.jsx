@@ -43,7 +43,7 @@ const Menucontrol = ({
           </Grid>
 
           {categoriesList.length > 0 &&
-            [<Grid item xs={3}>
+            [<Grid item xs={3} key="categories-item-1">
               <Typography gutterBottom variant="caption">{t('menu.dishes')}</Typography>
               <ListOfDishes
                 categoriesMap={categoriesMap}
@@ -51,12 +51,12 @@ const Menucontrol = ({
                 selectedCategoryId={selectedCategoryId}
               />
             </Grid>,
-            <Grid item xs={6}>
+            <Grid item xs={6} key="categories-item-2">
               {(selectedCategoryId && categoriesMap[selectedCategoryId] && menuItems[selectedFoodId]) && [
-                <Typography gutterBottom variant="caption">{t('menu.dishDetail')}</Typography>,
-                <ItemDetail menuItems={menuItems} selectedFoodId={selectedFoodId} />
+                <Typography key="typo-dish-detail" gutterBottom variant="caption">{t('menu.dishDetail')}</Typography>,
+                <ItemDetail key="dish-detail-container" menuItems={menuItems} selectedFoodId={selectedFoodId} />
               ]}
-            </Grid>]    
+            </Grid>]
           }
 
         </Grid>

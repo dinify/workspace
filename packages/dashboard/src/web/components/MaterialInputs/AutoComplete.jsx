@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -233,11 +232,9 @@ class IntegrationReactSelect extends React.Component {
             }}
             placeholder={placeholder}
             id="react-select-single"
-            InputProps={{
-              style: { padding: '14px' }
-            }}
             inputProps={{
               classes,
+              style: { padding: '14px' },
               name: 'react-select-single',
               instanceId: 'react-select-single',
               simpleValue: true,

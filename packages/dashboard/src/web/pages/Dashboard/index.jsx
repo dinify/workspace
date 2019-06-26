@@ -254,16 +254,16 @@ const Dashboard = ({
   const activeSubsection = subsectionNames.filter((s) => location.pathname.includes(s.path))[0];
   const sectionSteps = [
     {
-      path: '/settings/main',
-      label: t('contactsIn')
+      id: 'contactsIn',
+      path: '/settings/main'
     },
     {
+      id: 'addTables',
       path: '/settings/tables',
-      label: t('addTables')
     },
     {
+      id: 'createMenu',
       path: '/menu/control',
-      label: t('createMenu')
     }
   ];
   const publishable = true;
@@ -309,9 +309,7 @@ const Dashboard = ({
                             button
                             className={classes.nested}
                           >
-                            <ListItemIcon>
-                              {!!subsection.icon && subsection.icon}
-                            </ListItemIcon>
+                            <ListItemIcon>{subsection.icon || <span />}</ListItemIcon>
                             <ListItemText
                               inset
                               primary={subsection.name}
@@ -319,7 +317,7 @@ const Dashboard = ({
                               className={classes.nestedText}
                             />
                           </ListItem>  
-                        </Link>                      
+                        </Link>
                       )}
                     </List>
                   </Collapse>
@@ -344,10 +342,10 @@ const Dashboard = ({
           }>
 
             {sectionSteps.map((step) => 
-              <Step>
+              <Step key={step.id}>
                 <StepLabel active={location.pathname === step.path}>
                   <div className={classes.stepLabel}>
-                    <Link style={{color: 'inherit'}} to={step.path}>{step.label}</Link>
+                    <Link style={{color: 'inherit'}} to={step.path}>{t(step.id)}</Link>
                   </div>
                 </StepLabel>
               </Step>

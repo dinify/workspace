@@ -201,6 +201,6 @@ const enhance = compose(
     selectRestaurant,
     setOnboardingToken
   })
-)
+);
 
 export default enhance(RegisterRestaurant);

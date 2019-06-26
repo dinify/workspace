@@ -1,5 +1,5 @@
 // @flow
-import { Observable, of, from, merge } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { push } from 'connected-react-router';
@@ -7,11 +7,10 @@ import { reset } from 'redux-form';
 import * as R from 'ramda';
 import { actionTypes } from 'react-redux-firebase';
 import { setCookie } from '@dinify/common/dist/lib/FN';
-import { selectRestaurant } from './actions';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 import { reportCampaignAction } from '@dinify/common/dist/ducks/reporting/actions';
-
 import * as API from '@dinify/common/dist/api/restaurant';
+import { selectRestaurant } from './actions';
 
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
 
