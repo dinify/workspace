@@ -1,6 +1,8 @@
-// @flow
-import * as R from 'ramda';
-import { UpdateOriginal } from 'lib/FN';
+import pipe from 'ramda/src/pipe';
+import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
+import dissocPath from 'ramda/src/dissocPath';
+import { UpdateOriginal } from '@dinify/common/dist/lib/FN';
 
 const initialState = {
   all: {},
@@ -8,31 +10,29 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case 'FETCH_LOGGEDRESTAURANT_DONE': {
-      const actualAddons = action.payload.res.addons;
-      return R.assoc('all', UpdateOriginal(state.all, actualAddons))(state);
+      const actualAddons = payload.res.addons;
+      return assoc('all', UpdateOriginal(state.all, actualAddons))(state);
     }
-
     case 'CREATE_ADDON_DONE': {
-      const newAddon = action.payload.res;
-      return R.assocPath(['all', newAddon.id], newAddon)(state);
+      const newAddon = payload.res;
+      return assocPath(['all', newAddon.id], newAddon)(state);
     }
-
     case 'REMOVE_ADDON_INIT': {
-      const { id } = action.payload;
+      const { id } = payload;
       const addonObj = state.all[id];
-      return R.pipe(
-        R.assocPath(['backup', id], addonObj),
-        R.dissocPath(['all', id]),
+      return pipe(
+        assocPath(['backup', id], addonObj),
+        dissocPath(['all', id]),
       )(state);
     }
-
     case 'REMOVE_ADDON_FAIL': {
-      const { id } = action.payload.prePayload;
-      return R.assocPath(['all', id], state.backup[id])(state);
+      const { id } = payload.prePayload;
+      return assocPath(['all', id], state.backup[id])(state);
     }
-
     default:
       return state;
   }

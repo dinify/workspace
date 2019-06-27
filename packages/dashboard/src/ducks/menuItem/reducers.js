@@ -1,6 +1,7 @@
-// @flow
-import * as R from 'ramda';
-import * as FN from 'lib/FN';
+import pipe from 'ramda/src/pipe';
+import assocPath from 'ramda/src/assocPath';
+import dissocPath from 'ramda/src/dissocPath';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 
 const initialState = {
   all: {},
@@ -8,87 +9,89 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case 'FETCH_LOGGEDRESTAURANT_DONE': {
-      const categories = action.payload.res.categories;
-      FN.MapToList(categories).forEach(category => {
+      const categories = payload.res.categories;
+      let newState = state;
+      MapToList(categories).forEach(category => {
         if (!category.items) return;
-        FN.MapToList(category.items).forEach(item => {
-          state = R.assocPath(['all', item.id], item)(state);
+        MapToList(category.items).forEach(item => {
+          newState = assocPath(['all', item.id], item)(state);
         });
       });
-      return state;
-    }
 
+      return newState;
+    }
+    
     case 'CREATE_MENUITEM_DONE': {
-      const newItem = action.payload.res;
-      return R.assocPath(['all', newItem.id], newItem)(state);
+      const newItem = payload.res;
+      return assocPath(['all', newItem.id], newItem)(state);
     }
 
     case 'UPDATECUSOMIZATIONS_UPDATING': {
-      const { id, custKey, updatedCusts } = action.payload;
-      return R.assocPath(['all', id, custKey], updatedCusts)(state);
+      const { id, custKey, updatedCusts } = payload;
+      return assocPath(['all', id, custKey], updatedCusts)(state);
     }
 
     case 'UPDATE_MENUITEM_INIT': {
-      const payload = action.payload;
-      const original = state.all[payload.id];
-      if (payload.ingredients || payload.options || payload.addons) return state;
-      return R.assocPath(['all', payload.id], { ...original, ...payload })(
-        state,
-      );
+      const { id, ingredients, options, addons } = payload;
+      const original = state.all[id];
+      if (ingredients || options || addons) return state;
+      return assocPath(['all', payload.id], { ...original, ...payload })(state);
     }
 
     case 'REMOVE_MENUITEM_INIT': {
-      state = R.assocPath(
-        ['backup', action.payload.id],
-        state.all[action.payload.id],
-      )(state);
-      return R.dissocPath(['all', action.payload.id])(state);
+      const { id } = payload;
+      return pipe(
+        assocPath(['backup', id], state.all[id]),
+        dissocPath(['all', id])
+      )
     }
 
     case 'REMOVE_MENUITEM_FAIL': {
-      const id = action.payload.prePayload.id;
-      return R.assocPath(['all', id], state.backup[id])(state);
+      const id = payload.prePayload.id;
+      return assocPath(['all', id], state.backup[id])(state);
     }
 
     case 'ASSIGN_INGREDIENT-FOOD_INIT': {
-      const { foodId, ingredientId, ingredient } = action.payload;
+      const { foodId, ingredientId, ingredient } = payload;
       if (!ingredient) return state;
-      return R.assocPath(
-        ['all', foodId, 'ingredients', ingredientId],
-        ingredient,
-      )(state);
+      return assocPath(['all', foodId, 'ingredients', ingredientId], ingredient)(state);
     }
+
     case 'UNASSIGN_INGREDIENT-FOOD_INIT': {
-      const { foodId, ingredientId } = action.payload;
-      return R.dissocPath(['all', foodId, 'ingredients', ingredientId])(state);
+      const { foodId, ingredientId } = payload;
+      return dissocPath(['all', foodId, 'ingredients', ingredientId])(state);
     }
 
     case 'ASSIGN_ADDON-FOOD_INIT': {
-      const { foodId, addonId, addon } = action.payload;
+      const { foodId, addonId, addon } = payload;
       if (!addon) return state;
-      return R.assocPath(['all', foodId, 'addons', addonId], addon)(state);
+      return assocPath(['all', foodId, 'addons', addonId], addon)(state);
     }
+
     case 'UNASSIGN_ADDON-FOOD_INIT': {
-      const { foodId, addonId } = action.payload;
-      return R.dissocPath(['all', foodId, 'addons', addonId])(state);
+      const { foodId, addonId } = payload;
+      return dissocPath(['all', foodId, 'addons', addonId])(state);
     }
 
     case 'ASSIGN_OPTION-FOOD_INIT': {
-      const { foodId, optionId, option } = action.payload;
+      const { foodId, optionId, option } = payload;
       if (!option) return state;
-      return R.assocPath(['all', foodId, 'options', optionId], option)(state);
+      return assocPath(['all', foodId, 'options', optionId], option)(state);
     }
+
     case 'UNASSIGN_OPTION-FOOD_INIT': {
-      const { foodId, optionId } = action.payload;
-      return R.dissocPath(['all', foodId, 'options', optionId])(state);
+      const { foodId, optionId } = payload;
+      return dissocPath(['all', foodId, 'options', optionId])(state);
     }
 
     case 'UPDATE_ITEMIMAGE_DONE': {
-      const foodId = action.payload.prePayload.id;
-      const image = action.payload.res;
-      return R.assocPath(['all', foodId, 'images', image.id], image)(state);
+      const foodId = payload.prePayload.id;
+      const image = payload.res;
+      return assocPath(['all', foodId, 'images', image.id], image)(state);
     }
 
     default:

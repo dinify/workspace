@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@dinify/common/dist/components/Typography';
 import { useTranslation } from 'react-i18next';
-import * as FN from 'lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 import ListOfCategories from './ListOfCategories';
 import ListOfDishes from './ListOfDishes';
 import ItemDetail from './ItemDetail';

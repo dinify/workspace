@@ -1,6 +1,7 @@
-// @flow
 import React from 'react';
-import * as R from 'ramda';
+import last from 'ramda/src/last';
+import keys from 'ramda/src/keys';
+import without from 'ramda/src/without';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { Field, reduxForm } from 'redux-form';
@@ -55,7 +56,7 @@ let AddDayForm = ({ undefinedDays, handleSubmit }) => {
           <Button
             type="submit"
             className="FormInput"
-            fullWidth={true}
+            fullWidth
             style={{ float: 'right' }}
           >
             Add Day
@@ -72,13 +73,14 @@ AddDayForm = reduxForm({
 })(AddDayForm);
 
 const TimeField = props => {
-  const { value, onChange } = props.input;
+  const { input, label } = props;
+  const { value, onChange } = input;
   return (
     <TextField
       id="time"
       type="time"
       value={value}
-      label={props.label}
+      label={label}
       onChange={newTime => {
         onChange(newTime);
       }}
@@ -93,7 +95,7 @@ const TimeField = props => {
   );
 };
 
-const Day = ({ ranges, day, updateHours, addRange }) => {
+const Day = ({ ranges, day, addRange }) => {
   if (!day) return <div />;
   return (
     <div style={{ marginBottom: '35px' }}>
@@ -117,7 +119,7 @@ const Day = ({ ranges, day, updateHours, addRange }) => {
       <div className="center">
         <ThinButton
           type="button"
-          onClick={() => addRange({ dayName: day, from: R.last(ranges)[1] })}
+          onClick={() => addRange({ dayName: day, from: last(ranges)[1] })}
         >
           Add range
         </ThinButton>
@@ -130,10 +132,10 @@ let BusinessHoursForm = props => {
   const { handleSubmit, openHours, addRange } = props;
   return (
     <form onSubmit={handleSubmit}>
-      {R.keys(openHours).map(day => (
+      {keys(openHours).map(day => (
         <Day addRange={addRange} ranges={openHours[day]} day={day} key={day} />
       ))}
-      <Button type="submit" fullWidth={true}>
+      <Button type="submit" fullWidth>
         SAVE
       </Button>
     </form>
@@ -148,10 +150,10 @@ BusinessHoursForm = reduxForm({
 const BusinessHours = ({ updateHours, openHours, addDay, addRange }) => {
   if (!openHours) return <div />;
 
-  const definedDays = R.keys(openHours);
-  const undefinedDays = R.without(definedDays, R.keys(dayNames));
+  const definedDays = keys(openHours);
+  const undefinedDays = without(definedDays, keys(dayNames));
 
-  let defaultValues = {};
+  const defaultValues = {};
   definedDays.forEach(day => {
     openHours[day].forEach((range, i) => {
       defaultValues[`${day}_${i}_from`] = range[0];
@@ -160,7 +162,7 @@ const BusinessHours = ({ updateHours, openHours, addDay, addRange }) => {
   });
 
   const withNewData = updObj => {
-    let newObj = [];
+    const newObj = [];
     definedDays.forEach((day, j) => {
       openHours[day].forEach((range, i) => {
         newObj.push({

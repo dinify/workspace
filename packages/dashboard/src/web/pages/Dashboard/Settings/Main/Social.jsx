@@ -1,5 +1,4 @@
-// @flow
-import * as R from 'ramda';
+import last from 'ramda/src/last';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
@@ -15,13 +14,14 @@ import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 
 const renderSocialField = (props) => {
+  const { input } = props;
   let subdomain = <span style={{color: '#888'}}> </span>;
-  const value = props.input.value;
+  const value = input.value;
   if (value !== '') subdomain = value;
   return (
     <div>
       <Text {...props} />
-      <div>{props.input.name}.com/{subdomain}</div>
+      <div>{input.name}.com/{subdomain}</div>
     </div>
   )
 }
@@ -47,7 +47,7 @@ let SocialForm = ({ handleSubmit, t }) => {
           margin: 'normal',
         }}
       />
-      <Button type="submit" fullWidth={true}>
+      <Button type="submit" fullWidth>
         {t('save')}
       </Button>
     </form>
@@ -64,8 +64,8 @@ const Social = ({ updateSocial, social }) => {
   const { t } = useTranslation();
   const initialValues = {facebook: '', instagram: ''};
   if (social) {
-    if (social.facebook) initialValues.facebook = R.last(social.facebook.split('/'));
-    if (social.instagram) initialValues.instagram = R.last(social.instagram.split('/'));
+    if (social.facebook) initialValues.facebook = last(social.facebook.split('/'));
+    if (social.instagram) initialValues.instagram = last(social.instagram.split('/'));
   }
   const onSubmit = ({facebook, instagram}) => {
     if (facebook) facebook = `https://www.facebook.com/${facebook}`;

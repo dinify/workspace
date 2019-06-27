@@ -1,8 +1,7 @@
-// @flow
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import API from '../api';
-import * as R from 'ramda';
+import ramdaFilter from 'ramda/src/filter';
 
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 const camel = str => capitalize(str.toLowerCase());
@@ -78,7 +77,7 @@ const fetchAllEpic = (action$, state$) =>
       if (payload.cache) {
         const storeKey = subject.toLowerCase();
         const all = state$.value[storeKey].all;
-        ids = R.filter((id) => !all[id], ids);
+        ids = ramdaFilter((id) => !all[id], ids);
       }
       return ids.map((id) => ({
         type: `${path}FETCH_${subject}_INIT`,

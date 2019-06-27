@@ -1,19 +1,19 @@
-// @flow
-import { Observable, of, from as fromPromise } from 'rxjs';
+import { of, from as fromPromise } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import * as R from 'ramda';
+import find from 'ramda/src/find';
+import propEq from 'ramda/src/propEq';
 import * as API from '@dinify/common/dist/api/restaurant';
 import { Post } from '@dinify/common/dist/api/Network';
 import { change as changeForm } from 'redux-form';
-import { MapToList } from 'lib/FN';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 
 const saveTranslationDone = () => {
   return { type: 'PUSH_TRANSLATION_DONE'}
 }
 
-const pushTranslationEpic = (action$: Observable) =>
+const pushTranslationEpic = (action$) =>
   action$.pipe(
     ofType('PUSH_TRANSLATION_INIT'),
     mergeMap(({ payload }) => {
@@ -48,7 +48,7 @@ const pushTranslationEpic = (action$: Observable) =>
     })
   );
 
-const saveTranslationEpic = (action$: Observable, state$) =>
+const saveTranslationEpic = (action$, state$) =>
   action$.pipe(
     ofType('SAVE_TRANSLATION_INIT'),
     mergeMap(({ payload }) => {
@@ -65,7 +65,7 @@ const saveTranslationEpic = (action$: Observable, state$) =>
 
 const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
-const suggestTranslationEpic = (action$: Observable, state$) =>
+const suggestTranslationEpic = (action$) =>
   action$.pipe(
     ofType('SUGGEST_TRANSLATION_INIT'),
     mergeMap(({ payload: {form, text, field, from, to} }) => {
@@ -95,9 +95,9 @@ const suggestAllEpic = (action$, state$) =>
         let text = '';
         if (field.includes('_description')) {
           const prop = field.replace('_description', '');
-          text = R.find(R.propEq('id', prop))(originalsList).description || '';
+          text = find(propEq('id', prop))(originalsList).description || '';
         } else {
-          text = R.find(R.propEq('id', field))(originalsList).name || '';
+          text = find(propEq('id', field))(originalsList).name || '';
         }
         return {
           type: 'SUGGEST_TRANSLATION_INIT',
@@ -129,7 +129,7 @@ const confirmPreferredEpic = (action$, state$) =>
     })
   );
 
-const translateAllEpic = (action$: Observable, state$) =>
+const translateAllEpic = (action$, state$) =>
   action$.pipe(
     ofType('TRANSLATE_ALL_INIT'),
     mergeMap(() => {
@@ -145,6 +145,7 @@ const translateAllEpic = (action$: Observable, state$) =>
       );
     })
   );
+
 export default [
   pushTranslationEpic,
   suggestTranslationEpic,

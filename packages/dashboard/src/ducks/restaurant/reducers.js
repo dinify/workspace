@@ -1,13 +1,9 @@
-// @flow
-import * as R from 'ramda';
+import pipe from 'ramda/src/pipe';
+import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
+import dissoc from 'ramda/src/dissoc';
+import dissocPath from 'ramda/src/dissocPath';
 import { MapToList, setCookie } from '@dinify/common/dist/lib/FN';
-
-type State = {
-  appRun: boolean,
-  loggedRestaurant: ?Object,
-  selectedCategoryId: ?String,
-  selectedFoodId: ?String,
-};
 
 const preferredLanguagesInitial = [
   'cs', 'en', 'de', 'it',
@@ -36,46 +32,46 @@ const initialState = {
   defaultLanguage: 'en'
 };
 
-export default function reducer(state: State = initialState, action) {
+export default function reducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case 'BOOTSTRAP':
-      return R.assoc('appRun', true)(state);
+      return assoc('appRun', true)(state);
     case 'SET_ONBOARDINGTOKEN':
-      return R.assoc('onboardingToken', payload.token)(state);
+      return assoc('onboardingToken', payload.token)(state);
     case 'SELECT_LANGUAGE': {
       const l = payload.language;
       if (state.preferredLanguages.includes(l)) {
-        return R.assoc(
+        return assoc(
           'preferredLanguages',
           state.preferredLanguages.filter((x) => x !== l)
         )(state);
       }
-      return R.assoc('preferredLanguages', [...state.preferredLanguages, l])(state);
+      return assoc('preferredLanguages', [...state.preferredLanguages, l])(state);
     }
     case 'PREFILL_EMAIL':
-      return R.assocPath(['prefill', 'email'], payload.email)(
+      return assocPath(['prefill', 'email'], payload.email)(
         state,
       );
     case 'SELECT_RESTAURANT':
-      return R.assoc('selectedRestaurant', payload.id)(state);
+      return assoc('selectedRestaurant', payload.id)(state);
     case 'FETCH_LANGUAGES_DONE':
-      return R.assoc('languages', payload.res)(state);
+      return assoc('languages', payload.res)(state);
     case 'FETCH_MANAGEDRESTAURANTS_DONE':
-      return R.assoc('managedRestaurants', payload.res)(state);
+      return assoc('managedRestaurants', payload.res)(state);
     case 'PREFILL_RESTAURANTNAME':
-      return R.assocPath(['prefill', 'restaurantName'], payload.restaurantName)(
+      return assocPath(['prefill', 'restaurantName'], payload.restaurantName)(
         state,
       );
     case 'SET_ONGOINGREGISTRATION':
-      return R.assoc('ongoingRegistration', !!payload)(state);
+      return assoc('ongoingRegistration', !!payload)(state);
     case 'FETCH_MENULANGUAGES_DONE': {
-      return R.assoc('menuLanguages', payload.res)(state);
+      return assoc('menuLanguages', payload.res)(state);
     }
     case 'CREATE_MENULANGUAGE_DONE': {
       const language = payload.prePayload.language;
       const menuLanguage = { language };
-      return R.assoc('menuLanguages', [...state.menuLanguages, menuLanguage])(state);
+      return assoc('menuLanguages', [...state.menuLanguages, menuLanguage])(state);
     }
     case 'FETCH_LOGGEDRESTAURANT_DONE': {
       const restaurant = payload.res;
@@ -83,55 +79,57 @@ export default function reducer(state: State = initialState, action) {
       const menuLanguages = restaurant.menu_languages || {};
       const defaultMenuLanguages = MapToList(menuLanguages).filter(lang => lang.default);
       if (defaultMenuLanguages.length > 0) defaultLanguage = defaultMenuLanguages[0].language;
-      const newState = R.assoc('defaultLanguage', defaultLanguage)(state);
+      const newState = assoc('defaultLanguage', defaultLanguage)(state);
       setCookie('lang', defaultLanguage, 30);
-      return R.assoc('loggedRestaurant', restaurant)(newState);
+      return assoc('loggedRestaurant', restaurant)(newState);
     }
     case 'FETCH_LOGGEDRESTAURANT_FAIL': {
-      return R.dissoc('loggedRestaurant')(state);
+      return dissoc('loggedRestaurant')(state);
     }
     case 'UPDATE_NAME_INIT':
-      return R.assocPath(['loggedRestaurant', 'name'], payload.name)(
+      return assocPath(['loggedRestaurant', 'name'], payload.name)(
         state,
       );
     case 'UPDATE_IMAGE_DONE':
-      return R.assocPath(
+      return assocPath(
         ['loggedRestaurant', 'uploadedImage'],
         payload.res.url,
       )(state);
     case 'UPDATE_CATEGORY_INIT':
-      return R.assocPath(
+      return assocPath(
         ['loggedRestaurant', 'category'],
         payload.category,
       )(state);
     case 'UPDATE_LOCATION_INIT': {
-      state = R.assocPath(
-        ['loggedRestaurant', 'longitude'],
-        Number(payload.longitude),
-      )(state);
-      return R.assocPath(
-        ['loggedRestaurant', 'latitude'],
-        Number(payload.latitude),
+      return pipe(
+        assocPath(
+          ['loggedRestaurant', 'longitude'],
+          Number(payload.longitude),
+        ),
+        assocPath(
+          ['loggedRestaurant', 'latitude'],
+          Number(payload.latitude),
+        )        
       )(state);
     }
     case 'UPDATE_BANK_INIT': {
-      return R.assocPath(['loggedRestaurant', 'bank'], payload)(state);
+      return assocPath(['loggedRestaurant', 'bank'], payload)(state);
     }
     case 'GET_BILLS_DONE':
-      return R.assoc('bills', payload)(state);
+      return assoc('bills', payload)(state);
     case 'SELECT_CATEGORY':
-      return R.assoc('selectedCategoryId', payload.categoryId)(state);
+      return assoc('selectedCategoryId', payload.categoryId)(state);
     case 'SELECT_FOOD':
-      return R.assoc('selectedFoodId', payload.foodId)(state);
+      return assoc('selectedFoodId', payload.foodId)(state);
     case 'CREATE_WAITERBOARD_DONE': {
       const newWaiterboard = payload.res;
-      return R.assocPath(
+      return assocPath(
         ['loggedRestaurant', 'waiterboards', newWaiterboard.id],
         newWaiterboard,
       )(state);
     }
     case 'REMOVE_WAITERBOARD_DONE': {
-      return R.dissocPath([
+      return dissocPath([
         'loggedRestaurant',
         'waiterboards',
         payload.id,
@@ -140,7 +138,7 @@ export default function reducer(state: State = initialState, action) {
     case 'CREATE_TABLE_DONE': {
       const newTable = payload.res;
       const waiterboardId = payload.prePayload.waiterboardId;
-      return R.assocPath(
+      return assocPath(
         [
           'loggedRestaurant',
           'waiterboards',
@@ -154,7 +152,7 @@ export default function reducer(state: State = initialState, action) {
       )(state);
     }
     case 'REMOVE_TABLE_INIT': {
-      return R.dissocPath([
+      return dissocPath([
         'loggedRestaurant',
         'waiterboards',
         payload.waiterboardId,
@@ -164,39 +162,41 @@ export default function reducer(state: State = initialState, action) {
     }
     case 'UPDATE_TABLE_INIT': {
       const prePayload = payload;
-      state = R.assocPath(
-        [
-          'loggedRestaurant',
-          'waiterboards',
-          prePayload.waiterboardId,
-          'tables',
-          prePayload.id,
-          'x',
-        ],
-        prePayload.x,
-      )(state);
-      return R.assocPath(
-        [
-          'loggedRestaurant',
-          'waiterboards',
-          prePayload.waiterboardId,
-          'tables',
-          prePayload.id,
-          'y',
-        ],
-        prePayload.y,
+      return pipe(
+        assocPath(
+          [
+            'loggedRestaurant',
+            'waiterboards',
+            prePayload.waiterboardId,
+            'tables',
+            prePayload.id,
+            'x',
+          ],
+          prePayload.x,
+        ),
+        assocPath(
+          [
+            'loggedRestaurant',
+            'waiterboards',
+            prePayload.waiterboardId,
+            'tables',
+            prePayload.id,
+            'y',
+          ],
+          prePayload.y,
+        )
       )(state);
     }
     case 'ADD_DAY_TO_BUSINESSHOURS': {
-      return R.assocPath(
+      return assocPath(
         ['loggedRestaurant', 'open_hours'],
-        R.assoc(payload.dayName, [['10:00', '22:00']])(
+        assoc(payload.dayName, [['10:00', '22:00']])(
           state.loggedRestaurant.open_hours,
         ),
       )(state);
     }
     case 'ADD_RANGE_TO_BUSINESSHOURS': {
-      return R.assocPath(
+      return assocPath(
         ['loggedRestaurant', 'open_hours', payload.dayName],
         [
           ...state.loggedRestaurant.open_hours[payload.dayName],

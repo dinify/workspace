@@ -1,8 +1,8 @@
-// @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import * as R from 'ramda';
-import * as FN from 'lib/FN';
+import find from 'ramda/src/find';
+import propEq from 'ramda/src/propEq';
+import * as FN from '@dinify/common/dist/lib/FN';
 import { Label } from 'web/components/styled/FormBox';
 import { updateCusomizationsInit } from 'ducks/menuItem/actions';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
@@ -29,7 +29,6 @@ const ItemOptions = ({
   const optionsList = FN.MapToList(optionsMap);
   const dataSource = optionsList.map(o => ({ value: o.id, label: o.name }));
   const selectedFood = menuItems[selectedFoodId];
-  console.log(selectedFood.options, 'optionsList');
   return (
     <div style={{ marginBottom: 30 }}>
       <Label>{t('menu.optionGroups')}</Label>
@@ -75,7 +74,7 @@ const ItemOptions = ({
             custKey: 'options',
             custId: option.value,
             cust: {
-              ...R.find(R.propEq('id', option.value))(optionsList),
+              ...find(propEq('id', option.value))(optionsList),
               difference: { amount: '0', currency: 'CZK' },
             },
           })

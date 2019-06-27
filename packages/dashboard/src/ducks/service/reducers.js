@@ -1,5 +1,7 @@
-// @flow
-import * as R from 'ramda';
+import pipe from 'ramda/src/pipe';
+import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
+import dissocPath from 'ramda/src/dissocPath';
 
 const initialState = {
   all: {},
@@ -8,32 +10,34 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case 'FETCH_LOGGEDRESTAURANT_DONE': {
-      const services = action.payload.res.services;
-      return R.assoc('all', services)(state);
+      const services = payload.res.services;
+      return assoc('all', services)(state);
     }
 
     case 'REMOVE_SERVICE_INIT': {
-      state = R.assocPath(
-        ['backup', action.payload.id],
-        state.all[action.payload.id],
+      const { id } = payload;
+      return pipe(
+        assocPath(['backup', id], state.all[id]),
+        dissocPath(['all', id])
       )(state);
-      return R.dissocPath(['all', action.payload.id])(state);
     }
 
     case 'REMOVE_SERVICE_FAIL': {
-      const id = action.payload.prePayload.id;
-      return R.assocPath(['all', id], state.backup[id])(state);
+      const id = payload.prePayload.id;
+      return assocPath(['all', id], state.backup[id])(state);
     }
 
     case 'FETCH_SERVICEIMAGES_DONE': {
-      return R.assoc('images', action.payload.res)(state);
+      return assoc('images', payload.res)(state);
     }
 
     case 'CREATE_SERVICE_DONE': {
-      const newService = action.payload.res;
-      return R.assocPath(['all', newService.id], newService)(state);
+      const newService = payload.res;
+      return assocPath(['all', newService.id], newService)(state);
     }
 
     default:

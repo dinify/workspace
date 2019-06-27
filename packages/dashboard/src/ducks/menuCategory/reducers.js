@@ -1,5 +1,7 @@
-// @flow
-import * as R from 'ramda';
+import pipe from 'ramda/src/pipe';
+import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
+import dissocPath from 'ramda/src/dissocPath';
 
 const initialState = {
   all: {},
@@ -7,37 +9,36 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case 'FETCH_LOGGEDRESTAURANT_DONE': {
-      const categories = action.payload.res.categories;
-      state = R.assoc('all', categories)(state);
-      return state;
+      const categories = payload.res.categories;
+      return assoc('all', categories)(state);
     }
 
     case 'CREATE_MENUCATEGORY_DONE': {
-      const newCategory = action.payload.res;
-      return R.assocPath(['all', newCategory.id], newCategory)(state);
+      const newCategory = payload.res;
+      return assocPath(['all', newCategory.id], newCategory)(state);
     }
 
     case 'UPDATE_MENUCATEGORY_INIT': {
-      const payload = action.payload;
-      const original = state.all[payload.id];
-      return R.assocPath(['all', payload.id], { ...original, ...payload })(
-        state,
-      );
+      const { id } = payload;
+      const original = state.all[id];
+      return assocPath(['all', id], { ...original, ...payload })(state);
     }
 
     case 'REMOVE_MENUCATEGORY_INIT': {
-      state = R.assocPath(
-        ['backup', action.payload.id],
-        state.all[action.payload.id],
+      const { id } = payload;
+      return pipe(
+        assocPath(['backup', id], state.all[id]),
+        dissocPath(['all', id])
       )(state);
-      return R.dissocPath(['all', action.payload.id])(state);
     }
 
     case 'REMOVE_MENUCATEGORY_FAIL': {
-      const id = action.payload.prePayload.id;
-      return R.assocPath(['all', id], state.backup[id])(state);
+      const id = payload.prePayload.id;
+      return assocPath(['all', id], state.backup[id])(state);
     }
 
     default:

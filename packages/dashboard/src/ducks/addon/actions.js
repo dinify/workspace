@@ -1,4 +1,3 @@
-// @flow
 
 export const createAddonInit = payload => ({
   type: 'CREATE_ADDON_INIT',

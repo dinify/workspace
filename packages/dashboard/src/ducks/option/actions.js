@@ -1,4 +1,3 @@
-// @flow
 
 export const collapseOptionInit = payload => ({
   type: 'COLLAPSE_OPTION_INIT',

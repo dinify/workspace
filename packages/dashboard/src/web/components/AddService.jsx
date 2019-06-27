@@ -1,5 +1,5 @@
 import React from 'react';
-import * as R from 'ramda';
+import filter from 'ramda/src/filter';
 import { connect } from 'react-redux';
 import { Label } from 'web/components/styled/FormBox';
 import Avatar from '@material-ui/core/Avatar';
@@ -18,7 +18,7 @@ class AddServiceComponent extends React.PureComponent {
     const { images, createService, serviceType, t } = this.props;
     const { selectedImage } = this.state;
 
-    const filteredImages = R.filter((img) => {
+    const filteredImages = filter((img) => {
       if (serviceType === 'TABLEWARE') return img.item_type === `Internal\\Service\\Tableware`;
       return img.item_type === 'Internal\\Service\\Condiments';
     }, images);

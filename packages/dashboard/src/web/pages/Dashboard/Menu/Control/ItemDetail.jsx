@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import * as FN from 'lib/FN';
+import * as FN from '@dinify/common/dist/lib/FN';
 import Dropzone from 'react-dropzone';
 import {
   updateMenuitemInitAction,

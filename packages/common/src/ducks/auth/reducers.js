@@ -1,5 +1,5 @@
-// @flow
-import * as R from 'ramda';
+import assoc from 'ramda/src/assoc';
+import pipe from 'ramda/src/pipe';
 import types from './types';
 
 const initialState = {
@@ -12,15 +12,17 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case types.SET_PAGE: {
-      return R.assoc('page', action.payload)(state);
+      return assoc('page', action.payload)(state);
     }
     case types.SET_SHOWPASSWORD: {
-      return R.assoc('showPassword', action.payload)(state);
+      return assoc('showPassword', action.payload)(state);
     }
     case types.SET_LINKPROVIDERS: {
       const { credential, linkProviders } = action.payload;
-      const newState = R.assoc('credential', credential)(state);
-      return R.assoc('linkProviders', linkProviders)(newState);
+      return pipe(
+        assoc('credential', credential),
+        assoc('linkProviders', linkProviders)
+      )(state);
     }
     default:
       return state;

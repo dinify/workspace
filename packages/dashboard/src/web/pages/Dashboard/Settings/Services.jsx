@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { updateNameInitAction } from 'ducks/restaurant/actions';
 import { removeServiceInit } from 'ducks/service/actions';
 import { useTranslation } from 'react-i18next';
-import * as FN from 'lib/FN';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import * as R from 'ramda';
+import filter from 'ramda/src/filter';
+import find from 'ramda/src/find';
+import propEq from 'ramda/src/propEq';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
@@ -51,16 +53,16 @@ const styles = () => ({
 
 const ServiceCalls = ({ removeService, services, images, classes, tabIndex, switchTab }) => {
   const { t } = useTranslation();
-  const servicesList = FN.MapToList(services).sort((a, b) =>
+  const servicesList = MapToList(services).sort((a, b) =>
     a.name.localeCompare(b.name),
   );
   const getImageUrl = (service) => {
-    const img = R.find(R.propEq('id', service.image_id))(images);
+    const img = find(propEq('id', service.image_id))(images);
     if (img) return img.url;
     return service.image.url;
   }
   const selectedType = tabIndex === 0 ? 'TABLEWARE' : 'CONDIMENT';
-  const selectedServicesList = R.filter((s) => s.type === selectedType, servicesList);
+  const selectedServicesList = filter((s) => s.type === selectedType, servicesList);
   return (
     <div>
       <Paper style={{borderRadius: '2px', margin: '14px 10px'}}>

@@ -1,10 +1,10 @@
-// @flow
-import { Observable, of, from } from 'rxjs';
+import { of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { push } from 'connected-react-router';
 import { reset } from 'redux-form';
-import * as R from 'ramda';
+import sort from 'ramda/src/sort';
+import values from 'ramda/src/values';
 import { actionTypes } from 'react-redux-firebase';
 import { setCookie } from '@dinify/common/dist/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
@@ -15,7 +15,7 @@ import { selectRestaurant } from './actions';
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
 
 // Epic
-const bootstrapEpic = (action$: Observable) =>
+const bootstrapEpic = (action$) =>
   action$.pipe(
     ofType('persist/REHYDRATE'),
     mergeMap(() => {
@@ -24,7 +24,7 @@ const bootstrapEpic = (action$: Observable) =>
     })
   );
 
-const selectRestaurantEpic = (action$: Observable) =>
+const selectRestaurantEpic = (action$) =>
   action$.pipe(
     ofType('SELECT_RESTAURANT'),
     mapTo(push('/'))
@@ -59,7 +59,7 @@ const loadRestaurant = (action$) =>
     })
   );
 
-export const FailAction = (err: Error) => ({ type: 'FAIL', payload: err });
+export const FailAction = (err) => ({ type: 'FAIL', payload: err });
 
 export const createRestaurantDoneAction = ({ email, password }) => {
   return { type: 'LOGIN_INIT', payload: { email, password } };
@@ -68,7 +68,6 @@ export const createRestaurantDoneAction = ({ email, password }) => {
 
 const middlePromise = (firebase, res) => new Promise((resolve, reject) => {
   firebase.auth().currentUser.getIdTokenResult(true).then((t) => {
-    console.log('2');
     resolve({ t });
   })
   .catch(reject)
@@ -78,7 +77,6 @@ const registerRestaurantEpic = (action$, state$, { firebase }) =>
   action$.pipe(
     ofType('REGISTER_RESTAURANT_INIT'),
     mergeMap(({ payload: { restaurantName, subdomain, language } }) => {
-      console.log('1')
       const onboardingToken = state$.value.restaurant.onboardingToken;
       const createRestaurantPayload = { restaurantName, subdomain, language };
       if (onboardingToken) {
@@ -88,7 +86,6 @@ const registerRestaurantEpic = (action$, state$, { firebase }) =>
         mergeMap((res) => {
           return from(middlePromise(firebase, res)).pipe(
             mergeMap(({ t }) => {
-              console.log('3');
               setCookie('access_token', t.token, 90);
               return of(
                 { type: 'REGISTER_RESTAURANT_DONE', payload: { res } },
@@ -104,7 +101,7 @@ const registerRestaurantEpic = (action$, state$, { firebase }) =>
     })
   );
 
-const reorderEpic = (action$: Observable) =>
+const reorderEpic = (action$) =>
   action$.pipe(
     filter(
       action =>
@@ -138,8 +135,8 @@ const editImageEpic = (action$, state$) =>
     mergeMap(({ payload: { res } }) => {
       const { id } = res;
       const images = state$.value.restaurant.loggedRestaurant.images;
-      const maxPrecedence = R.sort((a, b) => b.precedence - a.precedence)(
-        R.values(images),
+      const maxPrecedence = sort((a, b) => b.precedence - a.precedence)(
+        values(images),
       )[0].precedence;
       return from(API.EditImage({ id, precedence: maxPrecedence + 1 })).pipe(
         map(res => ({ type: `EDIT_IMAGE_DONE`, payload: res })),
@@ -147,11 +144,6 @@ const editImageEpic = (action$, state$) =>
       );
     })
   )
-  snackbar.show({
-    message: 'Archived',
-    action: 'Undo',
-    handleAction: () => {/* do something... */} 
-  })
 
 const onUpdateDoneSnackbarsEpic = (action$) =>
   action$.pipe(
@@ -179,13 +171,13 @@ const onUpdateFailSnackbarsEpic = (action$) =>
     })
   );
 
-const resetCategoriesEpic = (action$: Observable) =>
+const resetCategoriesEpic = (action$) =>
   action$.pipe(
     ofType('CREATE_MENUCATEGORY_DONE'),
     map(() => reset('menu/createCategory'))
   );
 
-const resetMenuItemEpic = (action$: Observable) =>
+const resetMenuItemEpic = (action$) =>
   action$.pipe(
     ofType('CREATE_MENUITEM_DONE'),
     map(() => reset('menu/createItem'))

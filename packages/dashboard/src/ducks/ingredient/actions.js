@@ -1,4 +1,3 @@
-// @flow
 
 export const createIngredientInit = ({ name, form }) => {
   if (!name || name.length <= 2) {

@@ -1,8 +1,12 @@
-import * as R from 'ramda';
+import toPairs from 'ramda/src/toPairs';
+import curry from 'ramda/src/curry';
+import assocPath from 'ramda/src/assocPath';
+import path from 'ramda/src/path';
+import keys from 'ramda/src/keys';
 import numeral from 'numeral';
 
 export const MapToList = items =>
-  R.toPairs(items)
+  toPairs(items)
     .map(pair => ({ id: pair[0], ...pair[1] }))
     .sort((a, b) => b.id.localeCompare(a.id, 'en'));
 
@@ -28,8 +32,8 @@ export function isInstalled() {
   return false;
 }
 
-export const MapPath = R.curry((path, f, obj) =>
-  R.assocPath(path, f(R.path(path, obj)), obj),
+export const MapPath = curry((path, f, obj) =>
+  assocPath(path, f(path(path, obj)), obj),
 );
 
 export const UpdateOriginal = (originalMap, actual) => {
@@ -37,7 +41,7 @@ export const UpdateOriginal = (originalMap, actual) => {
   const actualMap = actual;
   MapToList(originalMap).forEach(o => {
     if (actualMap[o.id]) {
-      R.keys(o).forEach(originalKey => {
+      keys(o).forEach(originalKey => {
         if (actualMap[o.id][originalKey] === undefined) {
           actualMap[o.id][originalKey] = o[originalKey];
         }

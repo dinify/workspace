@@ -1,4 +1,6 @@
-import * as R from 'ramda';
+import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
+
 
 const initialState = {
   progressMap: {},
@@ -34,16 +36,16 @@ export default function reducer(state = initialState, action) {
     let newIndex = action.payload;
     const { navOpenedIndex } = state;
     if (navOpenedIndex === action.payload) newIndex = -2;    
-    return R.assoc('navOpenedIndex', newIndex)(state);
+    return assoc('navOpenedIndex', newIndex)(state);
   }
   if (action.type === 'SWITCH_SERVICESTAB') {
-    return R.assoc('servicesTabIndex', action.payload)(state);
+    return assoc('servicesTabIndex', action.payload)(state);
   }
   if (action.type === 'SWITCH_TRANSLATIONSTAB') {
-    return R.assoc('translationsTabIndex', action.payload)(state);
+    return assoc('translationsTabIndex', action.payload)(state);
   }
   if (action.type === 'persist/REHYDRATE') {
-    return R.assoc('errorsMap', {})(R.assoc('progressMap', {})(state));
+    return assoc('errorsMap', {})(assoc('progressMap', {})(state));
   }
   if (
     action.type.includes('CREATE') ||
@@ -70,10 +72,10 @@ export default function reducer(state = initialState, action) {
       key = key.replace('_FAIL', '');
       const theMessage = findNested(action.payload, 'message');
       if (theMessage) {
-        state = R.assocPath(['errorsMap', key], theMessage)(state);
+        state = assocPath(['errorsMap', key], theMessage)(state);
       }
     }
-    state = R.assocPath(['progressMap', key], stage)(state);
+    state = assocPath(['progressMap', key], stage)(state);
   }
   return state;
 }

@@ -9,9 +9,13 @@ import CardContent from '@material-ui/core/CardContent';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Chip from '@material-ui/core/Chip';
-import { MapToList, ListToMap } from 'lib/FN';
+import { MapToList, ListToMap } from  '@dinify/common/dist/lib/FN';
 import { connect } from 'react-redux';
-import * as R from 'ramda';
+import mergeAll from 'ramda/src/mergeAll';
+import merge from 'ramda/src/merge';
+import groupBy from 'ramda/src/groupBy';
+import mapObjIndexed from 'ramda/src/mapObjIndexed';
+
 import languagesArray from '@dinify/common/dist/lib/languages.json'
 import Typography from '@dinify/common/dist/components/Typography';
 import Collapse from '@material-ui/core/Collapse';
@@ -39,7 +43,7 @@ import Editor from './Editor';
 const PRE = 'PRE';
 const OTHER = 'OTHER';
 
-const languages = R.mergeAll(
+const languages = mergeAll(
   languagesArray.map((el) => {
     const key = el[0];
     return {[key]: {
@@ -65,13 +69,13 @@ const styles = theme => ({
 });
 
 const makeInitalValues = (translationsMap) => {
-  const names = R.mapObjIndexed((t) => t.name, translationsMap);
+  const names = mapObjIndexed((t) => t.name, translationsMap);
   const descriptions = {};
-  R.mapObjIndexed((t) => {
+  mapObjIndexed((t) => {
     if (t.description) descriptions[`${t.id}_description`] = t.description;
     return t.id;
   }, translationsMap);
-  return R.merge(names, descriptions);
+  return merge(names, descriptions);
 }
 
 const getCoverage = (t, o) => {
@@ -140,7 +144,7 @@ const Translations = ({
 
   if (menuLanguagesList.length < 1) {
     let selectFrom = autocompleteData.map((o) => ({...o, preferred: preferredLanguages.includes(o.value) }));
-    selectFrom = R.groupBy((o) => preSelectedLanguages.includes(o.value) ? PRE : OTHER)(selectFrom);
+    selectFrom = groupBy((o) => preSelectedLanguages.includes(o.value) ? PRE : OTHER)(selectFrom);
     return (
       <div style={{textAlign: 'center'}}>
         <div style={{margin: '20px 0'}}>
@@ -291,8 +295,8 @@ const translationsSelector = createSelector(
     const ofLocale = MapToList(translations[selectedLocale]);
     const ofDefaultLanguage = MapToList(translations[defaultLanguage]);
 
-    const byType = R.groupBy((o) => o.type)(ofLocale);
-    const defaultByType = R.groupBy((o) => o.type)(ofDefaultLanguage);
+    const byType = groupBy((o) => o.type)(ofLocale);
+    const defaultByType = groupBy((o) => o.type)(ofDefaultLanguage);
     return {
       locales,
       ofLocale,

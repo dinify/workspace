@@ -1,6 +1,6 @@
-// @flow
 import React from 'react';
-import * as R from 'ramda';
+import values from 'ramda/src/values';
+import sort from 'ramda/src/sort';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import {
@@ -16,9 +16,9 @@ const Image = ({ uploadMainImage, loggedRestaurant }) => {
   if (!loggedRestaurant) return <div />;
   const { t } = useTranslation();
   let imageUrl = '/static/placeholder.png';
-  const images = R.values(loggedRestaurant.images);
+  const images = values(loggedRestaurant.images);
   if (images.length > 0) {
-    const sortedImages = R.sort((a, b) => a.precedence - b.precedence)(images);
+    const sortedImages = sort((a, b) => a.precedence - b.precedence)(images);
     imageUrl = sortedImages[0].url;
   }
   if (loggedRestaurant.uploadedImage) imageUrl = loggedRestaurant.uploadedImage;

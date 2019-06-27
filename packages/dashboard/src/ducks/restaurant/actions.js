@@ -1,4 +1,3 @@
-// @flow
 
 // Action Creators
 export const selectCategoryAction = payload => ({

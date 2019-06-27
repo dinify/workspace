@@ -1,6 +1,8 @@
-// @flow
-import * as R from 'ramda';
-import { UpdateOriginal } from 'lib/FN';
+import pipe from 'ramda/src/pipe';
+import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
+import dissocPath from 'ramda/src/dissocPath';
+import { UpdateOriginal } from '@dinify/common/dist/lib/FN';
 
 const initialState = {
   all: {},
@@ -8,40 +10,33 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+  
+  switch (type) {
     case 'FETCH_LOGGEDRESTAURANT_DONE': {
-      const actualIngredients = action.payload.res.ingredients;
-      return R.assoc('all', UpdateOriginal(state.all, actualIngredients))(
-        state,
-      );
+      const actualIngredients = payload.res.ingredients;
+      return assoc('all', UpdateOriginal(state.all, actualIngredients))(state);
     }
-
     case 'CREATE_INGREDIENT_DONE': {
-      const newIngredient = action.payload.res;
-      return R.assocPath(['all', newIngredient.id], newIngredient)(state);
+      const newIngredient = payload.res;
+      return assocPath(['all', newIngredient.id], newIngredient)(state);
     }
-
     case 'UPDATE_INGREDIENT_INIT': {
-      const payload = action.payload;
-      return R.assocPath(['all', payload.id, 'excludable'], payload.excludable)(
-        state,
-      );
+      const { id, excludable } = payload;
+      return assocPath(['all', id, 'excludable'], excludable)(state);
     }
-
     case 'REMOVE_INGREDIENT_INIT': {
-      const { id } = action.payload;
+      const { id } = payload;
       const ingredientObj = state.all[id];
-      return R.pipe(
-        R.assocPath(['backup', id], ingredientObj),
-        R.dissocPath(['all', id]),
+      return pipe(
+        assocPath(['backup', id], ingredientObj),
+        dissocPath(['all', id]),
       )(state);
     }
-
     case 'REMOVE_INGREDIENT_FAIL': {
-      const { id } = action.payload.prePayload;
-      return R.assocPath(['all', id], state.backup[id])(state);
+      const { id } = payload.prePayload;
+      return assocPath(['all', id], state.backup[id])(state);
     }
-
     default:
       return state;
   }

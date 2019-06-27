@@ -10,8 +10,8 @@ import {
   arrayMove,
 } from 'react-sortable-hoc';
 import { useTranslation } from 'react-i18next';
-import * as FN from 'lib/FN';
-import * as R from 'ramda';
+import * as FN from '@dinify/common/dist/lib/FN';
+import filter from 'ramda/src/filter';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -194,7 +194,7 @@ const ListOfDishes = ({
   errorsMap,
 }) => {
   if (!selectedCategoryId || !categoriesMap[selectedCategoryId]) return <div />;
-  const menuItemsList = R.filter(
+  const menuItemsList = filter(
     item => item.menu_category_id === selectedCategoryId,
     FN.MapToList(menuItemsMap),
   ).sort((a, b) => a.precedence - b.precedence);

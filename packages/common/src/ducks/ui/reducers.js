@@ -1,5 +1,6 @@
-// @flow
-import * as R from 'ramda';
+import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
+
 import types from './types';
 
 const initialState = {
@@ -32,7 +33,7 @@ export default function reducer(state = initialState, action) {
     const theMessage = findNested(action.payload, 'message');
     const theCode = findNested(action.payload, 'code');
     if (theMessage) {
-      state = R.assocPath(['errorsMap', action.type], {
+      state = assocPath(['errorsMap', action.type], {
         message: theMessage,
         code: theCode,
       })(state);
@@ -41,22 +42,22 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case types.DIALOG_OPEN: {
       // TODO: close other dialogs
-      return R.assocPath(['dialogs', action.payload.id], {
+      return assocPath(['dialogs', action.payload.id], {
         ...action.payload,
         open: true,
       })(state);
     }
     case types.DIALOG_CLOSE: {
-      return R.assocPath(['dialogs', action.payload], {
+      return assocPath(['dialogs', action.payload], {
         ...state.dialogs[action.payload],
         open: false,
       })(state);
     }
     case types.TOGGLE_THEME: {
-      return R.assoc('theme', state.theme === 'dark' ? 'light' : 'dark')(state);
+      return assoc('theme', state.theme === 'dark' ? 'light' : 'dark')(state);
     }
     case 'persist/REHYDRATE': {
-      return R.assoc('errorsMap', {})(R.assoc('progressMap', {})(state));
+      return assoc('errorsMap', {})(assoc('progressMap', {})(state));
     }
     default:
       return state;

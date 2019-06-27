@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import moment from 'moment';
 import numeral from 'numeral';
-import * as R from 'ramda';
+import pluck from 'ramda/src/pluck';
 
 import ReactTable from 'react-table';
 import { DateRangePicker } from 'react-dates';
@@ -139,7 +139,7 @@ class Billing extends React.Component {
                 textAlign: 'right',
               },
               Footer: `${numeral(
-                R.pluck('sub_total')(bills).reduce(
+                pluck('sub_total')(bills).reduce(
                   (a, b) => Number(a) + Number(b),
                   0,
                 ),
@@ -162,7 +162,7 @@ class Billing extends React.Component {
                 <span>
                   <span>
                     {numeral(
-                      R.pluck('sub_total')(bills).reduce(
+                      pluck('sub_total')(bills).reduce(
                         (a, b) => Number(a) + Number(b) * 0.025,
                         0,
                       ),
@@ -179,7 +179,7 @@ class Billing extends React.Component {
                 textAlign: 'right',
               },
               Footer: `${numeral(
-                R.pluck('gratitude')(bills).reduce(
+                pluck('gratitude')(bills).reduce(
                   (a, b) => Number(a) + Number(b),
                   0,
                 ),

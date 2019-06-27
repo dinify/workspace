@@ -1,11 +1,12 @@
-// @flow
-import { Observable, of} from 'rxjs';
+import { of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import * as R from 'ramda';
-import * as FN from 'lib/FN';
+import keys from 'ramda/src/keys';
+import assocPath from 'ramda/src/assocPath';
+import dissocPath from 'ramda/src/dissocPath';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 
-const updateCusomizationsEpic = (action$: Observable, state$) =>
+const updateCusomizationsEpic = (action$, state$) =>
   action$.pipe(
     ofType('UPDATECUSOMIZATIONS_INIT'),
     mergeMap(({ payload: { menuItemId, actionKind, custKey, custId, cust, updateObj } }) => {
@@ -15,25 +16,25 @@ const updateCusomizationsEpic = (action$: Observable, state$) =>
 
       const custs = menuItem[custKey]; // ingredietns, addons or options
 
-      const updKeys = R.keys(updateObj);
+      const updKeys = keys(updateObj);
 
       let updatedCusts;
       let updatedCustsForStore;
       if (actionKind === 'ADD') {
-        updatedCusts = R.assocPath([custId], cust)(custs);
+        updatedCusts = assocPath([custId], cust)(custs);
         updatedCustsForStore = updatedCusts;
       }
       if (actionKind === 'UPDATE') {
-        updatedCusts = R.assocPath([custId, updKeys[0]], updateObj[updKeys[0]])(custs);
-        updatedCustsForStore = R.assocPath([custId, 'pivot', updKeys[0]], updateObj[updKeys[0]])(custs);
+        updatedCusts = assocPath([custId, updKeys[0]], updateObj[updKeys[0]])(custs);
+        updatedCustsForStore = assocPath([custId, 'pivot', updKeys[0]], updateObj[updKeys[0]])(custs);
       }
       if (actionKind === 'REMOVE') {
-        updatedCusts = R.dissocPath([custId])(custs);
+        updatedCusts = dissocPath([custId])(custs);
         updatedCustsForStore = updatedCusts;
       }
       const updatePayload = {};
       updatePayload.id = menuItemId;
-      updatePayload[custKey] = FN.MapToList(updatedCusts);
+      updatePayload[custKey] = MapToList(updatedCusts);
 
       return of(
         {

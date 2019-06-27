@@ -1,8 +1,13 @@
 // @flow
 import React from 'react';
 import { compose } from 'redux';
-import * as R from 'ramda';
-import * as FN from 'lib/FN';
+import pluck from 'ramda/src/pluck';
+import sum from 'ramda/src/sum';
+import apply from 'ramda/src/apply';
+import last from 'ramda/src/last';
+import range from 'ramda/src/range';
+
+import { MapToList } from '@dinify/common/dist/lib/FN';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -369,26 +374,26 @@ const Waiterboards = ({
 }) => {
   const { t } = useTranslation();
 
-  const waiterboards = FN.MapToList(loggedRestaurant.waiterboards).map(wb => {
-    const tables = FN.MapToList(wb.tables).sort(
+  const waiterboards = MapToList(loggedRestaurant.waiterboards).map(wb => {
+    const tables = MapToList(wb.tables).sort(
       (a, b) => a.number - b.number,
     );
-    const xs = R.pluck('x')(tables); // columns
-    const ys = R.pluck('y')(tables); // rows
-    const tableNumbers = R.pluck('number')(tables); // numbers
-    const capacities = R.pluck('capacity')(tables); // numbers
-    wb.capacity = R.sum(capacities);
-    wb.maxX = R.apply(Math.max, xs);
-    wb.maxY = R.apply(Math.max, ys);
+    const xs = pluck('x')(tables); // columns
+    const ys = pluck('y')(tables); // rows
+    const tableNumbers = pluck('number')(tables); // numbers
+    const capacities = pluck('capacity')(tables); // numbers
+    wb.capacity = sum(capacities);
+    wb.maxX = apply(Math.max, xs);
+    wb.maxY = apply(Math.max, ys);
     if (tables.length > 0 && tables.length < 5) {
       wb.maxX = 4;
     }
-    wb.lastTableCapacity = R.last(capacities) || 4;
+    wb.lastTableCapacity = last(capacities) || 4;
     if (tableNumbers.length < 1) wb.maxTableNumber = 0;
-    else wb.maxTableNumber = R.apply(Math.max, tableNumbers);
+    else wb.maxTableNumber = apply(Math.max, tableNumbers);
     wb.tables = tables;
-    const tablesMatrix = R.range(0, wb.maxY + 1).map(() =>
-      R.range(0, wb.maxX + 1).map(() => null),
+    const tablesMatrix = range(0, wb.maxY + 1).map(() =>
+      range(0, wb.maxX + 1).map(() => null),
     ); // tablesMatrix[y][x]
     tables.forEach(table => {
       if (Number.isInteger(table.x) && Number.isInteger(table.y))
@@ -396,15 +401,15 @@ const Waiterboards = ({
     });
 
     wb.suitableY = wb.maxY;
-    const lastRow = R.last(tablesMatrix);
+    const lastRow = last(tablesMatrix);
     if (!lastRow) {
       wb.suitableX = 0;
       wb.suitableY = 0;
-    } else if (R.last(lastRow)) {
+    } else if (last(lastRow)) {
       // if last column of last row is full
       wb.suitableY += 1;
       wb.maxY += 1;
-      //tablesMatrix[wb.maxY] = R.range(0, wb.maxX+1).map(() => null) // add row
+      //tablesMatrix[wb.maxY] = range(0, wb.maxX+1).map(() => null) // add row
       wb.suitableX = 0; // new table will be the first of new row
     } else {
       for (let i = lastRow.length - 1; i >= 0; i--) {
