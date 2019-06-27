@@ -1,14 +1,8 @@
-/* eslint-disable react/no-multi-comp */
-// @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
-import { Label } from 'web/components/styled/FormBox';
 import { updateNameInitAction } from 'ducks/restaurant/actions';
-import { createServiceInit, removeServiceInit } from 'ducks/service/actions';
+import { removeServiceInit } from 'ducks/service/actions';
 import { useTranslation } from 'react-i18next';
-import Button from '@material-ui/core/Button';
-import Text from 'web/components/MaterialInputs/Text';
 import * as FN from 'lib/FN';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
@@ -19,55 +13,17 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@dinify/common/dist/components/Typography';
 import Paper from '@material-ui/core/Paper';
 import { switchServicesTab as switchTab } from 'ducks/ui/actions';
-
-const formStyles = () => ({
-  input: {
-    padding: 10
-  }
-})
-
-let ServiceForm = ({ handleSubmit, classes, t }) => {
-  return (
-    <form onSubmit={handleSubmit}>
-      <Grid container spacing={8} direction="row" justify="center" alignItems="center">
-        <Grid item xs={9}>
-          <Field
-            name="name"
-            component={Text}
-            componentProps={{
-              style: {marginTop: 10},
-              variant: 'outlined',
-              label: t('serviceName'),
-              fullWidth: true,
-              margin: 'normal',
-              InputProps: { classes: { input: classes.input } },
-              InputLabelProps: {shrink: true}
-            }}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <Button type="submit" fullWidth variant="contained" color="primary">
-            {t('add')}
-          </Button>
-        </Grid>
-      </Grid>
-    </form>
-  );
-};
-ServiceForm = reduxForm({
-  form: 'settings/service',
-  //  enableReinitialize: true
-})(withStyles(formStyles)(ServiceForm));
+import AddServiceComponent from 'web/components/AddService';
 
 function TabContainer(props) {
+  const { children } = props;
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
+      {children}
     </Typography>
   );
 }
@@ -92,65 +48,6 @@ const styles = () => ({
     whiteSpace: 'nowrap'
   }
 });
-
-class AddServiceComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedImage: null,
-    };
-  }
-
-  render() {
-    const { images, createService, serviceType, t } = this.props;
-    const { selectedImage } = this.state;
-
-    const filteredImages = R.filter((img) => {
-      if (serviceType === 'TABLEWARE') return img.item_type === `Internal\\Service\\Tableware`;
-      return img.item_type === 'Internal\\Service\\Condiments';
-    }, images);
-
-    return (<div>
-      <Label className="center">{t('selectServiceIcon')}</Label>
-      <div style={{marginTop: 8}}>
-        {filteredImages.map((image) =>
-          <Avatar
-            key={image.id}
-            style={{
-              display: 'inline-block',
-              margin: '5px',
-              height: 60,
-              width: 60,
-              cursor: 'pointer',
-              border: selectedImage === image.id ? '3px solid red' : 'none'
-            }}
-            onClick={() => this.setState({ selectedImage: image.id })}
-            src={image.url}
-          />
-        )}
-      </div>
-      <ServiceForm
-        t={t}
-        onSubmit={({ name }) =>
-          createService({
-            name,
-            imageId: selectedImage || '587334ad-91f4-4179-8bd8-39b0abb1390c',
-            type: serviceType
-          })
-        }
-      />
-    </div>
-    );
-  }
-}
-
-AddServiceComponent = connect(
-  (state) => ({
-    images: state.service.images
-  }), {
-    createService: createServiceInit,
-  }
-)(AddServiceComponent)
 
 const ServiceCalls = ({ removeService, services, images, classes, tabIndex, switchTab }) => {
   const { t } = useTranslation();

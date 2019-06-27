@@ -9,7 +9,6 @@ import ListOfCategories from './ListOfCategories';
 import ListOfDishes from './ListOfDishes';
 import ItemDetail from './ItemDetail';
 
-
 const Menucontrol = ({
   selectedCategoryId,
   selectedFoodId,
@@ -19,47 +18,48 @@ const Menucontrol = ({
   const categoriesList = FN.MapToList(categoriesMap).sort(
     (a, b) => a.precedence - b.precedence,
   );
+  let categoryId = selectedCategoryId;
   if (categoriesList.length === 1) {
-    selectedCategoryId = categoriesList[0].id;
+    categoryId = categoriesList[0].id;
   }
   const { t } = useTranslation();
   return (
     <div>
-        {categoriesList.length < 1 && <div style={{textAlign: 'center', margin: '20px 0 40px 0'}}>
-          <Typography component="h2" variant="display1" gutterBottom>
-            {t('menu.startWithCategory')}
-          </Typography>
-        </div>}
-        {/* categoriesList.length > 0 && <Button variant="contained" color="primary" type="submit">
-          Translate menu
-          </Button> */}
-        <Grid container spacing={8} alignItems="flex-start" justify="center">
-          <Grid item xs={3}>
-            <Typography gutterBottom variant="caption">{t('menu.categories')}</Typography>
-            <ListOfCategories
-              categoriesList={categoriesList}
-              selectedCategoryId={selectedCategoryId}
-            />
-          </Grid>
-
-          {categoriesList.length > 0 &&
-            [<Grid item xs={3} key="categories-item-1">
-              <Typography gutterBottom variant="caption">{t('menu.dishes')}</Typography>
-              <ListOfDishes
-                categoriesMap={categoriesMap}
-                selectedFoodId={selectedFoodId}
-                selectedCategoryId={selectedCategoryId}
-              />
-            </Grid>,
-            <Grid item xs={6} key="categories-item-2">
-              {(selectedCategoryId && categoriesMap[selectedCategoryId] && menuItems[selectedFoodId]) && [
-                <Typography key="typo-dish-detail" gutterBottom variant="caption">{t('menu.dishDetail')}</Typography>,
-                <ItemDetail key="dish-detail-container" menuItems={menuItems} selectedFoodId={selectedFoodId} />
-              ]}
-            </Grid>]
-          }
-
+      {categoriesList.length < 1 && <div style={{textAlign: 'center', margin: '20px 0 40px 0'}}>
+        <Typography component="h2" variant="display1" gutterBottom>
+          {t('menu.startWithCategory')}
+        </Typography>
+      </div>}
+      {/* categoriesList.length > 0 && <Button variant="contained" color="primary" type="submit">
+        Translate menu
+        </Button> */}
+      <Grid container spacing={8} alignItems="flex-start" justify="center">
+        <Grid item xs={3}>
+          <Typography gutterBottom variant="caption">{t('menu.categories')}</Typography>
+          <ListOfCategories
+            categoriesList={categoriesList}
+            selectedCategoryId={categoryId}
+          />
         </Grid>
+
+        {categoriesList.length > 0 &&
+          [<Grid item xs={3} key="categories-item-1">
+            <Typography gutterBottom variant="caption">{t('menu.dishes')}</Typography>
+            <ListOfDishes
+              categoriesMap={categoriesMap}
+              selectedFoodId={selectedFoodId}
+              selectedCategoryId={categoryId}
+            />
+          </Grid>,
+          <Grid item xs={6} key="categories-item-2">
+            {(categoryId && categoriesMap[categoryId] && menuItems[selectedFoodId]) && [
+              <Typography key="typo-dish-detail" gutterBottom variant="caption">{t('menu.dishDetail')}</Typography>,
+              <ItemDetail key="dish-detail-container" menuItems={menuItems} selectedFoodId={selectedFoodId} />
+            ]}
+          </Grid>]
+        }
+
+      </Grid>
     </div>
   );
 }

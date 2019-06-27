@@ -68,7 +68,7 @@ const makeInitalValues = (translationsMap) => {
   const names = R.mapObjIndexed((t) => t.name, translationsMap);
   const descriptions = {};
   R.mapObjIndexed((t) => {
-    if (t.description) descriptions[t.id+'_description'] = t.description;
+    if (t.description) descriptions[`${t.id}_description`] = t.description;
     return t.id;
   }, translationsMap);
   return R.merge(names, descriptions);
@@ -310,11 +310,9 @@ const enhance = compose(
       languagesSetupShown: false
     }),
     {
-      toggleLanguagesSetup: () => (languagesSetupShown) => {
-        return {
-          languagesSetupShown: !languagesSetupShown
-        };
-      },
+      toggleLanguagesSetup: () => (languagesSetupShown) => ({
+        languagesSetupShown: !languagesSetupShown
+      }),
     }
   ),
   connect(
