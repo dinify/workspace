@@ -19,8 +19,9 @@ const filterAction = (type, kind, stage) => {
   return typeOnly.startsWith(`${kind}_`) && typeOnly.endsWith(`_${stage}`);
 };
 
-const handleError = ({ error, path, subject, actionKind, initAction: { payload, type } }) => {
-  if (error && error.statusCode === 401 && !payload.refreshTokenTried) {
+const handleError = ({ error, path, subject, actionKind, initAction }) => {
+  const { payload, type, refreshTokenTried } = initAction;
+  if (error && error.statusCode === 401 && !refreshTokenTried) {
     return of({
       type: UNAUTHORIZED,
       payload: { payload, type }
@@ -37,7 +38,8 @@ const handleError = ({ error, path, subject, actionKind, initAction: { payload, 
 const createEpic = (action$, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'CREATE', 'INIT')),
-    mergeMap(({ payload = {}, type }) => {
+    mergeMap((action) => {
+      const { payload = {}, type } = action;
       const { subject, path } = getSubjectAndPath(type, 'CREATE', 'INIT');
       const apiFnName = `Create${camel(subject)}`;
       const state = state$.value;
@@ -51,7 +53,7 @@ const createEpic = (action$, state$) =>
         })),
         catchError(error => handleError({
           error, path, subject, actionKind: 'CREATE',
-          initAction: { payload, type }
+          initAction: action
         }))
       )
     })
@@ -60,7 +62,8 @@ const createEpic = (action$, state$) =>
 const fetchEpic = (action$, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'FETCH', 'INIT')),
-    mergeMap(({ payload = {}, type }) => {
+    mergeMap((action) => {
+      const { payload = {}, type } = action;
       const { subject, path } = getSubjectAndPath(type, 'FETCH', 'INIT');
       const apiFnName = `Get${camel(subject)}`;
       const state = state$.value;
@@ -74,7 +77,7 @@ const fetchEpic = (action$, state$) =>
         })),
         catchError(error => handleError({
           error, path, subject, actionKind: 'FETCH',
-          initAction: { payload, type }
+          initAction: action
         }))
       )
     })
@@ -106,7 +109,8 @@ const fetchAllEpic = (action$, state$) =>
 const updateEpic = (action$, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'UPDATE', 'INIT')),
-    mergeMap(({ payload = {}, type }) => {
+    mergeMap((action) => {
+      const { payload = {}, type } = action;
       const { subject, path } = getSubjectAndPath(type, 'UPDATE', 'INIT');
       const apiFnName = `Change${camel(subject)}`;
       const state = state$.value;
@@ -120,7 +124,7 @@ const updateEpic = (action$, state$) =>
         })),
         catchError(error => handleError({
           error, path, subject, actionKind: 'UPDATE',
-          initAction: { payload, type }
+          initAction: action
         }))
       )
     })
@@ -129,7 +133,8 @@ const updateEpic = (action$, state$) =>
 const removeEpic = (action$, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'REMOVE', 'INIT')),
-    mergeMap(({ payload = {}, type }) => {
+    mergeMap((action) => {
+      const { payload = {}, type } = action;
       const { subject, path } = getSubjectAndPath(type, 'REMOVE', 'INIT');
       const apiFnName = `Remove${camel(subject)}`;
       const state = state$.value;
@@ -143,7 +148,7 @@ const removeEpic = (action$, state$) =>
         })),
         catchError(error => handleError({
           error, path, subject, actionKind: 'REMOVE',
-          initAction: { payload, type }
+          initAction: action
         }))
       )
     })

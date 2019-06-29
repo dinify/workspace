@@ -1,6 +1,6 @@
 import React from 'react';
 import { Observable, of, from } from 'rxjs';
-import { mergeMap, map, catchError, filter } from 'rxjs/operators';
+import { mergeMap, map, catchError, filter, tap, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import AccountExistsDialog from '../../components/dialogs/AccountExistsDialog';
 
@@ -34,15 +34,11 @@ const refreshTokenEpic = (action$, state$, { firebase }) =>
     ofType(UNAUTHORIZED),
     mergeMap(({ payload: { type, payload } }) => 
       from(firebase.auth().currentUser.getIdToken()).pipe(
-        map(t => {
-          setCookie('access_token', t.token, 90);
-          return {
-            type,
-            payload: {
-              ...payload,
-              refreshTokenTried: true // break the loop
-            }
-          }
+        tap(t => setCookie('access_token', t, 90)),
+        mapTo({
+          type,
+          payload,
+          refreshTokenTried: true // break the loop
         }),
         catchError(e => of({
           type: 'REFRESH_TOKEN_FAILED',
