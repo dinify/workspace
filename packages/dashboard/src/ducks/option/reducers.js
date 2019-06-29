@@ -6,6 +6,7 @@ import lensProp from 'ramda/src/lensProp';
 import assocPath from 'ramda/src/assocPath';
 import dissocPath from 'ramda/src/dissocPath';
 import { UpdateOriginal } from '@dinify/common/dist/lib/FN';
+import * as restaurantTypes from 'ducks/restaurant/types';
 
 const initialState = {
   all: {},
@@ -16,7 +17,7 @@ export default function reducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case 'FETCH_LOGGEDRESTAURANT_DONE': {
+    case restaurantTypes.FETCH_LOGGEDRESTAURANT_DONE: {
       const actualOptions = payload.res.options;
       return assoc('all', UpdateOriginal(state.all, actualOptions))(state);
     }

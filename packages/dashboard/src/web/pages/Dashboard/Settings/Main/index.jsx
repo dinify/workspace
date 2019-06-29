@@ -6,7 +6,7 @@ import styled from 'styled-components';
 // import BusinessHours from './BusinessHours';
 import Banking from './Banking';
 import Social from './Social';
-import Location from './Location';
+import GoogleLocation from './GoogleLocation';
 import Contact from './Contact';
 import Image from './Image';
 // import Type from './Type';
@@ -34,15 +34,14 @@ const Main = ({ loggedRestaurant }) => {
         </Column>
 
         <Column>
-          <Location loggedRestaurant={loggedRestaurant} />
-          <Social social={loggedRestaurant.social} />
-          <Banking payout={loggedRestaurant.payout} />
+          <GoogleLocation loggedRestaurant={loggedRestaurant} address={
+            loggedRestaurant.address ? loggedRestaurant.address.business : {}
+          }/>
         </Column>
 
         <Column>
-          <Address address={
-            loggedRestaurant.address ? loggedRestaurant.address.business : {}
-          } />
+          <Social social={loggedRestaurant.social} />
+          <Banking payout={loggedRestaurant.payout} />
         </Column>
 
         <Column>

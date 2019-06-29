@@ -1,5 +1,6 @@
+import * as types from './types';
 
 export const updateCusomizationsInit = (payload) => ({
-  type: 'UPDATECUSOMIZATIONS_INIT',
+  type: types.UPDATECUSOMIZATIONS_INIT,
   payload
 });

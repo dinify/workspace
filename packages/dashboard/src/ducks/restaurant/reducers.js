@@ -4,6 +4,7 @@ import assocPath from 'ramda/src/assocPath';
 import dissoc from 'ramda/src/dissoc';
 import dissocPath from 'ramda/src/dissocPath';
 import { MapToList, setCookie } from '@dinify/common/dist/lib/FN';
+import * as restaurantTypes from 'ducks/restaurant/types';
 
 const preferredLanguagesInitial = [
   'cs', 'en', 'de', 'it',
@@ -73,7 +74,7 @@ export default function reducer(state = initialState, action) {
       const menuLanguage = { language };
       return assoc('menuLanguages', [...state.menuLanguages, menuLanguage])(state);
     }
-    case 'FETCH_LOGGEDRESTAURANT_DONE': {
+    case restaurantTypes.FETCH_LOGGEDRESTAURANT_DONE: {
       const restaurant = payload.res;
       let defaultLanguage = 'en';
       const menuLanguages = restaurant.menu_languages || {};
@@ -165,23 +166,15 @@ export default function reducer(state = initialState, action) {
       return pipe(
         assocPath(
           [
-            'loggedRestaurant',
-            'waiterboards',
-            prePayload.waiterboardId,
-            'tables',
-            prePayload.id,
-            'x',
+            'loggedRestaurant', 'waiterboards', prePayload.waiterboardId,
+            'tables', prePayload.id, 'x',
           ],
           prePayload.x,
         ),
         assocPath(
           [
-            'loggedRestaurant',
-            'waiterboards',
-            prePayload.waiterboardId,
-            'tables',
-            prePayload.id,
-            'y',
+            'loggedRestaurant', 'waiterboards', prePayload.waiterboardId,
+            'tables', prePayload.id, 'y',
           ],
           prePayload.y,
         )

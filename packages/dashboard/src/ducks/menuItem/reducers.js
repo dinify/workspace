@@ -2,6 +2,8 @@ import pipe from 'ramda/src/pipe';
 import assocPath from 'ramda/src/assocPath';
 import dissocPath from 'ramda/src/dissocPath';
 import { MapToList } from '@dinify/common/dist/lib/FN';
+import * as restaurantTypes from 'ducks/restaurant/types';
+import * as types from './types';
 
 const initialState = {
   all: {},
@@ -12,7 +14,7 @@ export default function reducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case 'FETCH_LOGGEDRESTAURANT_DONE': {
+    case restaurantTypes.FETCH_LOGGEDRESTAURANT_DONE: {
       const categories = payload.res.categories;
       let newState = state;
       MapToList(categories).forEach(category => {
@@ -25,24 +27,19 @@ export default function reducer(state = initialState, action) {
       return newState;
     }
     
-    case 'CREATE_MENUITEM_DONE': {
+    case types.CREATE_MENUITEM_DONE: {
       const newItem = payload.res;
       return assocPath(['all', newItem.id], newItem)(state);
     }
 
-    case 'UPDATECUSOMIZATIONS_UPDATING': {
-      const { id, custKey, updatedCusts } = payload;
-      return assocPath(['all', id, custKey], updatedCusts)(state);
-    }
-
-    case 'UPDATE_MENUITEM_INIT': {
+    case types.UPDATE_MENUITEM_INIT: {
       const { id, ingredients, options, addons } = payload;
       const original = state.all[id];
       if (ingredients || options || addons) return state;
       return assocPath(['all', payload.id], { ...original, ...payload })(state);
     }
 
-    case 'REMOVE_MENUITEM_INIT': {
+    case types.REMOVE_MENUITEM_INIT: {
       const { id } = payload;
       return pipe(
         assocPath(['backup', id], state.all[id]),
@@ -50,9 +47,14 @@ export default function reducer(state = initialState, action) {
       )
     }
 
-    case 'REMOVE_MENUITEM_FAIL': {
+    case type.REMOVE_MENUITEM_FAIL: {
       const id = payload.prePayload.id;
       return assocPath(['all', id], state.backup[id])(state);
+    }
+
+    case 'UPDATECUSOMIZATIONS_UPDATING': {
+      const { id, custKey, updatedCusts } = payload;
+      return assocPath(['all', id, custKey], updatedCusts)(state);
     }
 
     case 'ASSIGN_INGREDIENT-FOOD_INIT': {
@@ -88,7 +90,7 @@ export default function reducer(state = initialState, action) {
       return dissocPath(['all', foodId, 'options', optionId])(state);
     }
 
-    case 'UPDATE_ITEMIMAGE_DONE': {
+    case types.UPDATE_ITEMIMAGE_DONE: {
       const foodId = payload.prePayload.id;
       const image = payload.res;
       return assocPath(['all', foodId, 'images', image.id], image)(state);

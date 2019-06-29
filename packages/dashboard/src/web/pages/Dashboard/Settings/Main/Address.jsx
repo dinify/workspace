@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
@@ -17,11 +16,6 @@ let AddressForm = ({ handleSubmit }) => {
   const { t } = useTranslation();
   return (
     <form onSubmit={handleSubmit}>
-      {/*<Field
-        name="country"
-        component={Text}
-        componentProps={{ label: 'Country', fullWidth: true, margin: 'normal' }}
-      /> */}
       <Field
         name="street"
         component={Text}
@@ -36,11 +30,6 @@ let AddressForm = ({ handleSubmit }) => {
           margin: 'normal',
         }}
       />
-      {/*<Field
-        name="region"
-        component={Text}
-        componentProps={{ label: 'Region', fullWidth: true, margin: 'normal' }}
-      /> */}
       <Field
         name="postal_code"
         component={Text}

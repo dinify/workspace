@@ -5,14 +5,16 @@ import keys from 'ramda/src/keys';
 import assocPath from 'ramda/src/assocPath';
 import dissocPath from 'ramda/src/dissocPath';
 import { MapToList } from '@dinify/common/dist/lib/FN';
+import * as types from './types';
+
 
 const updateCusomizationsEpic = (action$, state$) =>
   action$.pipe(
-    ofType('UPDATECUSOMIZATIONS_INIT'),
+    ofType(types.UPDATECUSOMIZATIONS_INIT),
     mergeMap(({ payload: { menuItemId, actionKind, custKey, custId, cust, updateObj } }) => {
 
       const menuItem = state$.value.menuItem.all[menuItemId];
-      if (!menuItem) return { type: 'UPDATECUSOMIZATIONS_FAIL' };
+      if (!menuItem) return { type: types.UPDATECUSOMIZATIONS_FAIL };
 
       const custs = menuItem[custKey]; // ingredietns, addons or options
 
@@ -38,7 +40,7 @@ const updateCusomizationsEpic = (action$, state$) =>
 
       return of(
         {
-          type: `UPDATECUSOMIZATIONS_UPDATING`,
+          type: types.UPDATECUSOMIZATIONS_UPDATING,
           payload: {
             id: menuItemId,
             custKey,
@@ -46,7 +48,7 @@ const updateCusomizationsEpic = (action$, state$) =>
           },
         },
         {
-          type: `UPDATE_MENUITEM_INIT`,
+          type: types.UPDATE_MENUITEM_INIT,
           payload: updatePayload,
         }
       );
