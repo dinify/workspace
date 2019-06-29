@@ -29,7 +29,7 @@ class SectionFAQ extends React.Component {
           <GridItem xs={12} sm={8} md={8}>
             <Accordion
               active={0}
-              collapses={['translation', 'correct', 'devices', 'training'].map(key => ({
+              collapses={['translation', 'correct', 'devices', 'training', 'trial', 'modify'].map(key => ({
                 title: t(`${tKey}.${key}.title`),
                 content: t(`${tKey}.${key}.content`)
               }))}

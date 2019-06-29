@@ -78,6 +78,14 @@
         "training": {
           "title": "Does the staff need training?",
           "content": "There is no training required, the interface is intuitive and simple to use, with interactive tutorials and on demand customer support. It's as simple to use as email, no need to change the existing billing system."
+        },
+        "trial": {
+          "title": "What happens after the free trial expires?",
+          "content": "At the end of the free trial, you'll be invited to upgrade to a paid plan for a monthly, or yearly billing cycle. All you will have to do at this point is to simply complete the subscription form with your credit card or your preferred method of online payment."
+        },
+        "modify": {
+          "title": "How can I modify my menu?",
+          "content": "With the Dashboard, you will have great flexibility in the ways you manage your menu. You can add or remove any item, or simple hide it temporarily. This realtime publishing flow will update all prices and pictures in the user facing app."
         }
       }
     }
