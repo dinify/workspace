@@ -6,7 +6,7 @@ import { reset } from 'redux-form';
 import sort from 'ramda/src/sort';
 import values from 'ramda/src/values';
 import { actionTypes } from 'react-redux-firebase';
-import { setCookie } from '@dinify/common/dist/lib/FN';
+import { setCookie, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 import { reportCampaignAction } from '@dinify/common/dist/ducks/reporting/actions';
 import * as API from '@dinify/common/dist/api/restaurant';
@@ -76,7 +76,8 @@ const middlePromise = (firebase) => new Promise((resolve, reject) => {
 const registerRestaurantEpic = (action$, state$, { firebase }) =>
   action$.pipe(
     ofType('REGISTER_RESTAURANT_INIT'),
-    mergeMap(({ payload: { restaurantName, subdomain, language } }) => {
+    mergeMap((action) => {
+      const { payload: { restaurantName, subdomain, language } } = action;
       const onboardingToken = state$.value.restaurant.onboardingToken;
       const createRestaurantPayload = { restaurantName, subdomain, language };
       if (onboardingToken) {
@@ -96,7 +97,11 @@ const registerRestaurantEpic = (action$, state$, { firebase }) =>
             catchError(error => of({ type: 'REGISTER_RESTAURANT_FAIL', error }))
           );
         }),
-        catchError(error => of({ type: 'REGISTER_RESTAURANT_FAIL', error }))
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: 'REGISTER_RESTAURANT_FAIL',
+          initAction: action
+        }))
       );
     })
   );
@@ -132,15 +137,20 @@ const reorderEpic = (action$) =>
 const editImageEpic = (action$, state$) =>
   action$.pipe(
     ofType('UPDATE_IMAGE_DONE'),
-    mergeMap(({ payload: { res } }) => {
+    mergeMap((action) => {
+      const { payload: { res } } = action;
       const { id } = res;
       const images = state$.value.restaurant.loggedRestaurant.images;
       const maxPrecedence = sort((a, b) => b.precedence - a.precedence)(
         values(images),
       )[0].precedence;
       return from(API.EditImage({ id, precedence: maxPrecedence + 1 })).pipe(
-        map(res => ({ type: `EDIT_IMAGE_DONE`, payload: res })),
-        catchError(error => of({ type: `EDIT_IMAGE_FAIL`, payload: error }))
+        map(res => ({ type:' EDIT_IMAGE_DONE', payload: res })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: 'EDIT_IMAGE_FAIL',
+          initAction: action
+        }))
       );
     })
   )

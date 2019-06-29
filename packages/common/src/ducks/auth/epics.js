@@ -32,7 +32,7 @@ const accessTokenEpic = (action$, state$) =>
 const refreshTokenEpic = (action$, state$, { firebase }) =>
   action$.pipe(
     ofType(UNAUTHORIZED),
-    mergeMap(({ payload: { type, payload } }) => 
+    mergeMap(({ payload: { type, payload } }) =>
       from(firebase.auth().currentUser.getIdToken()).pipe(
         tap(t => setCookie('access_token', t, 90)),
         mapTo({
@@ -44,8 +44,8 @@ const refreshTokenEpic = (action$, state$, { firebase }) =>
           type: 'REFRESH_TOKEN_FAILED',
           error: true,
           payload: e
-        }))        
-      )  
+        }))
+      )
     )
   );
 // return this.loginUser(error.email, params.password).then(result => {

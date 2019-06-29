@@ -2,7 +2,7 @@ import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import API from '../api';
 import ramdaFilter from 'ramda/src/filter';
-import { UNAUTHORIZED } from './auth/types';
+import { handleEpicAPIError } from '../lib/FN';
 
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 const camel = str => capitalize(str.toLowerCase());
@@ -17,22 +17,6 @@ const getSubjectAndPath = (type, kind, stage) => {
 const filterAction = (type, kind, stage) => {
   const typeOnly = withoutPath(type);
   return typeOnly.startsWith(`${kind}_`) && typeOnly.endsWith(`_${stage}`);
-};
-
-const handleError = ({ error, path, subject, actionKind, initAction }) => {
-  const { payload, type, refreshTokenTried } = initAction;
-  if (error && error.statusCode === 401 && !refreshTokenTried) {
-    return of({
-      type: UNAUTHORIZED,
-      payload: { payload, type }
-    });
-  } else {
-    return of({
-      type: `${path}${actionKind}_${subject}_FAIL`,
-      payload: error,
-      error: true
-    });
-  }
 };
 
 const createEpic = (action$, state$) =>
@@ -51,8 +35,9 @@ const createEpic = (action$, state$) =>
           type: `${path}CREATE_${subject}_DONE`,
           payload: { res, prePayload: payload },
         })),
-        catchError(error => handleError({
-          error, path, subject, actionKind: 'CREATE',
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: `${path}CREATE_${subject}_FAIL`,
           initAction: action
         }))
       )
@@ -75,14 +60,14 @@ const fetchEpic = (action$, state$) =>
           type: `${path}FETCH_${subject}_DONE`,
           payload: { res, prePayload: payload },
         })),
-        catchError(error => handleError({
-          error, path, subject, actionKind: 'FETCH',
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: `${path}FETCH_${subject}_FAIL`,
           initAction: action
         }))
       )
     })
   );
-
 
 const fetchAllEpic = (action$, state$) =>
   action$.pipe(
@@ -122,8 +107,9 @@ const updateEpic = (action$, state$) =>
           type: `${path}UPDATE_${subject}_DONE`,
           payload: { res, prePayload: payload },
         })),
-        catchError(error => handleError({
-          error, path, subject, actionKind: 'UPDATE',
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: `${path}UPDATE_${subject}_FAIL`,
           initAction: action
         }))
       )
@@ -146,8 +132,9 @@ const removeEpic = (action$, state$) =>
           type: `${path}REMOVE_${subject}_DONE`,
           payload: { res, prePayload: payload },
         })),
-        catchError(error => handleError({
-          error, path, subject, actionKind: 'REMOVE',
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: `${path}REMOVE_${subject}_FAIL`,
           initAction: action
         }))
       )

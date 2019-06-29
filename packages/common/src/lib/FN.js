@@ -1,9 +1,11 @@
+import { of } from 'rxjs';
 import toPairs from 'ramda/src/toPairs';
 import curry from 'ramda/src/curry';
 import assocPath from 'ramda/src/assocPath';
 import path from 'ramda/src/path';
 import keys from 'ramda/src/keys';
 import numeral from 'numeral';
+import { UNAUTHORIZED } from '../ducks/auth/types';
 
 export const MapToList = items =>
   toPairs(items)
@@ -188,4 +190,20 @@ export function getInitials(str = '', glue) {
   const initials = str.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g);
   if (glue) return initials.join('');
   return initials;
+};
+
+export const handleEpicAPIError = ({ error, failActionType, initAction }) => {
+  const { payload, type, refreshTokenTried } = initAction;
+  if (error && error.statusCode === 401 && !refreshTokenTried) {
+    return of({
+      type: UNAUTHORIZED,
+      payload: { payload, type }
+    });
+  } else {
+    return of({
+      type: failActionType,
+      payload: error,
+      error: true
+    });
+  }
 };

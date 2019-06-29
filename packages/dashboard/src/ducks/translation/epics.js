@@ -6,7 +6,7 @@ import propEq from 'ramda/src/propEq';
 import * as API from '@dinify/common/dist/api/restaurant';
 import { Post } from '@dinify/common/dist/api/Network';
 import { change as changeForm } from 'redux-form';
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 
 const saveTranslationDone = () => {
@@ -51,14 +51,19 @@ const pushTranslationEpic = (action$) =>
 const saveTranslationEpic = (action$, state$) =>
   action$.pipe(
     ofType('SAVE_TRANSLATION_INIT'),
-    mergeMap(({ payload }) => {
+    mergeMap((action) => {
+      const { payload } = action;
       const restaurantId = state$.value.restaurant.selectedRestaurant;
       return fromPromise(API.AddTranslation({...payload, restaurantId})).pipe(
         map(() => ({
           type: 'SAVE_TRANSLATION_DONE',
           payload: { prePayload: payload }
         })),
-        catchError(error => of({type: 'SAVE_TRANSLATION_FAIL', error}))
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: 'SAVE_TRANSLATION_FAIL',
+          initAction: action
+        }))
       );
     })
   );
@@ -132,7 +137,7 @@ const confirmPreferredEpic = (action$, state$) =>
 const translateAllEpic = (action$, state$) =>
   action$.pipe(
     ofType('TRANSLATE_ALL_INIT'),
-    mergeMap(() => {
+    mergeMap((action) => {
       const promise = API.TranslateAll({
         restaurantId: state$.value.restaurant.selectedRestaurant
       })
@@ -141,7 +146,11 @@ const translateAllEpic = (action$, state$) =>
           const message = 'Translated successfully';
           return of({type: 'TRANSLATE_ALL_DONE'}, snackbar.show({ message }));
         }),
-        catchError(error => of({type: 'TRANSLATE_ALL_FAIL', error}))
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: 'TRANSLATE_ALL_FAIL',
+          initAction: action
+        }))
       );
     })
   );
