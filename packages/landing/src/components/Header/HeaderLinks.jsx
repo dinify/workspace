@@ -51,106 +51,20 @@ import headerLinksStyle from "./headerLinksStyle.jsx";
 let currentAnimFrame = null;
 
 function HeaderLinks({ ...props }) {
-  const { classes, width, dropdownHoverColor, scrollingElement, onScrollFrame, menuItems = [] } = props;
+  const { classes, width, dropdownHoverColor, scrollingElement, onScrollFrame, children } = props;
 
   var onClickSections = {};
 
   if (isWidthDown('sm', width)) {
     return (
       <List style={{ marginTop: 4 }}>
-
-        {menuItems.map((item, i) => 
-          <ListItem
-            key={i}
-            button
-            style={{ borderRadius: 8 }}
-            href={'#' + item.anchor}
-            disableRipple
-          >
-            <Typography className={classes.button2}>
-              {item.name}
-            </Typography>
-          </ListItem>          
-        )}
-
-        <Divider color="textSecondary" style={{ marginTop: 16, marginBottom: 16 }} />
-
-        {/*<ListItem
-          button
-          style={{ borderRadius: 8 }}
-          onClick={() => {window.open("https://blog.dinify.app", "_blank")}}
-          disableRipple
-        >
-          <OpenInNew className={classes.textSecondary} style={{ marginRight: 8, fontSize: 16 }}/>
-          <Typography className={classes.button2}>
-            Blog
-          </Typography>
-        </ListItem>*/}
-
-        <ListItem
-          button
-          style={{ borderRadius: 8 }}
-          variant="outlined"
-          onClick={() => {window.open("https://dashboard.dinify.app/signin", "_blank")}}
-        >
-          <LogoIcon style={{ marginRight: 8, fontSize: 16 }} className={classes.textSecondary}/>
-          <Typography className={classes.button2}>
-            Dashboard
-          </Typography>
-        </ListItem>
+        {children}
       </List>
     );
   }
   return (
     <List className={classes.list}>
-
-      {menuItems.map((item, i) => 
-        <ListItem
-          className={classes.listItem}
-          key={i}
-        >
-          <Button
-            className={classes.button2}
-            href={'#' + item.anchor}
-            disableRipple
-          >
-            {item.name}
-          </Button>
-        </ListItem>          
-      )}
-
-      {/*
-
-            <ListItem className={classes.listItem} style={{ paddingLeft: 8, paddingRight: 8, marginRight: -16 }}>
-        <Typography color="textSecondary">•</Typography>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Button
-          className={classes.button2}
-          href="https://blog.dinify.app"
-          target="_blank"
-          rel="noopener noreferrer"
-          disableRipple
-        >
-          Blog
-          <OpenInNew style={{ marginLeft: 4, fontSize: 16 }}/>
-        </Button>
-      </ListItem>      
-      */}
-
-
-      <ListItem className={classes.listItem}>
-        <Button
-          variant="outlined"
-          className={classes.button2}
-          href="https://dashboard.dinify.app/signin"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <LogoIcon style={{ marginRight: 8, fontSize: 16 }} />
-          Dashboard
-        </Button>
-      </ListItem>
+      {children}
     </List>
   );
 }

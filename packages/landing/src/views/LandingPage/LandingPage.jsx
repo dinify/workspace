@@ -8,11 +8,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Explore from "@material-ui/icons/ExploreOutlined";
 // core components
 import Header from "components/Header/Header.jsx";
+import HeaderLink from "components/Header/HeaderLink.jsx";
+import HeaderDivider from "components/Header/HeaderDivider.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import landingPageStyle from "./landingPageStyle.jsx";
-import LogoText from "@dinify/common/dist/icons/LogoText";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -20,6 +21,7 @@ import Grid from "@material-ui/core/Grid";
 import Flag from "@dinify/common/dist/components/Flag";
 // Sections for this page
 // import SectionFeatures from "./Sections/SectionFeatures.jsx";
+import SignInLink from "components/Links/SignInLink.jsx";
 import SectionMultilingual from "./Sections/SectionMultilingual.jsx";
 import SectionFAQ from "./Sections/SectionFAQ.jsx";
 import SectionProduct from "./Sections/SectionProduct.jsx";
@@ -83,20 +85,6 @@ class LandingPage extends React.Component {
     const { headerScrolled, parallaxContainerState, scroll } = this.state;
 
     let selectedLanguage = getCookie('language');
-    const menuItems = [
-      {
-        name: t('features'),
-        anchor: 'features',
-      },
-      {
-        name: t('sectionProduct.header'),
-        anchor: 'howitworks',
-      },
-      {
-        name: 'FAQ',
-        anchor: 'faq',
-      },
-    ];
     return (
       <div>
         <div style={{
@@ -111,17 +99,17 @@ class LandingPage extends React.Component {
         <Header
           scrolled={headerScrolled}
           scrollingElement={parallaxContainerState}
-          menuItems={menuItems}
           color="transparent"
-          brand={props => (
-            <LogoText className={classes.contrastText} {...props} />
-          )}
           changeColorOnScroll={{
             height: 100,
             color: "primary"
-          }}
-          {...rest}
-        />
+          }} {...rest}>
+          <HeaderLink name={t('features')} anchor="features" />
+          <HeaderLink name={t('sectionProduct.header')} anchor="howitworks" />
+          <HeaderLink name="FAQ" anchor="faq" />
+          <HeaderDivider />
+          <SignInLink />
+        </Header>
       </div>
       <div
         ref={node => {
