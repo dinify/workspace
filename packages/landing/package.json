@@ -6,13 +6,14 @@
   "homepage": "https://www.dinify.app",
   "private": true,
   "dependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "2.1.8",
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "i18next": "^15.0.4",
-    "react-i18next": "^10.2.0"
+    "query-string": "^6.8.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-i18next": "^10.2.0",
+    "react-scripts": "2.1.8"
   },
   "scripts": {
     "start": "serve -s build -p 3000",

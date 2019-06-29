@@ -59,8 +59,12 @@
     }
   },
   "restaurantsPage": {
-    "title": "The modern way to deliver your menu",
-    "subtitle": "Dinify your business by partnering us",
+    "hero": {
+      "title": "The modern way to deliver your menu",
+      "subtitle": "Dinify your business by partnering us",
+      "continueWith": "Continue with {{email}}",
+      "cta": "Get Started"
+    },
     "sections": {
       "faq": {
         "translation": {

@@ -57,7 +57,7 @@ class LandingPage extends React.Component {
     window.addEventListener('scroll', this.handleScroll, true);
     const { location } = this.props;
     const parsed = queryString.parse(location.search);
-    const token = parsed.token;
+    const token = parsed.t;
     if (token) {
       ReportCampaignAction({
         token,
@@ -81,8 +81,6 @@ class LandingPage extends React.Component {
   render() {
     const { classes, t, location, ...rest } = this.props;
     const { headerScrolled, parallaxContainerState, scroll } = this.state;
-
-    const registrationURL = `https://dashboard.dinify.app/signup${location.search}`
 
     let selectedLanguage = getCookie('language');
     const menuItems = [
