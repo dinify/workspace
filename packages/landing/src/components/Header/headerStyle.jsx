@@ -29,6 +29,10 @@ const headerStyle = theme => ({
     position: "relative",
     borderBottom: "1px solid transparent"
   },
+  whiteSvg: {
+    color: '#ffffff',
+    fill: '#ffffff'
+  },
   absolute: {
     position: "absolute",
     top: "auto"

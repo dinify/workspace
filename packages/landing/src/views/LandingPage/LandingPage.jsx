@@ -50,7 +50,7 @@ class LandingPage extends React.Component {
     scroll: "inner"
   };
   rafPending = false;
- 
+
   componentDidMount() {
     //window.scrollTo(0, 0);
     //document.body.scrollTop = 0;
@@ -235,11 +235,7 @@ class LandingPage extends React.Component {
               <SectionFAQ t={t} />
             </div>
 
-            <Footer ref={node => { this.footer = node; }} style={{
-              marginTop: "calc(100vh - 24px)",
-              borderRadius: headerScrolled ? 0 : 8,
-              willChange: "transform"
-            }}>
+            <Footer>
               <GridContainer justify="center">
                 {langs.map((l) => (
                   <Grid item key={l.lang}>

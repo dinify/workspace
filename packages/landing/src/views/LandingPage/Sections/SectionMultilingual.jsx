@@ -9,10 +9,8 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import PhoneRestaurantMenu from "../Components/PhoneRestaurantMenu.jsx";
 
-import productStyle from "./productStyle.jsx";
-import presentationiPhone from "assets/img/appscreen1.jpg";
+import productStyle from "styles/productStyle.jsx";
 import "flag-icon-css/css/flag-icon.min.css";
-import CountryLanguage from 'country-language';
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
@@ -57,38 +55,9 @@ const countryCodes = [
   "is"
 ];
 
-const flagStyle = (selected) => ({
-  cursor: 'pointer'
-})
-
-const functionsEndpoint = 'https://us-central1-tabb-global.cloudfunctions.net';
-
-const getLangOfCountry = country => {
-  console.log(country);
-  return new Promise((resolve) => {
-    CountryLanguage.getCountryLanguages(country, (err, langs) => {
-      console.log(langs);
-      resolve(langs[0].iso639_1);
-    })
-  })
-}
-
-// const getTranslation = async ({ text, to }) => {
-//   const response = await fetch(`${functionsEndpoint}/translate`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({from: 'en', to, text})
-//   });
-//   const body = await response.json();
-//   return body;
-// }
-
 class SectionProduct extends React.Component {
   state = {
-    selectedIndex: 0,
-    //translations: {}
+    selectedIndex: 0
   }
   componentDidMount() {
     const intervalTrigger = () => {
@@ -105,15 +74,6 @@ class SectionProduct extends React.Component {
   selectLanguage = index => {
     clearInterval(window.dnfTranslationsIntervalId)
     this.setState({ selectedIndex: index });
-    // if (!this.state.translations[code]) {
-    //   const langCode = await getLangOfCountry(code);
-    //   const translation = await getTranslation({ text: descriptionEn, to: langCode });
-    //   let translations = this.state.translations;
-    //   console.log(translation);
-    //   translations[code] = translation ? translation.result : 'nope';
-    //   console.log(JSON.stringify(translations));
-    //   this.setState({ translations });
-    // }
   }
   render() {
     const { classes, width, t } = this.props;

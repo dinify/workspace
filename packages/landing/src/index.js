@@ -7,6 +7,9 @@ import i18n from '@dinify/common/dist/i18n';
 import { getCookie, setCookie } from '@dinify/common/dist/lib/FN';
 
 import LandingPage from "views/LandingPage/LandingPage.jsx";
+import RestaurantsPage from "views/RestaurantsPage/RestaurantsPage.jsx";
+
+import "assets/scss/material-kit-pro-react.css";
 
 // var hist = createHashHistory();
 
@@ -42,6 +45,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={LandingPage} />
+        <Route exact path="/restaurants" component={RestaurantsPage} />
         {/*
           <Route path="/about-us" component={AboutUsPage} />
           <Route path="/blog-post" component={BlogPostPage} />

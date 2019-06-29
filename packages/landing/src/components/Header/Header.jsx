@@ -16,6 +16,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Menu from "@material-ui/icons/MenuRounded";
 import Close from "@material-ui/icons/CloseRounded";
 // core components
+import LogoText from "@dinify/common/dist/icons/LogoText";
 import headerStyle from "./headerStyle.jsx";
 import HeaderLinks from "./HeaderLinks.jsx";
 import getTheme from "@dinify/common/dist/theme";
@@ -60,7 +61,7 @@ class Header extends React.Component {
       classes,
       color,
       links,
-      brand,
+      brand = props => <LogoText className={classes.whiteSvg} {...props} />,
       subBrand,
       fixed,
       absolute,
@@ -72,7 +73,7 @@ class Header extends React.Component {
       menuItems = []
     } = this.props;
     const completeAppBar = (scrolled, opacity) => {
-      const colorName = scrolled ? changeColorOnScroll.color : color;
+      const colorName = scrolled && changeColorOnScroll !== undefined ? changeColorOnScroll.color : color;
       const appBarClasses = classNames({
         [classes.appBar]: true,
         [classes[colorName]]: color,

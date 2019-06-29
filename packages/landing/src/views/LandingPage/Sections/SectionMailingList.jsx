@@ -13,7 +13,7 @@ import GridItem from "components/Grid/GridItem.jsx";
 import CustomText from "components/CustomText/CustomText.jsx";
 
 import getTheme from "@dinify/common/dist/theme";
-import productStyle from "./productStyle.jsx";
+import productStyle from "styles/productStyle.jsx";
 
 const darkTheme = getTheme({ type: "dark" });
 

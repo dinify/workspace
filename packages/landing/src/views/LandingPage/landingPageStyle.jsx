@@ -12,10 +12,6 @@ const landingPageStyle = theme => ({
     ...container,
     zIndex: "2"
   },
-  contrastText: {
-    color: '#ffffff',
-    fill: '#ffffff'
-  },
   button2: theme.typography.button2,
   main: {
     ...main
