@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
@@ -13,6 +12,7 @@ import { actionTypes } from 'react-redux-firebase';
 import { change as changeForm } from 'redux-form';
 import { setPage, setLinkProviders } from './actions';
 import { openDialog } from '../ui/actions';
+import { UNAUTHORIZED } from './types';
 
 const accessTokenEpic = (action$, state$) =>
   action$.pipe(
@@ -29,6 +29,29 @@ const accessTokenEpic = (action$, state$) =>
   );
 
 
+const refreshTokenEpic = (action$, state$, { firebase }) =>
+  action$.pipe(
+    ofType(UNAUTHORIZED),
+    mergeMap(({ payload: { type, payload } }) => 
+      from(firebase.auth().currentUser.getIdToken()).pipe(
+        map(t => {
+          setCookie('access_token', t.token, 90);
+          return {
+            type,
+            payload: {
+              ...payload,
+              refreshTokenTried: true // break the loop
+            }
+          }
+        }),
+        catchError(e => of({
+          type: 'REFRESH_TOKEN_FAILED',
+          error: true,
+          payload: e
+        }))        
+      )  
+    )
+  );
 // return this.loginUser(error.email, params.password).then(result => {
 //   console.log('Reauthentication result', result);
 //   result.user.linkAndRetrieveDataWithCredential(pendingCred).then((usercred) => {
@@ -116,4 +139,5 @@ export default [
   loginLinkEpic,
   accessTokenEpic,
   loginErrorEpic,
+  refreshTokenEpic
 ];

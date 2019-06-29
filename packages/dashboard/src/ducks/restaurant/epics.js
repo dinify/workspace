@@ -66,7 +66,7 @@ export const createRestaurantDoneAction = ({ email, password }) => {
   // return { type: 'CREATE_RESTAURANT_DONE', payload: res }
 };
 
-const middlePromise = (firebase, res) => new Promise((resolve, reject) => {
+const middlePromise = (firebase) => new Promise((resolve, reject) => {
   firebase.auth().currentUser.getIdTokenResult(true).then((t) => {
     resolve({ t });
   })

@@ -1,19 +1,19 @@
-export default {
-  LOGIN_INIT: 'tabb/auth/LOGIN_INIT',
-  LOGIN_DONE: 'tabb/auth/LOGIN_DONE',
-  LOGIN_FAIL: 'tabb/auth/LOGIN_FAIL',
-  SIGNUP_INIT: 'tabb/auth/SIGNUP_INIT',
-  SIGNUP_DONE: 'tabb/auth/SIGNUP_DONE',
-  SIGNUP_FAIL: 'tabb/auth/SIGNUP_FAIL',
-  FBAUTH_INIT: 'tabb/auth/FBAUTH_INIT',
-  FBAUTH_DONE: 'tabb/auth/FBAUTH_DONE',
-  FBAUTH_FAIL: 'tabb/auth/FBAUTH_FAIL',
-  GOOGLE_AUTH_INIT: 'tabb/auth/GOOGLE_AUTH_INIT',
-  GOOGLE_AUTH_DONE: 'tabb/auth/GOOGLE_AUTH_DONE',
-  GOOGLE_AUTH_FAIL: 'tabb/auth/GOOGLE_AUTH_FAIL',
-  LOGOUT_INIT: 'tabb/auth/LOGOUT_INIT',
-  LOGOUT_DONE: 'tabb/auth/LOGOUT_DONE',
-  SET_PAGE: 'tabb/auth/SET_PAGE',
-  SET_SHOWPASSWORD: 'tabb/auth/SET_SHOWPASSWORD',
-  SET_LINKPROVIDERS: 'tabb/auth/SET_LINKPROVIDERS',
-};
+
+export const LOGIN_INIT = 'dinify/auth/LOGIN_INIT';
+export const LOGIN_DONE = 'dinify/auth/LOGIN_DONE';
+export const LOGIN_FAIL = 'dinify/auth/LOGIN_FAIL';
+export const SIGNUP_INIT = 'dinify/auth/SIGNUP_INIT';
+export const SIGNUP_DONE = 'dinify/auth/SIGNUP_DONE';
+export const SIGNUP_FAIL = 'dinify/auth/SIGNUP_FAIL';
+export const FBAUTH_INIT = 'dinify/auth/FBAUTH_INIT';
+export const FBAUTH_DONE = 'dinify/auth/FBAUTH_DONE';
+export const FBAUTH_FAIL = 'dinify/auth/FBAUTH_FAIL';
+export const GOOGLE_AUTH_INIT = 'dinify/auth/GOOGLE_AUTH_INIT';
+export const GOOGLE_AUTH_DONE = 'dinify/auth/GOOGLE_AUTH_DONE';
+export const GOOGLE_AUTH_FAIL = 'dinify/auth/GOOGLE_AUTH_FAIL';
+export const LOGOUT_INIT = 'dinify/auth/LOGOUT_INIT';
+export const LOGOUT_DONE = 'dinify/auth/LOGOUT_DONE';
+export const SET_PAGE = 'dinify/auth/SET_PAGE';
+export const SET_SHOWPASSWORD = 'dinify/auth/SET_SHOWPASSWORD';
+export const SET_LINKPROVIDERS = 'dinify/auth/SET_LINKPROVIDERS';
+export const UNAUTHORIZED = 'dinify/auth/UNAUTHORIZED';

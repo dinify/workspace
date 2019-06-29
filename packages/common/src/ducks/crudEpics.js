@@ -2,6 +2,7 @@ import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import API from '../api';
 import ramdaFilter from 'ramda/src/filter';
+import { UNAUTHORIZED } from './auth/types';
 
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 const camel = str => capitalize(str.toLowerCase());
@@ -18,7 +19,22 @@ const filterAction = (type, kind, stage) => {
   return typeOnly.startsWith(`${kind}_`) && typeOnly.endsWith(`_${stage}`);
 };
 
-const createEpic = (action$: Observable, state$) =>
+const handleError = ({ error, path, subject, actionKind, initAction: { payload, type } }) => {
+  if (error && error.statusCode === 401 && !payload.refreshTokenTried) {
+    return of({
+      type: UNAUTHORIZED,
+      payload: { payload, type }
+    });
+  } else {
+    return of({
+      type: `${path}${actionKind}_${subject}_FAIL`,
+      payload: error,
+      error: true
+    });
+  }
+};
+
+const createEpic = (action$, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'CREATE', 'INIT')),
     mergeMap(({ payload = {}, type }) => {
@@ -33,17 +49,15 @@ const createEpic = (action$: Observable, state$) =>
           type: `${path}CREATE_${subject}_DONE`,
           payload: { res, prePayload: payload },
         })),
-        catchError(error => of({
-          type: `${path}CREATE_${subject}_FAIL`,
-          payload: error,
-          error: true
+        catchError(error => handleError({
+          error, path, subject, actionKind: 'CREATE',
+          initAction: { payload, type }
         }))
       )
     })
   );
 
-
-const fetchEpic = (action$: Observable, state$) =>
+const fetchEpic = (action$, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'FETCH', 'INIT')),
     mergeMap(({ payload = {}, type }) => {
@@ -58,10 +72,9 @@ const fetchEpic = (action$: Observable, state$) =>
           type: `${path}FETCH_${subject}_DONE`,
           payload: { res, prePayload: payload },
         })),
-        catchError(error => of({
-          type: `${path}FETCH_${subject}_FAIL`,
-          payload: error,
-          error: true
+        catchError(error => handleError({
+          error, path, subject, actionKind: 'FETCH',
+          initAction: { payload, type }
         }))
       )
     })
@@ -90,7 +103,7 @@ const fetchAllEpic = (action$, state$) =>
     })
   );
 
-const updateEpic = (action$: Observable, state$) =>
+const updateEpic = (action$, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'UPDATE', 'INIT')),
     mergeMap(({ payload = {}, type }) => {
@@ -105,16 +118,15 @@ const updateEpic = (action$: Observable, state$) =>
           type: `${path}UPDATE_${subject}_DONE`,
           payload: { res, prePayload: payload },
         })),
-        catchError(error => of({
-          type: `${path}UPDATE_${subject}_FAIL`,
-          payload: error,
-          error: true
+        catchError(error => handleError({
+          error, path, subject, actionKind: 'UPDATE',
+          initAction: { payload, type }
         }))
       )
     })
   );
 
-const removeEpic = (action$: Observable, state$) =>
+const removeEpic = (action$, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'REMOVE', 'INIT')),
     mergeMap(({ payload = {}, type }) => {
@@ -129,10 +141,9 @@ const removeEpic = (action$: Observable, state$) =>
           type: `${path}REMOVE_${subject}_DONE`,
           payload: { res, prePayload: payload },
         })),
-        catchError(error => of({
-          type: `${path}REMOVE_${subject}_FAIL`,
-          payload: error,
-          error: true
+        catchError(error => handleError({
+          error, path, subject, actionKind: 'REMOVE',
+          initAction: { payload, type }
         }))
       )
     })

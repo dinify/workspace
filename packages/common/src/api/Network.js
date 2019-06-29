@@ -46,7 +46,7 @@ export function Request(url, options = {}, noToken) {
         } else {
           // error
           if (json) {
-            reject(json.errors || json);
+            reject({...json, statusCode: status });
             return;
           }
           reject(new Error('No json in response'));

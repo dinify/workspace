@@ -1,6 +1,6 @@
 import assoc from 'ramda/src/assoc';
 import pipe from 'ramda/src/pipe';
-import types from './types';
+import * as types from './types';
 
 const initialState = {
   page: 'default',

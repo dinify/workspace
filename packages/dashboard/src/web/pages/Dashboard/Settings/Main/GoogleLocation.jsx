@@ -41,21 +41,15 @@ const addressByPlaceId = (placeId) => new Promise((resolve, reject) => {
 		.then((latlng) => {
 			const addressComponents = result.address_components;
 
-			console.log(addressComponents);
-
 			let route = find((item) => item.types.includes('route'))(addressComponents);
 			if (route) route = route.short_name;
 	
 			let streetNumber = find((item) => anyPass(
-				[
-					'street_number',
-					'premise'
-				].map((t) => (types) => includes(t, types))
+				['street_number','premise'].map((t) => (types) => includes(t, types))
 			)(item.types))(addressComponents);
 			if (streetNumber) streetNumber = streetNumber.short_name;
 	
-			let city = find((item) => anyPass(
-				[
+			let city = find((item) => anyPass([
 					'locality',
 					'administrative_area_level_3',
 					'administrative_area_level_2',
@@ -177,7 +171,6 @@ const MapComponent = compose(
     <Marker
       draggable
       onDragEnd={o => {
-        console.log(o.latLng.lat(), o.latLng.lng());
         props.updateLocation({
           name: 'name must be here',
           longitude: o.latLng.lng(),
