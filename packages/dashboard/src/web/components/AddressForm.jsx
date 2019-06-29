@@ -31,7 +31,7 @@ const AddressForm = ({ handleSubmit }) => {
           margin: 'normal',
           }}
       />
-      <Button type="submit" fullWidth>
+      <Button type="submit" fullWidth variant="outlined">
         {t('save')}
       </Button>
     </form>

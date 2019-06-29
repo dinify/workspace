@@ -47,7 +47,7 @@ let SocialForm = ({ handleSubmit, t }) => {
           margin: 'normal',
         }}
       />
-      <Button type="submit" fullWidth>
+      <Button type="submit" variant="outlined" fullWidth style={{marginTop: 20}}>
         {t('save')}
       </Button>
     </form>

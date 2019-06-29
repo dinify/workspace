@@ -21,7 +21,7 @@ let NameForm = ({ handleSubmit, t }) => {
         component={Text}
         componentProps={{ fullWidth: true, margin: 'normal' }}
       />
-      <Button type="submit" fullWidth={true}>
+      <Button type="submit" variant="outlined" fullWidth>
         {t('save')}
       </Button>
     </form>

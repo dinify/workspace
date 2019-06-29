@@ -41,6 +41,8 @@ const addressByPlaceId = (placeId) => new Promise((resolve, reject) => {
 		.then((latlng) => {
 			const addressComponents = result.address_components;
 
+			console.log(addressComponents);
+
 			let route = find((item) => item.types.includes('route'))(addressComponents);
 			if (route) route = route.short_name;
 	
@@ -96,6 +98,7 @@ class LocationSearchInput extends React.Component {
   };
  
   render() {
+		const { t } = this.props;
     return (
       <PlacesAutocomplete
         value={this.state.address}
@@ -107,11 +110,17 @@ class LocationSearchInput extends React.Component {
 						<TextField 
 							fullWidth
               {...getInputProps({
-                placeholder: 'Search Places ...',
+                placeholder: t('searchPlaces'),
                 className: 'location-search-input',
               })}						
 						/>
-            <div className="autocomplete-dropdown-container">
+            <div
+							className="autocomplete-dropdown-container"
+							style={{
+								position: 'absolute', zIndex: 2147483647,
+								boxShadow: '0 1px 4px 0 rgba(0,0,0,0.14)'
+							}}
+						>
               {loading && <div>Loading...</div>}
               {suggestions.map(suggestion => {
                 const className = suggestion.active
@@ -125,7 +134,7 @@ class LocationSearchInput extends React.Component {
                   <div
                     {...getSuggestionItemProps(suggestion, {
                       className,
-                      style,
+                      style: {...style, padding: '10px 5px'},
                     })}
                   >
                     <span>{suggestion.description}</span>
@@ -197,6 +206,7 @@ const Location = ({ updateLocation, loggedRestaurant, updateAddress, address, se
       </FormBoxHead>
       <FormBoxBody>
 				<LocationSearchInput
+					t={t}
 					setAddress={(a) => {
 						if (a.route && a.streetNumber) {
 							setFormFields('settings/address', 'street', `${a.route} ${a.streetNumber}`);

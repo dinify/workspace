@@ -12,7 +12,6 @@ import Image from './Image';
 // import Type from './Type';
 import Name from './Name';
 // import Tags from './Tags';
-import Address from './Address';
 
 const Column = styled.div`
   width: 290px;
@@ -27,7 +26,7 @@ const Main = ({ loggedRestaurant }) => {
       <div>
         <Column>
           <Name name={loggedRestaurant.name} />
-          {/*<Tags />*/}
+          {/* <Tags /> */}
           {/* <Type type={loggedRestaurant.type} /> */}
           <Image loggedRestaurant={loggedRestaurant} />
           <Contact contact={loggedRestaurant.contact} />
