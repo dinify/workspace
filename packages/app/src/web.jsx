@@ -27,7 +27,13 @@ websockets(store);
 
 let language = { primary: navigator.language, other: [] };
 const langCookie = getCookie('language');
-if (langCookie) language = JSON.parse(langCookie);
+if (langCookie) {
+  try {
+    language = JSON.parse(langCookie);
+  } catch (e) {
+    console.error('JSON parse error');
+  }
+}
 
 i18n({
   namespace: 'app',

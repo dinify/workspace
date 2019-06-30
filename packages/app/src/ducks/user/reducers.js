@@ -1,7 +1,6 @@
-
 import * as R from 'ramda';
+import * as authTypes from '@dinify/common/dist/ducks/auth/types';
 import types from './types';
-import authTypes from '@dinify/common/dist/ducks/auth/types';
 
 const initialState = {
   all: {},
