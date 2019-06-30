@@ -99,10 +99,9 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             if (error) {
               res.json({ error });
             } else {
-              res.json({ error: null });
+              res.json({ cohort });
             }
           });
-
 
         }).catch((err) => res.json({ error: err }));
       }

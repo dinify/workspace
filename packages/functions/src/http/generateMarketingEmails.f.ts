@@ -9,7 +9,7 @@ import Emails from '../models/Emails';
 import Cohorts from '../models/Cohorts';
 import uuidBase62 from 'uuid-base62';
 import map from 'async/map';
-
+import locales from '../templates/locales';
 import * as path from "path";
 import emojis from "../data/emojis";
 import likelySubtags from "../data/likelySubtags";
@@ -26,6 +26,12 @@ const cors = require('cors')({
 const config = functions.config();
 
 const formatPercent = (percent, decimals = 1) => `${Math.floor(percent * Math.pow(10, decimals + 2)) / Math.pow(10, decimals)}%`;
+
+const defaultLanguage = 'cs';
+const defaultSender = {
+  email: "hello@dinify.app",
+  name: "Dinify"
+};
 
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
@@ -78,17 +84,20 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
 
           const recipient = target.data.email_address;
           const tokenData = { e: recipient };
-          const template = "RestaurantOnboarding";
-          const msg = {
-            to: {
-              email: recipient
-            },
-            from: {
-              email: "hello@dinify.app",
-              name: "Dinify"
-            },
-            subject: "Lepší recenze, vyšší zisk, zkuste Dinify"
+          const template = {
+            name: "RestaurantOnboarding",
+            key: "rp-onboarding"
           };
+          let language = defaultLanguage;
+
+          // TODO: move to it's own function
+          // try {
+          //   // detect language for target based on TA email data
+          //   recipient.split('@')[1].split('.').map(part => {
+          //     if (part === 'cz') language = 'cs';
+          //   })
+          // }
+          // catch (e) {}
 
           Tokens.create({
             item_id: target.id,
@@ -98,6 +107,13 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             data: tokenData,
             expires_at: new Date()
           }).then((token: any) => {
+            const msg = {
+              to: {
+                email: recipient
+              },
+              from: defaultSender,
+              subject: locales[language][template.key].subject
+            };
             const variables = {
               restaurant: {
                 name: restaurant.name,
@@ -108,16 +124,17 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
                 targetPercent: formatPercent(restaurant.target_languages_rel)
               },
               price: '€19.95',
-              link: `https://www.dinify.app/landing?t=${token.id}&email=${recipient}`
+              link: `https://www.dinify.app/restaurants?t=${token.id}&email=${recipient}`
             };
-            const html = mail.generate(msg, variables, template);
+
+            const html = mail.generate(msg, variables, template, language);
 
             // save email object into emails table
             Emails.create({
               target_id: target.id,
               message_id: null, // null at the time of generating, defined at the time of sending
               message_key: 'events_sg.message_id',
-              type: template,
+              type: template.key,
               message: {...msg, html, variables}
             }).then((emailResult) => {
               cb(null, { email: emailResult.get(), token });
@@ -126,7 +143,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           }).catch((error) => cb(error));
         }).catch((error) => cb(error));
       }, (error, results) => {
-        if (!error) res.json({ error: null, results });
+        if (!error) res.json({ results });
         else res.json({ error });
       });
     }
