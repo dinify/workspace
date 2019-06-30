@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import styled from 'styled-components';
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -368,9 +367,9 @@ const Dashboard = ({
               </StepLabel>
             </Step>
           </Stepper> :
-          <div>
-            Published
-          </div>
+          <Typography variant='caption' align='center' style={{margin: '20px 0'}}>
+            {t('restaurantPublished')}
+          </Typography>
         }
 
         <Grid container justify="center">

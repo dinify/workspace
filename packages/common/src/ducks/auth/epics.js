@@ -28,12 +28,15 @@ const accessTokenEpic = (action$, state$) =>
     })
   );
 
+const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
 
 const refreshTokenEpic = (action$, state$, { firebase }) =>
   action$.pipe(
     ofType(UNAUTHORIZED),
-    mergeMap(({ payload: { type, payload } }) =>
-      from(firebase.auth().currentUser.getIdToken()).pipe(
+    mergeMap(({ payload: { type, payload } }) => {
+      const auth = firebase.auth();
+      if (!auth.currentUser) return of({ type: REFRESH_TOKEN_FAILED, error: true });
+      return from(auth.currentUser.getIdToken()).pipe(
         tap(t => setCookie('access_token', t, 90)),
         mapTo({
           type,
@@ -41,12 +44,12 @@ const refreshTokenEpic = (action$, state$, { firebase }) =>
           refreshTokenTried: true // break the loop
         }),
         catchError(e => of({
-          type: 'REFRESH_TOKEN_FAILED',
+          type: REFRESH_TOKEN_FAILED,
           error: true,
           payload: e
         }))
       )
-    )
+    })
   );
 // return this.loginUser(error.email, params.password).then(result => {
 //   console.log('Reauthentication result', result);
