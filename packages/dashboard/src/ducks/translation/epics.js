@@ -42,7 +42,7 @@ const pushTranslationEpic = (action$) =>
 
       saveActions.push({
         type: 'PUSH_TRANSLATION_DONE',
-        payload: { prePayload: payload }
+        payload: { initPayload: payload }
       });
       return saveActions;
     })
@@ -57,7 +57,7 @@ const saveTranslationEpic = (action$, state$) =>
       return fromPromise(API.AddTranslation({...payload, restaurantId})).pipe(
         map(() => ({
           type: 'SAVE_TRANSLATION_DONE',
-          payload: { prePayload: payload }
+          payload: { initPayload: payload }
         })),
         catchError(error => handleEpicAPIError({
           error,

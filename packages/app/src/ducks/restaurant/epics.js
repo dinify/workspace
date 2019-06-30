@@ -5,14 +5,16 @@ import * as API from '@dinify/common/dist/api/restaurant';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import { fetchStatusInit } from 'ducks/restaurant/actions';
 import { getCookie } from '@dinify/common/dist/lib/FN';
+import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
+import { checkinFail, checkinDone, favRestaurantDone } from './actions';
 import types from './types';
-import { checkinFail, checkinDone, favRestaurantDone, favRestaurantFail } from './actions';
 
 const checkinEpic = (action$) =>
   action$.pipe(
     ofType(types.CHECKIN_INIT),
     debounceTime(500),
-    exhaustMap(({ payload }) => {
+    exhaustMap((action) => {
+      const { payload } = action;
       if (getCookie('access_token') === '') {
         return of(checkinFail([{ status: 401 }]));
       }
@@ -26,7 +28,11 @@ const checkinEpic = (action$) =>
             action: 'See menu'
           })
         )),
-        catchError(error => of(checkinFail(error)))
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: types.CHECKIN_FAIL,
+          initAction: action
+        }))
       );
     })
   );
@@ -35,10 +41,15 @@ const favEpic = (action$) =>
   action$.pipe(
     ofType(types.FAV_RESTAURANT_INIT),
     debounceTime(500),
-    exhaustMap(({ payload }) => {
+    exhaustMap((action) => {
+      const { payload } = action;
       return from(API.FavRestaurant(payload)).pipe(
-        map((res) => favRestaurantDone({res, prePayload: payload })),
-        catchError(error => of(favRestaurantFail({error, prePayload: payload })))
+        map((res) => favRestaurantDone({res, initPayload: payload })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: types.FAV_RESTAURANT_FAIL,
+          initAction: action
+        }))
       )
     })
   );

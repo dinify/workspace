@@ -19,11 +19,6 @@ export const addToCartDone = (res) => ({
   payload: res
 });
 
-export const addToCartFail = (e) => ({
-  type: types.ADD_TO_CART_FAIL,
-  payload: e
-});
-
 export const rmFromCartInit = ({ orderItemId }) => ({
   type: types.REMOVE_ORDERITEM_INIT,
   payload: { orderItemId }
@@ -37,11 +32,6 @@ export const orderInit = (items) => ({
 export const orderDone = (res) => ({
   type: types.ORDER_DONE,
   payload: res
-});
-
-export const orderFail = (e) => ({
-  type: types.ORDER_FAIL,
-  payload: e
 });
 
 export const setOrderTypeAction = ({ orderType }) => ({

@@ -1,7 +1,6 @@
-
 import * as R from 'ramda';
-import types from './types';
 import * as FN from '@dinify/common/dist/lib/FN';
+import types from './types';
 
 const initialState = {
   all: {},
@@ -10,8 +9,8 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case types.FETCH_MENUCATEGORIES_DONE: {
-      const { payload: { prePayload, res }} = action;
-      const subdomain = prePayload.subdomain || '';
+      const { payload: { initPayload, res }} = action;
+      const subdomain = initPayload.subdomain || '';
       let newCategories = res || [];
       newCategories = newCategories.map((c) => {
         const plain = R.dissoc('items')(c);

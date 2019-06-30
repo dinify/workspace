@@ -45,12 +45,12 @@ export default function reducer(state = initialState, action) {
     }
 
     case 'REMOVE_OPTION_FAIL': {
-      const { id } = payload.prePayload;
+      const { id } = payload.initPayload;
       return assocPath(['all', id], state.backup[id])(state);
     }
 
     case 'CREATE_CHOICE_DONE': {
-      const { optionId } = payload.prePayload;
+      const { optionId } = payload.initPayload;
       const newChoice = payload.res;
       return assocPath(['all', optionId, 'choices', newChoice.id], newChoice)(state);
     }
@@ -65,7 +65,7 @@ export default function reducer(state = initialState, action) {
     }
 
     case 'REMOVE_CHOICE_FAIL': {
-      const { id, optionId } = payload.prePayload;
+      const { id, optionId } = payload.initPayload;
       return assocPath(['all', optionId, 'choices', id], state.backup[id])(state);
     }
 

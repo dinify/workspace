@@ -203,6 +203,7 @@ export const handleEpicAPIError = ({ error, failActionType, initAction }) => {
     return of({
       type: failActionType,
       payload: error,
+      initPayload: payload,
       error: true
     });
   }

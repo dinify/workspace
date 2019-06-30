@@ -33,7 +33,7 @@ const createEpic = (action$, state$) =>
       return from(API[apiFnName](payload)).pipe(
         map(res => ({
           type: `${path}CREATE_${subject}_DONE`,
-          payload: { res, prePayload: payload },
+          payload: { res, initPayload: payload },
         })),
         catchError(error => handleEpicAPIError({
           error,
@@ -58,7 +58,7 @@ const fetchEpic = (action$, state$) =>
       return from(API[apiFnName](payload)).pipe(
         map(res => ({
           type: `${path}FETCH_${subject}_DONE`,
-          payload: { res, prePayload: payload },
+          payload: { res, initPayload: payload },
         })),
         catchError(error => handleEpicAPIError({
           error,
@@ -105,7 +105,7 @@ const updateEpic = (action$, state$) =>
       return from(API[apiFnName](payload)).pipe(
         map(res => ({
           type: `${path}UPDATE_${subject}_DONE`,
-          payload: { res, prePayload: payload },
+          payload: { res, initPayload: payload },
         })),
         catchError(error => handleEpicAPIError({
           error,
@@ -130,7 +130,7 @@ const removeEpic = (action$, state$) =>
       return from(API[apiFnName](payload)).pipe(
         map(res => ({
           type: `${path}REMOVE_${subject}_DONE`,
-          payload: { res, prePayload: payload },
+          payload: { res, initPayload: payload },
         })),
         catchError(error => handleEpicAPIError({
           error,

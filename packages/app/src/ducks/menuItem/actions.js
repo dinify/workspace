@@ -15,14 +15,9 @@ export const favMenuitemInit = ({ fav, id }) => ({
   payload: { fav, id }
 });
 
-export const favMenuitemDone = ({ res, prePayload }) => ({
+export const favMenuitemDone = ({ res, initPayload }) => ({
   type: types.FAV_MENUITEM_DONE,
-  payload: {res, prePayload }
-});
-
-export const favMenuitemFail = ({ error, prePayload }) => ({
-  type: types.FAV_MENUITEM_FAIL,
-  payload: { error, prePayload }
+  payload: {res, initPayload }
 });
 
 export const excludeIngredient = ({ menuItemId, ingredientId, excluded }) => ({

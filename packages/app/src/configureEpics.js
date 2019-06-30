@@ -1,6 +1,6 @@
 import { combineEpics } from 'redux-observable';
 
-import { epics as crud } from 'ducks/crudEpics';
+import { epics as crud } from '@dinify/common/dist/ducks/crudEpics';
 import { authEpics as auth } from '@dinify/common/dist/ducks/auth';
 import { restaurantEpics as restaurant } from 'ducks/restaurant';
 import { userEpics as user } from 'ducks/user';

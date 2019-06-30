@@ -70,7 +70,7 @@ export default function reducer(state = initialState, action) {
       return assoc('menuLanguages', payload.res)(state);
     }
     case 'CREATE_MENULANGUAGE_DONE': {
-      const language = payload.prePayload.language;
+      const language = payload.initPayload.language;
       const menuLanguage = { language };
       return assoc('menuLanguages', [...state.menuLanguages, menuLanguage])(state);
     }
@@ -138,7 +138,7 @@ export default function reducer(state = initialState, action) {
     }
     case 'CREATE_TABLE_DONE': {
       const newTable = payload.res;
-      const waiterboardId = payload.prePayload.waiterboardId;
+      const waiterboardId = payload.initPayload.waiterboardId;
       return assocPath(
         [
           'loggedRestaurant',
@@ -162,21 +162,21 @@ export default function reducer(state = initialState, action) {
       ])(state);
     }
     case 'UPDATE_TABLE_INIT': {
-      const prePayload = payload;
+      const initPayload = payload;
       return pipe(
         assocPath(
           [
-            'loggedRestaurant', 'waiterboards', prePayload.waiterboardId,
-            'tables', prePayload.id, 'x',
+            'loggedRestaurant', 'waiterboards', initPayload.waiterboardId,
+            'tables', initPayload.id, 'x',
           ],
-          prePayload.x,
+          initPayload.x,
         ),
         assocPath(
           [
-            'loggedRestaurant', 'waiterboards', prePayload.waiterboardId,
-            'tables', prePayload.id, 'y',
+            'loggedRestaurant', 'waiterboards', initPayload.waiterboardId,
+            'tables', initPayload.id, 'y',
           ],
-          prePayload.y,
+          initPayload.y,
         )
       )(state);
     }

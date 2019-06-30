@@ -55,11 +55,11 @@ export default function reducer(state = initialState, action) {
       return R.assocPath(['all', id, 'favorite'], fav)(state);
     }
     case types.FAV_RESTAURANT_DONE: {
-      const { id, fav } = action.payload.prePayload;
+      const { id, fav } = action.payload.initPayload;
       return R.assocPath(['all', id, 'favorite'], fav)(state);
     }
     case types.FAV_RESTAURANT_FAIL: {
-      const { id, fav } = action.payload.prePayload;
+      const { id, fav } = action.initPayload;
       return R.assocPath(['all', id, 'favorite'], !fav)(state);
     }
     default:

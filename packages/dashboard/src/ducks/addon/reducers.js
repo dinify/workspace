@@ -31,7 +31,7 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
     case 'REMOVE_ADDON_FAIL': {
-      const { id } = payload.prePayload;
+      const { id } = payload.initPayload;
       return assocPath(['all', id], state.backup[id])(state);
     }
     default:

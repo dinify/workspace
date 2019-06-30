@@ -38,7 +38,7 @@ export default function reducer(state = initialState, action) {
     }
 
     case 'REMOVE_MENUCATEGORY_FAIL': {
-      const id = payload.prePayload.id;
+      const id = payload.initPayload.id;
       return assocPath(['all', id], state.backup[id])(state);
     }
 

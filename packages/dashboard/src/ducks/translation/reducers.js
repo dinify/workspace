@@ -31,7 +31,7 @@ export default function reducer(state = initialState, action) {
       return assoc('selectedLocale', selectedLocale)(state);
     }
     case 'SAVE_TRANSLATION_DONE': {
-      const { id, locale, type, description, name } = action.payload.prePayload;
+      const { id, locale, type, description, name } = action.payload.initPayload;
       const updObj = { id, type };
       if (description) updObj.description = description;
       if (name) updObj.name = name;

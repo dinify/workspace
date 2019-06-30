@@ -39,12 +39,12 @@ export const favRestaurantInit = ({ fav, id }) => ({
   payload: { fav, id }
 });
 
-export const favRestaurantDone = ({ res, prePayload }) => ({
+export const favRestaurantDone = ({ res, initPayload }) => ({
   type: types.FAV_RESTAURANT_DONE,
-  payload: { res, prePayload }
+  payload: { res, initPayload }
 });
 
-export const favRestaurantFail = ({ error, prePayload }) => ({
+export const favRestaurantFail = ({ error, initPayload }) => ({
   type: types.FAV_RESTAURANT_FAIL,
-  payload: { error, prePayload }
+  payload: { error, initPayload }
 });

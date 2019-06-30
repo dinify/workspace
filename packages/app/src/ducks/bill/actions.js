@@ -38,11 +38,6 @@ export const splitBillDone = (res) => ({
   payload: res
 })
 
-export const splitBillFail = (e) => ({
-  type: types.SPLIT_BILL_FAIL,
-  payload: e
-})
-
 export const transferBillInit = ({ itemId, userId }) => ({
   type: types.TRANSFER_BILL_INIT,
   payload: { itemId, userId }
@@ -51,11 +46,6 @@ export const transferBillInit = ({ itemId, userId }) => ({
 export const transferBillDone = (res) => ({
   type: types.TRANSFER_BILL_DONE,
   payload: res
-})
-
-export const transferBillFail = (e) => ({
-  type: types.TRANSFER_BILL_FAIL,
-  payload: e
 })
 
 export const initTransactionInit = ({ type, gratuity }) => ({
@@ -68,7 +58,3 @@ export const initTransactionDone = (res) => ({
   payload: res
 })
 
-export const initTransactionFail = (e) => ({
-  type: types.INIT_TRANSACTION_FAIL,
-  payload: e
-})

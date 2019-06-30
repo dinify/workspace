@@ -48,7 +48,7 @@ export default function reducer(state = initialState, action) {
     }
 
     case type.REMOVE_MENUITEM_FAIL: {
-      const id = payload.prePayload.id;
+      const id = payload.initPayload.id;
       return assocPath(['all', id], state.backup[id])(state);
     }
 
@@ -91,7 +91,7 @@ export default function reducer(state = initialState, action) {
     }
 
     case types.UPDATE_ITEMIMAGE_DONE: {
-      const foodId = payload.prePayload.id;
+      const foodId = payload.initPayload.id;
       const image = payload.res;
       return assocPath(['all', foodId, 'images', image.id], image)(state);
     }
