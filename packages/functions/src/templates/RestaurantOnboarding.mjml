@@ -192,14 +192,14 @@
         <mj-column padding-bottom="32px">
           <mj-image padding-bottom="8px" height="150px" width="200px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-4.png"/>
           <mj-text mj-class="headline6">${partner.item4.title}</mj-text>
-          <mj-text mj-class="body2">${partner.item4.title}</mj-text>
+          <mj-text mj-class="body2">${partner.item4.body}</mj-text>
         </mj-column>
       </mj-section>
       <mj-section padding-bottom="0px">
         <mj-column width="50%" padding="0px 0px 32px 16px">
           <mj-image padding-bottom="8px" height="150px" width="197px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-5.png"/>
           <mj-text mj-class="headline6">${partner.item5.title}</mj-text>
-          <mj-text mj-class="body2">${partner.item5.title}</mj-text>
+          <mj-text mj-class="body2">${partner.item5.body}</mj-text>
         </mj-column>
 				<mj-group>
           <mj-column css-class="card-light">
