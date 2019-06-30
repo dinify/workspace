@@ -57,5 +57,41 @@
       "title": "What locations are available?",
       "content": "We are a startup based in Prague, Czech Republic. We are currently only available in selected restaurants in Prague but we are expanding fast. Please make sure to keep in touch with us for updates."
     }
+  },
+  "restaurantsPage": {
+    "hero": {
+      "title": "The modern way to deliver your menu",
+      "subtitle": "Dinify your business by partnering us",
+      "continueWith": "Continue with {{email}}",
+      "cta": "Get Started"
+    },
+    "sections": {
+      "faq": {
+        "translation": {
+          "title": "How do I create my menu in so many languages?",
+          "content": "Once you create an account, you'll get access to your own restaurant dashboard. You can then start creating your menu in any language. Automated translations work well with English, so you can get everything done with a couple clicks."
+        },
+        "correct": {
+          "title": "How do I know if the automated translations are correct?",
+          "content": "The quality of the translation results depends on the input language, the context and so on. The main purpose of the translated menu (along with images) is to help your foreign guests better understand what they're getting, and make the right choice. Optionally, you can opt in to our on demand proofreading service at an extra cost."
+        },
+        "devices": {
+          "title": "What devices do I need to get started?",
+          "content": "Crafted with love by a restauranteour, the onboarding process has no hidden costs. All you need is an active internet connection and a device such as a laptop, tablet, or smartphone to use as a Waiterboard."
+        },
+        "training": {
+          "title": "Does the staff need training?",
+          "content": "There is no training required, the interface is intuitive and simple to use, with interactive tutorials and on demand customer support. It's as simple to use as email, no need to change the existing billing system."
+        },
+        "trial": {
+          "title": "What happens after the free trial expires?",
+          "content": "At the end of the free trial, you'll be invited to upgrade to a paid plan for a monthly, or yearly billing cycle. All you will have to do at this point is to simply complete the subscription form with your credit card or your preferred method of online payment."
+        },
+        "modify": {
+          "title": "How can I modify my menu?",
+          "content": "With the Dashboard, you will have great flexibility in the ways you manage your menu. You can add or remove any item, or simple hide it temporarily. This realtime publishing flow will update all prices and pictures in the user facing app."
+        }
+      }
+    }
   }
 }

@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import Copyright from "@material-ui/icons/CopyrightTwoTone";
 import Favorite from "@material-ui/icons/FavoriteTwoTone";
 
-import footerStyle from "assets/jss/material-kit-pro-react/components/footerStyle.jsx";
+import footerStyle from "styles/material-kit-pro-react/components/footerStyle.jsx";
 import getTheme from "@dinify/common/dist/theme";
 
 const darkTheme = getTheme({ type: "dark" });

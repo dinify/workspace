@@ -14,7 +14,7 @@ import {
   whiteColor,
   grayColor,
   hexToRgb
-} from "assets/jss/material-kit-pro-react.jsx";
+} from "styles/material-kit-pro-react.jsx";
 
 const headerStyle = theme => ({
   appBar: {
@@ -28,6 +28,10 @@ const headerStyle = theme => ({
     justifyContent: "flex-start",
     position: "relative",
     borderBottom: "1px solid transparent"
+  },
+  whiteSvg: {
+    color: '#ffffff',
+    fill: '#ffffff'
   },
   absolute: {
     position: "absolute",

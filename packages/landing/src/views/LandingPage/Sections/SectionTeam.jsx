@@ -18,8 +18,8 @@ import cardProfile2Square from "assets/img/faces/card-profile2-square.jpg";
 import cardProfile4Square from "assets/img/faces/card-profile4-square.jpg";
 import cardProfile6Square from "assets/img/faces/card-profile6-square.jpg";
 
-import teamsStyle from "assets/jss/material-kit-pro-react/views/sectionsSections/teamsStyle.jsx";
-import teamStyle from "assets/jss/material-kit-pro-react/views/landingPageSections/teamStyle.jsx";
+import teamsStyle from "styles/material-kit-pro-react/views/sectionsSections/teamsStyle.jsx";
+import teamStyle from "styles/material-kit-pro-react/views/landingPageSections/teamStyle.jsx";
 
 const style = {
   ...teamsStyle,

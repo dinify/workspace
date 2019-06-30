@@ -9,7 +9,7 @@ import classNames from "classnames";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
-import productStyle from "./productStyle.jsx";
+import productStyle from "styles/productStyle.jsx";
 
 class SectionProduct extends React.Component {
   render() {
@@ -48,7 +48,7 @@ class SectionProduct extends React.Component {
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href="https://m.dinify.app/checkin"
+                        href="https://web.dinify.app/checkin"
                       >
                         {t('sectionFAQ.scan.checkinPage')}
                       </a>

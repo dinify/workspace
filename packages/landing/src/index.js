@@ -6,28 +6,10 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import i18n from '@dinify/common/dist/i18n';
 import { getCookie, setCookie } from '@dinify/common/dist/lib/FN';
 
-// import ReactPixel from "react-facebook-pixel";
+import LandingPage from "views/LandingPage/LandingPage.jsx";
+import RestaurantsPage from "views/RestaurantsPage/RestaurantsPage.jsx";
 
 import "assets/scss/material-kit-pro-react.css";
-
-// pages for this product
-// import AboutUsPage from "views/AboutUsPage/AboutUsPage.jsx";
-// import BlogPostPage from "views/BlogPostPage/BlogPostPage.jsx";
-// import BlogPostsPage from "views/BlogPostsPage/BlogPostsPage.jsx";
-// import ComponentsPage from "views/ComponentsPage/ComponentsPage.jsx";
-// import ContactUsPage from "views/ContactUsPage/ContactUsPage.jsx";
-// import EcommercePage from "views/EcommercePage/EcommercePage.jsx";
-// import LoginPage from "views/LoginPage/LoginPage.jsx";
-// import PresentationPage from "views/PresentationPage/PresentationPage.jsx";
-// import PricingPage from "views/PricingPage/PricingPage.jsx";
-// import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
-// import ProductPage from "views/ProductPage/ProductPage.jsx";
-// import SectionsPage from "views/SectionsPage/SectionsPage.jsx";
-// import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.jsx";
-// import SignupPage from "views/SignupPage/SignupPage.jsx";
-// import ErrorPage from "views/ErrorPage/ErrorPage.jsx";
-
-import LandingPage from "views/LandingPage/LandingPage.jsx";
 
 // var hist = createHashHistory();
 
@@ -39,6 +21,7 @@ import LandingPage from "views/LandingPage/LandingPage.jsx";
 //  ReactPixel.pageView();
 //  ReactPixel.fbq("track", "PageView");
 //});
+
 
 import getTheme from "@dinify/common/dist/theme";
 
@@ -62,6 +45,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={LandingPage} />
+        <Route exact path="/restaurants" component={RestaurantsPage} />
         {/*
           <Route path="/about-us" component={AboutUsPage} />
           <Route path="/blog-post" component={BlogPostPage} />

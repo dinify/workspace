@@ -18,7 +18,7 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import InfoArea from "components/InfoArea/InfoArea.jsx";
 
-import productStyle from "./productStyle.jsx";
+import productStyle from "styles/productStyle.jsx";
 import featuresImage from "assets/img/features.jpg";
 import { supportsWebp } from "@dinify/common/dist/lib/FN";
 

@@ -12,7 +12,7 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomText from "components/CustomText/CustomText.jsx";
 
-import productStyle from "./productStyle.jsx";
+import productStyle from "styles/productStyle.jsx";
 
 
 class SectionStatement extends React.Component {

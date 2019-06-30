@@ -10,7 +10,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMore from "@material-ui/icons/ArrowDropDownRounded";
 import Typography from "@material-ui/core/Typography";
 
-import accordionStyle from "assets/jss/material-kit-pro-react/components/accordionStyle.jsx";
+import accordionStyle from "styles/material-kit-pro-react/components/accordionStyle.jsx";
 
 class Accordion extends React.Component {
   constructor(props) {

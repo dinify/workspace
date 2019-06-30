@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/ipad-comments.bcdf9b4f.jpg";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/assets-for-demo/presentationViewSectionComponent/ipad-comments.jpg
-// module id = 1080
-// module chunks = 0

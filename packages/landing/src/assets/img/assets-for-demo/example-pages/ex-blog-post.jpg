@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/ex-blog-post.5d02ac3d.jpg";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/assets-for-demo/example-pages/ex-blog-post.jpg
-// module id = 1123
-// module chunks = 0

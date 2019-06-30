@@ -1,8 +1,0 @@
-module.exports = __webpack_public_path__ + "static/media/suit-6.ba2bff5e.jpg";
-
-
-//////////////////
-// WEBPACK FOOTER
-// ./src/assets/img/examples/suit-6.jpg
-// module id = 1039
-// module chunks = 0

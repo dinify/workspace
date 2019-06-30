@@ -8,18 +8,21 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Explore from "@material-ui/icons/ExploreOutlined";
 // core components
 import Header from "components/Header/Header.jsx";
+import HeaderLink from "components/Header/HeaderLink.jsx";
+import HeaderDivider from "components/Header/HeaderDivider.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import landingPageStyle from "./landingPageStyle.jsx";
-import LogoText from "@dinify/common/dist/icons/LogoText";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
+import Link from '@material-ui/core/Link';
 import Flag from "@dinify/common/dist/components/Flag";
 // Sections for this page
 // import SectionFeatures from "./Sections/SectionFeatures.jsx";
+import SignInLink from "components/Links/SignInLink.jsx";
 import SectionMultilingual from "./Sections/SectionMultilingual.jsx";
 import SectionFAQ from "./Sections/SectionFAQ.jsx";
 import SectionProduct from "./Sections/SectionProduct.jsx";
@@ -50,7 +53,7 @@ class LandingPage extends React.Component {
     scroll: "inner"
   };
   rafPending = false;
- 
+
   componentDidMount() {
     //window.scrollTo(0, 0);
     //document.body.scrollTop = 0;
@@ -82,23 +85,7 @@ class LandingPage extends React.Component {
     const { classes, t, location, ...rest } = this.props;
     const { headerScrolled, parallaxContainerState, scroll } = this.state;
 
-    const registrationURL = `https://dashboard.dinify.app/signup${location.search}`
-
     let selectedLanguage = getCookie('language');
-    const menuItems = [
-      {
-        name: t('features'),
-        anchor: 'features',
-      },
-      {
-        name: t('sectionProduct.header'),
-        anchor: 'howitworks',
-      },
-      {
-        name: 'FAQ',
-        anchor: 'faq',
-      },
-    ];
     return (
       <div>
         <div style={{
@@ -113,17 +100,17 @@ class LandingPage extends React.Component {
         <Header
           scrolled={headerScrolled}
           scrollingElement={parallaxContainerState}
-          menuItems={menuItems}
           color="transparent"
-          brand={props => (
-            <LogoText className={classes.contrastText} {...props} />
-          )}
           changeColorOnScroll={{
             height: 100,
             color: "primary"
-          }}
-          {...rest}
-        />
+          }} {...rest}>
+          <HeaderLink name={t('features')} anchor="features" />
+          <HeaderLink name={t('sectionProduct.header')} anchor="howitworks" />
+          <HeaderLink name="FAQ" anchor="faq" />
+          <HeaderDivider />
+          <SignInLink className={classes.headerListItem}/>
+        </Header>
       </div>
       <div
         ref={node => {
@@ -189,7 +176,7 @@ class LandingPage extends React.Component {
                       variant="contained"
                       color="primary"
                       style={{ height: 48, marginTop: 16 }}
-                      href="https://m.dinify.app"
+                      href="https://web.dinify.app"
                       target="_blank"
                       rel="noopener noreferrer"
                       id="exploreButton"
@@ -197,6 +184,12 @@ class LandingPage extends React.Component {
                       <Explore style={{ marginRight: 8 }}/>
                       {t('hero.cta')}
                     </Button>
+                    <Link
+                      href="/restaurants?source=hero"
+                      variant="caption"
+                      style={{color: "rgba(255, 255, 255, 0.87)", marginTop: 8}}>
+                      Are you a restaurant?
+                    </Link>
                   </GridItem>
                   <GridItem style={{ flex: 1 }} className={classes.hideSmall}>
                     <img
@@ -235,26 +228,40 @@ class LandingPage extends React.Component {
               <SectionFAQ t={t} />
             </div>
 
-            <Footer ref={node => { this.footer = node; }} style={{
-              marginTop: "calc(100vh - 24px)",
-              borderRadius: headerScrolled ? 0 : 8,
-              willChange: "transform"
-            }}>
-              <GridContainer justify="center">
-                {langs.map((l) => (
-                  <Grid item key={l.lang}>
-                    <IconButton
-                      onClick={() => changeLanguage(l.lang)}
-                      className={
-                      classes.flag +
-                      " " +
-                        (l.lang === selectedLanguage ? classes.flagSelected : "")
-                      }
-                    >
-                      <Flag country={l.country.toUpperCase()} />
-                    </IconButton>
-                  </Grid>
-                ))}
+            <Footer>
+              <GridContainer justify="center" spacing={24}>
+                <Grid item>
+                  <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
+                    Language
+                  </Typography>
+                  <GridContainer justify="center">
+                    {langs.map((l) => (
+                      <Grid item key={l.lang}>
+                        <IconButton
+                          className={
+                            classes.flag +
+                            " " +
+                            (l.lang === selectedLanguage ? classes.flagSelected : "")
+                          }
+                          onClick={() => changeLanguage(l.lang)}
+                        >
+                          <Flag country={l.country.toUpperCase()} />
+                        </IconButton>
+                      </Grid>
+                    ))}
+                  </GridContainer>
+                </Grid>
+                <Grid item>
+                  <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
+                    Navigation
+                  </Typography>
+                  <Link
+                    href="/restaurants?source=footer"
+                    variant="body2"
+                    color="white">
+                    Become a Restaurant Partner
+                  </Link>
+                </Grid>
               </GridContainer>
             </Footer>
           </div>
