@@ -67,8 +67,6 @@ class HeaderLinks extends React.Component {
     const { drawer, classes, dropdownHoverColor, scrollingElement, onScrollFrame, children } = this.props;
     const { collapsed } = this.state;
 
-    console.log('collapsed', collapsed, 'drawer', drawer);
-
     var onClickSections = {};
 
     return (

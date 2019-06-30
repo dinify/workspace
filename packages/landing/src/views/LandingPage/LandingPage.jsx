@@ -18,6 +18,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
+import Link from '@material-ui/core/Link';
 import Flag from "@dinify/common/dist/components/Flag";
 // Sections for this page
 // import SectionFeatures from "./Sections/SectionFeatures.jsx";
@@ -183,6 +184,12 @@ class LandingPage extends React.Component {
                       <Explore style={{ marginRight: 8 }}/>
                       {t('hero.cta')}
                     </Button>
+                    <Link
+                      href="/restaurants?source=hero"
+                      variant="caption"
+                      style={{color: "rgba(255, 255, 255, 0.87)", marginTop: 8}}>
+                      Are you a restaurant?
+                    </Link>
                   </GridItem>
                   <GridItem style={{ flex: 1 }} className={classes.hideSmall}>
                     <img
@@ -222,21 +229,39 @@ class LandingPage extends React.Component {
             </div>
 
             <Footer>
-              <GridContainer justify="center">
-                {langs.map((l) => (
-                  <Grid item key={l.lang}>
-                    <IconButton
-                      onClick={() => changeLanguage(l.lang)}
-                      className={
-                      classes.flag +
-                      " " +
-                        (l.lang === selectedLanguage ? classes.flagSelected : "")
-                      }
-                    >
-                      <Flag country={l.country.toUpperCase()} />
-                    </IconButton>
-                  </Grid>
-                ))}
+              <GridContainer justify="center" spacing={24}>
+                <Grid item>
+                  <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
+                    Language
+                  </Typography>
+                  <GridContainer justify="center">
+                    {langs.map((l) => (
+                      <Grid item key={l.lang}>
+                        <IconButton
+                          className={
+                            classes.flag +
+                            " " +
+                            (l.lang === selectedLanguage ? classes.flagSelected : "")
+                          }
+                          onClick={() => changeLanguage(l.lang)}
+                        >
+                          <Flag country={l.country.toUpperCase()} />
+                        </IconButton>
+                      </Grid>
+                    ))}
+                  </GridContainer>
+                </Grid>
+                <Grid item>
+                  <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
+                    Navigation
+                  </Typography>
+                  <Link
+                    href="/restaurants?source=footer"
+                    variant="body2"
+                    color="white">
+                    Become a Restaurant Partner
+                  </Link>
+                </Grid>
               </GridContainer>
             </Footer>
           </div>
