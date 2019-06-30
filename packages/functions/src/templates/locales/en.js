@@ -1,6 +1,6 @@
 export default {
-  onboarding: {
-    subject: '',
+  "rp-onboarding": {
+    subject: 'Get started with Dinify',
     preview: 'Did you know, that as of today you have <b>${stats.targetCount} reviews</b> on TripAdvisor and <b>${stats.targetPercent}</b> of them are written in many different languages other than Czech or English? Here is what we found among all your reviews at ${restaurant.name}. The following chart shows the ditribution of languages and the corresponding count of reviews',
     hero: {
       title: 'A restaurant menu that speaks multiple languages',

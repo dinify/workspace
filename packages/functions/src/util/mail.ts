@@ -15,9 +15,9 @@ substitutions - the custom variables in the template
 templateName - name of template relative to templates folder root
 language - language code for localization (defaults to english)
 */
-export function generate(msg, substitutions, templateName, language = 'en') {
+export function generate(msg, substitutions, template, language = 'en') {
   const variables = {
-      ...locales[language].onboarding,
+      ...locales[language][template.key],
       ...substitutions,
       ...msg
   };
@@ -36,11 +36,11 @@ export function generate(msg, substitutions, templateName, language = 'en') {
     return subs;
   }
 
-  const templatePath = path.resolve("src/templates", `${templateName}.mjml`);
-  const template = readFileSync(templatePath).toString();
-  let  substituted = template;
+  const templatePath = path.resolve("src/templates", `${template.name}.mjml`);
+  const templateString = readFileSync(templatePath).toString();
+  let  substituted = templateString;
   try {
-    substituted = substituteDepth(template, variables);
+    substituted = substituteDepth(substituted, variables);
   }
   catch (e) { console.log(e) };
 

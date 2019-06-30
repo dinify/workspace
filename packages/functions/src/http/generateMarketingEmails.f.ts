@@ -9,7 +9,7 @@ import Emails from '../models/Emails';
 import Cohorts from '../models/Cohorts';
 import uuidBase62 from 'uuid-base62';
 import map from 'async/map';
-
+import locales from '../templates/locales';
 import * as path from "path";
 import emojis from "../data/emojis";
 import likelySubtags from "../data/likelySubtags";
@@ -84,7 +84,10 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
 
           const recipient = target.data.email_address;
           const tokenData = { e: recipient };
-          const template = "RestaurantOnboarding";
+          const template = {
+            name: "RestaurantOnboarding",
+            key: "rp-onboarding"
+          };
           let language = defaultLanguage;
 
           // TODO: move to it's own function
@@ -109,7 +112,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
                 email: recipient
               },
               from: defaultSender,
-              subject: locales[language].onboarding.subject
+              subject: locales[language][template.key].subject
             };
             const variables = {
               restaurant: {
@@ -131,7 +134,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
               target_id: target.id,
               message_id: null, // null at the time of generating, defined at the time of sending
               message_key: 'events_sg.message_id',
-              type: template,
+              type: template.key,
               message: {...msg, html, variables}
             }).then((emailResult) => {
               cb(null, { email: emailResult.get(), token });
