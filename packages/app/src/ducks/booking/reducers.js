@@ -1,5 +1,4 @@
-
-import * as R from 'ramda';
+import assoc from 'ramda/src/assoc';
 import types from './types';
 
 const initialState = {
@@ -9,15 +8,16 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
+  const { payload } = action;
   switch (action.type) {
     case types.SET_TIME: {
-      return R.assoc('time', action.payload)(state);
+      return assoc('time', payload)(state);
     }
     case types.SET_GUESTS: {
-      return R.assoc('guests', action.payload)(state);
+      return assoc('guests', payload)(state);
     }
     case types.SET_DATE: {
-      return R.assoc('date', action.payload)(state);
+      return assoc('date', payload)(state);
     }
     default:
       return state;

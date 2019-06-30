@@ -1,5 +1,10 @@
-
-import * as R from 'ramda';
+import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
+import findIndex from 'ramda/src/findIndex';
+import propEq from 'ramda/src/propEq';
+import append from 'ramda/src/append';
+import remove from 'ramda/src/remove';
+import forEach from 'ramda/src/forEach';
 import { selectedBillItems } from 'ducks/seat/selectors';
 import types from './types';
 import billTypes from '../bill/types';
@@ -16,64 +21,64 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case cartTypes.ORDER_INIT: {
-      return R.assoc('lastCartItems', action.payload)(state);
+      return assoc('lastCartItems', action.payload)(state);
     }
     case cartTypes.ORDER_DONE: {
       // the cart gets cleared by SEATS action (downstream websocket)
-      // return R.dissocPath(['seats', '0', 'cart'])(state);
+      // return dissocPath(['seats', '0', 'cart'])(state);
       return state;
     }
     case serviceTypes.CALL_SERVICE_INIT: {
       const serviceId = action.payload.serviceId;
-      return R.assocPath(['services', serviceId], {id: serviceId, status: 'LOADING', calls: {}})(state);
+      return assocPath(['services', serviceId], {id: serviceId, status: 'LOADING', calls: {}})(state);
     }
     case serviceTypes.CALL_SERVICE_DONE: {
       const call = action.payload;
-      const newState = R.assocPath(['services', call.service_id, 'calls', call.id], call)(state);
-      return R.assocPath(['services', call.service_id, 'status'], 'SENT')(newState);
+      const newState = assocPath(['services', call.service_id, 'calls', call.id], call)(state);
+      return assocPath(['services', call.service_id, 'status'], 'SENT')(newState);
     }
     case wsTypes.CONFIRMED_CALL: {
       const call = action.payload.call;
-      const newState = R.assocPath(['services', call.service_id, 'calls', call.id], call)(state);
-      return R.assocPath(['services', call.service_id, 'status'], 'READY')(newState);
+      const newState = assocPath(['services', call.service_id, 'calls', call.id], call)(state);
+      return assocPath(['services', call.service_id, 'status'], 'READY')(newState);
     }
     case cartTypes.REMOVE_ORDERITEM_DONE: {
-      return R.assocPath(['seats', '0', 'cart'], action.payload)(state);
+      return assocPath(['seats', '0', 'cart'], action.payload)(state);
     }
     case wsTypes.SEATS:
     case wsTypes.SPLIT:
     case wsTypes.CONFIRMED_ORDER:
     case wsTypes.CONFIRMED_PAYMENT: {
-      return R.assocPath(['seats'], action.payload.seats)(state);
+      return assocPath(['seats'], action.payload.seats)(state);
     }
     case wsTypes.CHECKIN: {
       const seat = action.payload.seat;
       let newState = state;
-      if (R.findIndex(R.propEq('id', seat.id))(state.seats) < 0) {
-          newState = R.assocPath(['seats'], R.append(seat, state.seats))(state);
+      if (findIndex(propEq('id', seat.id))(state.seats) < 0) {
+          newState = assocPath(['seats'], append(seat, state.seats))(state);
       }
-      if (action.payload.me) newState = R.assocPath(['checkedin'], true)(newState);
+      if (action.payload.me) newState = assocPath(['checkedin'], true)(newState);
       return newState;
     }
     case wsTypes.CHECKOUT: {
       const seat = action.payload.seat;
-      return R.assoc('seats', R.remove(R.findIndex(R.propEq('id', seat.id))(state.seats), 1, state.seats))(state);
+      return assoc('seats', remove(findIndex(propEq('id', seat.id))(state.seats), 1, state.seats))(state);
     }
     case wsTypes.CHECKOUT_ALL: {
-      return R.assoc('seats', [])(R.assoc('checkedin', false)(state));
+      return assoc('seats', [])(assoc('checkedin', false)(state));
     }
     case types.FETCH_SEATS_DONE: {
       const seats = action.payload.res;
-      return R.assoc('seats', seats)(R.assoc('checkedin', true)(state));
+      return assoc('seats', seats)(assoc('checkedin', true)(state));
     }
     case types.FETCH_SEATS_FAIL: {
-      return R.assoc('checkedin', false)(state);
+      return assoc('checkedin', false)(state);
     }
     case types.SELECT_BILLITEM: {
       const { selected, path } = action.payload;
       const seat = state.seats[path[1]];
       const billItem = seat.bill.orders[path[4]].items[path[6]];
-      const newState =  R.assocPath(path, selected)(state);
+      const newState =  assocPath(path, selected)(state);
       if (selectedBillItems({seat: newState}).length <= 0) {
         for (let i = 0; i < newState.seats.length; i += 1) {
           newState.seats[i].selected = false;
@@ -92,24 +97,24 @@ export default function reducer(state = initialState, action) {
     case types.SELECT_SEAT: {
       const { selected, seatIndex } = action.payload;
       if (seatIndex === 0) return state;
-      return R.assocPath(['seats', seatIndex, 'selected'], selected)(state);
+      return assocPath(['seats', seatIndex, 'selected'], selected)(state);
     }
     case billTypes.SPLIT_BILL_INIT: {
-      return R.assocPath(['splitLoading'], true)(state);
+      return assocPath(['splitLoading'], true)(state);
     }
     case billTypes.SPLIT_BILL_DONE: {
-      return R.assocPath(['seats'], action.payload.seats)(R.assocPath(['splitLoading'], false)(state));
+      return assocPath(['seats'], action.payload.seats)(assocPath(['splitLoading'], false)(state));
     }
     case billTypes.SPLIT_BILL_FAIL: {
-      return R.assocPath(['splitLoading'], false)(state);
+      return assocPath(['splitLoading'], false)(state);
     }
     case types.CLEAR_SELECTED_BILLITEMS: {
       // TODO: ramda impl
       let newState = state;
-      R.forEach((seat, seatIndex) => {
-        if (seat.bill) R.forEach(order => {
-          R.forEach(item => {
-            newState = R.assocPath(['seats', seatIndex, 'bill', 'orders', order.id, 'items', item.id, 'selected'], false)(newState)
+      forEach((seat, seatIndex) => {
+        if (seat.bill) forEach(order => {
+          forEach(item => {
+            newState = assocPath(['seats', seatIndex, 'bill', 'orders', order.id, 'items', item.id, 'selected'], false)(newState)
           }, Object.values(order.items))
         }, Object.values(seat.bill.orders))
       }, state.seats);

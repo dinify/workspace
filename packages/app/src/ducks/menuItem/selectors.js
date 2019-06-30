@@ -1,6 +1,8 @@
-import { createSelector } from 'reselect'
-import * as R from 'ramda'
-import * as FN from '@dinify/common/dist/lib/FN';
+import { createSelector } from 'reselect';
+import filter from 'ramda/src/filter';
+import propEq from 'ramda/src/propEq';
+
+import { MapToList } from '@dinify/common/dist/lib/FN';
 
 export const getItemsOfCategory = createSelector(
   [
@@ -8,6 +10,6 @@ export const getItemsOfCategory = createSelector(
     (state) => state.menuItem.all,
   ],
   (categoryId, itemsMap) => {
-    return R.filter(R.propEq('menu_category_id', categoryId), FN.MapToList(itemsMap));
+    return filter(propEq('menu_category_id', categoryId), MapToList(itemsMap));
   }
 )

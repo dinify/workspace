@@ -1,7 +1,7 @@
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import * as R from 'ramda';
+import pluck from 'ramda/src/pluck';
 import { fetchAllUsersInit } from 'ducks/user/actions';
 import types from './types';
 
@@ -9,7 +9,7 @@ const fetchUsersOfSeatsEpic = (action$) =>
   action$.pipe(
     ofType(types.FETCH_SEATS_DONE),
     switchMap(({ payload }) => {
-      const userIds = R.pluck('user_id', payload.res);
+      const userIds = pluck('user_id', payload.res);
       return of(fetchAllUsersInit(userIds));
     })
   )

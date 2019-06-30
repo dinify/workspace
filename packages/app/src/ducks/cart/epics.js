@@ -3,8 +3,7 @@ import { mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import * as API from '@dinify/common/dist/api/restaurant';
-import * as FN from '@dinify/common/dist/lib/FN';
-import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
+import { MapToList, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import { fetchSeatsInit } from 'ducks/seat/actions';
 import types from './types';
 import {
@@ -20,17 +19,17 @@ const addToCartEpic = (action$, state$) =>
       const { payload: { menuItemId } } = action;
       const menuItem = state$.value.menuItem.all[menuItemId];
       const choices = [];
-      FN.MapToList(menuItem.options).forEach((option) => {
-        FN.MapToList(option.choices).forEach((choice) => {
+      MapToList(menuItem.options).forEach((option) => {
+        MapToList(option.choices).forEach((choice) => {
           if (choice.selected) choices.push({id: choice.id});
         })
       })
       const excludes = [];
-      FN.MapToList(menuItem.ingredients).forEach((ingredient) => {
+      MapToList(menuItem.ingredients).forEach((ingredient) => {
         if (ingredient.excluded) excludes.push({id: ingredient.id});
       })
       const addons = [];
-      FN.MapToList(menuItem.addons).forEach((addon) => {
+      MapToList(menuItem.addons).forEach((addon) => {
         if (addon.qty > 0) addons.push({
           id: addon.id,
           amount: addon.qty,

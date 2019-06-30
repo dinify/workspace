@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import * as R from 'ramda';
+import omit from 'ramda/src/omit';
 
 const styles = theme => ({
   container: {
@@ -272,7 +272,7 @@ class ScrollSnapView extends React.Component {
     }
     return (
       <div
-        {...R.omit(['scrollTop', 'scrollLeft', 'classes', 'style', 'align', 'snap'], this.props)}
+        {...omit(['scrollTop', 'scrollLeft', 'classes', 'style', 'align', 'snap'], this.props)}
         style={Object.assign({
 
         }, style)}

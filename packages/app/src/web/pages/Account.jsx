@@ -1,5 +1,5 @@
 import React from 'react';
-import * as R from 'ramda';
+import remove from 'ramda/src/remove';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase';
@@ -194,7 +194,7 @@ const Account = ({
             </ListItemIcon>
             <ListItemText primary={language.nameNative} secondary={secondary} />
             <IconButton onClick={() => {
-              const other = R.remove(i, 1, profile.language.other);
+              const other = remove(i, 1, profile.language.other);
               firebase.updateProfile({
                 language: {
                   ...profile.language,

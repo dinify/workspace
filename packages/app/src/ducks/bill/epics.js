@@ -3,8 +3,6 @@ import { mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import * as API from '@dinify/common/dist/api/restaurant';
 import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
-// import * as R from 'ramda';
-// import * as FN from '@dinify/common/dist/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 import types from './types';
 import {

@@ -1,8 +1,8 @@
-
-import * as R from 'ramda';
-import * as FN from '@dinify/common/dist/lib/FN';
-import types from './types';
+import assocPath from 'ramda/src/assocPath';
+import keys from 'ramda/src/keys';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 import menuCategoryTypes from 'ducks/menuCategory/types';
+import types from './types';
 
 const initialState = {
   all: {},
@@ -16,14 +16,14 @@ export default function reducer(state = initialState, action) {
     //   const items = action.payload.res;
     //   let newState = state;
     //   FN.MapToList(items).forEach(item => {
-    //     if (item.published) newState = R.assocPath(['all', item.id], item)(newState);
+    //     if (item.published) newState = assocPath(['all', item.id], item)(newState);
     //   });
     //   return newState;
     // }
 
     case types.FETCH_MENUITEM_DONE: {
       const item = payload.res || {};
-      return R.assocPath(['all', item.id], item)(state);
+      return assocPath(['all', item.id], item)(state);
     }
 
     case menuCategoryTypes.FETCH_MENUCATEGORIES_DONE: {
@@ -31,8 +31,8 @@ export default function reducer(state = initialState, action) {
       let newState = state;
       categories.forEach((category) => {
         if (!category.items) return;
-        FN.MapToList(category.items).forEach(item => {
-          if (item.published) newState = R.assocPath(['all', item.id], item)(newState);
+        MapToList(category.items).forEach(item => {
+          if (item.published) newState = assocPath(['all', item.id], item)(newState);
         });
       })
       return newState;
@@ -40,19 +40,19 @@ export default function reducer(state = initialState, action) {
 
     case types.FAV_MENUITEM_INIT: {
       const { id, fav } = payload;
-      return R.assocPath(['all', id, 'favorite'], fav)(state);
+      return assocPath(['all', id, 'favorite'], fav)(state);
     }
     case types.FAV_MENUITEM_DONE: {
       const { id, fav } = payload.initPayload;
-      return R.assocPath(['all', id, 'favorite'], fav)(state);
+      return assocPath(['all', id, 'favorite'], fav)(state);
     }
     case types.FAV_MENUITEM_FAIL: {
       const { id, fav } = payload.initPayload;
-      return R.assocPath(['all', id, 'favorite'], !fav)(state);
+      return assocPath(['all', id, 'favorite'], !fav)(state);
     }
     case types.EXCLUDE_INGREDIENT: {
       const { menuItemId, ingredientId, excluded } = payload;
-      return R.assocPath([
+      return assocPath([
         'all',
         menuItemId,
         'ingredients',
@@ -64,7 +64,7 @@ export default function reducer(state = initialState, action) {
       const { menuItemId, addonId, inc } = payload;
       let preQty = state.all[menuItemId].addons[addonId].qty;
       if (!preQty) preQty = 0;
-      return R.assocPath([
+      return assocPath([
         'all',
         menuItemId,
         'addons',
@@ -75,8 +75,8 @@ export default function reducer(state = initialState, action) {
     case types.SELECT_CHOICE: {
       const { menuItemId, optionId, choiceId } = payload;
       let newState = state;
-      R.keys(state.all[menuItemId].options[optionId].choices).forEach((chId) => {
-        newState = R.assocPath([
+      keys(state.all[menuItemId].options[optionId].choices).forEach((chId) => {
+        newState = assocPath([
           'all', menuItemId, 'options', optionId, 'choices', chId, 'selected'
         ], chId === choiceId)(newState);
       })

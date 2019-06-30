@@ -9,7 +9,7 @@ import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import Typography from '@dinify/common/dist/components/Typography';
 import MenuItemCard from 'web/components/MenuItemCard';
 import * as FN from '@dinify/common/dist/lib/FN';
-import * as R from 'ramda';
+import sort from 'ramda/src/sort';
 import uniqueId from 'lodash.uniqueid';
 import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';
 
@@ -69,7 +69,7 @@ let MenuSection = ({
           <Typography variant="caption">{t('menu.caption', { restaurant })}</Typography>
         </Grid>
       </Grid>
-      {R.sort((a,b) => a.precedence - b.precedence, menuCategoriesList).map((category, i) => {
+      {sort((a,b) => a.precedence - b.precedence, menuCategoriesList).map((category, i) => {
         const categoryItems = FN.MapToList(category.items);
         if (categoryItems.length === 0) return <div />;
         return (
@@ -80,7 +80,7 @@ let MenuSection = ({
           </Typography>
           {mobile ?
             <div className={classes.scroller}>
-              {R.sort((a,b) => a.precedence - b.precedence, categoryItems).map((menuItem, i, arr) =>
+              {sort((a,b) => a.precedence - b.precedence, categoryItems).map((menuItem, i, arr) =>
                 <div key={menuItem.id} style={{
                   display: 'inline-block',
                   width: 'calc(50% - 16px)',
@@ -96,7 +96,7 @@ let MenuSection = ({
             <Grid
               container
               spacing={mediumScreen ? 24 : 16}>
-              {R.sort((a,b) => a.precedence - b.precedence, FN.MapToList(category.items)).map(menuItem =>
+              {sort((a,b) => a.precedence - b.precedence, FN.MapToList(category.items)).map(menuItem =>
                 <Grid item xs={6} sm={4} md={6} key={uniqueId()}>
                   <MenuItemCard menuItem={menuItem}/>
                 </Grid>

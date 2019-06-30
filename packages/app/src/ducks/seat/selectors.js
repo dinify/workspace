@@ -1,13 +1,14 @@
 import { createSelector } from 'reselect';
-import * as R from 'ramda';
+import filter from 'ramda/src/filter';
+import forEach from 'ramda/src/forEach';
 
 export const selectedBillItems = createSelector(
   [
     (state) => {
       const result = [];
-      if (state.seat.seats) R.forEach(seat => {
-        if (seat.bill) R.forEach(order => {
-          R.forEach(item => {
+      if (state.seat.seats) forEach(seat => {
+        if (seat.bill) forEach(order => {
+          forEach(item => {
             result.push(item);
           }, Object.values(order.items))
         }, Object.values(seat.bill.orders))
@@ -16,7 +17,7 @@ export const selectedBillItems = createSelector(
     },
   ],
   (billItems) => {
-    return R.filter(o => o.selected, billItems);
+    return filter(o => o.selected, billItems);
   },
 )
 
@@ -25,7 +26,7 @@ export const selectedSeats = createSelector(
     (state) => state.seat.seats,
   ],
   (seats) => {
-    return R.filter(o => o.selected, seats);
+    return filter(o => o.selected, seats);
   },
 )
 

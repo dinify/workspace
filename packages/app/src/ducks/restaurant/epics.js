@@ -3,10 +3,8 @@ import { mergeMap, exhaustMap, map, catchError, debounceTime } from 'rxjs/operat
 import { ofType } from 'redux-observable';
 import * as API from '@dinify/common/dist/api/restaurant';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
-import { fetchStatusInit } from 'ducks/restaurant/actions';
-import { getCookie } from '@dinify/common/dist/lib/FN';
-import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
-import { checkinFail, checkinDone, favRestaurantDone } from './actions';
+import { fetchStatusInit, checkinFail, checkinDone, favRestaurantDone } from 'ducks/restaurant/actions';
+import { getCookie, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import types from './types';
 
 const checkinEpic = (action$) =>

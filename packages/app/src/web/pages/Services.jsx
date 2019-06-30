@@ -11,7 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ServiceCallGraphic from 'web/components/ServiceCallGraphic';
 import { callServiceInit } from 'ducks/service/actions';
 import { Motion, spring } from 'react-motion';
-import * as R from 'ramda';
+import filter from 'ramda/src/filter';
 
 import * as FN from '@dinify/common/dist/lib/FN';
 
@@ -28,7 +28,7 @@ class Services extends React.Component {
     const { selectedTab } = this.state;
 
     let servicesList = restaurant ? FN.MapToList(restaurant.services) : [];
-    servicesList = R.filter((s) => {
+    servicesList = filter((s) => {
       if (selectedTab === 0) return s.type === 'TABLEWARE';
       if (selectedTab === 1) return s.type === 'CONDIMENT';
       return false;

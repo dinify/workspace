@@ -1,6 +1,6 @@
 
 import React from 'react';
-import * as R from 'ramda';
+import pluck from 'ramda/src/pluck';
 import * as FN from '@dinify/common/dist/lib/FN';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@dinify/common/dist/components/Typography';
@@ -49,7 +49,7 @@ const RestaurantListItem = ({
   classes,
   restaurant,
 }) => {
-  const images = R.pluck('url')(FN.MapToList(restaurant.images));
+  const images = pluck('url')(FN.MapToList(restaurant.images));
   const allTags = FN.MapToList(restaurant.tags);
   const tags = [];
   allTags.forEach(tag => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import * as R from 'ramda';
+import omit from 'ramda/src/omit';
 
 class ScrollLink extends React.Component {
   shouldComponentUpdate (nextProps, nextState) {
@@ -21,7 +21,7 @@ class ScrollLink extends React.Component {
   render () {
     return (
       <div
-        {...R.omit(['scrollTop', 'scrollLeft'], this.props)}
+        {...omit(['scrollTop', 'scrollLeft'], this.props)}
         ref={(node) => {this.pagerContainer = node}}
         >
         {this.props.children}

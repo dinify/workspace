@@ -1,5 +1,4 @@
-
-import * as R from 'ramda';
+import assocPath from 'ramda/src/assocPath';
 import types from './types';
 
 const initialState = {
@@ -36,7 +35,7 @@ export default function reducer(state = initialState, action) {
     //  return newState;
     // }
     case types.FETCH_CART_DONE: {
-      return R.assocPath(['cart'], action.payload)(state);
+      return assocPath(['cart'], action.payload)(state);
     }
     case types.FETCH_CART_FAIL: {
       const payload = action.payload;

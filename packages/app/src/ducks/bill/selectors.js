@@ -1,17 +1,17 @@
-import { createSelector } from 'reselect'
-import * as R from 'ramda'
-// import * as FN from '@dinify/common/dist/lib/FN';
+import { createSelector } from 'reselect';
+import filter from 'ramda/src/filter';
+import propEq from 'ramda/src/propEq';
+import any from 'ramda/src/any';
 
 export const checkSelecting = createSelector(
   [
     (state) => {
-      console.log(R.pluck('bill')(state.seat.seats));
-      //console.log(R.mergeAll(R.pluck('bill.items')(state.seat.seats)));
-      R.filter(R.propEq('selected', 'sds'));
+      //console.log(mergeAll(pluck('bill.items')(state.seat.seats)));
+      filter(propEq('selected', 'sds'));
     },
   ],
   (billItems) => {
     if (!billItems) return false;
-    return R.any((item) => item.selected)(billItems);
+    return any((item) => item.selected)(billItems);
   }
-)
+);

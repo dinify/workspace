@@ -1,6 +1,10 @@
 import { createSelector } from 'reselect'
-import * as R from 'ramda'
-import * as FN from '@dinify/common/dist/lib/FN';
+import find from 'ramda/src/find';
+import propEq from 'ramda/src/propEq';
+import filter from 'ramda/src/filter';
+import assoc from 'ramda/src/assoc';
+
+import { MapToList } from '@dinify/common/dist/lib/FN';
 
 export const getCategoriesBySubdomain = createSelector(
   [
@@ -10,12 +14,12 @@ export const getCategoriesBySubdomain = createSelector(
     (state) => state.menuItem.all,
   ],
   (subdomain, restaurantsMap, categoriesMap, itemsMap) => {
-    const restaurant = R.find(R.propEq('subdomain', subdomain))(FN.MapToList(restaurantsMap));
+    const restaurant = find(propEq('subdomain', subdomain))(MapToList(restaurantsMap));
     if (restaurant) {
-      return R.filter(R.propEq('restaurant_id', restaurant.id), FN.MapToList(categoriesMap))
+      return filter(propEq('restaurant_id', restaurant.id), MapToList(categoriesMap))
       .map((category) => {
-        const items = R.filter(R.propEq('menu_category_id', category.id), FN.MapToList(itemsMap));
-        return R.assoc('items', items)(category);
+        const items = filter(propEq('menu_category_id', category.id), MapToList(itemsMap));
+        return assoc('items', items)(category);
       });
     }
     return [];

@@ -10,7 +10,7 @@ import types from './types';
 const bootstrapEpic = (action$) =>
   action$.pipe(
     ofType('persist/PERSIST'),
-    mergeMap(() => of(fetchRestaurantsInit(),loadUserDataAction()))
+    mergeMap(() => of(fetchRestaurantsInit(), loadUserDataAction()))
   );
 
 const loadUserData = (action$) =>
