@@ -18,23 +18,23 @@
         	<mj-image width="150px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-header-1.png"/>
         </mj-column>
         <mj-column width="64%">
-          <mj-text mj-class="headline6" color="#fff">Naše menu mluví všemi jazyky</mj-text>
+          <mj-text mj-class="headline6" color="#fff">${hero.title}</mj-text>
           <mj-button href="${link}"
                      align="left"
                      mj-class="outlined button2-nowrap"
                      padding-bottom="8px"
                      padding-top="16px">
-						Vaše může také
+						${hero.cta}
           </mj-button>
         </mj-column>
       </mj-section>
       <mj-section>
         <mj-column>
           <mj-text mj-class="body1">
-            Zdravíme do ${restaurant.name},
+            ${main.dear}
           </mj-text>
           <mj-text mj-class="body2">
-            Zjistili jsme, že ${restaurant.name} má na TripAdvisoru ${stats.targetPercent} recenzí od zahraničních návštěvníků, kteří nemluví česky ani anglicky.
+            ${main.body}
           </mj-text>
         </mj-column>
       </mj-section>
@@ -45,13 +45,13 @@
       </mj-section>
 			<mj-section>
         <mj-column>
-        	<mj-text mj-class="headline5" align="center">Jsou to tyto jazyky</mj-text>
+        	<mj-text mj-class="headline5" align="center">${insights.title}</mj-text>
         </mj-column>
       </mj-section>
       <mj-section>
         <mj-column>
         	<mj-text mj-class="body2">
-            Zde je přehled jazyků, které se v recenzích vaší restaurace nejčastěji objevují:
+            ${insights.body}
           </mj-text>
           <mj-table padding="0px" padding-top="16px">
             <col width="32">
@@ -61,10 +61,9 @@
 							<td>${stats.langDist[0].language}</td>
               <td class="percentBarContainer">
               	<div class="percentBarBackground">
-                	${stats.langDist[0].count}
-                </div>
-                <div style="width:${stats.langDist[0].ratio}" class="percentBar">
-                   ${stats.langDist[0].percent}
+                  <div style="width:${stats.langDist[0].ratio}" class="percentBar">
+                     ${stats.langDist[0].percent}
+                  </div>
                 </div>
               </td>
             </tr>
@@ -72,11 +71,10 @@
               <td style="font-size: 24px">${stats.langDist[1].emoji}</td>
 							<td>${stats.langDist[1].language}</td>
               <td class="percentBarContainer">
-              	<div class="percentBarBackground">
-                	${stats.langDist[1].count}
-                </div>
-                <div style="width:${stats.langDist[1].ratio}" class="percentBar">
-                   ${stats.langDist[1].percent}
+                <div class="percentBarBackground">
+                  <div style="width:${stats.langDist[1].ratio}" class="percentBar">
+                     ${stats.langDist[1].percent}
+                  </div>
                 </div>
               </td>
             </tr>
@@ -84,11 +82,10 @@
               <td style="font-size: 24px">${stats.langDist[2].emoji}</td>
 							<td>${stats.langDist[2].language}</td>
               <td class="percentBarContainer">
-              	<div class="percentBarBackground">
-                	${stats.langDist[2].count}
-                </div>
-                <div style="width:${stats.langDist[2].ratio}" class="percentBar">
-                   ${stats.langDist[2].percent}
+                <div class="percentBarBackground">
+                  <div style="width:${stats.langDist[2].ratio}" class="percentBar">
+                     ${stats.langDist[2].percent}
+                  </div>
                 </div>
               </td>
             </tr>
@@ -96,11 +93,10 @@
               <td style="font-size: 24px">${stats.langDist[3].emoji}</td>
 							<td>${stats.langDist[3].language}</td>
               <td class="percentBarContainer">
-              	<div class="percentBarBackground">
-                	${stats.langDist[3].count}
-                </div>
-                <div style="width:${stats.langDist[3].ratio}" class="percentBar">
-                   ${stats.langDist[3].percent}
+                <div class="percentBarBackground">
+                  <div style="width:${stats.langDist[3].ratio}" class="percentBar">
+                     ${stats.langDist[3].percent}
+                  </div>
                 </div>
               </td>
             </tr>
@@ -108,11 +104,10 @@
               <td style="font-size: 24px">${stats.langDist[4].emoji}</td>
 							<td>${stats.langDist[4].language}</td>
               <td class="percentBarContainer">
-              	<div class="percentBarBackground">
-                	${stats.langDist[4].count}
-                </div>
-                <div style="width:${stats.langDist[4].ratio}" class="percentBar">
-                   ${stats.langDist[4].percent}
+                <div class="percentBarBackground">
+                  <div style="width:${stats.langDist[4].ratio}" class="percentBar">
+                     ${stats.langDist[4].percent}
+                  </div>
                 </div>
               </td>
             </tr>
@@ -129,26 +124,26 @@
         <mj-column>
           <mj-accordion>
           <mj-accordion-element>
-            <mj-accordion-title mj-class="subtitle1" color="#c13939">Co to pro vás znamená?</mj-accordion-title>
+            <mj-accordion-title mj-class="subtitle1" color="#c13939">${accordions.meaning.title}</mj-accordion-title>
             <mj-accordion-text mj-class="body2">
               <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-                Velký počet hodnocení naznačuje, že je vaše restaurace mezinárodně známá, a je žádaným místem pro spoustu zahraničních hostů. Přicházíme s řešením, které vylepší jejich zážitek u vás, a vaší restauraci výrazně zvýší prestiž.
+                ${accordions.meaning.body}
               </span>
             </mj-accordion-text>
           </mj-accordion-element>
           <mj-accordion-element>
-            <mj-accordion-title mj-class="subtitle1" color="#c13939">Jak?</mj-accordion-title>
+            <mj-accordion-title mj-class="subtitle1" color="#c13939">${accordions.why.title}</mj-accordion-title>
             <mj-accordion-text mj-class="body2">
               <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-                Servírováním <b>skvělého menu</b>, které už máte, v kombinaci s naší platformou <b>Dinify</b>, která vaše služby posune na ještě vyšší úroveň.
+                ${accordions.why.body}
               </span>
             </mj-accordion-text>
           </mj-accordion-element>
           <mj-accordion-element>
-            <mj-accordion-title mj-class="subtitle1" color="#c13939">Vytvořte dokonalý první dojem</mj-accordion-title>
+            <mj-accordion-title mj-class="subtitle1" color="#c13939">${accordions.impression.title}</mj-accordion-title>
             <mj-accordion-text mj-class="body2">
               <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-                Naše aplikace zajistí plynulý a ničím nerušený gastronimický zážitek, ať už je váš host z Čech nebo z Číny.
+                ${accordions.impression.body}
               </span>
             </mj-accordion-text>
           </mj-accordion-element>
@@ -163,7 +158,7 @@
       </mj-section>
       <mj-section>
         <mj-column>
-        	<mj-text mj-class="caption" align="center">Dinify je chytré multijazyčné menu ve vašem smartphonu.</mj-text>
+        	<mj-text mj-class="caption" align="center">${imageCaption}</mj-text>
         </mj-column>
       </mj-section>
       <mj-section>
@@ -173,64 +168,51 @@
       </mj-section>
       <mj-section>
         <mj-column>
-        	<mj-text mj-class="headline4" align="left">Připojte se k restauracím, které díky Dinify dobře rozumí svým hostům</mj-text>
+        	<mj-text mj-class="${partner.title.variant}" align="left">${partner.title.text}</mj-text>
         </mj-column>
       </mj-section>
       <mj-section>
         <mj-column padding-bottom="32px">
         	<mj-image padding-bottom="8px" width="134px" height="150px"  src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-1.png"/>
-          <mj-text mj-class="headline6">Mějte své menu ve všech světových jazycích</mj-text>
-        	<mj-text mj-class="body2">Když máte hlad, nemáte zrovna náladu složitě luštit menu v jazyce kterému nerozumíte, ani číšník nebude v lehké situaci, a snadno může dojít k nedorozumění. Dinify umožňuje objednat si kdekoliv ve vaší mateřštině, pohodlně.</mj-text>
+          <mj-text mj-class="headline6">${partner.item1.title}</mj-text>
+        	<mj-text mj-class="body2">${partner.item1.body}</mj-text>
         </mj-column>
         <mj-column padding-bottom="32px">
           <mj-image padding-bottom="8px" width="196px" height="150px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-2.png"/>
-          <mj-text mj-class="headline6">Okouzlíte své zahraniční hosty</mj-text>
-          <mj-text mj-class="body2">
-            Představte si, že cestujete do zahraničí, řekněme Shanghai. Posadíte se v restauraci s místní kuchyní, přijde za vámi číšník a se slovy „Dobrý den!“ vám podá jídelní lístek, psaný v češtině! Přesně to nabízí naše aplikace.
-          </mj-text>
+          <mj-text mj-class="headline6">${partner.item2.title}</mj-text>
+          <mj-text mj-class="body2">${partner.item2.body}</mj-text>
         </mj-column>
       </mj-section>
-
-
       <mj-section padding-bottom="0px">
         <mj-column padding-bottom="32px">
         	<mj-image padding-bottom="8px" height="150px" width="179px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-3.png"/>
-          <mj-text mj-class="headline6">Dokonalý gastronomický zážitek</mj-text>
-          <mj-text mj-class="body2">
-            Vaši hosté si budou moci objednat pohodlně a s jistotou.
-            Nejen díky tomu, že si vaše menu projdou v jejich mateřštině, ale také proto, že budou přesně vědět co dostanou, a také si budou moci objednávku přizpůsobit tak,
-            aby vyhovovala jejich nutričním preferencím. To jak moc dovolíte hostům přizpůsobovat samozřejmě můžete snadno nastavit, a samotné objednání pak bude rychlé a plynulé.
-          </mj-text>
+          <mj-text mj-class="headline6">${partner.item3.title}</mj-text>
+          <mj-text mj-class="body2">${partner.item3.body}</mj-text>
         </mj-column>
         <mj-column padding-bottom="32px">
           <mj-image padding-bottom="8px" height="150px" width="200px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-4.png"/>
-          <mj-text mj-class="headline6">Zvýšíme efektivitu vašeho personálu</mj-text>
-          <mj-text mj-class="body2">
-            Vaše obsluha může fungovat ještě lépe! Jazykové bariéry způsobují prodlevy a nepřesnosti v příjímání objednávek. Naše aplikace tyto bariéry odbourává a vede tak k vyšší efektivitě vašeho personálu.
-          </mj-text>
+          <mj-text mj-class="headline6">${partner.item4.title}</mj-text>
+          <mj-text mj-class="body2">${partner.item4.title}</mj-text>
         </mj-column>
-      </mj-section>
       </mj-section>
       <mj-section padding-bottom="0px">
         <mj-column width="50%" padding="0px 0px 32px 16px">
           <mj-image padding-bottom="8px" height="150px" width="197px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-5.png"/>
-          <mj-text mj-class="headline6">Více hostů, více tržeb</mj-text>
-          <mj-text mj-class="body2">
-            Zlepšete výnosnost od vašich zahraničních hostů o více než 20%. Díky naší aplikaci oslovíte více návštěvníků a zvýšíte i jejich čas strávený ve vaší restauraci.
-          </mj-text>
+          <mj-text mj-class="headline6">${partner.item5.title}</mj-text>
+          <mj-text mj-class="body2">${partner.item5.title}</mj-text>
         </mj-column>
 				<mj-group>
           <mj-column css-class="card-light">
-          	<mj-text padding-top="16px" mj-class="headline6">Vše je za ${price} / měsíc</mj-text>
+          	<mj-text padding-top="16px" mj-class="headline6">${partner.pricing.title}</mj-text>
             <mj-text mj-class="subtitle1">
-              Dinify vám zajistí výrazné zvýšení tržeb nejen od zahraničních hostů. Kontaktujte nás a společně se podíváme na všechny benefity, které Vám můžeme nabídnout.
+              ${partner.pricing.body}
             </mj-text>
           	<mj-button href="${link}"
                      align="left"
                      mj-class="primary button2-nowrap"
                      padding-bottom="16px"
                      padding-top="8px">
-					  	Začněte zdarma
+					  	${partner.pricing.cta}
             </mj-button>
           </mj-group>
       </mj-section>
