@@ -68,9 +68,8 @@ class Header extends React.Component {
       changeColorOnScroll,
       scrollingElement,
       onScrollFrame,
-      children,
       scrolled: scrolledProp,
-      menuItems = []
+      children
     } = this.props;
     const completeAppBar = (scrolled, opacity) => {
       const colorName = scrolled && changeColorOnScroll !== undefined ? changeColorOnScroll.color : color;
@@ -119,8 +118,9 @@ class Header extends React.Component {
 
             <Hidden smDown implementation="css" className={classes.hidden}>
               <div className={classes.collapse}>
-                {children}
-                <HeaderLinks menuItems={menuItems} scrollingElement={scrollingElement} onScrollFrame={onScrollFrame} />
+                <HeaderLinks drawer={false} scrollingElement={scrollingElement} onScrollFrame={onScrollFrame}>
+                  {children}
+                </HeaderLinks>
               </div>
             </Hidden>
             <Hidden mdUp>
@@ -153,12 +153,13 @@ class Header extends React.Component {
                 onClick={this.handleDrawerToggle}
                 className={classes.appResponsive}
               >
-                {children}
                 <HeaderLinks
-                  menuItems={menuItems}
+                  drawer={true}
                   scrollingElement={scrollingElement}
                   onScrollFrame={onScrollFrame}
-                />
+                >
+                  {children}
+                </HeaderLinks>
               </div>
             </Drawer>
           </Hidden>

@@ -108,7 +108,7 @@ class LandingPage extends React.Component {
           <HeaderLink name={t('sectionProduct.header')} anchor="howitworks" />
           <HeaderLink name="FAQ" anchor="faq" />
           <HeaderDivider />
-          <SignInLink />
+          <SignInLink className={classes.headerListItem}/>
         </Header>
       </div>
       <div

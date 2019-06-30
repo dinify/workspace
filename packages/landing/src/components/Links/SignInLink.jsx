@@ -1,23 +1,26 @@
 import React from 'react';
 import ListItem from "@material-ui/core/ListItem";
-import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import OpenInNew from "@material-ui/icons/OpenInNewRounded";
 
-import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import linksStyle from './linksStyle';
 
 const SignInLink = ({classes, ...other}) => {
   return (
     <ListItem
-      button
-      style={{ borderRadius: 8 }}
-      variant="outlined"
-      onClick={() => {window.open("https://m.dinify.app/signin", "_blank")}}
+      className={classes.listItem}
       {...other}
     >
-      <Typography className={classes.button2}>
+      <Button
+        className={classes.button2}
+        variant="outlined"
+        onClick={() => {window.open("https://m.dinify.app/signin", "_blank")}}
+        disableRipple
+      >
+        <OpenInNew style={{ fontSize: 16, marginRight: 4 }}/>
         Sign in
-      </Typography>
+      </Button>
     </ListItem>
   );
 }

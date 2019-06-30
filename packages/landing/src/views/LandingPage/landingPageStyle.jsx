@@ -6,6 +6,8 @@ import {
   mainRaised
 } from "styles/material-kit-pro-react.jsx";
 
+import headerLinksStyle from "components/Header/headerLinksStyle.jsx";
+
 const landingPageStyle = theme => ({
   container: {
     color: "rgba(255, 255, 255, 1)",
@@ -16,6 +18,7 @@ const landingPageStyle = theme => ({
   main: {
     ...main
   },
+  headerListItem: headerLinksStyle(theme).listItem,
   mainBottomSheet: {
     marginTop: -56,
     borderRadius: theme.shape.borderRadius,

@@ -50,23 +50,35 @@ import headerLinksStyle from "./headerLinksStyle.jsx";
 
 let currentAnimFrame = null;
 
-function HeaderLinks({ ...props }) {
-  const { classes, width, dropdownHoverColor, scrollingElement, onScrollFrame, children } = props;
+export const NavContext = React.createContext({type: 'listItem'});
 
-  var onClickSections = {};
+class HeaderLinks extends React.Component {
+  state = {
+    collapsed: false
+  }
 
-  if (isWidthDown('sm', width)) {
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.width !== this.props.width) {
+      this.setState({ collapsed: isWidthDown('sm', nextProps.width) });
+    }
+  }
+
+  render() {
+    const { drawer, classes, dropdownHoverColor, scrollingElement, onScrollFrame, children } = this.props;
+    const { collapsed } = this.state;
+
+    console.log('collapsed', collapsed, 'drawer', drawer);
+
+    var onClickSections = {};
+
     return (
-      <List style={{ marginTop: 4 }}>
-        {children}
-      </List>
+      <NavContext.Provider value={{ type: drawer ? 'listItem' : 'link'}}>
+        <List className={collapsed ?  undefined : classes.list}>
+          {children}
+        </List>
+      </NavContext.Provider>
     );
   }
-  return (
-    <List className={classes.list}>
-      {children}
-    </List>
-  );
 }
 
 HeaderLinks.defaultProps = {

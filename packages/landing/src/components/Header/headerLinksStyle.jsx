@@ -46,17 +46,7 @@ const headerLinksStyle = theme => ({
         maxHeight: "400px",
         overflow: "scroll"
       },
-      width: "100%",
-      "&:not(:last-child)": {
-        "&:after": {
-          width: "calc(100% - 30px)",
-          content: '""',
-          display: "block",
-          height: "1px",
-          marginLeft: "15px",
-          backgroundColor: grayColor[14]
-        }
-      }
+      width: "100%"
     }
   },
   listItemText: {
