@@ -1,15 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import Flag from "@dinify/common/dist/components/Flag";

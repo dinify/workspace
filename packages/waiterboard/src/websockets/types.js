@@ -1,4 +1,3 @@
-export default {
-  PAYMENT_RECEIVED: 'tabb/ws/PAYMENT_RECEIVED',
-  ORDER_RECEIVED: 'tabb/ws/ORDER_RECEIVED'
-};
+export const PAYMENT_RECEIVED = 'dinify/ws/PAYMENT_RECEIVED';
+export const ORDER_RECEIVED = 'dinify/ws/ORDER_RECEIVED';
+
