@@ -45,7 +45,13 @@ export function generate(msg, substitutions, template, language = 'en') {
   catch (e) { console.log(e) };
 
   const html = mjml2html(substituted, {
-      filePath: templatePath
+      filePath: templatePath,
+      minify: true,
+      keepComments: false,
+      fonts: {
+        'Lato': 'https://static.dinify.app/fonts/Lato/css',
+        'Google Sans': 'https://fonts.googleapis.com/css?family=Google%20Sans:500,700'
+      }
   }).html;
 
   try {
