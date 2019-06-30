@@ -2,7 +2,9 @@ import pipe from 'ramda/src/pipe';
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import dissocPath from 'ramda/src/dissocPath';
+import { ListToMap } from '@dinify/common/dist/lib/FN';
 import * as restaurantTypes from 'ducks/restaurant/types';
+import * as types from './types';
 
 const initialState = {
   all: {},
@@ -15,6 +17,11 @@ export default function reducer(state = initialState, action) {
   switch (type) {
     case restaurantTypes.FETCH_LOGGEDRESTAURANT_DONE: {
       const categories = payload.res.categories;
+      return assoc('all', categories)(state);
+    }
+
+    case types.FETCH_MENUCATEGORIES_DONE: {
+      const categories = ListToMap(payload.res);
       return assoc('all', categories)(state);
     }
 

@@ -1,28 +1,35 @@
-// @flow
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@dinify/common/dist/components/Typography';
 import { useTranslation } from 'react-i18next';
-import * as FN from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/dist/lib/FN';
+import { fetchMenuCategoriesInit } from 'ducks/menuCategory/actions';
 import ListOfCategories from './ListOfCategories';
 import ListOfDishes from './ListOfDishes';
 import ItemDetail from './ItemDetail';
 
 const Menucontrol = ({
+  selectedRestaurant,
   selectedCategoryId,
   selectedFoodId,
   categoriesMap,
   menuItems,
+  fetchMenu
 }) => {
-  const categoriesList = FN.MapToList(categoriesMap).sort(
+  if (selectedRestaurant) {
+    useEffect(() => {
+      fetchMenu({ subdomain: selectedRestaurant, populateWith: 'categories.items' })
+    }, []);
+  }
+  const { t } = useTranslation();
+  const categoriesList = MapToList(categoriesMap).sort(
     (a, b) => a.precedence - b.precedence,
   );
   let categoryId = selectedCategoryId;
   if (categoriesList.length === 1) {
     categoryId = categoriesList[0].id;
   }
-  const { t } = useTranslation();
   return (
     <div>
       {categoriesList.length < 1 && <div style={{textAlign: 'center', margin: '20px 0 40px 0'}}>
@@ -65,8 +72,11 @@ const Menucontrol = ({
 }
 
 export default connect(state => ({
+  selectedRestaurant: state.restaurant.selectedRestaurant,
   categoriesMap: state.menuCategory.all,
   selectedCategoryId: state.restaurant.selectedCategoryId,
   selectedFoodId: state.restaurant.selectedFoodId,
-  menuItems: state.menuItem.all,
-}))(Menucontrol);
+  menuItems: state.menuItem.all
+}), {
+  fetchMenu: fetchMenuCategoriesInit
+})(Menucontrol);

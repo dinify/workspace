@@ -3,6 +3,7 @@ import assocPath from 'ramda/src/assocPath';
 import dissocPath from 'ramda/src/dissocPath';
 import { MapToList } from '@dinify/common/dist/lib/FN';
 import * as restaurantTypes from 'ducks/restaurant/types';
+import * as menuCategoryTypes from 'ducks/menuCategory/types';
 import * as types from './types';
 
 const initialState = {
@@ -20,13 +21,24 @@ export default function reducer(state = initialState, action) {
       MapToList(categories).forEach(category => {
         if (!category.items) return;
         MapToList(category.items).forEach(item => {
-          newState = assocPath(['all', item.id], item)(state);
+          newState = assocPath(['all', item.id], item)(newState);
         });
       });
-
       return newState;
     }
     
+    case menuCategoryTypes.FETCH_MENUCATEGORIES_DONE: {
+      const categories = payload.res;
+      let newState = state;
+      MapToList(categories).forEach(category => {
+        if (!category.items) return;
+        MapToList(category.items).forEach(item => {
+          newState = assocPath(['all', item.id], item)(newState);
+        });
+      });
+      return newState;
+    }
+
     case types.CREATE_MENUITEM_DONE: {
       const newItem = payload.res;
       return assocPath(['all', newItem.id], newItem)(state);

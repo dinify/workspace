@@ -193,7 +193,9 @@ const ListOfDishes = ({
   progressMap,
   errorsMap,
 }) => {
-  if (!selectedCategoryId || !categoriesMap[selectedCategoryId]) return <div />;
+  if (!selectedCategoryId || !categoriesMap[selectedCategoryId]) {
+    return <div />;
+  }
   const menuItemsList = filter(
     item => item.menu_category_id === selectedCategoryId,
     FN.MapToList(menuItemsMap),
