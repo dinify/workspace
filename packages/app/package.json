@@ -1,7 +1,7 @@
 {
   "name": "@dinify/app",
   "version": "0.1.1",
-  "homepage": "https://m.dinify.app",
+  "homepage": "https://web.dinify.app",
   "private": true,
   "dependencies": {
     "@dinify/common": "^0.1.1",
