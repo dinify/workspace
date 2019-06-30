@@ -12,26 +12,35 @@ import restaurantsPageStyle from "./restaurantsPageStyle.jsx";
 import { useTranslation } from 'react-i18next';
 import classNames from "classnames";
 import queryString from "query-string";
+import { ReportCampaignAction } from '@dinify/common/dist/api/restaurant';
 
 class RestaurantsPage extends React.Component {
+
+  componentDidMount() {
+    const { location } = this.props;
+    const parsed = queryString.parse(location.search);
+    const token = parsed.t;
+    if (token) {
+      ReportCampaignAction({
+        token,
+        status: 'landed:landing'
+      })
+      .then(() => console.log('status updated'))
+      .catch(() => console.log('status update failed'));
+    }
+  }
+
   render() {
     const { classes, t, location } = this.props;
 
     const parsed = queryString.parse(location.search);
     const email = parsed.email;
 
-    const registrationURL = `https://dashboard.dinify.app/signup${location.search}`
+    const registrationURL = `https://dashboard.dinify.app/signin${location.search}`
 
-    const menuItems = [
-      {
-        name: 'Test',
-        anchor: 'test',
-      }
-    ];
     return (
       <div>
         <Header
-          menuItems={menuItems}
           color="transparent"
         />
         <div className={classNames(classes.section, classes.container)}>
