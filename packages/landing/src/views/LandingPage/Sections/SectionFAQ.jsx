@@ -48,7 +48,7 @@ class SectionProduct extends React.Component {
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href="https://m.dinify.app/checkin"
+                        href="https://web.dinify.app/checkin"
                       >
                         {t('sectionFAQ.scan.checkinPage')}
                       </a>

@@ -176,7 +176,7 @@ class LandingPage extends React.Component {
                       variant="contained"
                       color="primary"
                       style={{ height: 48, marginTop: 16 }}
-                      href="https://m.dinify.app"
+                      href="https://web.dinify.app"
                       target="_blank"
                       rel="noopener noreferrer"
                       id="exploreButton"
