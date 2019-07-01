@@ -1,4 +1,7 @@
 <mj-style inline="inline">
+  * {
+    font-family: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
   .white {
     color: #fff;
     opacity: 0.54;
@@ -42,11 +45,11 @@
     padding-left: 16px;
     padding-right: 16px;
   }
-  
+
   .btn-link a {
   	display: inline-block;
   }
-  
+
   @media only screen and (min-width: 0px)  {
     .horizontal {
       padding-left: 0px;
@@ -151,23 +154,26 @@
   }
   .percentBarContainer {
   	position:relative;height:24px;color:#fff;
-  }
-  .percentBar {
-  	position:absolute;top:0;bottom:0;left:0;right:0;background-color:rgb(66,133,244);border-radius:4px;width:100%;text-align:right;padding-right:8px;font-size: 0.9126955053060218rem;
     font-family: Lato;
     font-weight: 400;
     line-height: 24px;
     letter-spacing: 0.015625rem;
+  }
+  .percentBar {
+  	background-color:rgb(66,133,244);
+    border-radius:4px;
+    width:100%;
+    text-align:right;
+    padding-right:8px;
     min-width: 42px;
+    color:#fff;
   }
   .percentBarBackground {
 		color:rgba(0,0,0,0.72);
-  	position:absolute;top:0;bottom:0;left:0;right:0;background-color:rgba(0,0,0,0.12);border-radius:4px;
-  text-align:right;padding-right:8px;font-size: 0.9126955053060218rem;
-    font-family: Lato;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0.015625rem;
+  	background-color:rgba(0,0,0,0.12);
+    border-radius:4px;
+    text-align:right;
+    padding-right:8px;
   }
   .accordion {
     border-bottom: 1px solid rgba(0,0,0,0.12);
