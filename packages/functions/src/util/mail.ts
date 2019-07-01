@@ -49,7 +49,7 @@ export function generate(msg, substitutions, template, language = 'en') {
       minify: true,
       keepComments: false,
       fonts: {
-        'Lato': 'https://static.dinify.app/fonts/Lato/css',
+        'Lato': 'https://fonts.googleapis.com/css?family=Lato:400,700',
         'Google Sans': 'https://fonts.googleapis.com/css?family=Google%20Sans:500,700'
       }
   }).html;

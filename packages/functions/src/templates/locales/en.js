@@ -32,8 +32,11 @@ export default {
     partner: {
       title: {
         text: 'Partner with us',
-        variant: 'headline5'
+        variant: 'headline3'
       },
+      cta: 'Start for free',
+
+      // not using for now
       item1: {
         title: 'Have your menu in over 50 languages',
         body: 'Empower your foreign guests to order in their own language wuth confidence, no matter where they are from and no matter what language they speak.'

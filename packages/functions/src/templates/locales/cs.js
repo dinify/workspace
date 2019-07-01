@@ -34,6 +34,9 @@ export default {
         text: 'Připojte se k restauracím, které díky Dinify dobře rozumí svým hostům',
         variant: 'headline6'
       },
+      cta: 'Začněte zdarma',
+
+      // not using for now
       item1: {
         title: 'Mějte své menu ve všech světových jazycích',
         body: 'Když máte hlad, nemáte zrovna náladu složitě luštit menu v jazyce kterému nerozumíte, ani číšník nebude v lehké situaci, a snadno může dojít k nedorozumění. Dinify umožňuje objednat si kdekoliv ve vaší mateřštině, pohodlně.'
@@ -56,8 +59,7 @@ export default {
       },
       pricing: {
         title: 'Vše je za ${price} / měsíc',
-        body: 'Dinify vám zajistí výrazné zvýšení tržeb nejen od zahraničních hostů. Kontaktujte nás a společně se podíváme na všechny benefity, které Vám můžeme nabídnout.',
-        cta: 'Začněte zdarma'
+        body: 'Dinify vám zajistí výrazné zvýšení tržeb nejen od zahraničních hostů. Kontaktujte nás a společně se podíváme na všechny benefity, které Vám můžeme nabídnout.'
       }
     }
   }

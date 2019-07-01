@@ -10,7 +10,7 @@
     </mj-attributes>
     <mj-preview>${preview}</mj-preview>
   </mj-head>
-  <mj-body width="560px" background-color="transparent">
+  <mj-body width="560px" background-color="transparent" class="main">
 		<mj-wrapper css-class="card">
       <mj-include path="./components/header-red.mjml" />
       <mj-section text-align="left" css-class="red" direction="rtl">
@@ -30,7 +30,7 @@
       </mj-section>
       <mj-section>
         <mj-column>
-          <mj-text mj-class="body1">
+          <mj-text mj-class="body1" padding-bottom="16px">
             ${main.dear}
           </mj-text>
           <mj-text mj-class="body2">
@@ -55,7 +55,7 @@
           </mj-text>
           <mj-table padding="0px" padding-top="16px">
             <col width="32">
-            <col width="72">
+            <col width="88">
             <tr style="border-bottom: 8px solid transparent">
               <td style="font-size: 24px">${stats.langDist[0].emoji}</td>
 							<td>${stats.langDist[0].language}</td>
@@ -163,58 +163,15 @@
       </mj-section>
       <mj-section>
         <mj-column>
-        	<mj-divider/>
+        	<mj-text mj-class="${partner.title.variant}" align="center">${partner.title.text}</mj-text>
+          <mj-button href="${link}"
+                   align="center"
+                   mj-class="primary button2-nowrap"
+                   padding-bottom="24px"
+                   padding-top="16px">
+            ${hero.cta}
+          </mj-button>
         </mj-column>
-      </mj-section>
-      <mj-section>
-        <mj-column>
-        	<mj-text mj-class="${partner.title.variant}" align="left">${partner.title.text}</mj-text>
-        </mj-column>
-      </mj-section>
-      <mj-section>
-        <mj-column padding-bottom="32px">
-        	<mj-image padding-bottom="8px" width="134px" height="150px"  src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-1.png"/>
-          <mj-text mj-class="headline6">${partner.item1.title}</mj-text>
-        	<mj-text mj-class="body2">${partner.item1.body}</mj-text>
-        </mj-column>
-        <mj-column padding-bottom="32px">
-          <mj-image padding-bottom="8px" width="196px" height="150px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-2.png"/>
-          <mj-text mj-class="headline6">${partner.item2.title}</mj-text>
-          <mj-text mj-class="body2">${partner.item2.body}</mj-text>
-        </mj-column>
-      </mj-section>
-      <mj-section padding-bottom="0px">
-        <mj-column padding-bottom="32px">
-        	<mj-image padding-bottom="8px" height="150px" width="179px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-3.png"/>
-          <mj-text mj-class="headline6">${partner.item3.title}</mj-text>
-          <mj-text mj-class="body2">${partner.item3.body}</mj-text>
-        </mj-column>
-        <mj-column padding-bottom="32px">
-          <mj-image padding-bottom="8px" height="150px" width="200px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-4.png"/>
-          <mj-text mj-class="headline6">${partner.item4.title}</mj-text>
-          <mj-text mj-class="body2">${partner.item4.body}</mj-text>
-        </mj-column>
-      </mj-section>
-      <mj-section padding-bottom="0px">
-        <mj-column width="50%" padding="0px 0px 32px 16px">
-          <mj-image padding-bottom="8px" height="150px" width="197px" src="https://storage.googleapis.com/static.dinify.app/emails/rest-onbding-5.png"/>
-          <mj-text mj-class="headline6">${partner.item5.title}</mj-text>
-          <mj-text mj-class="body2">${partner.item5.body}</mj-text>
-        </mj-column>
-				<mj-group>
-          <mj-column css-class="card-light">
-          	<mj-text padding-top="16px" mj-class="headline6">${partner.pricing.title}</mj-text>
-            <mj-text mj-class="subtitle1">
-              ${partner.pricing.body}
-            </mj-text>
-          	<mj-button href="${link}"
-                     align="left"
-                     mj-class="primary button2-nowrap"
-                     padding-bottom="16px"
-                     padding-top="8px">
-					  	${partner.pricing.cta}
-            </mj-button>
-          </mj-group>
       </mj-section>
       <mj-include path="./components/footer.mjml" />
   </mj-body>

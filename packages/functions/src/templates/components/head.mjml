@@ -1,8 +1,8 @@
-<mj-font name="Lato" href="https://static.dinify.app/fonts/Lato/css" />
+<mj-font name="Lato" href="https://fonts.googleapis.com/css?family=Lato:400,700" />
 <mj-font name="Google Sans" href="https://fonts.googleapis.com/css?family=Google%20Sans:500,700" />
 <mj-attributes>
 	<mj-all font-family="Lato, Ubuntu, Helvetica, Arial, sans-serif" />
-  <mj-text padding align="left" color="rgba(0, 0, 0, 0.72)"/>
+  <mj-text font-family="Lato, Ubuntu, Helvetica, Arial, sans-serif" padding align="left" color="rgba(0, 0, 0, 0.72)"/>
   <mj-image padding/>
   <mj-divider padding border-width="1px" border-color="rgba(0, 0, 0, 0.12)"/>
 	<mj-wrapper padding="0px"/>
@@ -49,84 +49,73 @@
             border="1px solid rgba(0, 0, 0, 0.12)"
             background-color="#fff"
             border-radius="4px"/>
-  
-  <mj-class 
+
+  <mj-class
         name="headline4"
         font-size="2.201334635416666rem"
         font-family="Google Sans"
         font-weight="500"
         line-height="45px"
-        letter-spacing="0.015625rem"
         padding-top="0.125rem"
         padding-bottom="0.0625rem"/>
-      <mj-class 
+      <mj-class
         name="headline5"
         font-size="1.5538832720588232rem"
         font-family="Google Sans"
         font-weight="700"
-        line-height="32px"
-        letter-spacing="0rem"/>
-      <mj-class 
+        line-height="32px"/>
+      <mj-class
         name="headline6"
         font-size="1.2949027267156863rem"
         font-family="Google Sans"
         font-weight="700"
         line-height="26px"
-        letter-spacing="0.015625rem"
         padding-bottom="0.125rem"/>
-      <mj-class 
+      <mj-class
         name="body1"
         font-size="1.0430805774925962rem"
-        font-family="Lato"
         font-weight="400"
-				line-height="1.75rem"
-        letter-spacing="0.03125rem"/>
-      <mj-class 
+				line-height="1.75rem"/>
+      <mj-class
         name="body2"
         font-size="0.9126955053060218rem"
-        font-family="Lato"
         font-weight="400"
 				line-height="1.25rem"
-        letter-spacing="0.015625rem"
         padding-top="0.0625rem"
         padding-bottom="0.1875rem"/>
-      <mj-class 
+      <mj-class
         name="subtitle1"
         font-size="1.0430805774925962rem"
-        font-family="Lato"
         font-weight="400"
-        letter-spacing="0.009375000372529032rem"
         line-height="1.5rem"
         padding-top="0.125rem"
         padding-bottom="0.125rem"/>
-      <mj-class 
+      <mj-class
         name="button"
         font-size="0.910000538262795rem"
-        font-family="Lato"
-        font-weight="500"
+        font-weight="700"
         letter-spacing="0.078125rem"
         line-height="1rem"
         padding-top="0.1875rem"
         padding-bottom="0.0625rem"/>
-      <mj-class 
+      <mj-class
         name="button2"
         font-size=".875rem"
         font-family="Google Sans"
         font-weight="500"
         letter-spacing=".01785714em"
         line-height="1.25rem"/>
-  <mj-class 
+  <mj-class
         name="button2-nowrap"
         font-size=".875rem"
         font-family="Google Sans"
         font-weight="500"
         letter-spacing=".01785714em"
         line-height="36px"/>
-      <mj-class 
+      <mj-class
         name="overline"
         font-size="0.78000046136811rem"
-        font-family="Lato"
-        font-weight="500"
+        font-weight="700"
         letter-spacing="0.125rem"
         line-height="1rem"/>
 </mj-attributes>
