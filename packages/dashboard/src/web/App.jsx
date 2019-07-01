@@ -1,8 +1,6 @@
-// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import styled from 'styled-components';
 import queryString from 'query-string';
 import { appIsRunning } from 'selectors/restaurant';
 import { withStyles } from '@material-ui/core/styles';
@@ -15,27 +13,25 @@ import { reportCampaignAction } from '@dinify/common/dist/ducks/reporting/action
 import CircularProgress from '@material-ui/core/CircularProgress';
 import withRoot from 'withRoot.js';
 
-const Content = styled.div`
-  background-color: rgb(27, 36, 49);
-  color: white;
-`;
-
-const AppLoader = styled.div`
-  position: relative;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-
 const SignInWithRoot = withRoot(SignIn);
 const RegisterRestaurantWithRoot = withRoot(RegisterRestaurant);
 
-const styles = theme => ({
+const styles = () => ({
+  content: {
+    backgroundColor: 'rgb(27, 36, 49)',
+    color: 'white'
+  },
   progress: {
     color: 'rgba(255,255,255,0.4)'
   },
+  appLoaderContainer: {
+    position: 'relative',
+    height: '100vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  }
 });
 
 const App = ({
@@ -54,11 +50,11 @@ const App = ({
   const token = parsed.t;
   if (token) reportCampaignAction({ token, status: 'landed:dashboard'});
   return (
-    <Content>
+    <div className={classes.content}>
       {appLoading || !user.isLoaded ?
-        <AppLoader>
+        <div className={classes.appLoaderContainer}>
           <CircularProgress className={classes.progress} />
-        </AppLoader>
+        </div>
         :
         <Switch>
           <Route path="/qr/:code" component={Qr} />
@@ -78,7 +74,7 @@ const App = ({
           }} />
         </Switch>
       }
-    </Content>
+    </div>
   );
 }
 

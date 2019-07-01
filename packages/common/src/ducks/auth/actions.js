@@ -1,4 +1,4 @@
-import types from './types';
+import * as types from './types';
 
 export const setPage = (page) => ({
   type: types.SET_PAGE,

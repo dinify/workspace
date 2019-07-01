@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { compose } from 'redux';
 import pluck from 'ramda/src/pluck';
@@ -7,10 +6,10 @@ import apply from 'ramda/src/apply';
 import last from 'ramda/src/last';
 import range from 'ramda/src/range';
 
+import { withStyles } from '@material-ui/core/styles';
 import { MapToList } from '@dinify/common/dist/lib/FN';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import 'react-switch-button/dist/react-switch-button.css';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
@@ -25,9 +24,6 @@ import Delete from '@material-ui/icons/Delete';
 import OpenInBrowser from '@material-ui/icons/OpenInBrowser';
 
 import {
-  ContentWrapper
-} from 'web/components/styled/FormBox';
-import {
   createWaiterboardInitAction,
   deleteWaiterboardInitAction,
   createTableInitAction,
@@ -35,167 +31,8 @@ import {
   updateTableInitAction,
 } from 'ducks/restaurant/actions';
 
-const WB = styled.div`
-  background: rgb(60, 60, 65);
-  color: white;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
-  margin-bottom: 10px;
-  border-radius: 2px;
-  a {
-    color: white;
-  }
-  &.button {
-    background: #2c9df1;
-    color: white;
-    text-align: center;
-    text-transform: uppercase;
-    cursor: pointer;
-  }
-  input,
-  label {
-    color: white !important;
-  }
-  svg {
-    vertical-align: text-top;
-  }
-`;
+import styles from './WaiterboardsStyles';
 
-const WBheader = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0 10px;
-  position: relative;
-  height: 50px;
-`;
-
-const WBinfo = styled.div`
-  position: absolute;
-  top: 0;
-  right: 70px;
-  height: 50px;
-  line-height: 50px;
-  font-size: 24px;
-  color: rgba(255, 255, 255, 0.5);
-  i {
-    margin-left: 7px;
-  }
-`;
-
-const WBtitle = styled.div`
-  padding: 7px;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 18px;
-  .linkIcon {
-    margin-left: 5px;
-    color: rgba(255, 255, 255, 0.25);
-  }
-  .label {
-    text-transform: uppercase;
-    font-weight: 300;
-    font-size: 10px;
-    letter-spacing: 1px;
-    color: rgba(255, 255, 255, 0.25);
-  }
-  &:hover {
-    color: white;
-    .linkIcon {
-      color: rgba(255, 255, 255, 1);
-    }
-  }
-`;
-
-const WBbody = styled.div`
-  padding: 10px;
-`;
-
-const TableBox = styled.div`
-  display: inline-block;
-  background: rgba(0, 0, 0, 0.3);
-  color: white;
-  font-size: 12px;
-  width: ${p => (p.fixedWidth ? '250px' : '100%')};
-  margin: ${p => (p.fixedWidth ? '5px' : '0')};
-  overflow: hidden;
-  position: relative;
-  height: 100%;
-  min-height: 50px;
-`;
-const TablePlaceholder = styled.div`
-  background: ${p => (p.isOver ? 'black' : 'rgba(0,0,0,0.1)')};
-  display: inline-block;
-  overflow: hidden;
-  position: relative;
-  height: 100%;
-  min-height: 50px;
-  width: 100%;
-`;
-const Thumbnail = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.2);
-  width: 20%;
-  height: 100%;
-  padding: 2px 0;
-  text-align: center;
-  transition: all 150ms ease-in-out;
-  cursor: move;
-  i {
-    color: rgba(255, 255, 255, 0.3);
-    font-size: 15px;
-    position: absolute;
-    bottom: 5px;
-    left: 12px;
-  }
-`;
-const Id = styled.div`
-  font-size: 13px;
-  font-weight: 700;
-  width: 100%;
-`;
-const Seats = styled.div`
-  position: absolute;
-  top: 0;
-  left: 20%;
-  width: 80%;
-  padding: 2px 0 2px 5px;
-  height: 100%;
-  text-align: left;
-  .capacity {
-    font-size: 18px;
-    position: absolute;
-    top: 12px;
-    left: 33%;
-    line-height: 22px;
-    i {
-      font-size: 22px;
-      margin-left: 5px;
-      margin-top: 2px;
-      vertical-align: text-bottom;
-    }
-  }
-  .deleteButton {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 2px 5px;
-    background: transparent;
-    color: rgba(255, 255, 255, 0.5);
-    border: none;
-    outline: none;
-    &:hover {
-      color: #e74c3c;
-    }
-  }
-`;
-
-const TableTag = styled.table`
-  width: 100%;
-  td {
-    padding: 5px;
-  }
-`;
 
 // let CreateWaiterboardForm = ({ handleSubmit }) => {
 //   return (
@@ -219,21 +56,12 @@ const TableTag = styled.table`
 //   enableReinitialize: true,
 // })(CreateWaiterboardForm);
 
-const FieldsContainer = styled.div`
-  width: 80px;
-  display: inline-block;
-`;
-const ButtonContainer = styled.div`
-  width: 160px;
-  margin: 0 auto;
-`;
-
-let CreateTableForm = ({ handleSubmit, t }) => {
+let CreateTableForm = ({ handleSubmit, t, classes }) => {
   const style = { height: '64px' };
   const inputStyle = { textAlign: 'center' };
   return (
     <form onSubmit={handleSubmit} className="center">
-      <FieldsContainer>
+      <div className={classes.fieldsContainer}>
         <Field
           name="number"
           component={Text}
@@ -247,8 +75,8 @@ let CreateTableForm = ({ handleSubmit, t }) => {
             inputProps: {style: inputStyle}
           }}
         />
-      </FieldsContainer>
-      <FieldsContainer>
+      </div>
+      <div className={classes.fieldsContainer}>
         <Field
           name="capacity"
           component={Text}
@@ -262,12 +90,12 @@ let CreateTableForm = ({ handleSubmit, t }) => {
             inputProps: {style: inputStyle}
           }}
         />
-      </FieldsContainer>
-      <ButtonContainer>
+      </div>
+      <div className={classes.buttonContainer}>
         <Button type="submit" variant="outlined" style={{ color: 'white' }}>
           {t('addTable')}
         </Button>
-      </ButtonContainer>
+      </div>
     </form>
   );
 };
@@ -300,24 +128,25 @@ let TableComponent = ({
   wb,
   deleteTable,
   fixedWidth,
-  isDragging,
+  // isDragging,
   connectDragSource,
   connectDragPreview,
+  classes
 }) => {
   return connectDragPreview(
     <div>
-      <TableBox fixedWidth={fixedWidth}>
+      <div className={classes.tableBox} fixedWidth={fixedWidth}>
         {connectDragSource(
           <div style={{ height: '50px' }}>
-            <Thumbnail>
-              <Id>{table.number}</Id>
+            <div className={classes.thumbnail}>
+              <div className={classes.id}>{table.number}</div>
               <DragHandle />
-            </Thumbnail>
+            </div>
           </div>,
         )}
-        <Seats>
+        <div className={classes.seats}>
           <Tooltip placement="top" title="Capacity">
-            <div className="capacity">
+            <div className={classes.capacity}>
               <span>{table.capacity}</span>
               <Group />
             </div>
@@ -332,8 +161,8 @@ let TableComponent = ({
               <Delete />
             </button>
           </Tooltip>
-        </Seats>
-      </TableBox>
+        </div>
+      </div>
     </div>,
   );
 };
@@ -352,10 +181,15 @@ const boxTarget = {
     updateTable({ id, x, y, waiterboardId });
   },
 };
-let TargetComponent = ({ isOver, connectDropTarget }) => {
+let TargetComponent = ({ isOver, connectDropTarget, classes }) => {
   return connectDropTarget(
     <div>
-      <TablePlaceholder isOver={isOver} />
+      <div
+        className={classes.tablePlaceholder}
+        style={{
+          background: isOver ? 'black' : 'rgba(0,0,0,0.1)'
+        }}
+      />
     </div>,
   );
 };
@@ -370,7 +204,8 @@ const Waiterboards = ({
   // deleteWaiterboard,
   createTable,
   deleteTable,
-  updateTable
+  updateTable,
+  classes
 }) => {
   const { t } = useTranslation();
 
@@ -424,28 +259,28 @@ const Waiterboards = ({
 
   return (
     <div>
-      <ContentWrapper>
+      <div className={classes.contentWrapper}>
       {waiterboards.map(wb => (
-        <WB key={wb.id}>
-          <WBheader>
+        <div className={classes.wb} key={wb.id}>
+          <div className={classes.wbHeader}>
             <a
               href={`https://waiterboard.dinify.app/board/${wb.id}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <WBtitle>
+              <div className={classes.wbTitle}>
                 <div className="label">WAITERBOARD</div>
                 <div>
                   <span>{t('goToWaiterboard')}</span>
                   <OpenInBrowser />
                 </div>
-              </WBtitle>
+              </div>
             </a>
             <Tooltip placement="top" title="Total Capacity">
-              <WBinfo>
+              <div className={classes.wbInfo}>
                 {wb.capacity}
                 <Group />
-              </WBinfo>
+              </div>
             </Tooltip>
             {/*
             <Tooltip placement="top" title="Delete Waiterboard">
@@ -457,9 +292,9 @@ const Waiterboards = ({
             </Tooltip>            
             */}
 
-          </WBheader>
-          <WBbody>
-            <TableTag>
+          </div>
+          <div className={classes.wbBody}>
+            <table className={classes.tableTag}>
               <tbody>
                 {wb.tablesMatrix.map((row, i) => (
                   <tr key={i}>
@@ -468,6 +303,7 @@ const Waiterboards = ({
                         table ? (
                           <td key={table.id}>
                             <TableComponent
+                              classes={classes}
                               table={table}
                               wb={wb}
                               deleteTable={deleteTable}
@@ -476,6 +312,7 @@ const Waiterboards = ({
                         ) : (
                           <td key={(i + 1) * (j + 1)}>
                             <TargetComponent
+                              classes={classes}
                               x={j}
                               y={i}
                               updateTable={updateTable}
@@ -486,8 +323,9 @@ const Waiterboards = ({
                   </tr>
                 ))}
               </tbody>
-            </TableTag>
+            </table>
             <CreateTableForm
+              classes={classes}
               t={t}
               waiterboardId={wb.id}
               initialValues={{
@@ -504,8 +342,8 @@ const Waiterboards = ({
                 })
               }
             />
-          </WBbody>
-        </WB>
+          </div>
+        </div>
       ))}
       {/*
       <FormBox fullWidth>
@@ -519,20 +357,23 @@ const Waiterboards = ({
       </FormBox>        
       */}
 
-      </ContentWrapper>
+      </div>
     </div>
   );
 }
 
-export default connect(
-  state => ({
-    loggedRestaurant: state.restaurant.loggedRestaurant,
-  }),
-  {
-    createWaiterboard: createWaiterboardInitAction,
-    deleteWaiterboard: deleteWaiterboardInitAction,
-    createTable: createTableInitAction,
-    deleteTable: deleteTableInitAction,
-    updateTable: updateTableInitAction,
-  },
+export default compose(
+  withStyles(styles),
+  connect(
+    state => ({
+      loggedRestaurant: state.restaurant.loggedRestaurant,
+    }),
+    {
+      createWaiterboard: createWaiterboardInitAction,
+      deleteWaiterboard: deleteWaiterboardInitAction,
+      createTable: createTableInitAction,
+      deleteTable: deleteTableInitAction,
+      updateTable: updateTableInitAction,
+    },
+  )
 )(Waiterboards);

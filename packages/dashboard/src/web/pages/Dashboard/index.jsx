@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
@@ -36,39 +35,7 @@ import { toggleSection } from 'ducks/ui/actions';
 import { publishRestaurant } from 'ducks/restaurant/actions';
 import SettingsSection from './Settings';
 import MenuSection from './Menu';
-import BillingSection from './Billing';
-
-const Sidebar = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 240px;
-  overflow: auto;
-  @media print {
-    display: none;
-  }
-`;
-
-const ContentBG = styled.div`
-  position: fixed;
-  left: 240px;
-  top: 0;
-  height: 100%;
-  z-index: 1;
-  width: calc(100% - 240px);
-  background: #eff3f6;
-`
-
-const Content = styled.div`
-  position: relative;
-  z-index: 2;
-  margin-left: 240px;
-  margin-top: 50px;
-  width: calc(100% - 240px);
-  color: #354052;
-  padding: 10px 35px 0 35px;
-`;
+// import BillingSection from './Billing';
 
 const theme = createMuiTheme({
   palette: {
@@ -108,6 +75,35 @@ const changeLanguage = (lang) => {
 }
 
 const styles = theme => ({
+  sidebar: {
+    position: 'fixed',
+    left: 0,
+    top: 0,
+    height: '100vh',
+    width: 240,
+    overflow: 'auto',
+    '@media print': {
+      display: 'none'
+    }
+  },
+  contentBg: {
+    position: 'fixed',
+    left: 240,
+    top: 0,
+    height: '100%',
+    zIndex: 1,
+    width: 'calc(100% - 240px)',
+    background:' #eff3f6',
+  },
+  content: {
+    position: 'relative',
+    zIndex: 2,
+    marginLeft: 240,
+    marginTop: '50px',
+    width: 'calc(100% - 240px)',
+    color: '#354052',
+    padding: '10px 35px 0 35px',
+  },
   header: {
     position: 'fixed',
     zIndex: 10,
@@ -268,7 +264,7 @@ const Dashboard = ({
   let selectedLanguage = getCookie('language');
   return (
     <div>
-      <Sidebar>
+      <div className={classes.sidebar}>
 
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
@@ -388,29 +384,30 @@ const Dashboard = ({
         </Grid>        
 
         </MuiThemeProvider>
-      </Sidebar>
-      <ContentBG />
+      </div>
+      <div className={classes.contentBg} />
       <MuiThemeProvider theme={contentTheme}>
         <div className={classes.header}>
           <Typography style={{marginLeft: 10, marginTop: 7}} variant="h6">
             {activeSubsection && activeSubsection.name}
           </Typography> 
         </div>
-        <Content>
+        <div className={classes.content}>
           <div className={classes.solidContainer}>
             <Switch>
               <Redirect exact from="/" to="/settings" />
               <Route path="/settings" component={SettingsSection} />
               <Route path="/menu" component={MenuSection} />
-              <Route path="/billing" component={BillingSection} />
+              
               {
-                //  <Route path="/guests" component={GuestsSection} />
-                //  <Route path="/sales" component={SalesSection} />
-                //  <Route path="/engagement" component={EngagementSection} />
+                // <Route path="/billing" component={BillingSection} />
+                // <Route path="/guests" component={GuestsSection} />
+                // <Route path="/sales" component={SalesSection} />
+                // <Route path="/engagement" component={EngagementSection} />
               }
             </Switch>
           </div>
-        </Content>
+        </div>
       </MuiThemeProvider>
     </div>
   )

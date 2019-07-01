@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
@@ -30,7 +29,7 @@ let ContactForm = ({ handleSubmit }) => {
         component={Text}
         componentProps={{ label: 'Phone', fullWidth: true, margin: 'normal' }}
       />
-      <Button type="submit" fullWidth={true}>
+      <Button type="submit" fullWidth>
         SAVE
       </Button>
     </form>

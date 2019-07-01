@@ -1,7 +1,9 @@
-// @flow
 import React from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles } from '@material-ui/core/styles';
 
 // import BusinessHours from './BusinessHours';
 import Banking from './Banking';
@@ -19,8 +21,17 @@ const Column = styled.div`
   vertical-align: top;
 `;
 
-const Main = ({ loggedRestaurant }) => {
-  if (!loggedRestaurant) return <div />;
+const styles = () => ({
+  progress: {
+    color: 'rgba(0,0,0,0.2)',
+    position: 'absolute',
+    left: '50%',
+    top: '100px',
+  },
+});
+
+const Main = ({ loggedRestaurant, classes }) => {
+  if (!loggedRestaurant) return <CircularProgress className={classes.progress} />;
   return (
     <div>
       <div>
@@ -51,6 +62,9 @@ const Main = ({ loggedRestaurant }) => {
   );
 };
 
-export default connect(state => ({
-  loggedRestaurant: state.restaurant.loggedRestaurant,
-}))(Main);
+export default compose(
+  withStyles(styles),
+  connect((state) => ({
+    loggedRestaurant: state.restaurant.loggedRestaurant
+  }))
+)(Main);

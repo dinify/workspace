@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -53,7 +52,7 @@ const renderSubdomainField = (props) => {
   return (
     <div>
       <Text {...props} />
-      <div>m.dinify.app/restaurant/{subdomain}</div>
+      <div>web.dinify.app/restaurant/{subdomain}</div>
     </div>
   )
 }

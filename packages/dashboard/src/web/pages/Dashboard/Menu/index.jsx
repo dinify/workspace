@@ -1,7 +1,5 @@
-// @flow
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-
 
 import ControlSection from './Control';
 import CustomizationsSection from './Customizations';

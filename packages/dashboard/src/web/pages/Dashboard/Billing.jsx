@@ -1,8 +1,6 @@
-// @flow
 import 'react-dates/initialize';
 import React from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import moment from 'moment';
 import numeral from 'numeral';
 import pluck from 'ramda/src/pluck';
@@ -15,34 +13,34 @@ import 'react-dates/lib/css/_datepicker.css';
 
 import { getBillsInitAction } from 'ducks/restaurant/actions';
 
-const Header = styled.div`
-  position: fixed;
-  left: 240px;
-  z-index: 1000000;
-  top: 0;
-  height: 60px;
-  width: calc(100% - 240px);
-  background: #fff;
-  padding-left: 30px;
-`;
-
-const Title = styled.span`
-  margin-right: 50px;
-  line-height: 60px;
-`;
-
-const BillingPage = styled.div`
-  font-family: sans-serif;
-  .rt-td {
-    font-size: 12px;
-    strong {
-      color: black;
-    }
-  }
-  .rt-thead {
-    font-size: 12px;
-  }
-`;
+// const Header = styled.div`
+//   position: fixed;
+//   left: 240px;
+//   z-index: 1000000;
+//   top: 0;
+//   height: 60px;
+//   width: calc(100% - 240px);
+//   background: #fff;
+//   padding-left: 30px;
+// `;
+// 
+// const Title = styled.span`
+//   margin-right: 50px;
+//   line-height: 60px;
+// `;
+// 
+// const BillingPage = styled.div`
+//   font-family: sans-serif;
+//   .rt-td {
+//     font-size: 12px;
+//     strong {
+//       color: black;
+//     }
+//   }
+//   .rt-thead {
+//     font-size: 12px;
+//   }
+// `;
 
 class Billing extends React.Component {
   constructor(props) {

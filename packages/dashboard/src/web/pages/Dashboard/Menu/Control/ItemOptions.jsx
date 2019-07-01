@@ -60,7 +60,7 @@ const ItemOptions = ({
           ))}
         </div>
       ) : (
-        t('menu.noOptions')
+        t('menu.noOptionGroups')
       )}
 
       <AutoComplete

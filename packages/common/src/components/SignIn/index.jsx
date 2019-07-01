@@ -270,4 +270,4 @@ export default compose(
       openDialog: openDialogAction
     }
   )
-)(SignInPage)
+)(SignInPage);

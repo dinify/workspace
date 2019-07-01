@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { withStyles } from '@material-ui/core/styles';
@@ -19,7 +18,6 @@ import GTranslate from '@material-ui/icons/GTranslate';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { suggestTranslation, suggestAllTranslations } from 'ducks/translation/actions';
-
 
 const styles = theme => ({
   root: {
