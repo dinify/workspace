@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import { selectedRestaurant } from 'ducks/restaurant/selectors';
+import { fetchWaiterboards } from 'ducks/restaurant/actions';
+import Loading from 'web/components/Loading';
 
 const styles = () => ({
   wb: {
@@ -36,7 +38,14 @@ const styles = () => ({
   }
 });
 
-const QRs = ({ waiterboards, restaurant, classes }) => {
+const QRs = ({ waiterboards, waiterboardsLoaded, fetchWaiterboards, restaurant, classes }) => {
+
+  const shouldLoad = waiterboards.length < 1 && !waiterboardsLoaded;
+  useEffect(() => {
+    if (shouldLoad) fetchWaiterboards()
+  }, []);
+  if (shouldLoad) return <Loading />;
+
   const wbs = MapToList(waiterboards).map(wb => {
     const tables = MapToList(wb.tables).sort(
       (a, b) => a.number - b.number,
@@ -79,5 +88,7 @@ export default compose(
   connect((state) => ({
     waiterboards: state.restaurant.waiterboards,
     restaurant: selectedRestaurant(state)
-  }))
+  }), {
+    fetchWaiterboards
+  })
 )(QRs);

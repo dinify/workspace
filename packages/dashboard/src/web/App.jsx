@@ -58,8 +58,8 @@ const App = ({
         :
         <Switch>
           <Route path="/qr/:code" component={Qr} />
-          <Route path="/signin" component={() => {
-            return user.isEmpty ? <SignInWithRoot env="DASHBOARD" user={user}/> :
+          <Route path="/signin" component={({location}) => {
+            return user.isEmpty ? <SignInWithRoot env="DASHBOARD" user={user} location={location} /> :
             <Redirect to="/"/>
           }} />
           <Route path="/register" component={({location}) => {

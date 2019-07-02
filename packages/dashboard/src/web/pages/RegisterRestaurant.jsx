@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import queryString from 'query-string';
+import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 import Select from 'web/components/MaterialInputs/Select';
 import Card from '@material-ui/core/Card';
-import Typography from '@dinify/common/dist/components/Typography';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@dinify/common/dist/components/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Avatar from '@material-ui/core/Avatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import { MapToList, getInitials } from '@dinify/common/dist/lib/FN';
+
+import { MapToList } from '@dinify/common/dist/lib/FN';
 
 import {
   registerRestaurant,
@@ -26,11 +26,20 @@ import {
 } from 'ducks/restaurant/actions';
 
 const styles = {
-  card: {
+  wrapperCard: {
     maxWidth: '500px',
-    margin: '50px auto',
     background: 'rgba(255,255,255,0.07)',
-    borderRadius: '2px'
+    margin: '50px auto'
+  },
+  card: {
+    width: '146px',
+    margin: '5px',
+    background: 'rgba(255,255,255,0.07)',
+    borderRadius: '2px',
+    display: 'inline-block'
+  },
+  media: {
+    height: 140,
   },
   title: {
     fontSize: 18,
@@ -45,9 +54,10 @@ const createSubdomain = (subdomain) => {
   return subdomain.replace(/\W/g, '').toLowerCase();
 }
 
-const renderSubdomainField = (props) => {
-  let subdomain = <span style={{color: '#888'}}> please fill the field above</span>;
-  const value = createSubdomain(props.input.value);
+const renderSubdomainField = (t) => (props) => {
+  const { input } = props;
+  let subdomain = <span style={{color: '#888'}}> {t('fillFieldAbove')}</span>;
+  const value = createSubdomain(input.value);
   if (value !== '') subdomain = value;
   return (
     <div>
@@ -57,19 +67,19 @@ const renderSubdomainField = (props) => {
   )
 }
 
-let RegistrationForm = ({ handleSubmit }) => {
+let RegistrationForm = ({ t, handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <Field
         name="restaurantName"
         component={Text}
-        componentProps={{ label: 'Restaurant name', fullWidth: true, margin: 'normal' }}
+        componentProps={{ label: t('nameOfRestaurant'), fullWidth: true, margin: 'normal' }}
       />
       <Field
         name="subdomain"
-        component={renderSubdomainField}
+        component={renderSubdomainField(t)}
         componentProps={{
-          label: 'Restaurant URL',
+          label: t('restaurantURL'),
           fullWidth: true,
           margin: 'normal',
         }}
@@ -83,16 +93,16 @@ let RegistrationForm = ({ handleSubmit }) => {
           {label: 'Čeština', value: 'cs'},
         ]}
         componentProps={{
-          label: 'We will translate your menu from this language', 
+          label: t('defaultLanguageLabel'), 
           fullWidth: true,
           margin: 'normal'
         }}
       />
       <Typography variant="caption">
-        If you can create your menu in English, we recommend to keep English here to ensure more accurate translations
+        {t('defaultLanguageRecom')}
       </Typography>   
-      <Button type="submit" color="primary" variant="outlined" fullWidth={true} style={{marginTop: 20}}>
-        REGISTER
+      <Button type="submit" color="primary" variant="outlined" fullWidth style={{marginTop: 20}}>
+        {t('register')}
       </Button>
     </form>
   );
@@ -105,88 +115,85 @@ RegistrationForm = reduxForm({
 })(RegistrationForm);
 
 
-class RegisterRestaurant extends React.Component {
-  constructor(props) {
-    super(props);
-    const { location, prefillEmail, prefillRestaurantName, prefill, auth, setOngoingRegistration } = props;
-    const params = queryString.parse(location.search) || {};
-    const initialValues = {
-      restaurantName: params.restaurantName || '',
-      subdomain: params.name || '',
-      language: 'en'
-    };
+const RegisterRestaurant = (props) => {
+  const {
+    classes,
+    registerRestaurant,
+    managedRestaurants,
+    selectRestaurant,
+    location, prefillEmail, prefillRestaurantName,
+    prefill, auth, setOngoingRegistration
+  } = props;
+  const params = queryString.parse(location.search) || {};
+  const { t } = useTranslation();
+  useEffect(() => {
     if (auth.isEmpty) setOngoingRegistration(true);
     else setOngoingRegistration(false);
     if (params.t) setOnboardingToken({ token: params.t });
     if (params.email) prefillEmail({ email: params.email });
     if (params.restaurantName) prefillRestaurantName({ restaurantName: params.restaurantName });
-    if (prefill.restaurantName) {
-      initialValues.restaurantName = prefill.restaurantName;
-    }
-    if (initialValues.restaurantName) {
-      initialValues.subdomain = createSubdomain(initialValues.restaurantName);
-    }
-    this.state = {
-      initialValues
-    };
+  }, []);  
+  const initialValues = {
+    restaurantName: params.restaurantName || '',
+    subdomain: params.name || '',
+    language: 'en'
+  };
+  if (prefill.restaurantName) {
+    initialValues.restaurantName = prefill.restaurantName;
+  }
+  if (initialValues.restaurantName) {
+    initialValues.subdomain = createSubdomain(initialValues.restaurantName);
   }
 
-  render() {
-    const {
-      classes,
-      registerRestaurant,
-      managedRestaurants,
-      selectRestaurant
-    } = this.props;    
-
-    return (
-      <div>
-        {managedRestaurants.length > 0 &&
-          <Card className={classes.card}>
-            <CardContent>
-              <Typography className={classes.title} variant="h1" gutterBottom>
-                You can manage these restaurants
-              </Typography>
-              <List className={classes.root}>
-                {managedRestaurants.map((restaurant) => 
-                  <ListItem className={classes.listItem} key={`r-item-${restaurant.id}`}>
-                    <Avatar
-                      src={Object.keys(restaurant.images).length  ? MapToList(restaurant.images)[0].url : ''}
-                    >
-                      {getInitials(restaurant.name)}
-                    </Avatar>
-                    <ListItemText primary={restaurant.name} />
-                    <Button color="primary" variant="contained" onClick={() => selectRestaurant({id: restaurant.id})}>
-                      ENTER
-                    </Button>
-                  </ListItem>
-                )}
-              </List>
-            </CardContent>
-          </Card>      
-        }
-        <Card className={classes.card}>
+  return (
+    <div>
+      {managedRestaurants.length > 0 &&
+        <Card className={classes.wrapperCard}>
           <CardContent>
-            <Typography className={classes.title} variant="h1" gutterBottom>
-              Register new restaurant
+            <Typography className={classes.title} variant="h1" align="center" gutterBottom>
+              {t('manageTheseRestaurants')}
             </Typography>
-            <RegistrationForm
-              initialValues={this.state.initialValues}
-              onSubmit={(fields) => registerRestaurant({
-                restaurantName: fields.restaurantName,
-                subdomain: createSubdomain(fields.subdomain),
-                language: fields.language
-              })}
-            />
+              {managedRestaurants.map((restaurant) => 
+                <Card className={classes.card} key={`r-item-${restaurant.id}`}>
+                  <CardActionArea onClick={() => selectRestaurant({id: restaurant.id})}>
+                    <CardMedia
+                      className={classes.media}
+                      image={Object.keys(restaurant.images).length  ? MapToList(restaurant.images)[0].url : ''}
+                      title={restaurant.name}
+                    />
+                    <CardContent>
+                      <Typography variant="h6" component="h2">
+                        {restaurant.name || 'noname'}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              )}
           </CardContent>
-        </Card>
-      </div>
-    );
-  }
+        </Card>      
+      }
+      <Card className={classes.wrapperCard}>
+        <CardContent>
+          <Typography className={classes.title} variant="h1" gutterBottom>
+            {t('registerNewRestaurant')}
+          </Typography>
+          <RegistrationForm
+            t={t}
+            initialValues={initialValues}
+            onSubmit={(fields) => registerRestaurant({
+              restaurantName: fields.restaurantName,
+              subdomain: createSubdomain(fields.subdomain),
+              language: fields.language
+            })}
+          />
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
 
 
-const enhance = compose(
+export default compose(
   withStyles(styles),
   connect(state => ({
     prefill: state.restaurant.prefill,
@@ -200,6 +207,4 @@ const enhance = compose(
     selectRestaurant,
     setOnboardingToken
   })
-);
-
-export default enhance(RegisterRestaurant);
+)(RegisterRestaurant);

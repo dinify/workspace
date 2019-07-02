@@ -3,7 +3,6 @@ import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import dissocPath from 'ramda/src/dissocPath';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
-import * as restaurantTypes from 'ducks/restaurant/types';
 import * as types from './types';
 
 const initialState = {

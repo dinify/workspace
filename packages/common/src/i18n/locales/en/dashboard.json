@@ -1,4 +1,11 @@
 {
+  "manageTheseRestaurants": "You can manage these restaurants",
+  "registerNewRestaurant": "Register new restaurant",
+  "restaurantURL": "Restaurant URL",
+  "defaultLanguageLabel": "We will translate your menu from this language",
+  "defaultLanguageRecom": "If you can create your menu in English, we recommend to keep English here to ensure more accurate translations",
+  "register": "Register",
+  "fillFieldAbove": "please fill the field above",
   "address": {
     "businessAddress": "Business Address",
     "street": "Street",
@@ -101,5 +108,6 @@
   "completePrevious": "Complete previous steps first",
   "createAddonFail": "Adding of a new addon failed",
   "createOptionFail": "Adding of a new option group failed",
-  "createIngredientFail": "Adding of a new ingredient failed"
+  "createIngredientFail": "Adding of a new ingredient failed",
+  "changeRestaurant": "Change restaurant"
 }

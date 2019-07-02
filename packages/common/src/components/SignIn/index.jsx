@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux'
@@ -7,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
+import queryString from 'query-string';
 
 import LogoText from '../../icons/LogoText';
 
@@ -201,7 +201,7 @@ export class SignInForm extends React.Component {
               <div style={{flex: 1}}/>
               <Button
                 type="submit"
-                disabled={pristine || submitting}
+                disabled={submitting}
                 variant="outlined"
                 color="primary"
                 className={classes && classes.uncapitalized}>
@@ -236,8 +236,12 @@ SignInForm = reduxForm({
 class SignInPage extends React.Component {
   constructor(props) {
     super(props);
-    const { prefill } = props;
+    const { prefill, location } = props;
+    const params = queryString.parse(location.search) || {};
     let initialValues = {};
+    if (params && params.email) {
+      initialValues.email = params.email;
+    }
     if (prefill && prefill.email) {
       initialValues.email = prefill.email;
     }

@@ -33,9 +33,11 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import { toggleSection } from 'ducks/ui/actions';
 import { publishRestaurant } from 'ducks/restaurant/actions';
+import { selectedRestaurant } from 'ducks/restaurant/selectors';
 import SettingsSection from './Settings';
 import MenuSection from './Menu';
 // import BillingSection from './Billing';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -188,7 +190,7 @@ const shouldOpen = (openedIndex, index, location, section) => {
 }
 
 const Dashboard = ({
-  firebase, classes, location, openedIndex, toggleSection, loggedRestaurant, publishRestaurant
+  firebase, classes, location, openedIndex, toggleSection, restaurant = {}, publishRestaurant
 }) => {
   const { t } = useTranslation();
   const sections = [
@@ -260,7 +262,7 @@ const Dashboard = ({
     }
   ];
   const publishable = true;
-  const publised = loggedRestaurant && loggedRestaurant.published;
+  const publised = restaurant && restaurant.published;
   let selectedLanguage = getCookie('language');
   return (
     <div>
@@ -325,7 +327,7 @@ const Dashboard = ({
             </ListItem>
           </List>
 
-          {!publised ? <Stepper orientation="vertical" style={{
+          {!publised && <Stepper orientation="vertical" style={{
             background: 'transparent',
             paddingLeft: '32px',
             borderTop: '1px solid rgba(255,255,255,0.1)'
@@ -360,10 +362,7 @@ const Dashboard = ({
                 </Tooltip>
               </StepLabel>
             </Step>
-          </Stepper> :
-          <Typography variant='caption' align='center' style={{margin: '20px 0'}}>
-            {t('restaurantPublished')}
-          </Typography>
+          </Stepper>
         }
 
         <Grid container justify="center">
@@ -381,7 +380,31 @@ const Dashboard = ({
               </IconButton>
             </Grid>
           ))}
-        </Grid>        
+
+        </Grid>
+
+
+
+        <div style={{
+          textAlign: 'center',
+          padding: 26
+        }}>
+          <div style={{margin: '12px 0'}}>
+            {restaurant.name}
+          </div>
+          {publised &&
+          <Typography variant='caption' align='center' style={{margin: '12px 0'}}>
+            {t('restaurantPublished')}
+          </Typography>
+          }
+          <Link to="/register">
+            <Button renderAs="button" variant="outlined">
+              <span>{t('changeRestaurant')}</span>
+            </Button>
+          </Link>
+        </div>
+
+
 
         </MuiThemeProvider>
       </div>
@@ -418,7 +441,7 @@ export default compose(
   withStyles(styles),
   connect((state) => ({
     openedIndex: state.ui.navOpenedIndex,
-    loggedRestaurant: state.restaurant.loggedRestaurant
+    restaurant: selectedRestaurant(state)
   }), {
     toggleSection,
     publishRestaurant

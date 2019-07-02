@@ -1,4 +1,11 @@
 {
+  "manageTheseRestaurants": "Můžete spravovat tyto restaurace",
+  "registerNewRestaurant": "Zaregistrujte novou restauraci",
+  "restaurantURL": "URL restaurace",
+  "defaultLanguageLabel": "Menu přeložíme z tohoto jazyka",
+  "defaultLanguageRecom": "Pokud můžete menu zadat v Angličtině, doporučujeme zde nechat \"English\" pro větší přesnost překladů",
+  "register": "Registrovat",
+  "fillFieldAbove": "vyplňte prosím toto pole",
   "address": {
     "businessAddress": "Adresa",
     "street": "Ulice",
@@ -101,5 +108,6 @@
   "completePrevious": "Dokončete předchozí kroky",
   "createAddonFail": "Přidání extra položky se nezdařilo",
   "createOptionFail": "Přidání skupiny variant se nezdařilo",
-  "createIngredientFail": "Přidání ingredience se nezdařilo"
+  "createIngredientFail": "Přidání ingredience se nezdařilo",
+  "changeRestaurant": "Změnit restauraci"
 }
