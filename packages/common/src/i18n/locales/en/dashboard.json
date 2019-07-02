@@ -98,5 +98,8 @@
   "createMenu": "Create menu",
   "publish": "Publish",
   "restaurantPublished": "Restaurant published",
-  "completePrevious": "Complete previous steps first"
+  "completePrevious": "Complete previous steps first",
+  "createAddonFail": "Adding of a new addon failed",
+  "createOptionFail": "Adding of a new option group failed",
+  "createIngredientFail": "Adding of a new ingredient failed"
 }

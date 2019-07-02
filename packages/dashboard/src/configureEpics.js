@@ -5,6 +5,10 @@ import { reportingEpics as reporting } from '@dinify/common/dist/ducks/reporting
 
 import { restaurantEpics } from './ducks/restaurant';
 import { menuItemEpics } from './ducks/menuItem';
+import { addonEpics } from './ducks/addon';
+import { optionEpics } from './ducks/option';
+import { ingredientEpics } from './ducks/ingredient';
+
 import { translationEpics } from './ducks/translation';
 
 const rootEpic = (action$, state$, firebase, ...rest) => {
@@ -13,6 +17,9 @@ const rootEpic = (action$, state$, firebase, ...rest) => {
     ...restaurantEpics,
     ...menuItemEpics,
     ...translationEpics,
+    ...addonEpics,
+    ...optionEpics,
+    ...ingredientEpics,
     ...crud,
     ...reporting
   );

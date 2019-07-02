@@ -98,5 +98,8 @@
   "createMenu": "Vytvořte menu",
   "publish": "Publikovat",
   "restaurantPublished": "Restaurace zveřejněna",
-  "completePrevious": "Dokončete předchozí kroky"
+  "completePrevious": "Dokončete předchozí kroky",
+  "createAddonFail": "Přidání extra položky se nezdařilo",
+  "createOptionFail": "Přidání skupiny variant se nezdařilo",
+  "createIngredientFail": "Přidání ingredience se nezdařilo"
 }
