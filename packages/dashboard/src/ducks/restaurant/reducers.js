@@ -103,16 +103,11 @@ export default function reducer(state = initialState, action) {
     }
 
     case 'UPDATE_LOCATION_INIT': {
-      const { restaurantId, longitude, latitude } = payload;
+      const { longitude, latitude } = payload;
+      const restaurantId = state.selectedRestaurant;
       return pipe(
-        assocPath(
-          ['all', restaurantId, 'longitude'],
-          Number(longitude),
-        ),
-        assocPath(
-          ['all', restaurantId, 'latitude'],
-          Number(latitude),
-        )        
+        assocPath(['all', restaurantId, 'longitude'], Number(longitude)),
+        assocPath(['all', restaurantId, 'latitude'], Number(latitude),)        
       )(state);
     }
 
