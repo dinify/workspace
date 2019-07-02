@@ -29,17 +29,17 @@ const Menucontrol = () => {
     <div>
       <HeadLine>
         <Grid container spacing={8} alignItems="flex-start" justify="center">
-          <Grid item xs={4}>
+          <Grid item xs={4} style={{position: 'relative'}}>
             <Typography gutterBottom variant="caption">{t('menu.ingredients')}</Typography>
             <Ingredients styles={styles} />
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={4} style={{position: 'relative'}}>
             <Typography gutterBottom variant="caption">{t('menu.addons')}</Typography>
             <Addons styles={styles} />
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={4} style={{position: 'relative'}}>
             <Typography gutterBottom variant="caption">{t('menu.optionGroups')}</Typography>
             <Options styles={styles} />
           </Grid>

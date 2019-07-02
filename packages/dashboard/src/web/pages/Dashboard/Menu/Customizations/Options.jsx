@@ -143,7 +143,7 @@ const Options = ({
   if (shouldLoad) return <Loading />;
 
   return (
-    <div>
+    <React.Fragment>
       <Card square>
         <CardContent>
           <AddOptionForm t={t} onSubmit={({ name }) => createOption({
@@ -153,8 +153,8 @@ const Options = ({
         </CardContent>
       </Card>
       <List component="nav">
-        {optionsList.map((option, i) => (
-          <div key={option.id}>
+        {optionsList.map((option) => (
+          <React.Fragment key={option.id}>
             <ListItem
               button
               onClick={() => collapseOption({ id: option.id })}
@@ -219,10 +219,10 @@ const Options = ({
                 </ListItem>
               </List>
             </Collapse>
-          </div>
+          </React.Fragment>
         ))}
       </List>
-    </div>
+    </React.Fragment>
   );
 };
 

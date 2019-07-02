@@ -91,9 +91,8 @@ const Ingredients = ({
   }, []);
   if (shouldLoad) return <Loading />;
 
-
   return (
-    <div>
+    <React.Fragment>
       <Card square>
         <CardContent>
           <AddIngredientForm
@@ -108,23 +107,21 @@ const Ingredients = ({
         </CardContent>
       </Card>
       <List component="nav">
-        {ingredientsList.map((ingredient, i) => (
-          <div key={ingredient.id}>
-            <ListItem dense style={styles.ListItem}>
-              <ListItemText primary={ingredient.name} />
-              <Tooltip placement="left" title={t('delete')}>
-                <IconButton
-                  aria-label={t('delete')}
-                  onClick={() => removeIngredient({ id: ingredient.id })}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Tooltip>
-            </ListItem>
-          </div>
+        {ingredientsList.map((ingredient) => (
+          <ListItem dense style={styles.ListItem} key={ingredient.id}>
+            <ListItemText primary={ingredient.name} />
+            <Tooltip placement="left" title={t('delete')}>
+              <IconButton
+                aria-label={t('delete')}
+                onClick={() => removeIngredient({ id: ingredient.id })}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </ListItem>
         ))}
       </List>
-    </div>
+    </React.Fragment>
   );
 };
 

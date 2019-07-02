@@ -93,7 +93,7 @@ const Addons = ({
   if (shouldLoad) return <Loading />;
   
   return (
-    <div>
+    <React.Fragment>
       <Card square>
         <CardContent>
           <AddAddonForm
@@ -126,7 +126,7 @@ const Addons = ({
           </div>
         ))}
       </List>
-    </div>
+    </React.Fragment>
   );
 };
 
