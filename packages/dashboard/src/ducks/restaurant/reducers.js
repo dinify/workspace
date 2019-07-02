@@ -3,8 +3,8 @@ import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import dissoc from 'ramda/src/dissoc';
 import dissocPath from 'ramda/src/dissocPath';
-import { MapToList, setCookie } from '@dinify/common/dist/lib/FN';
-import * as restaurantTypes from 'ducks/restaurant/types';
+import { MapToList, ListToMap, setCookie } from '@dinify/common/dist/lib/FN';
+import * as types from './types';
 
 const preferredLanguagesInitial = [
   'cs', 'en', 'de', 'it',
@@ -13,6 +13,7 @@ const preferredLanguagesInitial = [
 ];
 
 const initialState = {
+  all: {},
   appRun: false,
   loggedRestaurant: null,
   bills: [],
@@ -30,12 +31,27 @@ const initialState = {
   menuLanguages: [],
   preferredLanguagesInitial,
   preferredLanguages: preferredLanguagesInitial,
-  defaultLanguage: 'en'
+  defaultLanguage: 'en',
+  waiterboards: [],
+  waiterboardsLoaded: false
 };
 
 export default function reducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
+    case types.FETCH_RESTAURANT_DONE: {
+      const restaurant = payload.res;
+      let defaultLanguage = 'en';
+      const menuLanguages = restaurant.menu_languages || {};
+      const defaultMenuLanguages = MapToList(menuLanguages).filter(lang => lang.default);
+      if (defaultMenuLanguages.length > 0) defaultLanguage = defaultMenuLanguages[0].language;
+      setCookie('lang', defaultLanguage, 30);
+      return pipe(
+        assocPath(['all', restaurant.id], restaurant),
+        assoc('defaultLanguage', defaultLanguage),
+        assoc('loggedRestaurant', restaurant)
+      )(state);
+    }
     case 'BOOTSTRAP':
       return assoc('appRun', true)(state);
     case 'SET_ONBOARDINGTOKEN':
@@ -56,6 +72,7 @@ export default function reducer(state = initialState, action) {
       );
     case 'SELECT_RESTAURANT':
       return assoc('selectedRestaurant', payload.id)(state);
+
     case 'FETCH_LANGUAGES_DONE':
       return assoc('languages', payload.res)(state);
     case 'FETCH_MANAGEDRESTAURANTS_DONE':
@@ -74,64 +91,53 @@ export default function reducer(state = initialState, action) {
       const menuLanguage = { language };
       return assoc('menuLanguages', [...state.menuLanguages, menuLanguage])(state);
     }
-    case restaurantTypes.FETCH_LOGGEDRESTAURANT_DONE: {
-      const restaurant = payload.res;
-      let defaultLanguage = 'en';
-      const menuLanguages = restaurant.menu_languages || {};
-      const defaultMenuLanguages = MapToList(menuLanguages).filter(lang => lang.default);
-      if (defaultMenuLanguages.length > 0) defaultLanguage = defaultMenuLanguages[0].language;
-      const newState = assoc('defaultLanguage', defaultLanguage)(state);
-      setCookie('lang', defaultLanguage, 30);
-      return assoc('loggedRestaurant', restaurant)(newState);
+
+    case 'UPDATE_NAME_INIT': {
+      const { restaurantId, name } = payload;
+      return assocPath(['all', restaurantId, 'name'], name)(state);
     }
-    case 'FETCH_LOGGEDRESTAURANT_FAIL': {
-      return dissoc('loggedRestaurant')(state);
+
+    case 'UPDATE_IMAGE_DONE': {
+      const { restaurantId, res } = payload;
+      return assocPath(['all', restaurantId, 'uploadedImage'], res.url)(state);
     }
-    case 'UPDATE_NAME_INIT':
-      return assocPath(['loggedRestaurant', 'name'], payload.name)(
-        state,
-      );
-    case 'UPDATE_IMAGE_DONE':
-      return assocPath(
-        ['loggedRestaurant', 'uploadedImage'],
-        payload.res.url,
-      )(state);
-    case 'UPDATE_CATEGORY_INIT':
-      return assocPath(
-        ['loggedRestaurant', 'category'],
-        payload.category,
-      )(state);
+
     case 'UPDATE_LOCATION_INIT': {
+      const { restaurantId, longitude, latitude } = payload;
       return pipe(
         assocPath(
-          ['loggedRestaurant', 'longitude'],
-          Number(payload.longitude),
+          ['all', restaurantId, 'longitude'],
+          Number(longitude),
         ),
         assocPath(
-          ['loggedRestaurant', 'latitude'],
-          Number(payload.latitude),
+          ['all', restaurantId, 'latitude'],
+          Number(latitude),
         )        
       )(state);
     }
-    case 'UPDATE_BANK_INIT': {
-      return assocPath(['loggedRestaurant', 'bank'], payload)(state);
-    }
+
     case 'GET_BILLS_DONE':
       return assoc('bills', payload)(state);
     case 'SELECT_CATEGORY':
       return assoc('selectedCategoryId', payload.categoryId)(state);
     case 'SELECT_FOOD':
       return assoc('selectedFoodId', payload.foodId)(state);
+
+    case types.FETCH_RESTAURANTWAITERBOARDS_DONE: {
+      return pipe(
+        assoc('waiterboards', ListToMap(payload.res)),
+        assoc('waiterboardsLoaded', true),
+      )(state);
+    }
     case 'CREATE_WAITERBOARD_DONE': {
       const newWaiterboard = payload.res;
       return assocPath(
-        ['loggedRestaurant', 'waiterboards', newWaiterboard.id],
+        ['waiterboards', newWaiterboard.id],
         newWaiterboard,
       )(state);
     }
     case 'REMOVE_WAITERBOARD_DONE': {
       return dissocPath([
-        'loggedRestaurant',
         'waiterboards',
         payload.id,
       ])(state);
@@ -141,7 +147,6 @@ export default function reducer(state = initialState, action) {
       const waiterboardId = payload.initPayload.waiterboardId;
       return assocPath(
         [
-          'loggedRestaurant',
           'waiterboards',
           waiterboardId,
           'tables',
@@ -154,7 +159,6 @@ export default function reducer(state = initialState, action) {
     }
     case 'REMOVE_TABLE_INIT': {
       return dissocPath([
-        'loggedRestaurant',
         'waiterboards',
         payload.waiterboardId,
         'tables',
@@ -166,14 +170,14 @@ export default function reducer(state = initialState, action) {
       return pipe(
         assocPath(
           [
-            'loggedRestaurant', 'waiterboards', initPayload.waiterboardId,
+            'waiterboards', initPayload.waiterboardId,
             'tables', initPayload.id, 'x',
           ],
           initPayload.x,
         ),
         assocPath(
           [
-            'loggedRestaurant', 'waiterboards', initPayload.waiterboardId,
+            'waiterboards', initPayload.waiterboardId,
             'tables', initPayload.id, 'y',
           ],
           initPayload.y,
@@ -181,18 +185,22 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
     case 'ADD_DAY_TO_BUSINESSHOURS': {
+      const { restaurantId } = payload;
+      const restaurant = state.all[restaurantId];
       return assocPath(
-        ['loggedRestaurant', 'open_hours'],
+        ['all', restaurantId, 'open_hours'],
         assoc(payload.dayName, [['10:00', '22:00']])(
-          state.loggedRestaurant.open_hours,
+          restaurant.open_hours,
         ),
       )(state);
     }
     case 'ADD_RANGE_TO_BUSINESSHOURS': {
+      const { restaurantId } = payload;
+      const restaurant = state.all[restaurantId];
       return assocPath(
-        ['loggedRestaurant', 'open_hours', payload.dayName],
+        ['all', restaurantId, 'open_hours', payload.dayName],
         [
-          ...state.loggedRestaurant.open_hours[payload.dayName],
+          ...restaurant.open_hours[payload.dayName],
           [payload.from, '23:59'],
         ],
       )(state);

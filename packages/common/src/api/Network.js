@@ -1,4 +1,3 @@
-// @flow
 import { getCookie } from '../lib/FN';
 
 export function Request(url, options = {}, noToken) {

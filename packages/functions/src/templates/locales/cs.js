@@ -21,7 +21,7 @@ export default {
       },
       why: {
         title: 'Jak?',
-        body: 'Servírováním <b>skvělého menu</b>, které už máte, v kombinaci s naší platformou <b>Dinify</b>, která vaše služby posune na ještě vyšší úroveň.'
+        body: 'Servírováním skvělého menu, které už máte, v kombinaci s naší platformou Dinify, která vaše služby posune na ještě vyšší úroveň.'
       },
       impression: {
         title: 'Vytvořte dokonalý první dojem',

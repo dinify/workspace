@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { lighten } from 'polished';
 import { Field, reduxForm } from 'redux-form';
 import {
   SortableContainer,
@@ -26,7 +25,6 @@ import CardContent from '@material-ui/core/CardContent';
 
 import IconButton from '@material-ui/core/IconButton';
 
-
 import {
   updateMenuitemInitAction,
   createMenuitemInitAction,
@@ -48,7 +46,7 @@ const FoodItem = styled.div`
   font-weight: 300;
   background-color: ${p => {
     if (p.disabled)
-      return p.selected ? 'rgb(60, 50, 50)' : lighten(0.3, 'rgb(169, 77, 72)');
+      return p.selected ? 'rgb(60, 50, 50)' : '#dcb0ae';
     return p.selected ? 'rgb(70, 0, 0)' : 'rgb(169, 77, 72)';
   }};
   font-size: 12px;

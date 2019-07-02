@@ -2,6 +2,7 @@ import pipe from 'ramda/src/pipe';
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import dissocPath from 'ramda/src/dissocPath';
+import * as restaurantTypes from 'ducks/restaurant/types';
 
 const initialState = {
   all: {},
@@ -13,7 +14,7 @@ export default function reducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case 'FETCH_LOGGEDRESTAURANT_DONE': {
+    case restaurantTypes.FETCH_RESTAURANT_DONE: {
       const services = payload.res.services;
       return assoc('all', services)(state);
     }

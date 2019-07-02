@@ -9,8 +9,9 @@ export function GetRestaurants({ populateWith }) {
   return Get({ path: `restaurant/list?limit=100${populateQuery}` });
 }
 
-export function GetRestaurant({ subdomain }) {
-  return Get({ path: `restaurant/${subdomain}?with=images,tags,services.image` });
+export function GetRestaurant({ subdomain, restaurantId }) {
+  const id = subdomain || restaurantId;
+  return Get({ path: `restaurant/${id}?with=images,tags,services.image` });
 }
 
 const populateCategoriesWith = [
@@ -418,22 +419,12 @@ export function Notify({ sendTo, type, payload }) {
   );
 }
 
-const loggedRestaurantWith = [
-  'images',
-  'services.image',
-  'waiterboards.tables',
-  'categories.items.images',
-  'categories.items.addons',
-  'categories.items.ingredients',
-  'categories.items.options',
-  'addons.price',
-  'ingredients',
-  'options.choices',
-  'menu_languages'
-].join(',');
-
 export function GetLoggedrestaurant({ restaurantId }) {
-  return Get({ path: `restaurant/${restaurantId}/all?with=${loggedRestaurantWith}` });
+  return Get({ path: `restaurant/${restaurantId}/all?with=images` });
+}
+
+export function GetRestaurantwaiterboards({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/waiterboards?with=waiterboards.tables` });
 }
 
 export function GetRestaurantsettings({ restaurantId }) {

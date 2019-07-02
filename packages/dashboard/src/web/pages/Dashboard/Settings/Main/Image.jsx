@@ -12,16 +12,16 @@ import { uploadMainImageInitAction } from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';
 import { useTranslation } from 'react-i18next';
 
-const Image = ({ uploadMainImage, loggedRestaurant }) => {
-  if (!loggedRestaurant) return <div />;
+const Image = ({ uploadMainImage, restaurant }) => {
+  if (!restaurant) return <div />;
   const { t } = useTranslation();
   let imageUrl = '/static/placeholder.png';
-  const images = values(loggedRestaurant.images);
+  const images = values(restaurant.images);
   if (images.length > 0) {
     const sortedImages = sort((a, b) => a.precedence - b.precedence)(images);
     imageUrl = sortedImages[0].url;
   }
-  if (loggedRestaurant.uploadedImage) imageUrl = loggedRestaurant.uploadedImage;
+  if (restaurant.uploadedImage) imageUrl = restaurant.uploadedImage;
   return (
     <FormBox>
       <FormBoxHead>

@@ -10,6 +10,7 @@ import { setCookie, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 import { reportCampaignAction } from '@dinify/common/dist/ducks/reporting/actions';
 import * as API from '@dinify/common/dist/api/restaurant';
+import * as types from './types';
 import { selectRestaurant } from './actions';
 
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
@@ -49,7 +50,7 @@ const loadRestaurant = (action$) =>
     ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
       return of(
-        {type: 'FETCH_LOGGEDRESTAURANT_INIT'},
+        {type: types.FETCH_RESTAURANT_INIT},
         {type: 'FETCH_LANGUAGES_INIT'},
         {type: 'FETCH_TRANSLATIONS_INIT'},
         {type: 'FETCH_SERVICEIMAGES_INIT'},

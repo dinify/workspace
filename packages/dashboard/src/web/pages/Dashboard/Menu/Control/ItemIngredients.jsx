@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as FN from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 import { Label } from 'web/components/styled/FormBox';
 import { updateCusomizationsInit } from 'ducks/menuItem/actions';
-import ListOfCustomizations from './ListOfCustomizations';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
 import RemoveCircle from '@material-ui/icons/RemoveCircle';
 import RemoveCircleOutline from '@material-ui/icons/RemoveCircleOutline';
+import ListOfCustomizations from './ListOfCustomizations';
 
 const Excludability = ({ selectedFoodId, updateCusomizations }) => ({ ingredient }) => {
   const excludable = ingredient.pivot ? ingredient.pivot.excludable : true;
@@ -46,7 +46,7 @@ const ItemIngredients = ({
   updateCusomizations,
   t
 }) => {
-  const ingredientsList = FN.MapToList(ingredientsMap);
+  const ingredientsList = MapToList(ingredientsMap);
   const dataSource = ingredientsList.map(o => ({ value: o.id, label: o.name }));
   const selectedFood = menuItems[selectedFoodId];
   return (
@@ -54,7 +54,7 @@ const ItemIngredients = ({
       <Label>{t('menu.ingredients')}</Label>
       {selectedFood.ingredients ? (
         <ListOfCustomizations
-          list={FN.MapToList(selectedFood.ingredients)}
+          list={MapToList(selectedFood.ingredients)}
           rmButtonFunction={ingredient =>
             updateCusomizations({
               menuItemId: selectedFoodId,

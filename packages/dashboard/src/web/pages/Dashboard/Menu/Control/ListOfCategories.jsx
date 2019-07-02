@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import styled from 'styled-components';
-import { lighten } from 'polished';
 import {
   SortableContainer,
   SortableElement,
@@ -58,7 +57,7 @@ const CategoryItem = styled.div`
   font-weight: 300;
   background-color: ${p => {
     if (p.disabled)
-      return p.selected ? 'rgb(30, 30, 50)' : lighten(0.3, 'rgb(53, 75, 92)');
+      return p.selected ? 'rgb(30, 30, 50)' : '#7899b2';
     return p.selected ? 'rgb(0, 20, 50)' : 'rgb(53, 75, 92)';
   }};
   font-size: 12px;

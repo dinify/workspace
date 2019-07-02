@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import pluck from 'ramda/src/pluck';
 import sum from 'ramda/src/sum';
@@ -22,6 +22,7 @@ import Group from '@material-ui/icons/Group';
 import DragHandle from '@material-ui/icons/DragHandle';
 import Delete from '@material-ui/icons/Delete';
 import OpenInBrowser from '@material-ui/icons/OpenInBrowser';
+import Loading from 'web/components/Loading';
 
 import {
   createWaiterboardInitAction,
@@ -29,6 +30,7 @@ import {
   createTableInitAction,
   deleteTableInitAction,
   updateTableInitAction,
+  fetchWaiterboards
 } from 'ducks/restaurant/actions';
 
 import styles from './WaiterboardsStyles';
@@ -199,17 +201,25 @@ TargetComponent = DropTarget('table', boxTarget, (connect, monitor) => ({
 }))(TargetComponent);
 
 const Waiterboards = ({
-  loggedRestaurant,
   // createWaiterboard,
   // deleteWaiterboard,
   createTable,
   deleteTable,
   updateTable,
-  classes
+  classes,
+  fetchWaiterboards,
+  waiterboards,
+  waiterboardsLoaded
 }) => {
   const { t } = useTranslation();
 
-  const waiterboards = MapToList(loggedRestaurant.waiterboards).map(wb => {
+  const shouldLoad = waiterboards.length < 1 && !waiterboardsLoaded;
+  useEffect(() => {
+    if (shouldLoad) fetchWaiterboards()
+  }, []);
+  if (shouldLoad) return <Loading />;
+
+  const wbs = waiterboards.map(wb => {
     const tables = MapToList(wb.tables).sort(
       (a, b) => a.number - b.number,
     );
@@ -260,7 +270,7 @@ const Waiterboards = ({
   return (
     <div>
       <div className={classes.contentWrapper}>
-      {waiterboards.map(wb => (
+      {wbs.map(wb => (
         <div className={classes.wb} key={wb.id}>
           <div className={classes.wbHeader}>
             <a
@@ -366,7 +376,8 @@ export default compose(
   withStyles(styles),
   connect(
     state => ({
-      loggedRestaurant: state.restaurant.loggedRestaurant,
+      waiterboards: MapToList(state.restaurant.waiterboards),
+      waiterboardsLoaded: state.restaurant.waiterboardsLoaded
     }),
     {
       createWaiterboard: createWaiterboardInitAction,
@@ -374,6 +385,7 @@ export default compose(
       createTable: createTableInitAction,
       deleteTable: deleteTableInitAction,
       updateTable: updateTableInitAction,
+      fetchWaiterboards
     },
   )
 )(Waiterboards);

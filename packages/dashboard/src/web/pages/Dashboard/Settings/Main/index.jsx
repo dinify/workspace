@@ -2,9 +2,8 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { withStyles } from '@material-ui/core/styles';
-
+import Loading from 'web/components/Loading';
+import { selectedRestaurant } from 'ducks/restaurant/selectors';
 // import BusinessHours from './BusinessHours';
 import Banking from './Banking';
 import Social from './Social';
@@ -21,41 +20,32 @@ const Column = styled.div`
   vertical-align: top;
 `;
 
-const styles = () => ({
-  progress: {
-    color: 'rgba(0,0,0,0.2)',
-    position: 'absolute',
-    left: '50%',
-    top: '100px',
-  },
-});
-
-const Main = ({ loggedRestaurant, classes }) => {
-  if (!loggedRestaurant) return <CircularProgress className={classes.progress} />;
+const Main = ({ restaurant }) => {
+  if (!restaurant) return <Loading />;
   return (
     <div>
       <div>
         <Column>
-          <Name name={loggedRestaurant.name} />
+          <Name name={restaurant.name} />
           {/* <Tags /> */}
-          {/* <Type type={loggedRestaurant.type} /> */}
-          <Image loggedRestaurant={loggedRestaurant} />
-          <Contact contact={loggedRestaurant.contact} />
+          {/* <Type type={restaurant.type} /> */}
+          <Image restaurant={restaurant} />
+          <Contact contact={restaurant.contact} />
         </Column>
 
         <Column>
-          <GoogleLocation loggedRestaurant={loggedRestaurant} address={
-            loggedRestaurant.address ? loggedRestaurant.address.business : {}
+          <GoogleLocation restaurant={restaurant} address={
+            restaurant.address ? restaurant.address.business : {}
           }/>
         </Column>
 
         <Column>
-          <Social social={loggedRestaurant.social} />
-          <Banking payout={loggedRestaurant.payout} />
+          <Social social={restaurant.social} />
+          <Banking payout={restaurant.payout} />
         </Column>
 
         <Column>
-          {/* <BusinessHours openHours={loggedRestaurant.open_hours} /> */}
+          {/* <BusinessHours openHours={restaurant.open_hours} /> */}
         </Column>
       </div>
     </div>
@@ -63,8 +53,7 @@ const Main = ({ loggedRestaurant, classes }) => {
 };
 
 export default compose(
-  withStyles(styles),
   connect((state) => ({
-    loggedRestaurant: state.restaurant.loggedRestaurant
+    restaurant: selectedRestaurant(state)
   }))
 )(Main);

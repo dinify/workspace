@@ -1,5 +1,10 @@
+import * as types from './types';
 
-// Action Creators
+export const fetchWaiterboards = payload => ({
+  type: types.FETCH_RESTAURANTWAITERBOARDS_INIT,
+  payload,
+});
+
 export const selectCategoryAction = payload => ({
     type: 'SELECT_CATEGORY',
     payload,
@@ -55,7 +60,7 @@ export const updateHoursInitAction = payload => ({
 });
 
 export const loggedFetchedAction = payload => ({
-  type: 'FETCH_LOGGEDRESTAURANT_DONE',
+  type: types.FETCH_RESTAURANT_DONE,
   payload,
 });
 export const signupInitAction = payload => ({ type: 'SIGNUP_INIT', payload });

@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import locales from './locales';
+import locales from './locales/dashboard';
 import moment from 'moment';
 import globalize from './globalize';
 import formatters from './formatters';
@@ -29,7 +29,6 @@ const getGlobalizedInstance = (language) => {
   instance.locale = locale;
   return instance;
 }
-
 
 export default ({ namespace, lang, fallback }) => {
   const defaultFallback = ['en']

@@ -17,7 +17,7 @@ export default function reducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case restaurantTypes.FETCH_LOGGEDRESTAURANT_DONE: {
+    case restaurantTypes.FETCH_RESTAURANT_DONE: {
       const actualOptions = payload.res.options;
       return assoc('all', UpdateOriginal(state.all, actualOptions))(state);
     }

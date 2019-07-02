@@ -6,6 +6,7 @@ import { MapToList } from '@dinify/common/dist/lib/FN';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import QRCode from 'qrcode.react';
+import { selectedRestaurant } from 'ducks/restaurant/selectors';
 
 const styles = () => ({
   wb: {
@@ -35,8 +36,8 @@ const styles = () => ({
   }
 });
 
-const QRs = ({ loggedRestaurant, classes }) => {
-  const waiterboards = MapToList(loggedRestaurant.waiterboards).map(wb => {
+const QRs = ({ waiterboards, restaurant, classes }) => {
+  const wbs = MapToList(waiterboards).map(wb => {
     const tables = MapToList(wb.tables).sort(
       (a, b) => a.number - b.number,
     );
@@ -46,7 +47,7 @@ const QRs = ({ loggedRestaurant, classes }) => {
   return (
     <div>
 
-      {waiterboards.map(wb => (
+      {wbs.map(wb => (
         <div className={classes.wb} key={wb.id}>
           {/*
             <Link
@@ -61,7 +62,7 @@ const QRs = ({ loggedRestaurant, classes }) => {
               <Link to={`/qr/${table.qr}`} target="_blank" key={table.id}>
                 <div className={classes.table}>
                   <div># {table.number}</div>
-                  <QRCode value={`https://web.dinify.app/restaurant/${loggedRestaurant.subdomain}?qr=${table.qr}`} />
+                  <QRCode value={`https://web.dinify.app/restaurant/${restaurant.subdomain}?qr=${table.qr}`} />
                   <div>CODE: {table.code}</div>
                 </div>
               </Link>
@@ -76,6 +77,7 @@ const QRs = ({ loggedRestaurant, classes }) => {
 export default compose(
   withStyles(styles),
   connect((state) => ({
-    loggedRestaurant: state.restaurant.loggedRestaurant
+    waiterboards: state.restaurant.waiterboards,
+    restaurant: selectedRestaurant(state)
   }))
 )(QRs);

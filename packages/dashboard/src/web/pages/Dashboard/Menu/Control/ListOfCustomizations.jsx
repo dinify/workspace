@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Chip from '@material-ui/core/Chip';
-import { withStyles } from '@material-ui/core/styles';
-
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 
 export const Customizations = styled.div`
   margin-top: 10px;

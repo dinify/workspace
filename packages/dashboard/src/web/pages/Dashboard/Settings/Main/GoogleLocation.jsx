@@ -186,11 +186,11 @@ const MapComponent = compose(
   </GoogleMap>
 ));
 
-const Location = ({ updateLocation, loggedRestaurant, updateAddress, address, setFormFields }) => {
-  if (!loggedRestaurant) return <div />;
+const Location = ({ updateLocation, restaurant, updateAddress, address, setFormFields }) => {
+  if (!restaurant) return <div />;
   const { t } = useTranslation();
-  const latitude = loggedRestaurant.latitude || 50.08730075;
-  const longitude = loggedRestaurant.longitude || 14.4207852;
+  const latitude = restaurant.latitude || 50.08730075;
+  const longitude = restaurant.longitude || 14.4207852;
   return (
     <FormBox>
       <FormBoxHead>
@@ -217,7 +217,7 @@ const Location = ({ updateLocation, loggedRestaurant, updateAddress, address, se
 				/>
 				<MapComponent
           updateLocation={updateLocation}
-          loggedRestaurant={loggedRestaurant}
+          restaurant={restaurant}
           latitude={latitude}
           longitude={longitude}					
 				/>
