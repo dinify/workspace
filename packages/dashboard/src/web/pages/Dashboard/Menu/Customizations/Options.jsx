@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import * as FN from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 import { Field, reduxForm } from 'redux-form';
 import { useTranslation } from 'react-i18next';
+import Loading from 'web/components/Loading';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -23,6 +24,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Text from 'web/components/MaterialInputs/Text';
 
 import {
+  fetchOptions,
   collapseOptionInit,
   createOptionInit,
   removeOptionInit,
@@ -121,7 +123,9 @@ AddOptionForm = reduxForm({
 const Options = ({
   createOption,
   createChoice,
-  optionsMap,
+  fetchOptions,
+  options,
+  optionsLoaded,
   collapseOption,
   removeChoice,
   removeOption,
@@ -129,10 +133,17 @@ const Options = ({
   progressMap,
   errorsMap,
 }) => {
-  const optionsList = FN.MapToList(optionsMap).sort((a, b) =>
+  const { t } = useTranslation();
+
+  const shouldLoad = options.length < 1 && !optionsLoaded;
+  useEffect(() => {
+    if (shouldLoad) fetchOptions()
+  }, []);
+  if (shouldLoad) return <Loading />;
+
+  const optionsList = options.sort((a, b) =>
     a.name.localeCompare(b.name),
   );
-  const { t } = useTranslation();
   return (
     <div>
       <Card square>
@@ -166,7 +177,7 @@ const Options = ({
 
             <Collapse in={option.collapsed} timeout="auto" unmountOnExit>
               <List component="div">
-                {FN.MapToList(option.choices).map(choice => (
+                {MapToList(option.choices).map(choice => (
                   <ListItem key={choice.id} style={styles.ListItem}>
                     <ListItemText
                       inset
@@ -219,8 +230,8 @@ const Options = ({
 
 export default connect(
   state => ({
-    loggedRestaurant: state.restaurant.loggedRestaurant,
-    optionsMap: state.option.all,
+    options: MapToList(state.option.all),
+    optionsLoaded: state.option.loaded,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
   }),
@@ -230,5 +241,6 @@ export default connect(
     collapseOption: collapseOptionInit,
     removeChoice: removeChoiceInit,
     removeOption: removeOptionInit,
+    fetchOptions
   },
 )(Options);

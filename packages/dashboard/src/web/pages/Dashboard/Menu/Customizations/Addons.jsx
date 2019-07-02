@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import * as FN from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 import { Field, reduxForm } from 'redux-form';
 import { useTranslation } from 'react-i18next';
+import Loading from 'web/components/Loading';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,7 +21,7 @@ import FormControl from '@material-ui/core/FormControl';
 
 import Text from 'web/components/MaterialInputs/Text';
 
-import { createAddonInit, removeAddonInit } from 'ducks/addon/actions';
+import { fetchAddons, createAddonInit, removeAddonInit } from 'ducks/addon/actions';
 
 let AddAddonForm = ({ t, handleSubmit, progress, errorMessage  }) => {
   return (
@@ -78,14 +79,23 @@ AddAddonForm = reduxForm({
 })(AddAddonForm);
 
 const Addons = ({
-  createAddon, addons, removeAddon, styles,
+  createAddon, addons, adddonsLoaded, removeAddon, styles,
+  fetchAddons,
   progressMap,
   errorsMap,
 }) => {
-  const addonsList = FN.MapToList(addons).sort((a, b) =>
+  const { t } = useTranslation();
+  
+  const shouldLoad = addons.length < 1 && !adddonsLoaded;
+  useEffect(() => {
+    if (shouldLoad) fetchAddons()
+  }, []);
+  if (shouldLoad) return <Loading />;
+
+  const addonsList = addons.sort((a, b) =>
     a.name.localeCompare(b.name),
   );
-  const { t } = useTranslation();
+  
   return (
     <div>
       <Card square>
@@ -126,12 +136,14 @@ const Addons = ({
 
 export default connect(
   state => ({
-    addons: state.addon.all,
+    addons: MapToList(state.addon.all),
+    adddonsLoaded: state.addon.loaded,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
   }),
   {
     createAddon: createAddonInit,
     removeAddon: removeAddonInit,
+    fetchAddons
   },
 )(Addons);

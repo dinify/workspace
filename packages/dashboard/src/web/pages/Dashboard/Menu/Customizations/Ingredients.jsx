@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import * as FN from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 import { Field, reduxForm } from 'redux-form';
 import { useTranslation } from 'react-i18next';
+import Loading from 'web/components/Loading';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -21,6 +22,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Text from 'web/components/MaterialInputs/Text';
 
 import {
+  fetchIngredients,
   createIngredientInit,
   removeIngredientInit,
   updateIngredientInit,
@@ -73,16 +75,26 @@ AddIngredientForm = reduxForm({
 const Ingredients = ({
   createIngredient,
   ingredients,
+  fetchIngredients,
+  ingredientsLoaded,
   removeIngredient,
   // updateIngredient,
   styles,
   progressMap,
   errorsMap,
 }) => {
-  const ingredientsList = FN.MapToList(ingredients).sort((a, b) =>
+  const { t } = useTranslation();
+
+  const shouldLoad = ingredients.length < 1 && !ingredientsLoaded;
+  useEffect(() => {
+    if (shouldLoad) fetchIngredients()
+  }, []);
+  if (shouldLoad) return <Loading />;
+
+  const ingredientsList = ingredients.sort((a, b) =>
     a.name.localeCompare(b.name),
   );
-  const { t } = useTranslation();
+
   return (
     <div>
       <Card square>
@@ -121,7 +133,8 @@ const Ingredients = ({
 
 export default connect(
   state => ({
-    ingredients: state.ingredient.all,
+    ingredients: MapToList(state.ingredient.all),
+    ingredientsLoaded: state.ingredient.loaded,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
   }),
@@ -129,5 +142,6 @@ export default connect(
     createIngredient: createIngredientInit,
     removeIngredient: removeIngredientInit,
     updateIngredient: updateIngredientInit,
+    fetchIngredients
   },
 )(Ingredients);

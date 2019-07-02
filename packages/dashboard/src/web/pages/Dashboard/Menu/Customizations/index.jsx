@@ -24,6 +24,7 @@ const styles = {
 
 const Menucontrol = () => {
   const { t } = useTranslation();
+
   return (
     <div>
       <HeadLine>

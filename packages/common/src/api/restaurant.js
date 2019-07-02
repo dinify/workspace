@@ -427,6 +427,18 @@ export function GetRestaurantwaiterboards({ restaurantId }) {
   return Get({ path: `restaurant/${restaurantId}/waiterboards?with=waiterboards.tables` });
 }
 
+export function GetRestaurantingredients({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/ingredients` });
+}
+
+export function GetRestaurantaddons({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/addons` });
+}
+
+export function GetRestaurantoptions({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/options?with=options.choices` });
+}
+
 export function GetRestaurantsettings({ restaurantId }) {
   return Get({ path: `restaurant/${restaurantId}/settings` });
 }
