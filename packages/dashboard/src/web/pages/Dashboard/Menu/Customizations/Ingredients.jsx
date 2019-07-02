@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { MapToList } from '@dinify/common/dist/lib/FN';
 import { Field, reduxForm } from 'redux-form';
 import { useTranslation } from 'react-i18next';
 import Loading from 'web/components/Loading';
@@ -27,6 +26,7 @@ import {
   removeIngredientInit,
   updateIngredientInit,
 } from 'ducks/ingredient/actions';
+import { listOfIngredients } from 'ducks/ingredient/selectors';
 
 let AddIngredientForm = ({ handleSubmit, progress, errorMessage, t }) => {
   return (
@@ -74,7 +74,7 @@ AddIngredientForm = reduxForm({
 
 const Ingredients = ({
   createIngredient,
-  ingredients,
+  ingredientsList,
   fetchIngredients,
   ingredientsLoaded,
   removeIngredient,
@@ -85,15 +85,12 @@ const Ingredients = ({
 }) => {
   const { t } = useTranslation();
 
-  const shouldLoad = ingredients.length < 1 && !ingredientsLoaded;
+  const shouldLoad = ingredientsList.length < 1 && !ingredientsLoaded;
   useEffect(() => {
     if (shouldLoad) fetchIngredients()
   }, []);
   if (shouldLoad) return <Loading />;
 
-  const ingredientsList = ingredients.sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
 
   return (
     <div>
@@ -133,7 +130,7 @@ const Ingredients = ({
 
 export default connect(
   state => ({
-    ingredients: MapToList(state.ingredient.all),
+    ingredientsList: listOfIngredients(state),
     ingredientsLoaded: state.ingredient.loaded,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,

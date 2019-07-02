@@ -31,6 +31,7 @@ import {
   createChoiceInit,
   removeChoiceInit,
 } from 'ducks/option/actions';
+import { listOfOptions } from 'ducks/option/selectors';
 
 let AddChoiceForm = ({ t, handleSubmit, progress, errorMessage }) => {
   return (
@@ -124,7 +125,7 @@ const Options = ({
   createOption,
   createChoice,
   fetchOptions,
-  options,
+  optionsList,
   optionsLoaded,
   collapseOption,
   removeChoice,
@@ -135,15 +136,12 @@ const Options = ({
 }) => {
   const { t } = useTranslation();
 
-  const shouldLoad = options.length < 1 && !optionsLoaded;
+  const shouldLoad = optionsList.length < 1 && !optionsLoaded;
   useEffect(() => {
     if (shouldLoad) fetchOptions()
   }, []);
   if (shouldLoad) return <Loading />;
 
-  const optionsList = options.sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
   return (
     <div>
       <Card square>
@@ -230,7 +228,7 @@ const Options = ({
 
 export default connect(
   state => ({
-    options: MapToList(state.option.all),
+    optionsList: listOfOptions(state),
     optionsLoaded: state.option.loaded,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,

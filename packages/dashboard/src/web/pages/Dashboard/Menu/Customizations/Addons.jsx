@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { MapToList } from '@dinify/common/dist/lib/FN';
 import { Field, reduxForm } from 'redux-form';
 import { useTranslation } from 'react-i18next';
 import Loading from 'web/components/Loading';
@@ -22,6 +21,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Text from 'web/components/MaterialInputs/Text';
 
 import { fetchAddons, createAddonInit, removeAddonInit } from 'ducks/addon/actions';
+import { listOfAddons } from 'ducks/addon/selectors';
 
 let AddAddonForm = ({ t, handleSubmit, progress, errorMessage  }) => {
   return (
@@ -79,22 +79,18 @@ AddAddonForm = reduxForm({
 })(AddAddonForm);
 
 const Addons = ({
-  createAddon, addons, adddonsLoaded, removeAddon, styles,
+  createAddon, addonsList, adddonsLoaded, removeAddon, styles,
   fetchAddons,
   progressMap,
   errorsMap,
 }) => {
   const { t } = useTranslation();
   
-  const shouldLoad = addons.length < 1 && !adddonsLoaded;
+  const shouldLoad = addonsList.length < 1 && !adddonsLoaded;
   useEffect(() => {
     if (shouldLoad) fetchAddons()
   }, []);
   if (shouldLoad) return <Loading />;
-
-  const addonsList = addons.sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
   
   return (
     <div>
@@ -135,12 +131,14 @@ const Addons = ({
 };
 
 export default connect(
-  state => ({
-    addons: MapToList(state.addon.all),
-    adddonsLoaded: state.addon.loaded,
-    progressMap: state.ui.progressMap,
-    errorsMap: state.ui.errorsMap,
-  }),
+  state => {
+    return {
+      addonsList: listOfAddons(state),
+      adddonsLoaded: state.addon.loaded,
+      progressMap: state.ui.progressMap,
+      errorsMap: state.ui.errorsMap,
+    }
+  },
   {
     createAddon: createAddonInit,
     removeAddon: removeAddonInit,
