@@ -2,6 +2,7 @@ import pipe from 'ramda/src/pipe';
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import dissocPath from 'ramda/src/dissocPath';
+import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as restaurantTypes from 'ducks/restaurant/types';
 
 const initialState = {
@@ -40,7 +41,9 @@ export default function reducer(state = initialState, action) {
       const newService = payload.res;
       return assocPath(['all', newService.id], newService)(state);
     }
-
+    case firebaseTypes.LOGOUT: {
+      return initialState;
+    }
     default:
       return state;
   }

@@ -1,7 +1,7 @@
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import mapObjIndexed from 'ramda/src/mapObjIndexed';
-
+import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 
 const initialState = {
@@ -39,6 +39,9 @@ export default function reducer(state = initialState, action) {
       if (!newState.all[locale]) newState.all[locale] = {};
       const newTranslation = { ...newState.all[locale][id], ...updObj };
       return assocPath(['all', locale, id], newTranslation)(newState);
+    }
+    case firebaseTypes.LOGOUT: {
+      return initialState;
     }
     default:
       return state;

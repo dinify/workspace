@@ -7,6 +7,7 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
 import queryString from 'query-string';
+import { useTranslation } from 'react-i18next';
 
 import LogoText from '../../icons/LogoText';
 
@@ -103,6 +104,7 @@ export class SignInForm extends React.Component {
 
   render() {
     const {
+      t,
       classes,
       handleSubmit = () => {},
       pristine,
@@ -116,32 +118,32 @@ export class SignInForm extends React.Component {
 
     const formOpen = page !== 'default';
 
-    let submitButtonText = 'Next';
+    let submitButtonText = t('next');
     let submitFc = this.decide;
-    let formTitle = 'Sign in';
-    let formSubtitle = 'to access more features, like dining history, reviews and saving your favorites';
+    let formTitle = t('user.signIn');
+    let formSubtitle = t('auth.appFormSubtitle');
     let leftButtonAction = () => setPage(formOpen ? 'default' : 'signUp');
 
     if (env === 'DASHBOARD') {
-      formSubtitle = 'to start setting things up, sign in with your email or social media account';
+      formSubtitle = t('auth.dashboardFormSubtitle');
     }
 
     if (page === 'signIn') {
-      submitButtonText = 'Sign in';
-      formTitle = 'Sign in with password'
+      submitButtonText = t('user.signIn');
+      formTitle = t('auth.signInWithPassword')
       submitFc = this.signIn;
     }
     if (page === 'signUp') {
-      submitButtonText = 'Create account';
-      formTitle = 'Create account';
+      submitButtonText = t('auth.createAccount');
+      formTitle = t('auth.createAccount');
       submitFc = this.signUp;
     }
     if (page === 'forgotPassword') {
-      submitButtonText = 'Send email';
-      formTitle = 'Forgot password';
+      submitButtonText = t('auth.sendEmail');
+      formTitle = t('auth.forgotPassword');
       submitFc = this.forgotPassword;
       leftButtonAction = () => setPage('signIn');
-      formSubtitle = 'enter the email address you use to sign in to get a password reset email'
+      formSubtitle = t('auth.forgotPwdFormSubtitle')
     }
 
     return (
@@ -187,7 +189,7 @@ export class SignInForm extends React.Component {
               </Typography>
             </div>
             <div style={{height: 185, overflow: 'hidden'}}>
-              <Fields env={env} />
+              <Fields env={env} t={t} />
             </div>
 
             <div style={{
@@ -196,7 +198,7 @@ export class SignInForm extends React.Component {
             }}>
               <Button onClick={leftButtonAction} variant="text" className={classes && classes.uncapitalized}>
                 {formOpen && <ChevronLeft style={{fontSize: '1.3125rem', marginLeft: -12}} />}
-                {formOpen ? 'Back' : 'New account'}
+                {formOpen ? t('back') : t('auth.newAccount')}
               </Button>
               <div style={{flex: 1}}/>
               <Button
@@ -233,32 +235,29 @@ SignInForm = reduxForm({
   destroyOnUnmount: false
 })(SignInForm)
 
-class SignInPage extends React.Component {
-  constructor(props) {
-    super(props);
-    const { prefill, location } = props;
-    const params = queryString.parse(location.search) || {};
-    let initialValues = {};
-    if (params && params.email) {
-      initialValues.email = params.email;
-    }
-    if (prefill && prefill.email) {
-      initialValues.email = prefill.email;
-    }
-    this.state = {
-      initialValues
-    };
+
+const SignInPage = (props) => {
+  const { prefill, location } = props;
+  const { t } = useTranslation();
+  const params = queryString.parse(location.search) || {};
+
+  let initialValues = {};
+  if (params && params.email) {
+    initialValues.email = params.email;
   }
-  render() {
-    return (
-      <div>
-        <SignInForm
-          initialValues={this.state.initialValues}
-          {...this.props}
-        />
-      </div>
-    )
+  if (prefill && prefill.email) {
+    initialValues.email = prefill.email;
   }
+
+  return (
+    <div>
+      <SignInForm
+        t={t}
+        initialValues={initialValues}
+        {...props}
+      />
+    </div>
+  )
 }
 
 export default compose(

@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux'
@@ -55,27 +54,27 @@ class Fields extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { authError } = nextProps;
-    const { page } = this.props;
+    const { page, t } = this.props;
     let errors = {};
     if (!authError) return;
     switch (authError.code) {
       case 'auth/invalid-email':
-        errors.email = 'The email address is invalid';
+        errors.email = t('auth.invalid-email');
         break;
       case 'auth/email-already-in-use':
-        errors.email = 'The email address is already in use';
+        errors.email = t('auth.email-already-in-use');
         break;
       case 'auth/weak-password':
-        errors.password = 'The password is too weak';
+        errors.password = t('auth.weak-password');
         break;
       case 'auth/user-disabled':
-        errors.email = 'This account has been disabled';
+        errors.email = t('auth.user-disabled');
         break;
       case 'auth/user-not-found':
-        errors.email = 'No account found with this email';
+        errors.email = t('auth.user-not-found');
         break;
       case 'auth/wrong-password':
-        errors.password = 'The passoword is incorrect';
+        errors.password = t('auth.wrong-password');
         break;
       default:
         break;
@@ -88,6 +87,7 @@ class Fields extends React.Component {
 
   render() {
     const {
+      t,
       classes,
       firebase,
       page,
@@ -104,10 +104,10 @@ class Fields extends React.Component {
     const formOpen = page !== 'default';
 
 
-    let emailLabel = 'Email address';
+    let emailLabel = t('email.long');
 
     if (page === 'default') {
-      emailLabel = 'Continue with email';
+      emailLabel = t('auth.continueWithEmail');
     }
 
     const direction = env === 'DASHBOARD' ? DOWN : UP;
@@ -155,7 +155,7 @@ class Fields extends React.Component {
             name="firstName"
             component={Text}
             componentProps={{
-              label: 'First name',
+              label: t('auth.firstName'),
               disabled: !formOpen,
               type: 'text',
               variant: 'filled',
@@ -170,7 +170,7 @@ class Fields extends React.Component {
             name="lastName"
             component={Text}
             componentProps={{
-              label: 'Last name',
+              label: t('auth.lastName'),
               disabled: !formOpen,
               type: 'text',
               variant: 'filled',
@@ -202,7 +202,7 @@ class Fields extends React.Component {
                   component={Text}
                   meta={{error: errors.password}}
                   componentProps={{
-                    label: 'Password',
+                    label: t('auth.password'),
                     style: {marginTop: 8},
                     disabled: !formOpen,
                     type: showPassword ? 'text' : 'password',
@@ -258,7 +258,7 @@ class Fields extends React.Component {
             component="span"
             color="textSecondary"
             style={{ paddingLeft: 8, paddingRight: 8 }}>
-            or
+            {t('auth.or')}
           </Typography>
         </div>
         <Divider className={classes && classes.grow} />
@@ -286,10 +286,10 @@ class Fields extends React.Component {
               }}>
                 {direction === DOWN && separator}
                 <div style={{ paddingBottom: 16 }}>
-                  <GoogleButton onClick={() => firebase.login({ provider: 'google', type: mobile ? 'redirect' : 'popup' })} />
+                  <GoogleButton t={t} onClick={() => firebase.login({ provider: 'google', type: mobile ? 'redirect' : 'popup' })} />
                 </div>
                 <div style={{ paddingBottom: 16 }}>
-                  <FacebookButton onClick={() => firebase.login({ provider: 'facebook', type: mobile ? 'redirect' : 'popup' })} />
+                  <FacebookButton t={t} onClick={() => firebase.login({ provider: 'facebook', type: mobile ? 'redirect' : 'popup' })} />
                 </div>
                 {direction === UP && separator}
               </div>

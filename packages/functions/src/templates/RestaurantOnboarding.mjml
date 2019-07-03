@@ -121,35 +121,33 @@
       </mj-section>
 
       <mj-section>
-      
-        <mj-column padding-bottom="32px">
-          <mj-text mj-class="subtitle1" color="#c13939">${accordions.meaning.title}</mj-text>
-          <mj-text mj-class="body2">
-            <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-              ${accordions.meaning.body}
-            </span>
-          </mj-text>
-        </mj-column>
-
-        <mj-column padding-bottom="32px">
-          <mj-text mj-class="subtitle1" color="#c13939">${accordions.why.title}</mj-text>
-          <mj-text mj-class="body2">
-            <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-              ${accordions.why.body}
-            </span>
-          </mj-text>
-        </mj-column>
-
-        <mj-column padding-bottom="32px">
-          <mj-text mj-class="subtitle1" color="#c13939">${accordions.impression.title}</mj-text>
-          <mj-text mj-class="body2">
-            <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-              ${accordions.impression.body}
-            </span>
-          </mj-text>
-        </mj-column>
-
+        <mj-text mj-class="subtitle1" color="#c13939">${accordions.meaning.title}</mj-text>
+        <mj-text mj-class="body2">
+          <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
+            ${accordions.meaning.body}
+          </span>
+        </mj-text>
       </mj-section>
+
+      <mj-section>
+        <mj-text mj-class="subtitle1" color="#c13939">${accordions.why.title}</mj-text>
+        <mj-text mj-class="body2">
+          <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
+            ${accordions.why.body}
+          </span>
+        </mj-text>
+      </mj-section>
+      
+      <mj-section>
+        <mj-text mj-class="subtitle1" color="#c13939">${accordions.impression.title}</mj-text>
+        <mj-text mj-class="body2">
+          <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
+            ${accordions.impression.body}
+          </span>
+        </mj-text>
+      </mj-section>
+
+
 
       <mj-section padding>
         <mj-column>

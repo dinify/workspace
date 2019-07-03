@@ -4,6 +4,7 @@ import dissocPath from 'ramda/src/dissocPath';
 import { MapToList } from '@dinify/common/dist/lib/FN';
 import * as restaurantTypes from 'ducks/restaurant/types';
 import * as menuCategoryTypes from 'ducks/menuCategory/types';
+import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 
 const initialState = {
@@ -107,7 +108,9 @@ export default function reducer(state = initialState, action) {
       const image = payload.res;
       return assocPath(['all', foodId, 'images', image.id], image)(state);
     }
-
+    case firebaseTypes.LOGOUT: {
+      return initialState;
+    }
     default:
       return state;
   }

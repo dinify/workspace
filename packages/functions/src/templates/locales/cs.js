@@ -1,10 +1,10 @@
 export default {
   "rp-onboarding": {
     subject: 'Lepší recenze, vyšší zisk, zkuste Dinify',
-    preview: 'Zjistili jsme, že ${restaurant.name} má na TripAdvisoru ${stats.targetPercent} recenzí od zahraničních návštěvníků, kteří nemluví česky ani anglicky. Zde je přehled jazyků, které se v recenzích vaší restaurace nejčastěji objevují',
+    preview: 'Zjistili jsme, že ${restaurant.name} má na TripAdvisoru ${stats.targetPercent} recenzí od návštěvníků, kteří nemluví anglicky. Zde je přehled jazyků, které se v recenzích vaší restaurace nejčastěji objevují',
     hero: {
       title: 'Naše menu mluví všemi jazyky',
-      cta: 'Vaše může také'
+      cta: 'Zjistit víc'
     },
     main: {
       dear: 'Zdravíme do ${restaurant.name},',

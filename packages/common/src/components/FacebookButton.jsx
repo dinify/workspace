@@ -31,6 +31,7 @@ const styles = theme => ({
 });
 
 const FacebookButton = ({
+  t,
   classes,
   ...props
 }) => {
@@ -42,7 +43,7 @@ const FacebookButton = ({
       variant="contained"
       {...props}>
       <FacebookLogo />
-      <span className={classes.leftGutter}>Continue with Facebook</span>
+      <span className={classes.leftGutter}>{t('auth.continueWithFacebook')}</span>
     </Button>
   );
 }

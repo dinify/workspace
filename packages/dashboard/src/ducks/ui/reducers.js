@@ -1,6 +1,6 @@
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
-
+import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 
 const initialState = {
   progressMap: {},
@@ -32,6 +32,7 @@ function findNested(obj, key, memo) {
 }
 
 export default function reducer(state = initialState, action) {
+  if (action.type === firebaseTypes.LOGOUT) return initialState;
   if (action.type === 'TOGGLE_NAV_OPENEDINDEX') {
     let newIndex = action.payload;
     const { navOpenedIndex } = state;

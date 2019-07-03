@@ -34,6 +34,7 @@ const styles = theme => ({
 });
 
 const GoogleButton = ({
+  t,
   classes,
   theme,
   ...props
@@ -46,7 +47,7 @@ const GoogleButton = ({
       variant={theme.palette.type === 'light' ? 'outlined' : 'contained'}
       {...props}>
       <GoogleLogo />
-      <span className={classes.leftGutter}>Continue with Google</span>
+      <span className={classes.leftGutter}>{t('auth.continueWithGoogle')}</span>
     </Button>
   );
 }

@@ -1,9 +1,9 @@
 import pipe from 'ramda/src/pipe';
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
-import dissoc from 'ramda/src/dissoc';
 import dissocPath from 'ramda/src/dissocPath';
 import { MapToList, ListToMap, setCookie } from '@dinify/common/dist/lib/FN';
+import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 
 const preferredLanguagesInitial = [
@@ -199,6 +199,12 @@ export default function reducer(state = initialState, action) {
           [payload.from, '23:59'],
         ],
       )(state);
+    }
+
+    case firebaseTypes.LOGOUT: {
+      setCookie('access_token', '', 1);
+      // reset everything
+      return {...initialState, appRun: true };
     }
 
     default:
