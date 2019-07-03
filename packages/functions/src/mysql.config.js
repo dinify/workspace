@@ -17,7 +17,7 @@ if ((process.env.NODE_ENV || '').trim() === 'production') { // prod
     }
   });
 } else { // dev
-  dbName = 'production';
+  dbName = 'test';
   sequelize = new Sequelize(dbName, dbUser, dbPass, {
     dialect: 'mysql',
     port: 3307,
