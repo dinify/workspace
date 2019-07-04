@@ -1,33 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import * as FN from '@dinify/common/dist/lib/FN';
 import { Label } from 'web/components/styled/FormBox';
-import { updateCusomizationsInit } from 'ducks/menuItem/actions';
-import ListOfCustomizations from './ListOfCustomizations';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 
+import { assignAddon, unassignAddon } from 'ducks/menuItem/actions';
+import { fetchAddons } from 'ducks/addon/actions';
+import { listOfAddons } from 'ducks/addon/selectors';
+
+import ListOfCustomizations from './ListOfCustomizations';
+
 const ItemAddons = ({
-  addonsMap,
+  addonsList,
+  fetchAddons,
+  addonsLoaded,
   menuItems,
+  assignAddon,
+  unassignAddon,
   selectedFoodId,
-  updateCusomizations,
   t
 }) => {
-  const addonsList = FN.MapToList(addonsMap);
-  const dataSource = addonsList.map(o => ({ value: o.id, label: o.name }));
+  const shouldLoad = addonsList.length < 1 && !addonsLoaded;
+  useEffect(() => {
+    if (shouldLoad) fetchAddons()
+  }, []);
   const selectedFood = menuItems[selectedFoodId];
+  if (!selectedFood) {
+    return <div />;
+  }
+  const assignedAddons = selectedFood.addons || [];
+  const assignedAddonsIds = assignedAddons.map(o => o.id);
+
+  const dataSource = addonsList
+    .filter(o => !assignedAddonsIds.includes(o.id))
+    .map(o => ({ value: o.id, label: o.name }));
+
   return (
     <div>
       <Label>{t('menu.addons')}</Label>
       {selectedFood.addons ? (
         <ListOfCustomizations
-          list={FN.MapToList(selectedFood.addons)}
+          list={selectedFood.addons}
           rmButtonFunction={addon =>
-            updateCusomizations({
+            unassignAddon({
               menuItemId: selectedFoodId,
-              actionKind: 'REMOVE',
-              custKey: 'addons',
-              custId: addon.id
+              addonId: addon.id
             })
           }
         />
@@ -38,12 +54,9 @@ const ItemAddons = ({
         dataSource={dataSource}
         placeholder={(t('menu.selectAddons'))}
         onChange={addon =>
-          updateCusomizations({
+          assignAddon({
             menuItemId: selectedFoodId,
-            actionKind: 'ADD',
-            custKey: 'addons',
-            custId: addon.value,
-            cust: addonsMap[addon.value],
+            addonId: addon.value
           })
         }
       />
@@ -53,10 +66,13 @@ const ItemAddons = ({
 
 export default connect(
   state => ({
-    addonsMap: state.addon.all,
+    addonsList: listOfAddons(state),
+    addonsLoaded: state.addon.loaded,
     menuItems: state.menuItem.all,
   }),
   {
-    updateCusomizations: updateCusomizationsInit
+    fetchAddons,
+    assignAddon,
+    unassignAddon,
   },
 )(ItemAddons);

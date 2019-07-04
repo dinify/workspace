@@ -44,3 +44,13 @@ export const setIngredientExcludability = payload => ({
   type: types.SET_INGREDIENT_EXCLUDABILITY_INIT,
   payload,
 });
+
+export const assignAddon = payload => ({
+  type: types.ASSIGN_ADDON_INIT,
+  payload,
+});
+
+export const unassignAddon = payload => ({
+  type: types.UNASSIGN_ADDON_INIT,
+  payload,
+});

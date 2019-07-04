@@ -50,7 +50,7 @@ const ListOfCustomizations = ({ list, rmButtonFunction, classes, ActionComponent
               label={
                 <span style={{ whiteSpace: 'nowrap' }}>
                   {customization.name}{' '}
-                  {customization.price ? `${customization.price.amount}KD` : ''}
+                  {customization.price ? `${customization.price.amount}${customization.price.currency}` : ''}
                   {ActionComponent ? <ActionComponent ingredient={customization} /> : ''}
                 </span>
               }

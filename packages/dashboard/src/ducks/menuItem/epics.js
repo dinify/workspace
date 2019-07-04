@@ -149,9 +149,68 @@ export const setIngredientExcludabilityEpic = (action$, state$) =>
     })    
   )
 
+export const assignAddonEpic = (action$, state$) => 
+  action$.pipe(
+    ofType(types.ASSIGN_ADDON_INIT),
+    mergeMap((action) => {
+      const { payload } = action;
+      const { menuItemId, addonId } = payload;
+      const addon = state$.value.addon.all[addonId];
+      const menuItem = state$.value.menuItem.all[menuItemId];
+      if (!addon || !menuItem) {
+        return of({
+          type: types.ASSIGN_ADDON_FAIL,
+          payload: 'addon and menuItem required'
+        });
+      }
+      if (ListToMap(menuItem.addons)[addonId]) {
+        return of({
+          type: types.ASSIGN_ADDON_FAIL,
+          payload: 'addon already assigned'
+        });        
+      }
+      const updatePayload = {
+        id: menuItemId,
+        addons: [...menuItem.addons, addon]
+      }
+      return of({
+        type: types.UPDATE_MENUITEM_INIT,
+        payload: updatePayload,
+      });
+    })
+  )
+
+export const unassignAddonEpic = (action$, state$) => 
+  action$.pipe(
+    ofType(types.UNASSIGN_ADDON_INIT),
+    mergeMap((action) => {
+      const { payload } = action;
+      const { menuItemId, addonId } = payload;
+      const addon = state$.value.addon.all[addonId];
+      const menuItem = state$.value.menuItem.all[menuItemId];
+      if (!addon || !menuItem) {
+        return of({
+          type: types.UNASSIGN_ADDON_FAIL,
+          payload: 'addon and menuItem required'
+        });
+      }
+      const newAddons = filter((i) => i.id !== addonId, menuItem.addons);
+      const updatePayload = {
+        id: menuItemId,
+        addons: newAddons
+      }
+      return of({
+        type: types.UPDATE_MENUITEM_INIT,
+        payload: updatePayload,
+      });
+    })
+  )
+
 export default [
   assignIngredientEpic,
   unassignIngredientEpic,
   updateCusomizationsEpic,
-  setIngredientExcludabilityEpic
+  setIngredientExcludabilityEpic,
+  assignAddonEpic,
+  unassignAddonEpic
 ];

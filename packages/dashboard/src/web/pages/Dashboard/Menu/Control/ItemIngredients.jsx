@@ -63,9 +63,9 @@ const ItemIngredients = ({
   const assignedIngredientsIds = assignedIngredients.map(o => o.id);
 
   const dataSource = ingredientsList
-  .filter(o => !assignedIngredientsIds.includes(o.id))
-  .map(o => ({ value: o.id, label: o.name }));
-  
+    .filter(o => !assignedIngredientsIds.includes(o.id))
+    .map(o => ({ value: o.id, label: o.name }));
+    
   return (
     <div style={{ marginBottom: 30 }}>
       <Label>{t('menu.ingredients')}</Label>
