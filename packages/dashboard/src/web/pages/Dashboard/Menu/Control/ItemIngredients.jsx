@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { MapToList } from '@dinify/common/dist/lib/FN';
 import { Label } from 'web/components/styled/FormBox';
-import { updateCusomizationsInit } from 'ducks/menuItem/actions';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
 import RemoveCircle from '@material-ui/icons/RemoveCircle';
 import RemoveCircleOutline from '@material-ui/icons/RemoveCircleOutline';
+import {
+  assignIngredient,
+  unassignIngredient,
+  setIngredientExcludability
+} from 'ducks/menuItem/actions';
+import { listOfIngredients } from 'ducks/ingredient/selectors';
+import { fetchIngredients } from 'ducks/ingredient/actions';
 import ListOfCustomizations from './ListOfCustomizations';
 
-const Excludability = ({ selectedFoodId, updateCusomizations }) => ({ ingredient }) => {
+const Excludability = ({ selectedFoodId, setIngredientExcludability }) => ({ ingredient }) => {
   const excludable = ingredient.pivot ? ingredient.pivot.excludable : true;
   return (
     <Tooltip
@@ -24,14 +29,10 @@ const Excludability = ({ selectedFoodId, updateCusomizations }) => ({ ingredient
         checkedIcon={<RemoveCircle style={{color: 'rgba(255,255,255,1)'}}/>}
         checked={excludable}
         onChange={ev =>
-          updateCusomizations({
+          setIngredientExcludability({
             menuItemId: selectedFoodId,
-            actionKind: 'UPDATE',
-            updateObj: {
-              excludable: ev.target.checked,
-            },
-            custKey: 'ingredients',
-            custId: ingredient.id
+            ingredientId: ingredient.id,
+            excludable: ev.target.checked
           })
         }
       />
@@ -41,29 +42,43 @@ const Excludability = ({ selectedFoodId, updateCusomizations }) => ({ ingredient
 
 const ItemIngredients = ({
   selectedFoodId,
-  ingredientsMap,
+  ingredientsList,
+  fetchIngredients,
+  ingredientsLoaded,
   menuItems,
-  updateCusomizations,
+  assignIngredient,
+  unassignIngredient,
+  setIngredientExcludability,
   t
 }) => {
-  const ingredientsList = MapToList(ingredientsMap);
-  const dataSource = ingredientsList.map(o => ({ value: o.id, label: o.name }));
+  const shouldLoad = ingredientsList.length < 1 && !ingredientsLoaded;
+  useEffect(() => {
+    if (shouldLoad) fetchIngredients()
+  }, []);
   const selectedFood = menuItems[selectedFoodId];
+  if (!selectedFood) {
+    return <div />;
+  }
+  const assignedIngredients = selectedFood.ingredients || [];
+  const assignedIngredientsIds = assignedIngredients.map(o => o.id);
+
+  const dataSource = ingredientsList
+  .filter(o => !assignedIngredientsIds.includes(o.id))
+  .map(o => ({ value: o.id, label: o.name }));
+  
   return (
     <div style={{ marginBottom: 30 }}>
       <Label>{t('menu.ingredients')}</Label>
-      {selectedFood.ingredients ? (
+      {assignedIngredients ? (
         <ListOfCustomizations
-          list={MapToList(selectedFood.ingredients)}
+          list={assignedIngredients}
           rmButtonFunction={ingredient =>
-            updateCusomizations({
+            unassignIngredient({
               menuItemId: selectedFoodId,
-              actionKind: 'REMOVE',
-              custKey: 'ingredients',
-              custId: ingredient.id
+              ingredientId: ingredient.id
             })
           }
-          ActionComponent={Excludability({ selectedFoodId, updateCusomizations })}
+          ActionComponent={Excludability({ selectedFoodId, setIngredientExcludability })}
         />
       ) : (
         t('menu.noIngredients')
@@ -72,12 +87,9 @@ const ItemIngredients = ({
         dataSource={dataSource}
         placeholder={(t('menu.selectIngredients'))}
         onChange={ingredient =>
-          updateCusomizations({
+          assignIngredient({
             menuItemId: selectedFoodId,
-            actionKind: 'ADD',
-            custKey: 'ingredients',
-            custId: ingredient.value,
-            cust: ingredientsMap[ingredient.value],
+            ingredientId: ingredient.value
           })
         }
       />
@@ -87,10 +99,14 @@ const ItemIngredients = ({
 
 export default connect(
   state => ({
-    ingredientsMap: state.ingredient.all,
+    ingredientsList: listOfIngredients(state),
+    ingredientsLoaded: state.ingredient.loaded,
     menuItems: state.menuItem.all,
   }),
   {
-    updateCusomizations: updateCusomizationsInit
+    fetchIngredients,
+    assignIngredient,
+    unassignIngredient,
+    setIngredientExcludability
   },
 )(ItemIngredients);

@@ -124,22 +124,6 @@ export const reorderCategoriesAction = payload => ({
   payload,
 });
 
-export const createMenuitemInitAction = payload => ({
-  type: 'CREATE_MENUITEM_INIT',
-  payload,
-});
-export const updateMenuitemInitAction = payload => ({
-  type: 'UPDATE_MENUITEM_INIT',
-  payload,
-});
-export const deleteMenuitemInitAction = payload => ({
-  type: 'REMOVE_MENUITEM_INIT',
-  payload,
-});
-export const reorderItemsAction = payload => ({
-  type: 'REORDER_MENUITEM_INIT',
-  payload,
-});
 
 export const rmFoodInitAction = payload => ({ type: 'RM_FOOD_INIT', payload });
 

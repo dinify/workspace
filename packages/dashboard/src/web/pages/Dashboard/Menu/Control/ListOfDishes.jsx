@@ -8,7 +8,7 @@ import {
   arrayMove,
 } from 'react-sortable-hoc';
 import { useTranslation } from 'react-i18next';
-import * as FN from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 import filter from 'ramda/src/filter';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -26,12 +26,15 @@ import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 
 import {
-  updateMenuitemInitAction,
-  createMenuitemInitAction,
-  deleteMenuitemInitAction,
-  reorderItemsAction,
+  createMenuitemInit,
+  updateMenuitemInit,
+  removeMenuitemInit,
+  reorderItemsInit
+} from 'ducks/menuItem/actions';
+import {
   selectFoodAction,
 } from 'ducks/restaurant/actions';
+
 import Typography from '@dinify/common/dist/components/Typography';
 
 const FoodItem = styled.div`
@@ -121,7 +124,7 @@ CreateItemForm = reduxForm({
 })(CreateItemForm);
 
 const SortableItem = SortableElement(
-  ({ t, item, selectedFoodId, selectFood, updateItem, deleteItem }) => (
+  ({ t, item, selectedFoodId, selectFood, updateItem, removeItem }) => (
     <FoodItem
       selected={item.id === selectedFoodId}
       disabled={!item.published}
@@ -133,7 +136,7 @@ const SortableItem = SortableElement(
           <Tooltip placement="left" title={t('delete')}>
             <IconButton
               aria-label={t('delete')}
-              onClick={() => deleteItem({ id: item.id })}
+              onClick={() => removeItem({ id: item.id })}
             >
               <DeleteIcon />
             </IconButton>
@@ -185,7 +188,7 @@ const ListOfDishes = ({
   menuItemsMap,
   updateItem,
   createItem,
-  deleteItem,
+  removeItem,
   reorderItems,
   progressMap,
   errorsMap,
@@ -195,7 +198,7 @@ const ListOfDishes = ({
   }
   const menuItemsList = filter(
     item => item.menu_category_id === selectedCategoryId,
-    FN.MapToList(menuItemsMap),
+    MapToList(menuItemsMap),
   ).sort((a, b) => a.precedence - b.precedence);
   const categoryName = categoriesMap[selectedCategoryId].name;
   const { t } = useTranslation();
@@ -233,7 +236,7 @@ const ListOfDishes = ({
           selectedFoodId,
           selectFood,
           updateItem,
-          deleteItem,
+          removeItem,
           t
         }}
       />
@@ -246,12 +249,11 @@ export default connect(
     menuItemsMap: state.menuItem.all,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
-  }),
-  {
-    updateItem: updateMenuitemInitAction,
-    createItem: createMenuitemInitAction,
-    deleteItem: deleteMenuitemInitAction,
-    reorderItems: reorderItemsAction,
+  }), {
+    updateItem: updateMenuitemInit,
+    createItem: createMenuitemInit,
+    removeItem: removeMenuitemInit,
+    reorderItems: reorderItemsInit,
     selectFood: selectFoodAction,
   },
 )(ListOfDishes);

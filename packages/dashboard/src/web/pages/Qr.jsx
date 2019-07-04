@@ -1,8 +1,9 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import { connect } from 'react-redux';
+import { selectedRestaurant } from 'ducks/restaurant/selectors';
 
-const Qr = ({ match, loggedRestaurant }) => {
+const Qr = ({ match, restaurant }) => {
   return (
     <div style={{
       position: 'absolute',
@@ -12,7 +13,7 @@ const Qr = ({ match, loggedRestaurant }) => {
       textAlign: 'center'
     }}>
       <QRCode
-        value={`https://web.dinify.app/restaurant/${loggedRestaurant.subdomain}?qr=${match.params.code}`}
+        value={`https://web.dinify.app/restaurant/${restaurant.subdomain}?qr=${match.params.code}`}
         size={256}
       />
     </div>
@@ -20,5 +21,5 @@ const Qr = ({ match, loggedRestaurant }) => {
 };
 
 export default connect(state => ({
-  loggedRestaurant: state.restaurant.loggedRestaurant,
+  restaurant: selectedRestaurant(state)
 }))(Qr);

@@ -4,7 +4,6 @@ import assocPath from 'ramda/src/assocPath';
 import dissocPath from 'ramda/src/dissocPath';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
-import * as restaurantTypes from 'ducks/restaurant/types';
 import * as types from './types';
 
 const initialState = {
@@ -16,10 +15,6 @@ export default function reducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case restaurantTypes.FETCH_RESTAURANT_DONE: {
-      const categories = payload.res.categories;
-      return assoc('all', categories)(state);
-    }
 
     case types.FETCH_MENUCATEGORIES_DONE: {
       const categories = ListToMap(payload.res);

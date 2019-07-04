@@ -15,7 +15,6 @@ const preferredLanguagesInitial = [
 const initialState = {
   all: {},
   appRun: false,
-  loggedRestaurant: null,
   bills: [],
   selectedCategoryId: null,
   selectedFoodId: null,
@@ -49,7 +48,6 @@ export default function reducer(state = initialState, action) {
       return pipe(
         assocPath(['all', restaurant.id], restaurant),
         assoc('defaultLanguage', defaultLanguage),
-        assoc('loggedRestaurant', restaurant)
       )(state);
     }
     case 'BOOTSTRAP':

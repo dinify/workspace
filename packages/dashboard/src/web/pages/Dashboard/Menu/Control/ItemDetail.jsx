@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as FN from '@dinify/common/dist/lib/FN';
 import Dropzone from 'react-dropzone';
-import {
-  updateMenuitemInitAction,
-  uploadItemImageInitAction,
-} from 'ducks/restaurant/actions';
+import { fetchMenuitemInit, updateMenuitemInit } from 'ducks/menuItem/actions';
+import { uploadItemImageInitAction } from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@material-ui/core/Button';
@@ -16,9 +14,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import { CardLabel } from 'web/components/styled/FormBox';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
-import { withStyles } from '@material-ui/core/styles';
 
 import ItemIngredients from './ItemIngredients';
 import ItemAddons from './ItemAddons';
@@ -100,10 +97,14 @@ let ItemDetail = ({
   uploadItemImage,
   menuItems,
   classes,
+  fetchMenuitem
 }) => {
-  const selectedFood = menuItems[selectedFoodId];
-  if (!selectedFood) return <div />;
   const { t } = useTranslation();
+  const selectedFood = menuItems[selectedFoodId];
+  useEffect(() => {
+    fetchMenuitem({ id: selectedFoodId })
+  }, []);
+  if (!selectedFood) return <div />;
   let foodImageUrl = '';
   if (selectedFood.images) {
     const images = FN.MapToList(selectedFood.images).sort(
@@ -178,7 +179,8 @@ ItemDetail = withStyles(styles)(ItemDetail);
 export default connect(
   null,
   {
-    updateFood: updateMenuitemInitAction,
+    fetchMenuitem: fetchMenuitemInit,
+    updateFood: updateMenuitemInit,
     uploadItemImage: uploadItemImageInitAction,
   },
 )(ItemDetail);
