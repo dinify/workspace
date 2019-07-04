@@ -1,10 +1,5 @@
 import * as types from './types';
 
-export const updateCusomizationsInit = (payload) => ({
-  type: types.UPDATECUSOMIZATIONS_INIT,
-  payload
-});
-
 export const fetchMenuitemInit = payload => ({
   type: types.FETCH_MENUITEM_INIT,
   payload,
@@ -52,5 +47,15 @@ export const assignAddon = payload => ({
 
 export const unassignAddon = payload => ({
   type: types.UNASSIGN_ADDON_INIT,
+  payload,
+});
+
+export const assignOption = payload => ({
+  type: types.ASSIGN_OPTION_INIT,
+  payload,
+});
+
+export const unassignOption = payload => ({
+  type: types.UNASSIGN_OPTION_INIT,
   payload,
 });

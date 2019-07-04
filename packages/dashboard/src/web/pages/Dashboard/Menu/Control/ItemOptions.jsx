@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import find from 'ramda/src/find';
 import propEq from 'ramda/src/propEq';
 import * as FN from '@dinify/common/dist/lib/FN';
 import { Label } from 'web/components/styled/FormBox';
-import { updateCusomizationsInit } from 'ducks/menuItem/actions';
+import { assignOption, unassignOption } from 'ducks/menuItem/actions';
+import { fetchOptions } from 'ducks/option/actions';
+import { listOfOptions } from 'ducks/option/selectors';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
@@ -20,22 +22,37 @@ const choicesEnumText = (choices) => {
 }
 
 const ItemOptions = ({
-  optionsMap,
+  optionsList,
+  fetchOptions,
+  optionsLoaded,
   selectedFoodId,
-  updateCusomizations,
+  assignOption,
+  unassignOption,
   menuItems,
   t
 }) => {
-  const optionsList = FN.MapToList(optionsMap);
-  const dataSource = optionsList.map(o => ({ value: o.id, label: o.name }));
+  const shouldLoad = optionsList.length < 1 && !optionsLoaded;
+  useEffect(() => {
+    if (shouldLoad) fetchOptions()
+  }, []);
   const selectedFood = menuItems[selectedFoodId];
+  if (!selectedFood) {
+    return <div />;
+  }
+  const assignedOptions = selectedFood.options || [];
+  const assignedOptionsIds = assignedOptions.map(o => o.id);
+
+  const dataSource = optionsList
+    .filter(o => !assignedOptionsIds.includes(o.id))
+    .map(o => ({ value: o.id, label: o.name }));
+
   return (
     <div style={{ marginBottom: 30 }}>
       <Label>{t('menu.optionGroups')}</Label>
 
       {selectedFood.options ? (
         <div>
-          {FN.MapToList(selectedFood.options).map((option, i) => (
+          {assignedOptions.map((option, i) => (
             <div key={i}>
               <Chip
                 style={{marginTop: '10px', maxWidth: '100%'}}
@@ -45,11 +62,9 @@ const ItemOptions = ({
                   </Avatar>
                 }
                 onDelete={() =>
-                  updateCusomizations({
+                  unassignOption({
                     menuItemId: selectedFoodId,
-                    actionKind: 'REMOVE',
-                    custKey: 'options',
-                    custId: option.id
+                    optionId: option.id
                   })
                 }
                 label={<div style={{maxWidth: '280px', overflow: 'hidden'}}>
@@ -68,15 +83,9 @@ const ItemOptions = ({
         placeholder={(t('menu.selectOptionGroups'))}
         dataSource={dataSource}
         onChange={option =>
-          updateCusomizations({
+          assignOption({
             menuItemId: selectedFoodId,
-            actionKind: 'ADD',
-            custKey: 'options',
-            custId: option.value,
-            cust: {
-              ...find(propEq('id', option.value))(optionsList),
-              difference: { amount: '0', currency: 'CZK' },
-            },
+            optionId: option.value
           })
         }
       />
@@ -86,10 +95,13 @@ const ItemOptions = ({
 
 export default connect(
   state => ({
-    optionsMap: state.option.all,
+    optionsList: listOfOptions(state),
+    optionsLoaded: state.option.loaded,
     menuItems: state.menuItem.all,
   }),
   {
-    updateCusomizations: updateCusomizationsInit
+    fetchOptions,
+    assignOption,
+    unassignOption,
   },
 )(ItemOptions);

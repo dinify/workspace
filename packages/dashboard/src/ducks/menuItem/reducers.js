@@ -1,7 +1,7 @@
 import pipe from 'ramda/src/pipe';
 import assocPath from 'ramda/src/assocPath';
 import dissocPath from 'ramda/src/dissocPath';
-import { MapToList, ListToMap } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 import * as menuCategoryTypes from 'ducks/menuCategory/types';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
@@ -70,44 +70,6 @@ export default function reducer(state = initialState, action) {
     case type.REMOVE_MENUITEM_FAIL: {
       const id = payload.initPayload.id;
       return assocPath(['all', id], state.backup[id])(state);
-    }
-
-    case 'UPDATECUSOMIZATIONS_UPDATING': {
-      const { id, custKey, updatedCusts } = payload;
-      return assocPath(['all', id, custKey], updatedCusts)(state);
-    }
-
-    case 'ASSIGN_INGREDIENT-FOOD_INIT': {
-      const { foodId, ingredientId, ingredient } = payload;
-      if (!ingredient) return state;
-      return assocPath(['all', foodId, 'ingredients', ingredientId], ingredient)(state);
-    }
-
-    case 'UNASSIGN_INGREDIENT-FOOD_INIT': {
-      const { foodId, ingredientId } = payload;
-      return dissocPath(['all', foodId, 'ingredients', ingredientId])(state);
-    }
-
-    case 'ASSIGN_ADDON-FOOD_INIT': {
-      const { foodId, addonId, addon } = payload;
-      if (!addon) return state;
-      return assocPath(['all', foodId, 'addons', addonId], addon)(state);
-    }
-
-    case 'UNASSIGN_ADDON-FOOD_INIT': {
-      const { foodId, addonId } = payload;
-      return dissocPath(['all', foodId, 'addons', addonId])(state);
-    }
-
-    case 'ASSIGN_OPTION-FOOD_INIT': {
-      const { foodId, optionId, option } = payload;
-      if (!option) return state;
-      return assocPath(['all', foodId, 'options', optionId], option)(state);
-    }
-
-    case 'UNASSIGN_OPTION-FOOD_INIT': {
-      const { foodId, optionId } = payload;
-      return dissocPath(['all', foodId, 'options', optionId])(state);
     }
 
     case types.UPDATE_ITEMIMAGE_DONE: {
