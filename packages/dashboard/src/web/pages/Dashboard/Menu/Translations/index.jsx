@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { createSelector } from 'reselect'
 import { compose } from 'redux';
