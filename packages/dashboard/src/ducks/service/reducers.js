@@ -17,7 +17,7 @@ export default function reducer(state = initialState, action) {
   switch (type) {
     case restaurantTypes.FETCH_RESTAURANT_DONE: {
       const services = payload.res.services;
-      return assoc('all', services)(state);
+      return assoc('all', { ...state.all, ...services })(state);
     }
 
     case 'REMOVE_SERVICE_INIT': {

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { updateNameInitAction } from 'ducks/restaurant/actions';
 import { removeServiceInit } from 'ducks/service/actions';
 import { useTranslation } from 'react-i18next';
-import { MapToList } from '@dinify/common/dist/lib/FN';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Tabs from '@material-ui/core/Tabs';
@@ -20,6 +19,7 @@ import Typography from '@dinify/common/dist/components/Typography';
 import Paper from '@material-ui/core/Paper';
 import { switchServicesTab as switchTab } from 'ducks/ui/actions';
 import AddServiceComponent from 'web/components/AddService';
+import { selectedServicesList } from 'ducks/service/selectors';
 
 function TabContainer(props) {
   const { children } = props;
@@ -51,18 +51,15 @@ const styles = () => ({
   }
 });
 
-const ServiceCalls = ({ removeService, services, images, classes, tabIndex, switchTab }) => {
+const ServiceCalls = ({ removeService, servicesList, images, classes, tabIndex, switchTab }) => {
   const { t } = useTranslation();
-  const servicesList = MapToList(services).sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
   const getImageUrl = (service) => {
     const img = find(propEq('id', service.image_id))(images);
     if (img) return img.url;
     return service.image.url;
   }
   const selectedType = tabIndex === 0 ? 'TABLEWARE' : 'CONDIMENT';
-  const selectedServicesList = filter((s) => s.type === selectedType, servicesList);
+  const specificServicesList = filter((s) => s.type === selectedType, servicesList);
   return (
     <div>
       <Paper style={{borderRadius: '2px', margin: '14px 10px'}}>
@@ -72,7 +69,7 @@ const ServiceCalls = ({ removeService, services, images, classes, tabIndex, swit
         </Tabs>
 
         <TabContainer>
-          {selectedServicesList.length > 0 ? selectedServicesList.map(service => (
+          {specificServicesList.length > 0 ? specificServicesList.map(service => (
             <Card key={service.id} className={classes.card}>
               <CardContent className={classes.cardContent}>
                 <Avatar src={getImageUrl(service)} className={classes.avatar} />
@@ -107,7 +104,7 @@ const ServiceCalls = ({ removeService, services, images, classes, tabIndex, swit
 
 export default connect(
   state => ({
-    services: state.service.all,
+    servicesList: selectedServicesList(state),
     images: state.service.images,
     tabIndex: state.ui.servicesTabIndex
   }),

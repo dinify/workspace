@@ -53,6 +53,14 @@ const restaurantPersistConfig = {
   ]
 }
 
+const servicePersistConfig = {
+  key: 'service',
+  storage,
+  whitelist: [
+    'all'
+  ]
+}
+
 const commonReducers = {
   auth,
   restaurant: persistReducer(restaurantPersistConfig, restaurant),
@@ -62,7 +70,7 @@ const commonReducers = {
   option,
   ingredient,
   addon,
-  service,
+  service: persistReducer(servicePersistConfig, service),
   translation,
   firebase: firebaseReducer,
   snackbar: snackbarReducer
