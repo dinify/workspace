@@ -56,6 +56,7 @@ const ServiceCalls = ({ removeService, servicesList, images, classes, tabIndex, 
   const getImageUrl = (service) => {
     const img = find(propEq('id', service.image_id))(images);
     if (img) return img.url;
+    if (!service.image) return '';
     return service.image.url;
   }
   const selectedType = tabIndex === 0 ? 'TABLEWARE' : 'CONDIMENT';

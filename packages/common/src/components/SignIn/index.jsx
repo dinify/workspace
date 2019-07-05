@@ -239,10 +239,12 @@ SignInForm = reduxForm({
 const SignInPage = (props) => {
   const { prefill, location } = props;
   const { t } = useTranslation();
-  const params = queryString.parse(location.search) || {};
-
+  let params = {};
+  if (location) {
+    params = queryString.parse(location.search);
+  }
   let initialValues = {};
-  if (params && params.email) {
+  if (params.email) {
     initialValues.email = params.email;
   }
   if (prefill && prefill.email) {

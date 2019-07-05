@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import find from 'ramda/src/find';
-import propEq from 'ramda/src/propEq';
 import * as FN from '@dinify/common/dist/lib/FN';
 import { Label } from 'web/components/styled/FormBox';
 import { assignOption, unassignOption } from 'ducks/menuItem/actions';
