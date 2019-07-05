@@ -1,5 +1,6 @@
 import assocPath from 'ramda/src/assocPath';
 import keys from 'ramda/src/keys';
+import apply from 'ramda/src/apply';
 import pipe from 'ramda/src/pipe';
 import { MapToList } from '@dinify/common/dist/lib/FN';
 import menuCategoryTypes from 'ducks/menuCategory/types';
@@ -17,15 +18,10 @@ const handleProp = (oldItem, propName) => newItem => {
   return updatedItem;
 }
 
-const updateMenuItem = (oldItem, newItem) => {
-  const result = pipe(
-    handleProp(oldItem, 'ingredients'),
-    handleProp(oldItem, 'addons'),
-    handleProp(oldItem, 'options')
-  )(newItem);
-  return result;
+const useOldIfNewNA = (oldItem, newItem, propArray) => {
+  if (!oldItem) return newItem;
+  return apply(pipe, propArray.map(p => handleProp(oldItem, p)))(newItem)
 }
-
 
 export default function reducer(state = initialState, action) {
   const { payload, type } = action;
@@ -52,12 +48,8 @@ export default function reducer(state = initialState, action) {
         if (!category.items) return;
         MapToList(category.items).forEach(item => {
           if (item.published) {
-            if (state.all[item.id]) {
-              const updatedItem = updateMenuItem(state.all[item.id], item);
-              newState = assocPath(['all', item.id], updatedItem)(newState);
-            } else {
-              newState = assocPath(['all', item.id], item)(newState);
-            }
+            const updatedItem = useOldIfNewNA(state.all[item.id], item, ['ingredients', 'addons', 'options']);
+            newState = assocPath(['all', item.id], updatedItem)(newState);
           }
         });
       })

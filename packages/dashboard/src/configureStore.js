@@ -44,6 +44,7 @@ const restaurantPersistConfig = {
   key: 'restaurant',
   storage,
   whitelist: [
+    'all',
     'loggedRestaurant',
     'selectedRestaurant',
     'prefill',
