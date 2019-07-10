@@ -59,3 +59,8 @@ export const unassignOption = payload => ({
   type: types.UNASSIGN_OPTION_INIT,
   payload,
 });
+
+export const uploadItemImageInit = payload => ({
+  type: types.UPDATE_ITEMIMAGE_INIT,
+  payload,
+});

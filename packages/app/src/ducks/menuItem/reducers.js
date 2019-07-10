@@ -12,7 +12,7 @@ const initialState = {
 
 const handleProp = (oldItem, propName) => newItem => {
   const updatedItem = newItem;
-  if (!updatedItem[propName] && oldItem[propName]) {
+  if (updatedItem[propName] === undefined && oldItem[propName] !== undefined) {
     updatedItem[propName] = oldItem[propName];
   }
   return updatedItem;
@@ -22,6 +22,8 @@ const useOldIfNewNA = (oldItem, newItem, propArray) => {
   if (!oldItem) return newItem;
   return apply(pipe, propArray.map(p => handleProp(oldItem, p)))(newItem)
 }
+
+const keepProps = ['ingredients', 'addons', 'options', 'favorite'];
 
 export default function reducer(state = initialState, action) {
   const { payload, type } = action;
@@ -38,7 +40,7 @@ export default function reducer(state = initialState, action) {
 
     case types.FETCH_MENUITEM_DONE: {
       const item = payload.res || {};
-      return assocPath(['all', item.id], item)(state);
+      return assocPath(['all', item.id], useOldIfNewNA(state.all[item.id], item, keepProps))(state);
     }
 
     case menuCategoryTypes.FETCH_MENUCATEGORIES_DONE: {
@@ -48,7 +50,7 @@ export default function reducer(state = initialState, action) {
         if (!category.items) return;
         MapToList(category.items).forEach(item => {
           if (item.published) {
-            const updatedItem = useOldIfNewNA(state.all[item.id], item, ['ingredients', 'addons', 'options']);
+            const updatedItem = useOldIfNewNA(state.all[item.id], item, keepProps);
             newState = assocPath(['all', item.id], updatedItem)(newState);
           }
         });

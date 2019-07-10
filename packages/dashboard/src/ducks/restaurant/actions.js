@@ -140,10 +140,6 @@ export const uploadMainImageInitAction = payload => ({
   type: 'UPDATE_IMAGE_INIT',
   payload,
 });
-export const uploadItemImageInitAction = payload => ({
-  type: 'UPDATE_ITEMIMAGE_INIT',
-  payload,
-});
 
 export const updateFoodNutritionInit = payload => ({
   type: 'UPDATE_NUTRITION_INIT',
