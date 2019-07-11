@@ -1,9 +1,9 @@
-import assoc from 'ramda/src/assoc'
-import filter from 'ramda/src/filter'
+import assoc from 'ramda/src/assoc';
+import filter from 'ramda/src/filter';
 
 const initialState = {
   list: []
-}
+};
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {

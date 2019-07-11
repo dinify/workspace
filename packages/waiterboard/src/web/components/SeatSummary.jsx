@@ -1,4 +1,4 @@
-// @flow
+
 import React from 'react'
 import { connect } from 'react-redux';
 import { colorsByStages } from '../colors'
@@ -6,7 +6,7 @@ import { ActionBox, Header, Text } from 'web/components/styled/Events'
 import User from 'web/components/Events/user'
 import filter from 'ramda/src/filter'
 import Order from 'web/components/Events/Order'
-import { MapToList } from 'lib/FN'
+import { MapToList } from '@dinify/common/dist/lib/FN'
 
 class SeatSummary extends React.Component {
 

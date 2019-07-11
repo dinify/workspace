@@ -459,8 +459,8 @@ export function CheckOutUser({ userId }) {
   return Post({ path: `checkout/user/${userId}` });
 }
 
-export function GetBookings() {
-  return Get({ path: `restaurant/my/bookings` });
+export function GetBookings({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/bookings` });
 }
 
 export function ConfirmBooking({ id }) {

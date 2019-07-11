@@ -1,11 +1,11 @@
-// @flow
+
 import React from 'react'
 import { colorsByStages } from '../../colors'
 import { connect } from 'react-redux';
 
 import moment from 'moment';
 
-import * as FN from '../../../lib/FN'
+import * as FN from '@dinify/common/dist/lib/FN'
 import { confirmOrderAhead } from 'ducks/restaurant/actions'
 
 import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, FoodItem, Color } from '../styled/Events'

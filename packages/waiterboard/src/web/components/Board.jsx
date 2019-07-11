@@ -1,31 +1,29 @@
-// @flow
-import React from 'react'
-import { connect } from 'react-redux'
-import styled from 'styled-components'
-import Swipeable from 'react-swipeable'
-import { MapToList } from 'lib/FN'
-
-import Header from './Header'
-import FrameOfTables from './FrameOfTables'
-import Modal from './Modal'
-import ModalUser from './ModalUser'
-import ModalListOfOrders from './ModalListOfOrders'
-import ModalListOfBookings from './ModalListOfBookings'
-import ModalTable from './ModalTable'
+import React from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import Swipeable from 'react-swipeable';
 
 import { toggleFrames, toggleModal } from 'ducks/ui'
 import { setOHEnabled, setWBidAction } from 'ducks/restaurant/actions'
 import { getGroupedBills } from 'ducks/bill/selectors';
 import { getTableList } from 'ducks/table/selectors';
-
-import Booking from './Events/Booking'
-import Call from './Events/Call'
-import Order from './Events/Order'
-import Bill from './Events/Bill'
 import { getBookingList } from 'ducks/booking/selectors';
 import { getOrderList } from 'ducks/order/selectors';
 import { getCallList } from 'ducks/call/selectors';
 import { getSeatList } from 'ducks/seat/selectors';
+
+import Header from './Header';
+import FrameOfTables from './FrameOfTables';
+import Modal from './Modal';
+import ModalUser from './ModalUser';
+import ModalListOfOrders from './ModalListOfOrders';
+import ModalListOfBookings from './ModalListOfBookings';
+import ModalTable from './ModalTable';
+import Booking from './Events/Booking';
+import Call from './Events/Call';
+import Order from './Events/Order';
+import Bill from './Events/Bill';
+
 
 const EventsPlaceholder = styled.div`
   font-size: 32px;

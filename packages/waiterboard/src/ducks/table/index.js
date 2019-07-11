@@ -1,6 +1,5 @@
-import reducer from './reducers'
+import reducer from './reducers';
 
-export { default as tableEpics } from './epics'
-export { default as tableTypes } from './types'
+export { default as tableEpics } from './epics';
 
-export default reducer
+export default reducer;

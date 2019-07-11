@@ -1,12 +1,11 @@
-// @flow
-import { Observable, of, from } from 'rxjs';
+import { of, from } from 'rxjs';
 import { mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import pluck from 'ramda/src/pluck'
+import pluck from 'ramda/src/pluck';
 import * as API from '@dinify/common/dist/api/restaurant';
-import { ListToMap } from 'lib/FN'
+import { ListToMap } from '@dinify/common/dist/lib/FN';
 
-const loadBookingEpic = (action$: Observable) =>
+const loadBookingEpic = (action$) =>
   action$.pipe(
     ofType('LOAD_BOOKING_INIT'),
     switchMap(() => {

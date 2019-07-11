@@ -1,3 +1,3 @@
-export default {
-  SEAT_RECEIVED: 'tabb/seat/SEAT_RECEIVED'
-};
+const p = 'dinify/seat';
+
+export const SEAT_RECEIVED = `${p}/SEAT_RECEIVED`;

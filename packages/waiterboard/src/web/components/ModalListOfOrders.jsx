@@ -1,9 +1,9 @@
-// @flow
+
 import React from 'react'
 import { connect } from 'react-redux';
 import Order from './Events/Order'
 import { colorsByStages } from '../colors'
-import { MapToList } from 'lib/FN'
+import { MapToList } from '@dinify/common/dist/lib/FN'
 
 import { Head, Body, BodyPlaceholder } from './styled/Modal'
 

@@ -11,16 +11,16 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 import auth from '@dinify/common/dist/ducks/auth';
-import table from 'ducks/table'
-import ui from 'ducks/ui'
-import restaurant from 'ducks/restaurant'
-import user from 'ducks/user'
-import booking from 'ducks/booking'
-import call from 'ducks/call'
-import order from 'ducks/order'
-import bill from 'ducks/bill'
-import service from 'ducks/service'
-import seat from 'ducks/seat'
+import table from 'ducks/table';
+import ui from 'ducks/ui';
+import restaurant from 'ducks/restaurant';
+import user from 'ducks/user';
+import booking from 'ducks/booking';
+import call from 'ducks/call';
+import order from 'ducks/order';
+import bill from 'ducks/bill';
+import service from 'ducks/service';
+import seat from 'ducks/seat';
 
 import firebaseConfig from '@dinify/common/firebaseConfig.json';
 import rootEpic from 'configureEpics.js';
@@ -31,7 +31,7 @@ const rootPersistConfig = {
   key: 'root',
   storage,
   whitelist: []
-}
+};
 
 const restaurantPersistConfig = {
   key: 'restaurant',
@@ -40,7 +40,7 @@ const restaurantPersistConfig = {
     'selectedRestaurant',
     'selectedWBId'
   ]
-}
+};
 
 const commonReducers = {
   auth,
@@ -56,7 +56,7 @@ const commonReducers = {
   seat,
   firebase: firebaseReducer,
   form: formReducer,
-}
+};
 
 const epicMiddleware = createEpicMiddleware();
 

@@ -1,6 +1,8 @@
 import { of } from 'rxjs';
 import toPairs from 'ramda/src/toPairs';
 import curry from 'ramda/src/curry';
+import apply from 'ramda/src/apply';
+import pipe from 'ramda/src/pipe';
 import assocPath from 'ramda/src/assocPath';
 import path from 'ramda/src/path';
 import keys from 'ramda/src/keys';
@@ -208,3 +210,17 @@ export const handleEpicAPIError = ({ error, failActionType, initAction }) => {
     });
   }
 };
+
+export const useOldPropIfNewNA = (oldItem, propName) => newItem => {
+  const updatedItem = newItem;
+  if (updatedItem[propName] === undefined && oldItem[propName] !== undefined) {
+    updatedItem[propName] = oldItem[propName];
+  }
+  return updatedItem;
+}
+
+// use old propertioes of Object if they are not available in the new one
+export const useOldPropsIfNewNA = (oldItem, newItem, propArray) => {
+  if (!oldItem) return newItem;
+  return apply(pipe, propArray.map(p => useOldPropIfNewNA(oldItem, p)))(newItem)
+}

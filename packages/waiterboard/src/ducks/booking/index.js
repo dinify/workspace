@@ -1,6 +1,5 @@
-import reducer from './reducers'
+import reducer from './reducers';
 
-export { default as bookingEpics } from './epics'
-export { default as bookingTypes } from './types'
+export { default as bookingEpics } from './epics';
 
-export default reducer
+export default reducer;

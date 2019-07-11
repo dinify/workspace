@@ -1,6 +1,6 @@
-import assoc from 'ramda/src/assoc'
-import assocPath from 'ramda/src/assocPath'
-import { UpdateOriginal } from 'lib/FN'
+import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
+import { UpdateOriginal } from '@dinify/common/dist/lib/FN';
 
 const initialState = {
   all: {}

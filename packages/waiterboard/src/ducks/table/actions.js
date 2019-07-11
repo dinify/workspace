@@ -1,4 +1,3 @@
-// @flow
 
 export const clearTable = (payload) => ({
   type: 'CLEAR_TABLE_INIT',

@@ -4,8 +4,7 @@ import { ofType } from 'redux-observable';
 import { push } from 'connected-react-router';
 import { actionTypes } from 'react-redux-firebase';
 import * as API from '@dinify/common/dist/api/restaurant';
-import { setCookie } from '@dinify/common/dist/lib/FN';
-import { appBootstrap, confirmationFail  } from './actions';
+import { appBootstrap, confirmationFail } from './actions';
 
 const bootstrapEpic = (action$) =>
   action$.pipe(
@@ -26,7 +25,7 @@ const loadRestaurant = (action$) =>
     ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
       return of(
-        {type: 'FETCH_LOGGEDRESTAURANT_INIT'},
+        {type: 'FETCH_RESTAURANT_INIT'},
         // {type: 'FETCH_LANGUAGES_INIT'},
         // {type: 'FETCH_TRANSLATIONS_INIT'},
         // {type: 'FETCH_SERVICEIMAGES_INIT'},

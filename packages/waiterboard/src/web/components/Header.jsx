@@ -1,10 +1,9 @@
-// @flow
 import React from 'react'
 import styled from 'styled-components'
 import numeral from 'numeral'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { MapToList } from 'lib/FN'
+import { MapToList } from '@dinify/common/dist/lib/FN'
 import { withFirebase } from 'react-redux-firebase'
 
 import AppBar from '@material-ui/core/AppBar'
@@ -123,7 +122,6 @@ const Header = ({
   tablesCount = 0,
   salesVolume = 0,
   restaurant,
-  selectedWBId,
   firebase,
   toggleFrames,
   toggleModal,
@@ -135,10 +133,6 @@ const Header = ({
   const frames = ['actions','tables']
   let restaurantName = '';
   if (restaurant) restaurantName = restaurant.name;
-  let waiterboardName = '';
-  if (restaurant.waiterboards && restaurant.waiterboards[selectedWBId]) {
-    waiterboardName = restaurant.waiterboards[selectedWBId].name
-  }
   const bookingsList = MapToList(bookings)
   const acceptedBookings = bookingsList.filter((b) => b.status === 'CONFIRMED')
 

@@ -1,10 +1,8 @@
-// @flow
-import { Observable, of, from } from 'rxjs';
-import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
-import { ofType } from 'redux-observable';
+import { of, from } from 'rxjs';
+import { switchMap, map, catchError, filter } from 'rxjs/operators';
 import * as API from '@dinify/common/dist/api/restaurant';
 
-const clearTableEpic = (action$: Observable) =>
+const clearTableEpic = (action$) =>
   action$.pipe(
     filter(action => action.type === 'CLEAR_TABLE_INIT'),
     switchMap(({ payload }) => {
@@ -16,10 +14,9 @@ const clearTableEpic = (action$: Observable) =>
         catchError(error => of(({type: 'CLEAR_TABLE_FAIL', error})))
       )
     })
-  )
+  );
 
-
-const clearUserEpic = (action$: Observable) =>
+const clearUserEpic = (action$) =>
   action$.pipe(
     filter(action => action.type === 'CLEAR_USER_INIT'),
     switchMap(({ payload }) => {
@@ -31,10 +28,9 @@ const clearUserEpic = (action$: Observable) =>
         catchError(error => of(({type: 'CLEAR_USER_FAIL', payload: error})))
       )
     })
-  )
-
+  );
 
 export default [
   clearTableEpic,
   clearUserEpic
-]
+];

@@ -1,22 +1,20 @@
-// @flow
 import React from 'react'
-import { colorsByStages } from '../../colors'
 import { connect } from 'react-redux';
-import { confirmOrder } from 'ducks/restaurant/actions'
-import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, FoodItem } from '../styled/Events'
-import User from './user'
-import { isItOutdated } from '../../../common/helpers/time'
-import moment from 'moment'
-import * as FN from '../../../lib/FN'
 import N from 'numeral';
+import moment from 'moment';
+import { confirmOrder } from 'ducks/restaurant/actions';
+import User from './user';
+import { colorsByStages } from '../../colors';
+import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, FoodItem } from '../styled/Events';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 
-const color = colorsByStages['s2']
+const color = colorsByStages['s2'];
 
 const ListOfCustomizations = ({ list }) => {
 	if (list) {
 		return (
 			<div>
-				{FN.MapToList(list).map((option, i) =>
+				{MapToList(list).map((option, i) =>
 					<FoodItem bgIndex={i} key={i}>
 						<span style={{whiteSpace: 'nowrap'}}>{option.name}</span>
 					</FoodItem>
@@ -62,11 +60,11 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
           </tr>
         </thead>
         <tbody>
-					{order.items ? FN.MapToList(order.items).map((item) =>
+					{order.items ? MapToList(order.items).map((item) =>
 						<Tr key={item.id}>
 	            <Td>{item.menu_item.name}</Td>
 							<Td items>
-								{item.choices ? FN.MapToList(item.choices).map((choice) =>
+								{item.choices ? MapToList(item.choices).map((choice) =>
 									<FoodItem bgIndex={0} key={choice.id}>
 										<span style={{whiteSpace: 'nowrap'}}>{choice.name}</span>
 									</FoodItem>

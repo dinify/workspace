@@ -1,8 +1,8 @@
-import { ListToMap } from 'lib/FN'
-import types from './types';
-import mergeDeepRight from 'ramda/src/mergeDeepRight'
-import assoc from 'ramda/src/assoc'
-import assocPath from 'ramda/src/assocPath'
+import { ListToMap } from '@dinify/common/dist/lib/FN';
+import mergeDeepRight from 'ramda/src/mergeDeepRight';
+import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
+import * as types from './types';
 
 const initialState = {
   all: {}

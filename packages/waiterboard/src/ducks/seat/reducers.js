@@ -1,9 +1,7 @@
-import assoc from 'ramda/src/assoc'
-import filter from 'ramda/src/filter'
-import assocPath from 'ramda/src/assocPath'
-import { ListToMap } from 'lib/FN'
-
-import types from './types';
+import assoc from 'ramda/src/assoc';
+import filter from 'ramda/src/filter';
+import { ListToMap } from '@dinify/common/dist/lib/FN';
+import * as types from './types';
 
 const initialState = {
   all: {}

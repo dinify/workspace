@@ -1,4 +1,4 @@
-// @flow
+
 import styled from 'styled-components'
 
 export const HorizontalLine = styled.div`

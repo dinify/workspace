@@ -1,18 +1,18 @@
-import assoc from 'ramda/src/assoc'
-import assocPath from 'ramda/src/assocPath'
-import keys from 'ramda/src/keys'
-import merge from 'ramda/src/merge'
-import { UpdateOriginal } from 'lib/FN'
+import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
+import keys from 'ramda/src/keys';
+import merge from 'ramda/src/merge';
+import { UpdateOriginal } from '@dinify/common/dist/lib/FN';
 
 const initialState = {
   all: {}
-}
+};
 
 // Reducer
 export default function reducer(state = initialState, action) {
   switch (action.type) {
 
-    case 'FETCH_LOGGEDRESTAURANT_DONE': {
+    case 'FETCH_RESTAURANT_DONE': {
       const restaurant = action.payload.res;
       const waiterboards = restaurant.waiterboards;
       const selectedWBid = keys(waiterboards)[0]

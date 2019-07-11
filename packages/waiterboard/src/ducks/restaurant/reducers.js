@@ -1,10 +1,11 @@
-import * as R from 'ramda';
-import assoc from 'ramda/src/assoc'
-import assocPath from 'ramda/src/assocPath'
+import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
+import pipe from 'ramda/src/pipe';
 import { setCookie } from '@dinify/common/dist/lib/FN';
-import types from './types';
+import * as types from './types';
 
 const initialState = {
+  all: {},
   selectedWBId: null,
   appRun: false,
   loggedUser: {},
@@ -17,26 +18,39 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
-    case types.LOGIN_DONE:
-      return state;
-    case types.BOOTSTRAP:
+  const { payload, type } = action;
+  switch (type) {
+    case types.BOOTSTRAP: {
       return assoc('appRun', true)(state);
-    case 'FETCH_LOGGEDRESTAURANT_DONE':
-      return assoc('loggedUser', action.payload.res)(state);
-    case 'GET_SALES_DONE':
-      return assoc('sales', action.payload.sales)(state);
+    }
+
+    case 'FETCH_RESTAURANT_DONE': {
+      const { res } = payload;
+      return assocPath(['all', res.id], res)(state);
+    }
+
+    case 'GET_SALES_DONE': {
+      const { sales } = payload;
+      return assoc('sales', sales)(state);
+    }
+
     case 'SET_TIMER': {
-      setCookie('timer-'+action.payload.key, action.payload.val, 30);
-      return assocPath(['timer', action.payload.key], action.payload.val)(state);
+      setCookie('timer-'+payload.key, payload.val, 30);
+      return assocPath(['timer', payload.key], payload.val)(state);
     }
+
     case 'SELECT_WAITERBOARD': {
-      const { id, restaurantId } = action.payload;
-      const newState = R.assoc('selectedWBId', id)(state);
-      return R.assoc('selectedRestaurant', restaurantId)(newState);
+      const { id, restaurantId } = payload;
+      return pipe(
+        assoc('selectedWBId', id),
+        assoc('selectedRestaurant', restaurantId)
+      )(state);
     }
-    case 'FETCH_MANAGEDRESTAURANTS_DONE':
-      return R.assoc('managedRestaurants', action.payload.res)(state);
+
+    case 'FETCH_MANAGEDRESTAURANTS_DONE': {
+      return assoc('managedRestaurants', payload.res)(state);
+    }
+
     default:
       return state;
   }

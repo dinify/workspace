@@ -1,7 +1,7 @@
 import assoc from 'ramda/src/assoc'
 import assocPath from 'ramda/src/assocPath'
-import types from './types';
-import { UpdateOriginal } from 'lib/FN'
+import { UpdateOriginal } from '@dinify/common/dist/lib/FN';
+import * as types from './types';
 
 const initialState = {
   all: {}

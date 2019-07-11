@@ -1,27 +1,12 @@
 import assocPath from 'ramda/src/assocPath';
 import keys from 'ramda/src/keys';
-import apply from 'ramda/src/apply';
-import pipe from 'ramda/src/pipe';
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList, useOldPropsIfNewNA } from '@dinify/common/dist/lib/FN';
 import menuCategoryTypes from 'ducks/menuCategory/types';
 import types from './types';
 
 const initialState = {
   all: {},
 };
-
-const handleProp = (oldItem, propName) => newItem => {
-  const updatedItem = newItem;
-  if (updatedItem[propName] === undefined && oldItem[propName] !== undefined) {
-    updatedItem[propName] = oldItem[propName];
-  }
-  return updatedItem;
-}
-
-const useOldIfNewNA = (oldItem, newItem, propArray) => {
-  if (!oldItem) return newItem;
-  return apply(pipe, propArray.map(p => handleProp(oldItem, p)))(newItem)
-}
 
 const keepProps = ['ingredients', 'addons', 'options', 'favorite'];
 
@@ -40,7 +25,7 @@ export default function reducer(state = initialState, action) {
 
     case types.FETCH_MENUITEM_DONE: {
       const item = payload.res || {};
-      return assocPath(['all', item.id], useOldIfNewNA(state.all[item.id], item, keepProps))(state);
+      return assocPath(['all', item.id], useOldPropsIfNewNA(state.all[item.id], item, keepProps))(state);
     }
 
     case menuCategoryTypes.FETCH_MENUCATEGORIES_DONE: {
@@ -50,7 +35,7 @@ export default function reducer(state = initialState, action) {
         if (!category.items) return;
         MapToList(category.items).forEach(item => {
           if (item.published) {
-            const updatedItem = useOldIfNewNA(state.all[item.id], item, keepProps);
+            const updatedItem = useOldPropsIfNewNA(state.all[item.id], item, keepProps);
             newState = assocPath(['all', item.id], updatedItem)(newState);
           }
         });

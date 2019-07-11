@@ -1,4 +1,3 @@
-// @flow
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -9,8 +8,6 @@ import Board from './Board'
 import SelectWB from './SelectWB'
 import SignIn from '@dinify/common/dist/components/SignIn';
 import withRoot from 'withRoot.js';
-import { stat } from 'fs';
-
 
 const Content = styled.div`
   font-family: 'Lato', sans-serif;

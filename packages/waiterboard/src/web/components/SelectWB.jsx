@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,10 +10,8 @@ import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import { MapToList, getInitials } from '@dinify/common/dist/lib/FN';
-import { FormBox, FormBoxHead, FormBoxBody } from './styled/FormBox';
-import IconButton from '@material-ui/core/IconButton';
-import ExitToApp from '@material-ui/icons/ExitToApp';
 import { withFirebase } from 'react-redux-firebase';
+import { FormBox, FormBoxHead, FormBoxBody } from './styled/FormBox';
 
 const Content = styled.div`
   position: relative;

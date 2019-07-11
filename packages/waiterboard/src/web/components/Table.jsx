@@ -1,19 +1,16 @@
-// @flow
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { colorsByStages } from '../colors';
-import { clearTable, updateTableInit } from 'ducks/table/actions';
-
 import S from 'string';
+import { clearTable, updateTableInit } from 'ducks/table/actions';
 import { toggleModal } from 'ducks/ui';
-
 import Block from '@material-ui/icons/Block';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import Chip from '@material-ui/core/Chip';
 import IconButton from '@material-ui/core/IconButton';
+import { colorsByStages } from '../colors';
 
 const TableBox = styled.div`
   display: inline-block;
@@ -45,7 +42,6 @@ const Id = styled.div`
   width: 50px;
   cursor: pointer;
 `;
-
 const Seats = styled.div`
   position: absolute;
   top: 0;
@@ -102,9 +98,9 @@ const Rectangle = styled.div`
 // TODO click to table: half screen: bills of the day, half screen: enlarged table
 
 const Sign = ({ guest, timer }) => {
-  let flash = false
+  let flash = false;
   if (guest.status === 's2') {
-    //flash = isItOutdated(guest.orderStartTime, timer.o)
+    // flash = isItOutdated(guest.orderStartTime, timer.o)
     return (
       <Circle>
         <Rectangle bg={colorsByStages['s1']} flash={flash} />
@@ -113,7 +109,7 @@ const Sign = ({ guest, timer }) => {
     )
   }
   if (guest.status === 's5') {
-    //flash = isItOutdated(guest.paymentStartTime, timer.p)
+    // flash = isItOutdated(guest.paymentStartTime, timer.p)
     return (
       <Circle>
         <Rectangle bg={colorsByStages['s3']} flash={flash} />
@@ -122,7 +118,7 @@ const Sign = ({ guest, timer }) => {
     )
   }
   if (guest.status === 's4') {
-    //flash = isItOutdated(guest.serviceCallStartTime, timer.sc)
+    // flash = isItOutdated(guest.serviceCallStartTime, timer.sc)
     return (
       <Circle>
         <Rectangle bg={colorsByStages['s4']} flash={flash} />
@@ -219,7 +215,6 @@ const Table = ({
 export default connect(
   state => ({
     users: state.user.all,
-    loggedRestaurant: state.restaurant.loggedRestaurant,
     timer: state.restaurant.timer
   }),
   {

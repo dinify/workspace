@@ -1,5 +1,4 @@
-// @flow
-import { Observable, of, from } from 'rxjs';
+import { of, from } from 'rxjs';
 import { mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import pluck from 'ramda/src/pluck'
@@ -19,7 +18,7 @@ const getUsersOfBillsEpic = (action$) =>
     })
   )
 
-const loadBillEpic = (action$: Observable, $state) =>
+const loadBillEpic = (action$, $state) =>
   action$.pipe(
     ofType('LOAD_BILL_INIT'),
     switchMap(() => {

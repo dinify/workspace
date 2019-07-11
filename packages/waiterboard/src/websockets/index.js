@@ -1,8 +1,8 @@
 import io from 'socket.io-client';
-import orderTypes from 'ducks/order/types';
-import billTypes from 'ducks/bill/types';
-import callTypes from 'ducks/call/types';
-import * as types from './types';
+import * as orderTypes from 'ducks/order/types';
+import * as billTypes from 'ducks/bill/types';
+import * as callTypes from 'ducks/call/types';
+// import * as types from './types';
 
 const socket = io('https://ws.dinify.app');
 

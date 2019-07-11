@@ -1,7 +1,6 @@
-// @flow
-import assoc from 'ramda/src/assoc'
-import evolve from 'ramda/src/evolve'
-import always from 'ramda/src/always'
+import assoc from 'ramda/src/assoc';
+import evolve from 'ramda/src/evolve';
+import always from 'ramda/src/always';
 
 const initialState = {
   frameIndex: 1,
@@ -23,7 +22,7 @@ export default function reducer(state = initialState, action) {
       return assoc('billsOfTable', action.payload)(state);
     case 'TOGGLE_MODAL': {
       const { open, type } = action.payload;
-      if (!open) state = assoc('billsOfTable', [])(state)
+      if (!open) state = assoc('billsOfTable', [])(state);
       return evolve({
         modalOpen: always(open),
         modalType: open ? always(type) : always(''),

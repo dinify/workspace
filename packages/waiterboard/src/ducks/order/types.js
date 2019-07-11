@@ -1,3 +1,3 @@
-export default {
-  ORDER_RECEIVED: 'tabb/order/ORDER_RECEIVED'
-};
+const p = 'dinify/order';
+
+export const ORDER_RECEIVED = `${p}/ORDER_RECEIVED`;

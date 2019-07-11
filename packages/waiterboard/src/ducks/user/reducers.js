@@ -1,4 +1,4 @@
-import assocPath from 'ramda/src/assocPath'
+import assocPath from 'ramda/src/assocPath';
 
 const initialState = {
   all: {}

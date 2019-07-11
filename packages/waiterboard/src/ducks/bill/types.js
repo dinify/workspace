@@ -1,3 +1,3 @@
-export default {
-  PAYMENT_RECEIVED: 'tabb/bill/PAYMENT_RECEIVED',
-};
+const p = 'dinify/bill';
+
+export const PAYMENT_RECEIVED = `${p}/PAYMENT_RECEIVED`;
