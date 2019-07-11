@@ -9,9 +9,12 @@ export function GetRestaurants({ populateWith }) {
   return Get({ path: `restaurant/list?limit=100${populateQuery}` });
 }
 
-export function GetRestaurant({ subdomain, restaurantId }) {
+export function GetRestaurant({ subdomain, restaurantId, populateWith }) {
+  let populateQuery = '';
+  if (populateWith) populateQuery = `?with=${populateWith}`;
+  else populateQuery = `?with=images,tags,services.image`;
   const id = subdomain || restaurantId;
-  return Get({ path: `restaurant/${id}?with=images,tags,services.image` });
+  return Get({ path: `restaurant/${id}${populateQuery}` });
 }
 
 const populateCategoriesWith = [

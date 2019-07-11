@@ -5,6 +5,7 @@ import { push } from 'connected-react-router';
 import { actionTypes } from 'react-redux-firebase';
 import * as API from '@dinify/common/dist/api/restaurant';
 import { appBootstrap, confirmationFail } from './actions';
+import * as bookingTypes from 'ducks/booking/types';
 
 const bootstrapEpic = (action$) =>
   action$.pipe(
@@ -25,7 +26,10 @@ const loadRestaurant = (action$) =>
     ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
       return of(
-        {type: 'FETCH_RESTAURANT_INIT'},
+        {
+          type: 'FETCH_RESTAURANT_INIT',
+          payload: { populateWith: 'waiterboards.tables' }
+        },
         // {type: 'FETCH_LANGUAGES_INIT'},
         // {type: 'FETCH_TRANSLATIONS_INIT'},
         // {type: 'FETCH_SERVICEIMAGES_INIT'},
@@ -57,7 +61,7 @@ const guestsPollingEpic = (action$, state$) =>
     mergeMap(() => {
       const waiterboardId = state$.value.restaurant.selectedWBId;
       let actions = [
-        {type: 'LOAD_BOOKING_INIT'}
+        {type: bookingTypes.FETCH_BOOKINGS_INIT}
       ]
       if (waiterboardId) {
         actions = [

@@ -1,26 +1,28 @@
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
-import { UpdateOriginal } from '@dinify/common/dist/lib/FN';
+import * as types from './types';
 
 const initialState = {
   all: {}
 }
 
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
+  const { payload, type } = action;
 
-    case 'LOAD_BOOKING_DONE': {
-      const payload = action.payload.res;
-      return assoc('all', UpdateOriginal(state.all, payload))(state);
+  switch (type) {
+
+    case types.FETCH_BOOKINGS_DONE: {
+      const { res } = payload;
+      return assoc('all', { ...state.all, ...res })(state);
     }
 
-    case 'CONFIRM_BOOKING_INIT': {
-      const { id } = action.payload;
+    case types.CONFIRM_BOOKING_INIT: {
+      const { id } = payload;
       return assocPath(['all', id, 'status'], 'CONFIRMED')(state);
     }
 
-    case 'CANCEL_BOOKING_INIT': {
-      const { id } = action.payload;
+    case types.CANCEL_BOOKING_INIT: {
+      const { id } = payload;
       return assocPath(['all', id, 'status'], 'CANCELLED')(state);
     }
 

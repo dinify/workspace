@@ -1,30 +1,19 @@
-import { of, from } from 'rxjs';
-import { mergeMap, switchMap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import pluck from 'ramda/src/pluck';
-import * as API from '@dinify/common/dist/api/restaurant';
-import { ListToMap } from '@dinify/common/dist/lib/FN';
+import * as types from './types';
 
 const loadBookingEpic = (action$) =>
   action$.pipe(
-    ofType('LOAD_BOOKING_INIT'),
-    switchMap(() => {
-      return from(API.GetBookings()).pipe(
-        mergeMap((bookings) => {
-          const userIds = pluck('initiator', bookings).filter((id) => id.length === 24)
-          return [
-            {
-              type: 'FETCHALL_USER_INIT',
-              payload: { ids: userIds, cache: true }
-            },
-            {
-              type: 'LOAD_BOOKING_DONE',
-              payload: {res: ListToMap(bookings) }
-            }
-          ]
-        }),
-        catchError(error => of({ type: 'ERROR', payload: error }))
-      )
+    ofType(types.FETCH_BOOKINGS_DONE),
+    mergeMap(({ payload }) => {
+      const bookings = payload.res;
+      const userIds = pluck('initiator', bookings).filter((id) => id.length === 24)
+      return of({
+        type: 'FETCHALL_USER_INIT',
+        payload: { ids: userIds, cache: true }
+      });
     })
   )
 

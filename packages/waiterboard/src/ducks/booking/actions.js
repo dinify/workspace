@@ -1,12 +1,11 @@
-
-
+import * as types from './types';
 
 export const confirmBookingInit = (payload) => ({
-  type: 'CONFIRM_BOOKING_INIT',
+  type: types.CONFIRM_BOOKING_INIT,
   payload
-})
+});
 
 export const cancelBookingInit = (payload) => ({
-  type: 'CANCEL_BOOKING_INIT',
+  type: types.CANCEL_BOOKING_INIT,
   payload
-})
+});

@@ -8,12 +8,12 @@ const initialState = {
   all: {}
 };
 
-// Reducer
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
+  const { payload, type } = action;
+  switch (type) {
 
     case 'FETCH_RESTAURANT_DONE': {
-      const restaurant = action.payload.res;
+      const restaurant = payload.res;
       const waiterboards = restaurant.waiterboards;
       const selectedWBid = keys(waiterboards)[0]
       const wb = waiterboards[selectedWBid]
@@ -21,8 +21,7 @@ export default function reducer(state = initialState, action) {
     }
 
     case 'UPDATE_TABLE_INIT': {
-      const payload = action.payload
-      const id = payload.id
+      const id = payload.id;
       const newTable = merge(state.all[id], payload)
       return assocPath(['all', id], newTable)(state)
     }
