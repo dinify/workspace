@@ -92,6 +92,23 @@
           "title": "How can I modify my menu?",
           "content": "With the Dashboard, you will have great flexibility in the ways you manage your menu. You can add or remove any item, or simple hide it temporarily. This realtime publishing flow will update all prices and pictures in the user facing app."
         }
+      },
+      "features": {
+        "order": {
+          "title": "Manage orders",
+          "description": "Receive orders in realtime to your waiterboard straight from the users checked in to your restaurant. This way, your employees won't have to spend more time taking orders.",
+          "alt": "Order feature in waiterboard"
+        },
+        "service": {
+          "title": "Service calls",
+          "description": "With service call requests, you get notified every time your guests need something, so your staff can focus on serving them quickly and efficiently.",
+          "alt": "Service call feature in waiterboard"
+        },
+        "pay": {
+          "title": "Bill payments",
+          "description": "Streamline payment collection so that your guests won't have to waste extra 15 minutes trying to get your servers' attention. By enabling them to leave when they want, you'll be able to serve more guests and have faster table turn.",
+          "alt": "Payment feature in waiterboard"
+        }
       }
     }
   },
