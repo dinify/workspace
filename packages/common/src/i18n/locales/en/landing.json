@@ -64,11 +64,28 @@
       "title": "The modern way to deliver your menu",
       "subtitle": "Dinify your business by partnering us",
       "continueWith": "Continue with {{email}}",
-      "cta": "Get Started"
+      "cta": "Get Started",
+      "caption": "Start 30 day free trial"
     },
     "sections": {
       "statement": {
         "title": "Build your menu in more than 50 languages and automate your service for foreign guests."
+      },
+      "pricing": {
+        "title": "Start your 30 day free trial with no credit card required.",
+        "subtitle": "Pay by month or the year, and cancel at any time.",
+        "cta": "Start trial",
+        "price": {
+          "monthly": {
+            "amount": "€19.95",
+            "caption": "Billed monthly"
+          },
+          "annual": {
+            "amount": "€200",
+            "caption": "Billed annually"
+          },
+          "or": "or"
+        }
       },
       "faq": {
         "translation": {

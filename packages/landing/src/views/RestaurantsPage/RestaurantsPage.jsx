@@ -10,6 +10,7 @@ import Footer from "components/Footer/Footer.jsx";
 import SectionFAQ from "./Sections/SectionFAQ.jsx";
 import SectionWaiterboard from "./Sections/SectionWaiterboard.jsx";
 import SectionStatement from "./Sections/SectionStatement.jsx";
+import SectionPricing from "./Sections/SectionPricing.jsx";
 import restaurantsPageStyle from "./restaurantsPageStyle.jsx";
 import { useTranslation } from 'react-i18next';
 import classNames from "classnames";
@@ -67,6 +68,9 @@ class RestaurantsPage extends React.Component {
                 <OpenInNew style={{ marginRight: 8 }}/>
                 {t('restaurantsPage.hero.cta')}
               </Button>
+              <Typography variant="caption" style={{marginTop: 8, color: 'rgba(255, 255, 255, 0.76)'}}>
+                Start your free 30 day trial
+              </Typography>
               {email && (
                 <Typography variant="body2" style={{color: 'rgba(255, 255, 255, 0.76)', marginTop: 8}}>
                   {t('restaurantsPage.hero.continueWith', {email})}
@@ -78,6 +82,7 @@ class RestaurantsPage extends React.Component {
         <div className={classes.lightBg}>
           <SectionWaiterboard t={t}/>
           <SectionStatement t={t}/>
+          <SectionPricing t={t} registrationURL={registrationURL}/>
           <SectionFAQ t={t}/>
         </div>
         <Footer></Footer>

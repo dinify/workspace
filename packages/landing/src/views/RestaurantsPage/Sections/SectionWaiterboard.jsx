@@ -33,13 +33,13 @@ const SectionWaiterboard = ({t, classes, ...otherProps}) => {
   ];
   return (
     <div
-      id="features"
+      id="waiterboard"
       className={classNames(classes.section, classes.container)}
       style={{ textAlign: "left" }}
       {...otherProps}>
       <div style={{ textAlign: "center", marginBottom: 24}}>
         <Typography variant="h3">{t(`${key}.title`)}</Typography>
-        <Typography variant="subtitle">{t(`${key}.subtitle`)}</Typography>
+        <Typography variant="subtitle1">{t(`${key}.subtitle`)}</Typography>
       </div>
       <GridContainer spacing={24}>
         {features.map(feature => (
