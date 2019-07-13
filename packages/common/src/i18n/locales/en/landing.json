@@ -67,6 +67,9 @@
       "cta": "Get Started"
     },
     "sections": {
+      "statement": {
+        "title": "Build your menu in more than 50 languages and automate your service for foreign guests."
+      },
       "faq": {
         "translation": {
           "title": "How do I create my menu in so many languages?",
@@ -93,7 +96,9 @@
           "content": "With the Dashboard, you will have great flexibility in the ways you manage your menu. You can add or remove any item, or simple hide it temporarily. This realtime publishing flow will update all prices and pictures in the user facing app."
         }
       },
-      "features": {
+      "waiterboard": {
+        "title": "The Waiterboard",
+        "subtitle": "Optimize your business for time, streamline your workflow",
         "order": {
           "title": "Manage orders",
           "description": "Receive orders in realtime to your waiterboard straight from the users checked in to your restaurant. This way, your employees won't have to spend more time taking orders.",

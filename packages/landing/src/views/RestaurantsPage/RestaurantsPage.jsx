@@ -8,7 +8,8 @@ import Button from "@material-ui/core/Button";
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import SectionFAQ from "./Sections/SectionFAQ.jsx";
-import SectionFeatures from "./Sections/SectionFeatures.jsx";
+import SectionWaiterboard from "./Sections/SectionWaiterboard.jsx";
+import SectionStatement from "./Sections/SectionStatement.jsx";
 import restaurantsPageStyle from "./restaurantsPageStyle.jsx";
 import { useTranslation } from 'react-i18next';
 import classNames from "classnames";
@@ -75,8 +76,9 @@ class RestaurantsPage extends React.Component {
           </GridContainer>
         </div>
         <div className={classes.lightBg}>
+          <SectionWaiterboard t={t}/>
+          <SectionStatement t={t}/>
           <SectionFAQ t={t}/>
-          <SectionFeatures t={t}/>
         </div>
         <Footer></Footer>
       </div>
