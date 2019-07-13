@@ -2,7 +2,8 @@
   "hero": {
     "header": "Order at restaurants in your own language, anywhere.",
     "subtitle": "Our mission is to connect travelers with local restaurants by breaking language barriers. No matter where you go or what language you speak, explore new food experiences and cuisines while on the move.",
-    "cta": "Explore"
+    "cta": "Explore",
+    "restaurants": "Are you a restaurant?"
   },
   "features": "Features",
   "sectionMultilingual": {
@@ -93,5 +94,13 @@
         }
       }
     }
+  },
+  "footer": {
+    "language": "Language",
+    "links": {
+      "title": "Navigation",
+      "restaurants": "Add your restaurant"
+    },
+    "copyright": "<0/><1/>, Made with<2/>by <3>Dinify</3>"
   }
 }
