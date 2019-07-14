@@ -2,7 +2,8 @@
   "hero": {
     "header": "Order at restaurants in your own language, anywhere.",
     "subtitle": "Our mission is to connect travelers with local restaurants by breaking language barriers. No matter where you go or what language you speak, explore new food experiences and cuisines while on the move.",
-    "cta": "Explore"
+    "cta": "Explore",
+    "restaurants": "Are you a restaurant?"
   },
   "features": "Features",
   "sectionMultilingual": {
@@ -63,9 +64,29 @@
       "title": "The modern way to deliver your menu",
       "subtitle": "Dinify your business by partnering us",
       "continueWith": "Continue with {{email}}",
-      "cta": "Get Started"
+      "cta": "Get Started",
+      "caption": "Start 30 day free trial"
     },
     "sections": {
+      "statement": {
+        "title": "Build your menu in more than 50 languages and automate your service for foreign guests."
+      },
+      "pricing": {
+        "title": "Start your 30 day free trial with no credit card required.",
+        "subtitle": "Pay by month or the year, and cancel at any time.",
+        "cta": "Start trial",
+        "price": {
+          "monthly": {
+            "amount": "€19.95",
+            "caption": "Billed monthly"
+          },
+          "annual": {
+            "amount": "€200",
+            "caption": "Billed annually"
+          },
+          "or": "or"
+        }
+      },
       "faq": {
         "translation": {
           "title": "How do I create my menu in so many languages?",
@@ -91,7 +112,34 @@
           "title": "How can I modify my menu?",
           "content": "With the Dashboard, you will have great flexibility in the ways you manage your menu. You can add or remove any item, or simple hide it temporarily. This realtime publishing flow will update all prices and pictures in the user facing app."
         }
+      },
+      "waiterboard": {
+        "title": "The Waiterboard",
+        "subtitle": "Optimize your business for time, streamline your workflow",
+        "order": {
+          "title": "Manage orders",
+          "description": "Receive orders in realtime to your waiterboard straight from the users checked in to your restaurant. This way, your employees won't have to spend more time taking orders.",
+          "alt": "Order feature in waiterboard"
+        },
+        "service": {
+          "title": "Service calls",
+          "description": "With service call requests, you get notified every time your guests need something, so your staff can focus on serving them quickly and efficiently.",
+          "alt": "Service call feature in waiterboard"
+        },
+        "pay": {
+          "title": "Bill payments",
+          "description": "Streamline payment collection so that your guests won't have to waste extra 15 minutes trying to get your servers' attention. By enabling them to leave when they want, you'll be able to serve more guests and have faster table turn.",
+          "alt": "Payment feature in waiterboard"
+        }
       }
     }
+  },
+  "footer": {
+    "language": "Language",
+    "links": {
+      "title": "Navigation",
+      "restaurants": "Add your restaurant"
+    },
+    "copyright": "<0/><1/>, Made with<2/>by <3>Dinify</3>"
   }
 }
