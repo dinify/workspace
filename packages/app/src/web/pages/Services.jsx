@@ -126,7 +126,7 @@ class Services extends React.Component {
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}>
-                      <Avatar style={{position: 'absolute', width: 64, height: 64}} src={service.image.url}></Avatar>
+                      <Avatar style={{position: 'absolute', width: 64, height: 64}} src={service.image && service.image.url}></Avatar>
                       <Motion
                         defaultStyle={{x: 0}}
                         style={{x: spring(status === 'SENT' ? 1 : 0, { stiffness: 260, damping: 24 })}}>

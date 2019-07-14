@@ -15,7 +15,6 @@ export function loadStateInit() {
   return { type: 'LOAD_STATE_INIT' };
 }
 
-export const confirmService = (payload) => ({ type: 'SERVICE_CONFIRMATION_INIT', payload })
 export const confirmOrder = (payload) => ({ type: 'ORDER_CONFIRMATION_INIT', payload })
 export const confirmOrderAhead = (payload) => ({ type: 'ORDERAHEAD_CONFIRMATION_INIT', payload })
 export const confirmBill = (payload) => ({ type: 'BILL_CONFIRMATION_INIT', payload })

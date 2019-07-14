@@ -1,23 +1,25 @@
-
-import React from 'react'
-import { colorsByStages } from '../../colors'
+import React from 'react';
 import { connect } from 'react-redux';
-import { confirmService } from '../../../ducks/restaurant'
-import { ActionBox, Header, TableId, Text, CheckButton } from '../styled/Events'
-import User from './user'
-import { isItOutdated } from '../../../common/helpers/time'
-import { Photo, Name } from '../styled/Events'
+import { confirmCallInit } from 'ducks/call/actions';
+import { relevantServices } from 'ducks/service/selectors';
+import { ActionBox, Header, TableId, Text, CheckButton, Photo } from '../styled/Events';
+import User from './user';
+import { colorsByStages } from '../../colors';
 
-import { confirmCallInit } from 'ducks/call/actions'
-
-const color = colorsByStages['s4']
+const color = colorsByStages.s4;
 
 const Call = ({ call, confirmCall, removed, services }) => {
+
 	let service = null;
+
+	console.log(services);
+
 	if (call.service_id && services && services[call.service_id]) {
 		service = services[call.service_id];
 	}
+
 	if (!service) return <div />;
+
 	return (
 		<ActionBox className={removed ? 'vhs-zoom vhs-reverse' : ''}>
 	    <Header>
@@ -35,7 +37,7 @@ const Call = ({ call, confirmCall, removed, services }) => {
 		      </Text>
 				}
 
-	      <CheckButton bg={color} onClick={() => confirmCall({callId: call.id})}>
+	      <CheckButton bg={color} onClick={() => confirmCall({ callId: call.id })}>
 	        <i className="ion-checkmark" />
 	      </CheckButton>
 
@@ -48,7 +50,7 @@ const Call = ({ call, confirmCall, removed, services }) => {
 export default connect(
   state => ({
 		timer: state.restaurant.timer,
-		services: state.restaurant.loggedUser.services
+		services: relevantServices(state)
 	}),
   {
     confirmCall: confirmCallInit

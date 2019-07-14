@@ -25,17 +25,10 @@ const loadRestaurant = (action$) =>
   action$.pipe(
     ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
-      return of(
-        {
-          type: 'FETCH_RESTAURANT_INIT',
-          payload: { populateWith: 'waiterboards.tables' }
-        },
-        // {type: 'FETCH_LANGUAGES_INIT'},
-        // {type: 'FETCH_TRANSLATIONS_INIT'},
-        // {type: 'FETCH_SERVICEIMAGES_INIT'},
-        // {type: 'FETCH_RESTAURANTSETTINGS_INIT'},
-        // {type: 'FETCH_MENULANGUAGES_INIT'}
-      );
+      return of({
+        type: 'FETCH_RESTAURANT_INIT',
+        payload: { populateWith: 'waiterboards.tables,services.image' }
+      });
     })
   );
 
