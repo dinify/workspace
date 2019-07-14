@@ -10,9 +10,11 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
+  const { payload, type } = action;
+  switch (type) {
+
     case 'FETCH_TRANSLATIONS_DONE': {
-      const res = action.payload.res;
+      const { res } = payload;
       const all = mapObjIndexed((val) => {
         return ListToMap(val);
       }, res);
@@ -22,16 +24,19 @@ export default function reducer(state = initialState, action) {
       }
       return assoc('all', all)(newState);
     }
+
     case 'ADD_LOCALE': {
-      const locale = action.payload.locale;
+      const { locale } = payload;
       return assocPath(['all', locale], {})(state);
     }
+
     case 'SELECT_LOCALE': {
-      const selectedLocale = action.payload.selectedLocale;
+      const { selectedLocale } = payload;
       return assoc('selectedLocale', selectedLocale)(state);
     }
+
     case 'SAVE_TRANSLATION_DONE': {
-      const { id, locale, type, description, name } = action.payload.initPayload;
+      const { id, locale, type, description, name } = payload.initPayload;
       const updObj = { id, type };
       if (description) updObj.description = description;
       if (name) updObj.name = name;
@@ -40,9 +45,11 @@ export default function reducer(state = initialState, action) {
       const newTranslation = { ...newState.all[locale][id], ...updObj };
       return assocPath(['all', locale, id], newTranslation)(newState);
     }
+
     case firebaseTypes.LOGOUT: {
       return initialState;
     }
+
     default:
       return state;
   }

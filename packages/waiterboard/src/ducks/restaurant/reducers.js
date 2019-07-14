@@ -8,7 +8,6 @@ const initialState = {
   all: {},
   selectedWBId: null,
   appRun: false,
-  loggedUser: {},
   sales: 0,
   timer: {
     o: 200

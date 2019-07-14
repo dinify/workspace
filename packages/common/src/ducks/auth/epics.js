@@ -23,7 +23,8 @@ const accessTokenEpic = (action$, state$) =>
       const auth = state$.value.firebase.auth;
       if (auth.stsTokenManager && auth.stsTokenManager.accessToken) {
         setCookie('access_token', auth.stsTokenManager.accessToken, 90);
-      } else setCookie('access_token', '', 1);
+      }
+      // else setCookie('access_token', '', 1);
       return of({ type: 'ACCESSTOKEN_HANDLED' });
     })
   );

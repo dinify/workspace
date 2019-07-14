@@ -168,7 +168,7 @@ const Table = ({
               <IconButton
                 aria-label="Mark as occupied"
                 disabled={presentGuests.length > 0 || table.offline}
-                onClick={() => updateTable({id: table.id, offline: true})}
+                onClick={() => updateTable({ id: table.id, offline: true })}
               >
                 <Block />
               </IconButton>

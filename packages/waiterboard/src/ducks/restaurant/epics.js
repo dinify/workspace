@@ -4,8 +4,8 @@ import { ofType } from 'redux-observable';
 import { push } from 'connected-react-router';
 import { actionTypes } from 'react-redux-firebase';
 import * as API from '@dinify/common/dist/api/restaurant';
-import { appBootstrap, confirmationFail } from './actions';
 import * as bookingTypes from 'ducks/booking/types';
+import { appBootstrap, confirmationFail } from './actions';
 
 const bootstrapEpic = (action$) =>
   action$.pipe(

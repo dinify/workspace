@@ -18,7 +18,7 @@ export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
 // Epic
 const bootstrapEpic = (action$) =>
   action$.pipe(
-    ofType('persist/REHYDRATE'),
+    ofType('persist/PERSIST'),
     mergeMap(() => {
       setCookie('lang', 'en', 30);
       return of(appBootstrap());

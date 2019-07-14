@@ -73,8 +73,9 @@ export default function reducer(state = initialState, action) {
 
     case 'FETCH_LANGUAGES_DONE':
       return assoc('languages', payload.res)(state);
-    case 'FETCH_MANAGEDRESTAURANTS_DONE':
+    case 'FETCH_MANAGEDRESTAURANTS_DONE': {
       return assoc('managedRestaurants', payload.res)(state);
+    }
     case 'PREFILL_RESTAURANTNAME':
       return assocPath(['prefill', 'restaurantName'], payload.restaurantName)(
         state,

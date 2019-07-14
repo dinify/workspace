@@ -227,8 +227,11 @@ export function CreateTable({ number, capacity, waiterboardId, x, y }) {
     { number, capacity, x, y },
   );
 }
-export function ChangeTable({ id, x, y }) {
-  return Post({ path: `table/${id}` }, { x, y });
+
+export function ChangeTable(payload) {
+  const { id } = payload;
+  delete payload.id;
+  return Post({ path: `table/${id}` }, payload);
 }
 
 export function RemoveTable({ id }) {

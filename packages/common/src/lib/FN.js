@@ -9,12 +9,24 @@ import keys from 'ramda/src/keys';
 import numeral from 'numeral';
 import { UNAUTHORIZED } from '../ducks/auth/types';
 
-export const MapToList = items =>
-  toPairs(items)
-    .map(pair => ({ id: pair[0], ...pair[1] }))
-    .sort((a, b) => b.id.localeCompare(a.id, 'en'));
+export const MapToList = (items, _options) => {
+  let { sortBy, sortType } = { sortBy: 'id', sortType: String };
+  if (_options) {
+    sortBy = _options.sortBy;
+    sortType = _options.sortType;
+  }
+  const list = toPairs(items).map((pair) => ({ id: pair[0], ...pair[1] }));
+  if (sortType === String) {
+    return list.sort((a, b) => b[sortBy].localeCompare(a[sortBy], 'en'));
+  }
+  if (sortType === Number) {
+    return list.sort((a, b) => a[sortBy] - b[sortBy]);
+  }
+  return list;
+}
 
 export const ListToMap = items => {
+  if (!items || !items.forEach) return {};
   const obj = {};
   items.forEach(item => {
     obj[item.id] = item;
