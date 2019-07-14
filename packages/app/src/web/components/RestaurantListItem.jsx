@@ -3,7 +3,7 @@ import React from 'react';
 import pluck from 'ramda/src/pluck';
 import * as FN from '@dinify/common/dist/lib/FN';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Carousel from './Carousel';
 

@@ -37,7 +37,7 @@ import CreditCard from '@material-ui/icons/CreditCardRounded';
 import Delete from '@material-ui/icons/DeleteRounded';
 import Done from '@material-ui/icons/DoneRounded';
 
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/lab/Slider';
 import * as FN from '@dinify/common/dist/lib/FN';
 

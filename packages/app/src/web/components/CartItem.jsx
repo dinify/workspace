@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Delete from '@material-ui/icons/DeleteRounded';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import * as FN from '@dinify/common/dist/lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import Price from 'web/components/Price';

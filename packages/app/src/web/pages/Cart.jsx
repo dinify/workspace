@@ -14,7 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 // import SwipableItem from 'web/components/SwipableItem';
 import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import CartItem from 'web/components/CartItem';
 import Price from 'web/components/Price';
 import TotalPrice from 'web/components/TotalPrice';

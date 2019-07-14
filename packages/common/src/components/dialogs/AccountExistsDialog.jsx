@@ -13,7 +13,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
-import Typography from '../Typography';
+import Typography from '@material-ui/core/Typography';
 import Text from '../Inputs/Text';
 import GoogleButton from '../GoogleButton';
 import FacebookButton from '../FacebookButton';

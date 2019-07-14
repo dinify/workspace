@@ -5,6 +5,7 @@ import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import getTheme from "@dinify/common/dist/theme";
 
 // A theme with custom primary and secondary color.
 // It's optional.
@@ -21,7 +22,7 @@ primary_800    #C13939
 primary_900    #B1312F
 */
 
-const getTheme = dark => createMuiTheme(
+const getThemeOld = dark => createMuiTheme(
   {
     palette: {
       type: dark ? 'dark' : 'light',
@@ -89,8 +90,8 @@ const getTheme = dark => createMuiTheme(
 );
 
 function withRoot(Component) {
-  const lightTheme = getTheme(false);
-  const darkTheme = getTheme(true);
+  const lightTheme = getTheme({ type: 'light' });
+  const darkTheme = getTheme({ type: 'dark' });
   function WithRoot(props) {
     // MuiThemeProvider makes the theme available down the React tree
     // thanks to React context.
