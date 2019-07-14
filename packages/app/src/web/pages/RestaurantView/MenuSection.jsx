@@ -6,7 +6,7 @@ import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import MenuItemCard from 'web/components/MenuItemCard';
 import * as FN from '@dinify/common/dist/lib/FN';
 import sort from 'ramda/src/sort';

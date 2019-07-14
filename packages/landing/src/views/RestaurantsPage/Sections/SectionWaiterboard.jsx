@@ -15,19 +15,19 @@ const SectionWaiterboard = ({t, classes, ...otherProps}) => {
     {
       title: t(`${key}.order.title`),
       description: t(`${key}.order.description`),
-      image: 'https://storage.googleapis.com/static.dinify.app/landing/waiterboard-order.png',
+      image: 'https://lh3.googleusercontent.com/0Z-K0YNe-iu6lDab6fKJ9E_qO08wQOI9aJhqdfv9yaLT5GPtTmYmbjpO9sovAcfuYavesOH47Xsoa_Oz7g=s0',
       alt: t(`${key}.order.alt`)
     },
     {
       title: t(`${key}.service.title`),
       description: t(`${key}.service.description`),
-      image: 'https://storage.googleapis.com/static.dinify.app/landing/waiterboard-service.png',
+      image: 'https://lh3.googleusercontent.com/NIKm6JFMoKXo0CW5sZNOsOfHukEkT4nHdCEgJC397l3Kh9162k6RMKp23eewKQLqCru0p550ZClgO3Jp=s0',
       alt: t(`${key}.service.alt`)
     },
     {
       title: t(`${key}.pay.title`),
       description: t(`${key}.pay.description`),
-      image: 'https://storage.googleapis.com/static.dinify.app/landing/waiterboard-pay.png',
+      image: 'https://lh3.googleusercontent.com/FNGkwq2XCWWNCTFpsAInqa3iKsLincvyAtjNcS_aVKgJ42xhLICz8D7Wlg70AKrVaX3nuc5dn0y7th3OcA=s0',
       alt: t(`${key}.pay.alt`)
     }
   ];

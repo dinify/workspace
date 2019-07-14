@@ -48,9 +48,7 @@ class PhoneRestaurantMenu extends Component {
         <img
           className={classes.mainImage}
           alt="Food on the menu"
-          src={`https://storage.googleapis.com/static.dinify.app/landing/menu-item-burger.${
-            webpSupported ? "webp" : "jpg"
-          }`}
+          src="https://lh3.googleusercontent.com/BszHgAIeTfoD3kiJ43-lyqrpFsbwqZDLs0LgEmX2Qz9upnLGhULc2KlETZFURQoa5cDF-Di2DgNNVts=s0"
         />
         <div className={classes.themedBg} style={{ height: "100%" }}>
           <List disablePadding>

@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import FavoriteToggle from 'web/components/FavoriteToggle';
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import Price from 'web/components/Price';

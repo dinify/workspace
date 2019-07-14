@@ -14,7 +14,7 @@ import Phone from '@material-ui/icons/PhoneRounded';
 import Place from '@material-ui/icons/PlaceRounded';
 import Schedule from '@material-ui/icons/ScheduleRounded';
 import StaticMap from 'web/components/StaticMap';
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import uniqueId from 'lodash.uniqueid';
 
 const styles = theme => ({

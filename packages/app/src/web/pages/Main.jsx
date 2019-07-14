@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withTheme } from '@material-ui/core/styles';
 import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
 import ResponsiveGrid from 'web/components/ResponsiveGrid';
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import RestaurantListItem from 'web/components/RestaurantListItem';
 import * as FN from '@dinify/common/dist/lib/FN';
 

@@ -9,9 +9,11 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 2,
   },
   googleButton: theme.palette.type === 'light' ? {
+    ...theme.typography.button2,
     height: 40,
     justifyContent: 'start',
   } : {
+    ...theme.typography.button2,
     height: 40,
     justifyContent: 'start',
     border: '1px solid transparent',

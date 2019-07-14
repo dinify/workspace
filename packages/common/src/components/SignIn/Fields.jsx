@@ -13,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
+import MuiButton from '@material-ui/core/Button';
 
 import Text from '../Inputs/Text';
 import GoogleButton from '../GoogleButton';
@@ -41,6 +41,9 @@ const styles = theme => ({
   },
   background: {
     backgroundColor: theme.palette.background.default
+  },
+  button2: {
+    ...theme.typography.button2
   }
 });
 
@@ -111,6 +114,8 @@ class Fields extends React.Component {
     }
 
     const direction = env === 'DASHBOARD' ? DOWN : UP;
+
+    const Button = ({children, ...otherProps}) => <MuiButton classes={{root: classes.button2}} {...otherProps}>{children}</MuiButton>;
 
     const emailField = (
       <Field

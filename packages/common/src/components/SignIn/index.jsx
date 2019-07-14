@@ -15,7 +15,7 @@ import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import MuiButton from '@material-ui/core/Button';
 
 import AccountExistsDialog from '../dialogs/AccountExistsDialog';
 import ResponsiveContainer from '../ResponsiveContainer';
@@ -32,7 +32,11 @@ const styles = theme => ({
   colorTextSecondary: {
     color: theme.palette.text.secondary
   },
+  button2: {
+    ...theme.typography.button2
+  }
 });
+
 
 export class SignInForm extends React.Component {
   validateEmail = (email) => {
@@ -71,7 +75,7 @@ export class SignInForm extends React.Component {
       }
     )
   }
-  
+
   decide = ({ email }) => {
     this.validateEmail(email);
     const { firebase, openDialog, setPage } = this.props;
@@ -113,6 +117,8 @@ export class SignInForm extends React.Component {
       setPage,
       env,
     } = this.props;
+
+    const Button = ({children, ...otherProps}) => <MuiButton classes={{root: classes.button2}} {...otherProps}>{children}</MuiButton>;
 
     const animConfig = { stiffness: 480, damping: 48 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import * as FN from '@dinify/common/dist/lib/FN';
 import Price from 'web/components/Price';

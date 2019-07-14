@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import CheckCircle from '@material-ui/icons/CheckCircleRounded';
 import { Motion, spring } from 'react-motion';
 import * as FN from '@dinify/common/dist/lib/FN';

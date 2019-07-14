@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Fab from '@material-ui/core/Fab';
 import ButtonBase from '@material-ui/core/ButtonBase';

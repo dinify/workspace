@@ -2,7 +2,7 @@ import React from "react";
 import { withTranslation } from "react-i18next";
 import PhotoCamera from '@material-ui/icons/PhotoCameraRounded';
 import Button from '@material-ui/core/Button';
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import QrScanner from "lib/qr-scanner.min.js";
 
