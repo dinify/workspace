@@ -21,6 +21,7 @@ import menuItem from 'ducks/menuItem';
 import booking from 'ducks/booking';
 import cart from 'ducks/cart';
 import bill from 'ducks/bill';
+import service from 'ducks/service';
 import seat from 'ducks/seat';
 import firebaseConfig from '@dinify/common/firebaseConfig.json';
 import rootEpic from './configureEpics';
@@ -51,6 +52,12 @@ const menuItemPersistConfig = {
   whitelist: ['all']
 }
 
+const servicePersistConfig = {
+  key: 'service',
+  storage,
+  whitelist: ['all']
+}
+
 const commonReducers = {
   auth,
   ui,
@@ -61,6 +68,7 @@ const commonReducers = {
   booking,
   cart,
   bill,
+  service: persistReducer(servicePersistConfig, service),
   seat,
   snackbar: snackbarReducer,
   firebase: firebaseReducer,

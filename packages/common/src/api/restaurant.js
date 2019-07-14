@@ -245,9 +245,15 @@ export function RemoveTable({ id }) {
 export function GetCategories({ restaurantId }) {
   return Get({ path: `restaurant/${restaurantId}/categories` });
 }
+
+export function GetServices({ restaurantId }) {
+  return Get({ path: `restaurant/${restaurantId}/services?limit=100` });
+}
+
 export function CreateMenucategory({ restaurantId, name, precedence }) {
   return Post({ path: `restaurant/${restaurantId}/menu/category/add` }, { name, precedence });
 }
+
 export function ChangeMenucategory(payload) {
   const { id } = payload;
   delete payload.restaurantId;

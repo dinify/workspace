@@ -9,7 +9,7 @@ import { selectedBillItems } from 'ducks/seat/selectors';
 import types from './types';
 import billTypes from '../bill/types';
 import cartTypes from '../cart/types';
-import serviceTypes from '../service/types';
+import * as serviceTypes from '../service/types';
 import wsTypes from '../../websockets/types';
 
 const initialState = {

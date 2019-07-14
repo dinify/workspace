@@ -1,7 +1,7 @@
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import * as authTypes from '@dinify/common/dist/ducks/auth/types';
-import types from './types';
+import * as types from './types';
 import wsTypes from '../../websockets/types';
 
 const initialState = {

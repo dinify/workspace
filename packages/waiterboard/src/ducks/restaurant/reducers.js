@@ -47,7 +47,12 @@ export default function reducer(state = initialState, action) {
     }
 
     case 'FETCH_MANAGEDRESTAURANTS_DONE': {
-      return assoc('managedRestaurants', payload.res)(state);
+      const { res } = payload;
+      let managedRestaurants = [];
+      if (res && res instanceof Array) {
+        managedRestaurants = res;
+      }
+      return assoc('managedRestaurants', managedRestaurants)(state);
     }
 
     default:

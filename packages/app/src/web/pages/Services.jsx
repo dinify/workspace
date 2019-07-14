@@ -9,11 +9,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ServiceCallGraphic from 'web/components/ServiceCallGraphic';
-import { callServiceInit } from 'ducks/service/actions';
+import { callServiceInit, fetchServicesInit } from 'ducks/service/actions';
+import { relevantServicesList } from 'ducks/service/selectors';
 import { Motion, spring } from 'react-motion';
 import filter from 'ramda/src/filter';
-
-import * as FN from '@dinify/common/dist/lib/FN';
 
 class Services extends React.Component {
   constructor(props) {
@@ -23,18 +22,27 @@ class Services extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { fetchServices, checkedInRestaurant } = this.props;
+    const prevCheckedInRestaurant = prevProps.checkedInRestaurant;
+    if (!prevCheckedInRestaurant && checkedInRestaurant) {
+      fetchServices({
+        restaurantId: checkedInRestaurant
+      })
+    }
+  }
+
   render() {
-    const { restaurant, call, services, t } = this.props;
+    const { servicesList, restaurant, call, services, t } = this.props;
     const { selectedTab } = this.state;
 
-    let servicesList = restaurant ? FN.MapToList(restaurant.services) : [];
-    servicesList = filter((s) => {
+    const selectedServicesList = filter((s) => {
       if (selectedTab === 0) return s.type === 'TABLEWARE';
       if (selectedTab === 1) return s.type === 'CONDIMENT';
       return false;
     }, servicesList);
 
-    if (restaurant == null) return (
+    if (!restaurant) return (
       <div style={{
         display: 'flex',
         height: 'calc(100vh - 56px)',
@@ -90,7 +98,7 @@ class Services extends React.Component {
         <div style={{marginTop: 16,
         width: '100%',}}>
           <Grid container spacing={16}>
-            {servicesList.map((service) => {
+            {selectedServicesList.map((service) => {
               const status = services[service.id] ? services[service.id].status : 'READY';
               return (
                 <Grid key={service.id} item xs={4} md={3} lg={3} style={{
@@ -172,9 +180,12 @@ class Services extends React.Component {
 export default connect(
   state => ({
     restaurant: state.restaurant.all[state.restaurant.checkedInRestaurant],
+    checkedInRestaurant: state.restaurant.checkedInRestaurant,
     services: state.seat.services,
+    servicesList: relevantServicesList(state)
   }),
   {
-    call: callServiceInit
+    call: callServiceInit,
+    fetchServices: fetchServicesInit
   }
 )(withTranslation()(Services));
