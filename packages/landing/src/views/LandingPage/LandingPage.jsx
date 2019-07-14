@@ -188,7 +188,7 @@ class LandingPage extends React.Component {
                       href="/restaurants?source=hero"
                       variant="caption"
                       style={{color: "rgba(255, 255, 255, 0.87)", marginTop: 8}}>
-                      Are you a restaurant?
+                      {t('hero.restaurants')}
                     </Link>
                   </GridItem>
                   <GridItem style={{ flex: 1 }} className={classes.hideSmall}>
@@ -232,7 +232,7 @@ class LandingPage extends React.Component {
               <GridContainer justify="center" spacing={24}>
                 <Grid item>
                   <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
-                    Language
+                    {t('footer.language')}
                   </Typography>
                   <GridContainer justify="center">
                     {langs.map((l) => (
@@ -253,13 +253,13 @@ class LandingPage extends React.Component {
                 </Grid>
                 <Grid item>
                   <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
-                    Navigation
+                    {t('footer.links.title')}
                   </Typography>
                   <Link
                     href="/restaurants?source=footer"
                     variant="body2"
                     color="white">
-                    Become a Restaurant Partner
+                    {t('footer.links.restaurants')}
                   </Link>
                 </Grid>
               </GridContainer>

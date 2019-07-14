@@ -12,13 +12,15 @@ import Typography from "@material-ui/core/Typography";
 // @material-ui/icons
 import Copyright from "@material-ui/icons/CopyrightTwoTone";
 import Favorite from "@material-ui/icons/FavoriteTwoTone";
+import { Trans, useTranslation } from 'react-i18next';
 
 import footerStyle from "styles/material-kit-pro-react/components/footerStyle.jsx";
 import getTheme from "@dinify/common/dist/theme";
 
 const darkTheme = getTheme({ type: "dark" });
 
-function Footer(props) {
+const Footer = (props) => {
+  const { t } = useTranslation();
   const { children, content, classes, theme, big, className } = props;
   const themeType =
     theme === "transparent" || theme == undefined ? false : true;
@@ -45,10 +47,12 @@ function Footer(props) {
         )}
         {content}
         <Typography variant="caption" color="textSecondary">
-          <Copyright className={classes.smallCopyright} />
-          {1900 + new Date().getYear()}{", made with"}
-          <Favorite className={classes.smallHeart}/>{"by "}
-          <a className={classes.textSecondary} href="https://www.dinify.app/">Dinify</a>
+          <Trans i18nKey="footer.copyright">
+            <Copyright className={classes.smallCopyright} />
+            {1900 + new Date().getYear()}
+            <Favorite className={classes.smallHeart}/>
+            <a className={classes.textSecondary} href="https://www.dinify.app/"/>
+          </Trans>
         </Typography>
         <div className={classes.clearFix} />
       </div>
