@@ -6,7 +6,6 @@ import NetworkWifi from "@material-ui/icons/NetworkWifiRounded";
 import NetworkCell from "@material-ui/icons/NetworkCellRounded";
 import BatteryFull from "@material-ui/icons/BatteryFullRounded";
 import Lens from "@material-ui/icons/LensRounded";
-import { supportsWebp } from "@dinify/common/dist/lib/FN";
 import classNames from "classnames";
 
 import getTheme from "@dinify/common/dist/theme";
@@ -100,15 +99,8 @@ const styles = theme => ({
 
 class PhoneFrame extends Component {
   state = {
-    dark: false,
-    webpSupported: false
+    dark: false
   };
-
-  componentDidMount() {
-    supportsWebp().then(supported => {
-      this.setState({ webpSupported: supported });
-    });
-  }
 
   toggleTheme = () => {
     this.setState({ dark: !this.state.dark });
@@ -116,7 +108,7 @@ class PhoneFrame extends Component {
 
   render() {
     const { classes, children, alt } = this.props;
-    const { dark, webpSupported } = this.state;
+    const { dark } = this.state;
     return (
       <MuiThemeProvider theme={dark ? darkTheme : lightTheme}>
         <div className={classes.demoContainer}>
@@ -156,9 +148,7 @@ class PhoneFrame extends Component {
           <div
             className={classes.phoneImg}
             style={{
-              backgroundImage: `url("https://storage.googleapis.com/static.dinify.app/landing/phone-frame.${
-                webpSupported ? "webp" : "png"
-              }")`
+              backgroundImage: `url("https://lh3.googleusercontent.com/4uTcj5tdJCSd6Go7WZFw72wAT0MLcdBh9vFh7MYjCDL9A4mqJZs-pdrZ4QwSLsmlicjYQzMhK-whqe-Ghw=s0-rp")`
             }}
           />
         </div>

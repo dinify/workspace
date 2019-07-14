@@ -85,7 +85,7 @@ class RestaurantsPage extends React.Component {
             alt="Restaurant atmoshpere"
             style={{
               zIndex: -1,
-              backgroundImage: `url("https://storage.googleapis.com/static.dinify.app/landing/rp-landing.jpg")`
+              backgroundImage: `url("https://lh3.googleusercontent.com/ywYnGBLXFvsX0PV0QSeW9PKdxRf-IdV2-UjYJIcgbyXuAZu0Y6mOCy95BqzRRpksiTJRSTCDhS0LdJ52=s0")`
             }}
           />
         </div>

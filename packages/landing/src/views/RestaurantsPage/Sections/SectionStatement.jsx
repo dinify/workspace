@@ -19,7 +19,7 @@ const SectionStatement = ({t, classes, ...otherProps}) => {
           classes.container
         )}
       >
-        <img style={{maxWidth: '100%', maxHeight: 694 / 2, marginBottom: 32}} alt="App in multiple languages" src="https://storage.googleapis.com/static.dinify.app/landing/app-multilanguage.png" />
+        <img style={{maxWidth: '100%', maxHeight: 694 / 2, marginBottom: 32}} alt="App in multiple languages" src="https://lh3.googleusercontent.com/ka6Cz1qPgsYNHTY3ehVm9QMOALAzRKuqMbRztdBJlZ_mCGxmoD77IOm3-Oo7ps4EW9r3E3NIion1G2k=s0" />
         <Typography variant="h5">
           {t('restaurantsPage.sections.statement.title')}
         </Typography>

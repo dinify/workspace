@@ -139,7 +139,7 @@ class LandingPage extends React.Component {
                 className={classNames(classes.heroImg, classes.darkScrim)}
                 alt="Restaurant atmoshpere"
                 style={{
-                  backgroundImage: `url("${require("assets/img/restaurantHero.jpg")}")`
+                  backgroundImage: `url("https://lh3.googleusercontent.com/Q-z3FZKwwlkjCCaeyROIxyRYkJDLkUhRPuFhGwS_hDijdqycFI49FcmcJ9Woke-HB_nKeLmH5onbyLqwRg=s0")`
                 }}
               />
                 <div
