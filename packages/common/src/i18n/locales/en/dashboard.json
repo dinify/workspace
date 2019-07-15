@@ -109,5 +109,6 @@
   "createAddonFail": "Adding of a new addon failed",
   "createOptionFail": "Adding of a new option group failed",
   "createIngredientFail": "Adding of a new ingredient failed",
-  "changeRestaurant": "Change restaurant"
+  "changeRestaurant": "Change restaurant",
+  "publishRequestPending": "Publish request sent"
 }

@@ -209,6 +209,22 @@ const addLangSnackbar = (action$) =>
     })
   );
 
+const publishRestaurantEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(types.SEND_PUBLISHREQUEST_INIT),
+    mergeMap((action) => {
+      const restaurantId = state$.value.restaurant.selectedRestaurant;
+      return from(API.SendPublishRequest({ restaurantId })).pipe(
+        map(res => ({ type: types.SEND_PUBLISHREQUEST_DONE, payload: res })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: types.SEND_PUBLISHREQUEST_FAIL,
+          initAction: action
+        }))
+      );
+    })
+  );
+
 export default [
   loadRestaurant,
   bootstrapEpic,
@@ -222,4 +238,5 @@ export default [
   resetCategoriesEpic,
   resetMenuItemEpic,
   addLangSnackbar,
+  publishRestaurantEpic
 ];

@@ -353,8 +353,8 @@ const Dashboard = ({
                     <Button
                       variant="contained" 
                       color="primary"
-                      disabled={!publishable}
-                      onClick={() => publishRestaurant({ published: true})}
+                      disabled={!publishable || restaurant.publishRequestPending}
+                      onClick={() => publishRestaurant()}
                     >
                       {t('publish')}
                     </Button>
@@ -362,6 +362,16 @@ const Dashboard = ({
                 </Tooltip>
               </StepLabel>
             </Step>
+
+            {restaurant.publishRequestPending &&
+              <Step>
+                <StepLabel active>
+                  <div className={classes.stepLabel}>
+                    {t('publishRequestPending')}
+                  </div>
+                </StepLabel>
+              </Step>
+            }
           </Stepper>
         }
 
@@ -393,9 +403,9 @@ const Dashboard = ({
             {restaurant.name}
           </div>
           {publised &&
-          <Typography variant='caption' align='center' style={{margin: '12px 0'}}>
-            {t('restaurantPublished')}
-          </Typography>
+            <Typography variant='caption' align='center' style={{margin: '12px 0'}}>
+              {t('restaurantPublished')}
+            </Typography>
           }
           <Link to="/register">
             <Button renderAs="button" variant="outlined">
@@ -405,9 +415,9 @@ const Dashboard = ({
         </div>
 
 
-
         </MuiThemeProvider>
       </div>
+
       <div className={classes.contentBg} />
       <MuiThemeProvider theme={contentTheme}>
         <div className={classes.header}>

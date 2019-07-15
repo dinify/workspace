@@ -200,6 +200,11 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
+    case types.SEND_PUBLISHREQUEST_DONE: {
+      const restaurantId = payload.restaurant_id;
+      return assocPath(['all', restaurantId, 'publishRequestPending'], true)(state);
+    }
+
     case firebaseTypes.LOGOUT: {
       setCookie('access_token', '', 1);
       // reset everything
