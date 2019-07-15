@@ -36,13 +36,8 @@ class App extends React.Component {
   onNavigate = (evt, val) => {
     const { history, checkedInRestaurant } = this.props;
     if (val === 0) history.push(routes.HOMEPAGE);
-    else if (val === 1) history.push(routes.EAT);
-    else if (val === 2) {
-      if (checkedInRestaurant || process.env.REACT_APP_CAMERA_SCANNER_ENABLED === 'false') {
-        history.push(routes.SERVICES);
-      }
-      else history.push(routes.CHECKIN);
-    }
+    else if (val === 1) history.push(routes.CHECKIN);
+    else if (val === 2) history.push(routes.ACCOUNT);
   }
 
   match = (...paths) => {
@@ -70,11 +65,11 @@ class App extends React.Component {
     } = this.props;
 
     return (
-      <div>
+      <div style={{position: 'relative'}}>
         <AppBar history={history}>
           <AccountSignIn visible={!this.match([routes.SIGNIN, routes.ACCOUNT])} history={history}/>
         </AppBar>
-        <div style={{marginBottom: 56}}>
+        <div style={{overflow: 'hidden'}}>
           <Switch>
             <Route exact path={routes.HOMEPAGE} render={() => (
               <Main/>
@@ -100,7 +95,7 @@ class App extends React.Component {
         </div>
         <Motion
           defaultStyle={{x: 0}}
-          style={{x: spring(this.match([routes.SIGNIN, routes.ACCOUNT]) ? 1 : 0)}}>
+          style={{x: 0}}>
           {style =>
             <Navigation
               style={{
@@ -109,13 +104,13 @@ class App extends React.Component {
               handleChange={this.onNavigate}
               checkedInRestaurant={checkedInRestaurant}
               value={(() => {
-                if (this.match(routes.EAT)) return 1;
-                if (this.match(routes.CHECKIN) || this.match(routes.SERVICES)) return 2;
+                if (this.match(routes.CHECKIN)) return 1;
+                if (this.match(routes.ACCOUNT) || this.match(routes.SIGNIN)) return 2;
                 return 0;
               })()}/>
           }
         </Motion>
-        {FN.MapToList(dialogs).map(dialog => 
+        {FN.MapToList(dialogs).map(dialog =>
           dialog.component({
             key: dialog.id,
             id: dialog.id,

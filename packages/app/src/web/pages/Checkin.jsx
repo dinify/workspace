@@ -4,15 +4,9 @@ import { connect } from 'react-redux';
 import { checkinInit } from 'ducks/restaurant/actions';
 import QRscanner from './QRscanner';
 
-type CheckinProps = {
-  query: Object,
-  checkedInRestaurant?: string,
-  checkin: func,
-};
-
 class Checkin extends React.PureComponent {
   render() {
-    const { checkedInRestaurant, checkin }: CheckinProps = this.props;
+    const { checkedInRestaurant, checkin } = this.props;
     let initiated = false;
 
     const onData = (data) => {
@@ -27,7 +21,15 @@ class Checkin extends React.PureComponent {
     }
 
     return (
-      <div>
+      <div style={{
+        zIndex: -1,
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        minHeight: '100vh'
+      }}>
         <QRscanner
           onData={onData}
         />

@@ -13,9 +13,8 @@
   "website": "Website",
   "nav": {
     "explore": "Explore",
-    "eat": "Eat",
     "checkIn": "Check in",
-    "service": "Service"
+    "account": "Account"
   },
   "ingredients": "Ingredients",
   "addons": "Addons",

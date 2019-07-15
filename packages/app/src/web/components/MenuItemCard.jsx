@@ -30,6 +30,7 @@ const styles = theme => ({
     transition: theme.transitions.create('opacity'),
   },
   price: {
+    marginTop: 4,
     color: theme.palette.text.secondary
   },
   imageSrc: {
