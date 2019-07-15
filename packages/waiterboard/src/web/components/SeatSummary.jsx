@@ -29,7 +29,7 @@ class SeatSummary extends React.Component {
 
         {subtotal ?
           <Text>
-  					{subtotal}KD
+  					{subtotal}Kč
   				</Text>
           :
           ''

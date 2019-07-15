@@ -105,25 +105,25 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer }) => {
               [/*<Tr key={order.id} className="headline">
                 <Td>{orderTypes[order.type]} order</Td>
                 <Td>{order.items.length}</Td>
-                <Td>{N(order.subtotal.amount).format('0.000')}KD</Td>
+                <Td>{N(order.subtotal.amount).format('0.000')}Kč</Td>
               </Tr>,*/
               order.items.map((item) =>
                 <Tr key={item.id}>
     	            <Td>{item.menu_item.name}</Td>
     	            <Td>1</Td>
-    	            <Td>{N(item.subtotal.amount).format('0.000')}KD</Td>
+    	            <Td>{N(item.subtotal.amount).format('0.000')}Kč</Td>
     	          </Tr>
               )]
   					)}
   					<Tr className="boldline">
   	          <Td>Gratuity</Td>
   	          <Td>{bill.gratuity}%</Td>
-  	          <Td>{N(gratuityAmount).format('0.000')}KD</Td>
+  	          <Td>{N(gratuityAmount).format('0.000')}Kč</Td>
   	        </Tr>
   					<Tr>
   	          <Td bold color={color}>TOTAL</Td>
   	          <Td></Td>
-  	          <Td bold color={color}>{N(total).format('0.000')}KD</Td>
+  	          <Td bold color={color}>{N(total).format('0.000')}Kč</Td>
   	        </Tr>
           </tbody>
         </TableTag>

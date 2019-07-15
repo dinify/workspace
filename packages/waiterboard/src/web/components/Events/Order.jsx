@@ -76,7 +76,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
 							<Td items>
 								<ListOfCustomizations list={item.addons}></ListOfCustomizations>
 							</Td>
-							<Td>{N(item.subtotal.amount).format('0.000')}KD</Td>
+							<Td>{N(item.subtotal.amount).format('0.000')}Kč</Td>
 	          </Tr>
 					): ''}
 					<Tr>
@@ -84,7 +84,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
 						<Td></Td>
 						<Td></Td>
 						<Td></Td>
-						<Td>{N(order.subtotal.amount).format('0.000')}{order.subtotal.currency === 'KWD' ? 'KD' : order.subtotal.currency}</Td>
+						<Td>{N(order.subtotal.amount).format('0.000')}{order.subtotal.currency === 'CZK' ? 'Kč' : order.subtotal.currency}</Td>
 					</Tr>
         </tbody>
       </TableTag>

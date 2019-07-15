@@ -135,7 +135,7 @@ class ModalUser extends React.Component {
             </tr>
             <tr>
               <TdLabel>Ave. Ticket</TdLabel>
-              <TdValue>{numeral(aveTicket).format('0.000')}KD</TdValue>
+              <TdValue>{numeral(aveTicket).format('0.000')}Kč</TdValue>
             </tr>
           </SmallTable>
 
@@ -150,7 +150,7 @@ class ModalUser extends React.Component {
             </tr>
             <tr>
               <TdLabel>Total Spend</TdLabel>
-              <TdValue>{numeral(totalSpend).format('0.000')}KD</TdValue>
+              <TdValue>{numeral(totalSpend).format('0.000')}Kč</TdValue>
             </tr>
           </SmallTable>
 

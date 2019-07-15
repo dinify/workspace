@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { openDialog, closeDialog } from 'ducks/ui/actions';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
-import { Motion, spring } from 'react-motion';
+import { Motion } from 'react-motion';
 
 import * as routes from 'web/routes';
 import Checkin from 'web/pages/Checkin';
@@ -69,7 +69,7 @@ class App extends React.Component {
         <AppBar history={history}>
           <AccountSignIn visible={!this.match([routes.SIGNIN, routes.ACCOUNT])} history={history}/>
         </AppBar>
-        <div style={{overflow: 'hidden'}}>
+        <div style={{ marginBottom: 56 }}>
           <Switch>
             <Route exact path={routes.HOMEPAGE} render={() => (
               <Main/>
