@@ -65,11 +65,11 @@ class App extends React.Component {
     } = this.props;
 
     return (
-      <div>
+      <div style={{position: 'relative'}}>
         <AppBar history={history}>
           <AccountSignIn visible={!this.match([routes.SIGNIN, routes.ACCOUNT])} history={history}/>
         </AppBar>
-        <div style={{marginBottom: 56}}>
+        <div style={{overflow: 'hidden'}}>
           <Switch>
             <Route exact path={routes.HOMEPAGE} render={() => (
               <Main/>
@@ -95,7 +95,7 @@ class App extends React.Component {
         </div>
         <Motion
           defaultStyle={{x: 0}}
-          style={{x: spring(this.match([routes.SIGNIN, routes.ACCOUNT]) ? 1 : 0)}}>
+          style={{x: 0}}>
           {style =>
             <Navigation
               style={{
@@ -105,7 +105,7 @@ class App extends React.Component {
               checkedInRestaurant={checkedInRestaurant}
               value={(() => {
                 if (this.match(routes.CHECKIN)) return 1;
-                if (this.match(routes.ACCOUNT)) return 2;
+                if (this.match(routes.ACCOUNT) || this.match(routes.SIGNIN)) return 2;
                 return 0;
               })()}/>
           }

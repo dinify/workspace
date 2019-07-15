@@ -107,7 +107,7 @@ class QRscanner extends React.Component {
         justifyContent: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.87)',
         color: 'rgba(255, 255, 255, 0.54)',
-        height: 'calc(100vh - 121px)',
+        height: '100%',
         width: '100vw'
       }}>
         <video
@@ -116,7 +116,7 @@ class QRscanner extends React.Component {
           ref={this.setVideoContext}
           hidden={cameraAccessible !== 'DONE'}
           style={{
-            maxHeight: 'calc(100vh - 121px)',
+            maxHeight: '100%',
             maxWidth: '100vw'
           }}/>
         {cameraAccessible === 'INIT' ? <CircularProgress color="inherit"/> : ''}

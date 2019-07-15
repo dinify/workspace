@@ -13,10 +13,17 @@ const Main = ({ restaurantsMap }) => {
     <div>
       <ResponsiveContainer>
         <Typography
-          style={{ paddingTop: 32 }}
+          style={{ paddingTop: 24 }}
           variant="h5"
           gutterBottom>
           Explore nearby places
+        </Typography>
+        <Typography
+          style={{ paddingBottom: 24 }}
+          variant="caption"
+          color="textSecondary"
+          gutterBottom>
+          more places coming soon, as they join and host their menu on the platform
         </Typography>
         <ResponsiveGrid>
           {restaurantsList.map(restaurant => (
