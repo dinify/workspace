@@ -448,11 +448,11 @@ export function GetRestaurantingredients({ restaurantId }) {
 }
 
 export function GetRestaurantaddons({ restaurantId }) {
-  return Get({ path: `restaurant/${restaurantId}/addons` });
+  return Get({ path: `restaurant/${restaurantId}/addons?limit=100` });
 }
 
 export function GetRestaurantoptions({ restaurantId }) {
-  return Get({ path: `restaurant/${restaurantId}/options?with=options.choices` });
+  return Get({ path: `restaurant/${restaurantId}/options?with=options.choices&limit=100` });
 }
 
 export function GetRestaurantsettings({ restaurantId }) {

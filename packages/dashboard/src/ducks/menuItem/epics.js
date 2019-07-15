@@ -6,7 +6,6 @@ import propEq from 'ramda/src/propEq';
 import pipe from 'ramda/src/pipe';
 import filter from 'ramda/src/filter';
 import assoc from 'ramda/src/assoc';
-import dissoc from 'ramda/src/dissoc';
 
 import assocPath from 'ramda/src/assocPath';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
@@ -184,7 +183,7 @@ export const assignOptionEpic = (action$, state$) =>
         options: [...menuItem.options, {
           ...option,
           difference: { amount: '0', currency: 'CZK' }
-        }].map((o) => dissoc('choices')(o))
+        }]// .map((o) => dissoc('choices')(o))
       }
       return of({
         type: types.UPDATE_MENUITEM_INIT,
