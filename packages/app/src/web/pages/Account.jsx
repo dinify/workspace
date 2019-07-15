@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import { getClaims } from '@dinify/common/dist/ducks/auth/selectors';
 import { withStateHandlers } from 'recompose';
-import { languages } from '@dinify/common/dist/lib';
+import { languageCountries as languages } from '@dinify/common/dist/lib';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import OpenInNew from '@material-ui/icons/OpenInNewRounded';
 import ArrowUpward from '@material-ui/icons/ArrowUpwardRounded';
@@ -27,7 +27,6 @@ import CurrencyPickerDialog from '@dinify/common/dist/components/dialogs/Currenc
 import Image from 'web/components/Image';
 import Flag from '@dinify/common/dist/components/Flag';
 import Card from 'web/components/Card';
-import countries from '@dinify/common/dist/lib/countries';
 import CashMultiple from '@dinify/common/dist/icons/CashMultiple';
 
 const styles = theme => ({
@@ -49,21 +48,16 @@ const styles = theme => ({
   }
 });
 
-const getLang = langtag => {
+const getLang = (languageId, i18n) => {
   let result = null;
   languages.forEach(lang => {
-    lang.countries.forEach(country => {
-      if (country.langtag === langtag) {
-        result = {
-          ...lang,
-          countryCount: lang.countries.length,
-          country: {
-            ...country,
-            name: countries[country.regionCode]
-          }
-        };
-      }
-    });
+    if (languageId === lang.code) {
+      result = {
+        ...lang,
+        nameEnglish: lang.name,
+        name: i18n.format(lang.code, 'languageName')
+      };
+    }
   });
   return result;
 }
@@ -103,13 +97,7 @@ const Account = ({
 
   const { t, i18n } = useTranslation();
   let primaryLang;
-  if (profile && profile.language) primaryLang = getLang(profile.language.primary);
-
-  let primaryLangSecondary;
-  if (primaryLang) {
-    if (primaryLang.countryCount > 1) primaryLangSecondary = <i>{primaryLang.country.nameNative}</i>;
-    else primaryLangSecondary = <span>{primaryLang.name}</span>;
-  }
+  if (profile && profile.language) primaryLang = getLang(profile.language.primary, i18n);
 
   let displayCurrency;
   if (profile && profile.displayCurrency) displayCurrency = profile.displayCurrency;
@@ -143,7 +131,7 @@ const Account = ({
         </Typography>
       </div>
 
-      <Typography variant="overline" color="textSecondary">
+      <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
         {t('profile')}
       </Typography>
       <Card>
@@ -169,11 +157,8 @@ const Account = ({
         <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
           {t('language.default')}
         </Typography>
-        {primaryLang && <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={() => {openDialog('primary', primaryLang.code)}}>
-          <ListItemIcon>
-            <Flag country={primaryLang.country.regionCode}/>
-          </ListItemIcon>
-          <ListItemText primary={primaryLang.nameNative} secondary={primaryLangSecondary} />
+        {primaryLang && <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={() => {openDialog('primary', primaryLang.code.split('-')[0])}}>
+          <ListItemText primary={primaryLang.nameNative} />
           <ChevronRight />
         </ListItem>}
         {!primaryLang && <div style={{padding: '16px 24px'}}>
@@ -186,12 +171,9 @@ const Account = ({
           {t('language.other')}
         </Typography>
         {profile.language && profile.language.other.map((lang, i) => {
-          const language = getLang(lang);
-          const secondary = language.countryCount > 1 ? language.country.nameNative : language.name;
-          return <ListItem key={language.country.langtag} style={{paddingLeft: 24, paddingRight: 24}}>
-            <ListItemIcon>
-              <Flag country={language.country.regionCode}/>
-            </ListItemIcon>
+          const language = getLang(lang, i18n);
+          const secondary = language.name;
+          return <ListItem key={language.code} style={{paddingLeft: 24, paddingRight: 24}}>
             <ListItemText primary={language.nameNative} secondary={secondary} />
             <IconButton onClick={() => {
               const other = remove(i, 1, profile.language.other);
