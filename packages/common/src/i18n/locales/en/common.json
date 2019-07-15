@@ -33,7 +33,7 @@
     "user-disabled": "This account has been disabled",
     "user-not-found": "No account found with this email",
     "wrong-password": "The passoword is incorrect"
-  },  
+  },
   "suggested": "Suggested",
   "selectLanguage": "Select language",
   "selectCountry": "Select country",
@@ -42,6 +42,7 @@
   "next": "Next",
   "select": "Select",
   "clear": "Clear",
+  "clear": "Cancel",
   "search": "Search",
   "loadingEllipsis": "Loading...",
   "saved": "Saved successfully ✅",

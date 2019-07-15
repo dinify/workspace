@@ -67,9 +67,13 @@
   },
   "roles": {
     "title": "Roles",
-    "manager": "Manager",
-    "waiter": "Waiter",
-    "cook": "Cook",
+    "at": "at {{restaurant}}",
+    "restaurant": {
+      "owner": "Restaurant Owner",
+      "manager": "Restaurant Manager",
+      "waiter": "Waiter",
+      "cook": "Cook"
+    },
     "proofreader": "Proofreader"
   },
   "language": {

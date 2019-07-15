@@ -38,6 +38,10 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center'
   },
+  owner: {
+    backgroundColor: theme.palette.primary.main,
+    color: 'rgba(255, 255, 255, 1)',
+  },
   manager: {
     backgroundColor: theme.palette.primary.main,
     color: 'rgba(255, 255, 255, 1)',
@@ -45,17 +49,19 @@ const styles = theme => ({
   waiter: {
     backgroundColor: theme.palette.secondary.main,
     color: 'rgba(255, 255, 255, 1)',
+  },
+  button2: {
+    ...theme.typography.button2
   }
 });
 
-const getLang = (languageId, i18n) => {
+const getLang = (languageId) => {
   let result = null;
   languages.forEach(lang => {
     if (languageId === lang.code) {
       result = {
         ...lang,
         nameEnglish: lang.name,
-        name: i18n.format(lang.code, 'languageName')
       };
     }
   });
@@ -80,6 +86,7 @@ const Account = ({
   openDialog,
   closeDialog,
   initialSelectedLanguage,
+  restaurantsMap,
   ...other
 }) => {
 
@@ -97,7 +104,7 @@ const Account = ({
 
   const { t, i18n } = useTranslation();
   let primaryLang;
-  if (profile && profile.language) primaryLang = getLang(profile.language.primary, i18n);
+  if (profile && profile.language) primaryLang = getLang(profile.language.primary);
 
   let displayCurrency;
   if (profile && profile.displayCurrency) displayCurrency = profile.displayCurrency;
@@ -149,7 +156,7 @@ const Account = ({
           <Typography variant="body2">
             {t('currency.original')}
           </Typography>
-          <Button onClick={() => {openDialog('currency')}} variant="text" color="primary">
+          <Button className={classes.button2} onClick={() => {openDialog('currency')}} variant="text" color="primary">
             {t('currency.set')}
           </Button>
         </div>}
@@ -162,7 +169,7 @@ const Account = ({
           <ChevronRight />
         </ListItem>}
         {!primaryLang && <div style={{padding: '16px 24px'}}>
-          <Button onClick={() => {openDialog('primary')}} variant="text" color="primary">
+          <Button className={classes.button2} onClick={() => {openDialog('primary')}} variant="text" color="primary">
             {t('language.setPrimary')}
           </Button>
         </div>}
@@ -171,10 +178,9 @@ const Account = ({
           {t('language.other')}
         </Typography>
         {profile.language && profile.language.other.map((lang, i) => {
-          const language = getLang(lang, i18n);
-          const secondary = language.name;
+          const language = getLang(lang);
           return <ListItem key={language.code} style={{paddingLeft: 24, paddingRight: 24}}>
-            <ListItemText primary={language.nameNative} secondary={secondary} />
+            <ListItemText primary={language.nameNative} />
             <IconButton onClick={() => {
               const other = remove(i, 1, profile.language.other);
               firebase.updateProfile({
@@ -202,7 +208,7 @@ const Account = ({
           </ListItem>;
         })}
         <div style={{padding: '16px 24px'}}>
-          <Button onClick={() => {openDialog('other')}} variant="text" color="primary">
+          <Button className={classes.button2} onClick={() => {openDialog('other')}} variant="text" color="primary">
             {t('language.addOther')}
           </Button>
         </div>
@@ -213,27 +219,31 @@ const Account = ({
             {t('roles.title')}
           </Typography>
 
-          {claims.roles.restaurant && (
-            <div>
-              <ListItem style={{paddingLeft: 24, paddingRight: 24}}>
-                <Avatar className={classes[claims.roles.restaurant.type]}>
+          {claims.roles.map(role => {
+            let secondary = '';
+            if (restaurantsMap[role.resource]) {
+              secondary = t('roles.at', {restaurant: restaurantsMap[role.resource].name})
+            }
+            return (
+              <ListItem key={role.resource} style={{paddingLeft: 24, paddingRight: 24}}>
+                <Avatar className={classes[role.id.split('.')[role.id.split('.').length - 1]]}>
                   <Person />
                 </Avatar>
-                <ListItemText primary={t(`roles.${claims.roles.restaurant.type}`)} secondary="at Korea Grill" />
+                <ListItemText primary={t(`roles.${role.id}`)} secondary={secondary} />
               </ListItem>
-              <ListItem button onClick={() => {openInNewTab('https://dashboard.dinify.app/')}} style={{paddingLeft: 80, paddingRight: 24}}>
-                <ListItemText primary={t('dashboard')}/>
-                <OpenInNew style={{opacity: 0.54}}/>
-              </ListItem>
-              <ListItem button onClick={() => {openInNewTab('https://waiterboard.dinify.app/')}} style={{paddingLeft: 80, paddingRight: 24}}>
-                <ListItemText primary={t('waiterboard')}/>
-                <OpenInNew style={{opacity: 0.54}}/>
-              </ListItem>
-            </div>
-          )}
+            );
+          })}
+          <ListItem button onClick={() => {openInNewTab('https://dashboard.dinify.app/')}} style={{paddingLeft: 80, paddingRight: 24}}>
+            <ListItemText primary={t('dashboard')}/>
+            <OpenInNew style={{opacity: 0.54}}/>
+          </ListItem>
+          <ListItem button onClick={() => {openInNewTab('https://waiterboard.dinify.app/')}} style={{paddingLeft: 80, paddingRight: 24}}>
+            <ListItemText primary={t('waiterboard')}/>
+            <OpenInNew style={{opacity: 0.54}}/>
+          </ListItem>
         </Card>
       )}
-      <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 16}}>
+      <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 16, paddingBottom: 16}}>
         <Button variant="outlined" onClick={() => {
           firebase.logout();
         }} color="primary">
@@ -320,6 +330,7 @@ const enhance = compose(
       user: state.firebase.auth,
       profile: state.firebase.profile,
       claims: getClaims(state),
+      restaurantsMap: state.restaurant.all,
     })
   )
 )

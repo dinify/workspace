@@ -32,7 +32,7 @@ const getGlobalizedInstance = (language) => {
 
 
 export default ({ namespace, lang, fallback }) => {
-  const defaultFallback = ['en']
+  let defaultFallback = ['en']
   if (fallback && fallback.length) defaultFallback = fallback;
 
   let globalized;
