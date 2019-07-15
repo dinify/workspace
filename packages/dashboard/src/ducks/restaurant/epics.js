@@ -50,7 +50,9 @@ const loadRestaurant = (action$) =>
     ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
       return of(
-        {type: types.FETCH_RESTAURANT_INIT},
+        {type: types.FETCH_RESTAURANT_INIT, payload: {
+          node: true
+        }},
         {type: 'FETCH_LANGUAGES_INIT'},
         {type: 'FETCH_TRANSLATIONS_INIT'},
         {type: 'FETCH_SERVICEIMAGES_INIT'},
