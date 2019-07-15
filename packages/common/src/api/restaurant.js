@@ -1,6 +1,7 @@
 import { Get, Post, PostMultipart } from './Network';
 
 const googleFunctionsEndpoint = 'https://europe-west1-dinify.cloudfunctions.net/';
+const nodeEndpoint = 'https://node.dinify.app/'
 
 export function GetRestaurants({ populateWith }) {
   let populateQuery = '';
@@ -440,7 +441,10 @@ export function GetRestaurantwaiterboards({ restaurantId }) {
 }
 
 export function GetRestaurantingredients({ restaurantId }) {
-  return Get({ path: `restaurant/${restaurantId}/ingredients` });
+  return Get({
+    endpoint: nodeEndpoint,
+    path: `ingredients/ofRestaurant/${restaurantId}`
+  });
 }
 
 export function GetRestaurantaddons({ restaurantId }) {
