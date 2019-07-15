@@ -10,11 +10,17 @@ export function GetRestaurants({ populateWith }) {
   return Get({ path: `restaurant/list?limit=100${populateQuery}` });
 }
 
-export function GetRestaurant({ subdomain, restaurantId, populateWith }) {
+export function GetRestaurant({ subdomain, restaurantId, populateWith, node }) {
   let populateQuery = '';
   if (populateWith) populateQuery = `?with=${populateWith}`;
   else populateQuery = `?with=images,tags,services.image`;
   const id = subdomain || restaurantId;
+  if (node) {
+    return Get({
+      endpoint: nodeEndpoint,
+      path: `restaurants/${id}`
+    });
+  }
   return Get({ path: `restaurant/${id}${populateQuery}` });
 }
 
