@@ -15,7 +15,7 @@ import merge from 'ramda/src/merge';
 import groupBy from 'ramda/src/groupBy';
 import mapObjIndexed from 'ramda/src/mapObjIndexed';
 
-import languagesArray from '@dinify/common/dist/lib/languages.json'
+import { languageCountries as languagesArray } from '@dinify/common/dist/lib'
 import Typography from '@dinify/common/dist/components/Typography';
 import Collapse from '@material-ui/core/Collapse';
 import Button from '@material-ui/core/Button';
@@ -44,12 +44,12 @@ const OTHER = 'OTHER';
 
 const languages = mergeAll(
   languagesArray.map((el) => {
-    const key = el[0];
+    const key = el.code;
     return {[key]: {
-      code: el[0],
-      langEn: el[1],
-      langLoc: el[2],
-      locales: el[3]
+      code: el.code,
+      langEn: el.name,
+      langLoc: el.nameNative,
+      locales: el.countries
     }
   }})
 );
