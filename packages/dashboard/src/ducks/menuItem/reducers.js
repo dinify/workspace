@@ -36,7 +36,6 @@ export default function reducer(state = initialState, action) {
         if (!category.items) return;
         MapToList(category.items).forEach(item => {
           item.menu_category_id = category.id;
-          item.price = {amount: 0, currency: 'CZK'};
           if (!state.all[item.id]) newState = assocPath(['all', item.id], item)(newState);
         });
       });

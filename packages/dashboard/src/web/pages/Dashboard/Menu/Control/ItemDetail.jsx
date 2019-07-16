@@ -102,7 +102,7 @@ let ItemDetail = ({
   const selectedFood = menuItems[selectedFoodId];
   useEffect(() => {
     fetchMenuitem({ id: selectedFoodId })
-  }, []);
+  }, [selectedFoodId]);
   if (!selectedFood) return <div />;
   let foodImageUrl = '';
   if (selectedFood.images) {

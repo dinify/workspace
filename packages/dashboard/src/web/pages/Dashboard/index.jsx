@@ -402,7 +402,7 @@ const Dashboard = ({
           <div style={{margin: '12px 0'}}>
             {restaurant.name}
           </div>
-          {publised &&
+          {!!publised &&
             <Typography variant='caption' align='center' style={{margin: '12px 0'}}>
               {t('restaurantPublished')}
             </Typography>

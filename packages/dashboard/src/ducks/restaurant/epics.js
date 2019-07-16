@@ -163,7 +163,7 @@ const onUpdateDoneSnackbarsEpic = (action$) =>
   action$.pipe(
     filter(
       action =>
-        action.type.startsWith('UPDATE_') && action.type.endsWith('_DONE'),
+        action.type.includes('UPDATE_') && action.type.endsWith('_DONE'),
     ),
     mergeMap(() => {
       return of(snackbar.show({
@@ -176,7 +176,7 @@ const onUpdateFailSnackbarsEpic = (action$) =>
   action$.pipe(
     filter(
       action =>
-        action.type.startsWith('UPDATE_') && action.type.endsWith('_FAIL'),
+        action.type.includes('UPDATE_') && action.type.endsWith('_FAIL'),
     ),
     mergeMap(() => {
       return of(snackbar.show({
@@ -201,7 +201,7 @@ const addLangSnackbar = (action$) =>
   action$.pipe(
     filter(
       action =>
-        action.type.startsWith('CREATE_MENULANGUAGE'),
+        action.type.includes('CREATE_MENULANGUAGE'),
     ),
     map(({ type }) => {
       let message = '';
