@@ -11,7 +11,7 @@ import RestaurantView from 'web/pages/RestaurantView';
 import MenuItemView from 'web/pages/MenuItemView';
 import SignIn from '@dinify/common/dist/components/SignIn';
 import Account from 'web/pages/Account';
-import Eat from 'web/pages/Eat';
+import DineIn from 'web/pages/DineIn';
 import Cart from 'web/pages/Cart';
 import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
@@ -36,7 +36,7 @@ class App extends React.Component {
   onNavigate = (evt, val) => {
     const { history, checkedInRestaurant } = this.props;
     if (val === 0) history.push(routes.HOMEPAGE);
-    else if (val === 1) history.push(routes.CHECKIN);
+    else if (val === 1) history.push(routes.DINEIN);
     else if (val === 2) history.push(routes.ACCOUNT);
   }
 
@@ -87,7 +87,7 @@ class App extends React.Component {
             <Route path={routes.RESTAURANT} component={RestaurantView} />
             <Route path={routes.MENUITEM} component={MenuItemView} />
 
-            <Route path={routes.EAT}  component={Eat} />
+            <Route path={routes.DINEIN}  component={DineIn} />
             <Route path={routes.CART}  component={Cart} />
             <Route path={routes.RECEIPT} component={Receipt} />
             <Route path={routes.SERVICES} component={Services} />
@@ -104,7 +104,7 @@ class App extends React.Component {
               handleChange={this.onNavigate}
               checkedInRestaurant={checkedInRestaurant}
               value={(() => {
-                if (this.match(routes.CHECKIN)) return 1;
+                if (this.match(routes.DINEIN)) return 1;
                 if (this.match(routes.ACCOUNT) || this.match(routes.SIGNIN)) return 2;
                 return 0;
               })()}/>
