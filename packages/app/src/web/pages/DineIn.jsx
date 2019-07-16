@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 // material-ui
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +12,8 @@ import CheckCircle from '@material-ui/icons/CheckCircleRounded';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import NotificationsActive from '@material-ui/icons/NotificationsActiveRounded';
 import ViewList from '@material-ui/icons/ViewListRounded';
+
+import Eat from './Eat';
 
 const DineIn = ({
   restaurantsMap,
@@ -44,17 +47,22 @@ const DineIn = ({
         <Typography variant="overline" color="textSecondary" style={{margin: 16}}>
           {t('dinein.actions')}
         </Typography>
-        <ListItem button>
+        <ListItem button component={({children, ...other}) => (
+          <Link to={`/restaurant/${restaurant.subdomain}`} {...other}>{children}</Link>
+        )}>
           <ViewList color="action"/>
           <ListItemText primary={t('dinein.seeMenu')}/>
           <ChevronRight color="action"/>
         </ListItem>
-        <ListItem button>
+        <ListItem button component={({children, ...other}) => (
+          <Link to="/dinein/services" {...other}>{children}</Link>
+        )}>
           <NotificationsActive color="action"/>
           <ListItemText primary={t('dinein.callService')}/>
           <ChevronRight color="action"/>
         </ListItem>
       </React.Fragment>}
+      <Eat/>
     </div>
   );
 };

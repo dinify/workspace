@@ -84,13 +84,14 @@ class App extends React.Component {
             }} />
 
             <Route path={routes.CHECKIN} component={Checkin} />
+            <Route path={routes.SERVICES} component={Services} />
+
             <Route path={routes.RESTAURANT} component={RestaurantView} />
             <Route path={routes.MENUITEM} component={MenuItemView} />
 
             <Route path={routes.DINEIN}  component={DineIn} />
             <Route path={routes.CART}  component={Cart} />
             <Route path={routes.RECEIPT} component={Receipt} />
-            <Route path={routes.SERVICES} component={Services} />
           </Switch>
         </div>
         <Motion

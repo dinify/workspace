@@ -8,4 +8,4 @@ export const EAT = '/eat';
 export const DINEIN = '/dinein';
 export const CART = '/cart';
 export const RECEIPT = '/receipt';
-export const SERVICES = '/services';
+export const SERVICES = '/dinein/services';
