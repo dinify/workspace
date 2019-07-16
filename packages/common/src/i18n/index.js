@@ -33,7 +33,7 @@ const getGlobalizedInstance = (language) => {
 
 export default ({ namespace, lang, fallback }) => {
   let defaultFallback = ['en']
-  if (fallback && fallback.length) defaultFallback = fallback;
+  if (fallback && fallback.length) defaultFallback = [...fallback, 'en'];
 
   let globalized;
   const options = {

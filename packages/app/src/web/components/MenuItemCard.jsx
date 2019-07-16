@@ -69,7 +69,10 @@ const MenuItemCard = ({
             backgroundImage: `url(${images[0]})`
           }}/>
       </div>
-      <Typography variant="subtitle1">{menuItem.name}</Typography>
+      <Typography style={{
+        textOverflow: 'ellipsis',
+        overflow: 'hidden'
+      }} variant="subtitle1">{menuItem.name}</Typography>
       <Typography
         className={classes.price}
         variant="overline">
