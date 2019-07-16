@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
-import Print from '@material-ui/icons/Print';
 
 import { MapToList } from '@dinify/common/dist/lib/FN';
 import { connect } from 'react-redux';
@@ -15,9 +14,9 @@ const styles = () => ({
   wb: {
     background: 'white',
     boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)',
-    borderRadius: '2px',
     padding: '10px',
-    margin: '14px 10px 0 10px',
+    height: '100vh',
+    margin: 0,
     '& a': {
       color: 'black',
     },
@@ -34,7 +33,7 @@ const styles = () => ({
     margin: 10,
     textAlign: 'center',
     fontSize: 12,
-    width: 250,
+    width: '5cm',
     overflow: 'hidden',
   }
 });
@@ -67,11 +66,6 @@ const QRs = ({ waiterboards, waiterboardsLoaded, fetchWaiterboards, restaurant, 
               <Typography gutterBottom variant="subtitle1" align="center">{wb.name}</Typography>
             </Link> 
           */}
-          <div style={{ textAlign: 'right' }}>
-            <Link to="/qrsprint" target="_blank">
-              <Print />
-            </Link>
-          </div>
           <div>
             {wb.tables.map(table => (
               <Link to={`/qr/${table.qr}`} target="_blank" key={table.id}>
