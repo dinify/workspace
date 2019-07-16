@@ -12,6 +12,7 @@ import RegisterRestaurant from 'web/pages/RegisterRestaurant';
 import { reportCampaignAction } from '@dinify/common/dist/ducks/reporting/actions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import withRoot from 'withRoot.js';
+import QRsPrint from './pages/QRsPrint';
 
 const SignInWithRoot = withRoot(SignIn);
 const RegisterRestaurantWithRoot = withRoot(RegisterRestaurant);
@@ -58,6 +59,7 @@ const App = ({
         :
         <Switch>
           <Route path="/qr/:code" component={Qr} />
+          <Route path="/qrsprint" component={QRsPrint} />
           <Route path="/signin" component={({location}) => {
             return user.isEmpty ? <SignInWithRoot env="DASHBOARD" user={user} location={location} /> :
             <Redirect to="/"/>
