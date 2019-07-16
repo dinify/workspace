@@ -1,7 +1,7 @@
 export const HOMEPAGE = '/';
 export const SIGNIN = '/account/signin';
 export const ACCOUNT = '/account';
-export const CHECKIN = '/checkin';
+export const CHECKIN = '/dinein/camera';
 export const RESTAURANT = '/restaurant/:subdomain';
 export const MENUITEM = '/menu/item/:id';
 export const EAT = '/eat';

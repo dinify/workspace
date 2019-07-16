@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 // material-ui
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -12,6 +13,7 @@ import CheckCircle from '@material-ui/icons/CheckCircleRounded';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import NotificationsActive from '@material-ui/icons/NotificationsActiveRounded';
 import ViewList from '@material-ui/icons/ViewListRounded';
+import Camera from '@material-ui/icons/CameraRounded';
 
 import Eat from './Eat';
 
@@ -62,6 +64,20 @@ const DineIn = ({
           <ChevronRight color="action"/>
         </ListItem>
       </React.Fragment>}
+      {!checkedin &&
+        <div>
+          <Typography style={{margin: 16}}>
+            {t('cart.checkInInstructions')}
+          </Typography>
+          <Button variant="contained" color="primary" style={{boxShadow: 'none', marginLeft: 16, marginRight: 16, ...theme.typography.button2}}
+          component={({children, ...other}) => (
+            <Link to="/dinein/camera" {...other}>{children}</Link>
+          )}>
+            <Camera style={{marginRight: 8}}/>
+            Open camera
+          </Button>
+        </div>
+      }
       <Eat/>
     </div>
   );
