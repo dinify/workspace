@@ -30,11 +30,18 @@ const populateCategoriesWith = [
   'categories.items.ingredients',
   'categories.items.options.choices',
 ].join(',');
-export function GetMenucategories({ subdomain, populateWith }) {
+export function GetMenucategories({ subdomain, populateWith, node }) {
   let populateQuery = '';
   
   if (populateWith) populateQuery = `&with=${populateWith}`;
   else populateQuery = `&with=${populateCategoriesWith}`;
+
+  if (node) {
+    return Get({
+      endpoint: nodeEndpoint,
+      path: `menuCategories/ofRestaurant/${subdomain}`
+    });    
+  }
 
   return Get({ path: `restaurant/${subdomain}/categories?limit=100${populateQuery}` });
 }

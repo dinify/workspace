@@ -19,7 +19,11 @@ const Menucontrol = ({
 }) => {
   if (selectedRestaurant) {
     useEffect(() => {
-      fetchMenu({ subdomain: selectedRestaurant, populateWith: 'categories.items' })
+      fetchMenu({
+        subdomain: selectedRestaurant,
+        populateWith: 'categories.items',
+        node: true
+      })
     }, []);
   }
   const { t } = useTranslation();

@@ -10,3 +10,13 @@ export const getOrderList = createSelector(
     return filter((o) => o.status !== 'CONFIRMED')(MapToList(all));
   }
 )
+
+export const getConfirmedOrderList = createSelector(
+  [
+    (state) => state.order.all,
+  ],
+  (all) => {
+    return filter((o) => o.status === 'CONFIRMED')(MapToList(all));
+  }
+)
+

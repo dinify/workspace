@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { MapToList } from '@dinify/common/dist/lib/FN'
 import { withFirebase } from 'react-redux-firebase'
 
+import sum from 'ramda/src/sum';
+
 import AppBar from '@material-ui/core/AppBar'
 import IconButton from '@material-ui/core/IconButton'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -17,6 +19,7 @@ import RestaurantMenu from '@material-ui/icons/RestaurantMenu'
 import Event from '@material-ui/icons/Event'
 
 import { toggleFrames, toggleModal } from 'ducks/ui'
+import { getConfirmedOrderList } from 'ducks/order/selectors';
 import { colorsByStages } from '../colors'
 
 const Label = styled.span`
@@ -120,7 +123,6 @@ const styles = {
 
 const Header = ({
   tablesCount = 0,
-  salesVolume = 0,
   restaurant,
   firebase,
   toggleFrames,
@@ -128,7 +130,8 @@ const Header = ({
   frameIndex,
   bookings,
   anyAction,
-  orders
+  orders,
+  confirmedOrders
 }) => {
   const frames = ['actions','tables']
   let restaurantName = '';
@@ -138,6 +141,17 @@ const Header = ({
 
   const ordersList = MapToList(orders)
   const confirmedOrdersCount = ordersList.filter((o) => o.status === 'CONFIRMED').length
+
+  
+  const amounts = confirmedOrders.map((o) => {
+    if (!o || !o.subtotal || !o.subtotal.amount) return 0;
+    return Number(o.subtotal.amount);
+  });
+
+  const salesVolume =  sum(amounts);
+
+  console.log(salesVolume);
+
   return (
     <AppBar position="static" style={styles.appbar}>
       <Container>
@@ -200,7 +214,8 @@ export default connect(
     frameIndex: state.ui.frameIndex,
     bookings: state.booking.all,
     salesVolume: state.restaurant.sales,
-    orders: state.order.all
+    orders: state.order.all,
+    confirmedOrders: getConfirmedOrderList(state)
   }),
   {
     toggleFrames,

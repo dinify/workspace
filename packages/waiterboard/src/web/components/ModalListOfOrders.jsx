@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import Order from './Events/Order'
 import { colorsByStages } from '../colors'
-import { MapToList } from '@dinify/common/dist/lib/FN'
+import { getConfirmedOrderList } from 'ducks/order/selectors';
 
 import { Head, Body, BodyPlaceholder } from './styled/Modal'
 
@@ -24,7 +24,7 @@ class ModalListOfOrders extends React.Component {
         </Head>
         <Body>
           {orders.length < 1 ? <BodyPlaceholder>No confirmed orders</BodyPlaceholder> : ''}
-          {MapToList(orders).filter((o) => o.status === 'CONFIRMED').map((order) =>
+          {orders.map((order) =>
             <Order key={order.id} order={order} noconfirm />
           )}
         </Body>
@@ -35,6 +35,6 @@ class ModalListOfOrders extends React.Component {
 
 export default connect(
   state => ({
-    orders: state.order.all
+    orders: getConfirmedOrderList(state)
   })
 )(ModalListOfOrders);
