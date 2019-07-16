@@ -143,14 +143,6 @@ const Cart = ({
           <RestaurantMenu style={{marginRight: 16}} />
           {t('order')}
         </Fab>
-
-        {notCheckedIn &&
-          <div>
-            <Typography style={{marginTop: 16}}>
-              {t('cart.checkInInstructions')}
-            </Typography>
-          </div>
-        }
       </ResponsiveContainer>
     </div>
   )

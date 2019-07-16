@@ -150,7 +150,7 @@ const Account = ({
             <CashMultiple />
           </ListItemIcon>
           <ListItemText primary={i18n.format(displayCurrency, 'currencyName')} secondary={displayCurrency} />
-          <ChevronRight />
+          <ChevronRight color="action"/>
         </ListItem>}
         {!displayCurrency && <div style={{padding: '0 24px 16px 24px'}}>
           <Typography variant="body2">
@@ -166,7 +166,7 @@ const Account = ({
         </Typography>
         {primaryLang && <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={() => {openDialog('primary', primaryLang.code.split('-')[0])}}>
           <ListItemText primary={primaryLang.nameNative} />
-          <ChevronRight />
+          <ChevronRight color="action"/>
         </ListItem>}
         {!primaryLang && <div style={{padding: '16px 24px'}}>
           <Button className={classes.button2} onClick={() => {openDialog('primary')}} variant="text" color="primary">

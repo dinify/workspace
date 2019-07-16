@@ -15,7 +15,7 @@ const SignInLink = ({classes, ...other}) => {
       <Button
         className={classes.button2}
         variant="outlined"
-        onClick={() => {window.open("https://web.dinify.app/signin", "_blank")}}
+        onClick={() => {window.open("https://web.dinify.app/account/signin", "_blank")}}
         disableRipple
       >
         <OpenInNew style={{ fontSize: 16, marginRight: 4 }}/>

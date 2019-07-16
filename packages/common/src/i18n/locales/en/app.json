@@ -13,8 +13,14 @@
   "website": "Website",
   "nav": {
     "explore": "Explore",
-    "checkIn": "Check in",
+    "dineIn": "Dine in",
     "account": "Account"
+  },
+  "dinein": {
+    "checkedin": "you are currently checked in",
+    "actions": "Actions",
+    "seeMenu": "See restaurant menu",
+    "callService": "Call a service"
   },
   "ingredients": "Ingredients",
   "addons": "Addons",

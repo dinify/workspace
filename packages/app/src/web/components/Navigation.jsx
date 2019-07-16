@@ -3,11 +3,11 @@ import { withStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
 import Explore from '@material-ui/icons/ExploreRounded';
-import Camera from '@material-ui/icons/CameraRounded';
+import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import AccountCircle from '@material-ui/icons/AccountCircleRounded';
 
 import ExploreOutlined from '@material-ui/icons/ExploreOutlined';
-import CameraOutlined from '@material-ui/icons/CameraOutlined';
+import RestaurantMenuOutlined from '@material-ui/icons/RestaurantMenuOutlined';
 import AccountCircleOutlined from '@material-ui/icons/AccountCircleOutlined';
 
 import Divider from '@material-ui/core/Divider';
@@ -40,8 +40,8 @@ const Navigation = ({
       text: t('nav.explore')
     },
     {
-      icon: selected => selected ? <Camera color={getColor(selected)}/> : <CameraOutlined color={getColor(selected)}/>,
-      text: t('nav.checkIn')
+      icon: selected => selected ? <RestaurantMenu color={getColor(selected)}/> : <RestaurantMenuOutlined color={getColor(selected)}/>,
+      text: t('nav.dineIn')
     },
     {
       icon: selected => selected ? <AccountCircle color={getColor(selected)}/> : <AccountCircleOutlined color={getColor(selected)}/>,
