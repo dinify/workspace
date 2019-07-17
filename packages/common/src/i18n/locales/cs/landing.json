@@ -7,8 +7,8 @@
   },
   "features": "Produkt",
   "sectionMultilingual": {
-    "header": "Digitální menu v 77 jazycích",
-    "subtitle": "Podporujeme již 77 jazyků a stále přidáváme další tak, aby si mohli snadno objednat opravdu všichni. Ve svém jazyce uvidíte nejen název jídla, ale i jeho ingredience, nutiční hodnoty a cenu ve vaší měně.",
+    "header": "Digitální menu v 96 jazycích",
+    "subtitle": "Podporujeme již 96 jazyků a stále přidáváme další tak, aby si mohli snadno objednat opravdu všichni. Ve svém jazyce uvidíte nejen název jídla, ale i jeho ingredience, nutiční hodnoty a cenu ve vaší měně.",
     "note": "a další..."
   },
   "sectionProduct": {
@@ -138,8 +138,11 @@
     "language": "Jazyk",
     "links": {
       "title": "Navigace",
-      "restaurants": "Přidejte vaši restauraci"
+      "restaurants": "Přidejte vaši restauraci",
+      "support": "Podpora",
+      "privacy": "Ochrana osobních údajů",
+      "terms": "Obchodni podmínky"
     },
-    "copyright": "<0/><1/>, Ze<2/><3>Dinify</3>"
+    "copyright": "Copyright<0/><1/>, Ze<2/><3>Dinify</3>"
   }
 }

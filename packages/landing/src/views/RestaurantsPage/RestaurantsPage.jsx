@@ -6,7 +6,7 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Header from "components/Header/Header.jsx";
-import Footer from "components/Footer/Footer.jsx";
+import { FooterView } from "views/FooterView";
 import SectionFAQ from "./Sections/SectionFAQ.jsx";
 import SectionWaiterboard from "./Sections/SectionWaiterboard.jsx";
 import SectionStatement from "./Sections/SectionStatement.jsx";
@@ -70,7 +70,7 @@ class RestaurantsPage extends React.Component {
                   {t('restaurantsPage.hero.cta')}
                 </Button>
                 <Typography variant="caption" style={{marginTop: 8, color: 'rgba(255, 255, 255, 0.76)'}}>
-                  Start your free 30 day trial
+                  {t('restaurantsPage.hero.caption')}
                 </Typography>
                 {email && (
                   <Typography variant="body2" style={{color: 'rgba(255, 255, 255, 0.76)', marginTop: 8}}>
@@ -95,7 +95,7 @@ class RestaurantsPage extends React.Component {
           <SectionPricing t={t} registrationURL={registrationURL}/>
           <SectionFAQ t={t}/>
         </div>
-        <Footer></Footer>
+        <FooterView />
       </div>
     );
   }

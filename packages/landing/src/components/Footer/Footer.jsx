@@ -1,7 +1,5 @@
 /* eslint-disable */
 import React from "react";
-// nodejs library to set properties for components
-import PropTypes from "prop-types";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
@@ -9,9 +7,17 @@ import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 // @material-ui/icons
 import Copyright from "@material-ui/icons/CopyrightTwoTone";
 import Favorite from "@material-ui/icons/FavoriteTwoTone";
+
+import FacebookBox from "@dinify/common/dist/icons/FacebookBox";
+import Instagram from "@dinify/common/dist/icons/Instagram";
+import Twitter from "@dinify/common/dist/icons/Twitter";
+import Youtube from "@dinify/common/dist/icons/Youtube";
+import Github from "@dinify/common/dist/icons/Github";
+
 import { Trans, useTranslation } from 'react-i18next';
 
 import footerStyle from "styles/material-kit-pro-react/components/footerStyle.jsx";
@@ -34,6 +40,44 @@ const Footer = (props) => {
     [classes.a]: true
   });
 
+  const verticalDividerStyle = {
+    content: '""',
+    width: 1,
+    height: 24,
+    backgroundColor: darkTheme.palette.divider,
+    marginLeft: 16,
+    marginRight: 16
+  };
+
+  const flexCenterStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  };
+
+  const socialLinks = [
+    {
+      link: 'http://www.facebook.com/dinifyapp',
+      component: <FacebookBox />
+    },
+    {
+      link: 'http://www.instagram.com/dinifyapp',
+      component: <Instagram />
+    },
+    {
+      link: 'http://twitter.com/dinifyapp',
+      component: <Twitter />
+    },
+    {
+      link: 'https://github.com/dinify',
+      component: <Github />
+    },
+    {
+      link: 'https://www.youtube.com/channel/UCARTi0PRcbWMskKRf7A9REg',
+      component: <Youtube />
+    }
+  ];
+
   return (
     <footer className={footerClasses}>
       <div className={classes.container}>
@@ -46,12 +90,27 @@ const Footer = (props) => {
           " "
         )}
         {content}
+        <div style={{
+          color: darkTheme.palette.text.secondary,
+          marginBottom: 32,
+          ...flexCenterStyle
+        }}>
+          {socialLinks.map((social, index) => (
+            <React.Fragment key={social.link}>
+              {index !== 0 && <div style={verticalDividerStyle}/>}
+              <Link href={social.link} color="inherit" style={flexCenterStyle}>
+                {social.component}
+              </Link>
+            </React.Fragment>
+          ))}
+
+        </div>
         <Typography variant="caption" color="textSecondary">
           <Trans i18nKey="footer.copyright">
             <Copyright className={classes.smallCopyright} />
-            {1900 + new Date().getYear()}
+            {`${1900 + new Date().getYear()}`}
             <Favorite className={classes.smallHeart}/>
-            <a className={classes.textSecondary} href="https://www.dinify.app/"/>
+            <Link href="/" color="inherit" />
           </Trans>
         </Typography>
         <div className={classes.clearFix} />
@@ -59,13 +118,6 @@ const Footer = (props) => {
     </footer>
   );
 }
-
-Footer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.oneOf(["dark", "white", "transparent"]),
-  big: PropTypes.bool,
-  content: PropTypes.node.isRequired
-};
 
 const WithStyles = withStyles(footerStyle)(Footer);
 
