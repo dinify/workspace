@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import map from 'async/map';
+import { Op } from "sequelize";
 import RestaurantsTa from "../models/RestaurantsTa";
 import TargetingTaggables from '../models/TargetingTaggables';
 import TargetingTags from '../models/TargetingTags';
@@ -10,19 +11,30 @@ const cors = require('cors')({
 
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
-    const {
+    let {
       query = {},
       skip = 0,
       limit = 100,
       order = [] // [['id','ASC']]
     } = req.body;
-    RestaurantsTa
-    .findAll({
+
+    if (query.num_reviews) {
+      query.num_reviews = {
+        [Op.gte]: query.num_reviews.$gt
+      }
+    }
+
+    const queryOptions = {
       where: query,
       offset: skip,
       limit,
       order
-    })
+    };
+
+    console.log(queryOptions);
+
+    RestaurantsTa
+    .findAll(queryOptions)
     .then((results) => {
       map(
         results,

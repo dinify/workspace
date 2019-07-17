@@ -21,7 +21,6 @@ import ItemAddons from './ItemAddons';
 import ItemOptions from './ItemOptions';
 import ItemNutrition from './ItemNutrition';
 
-
 let DetailForm = ({ handleSubmit }) => {
   const style = { height: '64px' };
   const { t } = useTranslation();

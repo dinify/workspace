@@ -2,7 +2,8 @@
   "hero": {
     "header": "Objednávejte si v restauracích ve svém jazyce, ať už jste kdekoliv.",
     "subtitle": "Naší misí je propjovat cestovatele a lokální restaurace. Je jedno jaké jazyky ovládáte, my vám umožníme mít skvělý zážitek v každé restauraci i na vašich cestách. Boříme jazykové bariéry.",
-    "cta": "Začni zde"
+    "cta": "Začni zde",
+    "restaurants": "Are you a restaurant?"
   },
   "features": "Produkt",
   "sectionMultilingual": {
@@ -63,35 +64,82 @@
       "title": "Přinášíme revoluci v gastro podnicích",
       "subtitle": "Posuňte s námi váš podnik na novou úroveň",
       "continueWith": "Pokračovat jako {{email}}",
-      "cta": "Začněte"
+      "cta": "Začněte",
+      "caption": "Vyzkoušejte na 30 dní zdarma"
     },
     "sections": {
+      "statement": {
+        "title": "Přeložíme vaše menu do více než 50 jazyků a zlepšíme servis vašich zahraničních hostů."
+      },
+      "pricing": {
+        "title": "Vyzkoušejte si Dinify na 30 dní zdarma",
+        "subtitle": "Poté za měsíční či roční předplatné, které můžete kdykoliv zrušit.",
+        "cta": "Registrovat zdarma",
+        "price": {
+          "monthly": {
+            "amount": "490 Kč",
+            "caption": "za měsíc"
+          },
+          "annual": {
+            "amount": "4 990 Kč",
+            "caption": "za rok"
+          },
+          "or": "nebo"
+        }
+      },
       "faq": {
         "translation": {
-          "title": "How do I create my menu in so many languages?",
-          "content": "Once you create an account, you'll get access to your own restaurant dashboard. You can then start creating your menu in any language. Automated translations work well with English, so you can get everything done with a couple clicks."
+          "title": "Jak mohu přeložit své menu do všech světových jazyků? ",
+          "content": "Jakmile si založíte svůj účet, můžete začít s vytvářením svého online menu. Dále vyberete jazyky, které chcete podporovat a my se postaráme o vše ostatní."
         },
         "correct": {
-          "title": "How do I know if the automated translations are correct?",
-          "content": "The quality of the translation results depends on the input language, the context and so on. The main purpose of the translated menu (along with images) is to help your foreign guests better understand what they're getting, and make the right choice. Optionally, you can opt in to our on demand proofreading service at an extra cost."
+          "title": "Jak bude zajištěna správnost překladů?",
+          "content": "Pro absolutní jistotu, že překlady budou na úrovni rodilých mluvčí, poskytujeme profesionální korekturu od našich externích partnerů."
         },
         "devices": {
-          "title": "What devices do I need to get started?",
-          "content": "Crafted with love by a restauranteour, the onboarding process has no hidden costs. All you need is an active internet connection and a device such as a laptop, tablet, or smartphone to use as a Waiterboard."
+          "title": "Budu potřebovat nějaké další zařízení?",
+          "content": "Vše co potřebujete je připojení k internetu a jakékoliv zařízení, které už máte. Může jím být notebook, tablet nebo smartphone."
         },
         "training": {
-          "title": "Does the staff need training?",
-          "content": "There is no training required, the interface is intuitive and simple to use, with interactive tutorials and on demand customer support. It's as simple to use as email, no need to change the existing billing system."
+          "title": "Potřebuje personál zaškolení?",
+          "content": "Díky intuitivnímu uživatelskému rozhraní není třeba žádné speciální školení. Naše zákaznická podpora a interaktivní tutorialy pomohou v případě jakýchkoliv problémů."
         },
         "trial": {
-          "title": "What happens after the free trial expires?",
-          "content": "At the end of the free trial, you'll be invited to upgrade to a paid plan for a monthly, or yearly billing cycle. All you will have to do at this point is to simply complete the subscription form with your credit card or your preferred method of online payment."
+          "title": "Co se stane po uplynutí zkušební doby?",
+          "content": "Po uplynutí zkušební doby si můžete vybrat mezi měsíčním nebo ročním předplatným."
         },
         "modify": {
-          "title": "How can I modify my menu?",
-          "content": "With the Dashboard, you will have great flexibility in the ways you manage your menu. You can add or remove any item, or simple hide it temporarily. This realtime publishing flow will update all prices and pictures in the user facing app."
+          "title": "Jak snadno upravím své menu?",
+          "content": "S naší palubní deskou budete mít obrovskou flexibilitu v cestách spravování nabídky. Můžete přidat nebo odebrat položku, nebo ji jednoduše dočasně skrýt. Tento zveřejňovací proud reálného času bude obnovovat všechny ceny a obrázky v uživetlem obložené aplikaci."
+        }
+      },
+      "waiterboard": {
+        "title": "Waiterboard",
+        "subtitle": "Zvýší efektivitu personálu ve vaší restauraci",
+        "order": {
+          "title": "Objednávky",
+          "description": "Objednávky od vašich hostů můžete přijímat přímo v naší aplikaci v reálném čase. Díky tomu dokážete obsloužit mnohem více hostů a výrazně snížít nároky na personál.",
+          "alt": "Objednávka ve waiterboardu"
+        },
+        "service": {
+          "title": "Přivolání obsluhy",
+          "description": "S funkcí přívolání obsluhy budete vědět přesně a okamžite, co váš host zrovna potřebuje. Díky tomu se váš personál může přímo zaměřit na naplnění potřeb zákazníka.",
+          "alt": "Přivolání obsluhy ve waiterboardu"
+        },
+        "pay": {
+          "title": "Platby",
+          "description": "Umožněte svým hostům zaplatit bez zbytečného čekání. Šetříte tak čas nejen jim, ale i sobě a dalším hostům, kteří čekají na volný stůl ve vaší restauraci. Zajistíte si tak spokojenost vašich hostů a vyšší obrat.",
+          "alt": "Platby ve waiterboardu"
         }
       }
     }
+  },
+  "footer": {
+    "language": "Jazyk",
+    "links": {
+      "title": "Navigace",
+      "restaurants": "Přidejte vaši restauraci"
+    },
+    "copyright": "<0/><1/>, Ze<2/><3>Dinify</3>"
   }
 }

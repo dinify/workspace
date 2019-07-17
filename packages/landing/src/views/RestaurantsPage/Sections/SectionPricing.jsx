@@ -48,7 +48,7 @@ const SectionPricing = ({t, registrationURL, classes, theme, ...otherProps}) => 
             </Typography>
           </div>
           <Typography variant="caption" color="textSecondary" style={{margin: '0 16px'}}>
-            or
+            {t(`${key}.price.or`)}
           </Typography>
           <div>
             <Typography variant="h5">
