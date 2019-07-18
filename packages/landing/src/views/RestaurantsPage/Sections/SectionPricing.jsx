@@ -65,18 +65,17 @@ const SectionPricing = ({t, registrationURL, classes, theme, ...otherProps}) => 
           {t(`${key}.price.or`)}
         </Typography>
         <div style={flexCenterStyle}>
-          <Phone style={{marginRight: 16}} color="action"/>
-          <div style={{height: '2.5rem'}}>
-            <Typography variant="h4" color="textPrimary">
-              <Link href={t(`support.phone.${countryCode}.link`)} color="inherit">
-                {t(`support.phone.${countryCode}.text`)}
-              </Link>
-            </Typography>
-            <Typography variant="caption" color="textSecondary" style={{marginTop: 4}}>
-              {t('support.caption')}
-            </Typography>
-          </div>
+          <Phone style={{marginRight: -24}} color="action"/>
+          <Typography style={{paddingLeft: 40, marginRight: 40}} variant="h4" color="textPrimary">
+            <Link href={t(`support.phone.${countryCode}.link`)} color="inherit">
+              {t(`support.phone.${countryCode}.text`)}
+            </Link>
+          </Typography>
+          <div style={{content: '""'}}/>
         </div>
+        <Typography variant="caption" color="textSecondary" style={{marginTop: 4}}>
+          {t('support.caption')}
+        </Typography>
       </div>
     </div>
   );
