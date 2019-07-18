@@ -13,6 +13,7 @@ import HeaderDivider from "components/Header/HeaderDivider.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
+import { FooterView } from "views/FooterView";
 import landingPageStyle from "./landingPageStyle.jsx";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -28,23 +29,7 @@ import SectionFAQ from "./Sections/SectionFAQ.jsx";
 import SectionProduct from "./Sections/SectionProduct.jsx";
 // import SectionMailingList from "./Sections/SectionMailingList.jsx";
 import { useTranslation } from 'react-i18next';
-import { getCookie, setCookie } from '@dinify/common/dist/lib/FN';
 import { ReportCampaignAction } from '@dinify/common/dist/api/restaurant';
-
-const headerToggleOffset = 100;
-const initialHeight = window.innerHeight;
-
-const langs = [{
-  lang:'en', country: 'gb',
- },
- {
-  lang: 'cs', country: 'cz'
-}];
-
-const changeLanguage = (lang) => {
-  window.i18nInstance.changeLanguage(lang);
-  setCookie('language', lang, 30);
-}
 
 class LandingPage extends React.Component {
   state = {
@@ -85,7 +70,6 @@ class LandingPage extends React.Component {
     const { classes, t, location, ...rest } = this.props;
     const { headerScrolled, parallaxContainerState, scroll } = this.state;
 
-    let selectedLanguage = getCookie('language');
     return (
       <div>
         <div style={{
@@ -228,42 +212,7 @@ class LandingPage extends React.Component {
               <SectionFAQ t={t} />
             </div>
 
-            <Footer>
-              <GridContainer justify="center" spacing={24}>
-                <Grid item>
-                  <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
-                    {t('footer.language')}
-                  </Typography>
-                  <GridContainer justify="center">
-                    {langs.map((l) => (
-                      <Grid item key={l.lang}>
-                        <IconButton
-                          className={
-                            classes.flag +
-                            " " +
-                            (l.lang === selectedLanguage ? classes.flagSelected : "")
-                          }
-                          onClick={() => changeLanguage(l.lang)}
-                        >
-                          <Flag country={l.country.toUpperCase()} />
-                        </IconButton>
-                      </Grid>
-                    ))}
-                  </GridContainer>
-                </Grid>
-                <Grid item>
-                  <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
-                    {t('footer.links.title')}
-                  </Typography>
-                  <Link
-                    href="/restaurants?source=footer"
-                    variant="body2"
-                    color="white">
-                    {t('footer.links.restaurants')}
-                  </Link>
-                </Grid>
-              </GridContainer>
-            </Footer>
+            <FooterView />
           </div>
         </div>
       </div>

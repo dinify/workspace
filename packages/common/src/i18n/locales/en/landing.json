@@ -7,7 +7,7 @@
   },
   "features": "Features",
   "sectionMultilingual": {
-    "header": "Digital menu in 77 languages",
+    "header": "Digital menu in 96 languages",
     "subtitle": "We strive to support as many languages as we can, so everybody can have a seamless culinary experience. Understand how much you spend by showing prices in your local currency, along with the original.",
     "note": "Note: Not all languages are listed here."
   },
@@ -138,8 +138,11 @@
     "language": "Language",
     "links": {
       "title": "Navigation",
-      "restaurants": "Add your restaurant"
+      "restaurants": "Add your restaurant",
+      "support": "Support",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
     },
-    "copyright": "<0/><1/>, Made with<2/>by <3>Dinify</3>"
+    "copyright": "Copyright<0/><1/>, Made with<2/>by <3>Dinify</3>"
   }
 }
