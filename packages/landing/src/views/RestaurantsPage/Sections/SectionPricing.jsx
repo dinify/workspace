@@ -5,15 +5,21 @@ import classNames from "classnames";
 // core components
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import GridContainer from "components/Grid/GridContainer.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
+import Link from "@material-ui/core/Link";
 import RestaurantMenu from "@material-ui/icons/RestaurantMenuRounded";
 import OpenInNew from "@material-ui/icons/OpenInNewRounded";
+import Phone from "@material-ui/icons/PhoneRounded";
 
 import productStyle from "styles/productStyle.jsx";
 
+const countryCode = 'CZ'; // TODO: get from locality (IP address or Geo)
 const key = 'restaurantsPage.sections.pricing';
 const SectionPricing = ({t, registrationURL, classes, theme, ...otherProps}) => {
+  const flexCenterStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  };
   return (
     <div id="pricing" className={classNames(classes.themedBg, classes.wrapper)}
       style={{ textAlign: "center" }}
@@ -33,31 +39,15 @@ const SectionPricing = ({t, registrationURL, classes, theme, ...otherProps}) => 
           {t(`${key}.subtitle`)}
         </Typography>
         <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
           marginTop: 56,
           marginBottom: 56
         }}>
-          <div>
-            <Typography variant="h5">
-              {t(`${key}.price.monthly.amount`)}
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
-              {t(`${key}.price.monthly.caption`)}
-            </Typography>
-          </div>
-          <Typography variant="caption" color="textSecondary" style={{margin: '0 16px'}}>
-            {t(`${key}.price.or`)}
+          <Typography variant="h5">
+            {t(`${key}.price.monthly.amount`)}
           </Typography>
-          <div>
-            <Typography variant="h5">
-              {t(`${key}.price.annual.amount`)}
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
-              {t(`${key}.price.annual.caption`)}
-            </Typography>
-          </div>
+          <Typography variant="subtitle1" color="textSecondary">
+            {t(`${key}.price.monthly.caption`)}
+          </Typography>
         </div>
         <Button
           variant="contained"
@@ -71,6 +61,22 @@ const SectionPricing = ({t, registrationURL, classes, theme, ...otherProps}) => 
           <OpenInNew style={{ marginRight: 8 }}/>
           {t(`${key}.cta`)}
         </Button>
+        <Typography variant="caption" color="textSecondary" style={{marginTop: 16, marginBottom: 8}}>
+          {t(`${key}.price.or`)}
+        </Typography>
+        <div style={flexCenterStyle}>
+          <Phone style={{marginRight: 16}} color="action"/>
+          <div style={{height: '2.5rem'}}>
+            <Typography variant="h4" color="textPrimary">
+              <Link href={t(`support.phone.${countryCode}.link`)} color="inherit">
+                {t(`support.phone.${countryCode}.text`)}
+              </Link>
+            </Typography>
+            <Typography variant="caption" color="textSecondary" style={{marginTop: 4}}>
+              {t('support.caption')}
+            </Typography>
+          </div>
+        </div>
       </div>
     </div>
   );
