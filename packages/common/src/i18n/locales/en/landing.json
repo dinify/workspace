@@ -139,10 +139,20 @@
     "links": {
       "title": "Navigation",
       "restaurants": "Add your restaurant",
+      "home": "Home page",
       "support": "Support",
       "privacy": "Privacy Policy",
       "terms": "Terms of Service"
     },
     "copyright": "Copyright<0/><1/>, Made with<2/>by <3>Dinify</3>"
+  },
+  "support": {
+    "caption": "Call us toll free domestically",
+    "phone": {
+      "CZ": {
+        "text": "+420 800200129",
+        "link": "tel:+420800200129"
+      }
+    }
   }
 }

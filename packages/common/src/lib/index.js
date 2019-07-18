@@ -1,4 +1,5 @@
 import { parseLanguages } from './FN';
+import * as imageModule from './image';
 import languagesJSON from './languages.json';
 // import countriesJSON from './countries.json';
 import languageCountriesJSON from './languageCountries.json';
@@ -12,3 +13,4 @@ export const languages = languagesJSON;
 export const currencyRates = currencyRatesJSON;
 export const defaultCurrencies = defaultCurrenciesJSON;
 export const currencies = currenciesJSON;
+export const image = imageModule;

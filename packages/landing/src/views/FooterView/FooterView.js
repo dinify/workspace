@@ -60,7 +60,7 @@ const FooterView = ({
           <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
             {t('footer.links.title')}
           </Typography>
-          {['restaurants', 'support', 'privacy', 'terms'].map(link => (
+          {['home', 'restaurants'].map(link => (
             <React.Fragment key={link}>
               <Link
                 href={`/${link}?source=footer`}

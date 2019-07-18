@@ -45,6 +45,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={LandingPage} />
+        <Route exact path="/home" component={LandingPage} />
         <Route exact path="/restaurants" component={RestaurantsPage} />
         {/*
           <Route path="/about-us" component={AboutUsPage} />
