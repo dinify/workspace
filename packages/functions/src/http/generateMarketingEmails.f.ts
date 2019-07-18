@@ -17,6 +17,7 @@ import localeDisplayNames from "../data/cs/localeDisplayNames";
 import * as mail from '../util/mail';
 import { readFileSync } from "fs";
 import _ from 'lodash';
+import { getLanguageAlias } from '../util/cldr';
 
 
 const cors = require('cors')({
@@ -87,13 +88,23 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
 
           const targetPercent = 0.85;
           const maxRatio = langDist[0].countRel;
-          langDist = langDist.map(val => ({
-            emoji: emojis[likelySubtags[val.lang].split('-')[2]],
-            language: capitalizeFirst(localeDisplayNames.languages[val.lang], val),
-            count: val.count,
-            ratio: formatPercent(Math.max(val.countRel * (targetPercent / maxRatio), 0.1), 0),
-            percent: formatPercent(val.countRel)
-          }));
+          langDist = langDist.map(val => {
+            let languageName = localeDisplayNames.languages[val.lang];
+            if (!languageName) {
+              console.log('replacing lang', val.lang);
+              const properLang = getLanguageAlias(val.lang);
+              console.log('with', properLang);
+              languageName = localeDisplayNames.languages[properLang];
+              console.log(languageName);
+            }
+            return {
+              emoji: emojis[likelySubtags[val.lang].split('-')[2]],
+              language: capitalizeFirst(languageName, val),
+              count: val.count,
+              ratio: formatPercent(Math.max(val.countRel * (targetPercent / maxRatio), 0.1), 0),
+              percent: formatPercent(val.countRel)
+            }
+          });
 
           const recipient = target.data.email_address;
           const tokenData = { e: recipient };
