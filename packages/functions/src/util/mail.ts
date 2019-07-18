@@ -22,7 +22,7 @@ export function generate(msg, substitutions, template, language = 'en') {
       ...msg
   };
 
-  console.log('using variables for mail generate', variables, locales);
+  // console.log('using variables for mail generate', variables, locales);
 
   // Use ES6 template literals
   const substitute = (string, vars) => new Function("return `" + string.split("${").join("${this.") + "`;").call(vars);

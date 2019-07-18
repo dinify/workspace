@@ -33,6 +33,23 @@ const defaultSender = {
   name: "Dinify"
 };
 
+const handleError = (cb, errorId: string) => (error: any) => {
+  console.error(error);
+  console.error(errorId);
+  cb({ error, errorId });
+}
+
+function isString(s) {
+  return typeof(s) === 'string' || s instanceof String;
+}
+
+const capitalizeFirst = (string, context) => {
+  if (!string || !(isString(string))) {
+    console.error(context);
+  };
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {
@@ -43,10 +60,6 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     if (targetId ? cohortId : !cohortId) {
       res.json({ error: 'required field missing' })
       return;
-    }
-
-    const capitalizeFirst = string => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     const next = (targets) => {
@@ -76,7 +89,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           const maxRatio = langDist[0].countRel;
           langDist = langDist.map(val => ({
             emoji: emojis[likelySubtags[val.lang].split('-')[2]],
-            language: capitalizeFirst(localeDisplayNames.languages[val.lang]),
+            language: capitalizeFirst(localeDisplayNames.languages[val.lang], val),
             count: val.count,
             ratio: formatPercent(Math.max(val.countRel * (targetPercent / maxRatio), 0.1), 0),
             percent: formatPercent(val.countRel)
@@ -123,7 +136,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
                 targetCount: restaurant.target_languages,
                 targetPercent: formatPercent(restaurant.target_languages_rel)
               },
-              price: '€19.95',
+              price: '490 Kč',
               link: `https://www.dinify.app/restaurants?t=${token.id}&email=${recipient}`
             };
 
@@ -137,11 +150,15 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
               type: template.key,
               message: {...msg, html, variables}
             }).then((emailResult) => {
-              cb(null, { email: emailResult.get(), token });
-            }).catch((error) => cb(error));
 
-          }).catch((error) => cb(error));
-        }).catch((error) => cb(error));
+              cb(null, { email: emailResult.get(), token });
+
+            }).catch(handleError(cb, 'Emails.create'));
+
+          }).catch(handleError(cb, 'Tokens.create'));
+
+        }).catch(handleError(cb, 'RestaurantsTa.findOne'));
+
       }, (error, results) => {
         if (!error) res.json({ results });
         else res.json({ error });
