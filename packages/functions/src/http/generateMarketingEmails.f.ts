@@ -33,6 +33,12 @@ const defaultSender = {
   name: "Dinify"
 };
 
+const handleError = (cb, id: string) => (error: any) => {
+  console.error(error);
+  console.error(id);
+  cb(error);
+}
+
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
   cors(req, res, () => {
     const {
@@ -123,7 +129,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
                 targetCount: restaurant.target_languages,
                 targetPercent: formatPercent(restaurant.target_languages_rel)
               },
-              price: '€19.95',
+              price: '490 Kč',
               link: `https://www.dinify.app/restaurants?t=${token.id}&email=${recipient}`
             };
 
@@ -137,11 +143,15 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
               type: template.key,
               message: {...msg, html, variables}
             }).then((emailResult) => {
-              cb(null, { email: emailResult.get(), token });
-            }).catch((error) => cb(error));
 
-          }).catch((error) => cb(error));
-        }).catch((error) => cb(error));
+              cb(null, { email: emailResult.get(), token });
+
+            }).catch(handleError(cb, '1'));
+
+          }).catch(handleError(cb, '2'));
+
+        }).catch(handleError(cb, '3'));
+
       }, (error, results) => {
         if (!error) res.json({ results });
         else res.json({ error });

@@ -1,7 +1,7 @@
 import { Get, Post, PostMultipart } from './Network';
 
 const googleFunctionsEndpoint = 'https://europe-west1-dinify.cloudfunctions.net/';
-const nodeEndpoint = 'https://node.dinify.app/'
+const nodeEndpoint = 'https://api.dinify.app/v2/'
 
 export function GetRestaurants({ populateWith }) {
   let populateQuery = '';
