@@ -33,10 +33,21 @@ const defaultSender = {
   name: "Dinify"
 };
 
-const handleError = (cb, id: string) => (error: any) => {
+const handleError = (cb, errorId: string) => (error: any) => {
   console.error(error);
-  console.error(id);
-  cb(error);
+  console.error(errorId);
+  cb({ error, errorId });
+}
+
+function isString(s) {
+  return typeof(s) === 'string' || s instanceof String;
+}
+
+const capitalizeFirst = (string, context) => {
+  if (!string || !(isString(string))) {
+    console.error(context);
+  };
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 exports = module.exports = functions.region('europe-west1').https.onRequest((req, res) => {
@@ -49,10 +60,6 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
     if (targetId ? cohortId : !cohortId) {
       res.json({ error: 'required field missing' })
       return;
-    }
-
-    const capitalizeFirst = string => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     const next = (targets) => {
@@ -82,7 +89,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           const maxRatio = langDist[0].countRel;
           langDist = langDist.map(val => ({
             emoji: emojis[likelySubtags[val.lang].split('-')[2]],
-            language: capitalizeFirst(localeDisplayNames.languages[val.lang]),
+            language: capitalizeFirst(localeDisplayNames.languages[val.lang], val),
             count: val.count,
             ratio: formatPercent(Math.max(val.countRel * (targetPercent / maxRatio), 0.1), 0),
             percent: formatPercent(val.countRel)
@@ -146,11 +153,11 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
 
               cb(null, { email: emailResult.get(), token });
 
-            }).catch(handleError(cb, '1'));
+            }).catch(handleError(cb, 'Emails.create'));
 
-          }).catch(handleError(cb, '2'));
+          }).catch(handleError(cb, 'Tokens.create'));
 
-        }).catch(handleError(cb, '3'));
+        }).catch(handleError(cb, 'RestaurantsTa.findOne'));
 
       }, (error, results) => {
         if (!error) res.json({ results });
