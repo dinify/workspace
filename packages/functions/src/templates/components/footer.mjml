@@ -67,16 +67,16 @@
 <mj-section padding="8px 0px 32px 0px">
   <mj-column>
     <mj-text align="center" mj-class="caption">
-      Kontaktovat nás mužete přes
+      ${footer.contactus}
       <br>
       <a href="mailto:${from.email}" style="color: rgba(0, 0, 0, 0.54)">${from.email}</a>
       <br>
       <br>
-      Zasláno ze <img style="display: inline; opacity: 0.38;" src="https://static.dinify.app/icons/favorite.png"
+      ${footer.love[0]} <img style="display: inline; opacity: 0.38;" src="https://static.dinify.app/icons/favorite.png"
       width="12px"
-      height="12px"/> od týmu Dinify
+      height="12px"/> ${footer.love[1]}
       <br>
-      <a href="#" style="color: rgba(0, 0, 0, 0.54)">Email preference</a>
+      <a href="#" style="color: rgba(0, 0, 0, 0.54)">${footer.preference}</a>
     </mj-text>
   </mj-column>
 </mj-section>

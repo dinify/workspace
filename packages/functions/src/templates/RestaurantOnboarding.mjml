@@ -121,33 +121,37 @@
       </mj-section>
 
       <mj-section>
-        <mj-text mj-class="subtitle1" color="#c13939">${accordions.meaning.title}</mj-text>
-        <mj-text mj-class="body2">
-          <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-            ${accordions.meaning.body}
-          </span>
-        </mj-text>
+        <mj-column>
+          <mj-text mj-class="subtitle1" color="#c13939">${accordions.meaning.title}</mj-text>
+          <mj-text mj-class="body2">
+            <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
+              ${accordions.meaning.body}
+            </span>
+          </mj-text>
+        </mj-column>
       </mj-section>
 
       <mj-section>
-        <mj-text mj-class="subtitle1" color="#c13939">${accordions.why.title}</mj-text>
-        <mj-text mj-class="body2">
-          <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-            ${accordions.why.body}
-          </span>
-        </mj-text>
+        <mj-column>
+          <mj-text mj-class="subtitle1" color="#c13939">${accordions.why.title}</mj-text>
+          <mj-text mj-class="body2">
+            <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
+              ${accordions.why.body}
+            </span>
+          </mj-text>
+        </mj-column>
       </mj-section>
-      
+
       <mj-section>
-        <mj-text mj-class="subtitle1" color="#c13939">${accordions.impression.title}</mj-text>
-        <mj-text mj-class="body2">
-          <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
-            ${accordions.impression.body}
-          </span>
-        </mj-text>
+        <mj-column>
+          <mj-text mj-class="subtitle1" color="#c13939">${accordions.impression.title}</mj-text>
+          <mj-text mj-class="body2">
+            <span style="line-height:1.25rem;color:rgba(0,0,0,0.72)">
+              ${accordions.impression.body}
+            </span>
+          </mj-text>
+        </mj-column>
       </mj-section>
-
-
 
       <mj-section padding>
         <mj-column>
@@ -169,6 +173,16 @@
                    padding-top="16px">
             ${hero.cta}
           </mj-button>
+          <mj-text mj-class="caption" align="center" margin-top="16px" margin-bottom="8px">
+            ${footer.phone.caption}
+          </mj-text>
+          <mj-text mj-class="headline5" align="center">
+            <img src="https://static.dinify.app/icons/phone.png"
+                 width="24px"
+                 height="24px"
+                 style="opacity: 0.38; padding-right: 8px; margin-top: 4px"/>
+            <a href="${footer.phone.link}" style="color: rgba(0, 0, 0, 0.54); text-decoration: none">${footer.phone.text}</a>
+          </mj-text>
         </mj-column>
       </mj-section>
       <mj-include path="./components/footer.mjml" />

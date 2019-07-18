@@ -61,6 +61,16 @@ export default {
         title: 'Vše je za ${price} / měsíc',
         body: 'Dinify vám zajistí výrazné zvýšení tržeb nejen od zahraničních hostů. Kontaktujte nás a společně se podíváme na všechny benefity, které Vám můžeme nabídnout.'
       }
+    },
+    footer: {
+      phone: {
+        link: 'tel:800200129',
+        text: '800 200 129',
+        caption: 'Nebo se na cokoliv zeptejte na naší bezplatné lince'
+      },
+      contactus: 'Kontaktovat nás mužete přes',
+      preference: 'Email preference',
+      love: ['Zasláno ze', 'od týmu Dinify']
     }
   }
 }

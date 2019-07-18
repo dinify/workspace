@@ -32,7 +32,7 @@ export default {
     partner: {
       title: {
         text: 'Partner with us',
-        variant: 'headline3'
+        variant: 'headline4'
       },
       cta: 'Start for free',
 
@@ -60,6 +60,16 @@ export default {
       pricing: {
         title: 'All for ${price} per month'
       }
+    },
+    footer: {
+      phone: {
+        link: 'tel:+420800200129',
+        text: '+420 800200129',
+        caption: 'Call us toll free domestically'
+      },
+      contactus: 'Get in touch with us at',
+      preference: 'Email preferences',
+      love: ['Made with', 'by Dinify']
     }
   }
 }
