@@ -77,18 +77,25 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           id: targetId
         }
       }).then((o) => {
-        if (!o) res.json({ error: 404 });
-        next([o]);
+        if (!o) {
+          res.json({ error: 404 });
+        } else {
+          next([o]);
+        }
       }).catch((err) => res.json({ error: err }));
     }
     else if (cohortId) {
       Targets.findAll({
         where: {
           cohort_id: cohortId
-        }
+        },
+        limit: 1
       }).then((targets) => {
-        if (targets.length === 0) res.json({ error: 404 });
-        next(targets);
+        if (targets.length === 0) {
+          res.json({ error: 404 });        
+        } else {
+          next(targets);
+        }
       }).catch((err) => res.json({ error: err }));
     }
 
