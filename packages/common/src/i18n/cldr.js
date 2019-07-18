@@ -1,3 +1,4 @@
+import aliases from 'lib/aliases.json';
 
 export function mainPathsFor(locales) {
   const mainFiles = [
@@ -92,4 +93,15 @@ function flatten(obj) {
   }
   _flatten(obj, arr);
   return arr;
+}
+
+export function getLanguageAlias = (language) => {
+  let replacements = [];
+  Object.entries(aliases).forEach(([key, value]) => {
+  	if (lang === key) {
+      replacements.push(value._replacement);
+    }
+  })
+  if (replacements.length === 0) return null;
+  return replacements[0];
 }
