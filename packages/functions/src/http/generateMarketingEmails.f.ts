@@ -28,6 +28,7 @@ const config = functions.config();
 
 const formatPercent = (percent, decimals = 1) => `${Math.floor(percent * Math.pow(10, decimals + 2)) / Math.pow(10, decimals)}%`;
 
+const excludeLanguagesFromStats = ['en', 'cs'];
 const defaultLanguage = 'cs';
 const defaultSender = {
   email: "hello@dinify.app",
@@ -74,17 +75,27 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             return;
           }
 
-          let langDist = _.keys(restaurant.language_distribution).map(key => {
+
+          let targetCount = 0;
+          let totalCount = 0;
+          let langDist = Object.keys(restaurant.language_distribution).map(key => {
+            const current = restaurant.language_distribution[key];
+            if (!excludeLanguagesFromStats.includes(key)) {
+              targetCount += current.count;
+            }
+            totalCount += current.count;
             return {
               lang: key,
-              ...restaurant.language_distribution[key]
+              ...current
             }
           })
           .sort((a, b) => {
             return b.count - a.count;
           })
-          .filter(val => ['en', 'cs'].indexOf(val.lang) === -1)
+          .filter(val => excludeLanguagesFromStats.indexOf(val.lang) === -1)
           .splice(0, 5);
+
+          const targetRel = targetCount / totalCount;
 
           const targetPercent = 0.85;
           const maxRatio = langDist[0].countRel;
@@ -144,8 +155,8 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
               },
               stats: {
                 langDist,
-                targetCount: restaurant.target_languages,
-                targetPercent: formatPercent(restaurant.target_languages_rel)
+                targetCount,
+                targetPercent: formatPercent(targetRel)
               },
               price: '490 Kč',
               link: `https://www.dinify.app/restaurants?t=${token.id}&email=${recipient}`
@@ -196,7 +207,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         }
       }).then((targets) => {
         if (targets.length === 0) {
-          res.json({ error: 404 });        
+          res.json({ error: 404 });
         } else {
           next(targets);
         }
