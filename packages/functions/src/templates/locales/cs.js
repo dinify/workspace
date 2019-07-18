@@ -1,31 +1,31 @@
 export default {
   "rp-onboarding": {
     subject: 'Lepší recenze, vyšší zisk, zkuste Dinify',
-    preview: 'Zjistili jsme, že ${restaurant.name} má na TripAdvisoru ${stats.targetPercent} recenzí od návštěvníků, kteří nemluví anglicky. Zde je přehled jazyků, které se v recenzích vaší restaurace nejčastěji objevují',
+    preview: 'Zjistili jsme, že ${restaurant.name} má na TripAdvisoru ${stats.targetPercent} recenzí od návštěvníků, kteří nemluví anglicky. Máme pro vás řešení jak zvýšit obrat z vašich zahraničních hostů.',
     hero: {
       title: 'Naše menu mluví všemi jazyky',
       cta: 'Zjistit víc'
     },
     main: {
       dear: 'Zdravíme do ${restaurant.name},',
-      body: 'Zjistili jsme, že ${restaurant.name} má na TripAdvisoru ${stats.targetPercent} recenzí od zahraničních návštěvníků, kteří nemluví česky ani anglicky.'
+      body: 'zjistili jsme, že ${restaurant.name} má na TripAdvisoru ${stats.targetPercent} recenzí od návštěvníků, kteří nemluví česky ani anglicky. Máme pro vás řešení, jak tyto zákazníky kvalitněji obsloužit a přitom zvýšit váš obrat!'
     },
     insights: {
       title: 'Jsou to tyto jazyky',
-      body: 'Zde je přehled jazyků, které se v recenzích vaší restaurace nejčastěji objevují:'
+      body: 'Zde je přehled 5 nejčastějších cizých jazyků ve vaší restauraci:'
     },
     accordions: {
       meaning: {
-        title: 'Co to pro vás znamená?',
-        body: 'Velký počet hodnocení naznačuje, že je vaše restaurace mezinárodně známá, a je žádaným místem pro spoustu zahraničních hostů. Přicházíme s řešením, které vylepší jejich zážitek u vás, a vaší restauraci výrazně zvýší prestiž.'
+        title: 'Lepší služby, vyšší obrat',
+        body: 'Díky naší unikátní aplikaci výrazně zvýšíte efektivitu vašeho personálu, popularitu nejen u zahraničních hostů a výrazně zvýšíme i obrat a zisk ${restaurant.name}.'
       },
       why: {
-        title: 'Jak?',
-        body: 'Servírováním skvělého menu, které už máte, v kombinaci s naší platformou Dinify, která vaše služby posune na ještě vyšší úroveň.'
+        title: 'Revoluce v gastronomii',
+        body: 'Řešíme problémy efektivity v restauracích zcela novým způsobem. Hosté si prostřednictvím naší aplikace mohou objednat přímo od stolu, stejně jednoduše mohou platit nebo přivolat obsluhu. Váš personál se tak může místo běhání od stolu ke stolu zaměřit na samotnou kvalitu servisu.'
       },
       impression: {
         title: 'Vytvořte dokonalý první dojem',
-        body: 'Naše aplikace zajistí plynulý a ničím nerušený gastronimický zážitek, ať už je váš host z Čech nebo z Číny.'
+        body: 'Naše aplikace zajistí plynulý a ničím nerušený gastronimický zážitek, ať už je váš host z Čech nebo z Číny. Přeložíme vaše menu do téměř 100 světových jazyků.'
       }
     },
     imageCaption: 'Dinify je chytré multijazyčné menu ve vašem smartphonu.',
@@ -66,7 +66,7 @@ export default {
       phone: {
         link: 'tel:800200129',
         text: '800 200 129',
-        caption: 'Nebo se na cokoliv zeptejte na naší bezplatné lince'
+        caption: 'Neváhejte se zeptat na naší bezplatné lince'
       },
       contactus: 'Kontaktovat nás mužete přes',
       preference: 'Email preference',
