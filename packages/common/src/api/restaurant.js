@@ -16,9 +16,11 @@ export function GetRestaurant({ subdomain, restaurantId, populateWith, node }) {
   else populateQuery = `?with=images,tags,services.image`;
   const id = subdomain || restaurantId;
   if (node) {
+    let scopes = '';
+    if (populateWith) scopes = `?scopes=${populateWith}`;
     return Get({
       endpoint: nodeEndpoint,
-      path: `restaurants/${id}`
+      path: `restaurants/${id}${scopes}`
     });
   }
   return Get({ path: `restaurant/${id}${populateQuery}` });
@@ -476,7 +478,13 @@ export function GetTables({ waiterboardId }) {
   return Get({ path: `waiterboard/${waiterboardId}/tables` });
 }
 
-export function GetSeatsOfWB({ waiterboardId }) {
+export function GetSeatsOfWB({ waiterboardId, node }) {
+  if (node) {
+    return Get({
+      endpoint: nodeEndpoint,
+      path: `waiterboard/${waiterboardId}/seats/all`
+    });
+  }
   return Get({ path: `waiterboard/${waiterboardId}/seats/all` });
 }
 
@@ -504,7 +512,13 @@ export function GetGuests({ waiterboardId }) {
   return Get({ path: `waiterboard/${waiterboardId}/guests` })
 }
 
-export function GetCalls({ waiterboardId }) {
+export function GetCalls({ waiterboardId, node }) {
+  if (node) {
+    return Get({
+      endpoint: nodeEndpoint,
+      path: `waiterboard/${waiterboardId}/calls`
+    });    
+  }
   return Get({ path: `waiterboard/${waiterboardId}/calls?with=service.image` });
 }
 

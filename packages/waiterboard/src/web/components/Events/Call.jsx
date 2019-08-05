@@ -12,7 +12,14 @@ const Call = ({ call, confirmCall, removed, services }) => {
 
 	let service = null;
 
-	console.log(services);
+	let tableNumber = 0;
+	if (call.seat && call.seat.table) {
+		tableNumber = call.seat.table.number;
+	}
+
+	if (call.table) {
+		tableNumber = call.table.number;
+	}
 
 	if (call.service_id && services && services[call.service_id]) {
 		service = services[call.service_id];
@@ -25,7 +32,7 @@ const Call = ({ call, confirmCall, removed, services }) => {
 	    <Header>
 
 	      <TableId bg={color}>
-	        {call.table && call.table.number}
+	        {tableNumber}
 	      </TableId>
 
 				<User userId={call.user_id} />

@@ -7,7 +7,7 @@ export const relevantServices = createSelector(
   allRestaurants,
   selectedRestaurantId,
   (all, id) => {
-    if (!id) return false;
+    if (!id || !all[id]) return false;
     return all[id].services;
   }
 );

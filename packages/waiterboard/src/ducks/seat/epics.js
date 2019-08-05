@@ -10,7 +10,7 @@ const loadSeatEpic = (action$, state$) =>
     ofType('LOAD_SEATS_INIT'),
     mergeMap(() => {
       const waiterboardId = state$.value.restaurant.selectedWBId;
-      return from(API.GetSeatsOfWB({ waiterboardId })).pipe(
+      return from(API.GetSeatsOfWB({ waiterboardId, node: true })).pipe(
         mergeMap((allSeats) => {
           const seats = filter((seat) => seat.occupied, allSeats);
           const userIds = pluck('user_id', seats)

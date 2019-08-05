@@ -27,7 +27,10 @@ const loadRestaurant = (action$) =>
     mergeMap(() => {
       return of({
         type: 'FETCH_RESTAURANT_INIT',
-        payload: { populateWith: 'waiterboards.tables,services.image' }
+        payload: {
+          populateWith: 'waiterboards.tables,services.image',
+          node: true
+        }
       });
     })
   );
@@ -68,6 +71,7 @@ const guestsPollingEpic = (action$, state$) =>
       return actions;
     })
   )
+
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 const camel = (str) => capitalize(str.toLowerCase())
