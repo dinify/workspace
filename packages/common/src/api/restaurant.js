@@ -39,7 +39,7 @@ export function GetMenucategories({ subdomain, populateWith, node }) {
   if (node) {
     return Get({
       endpoint: nodeEndpoint,
-      path: `menuCategories/ofRestaurant/${subdomain}`
+      path: `restaurant/${subdomain}/menuCategories`
     });    
   }
 
@@ -456,7 +456,7 @@ export function GetRestaurantwaiterboards({ restaurantId }) {
 export function GetRestaurantingredients({ restaurantId }) {
   return Get({
     endpoint: nodeEndpoint,
-    path: `ingredients/ofRestaurant/${restaurantId}`
+    path: `restaurant/${restaurantId}/ingredients`
   });
 }
 

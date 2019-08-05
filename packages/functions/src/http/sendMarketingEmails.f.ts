@@ -45,11 +45,8 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
             if (!email.message_id) {
               const message = email.message;
               const originalRecipient = message.to.email;
-              message.to.email = "test@dinify.app";
-              // if (process.env.NODE_ENV === "production") {
-              //   // dangerous line
-              //   message.to.email = originalRecipient;
-              // }
+              // message.to.email = "test@dinify.app";
+              message.to.email = originalRecipient;
 
               mail.send(message).then(([response, body]) => {
                 email.message_id = response.headers['x-message-id'];
@@ -89,7 +86,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
         where: {
           cohort_id: cohortId
         },
-        limit: 1
+        limit: 99
       }).then((targets) => {
         if (targets.length === 0) {
           res.json({ error: 404 });        

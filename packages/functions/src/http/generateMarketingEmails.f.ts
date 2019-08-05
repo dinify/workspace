@@ -80,7 +80,7 @@ exports = module.exports = functions.region('europe-west1').https.onRequest((req
           let totalCount = 0;
           let langDist = Object.keys(restaurant.language_distribution).map(key => {
             const current = restaurant.language_distribution[key];
-            if (!excludeLanguagesFromStats.includes(key)) {
+            if (excludeLanguagesFromStats.indexOf(key) === -1) {
               targetCount += current.count;
             }
             totalCount += current.count;
