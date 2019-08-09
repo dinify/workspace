@@ -9,7 +9,7 @@ const clearTableEpic = (action$) =>
       if (!global.confirm('Do you really want to check-out this table?')) {
         return of({type: "CLEAR_TABLE_CANCELED"});
       }
-      return from(API.CheckOut({tableId: payload.table.id })).pipe(
+      return from(API.CheckOut({ tableId: payload.table.id, node: true })).pipe(
         map(() => ({type: 'CLEAR_TABLE_DONE', payload })),
         catchError(error => of(({type: 'CLEAR_TABLE_FAIL', error})))
       )

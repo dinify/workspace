@@ -494,7 +494,13 @@ export function GetSeatsOfWB({ waiterboardId, node }) {
   return Get({ path: `waiterboard/${waiterboardId}/seats/all` });
 }
 
-export function CheckOut({ tableId }) {
+export function CheckOut({ tableId, node }) {
+  if (node) {
+    return Post({
+      endpoint: nodeEndpoint,
+      path: `table/${tableId}/checkout`
+    });
+  }
   return Post({ path: `table/${tableId}/checkout` });
 }
 
