@@ -1,6 +1,6 @@
 import assoc from 'ramda/src/assoc'
 import assocPath from 'ramda/src/assocPath'
-import { UpdateOriginal } from '@dinify/common/dist/lib/FN';
+import { ListToMap } from '@dinify/common/dist/lib/FN';
 import * as types from './types';
 
 const initialState = {
@@ -12,7 +12,7 @@ export default function reducer(state = initialState, action) {
 
     case 'LOAD_CALL_DONE': {
       const list = action.payload.res;
-      return assoc('all', UpdateOriginal(state.all, list))(state)
+      return assoc('all', ListToMap(list))(state)
     }
 
     case types.CALL_RECEIVED: {

@@ -8,9 +8,7 @@ import { colorsByStages } from '../../colors';
 
 const color = colorsByStages.s4;
 
-const Call = ({ call, confirmCall, removed, services }) => {
-
-	let service = null;
+const Call = ({ call, confirmCall, removed }) => {
 
 	let tableNumber = 0;
 	if (call.seat && call.seat.table) {
@@ -21,11 +19,10 @@ const Call = ({ call, confirmCall, removed, services }) => {
 		tableNumber = call.table.number;
 	}
 
-	if (call.service_id && services && services[call.service_id]) {
-		service = services[call.service_id];
+	let serviceName = '';
+	if (call.service && call.service.translations) {
+		serviceName = call.service.translations[0].name;
 	}
-
-	if (!service) return <div />;
 
 	return (
 		<ActionBox className={removed ? 'vhs-zoom vhs-reverse' : ''}>
@@ -37,12 +34,11 @@ const Call = ({ call, confirmCall, removed, services }) => {
 
 				<User userId={call.user_id} />
 
-				{service &&
-					<Text color={color} style={{top: 16}}>
-		        <span>{service.name}</span>
-						<Photo url={service.image.url}/>
-		      </Text>
-				}
+
+				<Text color={color} style={{top: 16}}>
+					<span>{serviceName}</span>
+					<Photo url={call.service && call.service.image.url}/>
+				</Text>
 
 	      <CheckButton bg={color} onClick={() => confirmCall({ callId: call.id })}>
 	        <i className="ion-checkmark" />

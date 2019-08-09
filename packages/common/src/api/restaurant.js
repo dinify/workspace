@@ -56,10 +56,16 @@ export function GetMenuitem({ id }) {
   return Get({ path: `menu/item/${id}?with=images,addons.price,ingredients,options.choices` });
 }
 
-export function Checkin({ qr, code }) {
+export function Checkin({ qr, code, node }) {
   const payload = {}
   if (qr) payload.qr = qr
   if (code) payload.code = code
+  if (node) {
+    return Post({
+      endpoint: nodeEndpoint,
+      path: `checkin`
+    }, payload);
+  }
   return Post({ path: `checkin?with=table` }, payload);
 }
 

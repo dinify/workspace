@@ -16,7 +16,7 @@ const checkinEpic = (action$) =>
       if (getCookie('access_token') === '') {
         return of(checkinFail([{ status: 401 }]));
       }
-      return from(API.Checkin(payload)).pipe(
+      return from(API.Checkin({ ...payload, node: true })).pipe(
         mergeMap(res => of(
           checkinDone(res),
           fetchStatusInit(),
