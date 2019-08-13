@@ -9,6 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Person from '@material-ui/icons/PersonRounded';
 import Image from 'web/components/Image';
+import * as routes from 'web/routes';
 
 const styles = theme => ({
   root: {
@@ -110,8 +111,8 @@ class AccountSignIn extends React.Component {
                   transform: `translate3d(${measuredWidth * style.x}px, 0px, 0)`,
                 }}
                 onClick={() => {
-                  if (!user.isEmpty) history.push('/account');
-                  else if (user.isEmpty && user.isLoaded) history.push('/account/signin');
+                  if (!user.isEmpty) history.push(routes.ACCOUNT);
+                  else if (user.isEmpty && user.isLoaded) history.push(routes.SIGNIN);
                 }}>
                 {user.isEmpty && user.isLoaded && <Typography
                   variant="button"
