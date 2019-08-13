@@ -101,7 +101,11 @@ class ModalUser extends React.Component {
 
     const { payload: { userId }, users, clearUser, getBillsOfUser, getOrdersOfUser, shown } = this.props;
 
-    const user = users[userId]
+
+
+    const user = users[userId];
+    console.log('rendered', shown, userId, user);
+
     if (!shown) return (<div />)
     if (!user) return (<div />)
 
@@ -119,7 +123,7 @@ class ModalUser extends React.Component {
     	<div>
         <Header>
 
-          <Photo url={`https://s3.eu-central-1.amazonaws.com/tabb/tabb-user-image/${userId}_PROFILE`} />
+          <Photo url={user.avatarUrl} />
           <CornerButton onClick={() => clearUser({ userId })}>
             <i className="ion-android-exit" />
             <span>Check Out</span>
@@ -154,16 +158,19 @@ class ModalUser extends React.Component {
             </tr>
           </SmallTable>
 
-          <SmallTable width="550px">
-            <tr>
-              <TdLabel left="80px">Favorites</TdLabel>
-              <TdValue>
-                {favs.map((fav, i) =>
-                  <Label key={i}>{fav.count}× {fav.food}</Label>
-                )}
-              </TdValue>
-            </tr>
-          </SmallTable>
+          {/*
+              <SmallTable width="550px">
+                <tr>
+                  <TdLabel left="80px">Favorites</TdLabel>
+                  <TdValue>
+                    {favs.map((fav, i) =>
+                      <Label key={i}>{fav.count}× {fav.food}</Label>
+                    )}
+                  </TdValue>
+                </tr>
+              </SmallTable>
+            */}
+
 
         </Header>
 

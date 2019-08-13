@@ -197,7 +197,7 @@ const Table = ({
         : ''}
 
         {presentGuests.map((guest, i) =>
-          <Guest key={i} onClick={() => guest.user ? toggleModal({ open: true, type: 'User', userId: guest.user.id }) : ''}>
+          <Guest key={i} onClick={() => guest.user ? toggleModal({ open: true, type: 'User', userId: guest.user_id }) : ''}>
             <Photo url={guest.user ? guest.user.avatarUrl : ''} />
             {guest.user ?
               <Name title={guest.user.displayName}>{S(guest.user.displayName).truncate(16).s}</Name>
