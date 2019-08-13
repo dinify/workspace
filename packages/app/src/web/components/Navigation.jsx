@@ -2,13 +2,13 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
-import Explore from '@material-ui/icons/ExploreRounded';
-import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
-import AccountCircle from '@material-ui/icons/AccountCircleRounded';
+import Rice from '@dinify/common/dist/icons/RiceRounded';
+import Silverware from '@dinify/common/dist/icons/SilverwareRounded';
+import Settings from '@material-ui/icons/SettingsRounded';
 
-import ExploreOutlined from '@material-ui/icons/ExploreOutlined';
-import RestaurantMenuOutlined from '@material-ui/icons/RestaurantMenuOutlined';
-import AccountCircleOutlined from '@material-ui/icons/AccountCircleOutlined';
+import RiceOutlined from '@dinify/common/dist/icons/RiceOutlined';
+import SilverwareVariant from '@dinify/common/dist/icons/SilverwareRoundedVariant';
+import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
 
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
@@ -36,16 +36,16 @@ const Navigation = ({
   const getColor = selected => selected ? 'primary' : 'action';
   const tabs = [
     {
-      icon: selected => selected ? <Explore color={getColor(selected)} /> : <ExploreOutlined color={getColor(selected)}/>,
-      text: t('nav.explore')
+      icon: selected => selected ? <Silverware color={getColor(selected)} /> : <SilverwareVariant color={getColor(selected)}/>,
+      text: t('nav.menu')
     },
     {
-      icon: selected => selected ? <RestaurantMenu color={getColor(selected)}/> : <RestaurantMenuOutlined color={getColor(selected)}/>,
+      icon: selected => selected ? <Rice color={getColor(selected)}/> : <RiceOutlined color={getColor(selected)}/>,
       text: t('nav.dineIn')
     },
     {
-      icon: selected => selected ? <AccountCircle color={getColor(selected)}/> : <AccountCircleOutlined color={getColor(selected)}/>,
-      text: t('nav.account')
+      icon: selected => selected ? <Settings color={getColor(selected)}/> : <SettingsOutlined color={getColor(selected)}/>,
+      text: t('nav.settings')
     }
   ];
   const BottomNavItem = ({

@@ -14,7 +14,9 @@
   "nav": {
     "explore": "Explore",
     "dineIn": "Dine in",
-    "account": "Account"
+    "account": "Account",
+    "menu": "Menu",
+    "settings": "Settings"
   },
   "dinein": {
     "checkedin": "you are currently checked in",
