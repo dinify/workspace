@@ -111,7 +111,7 @@ class AccountSignIn extends React.Component {
                 }}
                 onClick={() => {
                   if (!user.isEmpty) history.push('/account');
-                  else if (user.isEmpty && user.isLoaded) history.push('/signin');
+                  else if (user.isEmpty && user.isLoaded) history.push('/account/signin');
                 }}>
                 {user.isEmpty && user.isLoaded && <Typography
                   variant="button"
