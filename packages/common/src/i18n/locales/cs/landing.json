@@ -1,14 +1,14 @@
 {
   "hero": {
     "header": "Objednávejte si v restauracích ve svém jazyce, ať už jste kdekoliv.",
-    "subtitle": "Naší misí je propjovat cestovatele a lokální restaurace. Je jedno jaké jazyky ovládáte, my vám umožníme mít skvělý zážitek v každé restauraci i na vašich cestách. Boříme jazykové bariéry.",
+    "subtitle": "Naší misí je propojovat cestovatele a lokální restaurace. Je jedno, jaké jazyky ovládáte, my vám umožníme mít skvělý zážitek v každé restauraci i na vašich cestách. Boříme jazykové bariéry.",
     "cta": "Začni zde",
     "restaurants": "Máte restauraci?"
   },
   "features": "Produkt",
   "sectionMultilingual": {
     "header": "Digitální menu v 96 jazycích",
-    "subtitle": "Podporujeme již 96 jazyků a stále přidáváme další tak, aby si mohli snadno objednat opravdu všichni. Ve svém jazyce uvidíte nejen název jídla, ale i jeho ingredience, nutiční hodnoty a cenu ve vaší měně.",
+    "subtitle": "Podporujeme již 96 jazyků a stále přidáváme další, aby si mohl snadno objednat opravdu každý. Ve svém jazyce uvidíte nejen název jídla, ale i obsažené ingredience, nutiční hodnoty a cenu ve vaší měně.",
     "note": "a další..."
   },
   "sectionProduct": {
@@ -20,7 +20,7 @@
     },
     "step2": {
       "title": "Vyberte si z nabídky",
-      "description": "Vyhněte se nepříjemný překvapením. Objednávku si můžete upravit přesně dle vašich představ."
+      "description": "Vyhněte se nepříjemným překvapením. Objednávku si můžete upravit přesně dle vašich představ."
     },
     "step3": {
       "title": "Vychutnejte si zážitek",
@@ -30,7 +30,7 @@
   "sectionFAQ": {
     "download": {
       "title": "Kde mám aplikaci stáhnout?",
-      "content": "Nemusíte nic stathovat ani instalovat. Naše aplikaci otevřete v prohlížeči."
+      "content": "Nemusíte nic stahovat ani instalovat. Naši aplikaci otevřete v prohlížeči."
     },
     "started": {
       "title": "Jak mám začít?",
@@ -42,7 +42,7 @@
     },
     "scan": {
       "title": "Jak mám naskenovat QR kód?",
-      "start": "Pokud máte iPhone, stačí jen spustit fotoaparát a namířit kameru na kód. Pokud používate Android, můžete použít aplikaci Google Lens nebo jinou apliakci pro skenování QR kódů. Nebo můžete použít skener ",
+      "start": "Pokud máte iPhone, stačí jen spustit fotoaparát a namířit kameru na kód. Pokud používate Android, můžete použít aplikaci Google Lens nebo jinou aplikaci pro skenování QR kódů. Nebo můžete použít skener ",
       "checkinPage": "zde, v naší aplikaci",
       "end": "."
     },
@@ -52,7 +52,7 @@
     },
     "free": {
       "title": "Je to zdarma?",
-      "content": "Ano, vše je zdarma dokud je aplikace v beta verzi. Sbíráme vaše reakce, co ještě vyladit ve finální verzi."
+      "content": "Ano, vše je zdarma, dokud je aplikace v beta verzi. Vaše reakce a připomínky nám pomáhají vyladit finální verzi."
     },
     "available": {
       "title": "Kde už aplikace funguje?",
