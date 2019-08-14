@@ -4,6 +4,7 @@ import { ofType } from 'redux-observable';
 import pluck from 'ramda/src/pluck'
 import uniq from 'ramda/src/uniq'
 import * as API from '@dinify/common/dist/api/restaurant';
+import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 
 const getUsersOfBillsEpic = (action$) =>
   action$.pipe(
@@ -21,7 +22,7 @@ const getUsersOfBillsEpic = (action$) =>
 const loadBillEpic = (action$, $state) =>
   action$.pipe(
     ofType('LOAD_BILL_INIT'),
-    switchMap(() => {
+    switchMap((action) => {
       const waiterboardId = $state.value.restaurant.selectedWBId;
       return from(API.GetBills({ waiterboardId })).pipe(
         mergeMap((bills) => {
@@ -37,7 +38,11 @@ const loadBillEpic = (action$, $state) =>
             }
           ]
         }),
-        catchError(error => of({ type: 'ERROR', payload: error }))
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: 'ERROR',
+          initAction: action
+        }))
       )
     })
   )

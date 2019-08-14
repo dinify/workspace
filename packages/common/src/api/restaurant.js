@@ -504,7 +504,13 @@ export function CheckOut({ tableId, node }) {
   return Post({ path: `table/${tableId}/checkout` });
 }
 
-export function CheckOutUser({ userId }) {
+export function CheckOutUser({ userId, node }) {
+  if (node) {
+    return Post({
+      endpoint: nodeEndpoint,
+      path: `checkout/user/${userId}`
+    });
+  }
   return Post({ path: `checkout/user/${userId}` });
 }
 

@@ -4,6 +4,7 @@ import { ofType } from 'redux-observable';
 import { push } from 'connected-react-router';
 import { actionTypes } from 'react-redux-firebase';
 import * as API from '@dinify/common/dist/api/restaurant';
+import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as bookingTypes from 'ducks/booking/types';
 import { appBootstrap, confirmationFail } from './actions';
 
@@ -80,7 +81,8 @@ const actionEssence = (str) => camel(str.split('_')[0])
 const confirmationEpic = (action$) =>
   action$.pipe(
     filter(action => action.type.includes('CONFIRMATION') && action.type.includes('INIT')),
-    switchMap(({ type, payload }) => {
+    switchMap((action) => {
+      const { type, payload } = action;
       const APIcall = API[`Confirm${actionEssence(type)}`]
       return from(APIcall({...payload})).pipe(
         // delay(200)
@@ -88,7 +90,11 @@ const confirmationEpic = (action$) =>
           type: 'CONFIRMATION_DONE',
           payload: { type: actionEssence(type), ...payload }
         })),
-        catchError(error => of(confirmationFail(error)))
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: confirmationFail(error),
+          initAction: action
+        }))
       )
     })
   )
@@ -96,7 +102,8 @@ const confirmationEpic = (action$) =>
 const confirmationSyncEpic = (action$, state$) =>
   action$.pipe(
     ofType('CONFIRMATION_DONE'),
-    mergeMap(({ payload }) => {
+    mergeMap((action) => {
+      const { payload } = action;
       if (payload.stopPropagation) {
         return of({ type: 'CONFIRMATIONSYNC_DONE' });
       }
@@ -108,7 +115,11 @@ const confirmationSyncEpic = (action$, state$) =>
       });
       return from(promise).pipe(
         map(() => ({ type: 'CONFIRMATIONSYNC_DONE' })),
-        catchError(error => of(confirmationFail(error)))
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: confirmationFail(error),
+          initAction: action
+        }))
       )
     })
   )
