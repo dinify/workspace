@@ -1,6 +1,6 @@
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
-import types from './types';
+import * as types from './types';
 
 const initialState = {
   progressMap: {},

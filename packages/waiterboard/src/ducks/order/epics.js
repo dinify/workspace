@@ -16,7 +16,7 @@ const loadOrderEpic = (action$, $state) =>
           return [
             {
               type: 'FETCHALL_USER_INIT',
-              payload: { ids: userIds, cache: true }
+              payload: { ids: userIds, cache: true, node: true }
             },
             {
               type: 'LOAD_ORDER_DONE',

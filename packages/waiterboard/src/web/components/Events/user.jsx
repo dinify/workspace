@@ -1,9 +1,8 @@
-
 import React from 'react'
 import { connect } from 'react-redux';
-import { Photo, Name, Time, UserDetails } from '../styled/Events'
-import { toggleModal } from '../../../ducks/ui';
 import moment from 'moment';
+import { toggleModal } from 'ducks/ui/actions';
+import { Photo, Name, Time, UserDetails } from '../styled/Events';
 
 const User = ({
 	seat,
@@ -28,7 +27,7 @@ const User = ({
 				margin: '16px 0'
 			}}
 		>
-	    <Photo url={user.avatarUrl}/>
+	    <Photo url={user.photoURL}/>
 			<UserDetails>
 		    <Name>{user.displayName}</Name>
 				{checkinTime ? <Time>{checkinTime}</Time> : ''}

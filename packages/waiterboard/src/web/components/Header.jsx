@@ -1,26 +1,26 @@
-import React from 'react'
-import styled from 'styled-components'
-import numeral from 'numeral'
-import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { MapToList } from '@dinify/common/dist/lib/FN'
-import { withFirebase } from 'react-redux-firebase'
+import React from 'react';
+import styled from 'styled-components';
+import numeral from 'numeral';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { MapToList } from '@dinify/common/dist/lib/FN';
+import { withFirebase } from 'react-redux-firebase';
 
 import sum from 'ramda/src/sum';
 
-import AppBar from '@material-ui/core/AppBar'
-import IconButton from '@material-ui/core/IconButton'
-import Toolbar from '@material-ui/core/Toolbar'
-import Badge from '@material-ui/core/Badge'
-import Grid from '@material-ui/core/Grid'
+import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
+import Toolbar from '@material-ui/core/Toolbar';
+import Badge from '@material-ui/core/Badge';
+import Grid from '@material-ui/core/Grid';
 
-import ExitToApp from '@material-ui/icons/ExitToApp'
-import RestaurantMenu from '@material-ui/icons/RestaurantMenu'
-import Event from '@material-ui/icons/Event'
+import ExitToApp from '@material-ui/icons/ExitToApp';
+import RestaurantMenu from '@material-ui/icons/RestaurantMenu';
+import Event from '@material-ui/icons/Event';
 
-import { toggleFrames, toggleModal } from 'ducks/ui'
+import { toggleFrames, toggleModal } from 'ducks/ui/actions';
 import { getConfirmedOrderList } from 'ducks/order/selectors';
-import { colorsByStages } from '../colors'
+import { colorsByStages } from '../colors';
 
 const Label = styled.span`
   color: rgb(180, 185, 190);

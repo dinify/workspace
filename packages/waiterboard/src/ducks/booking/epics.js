@@ -12,7 +12,7 @@ const loadBookingEpic = (action$) =>
       const userIds = pluck('initiator', bookings).filter((id) => id.length === 24)
       return of({
         type: 'FETCHALL_USER_INIT',
-        payload: { ids: userIds, cache: true }
+        payload: { ids: userIds, cache: true, node: true }
       });
     })
   )

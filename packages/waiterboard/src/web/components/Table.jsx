@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import S from 'string';
 import { clearTable, updateTableInit } from 'ducks/table/actions';
-import { toggleModal } from 'ducks/ui';
+import { toggleModal } from 'ducks/ui/actions';
 import Block from '@material-ui/icons/Block';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import Grid from '@material-ui/core/Grid';
@@ -198,7 +198,7 @@ const Table = ({
 
         {presentGuests.map((guest, i) =>
           <Guest key={i} onClick={() => guest.user ? toggleModal({ open: true, type: 'User', userId: guest.user_id }) : ''}>
-            <Photo url={guest.user ? guest.user.avatarUrl : ''} />
+            <Photo url={guest.user ? guest.user.photoURL : ''} />
             {guest.user ?
               <Name title={guest.user.displayName}>{S(guest.user.displayName).truncate(16).s}</Name>
             : ''}

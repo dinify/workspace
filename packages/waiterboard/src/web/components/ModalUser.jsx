@@ -123,7 +123,7 @@ class ModalUser extends React.Component {
     	<div>
         <Header>
 
-          <Photo url={user.avatarUrl} />
+          <Photo url={user.photoURL} />
           <CornerButton onClick={() => clearUser({ userId })}>
             <i className="ion-android-exit" />
             <span>Check Out</span>

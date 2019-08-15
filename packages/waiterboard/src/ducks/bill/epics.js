@@ -14,7 +14,7 @@ const getUsersOfBillsEpic = (action$) =>
       const userIds = uniq(pluck('initiator', bills));
       return of({
         type: 'FETCHALL_USER_INIT',
-        payload: { ids: userIds, cache: true }
+        payload: { ids: userIds, cache: true, node: true }
       })
     })
   )
@@ -30,7 +30,7 @@ const loadBillEpic = (action$, $state) =>
           return [
             {
               type: 'FETCHALL_USER_INIT',
-              payload: { ids: userIds, cache: true }
+              payload: { ids: userIds, cache: true, node: true }
             },
             {
               type: 'LOAD_BILL_DONE',

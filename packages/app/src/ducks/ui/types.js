@@ -1,5 +1,5 @@
-export default {
-  DIALOG_OPEN: 'dinify/ui/DIALOG_OPEN',
-  DIALOG_CLOSE: 'dinify/ui/DIALOG_CLOSE',
-  TOGGLE_THEME: 'dinify/ui/TOGGLE_THEME',
-};
+const p = 'dinify/ui';
+
+export const DIALOG_OPEN = `${p}/DIALOG_OPEN`;
+export const DIALOG_CLOSE = `${p}/DIALOG_CLOSE`;
+export const TOGGLE_THEME = `${p}/TOGGLE_THEME`;
