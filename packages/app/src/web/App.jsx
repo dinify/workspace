@@ -34,7 +34,7 @@ class App extends React.Component {
   }
 
   onNavigate = (evt, val) => {
-    const { history, checkedInRestaurant } = this.props;
+    const { history } = this.props;
     if (val === 0) history.push(routes.HOMEPAGE);
     else if (val === 1) history.push(routes.DINEIN);
     else if (val === 2) history.push(routes.ACCOUNT);

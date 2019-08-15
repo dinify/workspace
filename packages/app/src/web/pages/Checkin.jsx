@@ -10,13 +10,15 @@ class Checkin extends React.PureComponent {
     let initiated = false;
 
     const onData = (data) => {
-      const query = data.match(/qr=([^&]*)/);
-      if (!checkedInRestaurant && query && query[1]) {
-        const qr = query[1];
-        if (!initiated) {
+      try {
+        const url = new URL(data);
+        const qr = url.searchParams.get('qr');
+        if (!checkedInRestaurant && qr && !initiated) {
           initiated = true;
-          checkin({ qr });
+          checkin({ qr, pathname: url.pathname });
         }
+      } catch (e) {
+        console.error('Invalid URL in QR');
       }
     }
 

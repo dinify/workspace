@@ -5,6 +5,7 @@ import * as API from '@dinify/common/dist/api/restaurant';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import { fetchStatusInit, checkinFail, checkinDone, favRestaurantDone } from 'ducks/restaurant/actions';
 import { getCookie, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
+import { push } from 'connected-react-router';
 import * as types from './types';
 
 const checkinEpic = (action$) =>
@@ -12,17 +13,21 @@ const checkinEpic = (action$) =>
     ofType(types.CHECKIN_INIT),
     debounceTime(500),
     exhaustMap((action) => {
-      const { payload } = action;
+      const { payload: { qr, pathname } } = action;
       if (getCookie('access_token') === '') {
         return of(checkinFail([{ status: 401 }]));
       }
-      return from(API.Checkin({ ...payload, node: true })).pipe(
+      return from(API.Checkin({
+        qr,
+        node: true 
+      })).pipe(
         mergeMap(res => of(
           checkinDone(res),
           fetchStatusInit(),
+          push(pathname),
           snackbar.show({
             message: 'You are now checked in',
-            handleAction: () => window.location.assign('/'),
+            handleAction: () => window.location.assign(pathname),
             action: 'See menu'
           })
         )),
