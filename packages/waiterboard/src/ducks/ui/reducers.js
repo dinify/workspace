@@ -9,29 +9,29 @@ const initialState = {
   modalType: null,
   modalPayload: {},
   waiterboardName: null,
-  billsOfTable: []
 };
 
-// Reducer
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
+
+  const { type, payload } = action;
+
+  switch (type) {
 
     case types.TOGGLE_FRAMES: {
-      return assoc('frameIndex', action.payload.i)(state);
+      return assoc('frameIndex', payload.i)(state);
     }
-    case 'GET_BILLSOFTABLE_DONE':
-      return assoc('billsOfTable', action.payload)(state);
+
     case types.TOGGLE_MODAL: {
-      const { open, type } = action.payload;
-      if (!open) state = assoc('billsOfTable', [])(state);
+      const { open, type } = payload;
       return evolve({
         modalOpen: always(open),
         modalType: open ? always(type) : always(''),
-        modalPayload: open ? always(action.payload) : always({}),
+        modalPayload: open ? always(payload) : always({}),
       })(state);
     }
 
     default:
       return state;
   }
+
 }
