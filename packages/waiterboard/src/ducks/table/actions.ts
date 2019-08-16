@@ -1,16 +1,29 @@
 import * as types from './types';
 
-export const clearTable = (payload: object) => ({
+interface ClearTable {
+  table: object;
+}
+
+export const clearTable = (payload: ClearTable) => ({
   type: types.CLEAR_TABLE_INIT,
   payload
 })
 
-export const clearUser = (payload: object) => ({
+interface ClearUser {
+  userId: string;
+}
+
+export const clearUser = (payload: ClearUser) => ({
   type: types.CLEAR_USER_INIT,
   payload
 })
 
-export const updateTableInit = (payload: object) => ({
+interface UpdateTable {
+  id: string;
+  offline: boolean;
+}
+
+export const updateTableInit = (payload: UpdateTable) => ({
   type: types.UPDATE_TABLE_INIT,
   payload
 })

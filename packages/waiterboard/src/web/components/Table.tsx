@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import S from 'string';
-import { clearTable, updateTableInit } from 'ducks/table/actions';
-import { toggleModal } from 'ducks/ui/actions';
+import { clearTable, updateTableInit } from '../../ducks/table/actions';
+import { toggleModal } from '../../ducks/ui/actions';
 import Block from '@material-ui/icons/Block';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import Grid from '@material-ui/core/Grid';
@@ -21,13 +21,13 @@ const TableBox = styled.div`
   font-family: sans-serif;
   color: white;
 `;
-const Thumbnail = styled.div`
+const Thumbnail = styled.div<{ bg?: string, color?: string }>`
   position: absolute;
   top: 0;
   left: 0;
   background: rgba(0,0,0,0.05);
-  background: ${props => props.bg};
-  color: ${props => props.color};
+  background: ${(props: any) => props.bg};
+  color: ${(props: any) => props.color};
   width: 50px;
   height: 180px;
   text-align: center;
@@ -64,9 +64,9 @@ const Guest = styled.div`
   cursor: pointer;
   vertical-align: top;
 `;
-const Photo = styled.div`
+const Photo = styled.div<{ url: string }>`
   background-color: white;
-  background-image: url(${props => props.url});
+  background-image: url(${(props: any) => props.url});
   width: 40px;
   height: 40px;
   background-size: 44px;
@@ -87,17 +87,20 @@ const Circle = styled.div`
   border-radius: 50%;
   overflow: hidden;
 `
-const Rectangle = styled.div`
+const Rectangle = styled.div<{ bg: string }>`
   width: 9px;
   height: 18px;
   display: inline-block;
-  background-color: ${p => p.bg};
-  ${p => p.flash ? 'animation: vhs-flash 0.5s infinite;' : ''}
+  background-color: ${(props: any) => props.bg};
 `
 
 // TODO click to table: half screen: bills of the day, half screen: enlarged table
 
-const Sign = ({ guest }) => {
+interface Guest {
+  status: string;
+}
+
+const Sign = ({ guest }: { guest: Guest }) => {
   if (guest.status === 's2') {
     return (
       <Circle>
@@ -124,35 +127,38 @@ const Sign = ({ guest }) => {
   }
   return (
     <Circle>
-      <Rectangle bg={colorsByStages[guest.status]} />
-      <Rectangle bg={colorsByStages[guest.status]} />
+      <Rectangle bg={(colorsByStages as any)[guest.status]} />
+      <Rectangle bg={(colorsByStages as any)[guest.status]} />
     </Circle>
     )
 }
 
 
-const Table = ({
-  table,
-  clearTable,
-  toggleModal,
-  seats = [],
-  users,
-  timer,
-  updateTable
-}) => {
+const Table: React.FC<{
+  table: any;
+  clearTable: typeof clearTable;
+  toggleModal: typeof toggleModal;
+  seats: any;
+  users: object;
+  updateTable: typeof updateTableInit;
+}> = (props) => {
+  const {
+    table,
+    clearTable,
+    toggleModal,
+    seats = [],
+    users,
+    updateTable,
+  } = props;
 
-  const presentGuests = seats.map((s) => {
-    s.user = users[s.user_id]
-    return s
-  })
-
-  const guestsStatuses = []
-
-  const tableStatus = guestsStatuses[0]
+  const presentGuests = seats.map((s: any) => {
+    s.user = (users as any)[s.user_id];
+    return s;
+  });
 
   return (
   	<TableBox>
-      <Thumbnail color={tableStatus === 's1' ? 'black' : 'white'} bg={presentGuests && presentGuests.length > 0 ? colorsByStages[tableStatus] : ''}>
+      <Thumbnail>
         <Grid container direction="column" justify="center" alignItems="center" spacing={16}>
           <Grid item>
             <Id onClick={() => toggleModal({ open: true, type: 'Table', tableId: table.id })}>
@@ -192,13 +198,13 @@ const Table = ({
           </Grid>
         : ''}
 
-        {presentGuests.map((guest, i) =>
+        {presentGuests.map((guest: any, i: number) =>
           <Guest key={i} onClick={() => guest.user ? toggleModal({ open: true, type: 'User', userId: guest.user_id }) : ''}>
             <Photo url={guest.user ? guest.user.photoURL : ''} />
             {guest.user ?
               <Name title={guest.user.displayName}>{S(guest.user.displayName).truncate(16).s}</Name>
             : ''}
-            <Sign guest={guest} timer={timer} />
+            <Sign guest={guest} />
           </Guest>
         )}
 
@@ -209,7 +215,7 @@ const Table = ({
 }
 
 export default connect(
-  state => ({
+  (state: any) => ({
     users: state.user.all,
   }),
   {
