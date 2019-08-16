@@ -1,37 +1,42 @@
 import assoc from 'ramda/src/assoc'
 import assocPath from 'ramda/src/assocPath'
 import { ListToMap } from '@dinify/common/dist/lib/FN';
-import * as types from './types';
+import * as callTypes from 'ducks/call/types';
+import * as commonTypes from 'ducks/common/types';
 
 const initialState = {
   all: {}
 }
 
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
 
-    case 'LOAD_CALL_DONE': {
-      const list = action.payload.res;
+  const { type, payload } = action;
+
+  switch (type) {
+
+    case callTypes.LOAD_CALL_DONE: {
+      const list = payload.res;
       return assoc('all', ListToMap(list))(state)
     }
 
-    case types.CALL_RECEIVED: {
-      const { call } = action.payload;
+    case callTypes.CALL_RECEIVED: {
+      const { call } = payload;
       return assocPath(['all', call.id], call)(state);
     }
 
-    case 'CALL_CONFIRMATION_INIT': {
-      const { callId } = action.payload;
+    case callTypes.CALL_CONFIRMATION_INIT: {
+      const { callId } = payload;
       return assocPath(['all', callId, 'status'], 'CONFIRMED')(state);
     }
 
-    case 'CONFIRMATION_DONE': {
-      if (action.payload.type !== 'Call') return state;
-      const { callId } = action.payload;
+    case commonTypes.CONFIRMATION_DONE: {
+      if (payload.type !== 'Call') return state;
+      const { callId } = payload;
       return assocPath(['all', callId, 'status'], 'CONFIRMED')(state);
     }
 
     default:
       return state;
   }
+
 }

@@ -1,6 +1,6 @@
-import { createSelector } from 'reselect'
+import { createSelector } from 'reselect';
 import { MapToList } from '@dinify/common/dist/lib/FN';
-import filter from 'ramda/src/filter'
+import filter from 'ramda/src/filter';
 
 export const getCallList = createSelector(
   [
@@ -9,4 +9,4 @@ export const getCallList = createSelector(
   (all) => {
     return filter((c) => c.status === 'PENDING')(MapToList(all));
   }
-)
+);
