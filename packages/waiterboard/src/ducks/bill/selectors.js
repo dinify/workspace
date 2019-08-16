@@ -1,6 +1,6 @@
-import { createSelector } from 'reselect'
+import { createSelector } from 'reselect';
 import { MapToList } from '@dinify/common/dist/lib/FN';
-import groupBy from 'ramda/src/groupBy'
+import groupBy from 'ramda/src/groupBy';
 
 export const getGroupedBills = createSelector(
   [

@@ -1,6 +1,6 @@
-
+import * as types from './types';
 
 export const fetchTodayBills = (payload) => ({
-  type: 'FETCH_TODAYBILLS_INIT',
+  type: types.FETCH_TODAYBILLS_INIT,
   payload
-})
+});
