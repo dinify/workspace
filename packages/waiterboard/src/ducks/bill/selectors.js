@@ -11,4 +11,4 @@ export const getGroupedBills = createSelector(
       MapToList(all, { sortBy: 'updated_at', sortType: String })
     );
   }
-)
+);

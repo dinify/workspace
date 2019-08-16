@@ -14,7 +14,7 @@ const getUsersOfBillsEpic = (action$) =>
     mergeMap(({ payload }) => {
       const bills = payload.res;
       const userIds = uniq(pluck('initiator', bills));
-      return of(fetchAllUsers({ ids: userIds, cache: true, node: true }));
+      return of(fetchAllUsers({ ids: userIds, cache: true }));
     })
   )
 
@@ -27,7 +27,7 @@ const loadBillEpic = (action$, $state) =>
         mergeMap((bills) => {
           const userIds = pluck('initiator', bills);
           return [
-            fetchAllUsers({ ids: userIds, cache: true, node: true }),
+            fetchAllUsers({ ids: userIds, cache: true }),
             {
               type: billTypes.LOAD_BILL_DONE,
               payload: { res: bills }
