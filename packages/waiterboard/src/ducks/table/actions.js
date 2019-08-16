@@ -1,15 +1,16 @@
+import * as types from './types';
 
 export const clearTable = (payload) => ({
-  type: 'CLEAR_TABLE_INIT',
+  type: types.CLEAR_TABLE_INIT,
   payload
 })
 
 export const clearUser = (payload) => ({
-  type: 'CLEAR_USER_INIT',
+  type: types.CLEAR_USER_INIT,
   payload
 })
 
 export const updateTableInit = (payload) => ({
-  type: 'UPDATE_TABLE_INIT',
+  type: types.UPDATE_TABLE_INIT,
   payload
 })
