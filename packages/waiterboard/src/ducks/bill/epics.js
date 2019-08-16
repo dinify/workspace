@@ -22,7 +22,7 @@ const loadBillEpic = (action$, $state) =>
   action$.pipe(
     ofType(billTypes.LOAD_BILL_INIT),
     switchMap((action) => {
-      const waiterboardId = $state.value.restaurant.selectedWBId;
+      const waiterboardId = $state.value.app.selectedWBId;
       return from(API.GetBills({ waiterboardId })).pipe(
         mergeMap((bills) => {
           const userIds = pluck('initiator', bills);

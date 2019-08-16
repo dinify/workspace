@@ -1,6 +1,6 @@
 import * as types from './types';
 
-export const confirmCallInit = (payload) => ({
+export const confirmOrderInit = (payload) => ({
   type: types.ORDER_CONFIRMATION_INIT,
   payload
 });

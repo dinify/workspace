@@ -1,19 +1,18 @@
+import React from 'react';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { clearUser } from 'ducks/table/actions';
+import numeral from 'numeral';
 
-import React from 'react'
-import styled from 'styled-components'
-import { connect } from 'react-redux'
-import { clearUser } from 'ducks/table/actions'
-import { getBillsOfUser, getOrdersOfUser } from 'ducks/restaurant/actions'
-import numeral from 'numeral'
-
-import Bill from './Events/Bill'
-import Order from './Events/Order'
+import Bill from './Events/Bill';
+import Order from './Events/Order';
 
 const Header = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   height: 180px;
+  width: 100%;
   padding: 30px;
 `;
 const Photo = styled.div`
@@ -49,19 +48,6 @@ const TdValue = styled.td`
   color: #666;
   text-align: left;
 `;
-
-const Label = styled.div`
-  color: blue;
-  background: white;
-  display: inline-block;
-  font-weight: 300;
-  padding: 5px 15px;
-  margin: 0 5px 5px 0;
-  font-size: 14px;
-  text-align: center;
-  border-wadius: 20px;
-`;
-
 
 const Body = styled.div`
   position: absolute;
@@ -99,23 +85,19 @@ class ModalUser extends React.Component {
 
   render(){
 
-    const { payload: { userId }, users, clearUser, getBillsOfUser, getOrdersOfUser, shown } = this.props;
+    const { payload: { userId }, users, clearUser, shown } = this.props;
 
 
 
     const user = users[userId];
-    console.log('rendered', shown, userId, user);
 
-    if (!shown) return (<div />)
-    if (!user) return (<div />)
+    if (!shown) return (<div />);
+    if (!user) return (<div />);
 
-    let totalSpend = 0
-    let aveTicket = 0
-    let visitsCount = 0
-    let favs = []
-
-    if (user.orders === undefined) getOrdersOfUser({ userId })
-    if (user.bills === undefined) getBillsOfUser({ userId })
+    let totalSpend = 0;
+    let aveTicket = 0;
+    let visitsCount = 0;
+    let favs = [];
 
     // TODO check-out kick him out
 
@@ -198,7 +180,5 @@ export default connect(
   }),
   {
     clearUser,
-    getBillsOfUser,
-    getOrdersOfUser
   }
 )(ModalUser);

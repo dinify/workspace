@@ -12,7 +12,7 @@ const loadOrderEpic = (action$, $state) =>
     ofType(orderTypes.LOAD_ORDER_INIT),
     switchMap((action) => {
 
-      const waiterboardId = $state.value.restaurant.selectedWBId;
+      const waiterboardId = $state.value.app.selectedWBId;
 
       return from(API.GetOrders({ waiterboardId })).pipe(
         mergeMap((orders) => {

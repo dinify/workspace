@@ -2,11 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux';
 import N from 'numeral';
 import moment from 'moment';
-import { confirmOrder } from 'ducks/restaurant/actions';
+import { MapToList } from '@dinify/common/dist/lib/FN';
+import { confirmOrderInit } from 'ducks/order/actions';
 import User from './user';
 import { colorsByStages } from '../../colors';
 import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, FoodItem } from '../styled/Events';
-import { MapToList } from '@dinify/common/dist/lib/FN';
 
 const color = colorsByStages['s2'];
 
@@ -97,6 +97,6 @@ export default connect(
 		timer: state.restaurant.timer,
 	}),
   {
-    confirmOrder
+    confirmOrder: confirmOrderInit
   },
 )(Order);

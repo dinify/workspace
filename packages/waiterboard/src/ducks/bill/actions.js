@@ -5,7 +5,7 @@ export const fetchTodayBills = (payload) => ({
   payload
 });
 
-export const confirmCallInit = (payload) => ({
+export const confirmBillInit = (payload) => ({
   type: types.BILL_CONFIRMATION_INIT,
   payload
 });

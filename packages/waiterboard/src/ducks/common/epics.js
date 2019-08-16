@@ -6,9 +6,10 @@ import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as commonTypes from 'ducks/common/types';
 import { confirmationFail } from 'ducks/common/actions';
 
-const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
-const camel = (str) => capitalize(str.toLowerCase())
-const actionEssence = (str) => camel(str.split('_')[0])
+const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+const camel = (str) => capitalize(str.toLowerCase());
+const withoutPath = type => type.match(/\w+(?:\.\w+)*$/g)[0];
+const actionEssence = (str) => camel(withoutPath(str).split('_')[0]);
 
 const confirmationEpic = (action$) =>
   action$.pipe(
@@ -39,7 +40,7 @@ const confirmationSyncEpic = (action$, state$) =>
       if (payload.stopPropagation) {
         return of({ type: commonTypes.CONFIRMATIONSYNC_DONE });
       }
-      const waiterboardId = state$.value.restaurant.selectedWBId;
+      const waiterboardId = state$.value.app.selectedWBId;
       const promise = API.Notify({
         sendTo: [`waiterboard/${waiterboardId}`],
         type: 'confirmation',

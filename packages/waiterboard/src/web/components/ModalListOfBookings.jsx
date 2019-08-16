@@ -1,9 +1,8 @@
-
-import React from 'react'
-import { connect } from 'react-redux'
-import Booking from './Events/Booking'
-import { colorsByStages } from '../colors'
-import { MapToList } from '@dinify/common/dist/lib/FN'
+import React from 'react';
+import { connect } from 'react-redux';
+import { MapToList } from '@dinify/common/dist/lib/FN';
+import Booking from './Events/Booking';
+import { colorsByStages } from '../colors';
 
 import { Head, Body, BodyPlaceholder } from './styled/Modal'
 
@@ -13,7 +12,7 @@ const ModalListOfBookings = ({ bookings, shown }) => {
 
   return (
   	<div>
-      <Head bg={colorsByStages['booking']}>
+      <Head bg={colorsByStages.booking}>
         Accepted Reservations
       </Head>
       <Body>

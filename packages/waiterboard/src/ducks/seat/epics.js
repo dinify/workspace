@@ -13,7 +13,7 @@ const loadSeatEpic = (action$, state$) =>
     ofType(seatTypes.LOAD_SEATS_INIT),
     mergeMap((action) => {
 
-      const waiterboardId = state$.value.restaurant.selectedWBId;
+      const waiterboardId = state$.value.app.selectedWBId;
 
       return from(API.GetSeatsOfWB({ waiterboardId, node: true })).pipe(
         mergeMap((allSeats) => {

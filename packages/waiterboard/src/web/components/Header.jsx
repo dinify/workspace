@@ -148,9 +148,7 @@ const Header = ({
     return Number(o.subtotal.amount);
   });
 
-  const salesVolume =  sum(amounts);
-
-  console.log(salesVolume);
+  const salesVolume = sum(amounts);
 
   return (
     <AppBar position="static" style={styles.appbar}>
@@ -209,11 +207,9 @@ const Header = ({
 
 export default connect(
   state => ({
-    restaurant: state.restaurant.loggedUser,
-    selectedWBId: state.restaurant.selectedWBId,
+    selectedWBId: state.app.selectedWBId,
     frameIndex: state.ui.frameIndex,
     bookings: state.booking.all,
-    salesVolume: state.restaurant.sales,
     orders: state.order.all,
     confirmedOrders: getConfirmedOrderList(state)
   }),

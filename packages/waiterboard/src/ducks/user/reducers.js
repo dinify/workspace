@@ -12,8 +12,8 @@ export default function reducer(state = initialState, action) {
   switch (type) {
 
     case userTypes.FETCH_USER_DONE: {
-      const { uid } = payload;
-      return assocPath(['all', uid], payload)(state);
+      const user = payload.res;
+      return assocPath(['all', user.uid], user)(state);
     }
 
     default:

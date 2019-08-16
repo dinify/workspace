@@ -30,6 +30,12 @@ export default function reducer(state = initialState, action) {
       return assoc('all', filteredGuests)(state);
     }
 
+    case tableTypes.CLEAR_USER_DONE: {
+      const userId = payload.userId;
+      const filteredGuests = filter((guest) => guest.user_id !== userId, state.all);
+      return assoc('all', filteredGuests)(state);
+    }
+
     default:
       return state;
   }

@@ -12,7 +12,7 @@ const loadCallEpic = (action$, $state) =>
     ofType(callTypes.LOAD_CALL_INIT),
     mergeMap((action) => {
 
-      const waiterboardId = $state.value.restaurant.selectedWBId;
+      const waiterboardId = $state.value.app.selectedWBId;
 
       return from(API.GetCalls({ waiterboardId, node: true })).pipe(
         mergeMap((calls) => {

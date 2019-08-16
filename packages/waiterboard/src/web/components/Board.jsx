@@ -165,12 +165,10 @@ export default connect(
     modalOpen: state.ui.modalOpen,
     modalType: state.ui.modalType,
     modalPayload: state.ui.modalPayload,
-    selectedWBId: state.restaurant.selectedWBId
+    selectedWBId: state.app.selectedWBId
   }),
   {
     toggleFrames,
-    toggleModal,
-    setOHEnabled,
-    setWBidAction
+    toggleModal
   },
 )(Board);

@@ -97,32 +97,28 @@ const Rectangle = styled.div`
 
 // TODO click to table: half screen: bills of the day, half screen: enlarged table
 
-const Sign = ({ guest, timer }) => {
-  let flash = false;
+const Sign = ({ guest }) => {
   if (guest.status === 's2') {
-    // flash = isItOutdated(guest.orderStartTime, timer.o)
     return (
       <Circle>
-        <Rectangle bg={colorsByStages['s1']} flash={flash} />
-        <Rectangle bg={colorsByStages['s2']} flash={flash} />
+        <Rectangle bg={colorsByStages['s1']} />
+        <Rectangle bg={colorsByStages['s2']} />
       </Circle>
     )
   }
   if (guest.status === 's5') {
-    // flash = isItOutdated(guest.paymentStartTime, timer.p)
     return (
       <Circle>
-        <Rectangle bg={colorsByStages['s3']} flash={flash} />
-        <Rectangle bg={colorsByStages['s5']} flash={flash} />
+        <Rectangle bg={colorsByStages['s3']} />
+        <Rectangle bg={colorsByStages['s5']} />
       </Circle>
     )
   }
   if (guest.status === 's4') {
-    // flash = isItOutdated(guest.serviceCallStartTime, timer.sc)
     return (
       <Circle>
-        <Rectangle bg={colorsByStages['s4']} flash={flash} />
-        <Rectangle bg={colorsByStages['s4']} flash={flash} />
+        <Rectangle bg={colorsByStages['s4']} />
+        <Rectangle bg={colorsByStages['s4']} />
       </Circle>
     )
   }
@@ -215,7 +211,6 @@ const Table = ({
 export default connect(
   state => ({
     users: state.user.all,
-    timer: state.restaurant.timer
   }),
   {
     clearTable,

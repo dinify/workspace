@@ -1,14 +1,13 @@
-
-import React from 'react'
+import React from 'react';
 import { connect } from 'react-redux';
-import { colorsByStages } from '../colors'
-import { Head, Body, BodyPlaceholder } from './styled/Modal'
-import Seat from './SeatSummary'
+import { colorsByStages } from '../colors';
+import { Head, Body, BodyPlaceholder } from './styled/Modal';
+import Seat from './SeatSummary';
 
 class ModalTable extends React.Component {
 
   render(){
-    const { shown, payload: { tableId }, tableMap, seatList, orders } = this.props;
+    const { shown, payload: { tableId }, tableMap, seatList } = this.props;
     if (!shown) return (<div />)
 
     const table = tableMap[tableId] || {};
@@ -37,7 +36,7 @@ class ModalTable extends React.Component {
 
 export default connect(
   state => ({
-    waiterboardId: state.restaurant.selectedWBId,
+    waiterboardId: state.app.selectedWBId,
     tableMap: state.table.all
   })
 )(ModalTable);
