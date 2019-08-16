@@ -1,18 +1,23 @@
 import assocPath from 'ramda/src/assocPath';
+import * as userTypes from 'ducks/user/types';
 
 const initialState = {
   all: {}
-}
+};
 
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
 
-    case 'FETCH_USER_DONE': {
-      const payload = action.payload.res;
-      return assocPath(['all', payload.uid], payload)(state);
+  const { type, payload } = action;
+
+  switch (type) {
+
+    case userTypes.FETCH_USER_DONE: {
+      const { uid } = payload;
+      return assocPath(['all', uid], payload)(state);
     }
 
     default:
       return state;
   }
+  
 }
