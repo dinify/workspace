@@ -10,6 +10,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
+import app from 'ducks/app';
 import auth from '@dinify/common/dist/ducks/auth';
 import table from 'ducks/table';
 import ui from 'ducks/ui';
@@ -33,8 +34,8 @@ const rootPersistConfig = {
   whitelist: []
 };
 
-const restaurantPersistConfig = {
-  key: 'restaurant',
+const appPersistConfig = {
+  key: 'app',
   storage,
   whitelist: [
     'selectedRestaurant',
@@ -43,10 +44,11 @@ const restaurantPersistConfig = {
 };
 
 const commonReducers = {
+  app: persistReducer(appPersistConfig, app),
   auth,
   table,
   ui,
-  restaurant: persistReducer(restaurantPersistConfig, restaurant),
+  restaurant,
   user,
   booking,
   call,

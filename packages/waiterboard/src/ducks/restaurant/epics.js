@@ -1,33 +1,16 @@
-import { of, from } from 'rxjs';
-import { mergeMap, switchMap, map, catchError, filter, mapTo } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { mergeMap, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { push } from 'connected-react-router';
 import { actionTypes } from 'react-redux-firebase';
-import * as API from '@dinify/common/dist/api/restaurant';
-import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
-import * as bookingTypes from 'ducks/booking/types';
-import { appBootstrap, confirmationFail } from './actions';
-
-const bootstrapEpic = (action$) =>
-  action$.pipe(
-    ofType('persist/REHYDRATE'),
-    mergeMap(() => {
-      return of(appBootstrap());
-    })
-  );
-
-const selectWBRedirectEpic = (action$) =>
-  action$.pipe(
-    ofType('SELECT_WAITERBOARD'),
-    mapTo(push('/board'))
-  );
+import * as restaurantTypes from 'ducks/restaurant/types';
+import * as appTypes from 'ducks/app/types';
 
 const loadRestaurant = (action$) =>
   action$.pipe(
-    ofType('LOAD_RESTAURANT'),
+    ofType(restaurantTypes.LOAD_RESTAURANT),
     mergeMap(() => {
       return of({
-        type: 'FETCH_RESTAURANT_INIT',
+        type: restaurantTypes.FETCH_RESTAURANT_INIT,
         payload: {
           populateWith: 'waiterboards.tables,services.image',
           node: true
@@ -39,97 +22,29 @@ const loadRestaurant = (action$) =>
 const getLoggedEpic = (action$, state$) =>
   action$.pipe(
     filter(action => {
-      const triggerOn = [actionTypes.LOGIN, actionTypes.AUTH_EMPTY_CHANGE, 'SELECT_WAITERBOARD'];
+      const triggerOn = [
+        actionTypes.LOGIN,
+        actionTypes.AUTH_EMPTY_CHANGE,
+        appTypes.SELECT_WAITERBOARD
+      ];
       return triggerOn.includes(action.type);
     }),
     mergeMap(() => {
-      const reactions = [{type: 'FETCH_MANAGEDRESTAURANTS_INIT'}];
+
+      const reactions = [{ type: restaurantTypes.FETCH_MANAGEDRESTAURANTS_INIT }];
+
       const selectedRestaurant = state$.value.restaurant.selectedRestaurant;
-      if (selectedRestaurant) reactions.push({type: 'LOAD_RESTAURANT'});
+      if (selectedRestaurant) reactions.push({ type: restaurantTypes.LOAD_RESTAURANT });
+
       const waiterboardId = state$.value.restaurant.selectedWBId;
-      if (waiterboardId) reactions.push({type: 'LOAD_STATE_INIT'});
+      if (waiterboardId) reactions.push({ type: appTypes.LOAD_STATE_INIT });
+
       return reactions;
+
     })
   );
 
-const guestsPollingEpic = (action$, state$) =>
-  action$.pipe(
-    ofType('LOAD_STATE_INIT'),
-    mergeMap(() => {
-      const waiterboardId = state$.value.restaurant.selectedWBId;
-      let actions = [
-        {type: bookingTypes.FETCH_BOOKINGS_INIT}
-      ]
-      if (waiterboardId) {
-        actions = [
-          {type: 'LOAD_ORDER_INIT'},
-          {type: 'LOAD_BILL_INIT'},
-          {type: 'LOAD_CALL_INIT'},
-          {type: 'LOAD_SEATS_INIT'},
-          ...actions
-        ]
-      }
-      return actions;
-    })
-  )
-
-
-const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
-const camel = (str) => capitalize(str.toLowerCase())
-const actionEssence = (str) => camel(str.split('_')[0])
-
-const confirmationEpic = (action$) =>
-  action$.pipe(
-    filter(action => action.type.includes('CONFIRMATION') && action.type.includes('INIT')),
-    switchMap((action) => {
-      const { type, payload } = action;
-      const APIcall = API[`Confirm${actionEssence(type)}`]
-      return from(APIcall({...payload})).pipe(
-        // delay(200)
-        map(() => ({
-          type: 'CONFIRMATION_DONE',
-          payload: { type: actionEssence(type), ...payload }
-        })),
-        catchError(error => handleEpicAPIError({
-          error,
-          failActionType: confirmationFail(error),
-          initAction: action
-        }))
-      )
-    })
-  )
-
-const confirmationSyncEpic = (action$, state$) =>
-  action$.pipe(
-    ofType('CONFIRMATION_DONE'),
-    mergeMap((action) => {
-      const { payload } = action;
-      if (payload.stopPropagation) {
-        return of({ type: 'CONFIRMATIONSYNC_DONE' });
-      }
-      const waiterboardId = state$.value.restaurant.selectedWBId;
-      const promise = API.Notify({
-        sendTo: [`waiterboard/${waiterboardId}`],
-        type: 'confirmation',
-        payload: { ...payload, instanceId: document.instanceId }
-      });
-      return from(promise).pipe(
-        map(() => ({ type: 'CONFIRMATIONSYNC_DONE' })),
-        catchError(error => handleEpicAPIError({
-          error,
-          failActionType: confirmationFail(error),
-          initAction: action
-        }))
-      )
-    })
-  )
-
 export default [
-  bootstrapEpic,
   getLoggedEpic,
   loadRestaurant,
-  guestsPollingEpic,
-  confirmationEpic,
-  confirmationSyncEpic,
-  selectWBRedirectEpic
 ];

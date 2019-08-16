@@ -6,3 +6,4 @@ export const FETCH_TODAYBILLS_DONE = `${p}/FETCH_TODAYBILLS_DONE`;
 export const LOAD_BILL_INIT = `${p}/LOAD_BILL_INIT`;
 export const LOAD_BILL_DONE = `${p}/LOAD_BILL_DONE`;
 export const LOAD_BILL_FAIL = `${p}/LOAD_BILL_FAIL`;
+export const BILL_CONFIRMATION_INIT = `${p}/BILL_CONFIRMATION_INIT`;

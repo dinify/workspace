@@ -4,3 +4,4 @@ export const ORDER_RECEIVED = `${p}/ORDER_RECEIVED`;
 export const LOAD_ORDER_INIT = `${p}/LOAD_ORDER_INIT`;
 export const LOAD_ORDER_DONE = `${p}/LOAD_ORDER_DONE`;
 export const LOAD_ORDER_FAIL = `${p}/LOAD_ORDER_FAIL`;
+export const ORDER_CONFIRMATION_INIT = `${p}/ORDER_CONFIRMATION_INIT`;
