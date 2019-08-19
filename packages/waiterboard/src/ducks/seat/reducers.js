@@ -1,8 +1,9 @@
 import assoc from 'ramda/src/assoc';
+import assocPath from 'ramda/src/assocPath';
 import filter from 'ramda/src/filter';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 import * as seatTypes from 'ducks/seat/types';
-import * as tableTypes from 'ducks/table/types';
+import * as tableTypes from 'ducks/table/types.ts';
 
 const initialState = {
   all: {}
@@ -19,10 +20,10 @@ export default function reducer(state = initialState, action) {
       return assoc('all', ListToMap(list))(state);
     }
 
-    // case 'SEAT_RECEIVED': {
-    //   const { seat } = action.payload;
-    //   return assocPath(['all', seat.id], seat)(state);
-    // }
+    case seatTypes.SEAT_RECEIVED: {
+      const { seat } = action.payload;
+      return assocPath(['all', seat.id], seat)(state);
+    }
 
     case tableTypes.CLEAR_TABLE_DONE: {
       const tableId = payload.table.id;

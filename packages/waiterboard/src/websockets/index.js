@@ -2,6 +2,9 @@ import io from 'socket.io-client';
 import * as orderTypes from 'ducks/order/types';
 import * as billTypes from 'ducks/bill/types';
 import * as callTypes from 'ducks/call/types';
+import * as seatTypes from 'ducks/seat/types';
+import * as commonTypes from 'ducks/common/types';
+import { fetchAllUsers } from 'ducks/user/actions';
 // import * as types from './types';
 
 const socket = io('https://ws.dinify.app');
@@ -34,43 +37,51 @@ const websockets = (store) => {
 
   socket.on('checkin', (payload) => {
     console.log('checkin', payload);
+    
     const userId = payload.seat.user_id;
-    dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
-    dispatch({ type: 'SEAT_RECEIVED', payload });
+    dispatch(fetchAllUsers({ ids: [userId], cache: true }));
+    dispatch({ type: seatTypes.SEAT_RECEIVED, payload });
+
     playChime();
   })
 
   socket.on('checkout', (data) => {
     console.log('checkout', data);
-    dispatch({ type: 'LOAD_SEATS_INIT'});
+    dispatch({ type: seatTypes.LOAD_SEATS_INIT });
   })
 
   socket.on('order-incoming', (payload) => {
     console.log('order-incoming', payload);
+
     const userId = payload.order.initiator;
-    dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
+    dispatch(fetchAllUsers({ ids: [userId], cache: true }));
     dispatch({ type: orderTypes.ORDER_RECEIVED, payload });
+
     playChime();
   })
 
   socket.on('transaction-incoming', (payload) => {
     console.log('transaction-incoming', payload);
+
     const userId = payload.trasaction.initiator;
-    dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
+    dispatch(fetchAllUsers({ ids: [userId], cache: true }));
     dispatch({
       type: billTypes.PAYMENT_RECEIVED,
       payload: {
         payment: payload.trasaction
       }
     });
+
     playChime();
   })
 
   socket.on('call-incoming', (payload) => {
     console.log('call-incoming', payload);
+
     dispatch({ type: callTypes.CALL_RECEIVED, payload });
     const userId = payload.call.user_id;
-    dispatch({ type: 'FETCHALL_USER_INIT', payload: {ids: [userId], cache: true} });
+    dispatch(fetchAllUsers({ ids: [userId], cache: true }));
+
     playChime();
   })
 
@@ -82,7 +93,7 @@ const websockets = (store) => {
   socket.on('confirmation', (data) => {
     if (data.instanceId !== document.instanceId) {
       dispatch({
-        type: 'CONFIRMATION_DONE',
+        type: commonTypes.CONFIRMATION_DONE,
         payload: {
           stopPropagation: true,
           ...data

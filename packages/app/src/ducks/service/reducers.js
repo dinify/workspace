@@ -2,6 +2,7 @@ import assoc from 'ramda/src/assoc';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 import * as restaurantTypes from 'ducks/restaurant/types';
 import * as types from './types';
+import { pipe } from 'rxjs';
 
 const initialState = {
   all: {}
