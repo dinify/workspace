@@ -51,7 +51,7 @@ const websockets = (store) => {
   });
 
   socket.on('checkin', (data) => {
-    const me = data.seat.user_id === getState().user.loggedUserId;
+    const me = data.seat.user_id === getState().firebase.auth.uid;
     data.me = me;
     dispatch({ type: types.CHECKIN, payload: data });
     if (!me) dispatch(snackbar.show({ message: 'New guest joined table' }))

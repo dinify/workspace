@@ -19,6 +19,16 @@ const filterAction = (type, kind, stage) => {
   return typeOnly.startsWith(`${kind}_`) && typeOnly.endsWith(`_${stage}`);
 };
 
+const getRestaurantId = (state) => {
+  if (state.restaurant && state.restaurant.selectedRestaurant) {
+    return state.restaurant.selectedRestaurant;
+  }
+  if (state.app && state.app.selectedRestaurant) {
+    return state.app.selectedRestaurant;
+  }
+  return undefined;
+}
+
 const createEpic = (action$, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'CREATE', 'INIT')),
@@ -26,10 +36,10 @@ const createEpic = (action$, state$) =>
       const { payload = {}, type } = action;
       const { subject, path } = getSubjectAndPath(type, 'CREATE', 'INIT');
       const apiFnName = `Create${camel(subject)}`;
+      
       const state = state$.value;
-      if (state.restaurant && state.restaurant.selectedRestaurant) {
-        payload.restaurantId = state.restaurant.selectedRestaurant;
-      }
+      payload.restaurantId = getRestaurantId(state);
+
       return from(API[apiFnName](payload)).pipe(
         map(res => ({
           type: `${path}CREATE_${subject}_DONE`,
@@ -51,10 +61,10 @@ const fetchEpic = (action$, state$) =>
       const { payload = {}, type } = action;
       const { subject, path } = getSubjectAndPath(type, 'FETCH', 'INIT');
       const apiFnName = `Get${camel(subject)}`;
+
       const state = state$.value;
-      if (state.restaurant && state.restaurant.selectedRestaurant) {
-        payload.restaurantId = state.restaurant.selectedRestaurant;
-      }
+      payload.restaurantId = getRestaurantId(state);
+
       return from(API[apiFnName](payload)).pipe(
         map(res => ({
           type: `${path}FETCH_${subject}_DONE`,
@@ -98,10 +108,10 @@ const updateEpic = (action$, state$) =>
       const { payload = {}, type } = action;
       const { subject, path } = getSubjectAndPath(type, 'UPDATE', 'INIT');
       const apiFnName = `Change${camel(subject)}`;
+
       const state = state$.value;
-      if (state.restaurant && state.restaurant.selectedRestaurant) {
-        payload.restaurantId = state.restaurant.selectedRestaurant;
-      }
+      payload.restaurantId = getRestaurantId(state);
+
       return from(API[apiFnName](payload)).pipe(
         map(res => ({
           type: `${path}UPDATE_${subject}_DONE`,
@@ -123,10 +133,10 @@ const removeEpic = (action$, state$) =>
       const { payload = {}, type } = action;
       const { subject, path } = getSubjectAndPath(type, 'REMOVE', 'INIT');
       const apiFnName = `Remove${camel(subject)}`;
+
       const state = state$.value;
-      if (state.restaurant && state.restaurant.selectedRestaurant) {
-        payload.restaurantId = state.restaurant.selectedRestaurant;
-      }
+      payload.restaurantId = getRestaurantId(state);
+
       return from(API[apiFnName](payload)).pipe(
         map(res => ({
           type: `${path}REMOVE_${subject}_DONE`,

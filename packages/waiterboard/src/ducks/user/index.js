@@ -1,5 +1,5 @@
-import reducer from './reducers'
+import reducer from './reducers';
 
-export { default as userEpics } from './epics'
+export { default as userEpics } from './epics';
 
-export default reducer
+export default reducer;

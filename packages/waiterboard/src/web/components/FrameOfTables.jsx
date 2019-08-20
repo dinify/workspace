@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import groupBy from 'ramda/src/groupBy'
-import Table from './Table';
+import Table from './Table.tsx';
 import Container from './Container';
 
 const FrameOfTables = ({

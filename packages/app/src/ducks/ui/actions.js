@@ -1,4 +1,4 @@
-import types from './types';
+import * as types from './types';
 
 export const openDialog = (e) => ({
   type: types.DIALOG_OPEN,

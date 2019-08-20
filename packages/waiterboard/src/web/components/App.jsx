@@ -1,18 +1,18 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import styled from 'styled-components'
-import { appIsRunning } from '../../selectors/restaurant'
-import media from '../../common/helpers/media'
-import Board from './Board'
-import SelectWB from './SelectWB'
+import styled from 'styled-components';
+import { appIsRunning } from 'ducks/app/selectors';
+import media from 'common/helpers/media';
 import SignIn from '@dinify/common/dist/components/SignIn';
 import withRoot from 'withRoot.js';
+import Board from './Board';
+import SelectWB from './SelectWB';
 
 const Content = styled.div`
   font-family: 'Lato', sans-serif;
   ${media.tablet`max-width: 100%;`}
-`
+`;
 
 const AppLoader = styled.div`
   position: relative;
@@ -22,7 +22,7 @@ const AppLoader = styled.div`
   justify-content: center;
   flex-direction: column;
   color: white;
-`
+`;
 
 const SignInWithRoot = withRoot(SignIn);
 
@@ -54,6 +54,7 @@ const App = ({ appLoading, user, history, selectedRestaurant, selectedWaiterboar
 export default connect(state => ({
   user: state.firebase.auth,
   appLoading: !appIsRunning(state),
-  selectedRestaurant: state.restaurant.selectedRestaurant,
-  selectedWaiterboard: state.restaurant.selectedWBId
-}))(App)
+  selectedRestaurant: state.app.selectedRestaurant,
+  selectedWaiterboard: state.app.selectedWBId
+}))(App);
+

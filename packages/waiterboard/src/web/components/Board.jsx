@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Swipeable from 'react-swipeable';
 
-import { toggleFrames, toggleModal } from 'ducks/ui'
-import { setOHEnabled, setWBidAction } from 'ducks/restaurant/actions'
+import { toggleFrames, toggleModal } from 'ducks/ui/actions';
+import { setOHEnabled, setWBidAction } from 'ducks/restaurant/actions';
 import { getGroupedBills } from 'ducks/bill/selectors';
 import { getTableList } from 'ducks/table/selectors';
 import { getBookingList } from 'ducks/booking/selectors';
@@ -165,12 +165,10 @@ export default connect(
     modalOpen: state.ui.modalOpen,
     modalType: state.ui.modalType,
     modalPayload: state.ui.modalPayload,
-    selectedWBId: state.restaurant.selectedWBId
+    selectedWBId: state.app.selectedWBId
   }),
   {
     toggleFrames,
-    toggleModal,
-    setOHEnabled,
-    setWBidAction
+    toggleModal
   },
 )(Board);

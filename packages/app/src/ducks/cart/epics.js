@@ -42,7 +42,7 @@ const addToCartEpic = (action$, state$) =>
           fetchCartInit(),
           snackbar.show({
             message: 'Added to cart',
-            handleAction: () => window.location.assign('/eat'),
+            handleAction: () => window.location.assign('/dinein'),
             action: 'Go to cart'
           })
         )),

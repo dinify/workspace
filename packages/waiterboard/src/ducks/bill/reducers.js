@@ -2,37 +2,42 @@ import { ListToMap } from '@dinify/common/dist/lib/FN';
 import mergeDeepRight from 'ramda/src/mergeDeepRight';
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
-import * as types from './types';
+import * as billTypes from 'ducks/bill/types';
+import * as commonTypes from 'ducks/common/types';
 
 const initialState = {
   all: {}
 }
 
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
 
-    case 'LOAD_BILL_DONE': {
-      const list = action.payload.res;
+  const { type, payload } = action;
+
+  switch (type) {
+
+    case billTypes.LOAD_BILL_DONE: {
+      const list = payload.res;
       return assoc('all', mergeDeepRight(state.all, ListToMap(list)))(state);
     }
 
-    case 'FETCH_TODAYBILLS_DONE': {
-      const list = action.payload.res;
+    case billTypes.FETCH_TODAYBILLS_DONE: {
+      const list = payload.res;
       return assoc('all', mergeDeepRight(state.all, ListToMap(list)))(state);
     }
 
-    case types.PAYMENT_RECEIVED: {
-      const { payment } = action.payload;
+    case billTypes.PAYMENT_RECEIVED: {
+      const { payment } = payload;
       return assocPath(['all', payment.id], payment)(state);
     }
 
-    case 'CONFIRMATION_DONE': {
-      if (action.payload.type !== 'Bill') return state;
-      const { billId } = action.payload;
+    case commonTypes.CONFIRMATION_DONE: {
+      if (payload.type !== 'Bill') return state;
+      const { billId } = payload;
       return assocPath(['all', billId, 'status'], 'PROCESSED')(state);
     }
 
     default:
       return state;
   }
+
 }

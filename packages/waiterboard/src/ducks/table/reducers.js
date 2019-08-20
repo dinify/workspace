@@ -2,16 +2,20 @@ import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import keys from 'ramda/src/keys';
 import { UpdateOriginal } from '@dinify/common/dist/lib/FN';
+import * as restaurantTypes from 'ducks/restaurant/types';
+import * as tableTypes from 'ducks/table/types';
 
 const initialState = {
   all: {}
 };
 
 export default function reducer(state = initialState, action) {
+
   const { payload, type } = action;
+
   switch (type) {
 
-    case 'FETCH_RESTAURANT_DONE': {
+    case restaurantTypes.FETCH_RESTAURANT_DONE: {
       const restaurant = payload.res;
       const waiterboards = restaurant.waiterboards;
       const selectedWBid = keys(waiterboards)[0];
@@ -19,7 +23,7 @@ export default function reducer(state = initialState, action) {
       return assoc('all', UpdateOriginal(state.all, wb.tables))(state);
     }
 
-    case 'UPDATE_TABLE_INIT': {
+    case tableTypes.UPDATE_TABLE_INIT: {
       const { id } = payload;
       return assocPath(['all', id], { ...state.all[id], ...payload })(state);
     }
@@ -27,4 +31,5 @@ export default function reducer(state = initialState, action) {
     default:
       return state;
   }
+
 }

@@ -1,5 +1,6 @@
-// @flow
 import { Get, Post } from './Network';
+
+const nodeEndpoint = 'https://api.dinify.app/v2/'
 
 type RegisterLocalProps = {
   name: string,
@@ -77,9 +78,9 @@ export function LoginWithGoogle({ accessToken }) {
 
 export function GetUser({ id }) {
   return Get({
-    endpoint: 'https://europe-west1-dinify.cloudfunctions.net/api/',
+    endpoint: nodeEndpoint,
     path: `user/${id}`
-  })
+  });
 }
 
 export function RegisterFirebaseToken({ token }) {

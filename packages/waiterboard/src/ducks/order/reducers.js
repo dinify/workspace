@@ -2,32 +2,37 @@ import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import mergeDeepRight from 'ramda/src/mergeDeepRight';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
-import * as types from './types';
+import * as orderTypes from 'ducks/order/types';
+import * as commonTypes from 'ducks/common/types';
 
 const initialState = {
   all: {}
 }
 
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
 
-    case 'LOAD_ORDER_DONE': {
-      const list = action.payload.res;
+  const { type, payload } = action;
+
+  switch (type) {
+
+    case orderTypes.LOAD_ORDER_DONE: {
+      const list = payload.res;
       return assoc('all', mergeDeepRight(state.all, ListToMap(list)))(state);
     }
 
-    case types.ORDER_RECEIVED: {
-      const { order } = action.payload;
+    case orderTypes.ORDER_RECEIVED: {
+      const { order } = payload;
       return assocPath(['all', order.id], order)(state);
     }
 
-    case 'CONFIRMATION_DONE': {
-      if (action.payload.type !== 'Order') return state;
-      const { orderId } = action.payload;
+    case commonTypes.CONFIRMATION_DONE: {
+      if (payload.type !== 'Order') return state;
+      const { orderId } = payload;
       return assocPath(['all', orderId, 'status'], 'CONFIRMED')(state);
     }
 
     default:
       return state;
   }
+
 }

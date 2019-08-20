@@ -25,7 +25,7 @@ import IconButton from '@material-ui/core/IconButton';
 import LanguagePickerDialog from '@dinify/common/dist/components/dialogs/LanguagePickerDialog';
 import CurrencyPickerDialog from '@dinify/common/dist/components/dialogs/CurrencyPickerDialog';
 import Image from 'web/components/Image';
-import Flag from '@dinify/common/dist/components/Flag';
+// import Flag from '@dinify/common/dist/components/Flag';
 import Card from 'web/components/Card';
 import CashMultiple from '@dinify/common/dist/icons/CashMultiple';
 

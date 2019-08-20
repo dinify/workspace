@@ -2,18 +2,16 @@ import { of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import pluck from 'ramda/src/pluck';
-import * as types from './types';
+import { fetchAllUsers } from 'ducks/user/actions';
+import * as bookingTypes from 'ducks/booking/types';
 
 const loadBookingEpic = (action$) =>
   action$.pipe(
-    ofType(types.FETCH_BOOKINGS_DONE),
+    ofType(bookingTypes.FETCH_BOOKINGS_DONE),
     mergeMap(({ payload }) => {
       const bookings = payload.res;
-      const userIds = pluck('initiator', bookings).filter((id) => id.length === 24)
-      return of({
-        type: 'FETCHALL_USER_INIT',
-        payload: { ids: userIds, cache: true }
-      });
+      const userIds = pluck('initiator', bookings);
+      return of(fetchAllUsers({ ids: userIds, cache: true }));
     })
   )
 

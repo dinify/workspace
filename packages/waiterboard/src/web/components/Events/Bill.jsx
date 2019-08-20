@@ -1,16 +1,15 @@
-
-import React from 'react'
-import { colorsByStages } from '../../colors'
+import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Text as FormText } from 'react-form'
-import styled from 'styled-components'
-import { confirmBill } from 'ducks/restaurant/actions'
-import { ActionBox, Header, TableId, CheckButton, TableTag, Th, Tr, Td, Text } from '../styled/Events'
-import User from './user'
-import N from 'numeral';
-import * as FN from '@dinify/common/dist/lib/FN'
-import Elapsed from './Elapsed';
 import moment from 'moment';
+import N from 'numeral';
+import { Form, Text as FormText } from 'react-form';
+import styled from 'styled-components';
+import * as FN from '@dinify/common/dist/lib/FN';
+import { confirmBillInit } from 'ducks/bill/actions';
+import { ActionBox, Header, TableId, CheckButton, TableTag, Th, Tr, Td, Text } from '../styled/Events';
+import { colorsByStages } from '../../colors';
+import User from './user';
+import Elapsed from './Elapsed';
 
 const TextInput = styled(FormText)`
   background-color: rgba(0,0,0,0.06);
@@ -26,14 +25,9 @@ const TextInput = styled(FormText)`
   }
 `;
 
-const orderTypes = {
-  'DINE_IN': 'Dine in',
-  'AHEAD': 'Ahead'
-}
+const color = colorsByStages.s5;
 
-const color = colorsByStages.s5
-
-const Bill = ({ bill, confirmBill, removed, noconfirm, timer }) => {
+const Bill = ({ bill, confirmBill, removed, noconfirm }) => {
   if (!bill || !bill.subtotal) return null
   const subtotal = Number(bill.subtotal.amount);
   const gratuityPercentage = Number(bill.gratuity/100);
@@ -102,11 +96,13 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, timer }) => {
           </thead>
           <tbody>
   					{orderItems.map((order) =>
-              [/*<Tr key={order.id} className="headline">
-                <Td>{orderTypes[order.type]} order</Td>
-                <Td>{order.items.length}</Td>
-                <Td>{N(order.subtotal.amount).format('0.000')}Kč</Td>
-              </Tr>,*/
+              [/*
+                  <Tr key={order.id} className="headline">
+                  <Td>{orderTypes[order.type]} order</Td>
+                  <Td>{order.items.length}</Td>
+                  <Td>{N(order.subtotal.amount).format('0.000')}Kč</Td>
+                </Tr>, 
+                */
               order.items.map((item) =>
                 <Tr key={item.id}>
     	            <Td>{item.menu_item.name}</Td>
@@ -138,6 +134,6 @@ export default connect(
     timer: state.restaurant.timer,
   }),
   {
-    confirmBill
+    confirmBill: confirmBillInit
   },
 )(Bill);

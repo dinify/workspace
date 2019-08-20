@@ -9,22 +9,17 @@ class Checkin extends React.PureComponent {
     const { checkedInRestaurant, checkin } = this.props;
     let initiated = false;
 
-    const onData = (codes) => {
-      if (codes.length !== 1) return;
-      codes.forEach(code => {
-        const result = code.data.match(/web\.dinify\.app/g);
-        if (result && result.length === 1) {
-          // code.polygon
-          const query = code.data.match(/qr=([^&]*)/);
-          if (!checkedInRestaurant && query && query[1]) {
-            const qr = query[1];
-            if (!initiated) {
-              initiated = true;
-              checkin({ qr });
-            }
-          }
+    const onData = (data) => {
+      try {
+        const url = new URL(data);
+        const qr = url.searchParams.get('qr');
+        if (!checkedInRestaurant && qr && !initiated) {
+          initiated = true;
+          checkin({ qr, pathname: url.pathname });
         }
-      });
+      } catch (e) {
+        console.error('Invalid URL in QR');
+      }
     }
 
     return (

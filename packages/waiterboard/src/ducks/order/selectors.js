@@ -9,7 +9,7 @@ export const getOrderList = createSelector(
   (all) => {
     return filter((o) => o.status !== 'CONFIRMED')(MapToList(all));
   }
-)
+);
 
 export const getConfirmedOrderList = createSelector(
   [
@@ -18,5 +18,5 @@ export const getConfirmedOrderList = createSelector(
   (all) => {
     return filter((o) => o.status === 'CONFIRMED')(MapToList(all));
   }
-)
+);
 

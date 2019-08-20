@@ -1,6 +1,6 @@
-
+import * as types from './types';
 
 export const confirmCallInit = (payload) => ({
-  type: 'CALL_CONFIRMATION_INIT',
+  type: types.CALL_CONFIRMATION_INIT,
   payload
-})
+});

@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { selectWaiterboard } from 'ducks/restaurant/actions';
+import { selectWaiterboard } from 'ducks/app/actions';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
@@ -99,7 +99,6 @@ const enhance = compose(
   withFirebase,
   withStyles(styles),
   connect(state => ({
-    logged: state.restaurant.loggedUser,
     managedRestaurants: state.restaurant.managedRestaurants
   }), {
     selectWaiterboard
