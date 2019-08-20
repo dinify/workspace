@@ -5,10 +5,12 @@ import { useTranslation } from 'react-i18next';
 import Rice from '@dinify/common/dist/icons/RiceRounded';
 import Silverware from '@dinify/common/dist/icons/SilverwareRounded';
 import Settings from '@material-ui/icons/SettingsRounded';
+import LocalLibrary from '@material-ui/icons/LocalLibrary';
 
 import RiceOutlined from '@dinify/common/dist/icons/RiceOutlined';
 import SilverwareVariant from '@dinify/common/dist/icons/SilverwareRoundedVariant';
 import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
+import LocalLibraryOutlined from '@material-ui/icons/LocalLibraryOutlined';
 
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
@@ -36,11 +38,11 @@ const Navigation = ({
   const getColor = selected => selected ? 'primary' : 'action';
   const tabs = [
     {
-      icon: selected => selected ? <Silverware color={getColor(selected)} /> : <SilverwareVariant color={getColor(selected)}/>,
+      icon: selected => selected ? <LocalLibrary color={getColor(selected)} /> : <LocalLibraryOutlined color={getColor(selected)}/>,
       text: t('nav.menu')
     },
     {
-      icon: selected => selected ? <Rice color={getColor(selected)}/> : <RiceOutlined color={getColor(selected)}/>,
+      icon: selected => selected ? <Silverware color={getColor(selected)}/> : <SilverwareVariant color={getColor(selected)}/>,
       text: t('nav.dineIn')
     },
     {
