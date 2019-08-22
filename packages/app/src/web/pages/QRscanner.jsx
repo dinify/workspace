@@ -4,11 +4,14 @@ import PhotoCamera from '@material-ui/icons/PhotoCameraRounded';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import QrScanner from "lib/qr-scanner.min.js";
+import ZbarScanner from 'lib/zbar';
+// import QrScanner from "lib/qr-scanner.min.js";
 
 class QRscanner extends React.Component {
   constructor(props) {
     super(props);
+    this.running = true;
+    this.scanner = null;
     this.state = {
       cameraAccessible: 'INIT',
       status: null,
@@ -16,6 +19,14 @@ class QRscanner extends React.Component {
   }
 
   componentDidMount() {
+    const onAnimationFrame = (imageData, width, height) => {
+      if (this.scanner) {
+        const codes = this.scanner.scanQrcode(imageData.data, width, height);
+        if (codes.length > 0) {
+          this.props.onData(codes);
+        }
+      }
+    };
     const displayVideo = (stream) => {
       this.setState({ cameraAccessible: 'DONE' });
       this.video.srcObject = stream;
@@ -23,10 +34,32 @@ class QRscanner extends React.Component {
       this.video.setAttribute("autoplay", true);
       this.video.play();
 
-      this.scanner = new QrScanner(this.video, result => {
-        console.log('Decoded qr code:', result);
-        this.props.onData(result);
+      ZbarScanner({locateFile: (file) => `/libraries/zbar/${file}`}).then((instance) => {
+        this.scanner = instance;
       });
+
+      const canvas = document.createElement('canvas');
+
+      const rasterize = () => {
+        if (this.video && this.video.srcObject) {
+          const videoElement = this.video;
+          const sourceRectWidth = videoElement.videoWidth;
+          const sourceRectHeight = videoElement.videoHeight;
+          if (canvas.width !== sourceRectWidth || canvas.height !== sourceRectHeight) {
+              canvas.width = sourceRectWidth;
+              canvas.height = sourceRectHeight;
+          }
+          const context = canvas.getContext("2d", { alpha: false });
+          if (context && sourceRectWidth > 0 && sourceRectHeight > 0) {
+            context.imageSmoothingEnabled = false;
+            context.drawImage(videoElement, 0, 0, sourceRectWidth, sourceRectHeight, 0, 0, canvas.width, canvas.height);
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            onAnimationFrame(imageData, canvas.width, canvas.height);
+          }
+        }
+        if (this.running) requestAnimationFrame(rasterize);
+      }
+      requestAnimationFrame(rasterize);
     }
     navigator.getWebcam = (
       navigator.getUserMedia ||
@@ -62,6 +95,7 @@ class QRscanner extends React.Component {
   }
 
   componentWillUnmount() {
+    this.running = false;
     if (this.video.srcObject) {
       this.video.srcObject.getTracks().forEach((track) => {
         track.stop();
@@ -83,14 +117,8 @@ class QRscanner extends React.Component {
       if (!file) {
           return;
       }
-      QrScanner.scanImage(file)
-        .then(result => {
-          this.props.onCode(result);
-        })
-        .catch(e => {
-          this.setState({ status: e });
-          console.log(e || 'No QR code found.')
-      });
+      // TODO scan image from variable 'file'
+      console.error('Scanning QR from file not implemented');
     }
     camera.click();
 	}

@@ -95,10 +95,12 @@ class App extends React.Component {
           </Switch>
         </div>
         <Motion
+          key="bottom-navigation-wrapper"
           defaultStyle={{x: 0}}
           style={{x: 0}}>
           {style =>
             <Navigation
+              key="bottom-navigation"
               style={{
                 transform: `translate3d(0, ${style.x * 56}px, 0)`
               }}
