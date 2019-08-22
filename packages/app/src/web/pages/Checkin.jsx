@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { checkinInit } from 'ducks/restaurant/actions';
+import { checkinAsync } from 'ducks/restaurant/actions.ts';
 import QRscanner from './QRscanner';
 
 class Checkin extends React.PureComponent {
@@ -48,6 +48,6 @@ export default connect(
     checkedInRestaurant: state.restaurant.checkedInRestaurant
   }),
   {
-    checkin: checkinInit,
+    checkin: checkinAsync.request,
   }
 )(Checkin);

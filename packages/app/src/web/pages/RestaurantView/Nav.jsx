@@ -9,7 +9,7 @@ import CalendarClock from '@dinify/common/dist/icons/CalendarClock';
 import Place from '@material-ui/icons/PlaceRounded';
 import FavoriteToggle from 'web/components/FavoriteToggle';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import { favRestaurantInit } from 'ducks/restaurant/actions';
+import { favRestaurantAsync } from 'ducks/restaurant/actions.ts';
 
 const styles = theme => ({
   secondary: {
@@ -89,7 +89,7 @@ let Nav = ({
 
 Nav = connect(null,
   {
-    favRestaurant: favRestaurantInit
+    favRestaurant: favRestaurantAsync.request
   }
 )(Nav)
 

@@ -10,10 +10,9 @@ import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import Typography from '@material-ui/core/Typography';
 import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
-import { fetchRestaurantInit } from 'ducks/restaurant/actions';
 import { fetchMenucategoriesInit } from 'ducks/menuCategory/actions';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
-import { checkinInit } from 'ducks/restaurant/actions';
+import { checkinAsync, fetchRestaurantAsync } from 'ducks/restaurant/actions.ts';
 import InfoSection from './InfoSection';
 import MenuSection from './MenuSection';
 import Nav from './Nav';
@@ -226,8 +225,8 @@ RestaurantView = connect(
   }),
   {
     fetchMenucategories: fetchMenucategoriesInit,
-    fetchRestaurant: fetchRestaurantInit,
-    checkin: checkinInit,
+    fetchRestaurant: fetchRestaurantAsync.request,
+    checkin: checkinAsync.request,
   }
 )(RestaurantView)
 

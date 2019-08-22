@@ -15,7 +15,7 @@ import 'firebase/auth';
 import auth from '@dinify/common/dist/ducks/auth';
 import ui from 'ducks/ui';
 import user from 'ducks/user';
-import restaurant from 'ducks/restaurant';
+import restaurant from 'ducks/restaurant/reducers.ts';
 import menuCategory from 'ducks/menuCategory';
 import menuItem from 'ducks/menuItem';
 import booking from 'ducks/booking';
