@@ -303,6 +303,7 @@ export function ChangeMenuitem(payload) {
   const id = payload.id;
   let updObj = payload;
   delete updObj.id;
+  if (updObj.description === '') delete updObj.description;
   //updObj = R.filter(R.identity)(updObj);
   return Post({ path: `menu/item/${id}` }, updObj);
 }
