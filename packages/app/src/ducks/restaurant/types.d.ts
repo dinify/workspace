@@ -3,11 +3,21 @@ declare module 'RestaurantModels' {
   export type Restaurant = {
     id: string;
     title: string;
+    favorite: boolean;
   };
 
-  export type Status = {
-    id: string;
-    title: string;
+  export type RestaurantResponse = {
+    res: Restaurant;
+  }
+
+  export type RestaurantsResponse = {
+    res: Restaurant[];
+  }
+
+  export type StatusResponse = {
+    res: {
+      restaurant: Restaurant
+    }
   };
 
   export type FavRestaurantRequest = {
@@ -17,7 +27,12 @@ declare module 'RestaurantModels' {
 
   export type FavRestaurantResponse = {
     res: object;
-    initPayload: object;
+    initPayload: FavRestaurantRequest;
+  }
+
+  export type FavRestaurantError = {
+    error: object;
+    initPayload: FavRestaurantRequest;
   }
 
 }

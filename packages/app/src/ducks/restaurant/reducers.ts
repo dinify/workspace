@@ -1,87 +1,83 @@
-import { Restaurant } from 'RestaurantModels';
+import { Restaurant, FavRestaurantResponse, FavRestaurantRequest } from 'RestaurantModels';
 
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
-import { 
-  fetchStatusAsync, favRestaurantAsync, fetchRestaurantAsync, fetchRestaurantsAsync
-} from './actions';
+import * as actions from './actions';
 import wsTypes from '../../websockets/types';
-import { getType } from 'typesafe-actions';
+import { createReducer, ActionType } from 'typesafe-actions';
+import { combineReducers } from 'redux';
 
 const authTypes = require('@dinify/common/dist/ducks/auth/types');
-
 const { ListToMap } = require('@dinify/common/dist/lib/FN');
 
 
-const initialState = {
-  all: {},
-  checkedInRestaurant: null,
-};
+type State = any;
+type Action = ActionType<typeof actions>;
 
-export default function reducer(state = initialState, action: any) {
+export const all = createReducer<State, Action>({})
 
-  switch (action.type) {
+  .handleAction(actions.fetchRestaurantsAsync.success, (state, action) => {
+    const restaurants: Restaurant[] = action.payload.res;
+    return ListToMap(restaurants);
+  })
 
-    case getType(fetchRestaurantsAsync.success): {
-      const restaurants: Restaurant[] = action.payload.res;
-      return assoc('all', ListToMap(restaurants))(state);
-    }
+  .handleAction(actions.fetchRestaurantAsync.success, (state, action) => {
+    const restaurant: Restaurant = action.payload.res;
+    return assoc(restaurant.id, restaurant)(state);
+  })
 
-    case getType(fetchRestaurantAsync.success): {
-      const restaurant: Restaurant = action.payload.res;
-      return assocPath(['all', restaurant.id], restaurant)(state);
-    }
-    // case types.CHECKIN_DONE: {
-    //  const id = action.payload.table.restaurant.id;
-    //  return assoc('checkedInRestaurant', id)(state);
+  .handleAction(actions.favRestaurantAsync.request, (state, action) => {
+    const { id, fav }: FavRestaurantRequest = action.payload;
+    return assocPath([id, 'favorite'], fav)(state);
+  })
+
+  .handleAction(actions.favRestaurantAsync.success, (state, action) => {
+    const { id, fav }: FavRestaurantRequest = action.payload.initPayload;
+    return assocPath([id, 'favorite'], fav)(state);
+  })
+
+  .handleAction(actions.favRestaurantAsync.failure, (state, action) => {
+    const { id, fav } = action.payload.initPayload;
+    return assocPath([id, 'favorite'], !fav)(state);
+  });
+
+export const checkedInRestaurant = createReducer<State, Action>(null)
+
+  .handleAction(actions.fetchStatusAsync.success, (state, action) => {
+    const res = action.payload.res;
+    return res.restaurant.id;
+  });
+
+export const status = createReducer<State, Action>(null)
+
+  .handleAction(actions.fetchStatusAsync.success, (state, action) => {
+    const res = action.payload.res;
+    return res;
+  });
+
+const restaurantReducer = combineReducers({
+  all,
+  checkedInRestaurant,
+  status
+});
+
+export default restaurantReducer;
+export type RestaurantState = ReturnType<typeof restaurantReducer>;
+
+    // TODO
+    // case wsTypes.CHECKOUT_ALL: {
+    //   const s = assoc('checkedInRestaurant', null)(state);
+    //   return assoc('status', null)(s);
     // }
 
-    case wsTypes.CHECKOUT_ALL: {
-      const s = assoc('checkedInRestaurant', null)(state);
-      return assoc('status', null)(s);
-    }
+    // case getType(fetchStatusAsync.failure): {
+    //   const payload = action.payload;
+    //   if (payload instanceof Array && payload[0].status === 401) {
+    //     return assoc('checkedInRestaurant', null)(state);
+    //   }
+    //   return state;
+    // }
 
-    case getType(fetchStatusAsync.success): {
-      const res = action.payload.res;
-      if (!res || !(res instanceof Object)) {
-        const s = assoc('checkedInRestaurant', null)(state);
-        return assoc('status', null)(s);
-      }
-      const id = res.restaurant.id;
-      const s = assoc('checkedInRestaurant', id)(state);
-      return assoc('status', res)(s);
-    }
-
-    case getType(fetchStatusAsync.failure): {
-      const payload = action.payload;
-      if (payload instanceof Array && payload[0].status === 401) {
-        return assoc('checkedInRestaurant', null)(state);
-      }
-      return state;
-    }
-
-    case authTypes.LOGOUT_DONE: {
-      return assoc('checkedInRestaurant', null)(state);
-    }
-
-    case getType(favRestaurantAsync.request): {
-      const { id, fav } = action.payload;
-      return assocPath(['all', id, 'favorite'], fav)(state);
-    }
-
-    case getType(favRestaurantAsync.success): {
-      const { id, fav } = action.payload.initPayload;
-      return assocPath(['all', id, 'favorite'], fav)(state);
-    }
-
-    case getType(favRestaurantAsync.failure): {
-      const { id, fav } = action.initPayload;
-      return assocPath(['all', id, 'favorite'], !fav)(state);
-    }
-
-    default:
-      return state;
-
-  }
-
-}
+    // case authTypes.LOGOUT_DONE: {
+    //   return assoc('checkedInRestaurant', null)(state);
+    // }
