@@ -4,6 +4,7 @@ import { openDialog, closeDialog } from 'ducks/ui/actions';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 import { Motion } from 'react-motion';
+import { cartExists } from 'ducks/cart/selectors';
 
 import * as routes from 'web/routes';
 import Checkin from 'web/pages/Checkin';
@@ -20,6 +21,7 @@ import Main from 'web/pages/Main';
 import AccountSignIn from 'web/components/AccountSignIn';
 import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
+import { Bar as CartBar } from 'web/components/cart';
 
 import * as FN from '@dinify/common/dist/lib/FN';
 
@@ -57,6 +59,7 @@ class App extends React.Component {
 
   render() {
     const {
+      cartExists,
       checkedInRestaurant,
       dialogs,
       closeDialog,
@@ -113,6 +116,19 @@ class App extends React.Component {
               })()}/>
           }
         </Motion>
+        <Motion
+          key="cart-bar-wrapper"
+          defaultStyle={{x: 0}}
+          style={{x: cartExists ? 0 : 1}}>
+          {style =>
+            <CartBar
+              key="cart-bar"
+              style={{
+                bottom: 56,
+                transform: `translate3d(0, ${style.x * 56}px, 0)`
+              }}/>
+          }
+        </Motion>
         {FN.MapToList(dialogs).map(dialog =>
           dialog.component({
             key: dialog.id,
@@ -129,6 +145,7 @@ class App extends React.Component {
 App = connect(
   (state) => ({
     user: state.firebase.auth,
+    cartExists: cartExists(state),
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
     dialogs: state.ui.dialogs,
     location: state.router.location
