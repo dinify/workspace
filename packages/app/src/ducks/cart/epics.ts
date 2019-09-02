@@ -13,37 +13,17 @@ import {
   orderAsync,
   rmFromCartAsync,
 } from './actions';
+import {
+  MenuItem,
+  Option,
+  Choice,
+  Ingredient,
+  Addon,
+} from 'CartModels';
 
 const { MapToList, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const API = require('@dinify/common/dist/api/restaurant');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
-
-interface Addon {
-  id: string;
-  qty: number;
-}
-
-interface Choice {
-  id: string;
-  selected: boolean;
-}
-
-interface Option {
-  id: string;
-  choices: [Choice];
-}
-
-interface Ingredient {
-  id: string;
-  excluded: boolean;
-}
-
-interface MenuItem {
-  id: string;
-  addons: [Addon];
-  options: [Option];
-  ingredients: [Ingredient];
-}
 
 const processChoices = pipe(
   (m: object) => MapToList(m),

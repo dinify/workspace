@@ -26,4 +26,31 @@ declare module 'CartModels' {
     res: any;
   }
 
+  export type Addon = {
+    id: string;
+    qty: number;
+  }
+  
+  export type Choice = {
+    id: string;
+    selected: boolean;
+  }
+  
+  export type Option = {
+    id: string;
+    choices: [Choice];
+  }
+  
+  export type Ingredient = {
+    id: string;
+    excluded: boolean;
+  }
+  
+  export type MenuItem = {
+    id: string;
+    addons: [Addon];
+    options: [Option];
+    ingredients: [Ingredient];
+  }  
+
 }
