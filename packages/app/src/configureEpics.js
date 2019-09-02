@@ -5,7 +5,7 @@ import { authEpics as auth } from '@dinify/common/dist/ducks/auth';
 import restaurant from 'ducks/restaurant/epics.ts';
 import { userEpics as user } from 'ducks/user';
 import { menuItemEpics as menuItem } from 'ducks/menuItem';
-import { cartEpics as cart } from 'ducks/cart';
+import cart from 'ducks/cart/epics.ts';
 import { billEpics as bill } from 'ducks/bill';
 import { seatEpics as seat } from 'ducks/seat';
 import { uiEpics as ui } from 'ducks/ui';

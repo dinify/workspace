@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { MapToList } from '@dinify/common/dist/lib/FN';
 
 export const cart = createSelector(
   [

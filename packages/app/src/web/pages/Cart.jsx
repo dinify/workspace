@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
@@ -23,7 +22,7 @@ import TotalPrice from 'web/components/TotalPrice';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import * as FN from '@dinify/common/dist/lib/FN';
-import { rmFromCartInit, orderInit, setOrderTypeAction } from 'ducks/cart/actions';
+import { rmFromCartAsync, orderAsync, setOrderTypeAction } from 'ducks/cart/actions.ts';
 
 const styles = theme => ({
   primary: {
@@ -157,8 +156,8 @@ export default connect(
   }),
   {
     setOrderType: setOrderTypeAction,
-    rmFromCart: rmFromCartInit,
-    order: orderInit
+    rmFromCart: rmFromCartAsync.request,
+    order: orderAsync.request
   }
 )(withStateHandlers(
   {

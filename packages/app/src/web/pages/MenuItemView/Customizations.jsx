@@ -21,8 +21,8 @@ import {
   incAddonQty as incAddonQtyAction,
   selectChoice as selectChoiceAction
 } from 'ducks/menuItem/actions';
-import { addToCartInit } from 'ducks/cart/actions';
-import cartTypes from 'ducks/cart/types';
+import { addToCartAsync } from 'ducks/cart/actions.ts';
+import { getType } from 'typesafe-actions';
 
 const styles = theme => ({
   secondary: {
@@ -263,13 +263,13 @@ let Customizations = ({
 
 Customizations = connect(
   (state) => ({
-    addToCartDone: state.ui.progressMap[cartTypes.ADD_TO_CART_DONE]
+    addToCartDone: state.ui.progressMap[getType(addToCartAsync.done)]
   }),
   {
     excludeIngredient: excludeIngredientAction,
     incAddonQty: incAddonQtyAction,
     selectChoice: selectChoiceAction,
-    addToCart: addToCartInit,
+    addToCart: addToCartAsync.request,
   }
 )(Customizations)
 

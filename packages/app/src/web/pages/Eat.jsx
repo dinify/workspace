@@ -8,7 +8,7 @@ import {
   transferBillInit,
   initTransactionInit,
 } from 'ducks/bill/actions';
-import { rmFromCartInit, orderInit, setOrderTypeAction } from 'ducks/cart/actions';
+import { rmFromCartAsync, orderAsync, setOrderTypeAction } from 'ducks/cart/actions.ts';
 import {
   checkSelecting,
   selectedBillItems as selectedBillItemsSelector,
@@ -455,8 +455,8 @@ Eat = connect(state => ({
   selectBillItem: selectBillItemAction,
   selectSeat: selectSeatAction,
   clearSelectedBillItems: clearSelectedBillItemsAction,
-  rmFromCart: rmFromCartInit,
-  order: orderInit
+  rmFromCart: rmFromCartAsync.request,
+  order: orderAsync.request
 })(Eat)
 
 export default withTranslation()(withStyles(styles)(Eat));

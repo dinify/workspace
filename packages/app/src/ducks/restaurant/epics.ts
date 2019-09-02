@@ -20,7 +20,7 @@ const checkinEpic: Epic = (action$) =>
       }
       return from(API.Checkin({
         qr,
-        node: true 
+        node: true
       })).pipe(
         mergeMap((res: any) => of(
           checkinAsync.success(res),

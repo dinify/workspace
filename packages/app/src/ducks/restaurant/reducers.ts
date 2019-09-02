@@ -1,5 +1,4 @@
 import { Restaurant, FavRestaurantResponse, FavRestaurantRequest } from 'RestaurantModels';
-
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import * as actions from './actions';
@@ -41,6 +40,7 @@ export const all = createReducer<State, Action>({})
     return assocPath([id, 'favorite'], !fav)(state);
   });
 
+
 export const checkedInRestaurant = createReducer<State, Action>(null)
 
   .handleAction(actions.fetchStatusAsync.success, (state, action) => {
@@ -48,6 +48,7 @@ export const checkedInRestaurant = createReducer<State, Action>(null)
     return res.restaurant.id;
   });
 
+  
 export const status = createReducer<State, Action>(null)
 
   .handleAction(actions.fetchStatusAsync.success, (state, action) => {

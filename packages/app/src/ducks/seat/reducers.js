@@ -1,3 +1,4 @@
+import { getType } from 'typesafe-actions';
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import findIndex from 'ramda/src/findIndex';
@@ -6,9 +7,9 @@ import append from 'ramda/src/append';
 import remove from 'ramda/src/remove';
 import forEach from 'ramda/src/forEach';
 import { selectedBillItems } from 'ducks/seat/selectors';
+import { orderAsync, rmFromCartAsync } from 'ducks/cart/actions.ts';
 import types from './types';
 import billTypes from '../bill/types';
-import cartTypes from '../cart/types';
 import * as serviceTypes from '../service/types';
 import wsTypes from '../../websockets/types';
 
@@ -22,14 +23,18 @@ export default function reducer(state = initialState, action) {
 
   switch (action.type) {
 
-    case cartTypes.ORDER_INIT: {
+    case getType(orderAsync.request): {
       return assoc('lastCartItems', action.payload)(state);
     }
 
-    case cartTypes.ORDER_DONE: {
-      // the cart gets cleared by SEATS action (downstream websocket)
-      // return dissocPath(['seats', '0', 'cart'])(state);
-      return state;
+    // case cartTypes.ORDER_DONE: {
+    //   // the cart gets cleared by SEATS action (downstream websocket)
+    //   // return dissocPath(['seats', '0', 'cart'])(state);
+    //   return state;
+    // }
+
+    case getType(rmFromCartAsync.success): {
+      return assocPath(['seats', '0', 'cart'], action.payload)(state);
     }
 
     case serviceTypes.CALL_SERVICE_INIT: {
@@ -47,10 +52,6 @@ export default function reducer(state = initialState, action) {
       const call = action.payload.call;
       const newState = assocPath(['services', call.service_id, 'calls', call.id], call)(state);
       return assocPath(['services', call.service_id, 'status'], 'READY')(newState);
-    }
-
-    case cartTypes.REMOVE_ORDERITEM_DONE: {
-      return assocPath(['seats', '0', 'cart'], action.payload)(state);
     }
 
     case wsTypes.SEATS:

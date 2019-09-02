@@ -19,7 +19,7 @@ import restaurant from 'ducks/restaurant/reducers.ts';
 import menuCategory from 'ducks/menuCategory';
 import menuItem from 'ducks/menuItem';
 import booking from 'ducks/booking';
-import cart from 'ducks/cart';
+import cart from 'ducks/cart/reducers.ts';
 import bill from 'ducks/bill';
 import service from 'ducks/service';
 import seat from 'ducks/seat';

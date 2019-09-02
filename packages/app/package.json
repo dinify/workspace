@@ -37,6 +37,7 @@
     "moment": "^2.24.0",
     "most": "^1.7.3",
     "node-vibrant": "^3.0.0",
+    "normalizr": "^3.4.1",
     "numeral": "^2.0.6",
     "prop-types": "^15.6.2",
     "ramda": "^0.26.1",

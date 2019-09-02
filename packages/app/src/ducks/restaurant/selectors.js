@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect'
+import { createSelector } from 'reselect';
 import find from 'ramda/src/find';
 import propEq from 'ramda/src/propEq';
 import { MapToList } from '@dinify/common/dist/lib/FN';
