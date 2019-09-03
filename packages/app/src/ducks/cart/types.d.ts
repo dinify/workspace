@@ -16,7 +16,9 @@ declare module 'CartModels' {
 
   export type Addon = {
     id: string;
-    qty: number;
+    price: Price;
+    translations: [Translation];
+    qty?: number;
   }
 
   export type Translation = {
@@ -78,6 +80,7 @@ declare module 'CartModels' {
     orderItemId: string;
     addonId: string;
     amount: 1;
+    addon: Addon;
   }
 
   export type OrderChoice = {  
@@ -111,10 +114,6 @@ declare module 'CartModels' {
     subtotal: Subtotal;
     items: [CartItem];
   }
-
-
-
-
 
   export type RmFromCartRequest = {
     orderItemId: string;
