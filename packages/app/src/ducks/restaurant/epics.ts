@@ -1,9 +1,9 @@
 import { of, from } from 'rxjs';
 import { filter, mergeMap, exhaustMap, map, catchError, debounceTime } from 'rxjs/operators';
-import { Epic } from 'redux-observable';
+import { Epic, ofType } from 'redux-observable';
 import { push } from 'connected-react-router';
 import { checkinAsync, fetchStatusAsync, favRestaurantAsync } from './actions';
-import { isActionOf } from 'typesafe-actions';
+import { isActionOf, getType } from 'typesafe-actions';
 
 const { getCookie, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const API = require('@dinify/common/dist/api/restaurant');
@@ -11,7 +11,7 @@ const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
 const checkinEpic: Epic = (action$) =>
   action$.pipe(
-    filter(isActionOf(checkinAsync.request)),
+    ofType(getType(checkinAsync.request)),
     debounceTime(500),
     exhaustMap((action: any) => {
       const { payload: { qr, pathname } } = action;
@@ -34,7 +34,7 @@ const checkinEpic: Epic = (action$) =>
         )),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: checkinAsync.failure,
+          failActionType: getType(checkinAsync.failure),
           initAction: action
         }))
       );
@@ -43,7 +43,7 @@ const checkinEpic: Epic = (action$) =>
 
 const favEpic: Epic = (action$) =>
   action$.pipe(
-    filter(isActionOf(favRestaurantAsync.request)),
+    ofType(getType(favRestaurantAsync.request)),
     debounceTime(500),
     exhaustMap((action: any) => {
       const { payload } = action;
@@ -51,7 +51,7 @@ const favEpic: Epic = (action$) =>
         map((res: any) => favRestaurantAsync.success({ res, initPayload: payload })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: favRestaurantAsync.failure,
+          failActionType: getType(favRestaurantAsync.failure),
           initAction: action
         }))
       )
