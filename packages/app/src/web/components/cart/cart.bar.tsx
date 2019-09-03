@@ -4,13 +4,17 @@ import { useTranslation } from 'react-i18next';
 
 import Typography from '@material-ui/core/Typography';
 
-const CartBar = ({
+const CartBar: React.FC<{
+  cart: any,
+  style?: React.CSSProperties,
+  onClick?: () => void
+}> = ({
   cart,
   style,
   ...otherProps
 }) => {
   const { t } = useTranslation();
-  const cartItemCount = cart ? cart.count : 0;
+  const cartItemCount = cart && cart.count !== undefined ? cart.count : 0;
   return (
     <div style={{
       position: 'fixed',
@@ -32,9 +36,11 @@ const CartBar = ({
   );
 };
 
-export default connect(
-  state => ({
-    cart: state.cart.cart.res,
-  }),
-  { }
-)(CartBar);
+// export default connect(
+//   (state: any) => ({
+//     cart: state.cart,
+//   }),
+//   { }
+// )(CartBar);
+
+export default CartBar;
