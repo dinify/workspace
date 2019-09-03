@@ -36,9 +36,7 @@ const processChoices = pipe(
 const processExcludes = pipe(
   (m: object) => MapToList(m),
   (list: [Ingredient]) => filter((ingredient: Ingredient) => !!ingredient.excluded, list),
-  map((ingredient) => ({
-    id: ingredient.id
-  }))
+  map((ingredient) => ({ id: ingredient.id }))
 );
 
 const processAddons = pipe(
@@ -87,7 +85,7 @@ const addToCartEpic: Epic = (action$, state$) =>
 
 const orderEpic: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(getType(rmFromCartAsync.request)),
+    ofType(getType(orderAsync.request)),
     switchMap((action) => {
       const orderType = state$.value.cart.orderType;
       return from(API.Order({ orderType })).pipe(
@@ -100,7 +98,7 @@ const orderEpic: Epic = (action$, state$) =>
         )),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(rmFromCartAsync.failure),
+          failActionType: getType(orderAsync.failure),
           initAction: action
         }))
       );

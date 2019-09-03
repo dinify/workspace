@@ -263,7 +263,7 @@ let Customizations = ({
 
 Customizations = connect(
   (state) => ({
-    addToCartDone: state.ui.progressMap[getType(addToCartAsync.done)]
+    addToCartDone: state.ui.progressMap[getType(addToCartAsync.success)]
   }),
   {
     excludeIngredient: excludeIngredientAction,

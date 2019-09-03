@@ -74,7 +74,6 @@ const websockets = (store) => {
   });
 
   socket.on('seats', (data) => {
-    console.log('ssssseeeeaaattsts');
     console.log(data);
     dispatch({ type: types.SEATS, payload: data });
   });

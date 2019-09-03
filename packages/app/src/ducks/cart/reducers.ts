@@ -34,7 +34,7 @@ type Action = ActionType<typeof actions>;
 export const cart = createReducer<State, Action>({ count: 0 })
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
-    return action.payload;
+    return action.payload.res;
   });
 
 const cartReducer = combineReducers({
