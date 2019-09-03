@@ -65,6 +65,9 @@ declare module 'CartModels' {
     cookingTime: any;
     translations: [MenuItemTranslation];
     price: Price;
+    options: [Option];
+    addons: [Addon];
+    ingredients: [Ingredient];
   }
 
   export type Subtotal = Price & {
@@ -72,7 +75,9 @@ declare module 'CartModels' {
   }
 
   export type OrderAddon = {
-    
+    orderItemId: string;
+    addonId: string;
+    amount: 1;
   }
 
   export type OrderChoice = {  
@@ -81,9 +86,7 @@ declare module 'CartModels' {
     choice: Choice;
   }
 
-  export type OrderExclude = {
-
-  }
+  export type OrderExclude = any;
   
   export type OrderItem = {
     id: string;
