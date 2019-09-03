@@ -35,13 +35,13 @@ const processChoices = pipe(
 
 const processExcludes = pipe(
   (m: object) => MapToList(m),
-  (list: [Ingredient]) => filter((ingredient: Ingredient) => !!ingredient.excluded, list),
+  (list: [Ingredient]) => filter((ingredient) => !!ingredient.excluded, list),
   map((ingredient) => ({ id: ingredient.id }))
 );
 
 const processAddons = pipe(
   (m: object) => MapToList(m),
-  (list: [Addon]) => filter((addon: Addon) => addon.qty > 0, list),
+  (list: [Addon]) => filter((addon) => addon.qty ? addon.qty > 0 : true, list),
   map((addon: Addon) => ({
     id: addon.id,
     amount: addon.qty,

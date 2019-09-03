@@ -1,19 +1,5 @@
 declare module 'CartModels' {
 
-  export type Cart = {
-    id: string;
-    title: string;
-    favorite: boolean;
-  };
-
-  export type CartResponse = {
-    res: Cart;
-  }
-
-  export type AddToCartRequest = {
-    menuItemId: string;
-  }
-
   export type Addon = {
     id: string;
     price: Price;
@@ -91,6 +77,13 @@ declare module 'CartModels' {
 
   export type OrderExclude = any;
   
+  export type Owner = {
+    userId: string;
+    paid: boolean;
+    transactionId: string;
+
+  }
+
   export type OrderItem = {
     id: string;
     orderId: string | null;
@@ -98,7 +91,7 @@ declare module 'CartModels' {
     initiator: string; // uid
     status: string;
     meta: any; // TODO
-    owners: [any] // TODO
+    owners: [Owner] // TODO
     menuItem: MenuItem;
     orderAddons: [OrderAddon];
     orderChoices: [OrderChoice];
@@ -110,9 +103,22 @@ declare module 'CartModels' {
     subtotal: Subtotal;
   }
 
-  export type AddToCartResponse = {
+  export type AddToCartResponse = CartItem;
+
+  export type AddToCartRequest = {
+    menuItemId: string;
+    excludes: [string];
+    addons: [];
+    choices: [];
+  }
+
+  export type Cart = {
     subtotal: Subtotal;
     items: [CartItem];
+  }
+
+  export type CartResponse = {
+    res: Cart;
   }
 
   export type RmFromCartRequest = {
