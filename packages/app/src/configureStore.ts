@@ -6,25 +6,30 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import { reducer as formReducer } from 'redux-form';
-import { snackbarReducer } from 'material-ui-snackbar-redux';
 import { firebaseReducer } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import auth from '@dinify/common/dist/ducks/auth';
-import ui from 'ducks/ui';
-import user from 'ducks/user';
-import restaurant from 'ducks/restaurant/reducers.ts';
-import menuCategory from 'ducks/menuCategory';
-import menuItem from 'ducks/menuItem';
-import booking from 'ducks/booking';
-import cart from 'ducks/cart/reducers.ts';
-import bill from 'ducks/bill';
-import service from 'ducks/service';
-import seat from 'ducks/seat';
+import auth from '@dinify/common/src/ducks/auth/reducers';
+import ui from './ducks/ui';
+import user from './ducks/user';
+import restaurant from './ducks/restaurant/reducers';
+import menuCategory from './ducks/menuCategory';
+import menuItem from './ducks/menuItem';
+import booking from './ducks/booking';
+import cart from './ducks/cart/reducers';
+import bill from './ducks/bill';
+import service from './ducks/service';
+import seat from './ducks/seat';
 import firebaseConfig from '@dinify/common/firebaseConfig.json';
 import rootEpic from './configureEpics';
+
+import { StateType } from 'typesafe-actions';
+
+const { MapToList, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
+const snackbarReducer = require('material-ui-snackbar-redux').snackbarReducer;
+
 
 firebase.initializeApp(firebaseConfig);
 
@@ -72,13 +77,17 @@ const commonReducers = {
   seat,
   snackbar: snackbarReducer,
   firebase: firebaseReducer,
+  form: formReducer,
 };
 
 const epicMiddleware = createEpicMiddleware();
 
-export default (history) => {
+const staticRootReducer = combineReducers(commonReducers);
+
+export type RootState = StateType<typeof staticRootReducer>;
+
+export default (history: any) => {
   const rootReducer = combineReducers({
-    form: formReducer,
     router: connectRouter(history),
     ...commonReducers,
   });
@@ -105,6 +114,6 @@ export default (history) => {
 
   return {
     store,
-    persistor
+    persistor,
   };
 };

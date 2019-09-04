@@ -13,7 +13,7 @@ import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-import configureStore from './configureStore';
+import configureStore from './configureStore.ts';
 import websockets from './websockets';
 
 //  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
