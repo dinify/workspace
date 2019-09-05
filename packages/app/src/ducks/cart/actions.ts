@@ -3,7 +3,8 @@ import {
   AddToCartRequest,
   RmFromCartRequest,
   OrderRequest,
-  OrderResponse
+  OrderResponse,
+  CartResponseNormalized
 } from 'CartModels';
 import {
   createAction,
@@ -16,7 +17,7 @@ export const fetchCartAsync = createAsyncAction(
   `${p}/GET_CART_INIT`,
   `${p}/GET_CART_DONE`,
   `${p}/GET_CART_FAIL`
-)<undefined, CartResponse, string>();
+)<undefined, CartResponseNormalized, string>();
 
 export const addToCartAsync = createAsyncAction(
   `${p}/ADD_TO_CART_INIT`,

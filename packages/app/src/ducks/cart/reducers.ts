@@ -2,7 +2,7 @@
 import * as actions from './actions';
 import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
-import { Cart } from 'CartModels';
+import { OrderItemMap } from 'CartModels';
 
 // case types.ADD_TO_CART_DONE: {
 //   const res = action.payload;
@@ -29,11 +29,12 @@ import { Cart } from 'CartModels';
 //  return newState;
 // }
 
-export const cart = createReducer(null as Cart | null)
+
+export const cart = createReducer({} as OrderItemMap | object)
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     state;
-    return action.payload;
+    return action.payload.entities.orderItem;
   })
 
   .handleAction(actions.addToCartAsync.request, (state) => {
