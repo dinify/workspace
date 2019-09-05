@@ -7,6 +7,7 @@ import { map as rxMap, mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
 import { fetchSeatsInit } from '../seat/actions.js';
 import { getType } from 'typesafe-actions';
+import { normalize, schema } from 'normalizr';
 import {
   addToCartAsync,
   fetchCartAsync,
@@ -19,6 +20,8 @@ import {
   Choice,
   Ingredient,
   Addon,
+  CartResponse,
+  CartResponseNormalized,
 } from 'CartModels';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 
@@ -48,11 +51,41 @@ const processAddons = pipe(
   }))
 );
 
+const owner = new schema.Entity('owner');
+
+const menuItem = new schema.Entity('menuItem');
+
+const orderAddon = new schema.Entity('orderAddon');
+const orderChoice = new schema.Entity('orderChoice');
+const orderExclude = new schema.Entity('orderExclude');
+
+
+const orderItem = new schema.Entity('orderItem', {
+  owners: [owner],
+  menuItem: menuItem,
+  orderAddons: [orderAddon],
+  orderChoices: [orderChoice],
+  orderExcludes: [orderExclude]
+});
+
+const cartItem = new schema.Entity('cartItem', {
+  orderItem: orderItem
+});
+
+const cart = new schema.Entity('cart', {
+  items: [cartItem]
+});
+
+
 const getCartEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(fetchCartAsync.request)),
     switchMap((action) => from(API.GetCart()).pipe(
-      rxMap(fetchCartAsync.success),
+      rxMap((res: CartResponse) => {
+        const normalized: CartResponseNormalized = normalize(res, cart);
+        console.log(normalized);
+        return fetchCartAsync.success(normalized);
+      }),
       catchError(error => handleEpicAPIError({
         error,
         failActionType: getType(fetchCartAsync.failure),

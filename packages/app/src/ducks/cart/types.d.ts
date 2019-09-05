@@ -82,7 +82,6 @@ declare module 'CartModels' {
     userId: string;
     paid: boolean;
     transactionId: string;
-
   }
 
   export type OrderItem = {
@@ -119,6 +118,21 @@ declare module 'CartModels' {
   }
 
   export type CartResponse = Cart;
+
+  export type MenuItemMap = {
+    [id: string]: MenuItem;
+  }
+
+  export type OrderItemMap = {
+    [id: string]: OrderItem;
+  }
+
+  export type CartResponseNormalized = {
+    entities: {
+      menuItem: MenuItemMap,
+      orderItem: OrderItemMap
+    }
+  }
 
   export type RmFromCartRequest = {
     orderItemId: string;
