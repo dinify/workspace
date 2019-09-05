@@ -1,4 +1,4 @@
-import { Get, Post } from './Network';
+import { Get, Post, Delete } from './Network';
 
 export const GetRestaurantById = ({ restaurantId, populateWith }) => {
   let scopes = '';
@@ -43,6 +43,10 @@ export const GetCalls = ({ waiterboardId }) => Get({
 export const AddToCart = (body) => Post({
   path: 'cart'
 }, body);
+
+export const RemoveFromCart = ({ cartItemId }) => Delete({
+  path: `/cart/item/${cartItemId}`
+});
 
 export const Order = () => Post({
   path: 'order/dinein'
