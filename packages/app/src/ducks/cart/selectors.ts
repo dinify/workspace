@@ -1,15 +1,16 @@
 import { createSelector } from 'reselect';
 import { CartState } from './reducers';
+import { MapToList } from '@dinify/common/src/lib/FN';
 
 
-export const getCart = (state: CartState) => state.cart;
+export const getCartItems = (state: CartState) => state.items;
 
 
-export const cartExists = createSelector(
+export const getCartItemsList = createSelector(
   [
-    getCart
+    getCartItems
   ],
-  (cart) => {
-    return cart !== undefined && cart !== null;
+  (cartItemsMap) => {
+    return MapToList(cartItemsMap);
   }
 );

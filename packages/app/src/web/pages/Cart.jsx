@@ -142,7 +142,7 @@ const Cart = ({
 
 export default connect(
   (state) => ({
-    cart: getCart(state.cart),
+    cart: null,
     checkedin: state.seat.checkedin,
     checkedInRestaurant: state.restaurant.checkedInRestaurant
   }),

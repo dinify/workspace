@@ -5,19 +5,19 @@ import { connect } from 'react-redux';
 
 import CartBar from './cart.bar';
 import CartView from './cart.view';
-import { getCart } from '../../../ducks/cart/selectors';
+import { getCartItemsList } from '../../../ducks/cart/selectors';
 import { RootState } from 'typesafe-actions';
 
-import { Cart } from 'CartModels';
+import { Cart, CartItem } from 'CartModels';
 
 const CartModal: React.FC<{
-    cart: Cart
-}> = ({cart, ...otherProps}) => {
-    if (!cart) return null;
+    cartItemsList: [CartItem]
+}> = ({ cartItemsList, ...otherProps }) => {
+    if (!cartItemsList) return null;
 
     // TODO: move to global state with redux along with other modals
     const [open, setOpen] = useState(false);
-    const cartVisible = (cart && cart.items) && cart.items.length > 0;
+    const cartVisible = cartItemsList.length > 0;
     const props = useSpring({
         transform: cartVisible ? `translate3d(0, 0px, 0)` : `translate3d(0, 56px, 0)`
     });
@@ -26,13 +26,13 @@ const CartModal: React.FC<{
         <div {...otherProps}>
             <AnimatedCartBar
                 onClick={() => { setOpen(true); }} 
-                cart={cart}
+                cart={cartItemsList}
                 style={{
                     bottom: 56,
                     ...props
                 }}/>
             <Dialog fullScreen open={open} onClose={() => { setOpen(false); }}>
-                <CartView onClose={() => { setOpen(false); }} cart={cart}/>
+                <CartView onClose={() => { setOpen(false); }} cart={cartItemsList}/>
             </Dialog>
         </div>
     );
@@ -40,7 +40,7 @@ const CartModal: React.FC<{
 
 export default connect(
     (state: RootState) => ({
-        cart: getCart(state.cart),
+        cartItemsList: getCartItemsList(state.cart),
     }),
     { }
 )(CartModal);

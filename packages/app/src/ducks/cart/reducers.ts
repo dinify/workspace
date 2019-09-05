@@ -30,11 +30,11 @@ import { OrderItemMap } from 'CartModels';
 // }
 
 
-export const cart = createReducer({} as OrderItemMap | object)
+export const items = createReducer({} as OrderItemMap)
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     state;
-    return action.payload.entities.orderItem;
+    return action.payload.entities.cartItems;
   })
 
   .handleAction(actions.addToCartAsync.request, (state) => {
@@ -46,7 +46,7 @@ export const cart = createReducer({} as OrderItemMap | object)
   });
 
 const cartReducer = combineReducers({
-  cart
+  items
 });
 
 export default cartReducer;

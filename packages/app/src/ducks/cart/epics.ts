@@ -2,6 +2,11 @@ import pipe from 'ramda/src/pipe';
 import filter from 'ramda/src/filter';
 import map from 'ramda/src/map';
 import unnest from 'ramda/src/unnest';
+import prop from 'ramda/src/prop';
+import pluck from 'ramda/src/pluck';
+import zipObj from 'ramda/src/zipObj';
+import assocPath from 'ramda/src/assocPath';
+
 import { of, from } from 'rxjs';
 import { map as rxMap, mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
@@ -55,26 +60,35 @@ const owner = new schema.Entity('owner');
 
 const menuItem = new schema.Entity('menuItem');
 
-const orderAddon = new schema.Entity('orderAddon');
-const orderChoice = new schema.Entity('orderChoice');
-const orderExclude = new schema.Entity('orderExclude');
 
-
-const orderItem = new schema.Entity('orderItem', {
-  owners: [owner],
-  menuItem: menuItem,
-  orderAddons: [orderAddon],
-  orderChoices: [orderChoice],
-  orderExcludes: [orderExclude]
+const orderAddons = new schema.Entity('addons', {}, {
+  idAttribute: 'addonId',
+  processStrategy: prop('addon')
+})
+const orderChoices = new schema.Entity('choices', {}, {
+  idAttribute: 'choiceId',
+  processStrategy: prop('choice')
 });
-
-const cartItem = new schema.Entity('cartItem', {
-  orderItem: orderItem
+const orderExcludes = new schema.Entity('excludes', {}, {
+  idAttribute: 'ingredientId',
+  processStrategy: prop('ingredient')
 });
+const cartItem = new schema.Entity('cartItems', {
+  orderItem: {
+    owners: [owner],
+    menuItem: menuItem,
+    orderAddons: [orderAddons],
+    orderChoices: [orderChoices],
+    orderExcludes: [orderExcludes]
+  }
+}, { idAttribute: (v) => v.orderItem.id });
 
-const cart = new schema.Entity('cart', {
+const cart = {
   items: [cartItem]
-});
+};
+
+const keyedPropsOfList = (keyProp: string, valProp: string) => 
+  (list: any[]) => zipObj(pluck(keyProp)(list), pluck(valProp)(list));
 
 
 const getCartEpic: Epic = (action$) =>
@@ -82,8 +96,17 @@ const getCartEpic: Epic = (action$) =>
     ofType(getType(fetchCartAsync.request)),
     switchMap((action) => from(API.GetCart()).pipe(
       rxMap((res: CartResponse) => {
-        const normalized: CartResponseNormalized = normalize(res, cart);
-        console.log(normalized);
+
+        const orderItems = pluck('orderItem')(res.items);
+        
+        const addonsByOrderItemId = keyedPropsOfList('id', 'orderAddons')(orderItems);
+
+        let normalized: CartResponseNormalized = normalize(res, cart);
+
+        const newCartItems = map((ci) => assocPath(['orderItem', 'orderAddons'], addonsByOrderItemId[ci.orderItem.id])(ci), normalized.entities.cartItems);
+
+        normalized = assocPath(['entities', 'cartItems'], newCartItems)(normalized);
+
         return fetchCartAsync.success(normalized);
       }),
       catchError(error => handleEpicAPIError({

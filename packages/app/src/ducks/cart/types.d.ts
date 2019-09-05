@@ -129,8 +129,8 @@ declare module 'CartModels' {
 
   export type CartResponseNormalized = {
     entities: {
-      menuItem: MenuItemMap,
-      orderItem: OrderItemMap
+      menuItems: MenuItemMap,
+      cartItems: OrderItemMap
     }
   }
 
