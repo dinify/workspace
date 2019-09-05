@@ -17,13 +17,13 @@ const Typography: React.FC<TypographyProps> = ({
   ...otherProps
 }) => {
   const { typography } = theme;
-  let childVariant: TypographyProps['variant'];
+  let childVariant: MuiTypographyProps['variant'];
   let childStyle = {};
   if (variant === 'button2') {
     childVariant = 'button';
     childStyle = typography[variant];
   }
-  else childVariant = variant as TypographyProps['variant'];
+  else childVariant = variant as MuiTypographyProps['variant'];
 
   return (
     <MuiTypography 

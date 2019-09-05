@@ -29,7 +29,7 @@ declare module 'CartModels' {
   
   export type Ingredient = {
     id: string;
-    excluded: boolean;
+    translations: [Translation];
   }
 
   export type Price = {
@@ -76,7 +76,12 @@ declare module 'CartModels' {
     choice: Choice;
   }
 
-  export type OrderExclude = any;
+  export type OrderExclude = {
+    orderItemId: string;
+    ingredientId: string;
+    excluded: boolean;
+    ingredient: Ingredient
+  };
   
   export type Owner = {
     userId: string;
