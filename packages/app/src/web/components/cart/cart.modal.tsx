@@ -1,8 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { useSpring, animated } from 'react-spring';
 import { connect } from 'react-redux';
-import { cartExists as cartExistsSelector } from 'ducks/cart/selector';
 
 import CartBar from './cart.bar';
 import CartView from './cart.view';

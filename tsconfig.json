@@ -1,6 +1,14 @@
 {
+  "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "sourceMap": true,
+    "baseUrl": "./packages",
+    "paths": {
+      "@dinify/common": ["common/src"],
+      "@dinify/app": ["app/src"],
+      "@dinify/dashboard": ["dashboard/src"],
+      "@dinify/waiterboard": ["waiterboard/src"],
+      "@dinify/*": ["*/src"]
+    },
     "removeComments": true,
 
     "strict": true,

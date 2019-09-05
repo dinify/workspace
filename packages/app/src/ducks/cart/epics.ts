@@ -20,9 +20,9 @@ import {
   Ingredient,
   Addon,
 } from 'CartModels';
+import * as API from '@dinify/common/src/api/v2/restaurant';
 
 const { MapToList, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
-const API = require('@dinify/common/dist/api/restaurant');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
 const processChoices = pipe(
@@ -83,12 +83,11 @@ const addToCartEpic: Epic = (action$, state$) =>
     })
   );
 
-const orderEpic: Epic = (action$, state$) =>
+const orderEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(orderAsync.request)),
     switchMap((action) => {
-      const orderType = state$.value.cart.orderType;
-      return from(API.Order({ orderType })).pipe(
+      return from(API.Order()).pipe(
         mergeMap((res: any) => of(
           orderAsync.success(res),
           fetchCartAsync.request(),

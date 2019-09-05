@@ -1,12 +1,12 @@
-import { Restaurant, FavRestaurantResponse, FavRestaurantRequest } from 'RestaurantModels';
+import { Restaurant, FavRestaurantRequest } from 'RestaurantModels';
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import * as actions from './actions';
-import wsTypes from '../../websockets/types';
+// import wsTypes from '../../websockets/types';
 import { createReducer, ActionType } from 'typesafe-actions';
 import { combineReducers } from 'redux';
 
-const authTypes = require('@dinify/common/dist/ducks/auth/types');
+// const authTypes = require('@dinify/common/dist/ducks/auth/types');
 const { ListToMap } = require('@dinify/common/dist/lib/FN');
 
 
@@ -16,6 +16,7 @@ type Action = ActionType<typeof actions>;
 export const all = createReducer<State, Action>({})
 
   .handleAction(actions.fetchRestaurantsAsync.success, (state, action) => {
+    state;
     const restaurants: Restaurant[] = action.payload.res;
     return ListToMap(restaurants);
   })
@@ -44,6 +45,7 @@ export const all = createReducer<State, Action>({})
 export const checkedInRestaurant = createReducer<State, Action>(null)
 
   .handleAction(actions.fetchStatusAsync.success, (state, action) => {
+    state;
     const res = action.payload.res;
     if (!res.restaurant) return null;
     return res.restaurant.id;
@@ -53,6 +55,7 @@ export const checkedInRestaurant = createReducer<State, Action>(null)
 export const status = createReducer<State, Action>(null)
 
   .handleAction(actions.fetchStatusAsync.success, (state, action) => {
+    state;
     const res = action.payload.res;
     return res;
   });

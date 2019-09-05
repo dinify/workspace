@@ -1,4 +1,4 @@
-import assocPath from 'ramda/src/assocPath';
+// import assocPath from 'ramda/src/assocPath';
 import * as actions from './actions';
 import { createReducer, ActionType } from 'typesafe-actions';
 import { combineReducers } from 'redux';
@@ -34,14 +34,15 @@ type Action = ActionType<typeof actions>;
 export const cart = createReducer<State, Action>({ count: 0 })
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
+    state;
     return action.payload.res;
   })
 
-  .handleAction(actions.addToCartAsync.request, (state, action) => {
+  .handleAction(actions.addToCartAsync.request, (state) => {
     return state;
   })
 
-  .handleAction(actions.addToCartAsync.success, (state, action) => {
+  .handleAction(actions.addToCartAsync.success, (state) => {
     return state;
   });
 

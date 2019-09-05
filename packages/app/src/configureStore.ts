@@ -27,7 +27,6 @@ import rootEpic from './configureEpics';
 
 import { StateType } from 'typesafe-actions';
 
-const { MapToList, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbarReducer = require('material-ui-snackbar-redux').snackbarReducer;
 
 

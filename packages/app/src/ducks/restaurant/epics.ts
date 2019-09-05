@@ -1,9 +1,9 @@
 import { of, from } from 'rxjs';
-import { filter, mergeMap, exhaustMap, map, catchError, debounceTime } from 'rxjs/operators';
+import { mergeMap, exhaustMap, map, catchError, debounceTime } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
 import { push } from 'connected-react-router';
 import { checkinAsync, fetchStatusAsync, favRestaurantAsync } from './actions';
-import { isActionOf, getType } from 'typesafe-actions';
+import { getType } from 'typesafe-actions';
 
 const { getCookie, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const API = require('@dinify/common/dist/api/restaurant');
