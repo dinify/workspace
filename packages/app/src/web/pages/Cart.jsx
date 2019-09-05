@@ -22,7 +22,8 @@ import TotalPrice from 'web/components/TotalPrice';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import * as FN from '@dinify/common/dist/lib/FN';
-import { rmFromCartAsync, orderAsync, setOrderTypeAction } from 'ducks/cart/actions.ts';
+import { rmFromCartAsync, orderAsync } from 'ducks/cart/actions.ts';
+import { getCart } from 'ducks/cart/selectors.ts';
 
 const styles = theme => ({
   primary: {
@@ -47,17 +48,9 @@ const Cart = ({
   setEditing,
   checkedin,
   order,
-  checkedInRestaurant,
-  orderType,
-  setOrderType
 }) => {
   const { t } = useTranslation();
   const notCheckedIn = !checkedin; // !checkedInRestaurant;
-
-  if (checkedInRestaurant) setOrderType({ orderType: 'DINE_IN' })
-  else if (orderType === 'DINE_IN' && notCheckedIn) {
-    setOrderType({ orderType: 'AHEAD' })
-  }
 
   if (!cart) return null;
   const count = cart.count === undefined ? 0 : cart.count;
@@ -148,14 +141,12 @@ const Cart = ({
 }
 
 export default connect(
-  state => ({
-    cart: state.cart.cart.res,
+  (state) => ({
+    cart: getCart(state.cart),
     checkedin: state.seat.checkedin,
-    orderType: state.cart.orderType,
     checkedInRestaurant: state.restaurant.checkedInRestaurant
   }),
   {
-    setOrderType: setOrderTypeAction,
     rmFromCart: rmFromCartAsync.request,
     order: orderAsync.request
   }
@@ -164,6 +155,6 @@ export default connect(
     editing: false,
   },
   {
-    setEditing: () => (editing) => ({editing}),
+    setEditing: () => (editing) => ({ editing }),
   }
 )(withStyles(styles)(Cart)));

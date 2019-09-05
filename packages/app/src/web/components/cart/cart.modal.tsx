@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 
 import CartBar from './cart.bar';
 import CartView from './cart.view';
+import { getCart } from '../../../ducks/cart/selectors';
+import { RootState } from 'typesafe-actions';
 
 const CartModal: React.FC<{
     cart: any
@@ -35,8 +37,8 @@ const CartModal: React.FC<{
 }
 
 export default connect(
-    (state: any) => ({
-        cart: state.cart.cart,
+    (state: RootState) => ({
+        cart: getCart(state.cart),
     }),
     { }
 )(CartModal);

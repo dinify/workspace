@@ -1,7 +1,8 @@
 // import assocPath from 'ramda/src/assocPath';
 import * as actions from './actions';
-import { createReducer, ActionType } from 'typesafe-actions';
+import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
+import { Cart } from 'CartModels';
 
 // case types.ADD_TO_CART_DONE: {
 //   const res = action.payload;
@@ -28,10 +29,7 @@ import { combineReducers } from 'redux';
 //  return newState;
 // }
 
-type State = any;
-type Action = ActionType<typeof actions>;
-
-export const cart = createReducer<State, Action>({ count: 0 })
+export const cart = createReducer(null as Cart | null)
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     state;

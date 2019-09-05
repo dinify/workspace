@@ -58,7 +58,6 @@ class App extends React.Component {
 
   render() {
     const {
-      cartExists,
       checkedInRestaurant,
       dialogs,
       closeDialog,
