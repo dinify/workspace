@@ -40,6 +40,11 @@ export const GetCalls = ({ waiterboardId }) => Get({
   path: `waiterboard/${waiterboardId}/calls`
 });
 
+// replace any with Cart
+export const GetCart = (): Promise<any> => Get({
+  path: `cart`
+});
+
 export const AddToCart = (body) => Post({
   path: 'cart'
 }, body);

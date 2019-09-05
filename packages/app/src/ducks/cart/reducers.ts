@@ -35,7 +35,7 @@ export const cart = createReducer<State, Action>({ count: 0 })
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     state;
-    return action.payload.res;
+    return action.payload;
   })
 
   .handleAction(actions.addToCartAsync.request, (state) => {

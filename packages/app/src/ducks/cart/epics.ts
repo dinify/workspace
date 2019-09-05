@@ -3,7 +3,7 @@ import filter from 'ramda/src/filter';
 import map from 'ramda/src/map';
 import unnest from 'ramda/src/unnest';
 import { of, from } from 'rxjs';
-import { mergeMap, switchMap, catchError } from 'rxjs/operators';
+import { map as rxMap, mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
 import { fetchSeatsInit } from '../seat/actions.js';
 import { getType } from 'typesafe-actions';
@@ -47,6 +47,19 @@ const processAddons = pipe(
     amount: addon.qty,
   }))
 );
+
+const getCartEpic: Epic = (action$) =>
+  action$.pipe(
+    ofType(getType(fetchCartAsync.request)),
+    switchMap((action) => from(API.GetCart()).pipe(
+      rxMap(fetchCartAsync.success),
+      catchError(error => handleEpicAPIError({
+        error,
+        failActionType: getType(fetchCartAsync.failure),
+        initAction: action
+      }))
+    ))
+  );
 
 const addToCartEpic: Epic = (action$, state$) =>
   action$.pipe(
@@ -140,6 +153,7 @@ const updateAfterEditEpic: Epic = (action$) =>
   );
 
 export default [
+  getCartEpic,
   addToCartEpic,
   rmFromCartEpic,
   orderEpic,

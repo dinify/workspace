@@ -1,3 +1,4 @@
+
 declare module 'CartModels' {
 
   export type Addon = {
@@ -117,9 +118,7 @@ declare module 'CartModels' {
     items: [CartItem];
   }
 
-  export type CartResponse = {
-    res: Cart;
-  }
+  export type CartResponse = Cart;
 
   export type RmFromCartRequest = {
     orderItemId: string;
