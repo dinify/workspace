@@ -1,19 +1,26 @@
 import React from 'react';
-import Cart from '../../pages/Cart';
+import { useTranslation } from 'react-i18next';
 
-import IconButton from '@material-ui/core/IconButton';
-import Close from '@material-ui/icons/CloseRounded';
+import CartPage from '../../pages/Cart';
+import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
+
+import { Cart } from 'CartModels';
 
 const CartView: React.FC<{
     onClose?: () => void,
-    cart: any
+    cart: Cart
 }> = ({cart, onClose = () => {}, ...otherProps}) => {
+    const { t } = useTranslation();
+    const cartItemCount = (cart && cart.items) ? cart.items.length : 0;
     return (
         <div {...otherProps}>
-            <IconButton onClick={onClose}>
-                <Close />
-            </IconButton>
-            <Cart />
+            <AppBar>
+                <AppBarAction type="close" onClick={onClose}/>
+                <AppBarTitle 
+                    title={t('cart.title')} 
+                    subtitle={t('cart.itemCount', { count: cartItemCount, context: cartItemCount === 0 ? 'none' : undefined })}/>
+            </AppBar>
+            <CartPage />
         </div>
     );
 }

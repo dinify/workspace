@@ -8,14 +8,16 @@ import CartView from './cart.view';
 import { getCart } from '../../../ducks/cart/selectors';
 import { RootState } from 'typesafe-actions';
 
+import { Cart } from 'CartModels';
+
 const CartModal: React.FC<{
-    cart: any
+    cart: Cart
 }> = ({cart, ...otherProps}) => {
     if (!cart) return null;
 
     // TODO: move to global state with redux along with other modals
     const [open, setOpen] = useState(false);
-    const cartVisible = cart.count !== undefined && cart.count > 0;
+    const cartVisible = (cart && cart.items) && cart.items.length > 0;
     const props = useSpring({
         transform: cartVisible ? `translate3d(0, 0px, 0)` : `translate3d(0, 56px, 0)`
     });

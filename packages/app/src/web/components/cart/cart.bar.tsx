@@ -7,8 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CartIcon from '@material-ui/icons/ShoppingCartRounded';
 
+import { Cart } from 'CartModels';
+
 const CartBar: React.FC<{
-  cart: any,
+  cart: Cart,
   style?: React.CSSProperties,
   onClick?: () => void
 }> = ({
@@ -17,7 +19,7 @@ const CartBar: React.FC<{
   ...otherProps
 }) => {
   const { t } = useTranslation();
-  const cartItemCount = cart && cart.count !== undefined ? cart.count : 0;
+  const cartItemCount = (cart && cart.items) ? cart.items.length : 0;
   return (
     <ButtonBase style={{
       position: 'fixed',
