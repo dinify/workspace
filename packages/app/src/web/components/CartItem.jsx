@@ -129,7 +129,7 @@ const CartItem = ({
               top: 0,
               right: 0
             }}>
-              <IconButton onClick={() => {rmFromCart({ orderItemId: item.id})}}>
+              <IconButton onClick={() => {rmFromCart({ cartItemId: item.id})}}>
                 <Delete />
               </IconButton>
             </div>

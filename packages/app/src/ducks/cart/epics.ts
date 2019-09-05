@@ -83,6 +83,29 @@ const addToCartEpic: Epic = (action$, state$) =>
     })
   );
 
+const rmFromCartEpic: Epic = (action$) =>
+  action$.pipe(
+    ofType(getType(rmFromCartAsync.request)),
+    switchMap((action) => {
+
+      const { payload: { cartItemId } } = action;
+
+      return from(API.RemoveFromCart({ cartItemId })).pipe(
+        mergeMap((res: any) => of(
+          rmFromCartAsync.success(res),
+          snackbar.show({
+            message: 'Removed from cart',
+          })
+        )),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(rmFromCartAsync.failure),
+          initAction: action
+        }))
+      );
+    })
+  );
+
 const orderEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(orderAsync.request)),
@@ -118,6 +141,7 @@ const updateAfterEditEpic: Epic = (action$) =>
 
 export default [
   addToCartEpic,
+  rmFromCartEpic,
   orderEpic,
   updateAfterEditEpic
 ];

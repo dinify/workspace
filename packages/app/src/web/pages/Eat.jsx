@@ -379,7 +379,7 @@ class Eat extends React.Component {
                     selectedSeats.length <= 3 ? t('bill.splittingWith', {
                       context: selectedSeats.length === 0 ? 'zero' : undefined,
                       list: splitingWithNames
-                    }) : t('bill.splittingCount', { count: selectedSeats.length })
+                    }) : t('bill.splittingCount', { count: selectedSeats.length || 0 })
                   }
                 </Typography>
                 <Typography style={{

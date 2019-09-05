@@ -25,9 +25,9 @@ export const addToCartAsync = createAsyncAction(
 )<AddToCartRequest, CartResponse, string>();
 
 export const rmFromCartAsync = createAsyncAction(
-  `${p}/REMOVE_ORDERITEM_INIT`,
-  `${p}/REMOVE_ORDERITEM_DONE`,
-  `${p}/REMOVE_ORDERITEM_FAIL`
+  `${p}/RM_FROM_CART_INIT`,
+  `${p}/RM_FROM_CART_DONE`,
+  `${p}/RM_FROM_CART_FAIL`
 )<RmFromCartRequest, CartResponse, string>();
 
 
