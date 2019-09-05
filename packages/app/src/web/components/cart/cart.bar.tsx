@@ -1,7 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import Price from '../../../web/components/Price';
+
 import Typography from '@material-ui/core/Typography';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import CartIcon from '@material-ui/icons/ShoppingCartRounded';
 
 const CartBar: React.FC<{
   cart: any,
@@ -15,7 +19,7 @@ const CartBar: React.FC<{
   const { t } = useTranslation();
   const cartItemCount = cart && cart.count !== undefined ? cart.count : 0;
   return (
-    <div style={{
+    <ButtonBase style={{
       position: 'fixed',
       bottom: 0,
       height: 56,
@@ -23,15 +27,24 @@ const CartBar: React.FC<{
       backgroundColor: '#fff',
       borderTop: '1px solid rgba(0,0,0,0.12)',
       padding: `8px 16px 8px 16px`,
+      justifyContent: 'flex-start',
       ...style
     }} {...otherProps}>
-      <Typography variant="subtitle1">
-        {t('cart.title')}
-      </Typography>
-      <Typography variant="caption">
-        {t('cart.itemCount', { count: cartItemCount, context: cartItemCount === 0 ? 'none' : undefined })}
-      </Typography>
-    </div>
+      <CartIcon color="action" />
+      <div style={{textAlign: 'start', padding: '0 16px', flex: 1}}>
+        <Typography variant="subtitle1">
+          {t('cart.title')}
+        </Typography>
+        <Typography variant="caption" color="textSecondary">
+          {t('cart.itemCount', { count: cartItemCount, context: cartItemCount === 0 ? 'none' : undefined })}
+        </Typography>
+      </div>
+      <div style={{textAlign: 'end'}}>
+        <Typography variant="overline">
+          <Price price={cart.subtotal} />
+        </Typography>
+      </div>
+    </ButtonBase>
   );
 };
 
