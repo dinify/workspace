@@ -55,8 +55,11 @@ export const AddToCart = (body) => Post({
   path: 'cart'
 }, body);
 
-export const RemoveFromCart = ({ cartItemId }) => Delete({
-  path: `/cart/item/${cartItemId}`
+type RemoveFromCartProps = {
+  orderItemId: string
+}
+export const RemoveFromCart = ({ orderItemId }: RemoveFromCartProps) => Delete({
+  path: `cart/item/${orderItemId}`
 });
 
 export const Order = () => Post({

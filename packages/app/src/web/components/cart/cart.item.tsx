@@ -7,17 +7,20 @@ import { OrderItem, Translation, Price as PriceType, MenuItemMap } from 'CartMod
 import Price from '../../components/Price';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
+import { rmFromCartAsync } from '../../../ducks/cart/actions';
 
-const cartItemComponent: React.FC<{
+const CartItemComponent: React.FC<{
   theme?: any,
   editMode: boolean,
   orderItem: OrderItem,
-  menuItems: MenuItemMap
+  menuItems: MenuItemMap,
+  removeFromCart: typeof rmFromCartAsync.request
 }> = ({
   theme,
   editMode = false,
-  orderItem = {},
-  menuItems
+  orderItem,
+  menuItems,
+  removeFromCart
 }) => {
   const testLocale = 'en';
   const getName = (arr: [Translation]) => {
@@ -25,7 +28,7 @@ const cartItemComponent: React.FC<{
     const tr = arr[0];
     return tr ? tr.name : '';
   }
-  const menuItem = menuItems[orderItem.menuItem];
+  const menuItem = menuItems[orderItem.menuItemId];
 
   let customizations: {
     name: string,
@@ -128,9 +131,7 @@ const cartItemComponent: React.FC<{
             top: 0,
             right: 0
           }}>
-            <IconButton onClick={() => {
-              // TODO: remove from cart action here
-            }}>
+            <IconButton onClick={() => removeFromCart({ orderItemId: orderItem.id })}>
               <DeleteIcon />
             </IconButton>
           </div>
@@ -144,6 +145,8 @@ const cartItemComponent: React.FC<{
 
 export default connect(
   (state: RootState) => ({
-      menuItems: state.menuItem.all,
-  })
-)(withTheme()(cartItemComponent));
+    menuItems: state.menuItem.all,
+  }), {
+    removeFromCart: rmFromCartAsync.request
+  }
+)(withTheme()(CartItemComponent));

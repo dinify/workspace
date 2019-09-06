@@ -28,6 +28,7 @@ import {
   CartResponse,
   CartResponseNormalized,
   OrderItem,
+  RmFromCartRequest,
 } from 'CartModels';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 
@@ -153,9 +154,9 @@ const rmFromCartEpic: Epic = (action$) =>
     ofType(getType(rmFromCartAsync.request)),
     switchMap((action) => {
 
-      const { payload: { cartItemId } } = action;
+      const payload: RmFromCartRequest = action.payload;
 
-      return from(API.RemoveFromCart({ cartItemId })).pipe(
+      return from(API.RemoveFromCart(payload)).pipe(
         mergeMap((res: any) => of(
           rmFromCartAsync.success(res),
           snackbar.show({

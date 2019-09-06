@@ -11,7 +11,6 @@ import RestaurantView from 'web/pages/RestaurantView';
 import MenuItemView from 'web/pages/MenuItemView';
 import SignIn from '@dinify/common/dist/components/SignIn';
 import Account from 'web/pages/Account';
-import DineIn from 'web/pages/DineIn';
 import Cart from 'web/pages/Cart';
 import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
@@ -20,7 +19,7 @@ import Main from 'web/pages/Main';
 import AccountSignIn from 'web/components/AccountSignIn';
 import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
-import { Modal as CartModal } from 'web/components/cart';
+import { Modal as CartModal } from 'web/components/cart/index.ts';
 
 import * as FN from '@dinify/common/dist/lib/FN';
 
@@ -37,8 +36,7 @@ class App extends React.Component {
   onNavigate = (evt, val) => {
     const { history } = this.props;
     if (val === 0) history.push(routes.HOMEPAGE);
-    else if (val === 1) history.push(routes.DINEIN);
-    else if (val === 2) history.push(routes.ACCOUNT);
+    else if (val === 1) history.push(routes.ACCOUNT);
   }
 
   match = (...paths) => {
