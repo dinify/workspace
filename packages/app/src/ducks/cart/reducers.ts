@@ -2,7 +2,7 @@
 import * as actions from './actions';
 import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
-import { OrderItemMap } from 'CartModels';
+import { OrderItemMap, Subtotal } from 'CartModels';
 
 // case types.ADD_TO_CART_DONE: {
 //   const res = action.payload;
@@ -37,16 +37,26 @@ export const items = createReducer({} as OrderItemMap)
     return action.payload.entities.cartItems;
   })
 
-  .handleAction(actions.addToCartAsync.request, (state) => {
+  .handleAction(actions.addToCartAsync.request, (state, action) => {
     return state;
   })
 
-  .handleAction(actions.addToCartAsync.success, (state) => {
-    return state;
+  .handleAction(actions.addToCartAsync.success, (state, action) => {
+    const cartItem = action.payload;
+    console.log(cartItem);
+    return { ...state, [cartItem.id]: cartItem };
+  });
+
+export const subtotal = createReducer({ amount: 0 } as Subtotal)
+
+  .handleAction(actions.fetchCartAsync.success, (state, action) => {
+    state;
+    return action.payload.result.subtotal;
   });
 
 const cartReducer = combineReducers({
-  items
+  items,
+  subtotal
 });
 
 export default cartReducer;

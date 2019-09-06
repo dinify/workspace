@@ -23,7 +23,7 @@ export const addToCartAsync = createAsyncAction(
   `${p}/ADD_TO_CART_INIT`,
   `${p}/ADD_TO_CART_DONE`,
   `${p}/ADD_TO_CART_FAIL`
-)<AddToCartRequest, CartResponse, string>();
+)<AddToCartRequest, any, string>();
 
 export const rmFromCartAsync = createAsyncAction(
   `${p}/RM_FROM_CART_INIT`,

@@ -96,19 +96,15 @@ declare module 'CartModels' {
     initiator: string; // uid
     status: string;
     meta: any; // TODO
-    owners: [Owner] // TODO
+    owners: [Owner]
     menuItem: MenuItem;
     orderAddons: [OrderAddon];
     orderChoices: [OrderChoice];
     orderExcludes: [OrderExclude];
-  }
-
-  export type CartItem = {
-    orderItem: OrderItem;
     subtotal: Subtotal;
   }
 
-  export type AddToCartResponse = CartItem;
+  export type AddToCartResponse = OrderItem;
 
   export type AddToCartRequest = {
     menuItemId: string;
@@ -135,7 +131,7 @@ declare module 'CartModels' {
   export type CartResponseNormalized = {
     entities: {
       menuItems: MenuItemMap,
-      cartItems: OrderItemMap
+      orderItems: OrderItemMap
     }
   }
 
