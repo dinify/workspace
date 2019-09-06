@@ -1,5 +1,11 @@
 import { Get, Post, Delete } from './Network';
 
+export const GetListOfRestaurants = () => {
+  return Get({
+    path: `restaurants`
+  });
+}
+
 export const GetRestaurantById = ({ restaurantId, populateWith }) => {
   let scopes = '';
   if (populateWith) scopes = `?scopes=${populateWith}`;

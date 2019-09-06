@@ -3,6 +3,9 @@ import keys from 'ramda/src/keys';
 import { MapToList, useOldPropsIfNewNA } from '@dinify/common/dist/lib/FN';
 import menuCategoryTypes from 'ducks/menuCategory/types';
 import types from './types';
+import { getType } from 'typesafe-actions';
+import * as cartActions from '../cart/actions.ts';
+
 
 const initialState = {
   all: {},
@@ -26,6 +29,11 @@ export default function reducer(state = initialState, action) {
     case types.FETCH_MENUITEM_DONE: {
       const item = payload.res || {};
       return assocPath(['all', item.id], useOldPropsIfNewNA(state.all[item.id], item, keepProps))(state);
+    }
+
+    case getType(cartActions.fetchCartAsync.success): {
+      const menuItems = action.payload.entities.menuItems;
+      return { ...state.all, ...menuItems };
     }
 
     case menuCategoryTypes.FETCH_MENUCATEGORIES_DONE: {
@@ -77,6 +85,7 @@ export default function reducer(state = initialState, action) {
         'qty'
       ], preQty + inc)(state);
     }
+
     case types.SELECT_CHOICE: {
       const { menuItemId, optionId, choiceId } = payload;
       let newState = state;
@@ -87,6 +96,7 @@ export default function reducer(state = initialState, action) {
       })
       return newState;
     }
+
     default:
       return state;
   }
