@@ -1,68 +1,15 @@
+import { MenuItem, MenuItemMap, Choice, Addon, Ingredient } from 'MenuItemsModels';
 
 declare module 'CartModels' {
-
-  export type Addon = {
-    id: string;
-    price: Price;
-    translations: [Translation];
-    qty?: number;
-  }
 
   export type Translation = {
     locale: string;
     name: string;
   }
   
-  export type Choice = {
-    id: string;
-    optionId: string;
-    price: Price;
-    translations: [Translation];
-    price: Price;
-    selected?: boolean;
-  }
-  
-  export type Option = {
-    id: string;
-    choices: [Choice];
-  }
-  
-  export type Ingredient = {
-    id: string;
-    translations: [Translation];
-  }
-
   export type Price = {
     amount: number;
     currency: string;
-  }
-
-  export type MenuItemTranslation = {
-    name: string;
-    description: string;
-    locale: string;
-  }
-
-  export type Image = {
-    url: string;
-    precedence: number;
-  }
-
-  export type MenuItem = {
-    id: string;
-    menuCategoryId: string;
-    published: boolean;
-    calories: any;
-    precedence: number;
-    display: any;
-    promotion: any;
-    cookingTime: any;
-    translations: [MenuItemTranslation];
-    images: [Image];
-    price: Price;
-    options: [Option];
-    addons: [Addon];
-    ingredients: [Ingredient];
   }
 
   export type Subtotal = Price & {
@@ -126,10 +73,6 @@ declare module 'CartModels' {
 
   export type CartResponse = Cart;
 
-  export type MenuItemMap = {
-    [id: string]: MenuItem;
-  }
-
   export type OrderItemMap = {
     [id: string]: OrderItem;
   }
@@ -138,6 +81,9 @@ declare module 'CartModels' {
     entities: {
       menuItems: MenuItemMap,
       orderItems: OrderItemMap
+    },
+    result: {
+      subtotal: Subtotal
     }
   }
 

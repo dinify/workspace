@@ -2,7 +2,7 @@
 import * as actions from './actions';
 import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
-import { OrderItemMap, Subtotal } from 'CartModels';
+import { OrderItemMap, OrderItem, Subtotal } from 'CartModels';
 import dissoc from 'ramda/src/dissoc';
 
 // case types.ADD_TO_CART_DONE: {
@@ -48,9 +48,8 @@ export const items = createReducer({} as OrderItemMap)
   })
 
   .handleAction(actions.addToCartAsync.success, (state, action) => {
-    const cartItem = action.payload;
-    console.log(cartItem);
-    return { ...state, [cartItem.id]: cartItem };
+    const orderItem = action.payload;
+    return { ...state, [orderItem.id]: orderItem };
   });
 
 const defaultSubtotal: Subtotal = {

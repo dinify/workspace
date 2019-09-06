@@ -5,14 +5,16 @@ import menuCategoryTypes from 'ducks/menuCategory/types';
 import types from './types';
 import { getType } from 'typesafe-actions';
 import * as cartActions from '../cart/actions.ts';
+import * as menuCategoriesActions from '../menuCategory/actions.ts';
 import assoc from 'ramda/es/assoc';
+// import * as FN from '@dinify/common/dist/lib/FN';
 
 
 const initialState = {
   all: {},
 };
 
-const keepProps = ['ingredients', 'addons', 'options', 'favorite'];
+// const keepProps = ['ingredients', 'addons', 'options', 'favorite'];
 
 export default function reducer(state = initialState, action) {
   const { payload, type } = action;
@@ -26,11 +28,15 @@ export default function reducer(state = initialState, action) {
     //   });
     //   return newState;
     // }
-
     // case types.FETCH_MENUITEM_DONE: {
     //   const item = payload.res || {};
     //   return assocPath(['all', item.id], useOldPropsIfNewNA(state.all[item.id], item, keepProps))(state);
     // }
+
+    case getType(menuCategoriesActions.fetchMenuCategoriesAsync.success): {
+      const menuItems = action.payload.entities.menuItems;
+      return assoc('all', { ...state.all, ...menuItems })(state);
+    }
 
     case getType(cartActions.fetchCartAsync.success): {
       const menuItems = action.payload.entities.menuItems;
