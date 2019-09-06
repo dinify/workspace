@@ -42,10 +42,6 @@ const Navigation = ({
       text: t('nav.menu')
     },
     {
-      icon: selected => selected ? <Silverware color={getColor(selected)}/> : <SilverwareVariant color={getColor(selected)}/>,
-      text: t('nav.dineIn')
-    },
-    {
       icon: selected => selected ? <Settings color={getColor(selected)}/> : <SettingsOutlined color={getColor(selected)}/>,
       text: t('nav.settings')
     }

@@ -90,7 +90,7 @@ class App extends React.Component {
             <Route path={routes.RESTAURANT} component={RestaurantView} />
             <Route path={routes.MENUITEM} component={MenuItemView} />
 
-            <Route path={routes.DINEIN}  component={DineIn} />
+            {/* <Route path={routes.DINEIN}  component={DineIn} /> */}
             <Route path={routes.CART}  component={Cart} />
             <Route path={routes.RECEIPT} component={Receipt} />
           </Switch>
@@ -108,8 +108,7 @@ class App extends React.Component {
               handleChange={this.onNavigate}
               checkedInRestaurant={checkedInRestaurant}
               value={(() => {
-                if (this.match(routes.DINEIN)) return 1;
-                if (this.match(routes.ACCOUNT) || this.match(routes.SIGNIN)) return 2;
+                if (this.match(routes.ACCOUNT) || this.match(routes.SIGNIN)) return 1;
                 return 0;
               })()}/>
           }
