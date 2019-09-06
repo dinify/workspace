@@ -1,25 +1,26 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
 import Price from '../../../web/components/Price';
 
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CartIcon from '@material-ui/icons/ShoppingCartRounded';
-
-import { Cart } from 'CartModels';
+import { RootState } from 'typesafe-actions';
+import { Cart, Subtotal } from 'CartModels';
 
 const CartBar: React.FC<{
-  cart: Cart,
   style?: React.CSSProperties,
-  onClick?: () => void
+  onClick?: () => void,
+  subtotal: Subtotal
 }> = ({
-  cart,
   style,
+  subtotal,
   ...otherProps
 }) => {
   const { t } = useTranslation();
-  const cartItemCount = (cart && cart.items) ? cart.items.length : 0;
+  const cartItemCount = 1;
   return (
     <ButtonBase style={{
       position: 'fixed',
@@ -43,7 +44,7 @@ const CartBar: React.FC<{
       </div>
       <div style={{textAlign: 'end'}}>
         <Typography variant="overline">
-          <Price price={cart.subtotal} />
+          <Price price={subtotal} />
         </Typography>
       </div>
     </ButtonBase>
@@ -57,4 +58,8 @@ const CartBar: React.FC<{
 //   { }
 // )(CartBar);
 
-export default CartBar;
+export default connect(
+  (state: RootState) => ({
+      subtotal: state.cart.subtotal,
+  })
+)(CartBar);

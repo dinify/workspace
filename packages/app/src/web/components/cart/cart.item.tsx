@@ -3,61 +3,68 @@ import { withTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteRounded';
-import { CartItem, Translation, PriceType } from 'CartModels';
+import { OrderItem, Translation, Price as PriceType, MenuItemMap } from 'CartModels';
 import Price from '../../components/Price';
+import { connect } from 'react-redux';
+import { RootState } from 'typesafe-actions';
 
-const CartItemComponent: React.FC<{
+const cartItemComponent: React.FC<{
   theme?: any,
   editMode: boolean,
-  cartItem: CartItem
+  orderItem: OrderItem,
+  menuItems: MenuItemMap
 }> = ({
   theme,
   editMode = false,
-  cartItem,
+  orderItem = {},
+  menuItems
 }) => {
   const testLocale = 'en';
   const getName = (arr: [Translation]) => {
-    const tr = arr.find(t => t.locale === testLocale);
+    // const tr = arr.find(t => t.locale === testLocale);
+    const tr = arr[0];
     return tr ? tr.name : '';
   }
+  const menuItem = menuItems[orderItem.menuItem];
+
   let customizations: {
     name: string,
     crossover: boolean,
     price?: PriceType,
     amount?: number
   }[] = [];
-  customizations.push(
-    ...cartItem.orderItem.orderChoices
-      .map(choice => choice.choice)
-      .map(choice => {
-        return {
-          name: getName(choice.translations),
-          crossover: false,
-          price: choice.price
-        }
-      })
-  );
-  customizations.push(
-    ...cartItem.orderItem.orderAddons
-      .map(addon => {
-        return {
-          name: getName(addon.addon.translations),
-          crossover: false,
-          price: addon.addon.price,
-          amount: addon.amount
-        }
-      })
-  );
-  customizations.push(
-    ...cartItem.orderItem.orderExcludes
-      .filter(i => i.ingredient)
-      .map(ingredient => {
-        return {
-          name: getName(ingredient.ingredient.translations),
-          crossover: true
-        }
-      })
-  );
+  // customizations.push(
+  //   ...orderItem.orderChoices
+  //     .map(choice => choice.choice)
+  //     .map(choice => {
+  //       return {
+  //         name: getName(choice.translations),
+  //         crossover: false,
+  //         price: choice.price
+  //       }
+  //     })
+  // );
+  // customizations.push(
+  //   ...orderItem.orderAddons
+  //     .map(addon => {
+  //       return {
+  //         name: getName(addon.addon.translations),
+  //         crossover: false,
+  //         price: addon.addon.price,
+  //         amount: addon.amount
+  //       }
+  //     })
+  // );
+  // customizations.push(
+  //   ...orderItem.orderExcludes
+  //     .filter(i => i.ingredient)
+  //     .map(ingredient => {
+  //       return {
+  //         name: getName(ingredient.ingredient.translations),
+  //         crossover: true
+  //       }
+  //     })
+  // );
   return (
     <div
       style={{
@@ -76,12 +83,12 @@ const CartItemComponent: React.FC<{
       <div style={{flex: 1, marginLeft: 16, position: 'relative'}}>
         <div style={{display: 'flex'}}>
           <Typography style={{flex: 1, marginRight: 32}} >
-            {getName(cartItem.orderItem.menuItem.translations)}
+            {getName(menuItem.translations)}
           </Typography>
           <Typography
             variant="overline"
             style={{alignSelf: 'flex-end', opacity: editMode ? 0 : 1}}>
-            <Price price={cartItem.orderItem.menuItem.price}/>
+            <Price price={menuItem.price}/>
           </Typography>
         </div>
         {customizations.length ? customizations.map((customization, i) =>
@@ -133,4 +140,10 @@ const CartItemComponent: React.FC<{
   );
 };
 
-export default withTheme()(CartItemComponent);
+
+
+export default connect(
+  (state: RootState) => ({
+      menuItems: state.menuItem.all,
+  })
+)(withTheme()(cartItemComponent));

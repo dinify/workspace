@@ -4,17 +4,16 @@ import { useTranslation } from 'react-i18next';
 import CartPage from '../../pages/Cart';
 import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
 import CartItem from './cart.item';
-import { Cart, Price } from 'CartModels';
+import { Cart, Price, OrderItem } from 'CartModels';
 
 const CartView: React.FC<{
     onClose?: () => void,
-    cart: Cart
-}> = ({cart, onClose = () => {}, ...otherProps}) => {
+    orderItemsList: OrderItem[]
+}> = ({ orderItemsList, onClose = () => {}, ...otherProps}) => {
     const [editMode, setEditMode] = useState(false);
     const { t } = useTranslation();
 
-    const cartItemCount = (cart && cart.items) ? cart.items.length : 0;
-    console.log(cart);
+    const cartItemCount = orderItemsList.length;
     
     return (
         <div {...otherProps}>
@@ -25,9 +24,9 @@ const CartView: React.FC<{
                     subtitle={t('cart.itemCount', { count: cartItemCount, context: cartItemCount === 0 ? 'none' : undefined })}/>
                 <AppBarAction type={editMode ? 'done' : 'edit'} onClick={() => {setEditMode(!editMode)}}/>
             </AppBar>
-            {cart.items.map(item => {
+            {orderItemsList.map(item => {
                 return (
-                    <CartItem editMode={editMode} cartItem={item}/>
+                    <CartItem editMode={editMode} orderItem={item}/>
                 );
             })}
             <CartPage />

@@ -5,6 +5,7 @@ import menuCategoryTypes from 'ducks/menuCategory/types';
 import types from './types';
 import { getType } from 'typesafe-actions';
 import * as cartActions from '../cart/actions.ts';
+import assoc from 'ramda/es/assoc';
 
 
 const initialState = {
@@ -33,7 +34,7 @@ export default function reducer(state = initialState, action) {
 
     case getType(cartActions.fetchCartAsync.success): {
       const menuItems = action.payload.entities.menuItems;
-      return { ...state.all, ...menuItems };
+      return assoc('all', { ...state.all, ...menuItems })(state);
     }
 
     case menuCategoryTypes.FETCH_MENUCATEGORIES_DONE: {
