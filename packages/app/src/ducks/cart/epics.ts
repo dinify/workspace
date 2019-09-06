@@ -27,6 +27,7 @@ import {
   Addon,
   CartResponse,
   CartResponseNormalized,
+  OrderItem,
 } from 'CartModels';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 
@@ -58,8 +59,7 @@ const processAddons = pipe(
 
 const owner = new schema.Entity('owner');
 
-const menuItem = new schema.Entity('menuItem');
-
+const menuItem = new schema.Entity('menuItems');
 
 const orderAddons = new schema.Entity('addons', {}, {
   idAttribute: 'addonId',
@@ -73,18 +73,15 @@ const orderExcludes = new schema.Entity('excludes', {}, {
   idAttribute: 'ingredientId',
   processStrategy: prop('ingredient')
 });
-const cartItem = new schema.Entity('cartItems', {
-  orderItem: {
-    owners: [owner],
-    menuItem: menuItem,
-    orderAddons: [orderAddons],
-    orderChoices: [orderChoices],
-    orderExcludes: [orderExcludes]
-  }
-}, { idAttribute: (v) => v.orderItem.id });
-
+const orderItem = new schema.Entity('orderItems', {
+  owners: [owner],
+  menuItem: menuItem,
+  orderAddons: [orderAddons],
+  orderChoices: [orderChoices],
+  orderExcludes: [orderExcludes]
+});
 const cart = {
-  items: [cartItem]
+  items: [orderItem]
 };
 
 const keyedPropsOfList = (keyProp: string, valProp: string) => 
@@ -97,23 +94,22 @@ const getCartEpic: Epic = (action$) =>
     switchMap((action) => from(API.GetCart()).pipe(
       rxMap((res: CartResponse) => {
 
-        const orderItems = pluck('orderItem')(res.items);
+        const orderItems: OrderItem[] = res.items;
         
         const addonsByOrderItemId = keyedPropsOfList('id', 'orderAddons')(orderItems);
 
         let normalized: CartResponseNormalized = normalize(res, cart);
 
-        const newCartItems = map((ci) => assocPath(['orderItem', 'orderAddons'], addonsByOrderItemId[ci.orderItem.id])(ci), normalized.entities.cartItems);
-
-        normalized = assocPath(['entities', 'cartItems'], newCartItems)(normalized);
-
         return fetchCartAsync.success(normalized);
       }),
-      catchError(error => handleEpicAPIError({
-        error,
-        failActionType: getType(fetchCartAsync.failure),
-        initAction: action
-      }))
+      catchError(error => {
+        console.log(error);
+        return handleEpicAPIError({
+          error,
+          failActionType: getType(fetchCartAsync.failure),
+          initAction: action
+        })
+      })
     ))
   );
 

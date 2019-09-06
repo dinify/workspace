@@ -3,12 +3,12 @@ import { CartState } from './reducers';
 import { MapToList } from '@dinify/common/src/lib/FN';
 
 
-export const getCartItems = (state: CartState) => state.items;
+export const getOrderItems = (state: CartState) => state.items;
 
 
-export const getCartItemsList = createSelector(
+export const getOrderItemsList = createSelector(
   [
-    getCartItems
+    getOrderItems
   ],
   (cartItemsMap) => {
     return MapToList(cartItemsMap);

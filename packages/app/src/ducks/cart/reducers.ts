@@ -34,7 +34,7 @@ export const items = createReducer({} as OrderItemMap)
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     state;
-    return action.payload.entities.cartItems;
+    return action.payload.entities.orderItems;
   })
 
   .handleAction(actions.addToCartAsync.request, (state, action) => {
