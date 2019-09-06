@@ -27,30 +27,30 @@ export default function reducer(state = initialState, action) {
     //   return newState;
     // }
 
-    case types.FETCH_MENUITEM_DONE: {
-      const item = payload.res || {};
-      return assocPath(['all', item.id], useOldPropsIfNewNA(state.all[item.id], item, keepProps))(state);
-    }
+    // case types.FETCH_MENUITEM_DONE: {
+    //   const item = payload.res || {};
+    //   return assocPath(['all', item.id], useOldPropsIfNewNA(state.all[item.id], item, keepProps))(state);
+    // }
 
     case getType(cartActions.fetchCartAsync.success): {
       const menuItems = action.payload.entities.menuItems;
       return assoc('all', { ...state.all, ...menuItems })(state);
     }
 
-    case menuCategoryTypes.FETCH_MENUCATEGORIES_DONE: {
-      const categories = payload.res;
-      let newState = state;
-      categories.forEach((category) => {
-        if (!category.items) return;
-        MapToList(category.items).forEach(item => {
-          if (item.published) {
-            const updatedItem = useOldPropsIfNewNA(state.all[item.id], item, keepProps);
-            newState = assocPath(['all', item.id], updatedItem)(newState);
-          }
-        });
-      })
-      return newState;
-    }
+    // case menuCategoryTypes.FETCH_MENUCATEGORIES_DONE: {
+    //   const categories = payload.res;
+    //   let newState = state;
+    //   categories.forEach((category) => {
+    //     if (!category.items) return;
+    //     MapToList(category.items).forEach(item => {
+    //       if (item.published) {
+    //         const updatedItem = useOldPropsIfNewNA(state.all[item.id], item, keepProps);
+    //         newState = assocPath(['all', item.id], updatedItem)(newState);
+    //       }
+    //     });
+    //   })
+    //   return newState;
+    // }
 
     case types.FAV_MENUITEM_INIT: {
       const { id, fav } = payload;

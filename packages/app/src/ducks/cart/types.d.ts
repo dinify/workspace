@@ -43,6 +43,11 @@ declare module 'CartModels' {
     locale: string;
   }
 
+  export type Image = {
+    url: string;
+    precedence: number;
+  }
+
   export type MenuItem = {
     id: string;
     menuCategoryId: string;
@@ -53,6 +58,7 @@ declare module 'CartModels' {
     promotion: any;
     cookingTime: any;
     translations: [MenuItemTranslation];
+    images: [Image];
     price: Price;
     options: [Option];
     addons: [Addon];

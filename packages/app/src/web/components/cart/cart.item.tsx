@@ -8,6 +8,7 @@ import Price from '../../components/Price';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import { rmFromCartAsync } from '../../../ducks/cart/actions';
+import Image from '../Image';
 
 const CartItemComponent: React.FC<{
   theme?: any,
@@ -81,7 +82,7 @@ const CartItemComponent: React.FC<{
         backgroundColor: theme.palette.divider,
         overflow: 'hidden'
       }}>
-        {/* TODO: menu item image goes here */}
+        <img src={menuItem.images[0].url} style={{ width: 56, height: 56 }}/>
       </div>
       <div style={{flex: 1, marginLeft: 16, position: 'relative'}}>
         <div style={{display: 'flex'}}>
