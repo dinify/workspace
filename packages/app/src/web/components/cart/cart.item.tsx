@@ -21,7 +21,10 @@ const CartItemComponent: React.FC<{
   editMode = false,
   orderItem,
   menuItems,
-  removeFromCart
+  removeFromCart,
+  addons,
+  ingredients,
+  choices,
 }) => {
   const testLocale = 'en';
   const getName = (arr: [Translation]) => {
@@ -37,38 +40,40 @@ const CartItemComponent: React.FC<{
     price?: PriceType,
     amount?: number
   }[] = [];
-  // customizations.push(
-  //   ...orderItem.orderChoices
-  //     .map(choice => choice.choice)
-  //     .map(choice => {
-  //       return {
-  //         name: getName(choice.translations),
-  //         crossover: false,
-  //         price: choice.price
-  //       }
-  //     })
-  // );
-  // customizations.push(
-  //   ...orderItem.orderAddons
-  //     .map(addon => {
-  //       return {
-  //         name: getName(addon.addon.translations),
-  //         crossover: false,
-  //         price: addon.addon.price,
-  //         amount: addon.amount
-  //       }
-  //     })
-  // );
-  // customizations.push(
-  //   ...orderItem.orderExcludes
-  //     .filter(i => i.ingredient)
-  //     .map(ingredient => {
-  //       return {
-  //         name: getName(ingredient.ingredient.translations),
-  //         crossover: true
-  //       }
-  //     })
-  // );
+  customizations.push(
+    ...orderItem.orderChoices
+      .map((choiceId: string) => {
+        const choice = choices[choiceId];
+        return {
+          name: getName(choice.translations),
+          crossover: false,
+          price: choice.price
+        }
+      })
+  );
+  customizations.push(
+    ...orderItem.orderAddons
+      .map((addonId: string) => {
+        const addon = addons[addonId];
+        return {
+          name: getName(addon.translations),
+          crossover: false,
+          price: addon.price,
+          amount: 1 // TODO
+        }
+      })
+  );
+  customizations.push(
+    ...orderItem.orderExcludes
+      .filter(i => !!i)
+      .map((ingredientId: string) => {
+        const ingredient = ingredients[ingredientId];
+        return {
+          name: getName(ingredient.translations),
+          crossover: true
+        }
+      })
+  );
   return (
     <div
       style={{
@@ -147,6 +152,9 @@ const CartItemComponent: React.FC<{
 export default connect(
   (state: RootState) => ({
     menuItems: state.menuItem.all,
+    addons: state.addon.all,
+    choices: state.option.choices,
+    ingredients: state.ingredient.all
   }), {
     removeFromCart: rmFromCartAsync.request
   }
