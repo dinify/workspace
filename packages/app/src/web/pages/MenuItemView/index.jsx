@@ -11,9 +11,13 @@ import Carousel from 'web/components/Carousel';
 import Price from 'web/components/Price';
 import * as FN from '@dinify/common/dist/lib/FN';
 import uniqueId from 'lodash.uniqueid';
+import {
+  favMenuitemInit,
+  fetchMenuItemAsync,
+  clearCustomizationsAction
+} from 'ducks/menuItem/actions.ts';
 import Customizations from './Customizations';
 import NutritionFacts from './NutritionFacts';
-import { fetchMenuitemInit, favMenuitemInit, fetchMenuItemAsync } from 'ducks/menuItem/actions.ts';
 
 const styles = theme => ({
   category: {
@@ -45,8 +49,10 @@ class MenuItemView extends React.PureComponent {
   componentWillMount() {
     const {
       fetchMenuItem,
+      clearCustomizations,
       match: { params }
     } = this.props;
+    clearCustomizations({ menuItemId: params.id })
     fetchMenuItem({ menuItemId: params.id });
   }
 
@@ -133,7 +139,8 @@ MenuItemView = connect(
   }),
   {
     fetchMenuItem: fetchMenuItemAsync.request,
-    favMenuitem: favMenuitemInit
+    favMenuitem: favMenuitemInit,
+    clearCustomizations: clearCustomizationsAction
   }
 )(MenuItemView)
 

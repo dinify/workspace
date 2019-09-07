@@ -5,7 +5,7 @@ import keys from 'ramda/src/keys';
 // import menuCategoryTypes from 'ducks/menuCategory/types';
 import { getType } from 'typesafe-actions';
 import * as cartActions from '../cart/actions.ts';
-import { fetchMenuItemAsync } from './actions.ts';
+import { fetchMenuItemAsync, clearCustomizationsAction } from './actions.ts';
 
 import * as menuCategoriesActions from '../menuCategory/actions.ts';
 import assoc from 'ramda/src/assoc';
@@ -62,6 +62,15 @@ export default function reducer(state = initialState, action) {
     case getType(cartActions.fetchCartAsync.success): {
       const menuItems = action.payload.entities.menuItems;
       return assoc('all', { ...state.all, ...menuItems })(state);
+    }
+
+    case getType(clearCustomizationsAction): {
+      const { menuItemId } = action.payload;
+      return pipe(
+        assocPath(['selectedAddons', menuItemId], {}),
+        assocPath(['selectedExcludes', menuItemId], {}),
+        assocPath(['selectedChoices', menuItemId], {}),
+      )(state);
     }
 
     case 'INC_ADDON_QTY': {

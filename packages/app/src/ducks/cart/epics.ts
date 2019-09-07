@@ -35,28 +35,34 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 const { MapToList, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
+const createPivotId = (key: string) => (v: any, p: any) => `${p.id}.${v[key].id}`
+
 const owner = new schema.Entity('owner');
 
 const menuItem = new schema.Entity('menuItems');
 
-const orderAddons = new schema.Entity('addons', {}, {
-  idAttribute: 'addonId',
-  processStrategy: prop('addon')
+const addon = new schema.Entity('addons');
+
+const orderAddon = new schema.Entity('orderAddons', {
+  addon
+}, {
+  idAttribute: createPivotId('addon'),
 })
-const orderChoices = new schema.Entity('choices', {}, {
+
+const orderChoice = new schema.Entity('choices', {}, {
   idAttribute: 'choiceId',
   processStrategy: prop('choice')
 });
-const orderExcludes = new schema.Entity('excludes', {}, {
+const orderExclude = new schema.Entity('excludes', {}, {
   idAttribute: 'ingredientId',
   processStrategy: prop('ingredient')
 });
 const orderItem = new schema.Entity('orderItems', {
   owners: [owner],
   menuItem: menuItem,
-  orderAddons: [orderAddons],
-  orderChoices: [orderChoices],
-  orderExcludes: [orderExcludes]
+  orderAddons: [orderAddon],
+  orderChoices: [orderChoice],
+  orderExcludes: [orderExclude]
 });
 const cart = {
   items: [orderItem]
@@ -120,11 +126,11 @@ const addToCartEpic: Epic = (action$, state$) =>
         mergeMap((res: any) => of(
           addToCartAsync.success(res),
           fetchCartAsync.request(),
-          snackbar.show({
-            message: 'Added to cart',
-            handleAction: () => window.location.assign('/dinein'),
-            action: 'Go to cart'
-          })
+          // snackbar.show({
+          //   message: 'Added to cart',
+          //   handleAction: () => window.location.assign('/dinein'),
+          //   action: 'Go to cart'
+          // })
         )),
         catchError(error => handleEpicAPIError({
           error,

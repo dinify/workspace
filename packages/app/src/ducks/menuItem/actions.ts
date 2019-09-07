@@ -3,7 +3,8 @@ import {
   MenuItemResponse
 } from 'MenuItemsModels';
 import {
-  createAsyncAction
+  createAsyncAction,
+  createAction
 } from 'typesafe-actions';
 
 const p = 'dinify/cart';
@@ -13,6 +14,10 @@ export const fetchMenuItemAsync = createAsyncAction(
   `${p}/GET_MENUITEM_DONE`,
   `${p}/GET_MENUITEM_FAIL`
 )<MenuItemRequest, MenuItemResponse, string>();
+
+export const clearCustomizationsAction = createAction(`${p}/CLEAR_CUSTOMIZATIONS`, action => {
+  return ({ menuItemId }: { menuItemId: string }) => action({ menuItemId });
+});
 
 export const fetchMenuitemsInit = ({ categoryId }) => ({
   type: 'FETCH_MENUITEMS_INIT',

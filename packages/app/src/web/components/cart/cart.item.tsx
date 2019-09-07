@@ -25,6 +25,7 @@ const CartItemComponent: React.FC<{
   addons,
   ingredients,
   choices,
+  orderAddons
 }) => {
   const testLocale = 'en';
   const getName = (arr: [Translation]) => {
@@ -53,13 +54,15 @@ const CartItemComponent: React.FC<{
   );
   customizations.push(
     ...orderItem.orderAddons
-      .map((addonId: string) => {
+      .map((orderAddonId: string) => {
+        const addonId = orderAddonId.split('.')[1];
         const addon = addons[addonId];
+        const orderAddon = orderAddons[`${orderItem.id}.${addonId}`];
         return {
           name: getName(addon.translations),
           crossover: false,
           price: addon.price,
-          amount: 1 // TODO
+          amount: orderAddon ? orderAddon.amount : 0
         }
       })
   );
@@ -154,7 +157,8 @@ export default connect(
     menuItems: state.menuItem.all,
     addons: state.addon.all,
     choices: state.option.choices,
-    ingredients: state.ingredient.all
+    ingredients: state.ingredient.all,
+    orderAddons: state.cart.orderAddons
   }), {
     removeFromCart: rmFromCartAsync.request
   }

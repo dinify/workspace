@@ -52,6 +52,13 @@ export const items = createReducer({} as OrderItemMap)
     return { ...state, [orderItem.id]: orderItem };
   });
 
+export const orderAddons = createReducer({} as OrderItemMap)
+
+  .handleAction(actions.fetchCartAsync.success, (state, action) => {
+    state;
+    return action.payload.entities.orderAddons;
+  });
+
 const defaultSubtotal: Subtotal = {
   amount: 0,
   currency: 'EUR',
@@ -67,6 +74,7 @@ export const subtotal = createReducer(defaultSubtotal as Subtotal)
 
 const cartReducer = combineReducers({
   items,
+  orderAddons,
   subtotal
 });
 
