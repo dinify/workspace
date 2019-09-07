@@ -35,28 +35,30 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 const { MapToList, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
-const processChoices = pipe(
-  (m: object) => MapToList(m),
-  map((option: Option) => MapToList(option.choices)),
-  (nestedList: any) => unnest(nestedList),
-  (list: any) => filter((choice: Choice) => !!choice.selected, list),
-  map((choice: Choice) => ({ id: choice.id }))
-);
+const processChoices = (menuItemId: string, selectedChoices: any) => {
+  const relevantSC = selectedChoices[menuItemId];
+  if (!relevantSC) return [];
+  return Object.keys(relevantSC).map((choiceId) => ({
+    id: choiceId
+  }));
+}
 
-const processExcludes = pipe(
-  (m: object) => MapToList(m),
-  (list: [Ingredient]) => filter((ingredient) => !!ingredient.excluded, list),
-  map((ingredient) => ({ id: ingredient.id }))
-);
+const processExcludes = (menuItemId: string, selectedExcludes: any) => {
+  const relevantSE = selectedExcludes[menuItemId];
+  if (!relevantSE) return [];
+  return Object.keys(relevantSE).map((ingredientId) => ({
+    id: ingredientId
+  }));
+}
 
-const processAddons = pipe(
-  (m: object) => MapToList(m),
-  (list: [Addon]) => filter((addon) => addon.qty ? addon.qty > 0 : true, list),
-  map((addon: Addon) => ({
-    id: addon.id,
-    amount: addon.qty,
-  }))
-);
+const processAddons = (menuItemId: string, selectedAddons: any) => {
+  const relevantSA = selectedAddons[menuItemId];
+  if (!relevantSA) return [];
+  return Object.keys(relevantSA).map((addonId) => ({
+    id: addonId,
+    amount: relevantSA[addonId].amount
+  }));
+}
 
 const owner = new schema.Entity('owner');
 
@@ -120,13 +122,17 @@ const addToCartEpic: Epic = (action$, state$) =>
     switchMap((action) => {
       
       const { payload: { menuItemId } } = action;
-      const menuItem: MenuItem = state$.value.menuItem.all[menuItemId];
+      const {
+        selectedAddons,
+        selectedExcludes,
+        selectedChoices
+      } = state$.value.menuItem;
 
       const apiPayload = {
         menuItemId,
-        choices: processChoices(menuItem.options),
-        excludes: processExcludes(menuItem.ingredients),
-        addons: processAddons(menuItem.addons)
+        choices: processChoices(menuItemId, selectedChoices),
+        excludes: processExcludes(menuItemId, selectedExcludes),
+        addons: processAddons(menuItemId, selectedAddons)
       };
 
       return from(API.AddToCart(apiPayload)).pipe(
