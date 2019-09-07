@@ -8,11 +8,15 @@ import { fetchMenuItemAsync } from './actions.ts';
 
 import * as menuCategoriesActions from '../menuCategory/actions.ts';
 import assoc from 'ramda/src/assoc';
+import pipe from 'ramda/src/pipe';
 // import * as FN from '@dinify/common/dist/lib/FN';
 
 
 const initialState = {
   all: {},
+  menuAddons: {},
+  menuIngredients: {},
+  menuOptions: {}
 };
 
 // const keepProps = ['ingredients', 'addons', 'options', 'favorite'];
@@ -36,7 +40,15 @@ export default function reducer(state = initialState, action) {
 
     case getType(fetchMenuItemAsync.success): {
       const menuItems = action.payload.entities.menuItems;
-      return assoc('all', { ...state.all, ...menuItems })(state);
+      const menuAddons = action.payload.entities.menuAddons;
+      const menuIngredients = action.payload.entities.menuIngredients;
+      const menuOptions = action.payload.entities.menuOptions;
+      return pipe(
+        assoc('all', { ...state.all, ...menuItems }),
+        assoc('menuAddons', { ...state.menuAddons, ...menuAddons }),
+        assoc('menuIngredients', { ...state.menuIngredients, ...menuIngredients }),
+        assoc('menuOptions', { ...state.menuOptions, ...menuOptions }),
+      )(state);
     }
 
     case getType(menuCategoriesActions.fetchMenuCategoriesAsync.success): {
