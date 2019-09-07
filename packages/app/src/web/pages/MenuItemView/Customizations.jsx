@@ -76,7 +76,10 @@ let Customizations = ({
   options,
   menuAddons,
   menuIngredients,
-  menuOptions
+  menuOptions,
+  selectedAddons,
+  selectedExcludes,
+  selectedChoices
 }) => {
 
   const { t } = useTranslation();
@@ -103,6 +106,13 @@ let Customizations = ({
         const menuIngredient = menuIngredients[menuIngredientId];
         if (!menuIngredient) return (<div />);
         const ingredient = ingredients[menuIngredient.ingredientId];
+        
+        let excluded = false;
+        const relevantSE = selectedExcludes[menuItem.id];
+        if (relevantSE && relevantSE[ingredient.id]) {
+          excluded = true;
+        }
+
         return (<div key={ingredient.id} style={{width: '100%', marginTop: allNonExcludable ? 0 : 8}}>
           <ButtonBase
             style={{borderRadius: 4, width: '100%'}}
@@ -111,7 +121,7 @@ let Customizations = ({
               excludeIngredient({
                 menuItemId: menuItem.id,
                 ingredientId: ingredient.id,
-                excluded: !menuIngredient.excluded
+                excluded: !excluded
               })
             }}>
             <div style={{
@@ -122,18 +132,18 @@ let Customizations = ({
             }}>
               <Typography
 
-                color={menuIngredient.excluded ? 'textSecondary' : 'default'}
+                color={excluded ? 'textSecondary' : 'default'}
                 style={{
                   flex: 1,
                   textAlign: 'start',
                   paddingLeft: 16,
-                  textDecoration: menuIngredient.excluded ? 'line-through' : 'none'
+                  textDecoration: excluded ? 'line-through' : 'none'
                 }}>
                 {ingredient.translations[0].name}
               </Typography>
               {menuIngredient.excludable ?
                 <div style={{width: 40, height: 40, marginRight: 8, padding: 8}}>
-                  {menuIngredient.excluded ?
+                  {excluded ?
                     <AddCircle className={classes.secondary}/> :
                     <RemoveCircle className={classes.secondary}/>
                   }
@@ -160,17 +170,23 @@ let Customizations = ({
         if (!menuAddon) return (<div />);
         const addon = addons[menuAddon.addonId];
 
+        let amount = 0;
+        const relevantSA = selectedAddons[menuItem.id];
+        if (relevantSA && relevantSA[addon.id]) {
+          amount = relevantSA[addon.id].amount;
+        }
+        
         return (<Grid key={addon.id} container wrap="nowrap" style={{marginTop: 8, alignItems: 'center'}} spacing={16}>
           <Grid item>
             <IconButton
               onClick={() => {
-                if (addon.qty > 0) incAddonQty({
+                if (amount > 0) incAddonQty({
                   menuItemId: menuItem.id,
                   addonId: addon.id,
                   inc: - 1
                 })
               }} // remove addon if amount > 0
-              disabled={!addon.qty || addon.qty < 1}>
+              disabled={amount < 1}>
               <RemoveCircle />
             </IconButton>
           </Grid>
@@ -184,7 +200,7 @@ let Customizations = ({
           </Grid>
           <Grid item>
             <Typography variant="subtitle1">
-              {addon.qty ? `× ${addon.qty}` : ''}
+              {amount ? `× ${amount}` : ''}
             </Typography>
           </Grid>
           <Grid item>
@@ -196,7 +212,7 @@ let Customizations = ({
                   inc: 1
                 })
               }}  // add addon if amount < max - 1
-              disabled={addon.qty >= addon.maximum && addon.maximum !== null}>
+              disabled={amount >= addon.maximum && addon.maximum !== null}>
               <AddCircle />
             </IconButton>
           </Grid>
@@ -220,8 +236,11 @@ let Customizations = ({
               {option.translations[0].name}
             </Typography>
             <div className={classes.chipContainer}>
-              {FN.MapToList(option.choices).map((choice) => {
+              {option.choices.map((choice) => {
                 const parsedAmt = choice.difference ? parseFloat(choice.difference.amount) : 0;
+                let selected = false;
+                const relevantSC = selectedChoices[menuItem.id];
+                if (relevantSC && relevantSC[choice.id]) selected = true;
                 return (
                   <Chip
                     variant="outlined"
@@ -233,7 +252,7 @@ let Customizations = ({
                         </Typography>
                       </div>
                     ) : null}
-                    classes={{root: choice.selected ? classes.selected : null}} // add class if selected
+                    classes={{root: selected ? classes.selected : null}} // add class if selected
                     onClick={() => {
                       selectChoice({
                         menuItemId: menuItem.id,
@@ -275,7 +294,10 @@ Customizations = connect(
     menuOptions: state.menuItem.menuOptions,
     addons: state.addon.all,
     ingredients: state.ingredient.all,
-    options: state.option.all
+    options: state.option.all,
+    selectedAddons: state.menuItem.selectedAddons,
+    selectedExcludes: state.menuItem.selectedExcludes,
+    selectedChoices: state.menuItem.selectedChoices
   }),
   {
     excludeIngredient: excludeIngredientAction,
