@@ -5,19 +5,12 @@ import { createLogger } from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import firebaseConfig from '@dinify/common/firebaseConfig.json';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-
-
 import { RootAction, RootState, Services } from 'typesafe-actions';
 
 import { commonReducers } from './root-reducer';
 import rootEpic from './root-epic';
 import services from '../services';
 
-firebase.initializeApp(firebaseConfig);
 
 
 export const epicMiddleware = createEpicMiddleware<

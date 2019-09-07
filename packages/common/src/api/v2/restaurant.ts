@@ -18,6 +18,10 @@ export const GetMenuCategoriesOfSubdomain = ({ subdomain }) => Get({
   path: `restaurant/subdomain/${subdomain}/menu/categories`
 });
 
+export const GetMenuItem = ({ menuItemId }) => Get({
+  path: `menu/item/${menuItemId}`
+});
+
  // Used by dashboard only - subdomain is id in fact (TODO)
 export const GetMenucategories = ({ subdomain }) => Get({
   path: `restaurant/${subdomain}/menuCategories`

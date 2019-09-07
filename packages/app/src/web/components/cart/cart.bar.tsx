@@ -8,19 +8,21 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CartIcon from '@material-ui/icons/ShoppingCartRounded';
 import { RootState } from 'typesafe-actions';
-import { Cart, Subtotal } from 'CartModels';
+import { Subtotal, OrderItem } from 'CartModels';
 
 const CartBar: React.FC<{
   style?: React.CSSProperties,
   onClick?: () => void,
-  subtotal: Subtotal
+  subtotal: Subtotal,
+  orderItemsList: OrderItem[]
 }> = ({
   style,
   subtotal,
+  orderItemsList,
   ...otherProps
 }) => {
   const { t } = useTranslation();
-  const cartItemCount = 1;
+  const cartItemCount = orderItemsList.length;
   return (
     <ButtonBase style={{
       position: 'fixed',
@@ -60,6 +62,6 @@ const CartBar: React.FC<{
 
 export default connect(
   (state: RootState) => ({
-      subtotal: state.cart.subtotal,
+    subtotal: state.cart.subtotal,
   })
 )(CartBar);

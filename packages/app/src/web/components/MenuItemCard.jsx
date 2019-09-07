@@ -72,7 +72,7 @@ const MenuItemCard = ({
       <Typography style={{
         textOverflow: 'ellipsis',
         overflow: 'hidden'
-      }} variant="subtitle1">{menuItem.name}</Typography>
+      }} variant="subtitle1">{menuItem.translations[0].name}</Typography>
       <Typography
         className={classes.price}
         variant="overline">

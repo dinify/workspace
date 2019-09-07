@@ -1,12 +1,13 @@
 import assocPath from 'ramda/src/assocPath';
 import keys from 'ramda/src/keys';
-import { MapToList, useOldPropsIfNewNA } from '@dinify/common/dist/lib/FN';
-import menuCategoryTypes from 'ducks/menuCategory/types';
-import types from './types';
+// import { MapToList, useOldPropsIfNewNA } from '@dinify/common/dist/lib/FN';
+// import menuCategoryTypes from 'ducks/menuCategory/types';
 import { getType } from 'typesafe-actions';
 import * as cartActions from '../cart/actions.ts';
+import { fetchMenuItemAsync } from './actions.ts';
+
 import * as menuCategoriesActions from '../menuCategory/actions.ts';
-import assoc from 'ramda/es/assoc';
+import assoc from 'ramda/src/assoc';
 // import * as FN from '@dinify/common/dist/lib/FN';
 
 
@@ -33,6 +34,11 @@ export default function reducer(state = initialState, action) {
     //   return assocPath(['all', item.id], useOldPropsIfNewNA(state.all[item.id], item, keepProps))(state);
     // }
 
+    case getType(fetchMenuItemAsync.success): {
+      const menuItem = action.payload;
+      return assocPath(['all', menuItem.id], menuItem)(state)
+    }
+
     case getType(menuCategoriesActions.fetchMenuCategoriesAsync.success): {
       const menuItems = action.payload.entities.menuItems;
       return assoc('all', { ...state.all, ...menuItems })(state);
@@ -58,19 +64,19 @@ export default function reducer(state = initialState, action) {
     //   return newState;
     // }
 
-    case types.FAV_MENUITEM_INIT: {
+    case 'FAV_MENUITEM_INIT': {
       const { id, fav } = payload;
       return assocPath(['all', id, 'favorite'], fav)(state);
     }
-    case types.FAV_MENUITEM_DONE: {
+    case 'FAV_MENUITEM_DONE': {
       const { id, fav } = payload.initPayload;
       return assocPath(['all', id, 'favorite'], fav)(state);
     }
-    case types.FAV_MENUITEM_FAIL: {
+    case 'FAV_MENUITEM_FAIL': {
       const { id, fav } = payload.initPayload;
       return assocPath(['all', id, 'favorite'], !fav)(state);
     }
-    case types.EXCLUDE_INGREDIENT: {
+    case 'EXCLUDE_INGREDIENT': {
       const { menuItemId, ingredientId, excluded } = payload;
       return assocPath([
         'all',
@@ -80,7 +86,7 @@ export default function reducer(state = initialState, action) {
         'excluded'
       ], excluded)(state);
     }
-    case types.INC_ADDON_QTY: {
+    case 'INC_ADDON_QTY': {
       const { menuItemId, addonId, inc } = payload;
       let preQty = state.all[menuItemId].addons[addonId].qty;
       if (!preQty) preQty = 0;
@@ -93,7 +99,7 @@ export default function reducer(state = initialState, action) {
       ], preQty + inc)(state);
     }
 
-    case types.SELECT_CHOICE: {
+    case 'SELECT_CHOICE': {
       const { menuItemId, optionId, choiceId } = payload;
       let newState = state;
       keys(state.all[menuItemId].options[optionId].choices).forEach((chId) => {

@@ -1,6 +1,5 @@
 import { Price, Translation } from 'CartModels';
 
-
 declare module 'MenuItemsModels' {
 
   export type MenuItemTranslation = {
@@ -60,5 +59,11 @@ declare module 'MenuItemsModels' {
   export type MenuItemMap = {
     [id: string]: MenuItem;
   }
+
+  export type MenuItemRequest = {
+    menuItemId: string;
+  }
+
+  export type MenuItemResponse = MenuItem;
 
 }

@@ -13,7 +13,7 @@ import * as FN from '@dinify/common/dist/lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import Customizations from './Customizations';
 import NutritionFacts from './NutritionFacts';
-import { fetchMenuitemInit, favMenuitemInit } from 'ducks/menuItem/actions';
+import { fetchMenuitemInit, favMenuitemInit, fetchMenuItemAsync } from 'ducks/menuItem/actions.ts';
 
 const styles = theme => ({
   category: {
@@ -44,10 +44,10 @@ const styles = theme => ({
 class MenuItemView extends React.PureComponent {
   componentWillMount() {
     const {
-      fetchMenuitem,
+      fetchMenuItem,
       match: { params }
     } = this.props;
-    fetchMenuitem({ id: params.id });
+    fetchMenuItem({ menuItemId: params.id });
   }
 
   render() {
@@ -94,7 +94,7 @@ class MenuItemView extends React.PureComponent {
             <Grid item xs={12} md={6}>
               <Grid container spacing={0}>
                 <Grid item style={{flex: 1}}>
-                  <Typography variant="h6">{menuItem.name}</Typography>
+                  <Typography variant="h6">{menuItem.translations[0].name}</Typography>
                   <Typography gutterBottom variant="subtitle1">
                     <Price price={menuItem.price} />
                   </Typography>
@@ -109,7 +109,7 @@ class MenuItemView extends React.PureComponent {
                   />
                 </Grid>
               </Grid>
-              <Typography  >{menuItem.description}</Typography>
+              <Typography  >{menuItem.translations[0].description}</Typography>
               {menuItem.calories && <div style={{marginTop: 16}}>
                 <NutritionFacts calories={menuItem.calories} />
               </div>}
@@ -132,7 +132,7 @@ MenuItemView = connect(
     menuItem: state.menuItem.all[match.params.id]
   }),
   {
-    fetchMenuitem: fetchMenuitemInit,
+    fetchMenuItem: fetchMenuItemAsync.request,
     favMenuitem: favMenuitemInit
   }
 )(MenuItemView)
