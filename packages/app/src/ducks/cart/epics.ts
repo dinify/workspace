@@ -35,31 +35,6 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 const { MapToList, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
-const processChoices = (menuItemId: string, selectedChoices: any) => {
-  const relevantSC = selectedChoices[menuItemId];
-  if (!relevantSC) return [];
-  return Object.keys(relevantSC).map((choiceId) => ({
-    id: choiceId
-  }));
-}
-
-const processExcludes = (menuItemId: string, selectedExcludes: any) => {
-  const relevantSE = selectedExcludes[menuItemId];
-  if (!relevantSE) return [];
-  return Object.keys(relevantSE).map((ingredientId) => ({
-    id: ingredientId
-  }));
-}
-
-const processAddons = (menuItemId: string, selectedAddons: any) => {
-  const relevantSA = selectedAddons[menuItemId];
-  if (!relevantSA) return [];
-  return Object.keys(relevantSA).map((addonId) => ({
-    id: addonId,
-    amount: relevantSA[addonId].amount
-  }));
-}
-
 const owner = new schema.Entity('owner');
 
 const menuItem = new schema.Entity('menuItems');
@@ -116,6 +91,12 @@ const getCartEpic: Epic = (action$) =>
     ))
   );
 
+const processCustomizations = (menuItemId: string, selectedCusomizations: any) => {
+  const relevantCol = selectedCusomizations[menuItemId];
+  if (!relevantCol) return [];
+  return Object.keys(relevantCol).map((id) => ({ id, ...relevantCol[id] }));
+}
+
 const addToCartEpic: Epic = (action$, state$) =>
   action$.pipe(
     ofType(getType(addToCartAsync.request)),
@@ -130,9 +111,9 @@ const addToCartEpic: Epic = (action$, state$) =>
 
       const apiPayload = {
         menuItemId,
-        choices: processChoices(menuItemId, selectedChoices),
-        excludes: processExcludes(menuItemId, selectedExcludes),
-        addons: processAddons(menuItemId, selectedAddons)
+        choices: processCustomizations(menuItemId, selectedChoices),
+        excludes: processCustomizations(menuItemId, selectedExcludes),
+        addons: processCustomizations(menuItemId, selectedAddons)
       };
 
       return from(API.AddToCart(apiPayload)).pipe(
