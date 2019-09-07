@@ -1,4 +1,7 @@
 import { Price, Translation } from 'CartModels';
+import { Ingredient, IngredientMap } from 'IngredientModels';
+import { Addon, AddonMap } from 'AddonModels';
+import { Choice, Option, OptionMap } from 'OptionModels';
 
 declare module 'MenuItemsModels' {
 
@@ -11,32 +14,6 @@ declare module 'MenuItemsModels' {
   export type Image = {
     url: string;
     precedence: number;
-  }
-
-  export type Addon = {
-    id: string;
-    price: Price;
-    translations: [Translation];
-    qty?: number;
-  }
-
-  export type Ingredient = {
-    id: string;
-    translations: [Translation];
-  }
-
-  export type Choice = {
-    id: string;
-    optionId: string;
-    price: Price;
-    translations: [Translation];
-    price: Price;
-    selected?: boolean;
-  }
-  
-  export type Option = {
-    id: string;
-    choices: [Choice];
   }
 
   export type MenuItem = {
@@ -62,14 +39,6 @@ declare module 'MenuItemsModels' {
 
   export type AddonMap = {
     [id: string]: Addon;
-  }
-
-  export type OptionMap = {
-    [id: string]: Option;
-  }
-
-  export type IngredientMap = {
-    [id: string]: Ingredient;
   }
 
   export type MenuItemRequest = {

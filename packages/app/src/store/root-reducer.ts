@@ -16,6 +16,8 @@ import bill from '../ducks/bill/reducers';
 import service from '../ducks/service/reducers';
 import seat from '../ducks/seat/reducers';
 import ingredient from '../ducks/ingredient/reducers';
+import addon from '../ducks/addon/reducers';
+import option from '../ducks/option/reducers';
 
 const snackbarReducer = require('material-ui-snackbar-redux').snackbarReducer;
 
@@ -58,7 +60,9 @@ export const commonReducers = {
   snackbar: snackbarReducer,
   firebase: firebaseReducer,
   form: formReducer,
-  ingredient
+  ingredient,
+  addon,
+  option
 };
 
 const rootReducer = combineReducers(commonReducers);

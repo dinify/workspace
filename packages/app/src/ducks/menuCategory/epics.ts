@@ -47,7 +47,6 @@ const getMenuCategoriesEpic: Epic = (action$) =>
           return fetchMenuCategoriesAsync.success(normalized);
         }),
         catchError(error => {
-          console.log(error);
           return handleEpicAPIError({
             error,
             failActionType: getType(fetchMenuCategoriesAsync.failure),

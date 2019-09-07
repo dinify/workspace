@@ -71,28 +71,21 @@ let Customizations = ({
   addToCart,
   // onSnackClose, addToCartDone,
   history,
+  addons,
+  ingredients,
+  options,
+  menuAddons,
+  menuIngredients,
+  menuOptions
 }) => {
 
   const { t } = useTranslation();
-  const ingredients = [];
-  const addons = [];
-  const options = [];
 
-  let selectCount = 0;
-  options.map(option => {
-    let selected = false;
-    FN.MapToList(option.choices).map((choice) => {
-      selected = selected || choice.selected;
-      return null;
-    });
-    if (selected) selectCount += 1;
-    return null;
-  });
+  const selectCount = 0;
 
-  let allNonExcludable = true;
-  ingredients.forEach(ingredient => {
-    allNonExcludable = allNonExcludable && !ingredient.excludable;
-  });
+  const allNonExcludable = true;
+
+  if (!menuItem.menuIngredients) return <div />;
 
   return (
     <div>
@@ -106,8 +99,10 @@ let Customizations = ({
       </Typography>}
 
 
-      {menuItem.menuIngredients.length > 0 && menuItem.menuIngredients.map(menuIngredient => {
-        const ingredient = menuIngredient.ingredient;
+      {menuItem.menuIngredients.length > 0 && menuItem.menuIngredients.map(menuIngredientId => {
+        const menuIngredient = menuIngredients[menuIngredientId];
+        if (!menuIngredient) return (<div />);
+        const ingredient = ingredients[menuIngredient.ingredientId];
         return (<div key={ingredient.id} style={{width: '100%', marginTop: allNonExcludable ? 0 : 8}}>
           <ButtonBase
             style={{borderRadius: 4, width: '100%'}}
@@ -150,9 +145,9 @@ let Customizations = ({
         </div>);
       })}
 
-      {addons.length > 0 && <Divider style={{marginTop: 16}} />}
+      {menuItem.menuAddons.length > 0 && <Divider style={{marginTop: 16}} />}
 
-      {addons.length > 0 &&
+      {menuItem.menuAddons.length > 0 &&
         <Typography
           style={{marginTop: 16}}
           color="primary"
@@ -160,8 +155,12 @@ let Customizations = ({
           {t('addons')}
         </Typography>
       }
-      {addons.length > 0 && addons.map(addon =>
-        <Grid key={addon.id} container wrap="nowrap" style={{marginTop: 8, alignItems: 'center'}} spacing={16}>
+      {menuItem.menuAddons.length > 0 && menuItem.menuAddons.map(menuAddonId => {
+        const menuAddon = menuAddons[menuAddonId];
+        if (!menuAddon) return (<div />);
+        const addon = addons[menuAddon.addonId];
+
+        return (<Grid key={addon.id} container wrap="nowrap" style={{marginTop: 8, alignItems: 'center'}} spacing={16}>
           <Grid item>
             <IconButton
               onClick={() => {
@@ -180,7 +179,7 @@ let Customizations = ({
               <Price price={addon.price} />
             </Typography>
             <Typography >
-              {addon.name}
+              {addon.translations[0].name}
             </Typography>
           </Grid>
           <Grid item>
@@ -201,19 +200,24 @@ let Customizations = ({
               <AddCircle />
             </IconButton>
           </Grid>
-        </Grid>
-      )}
+        </Grid>)
+      })}
 
-      {options.length > 0 && <Divider style={{marginTop: 16}} />}
+      {menuItem.menuOptions.length > 0 && <Divider style={{marginTop: 16}} />}
 
-      {options.length > 0 && options.map(option => {
+      {menuItem.menuOptions.length > 0 && menuItem.menuOptions.map(menuOptionId => {
+
+        const menuOption = menuOptions[menuOptionId];
+        if (!menuOption) return (<div />);
+        const option = options[menuOption.optionId];
+
         return (
           <div key={option.id}>
             <Typography
               style={{marginTop: 32}}
               className={classes.secondary}
               variant="overline">
-              {option.name}
+              {option.translations[0].name}
             </Typography>
             <div className={classes.chipContainer}>
               {FN.MapToList(option.choices).map((choice) => {
@@ -238,7 +242,7 @@ let Customizations = ({
                       })
                     }} // select choice
                     className={classes.chip}
-                    label={choice.name}/>
+                    label={choice.translations[0].name}/>
                 );
               })}
             </div>
@@ -265,7 +269,13 @@ let Customizations = ({
 
 Customizations = connect(
   (state) => ({
-    addToCartDone: state.ui.progressMap[getType(addToCartAsync.success)]
+    addToCartDone: state.ui.progressMap[getType(addToCartAsync.success)],
+    menuAddons: state.menuItem.menuAddons,
+    menuIngredients: state.menuItem.menuIngredients,
+    menuOptions: state.menuItem.menuOptions,
+    addons: state.addon.all,
+    ingredients: state.ingredient.all,
+    options: state.option.all
   }),
   {
     excludeIngredient: excludeIngredientAction,

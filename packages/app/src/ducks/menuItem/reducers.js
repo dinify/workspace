@@ -37,7 +37,6 @@ export default function reducer(state = initialState, action) {
     //   const item = payload.res || {};
     //   return assocPath(['all', item.id], useOldPropsIfNewNA(state.all[item.id], item, keepProps))(state);
     // }
-
     case getType(fetchMenuItemAsync.success): {
       const menuItems = action.payload.entities.menuItems;
       const menuAddons = action.payload.entities.menuAddons;
