@@ -109,7 +109,7 @@ class MenuItemView extends React.PureComponent {
                   />
                 </Grid>
               </Grid>
-              <Typography  >{menuItem.translations[0].description}</Typography>
+              <Typography>{menuItem.translations[0].description}</Typography>
               {menuItem.calories && <div style={{marginTop: 16}}>
                 <NutritionFacts calories={menuItem.calories} />
               </div>}

@@ -60,10 +60,32 @@ declare module 'MenuItemsModels' {
     [id: string]: MenuItem;
   }
 
+  export type AddonMap = {
+    [id: string]: Addon;
+  }
+
+  export type OptionMap = {
+    [id: string]: Option;
+  }
+
+  export type IngredientMap = {
+    [id: string]: Ingredient;
+  }
+
   export type MenuItemRequest = {
     menuItemId: string;
   }
 
-  export type MenuItemResponse = MenuItem;
+  export type MenuItemResponseNormalized = {
+    entities: {
+      menuItems: MenuItemMap;
+      addons: AddonMap;
+      ingredients: IngredientMap;
+      options: OptionMap;
+      menuAddons: any;
+      menuOptions: any;
+      menuIngredients: any;
+    }
+  };
 
 }

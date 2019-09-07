@@ -74,9 +74,9 @@ let Customizations = ({
 }) => {
 
   const { t } = useTranslation();
-  const ingredients = FN.MapToList(menuItem.ingredients);
-  const addons = FN.MapToList(menuItem.addons);
-  const options = FN.MapToList(menuItem.options);
+  const ingredients = [];
+  const addons = [];
+  const options = [];
 
   let selectCount = 0;
   options.map(option => {
@@ -91,30 +91,32 @@ let Customizations = ({
 
   let allNonExcludable = true;
   ingredients.forEach(ingredient => {
-    allNonExcludable = allNonExcludable && !ingredient.pivot.excludable;
+    allNonExcludable = allNonExcludable && !ingredient.excludable;
   });
 
   return (
     <div>
-      {ingredients.length > 0 && <Divider style={{marginTop: 16}} />}
+      {menuItem.menuIngredients.length > 0 && <Divider style={{marginTop: 16}} />}
 
-      {ingredients.length > 0 && <Typography
+      {menuItem.menuIngredients.length > 0 && <Typography
         style={{marginTop: 32}}
         color="primary"
         variant="overline">
         {t('ingredients')}
       </Typography>}
 
-      {ingredients.length > 0 && ingredients.map(ingredient =>
-        <div key={ingredient.id} style={{width: '100%', marginTop: allNonExcludable ? 0 : 8}}>
+
+      {menuItem.menuIngredients.length > 0 && menuItem.menuIngredients.map(menuIngredient => {
+        const ingredient = menuIngredient.ingredient;
+        return (<div key={ingredient.id} style={{width: '100%', marginTop: allNonExcludable ? 0 : 8}}>
           <ButtonBase
             style={{borderRadius: 4, width: '100%'}}
-            disabled={!ingredient.pivot.excludable}
+            disabled={!menuIngredient.excludable}
             onClick={() => {
               excludeIngredient({
                 menuItemId: menuItem.id,
                 ingredientId: ingredient.id,
-                excluded: !ingredient.excluded
+                excluded: !menuIngredient.excluded
               })
             }}>
             <div style={{
@@ -125,28 +127,28 @@ let Customizations = ({
             }}>
               <Typography
 
-                color={ingredient.excluded ? 'textSecondary' : 'default'}
+                color={menuIngredient.excluded ? 'textSecondary' : 'default'}
                 style={{
                   flex: 1,
                   textAlign: 'start',
                   paddingLeft: 16,
-                  textDecoration: ingredient.excluded ? 'line-through' : 'none'
+                  textDecoration: menuIngredient.excluded ? 'line-through' : 'none'
                 }}>
-                {ingredient.name}
+                {ingredient.translations[0].name}
               </Typography>
-              {ingredient.pivot.excludable ?
+              {menuIngredient.excludable ?
                 <div style={{width: 40, height: 40, marginRight: 8, padding: 8}}>
-                  {ingredient.excluded ?
+                  {menuIngredient.excluded ?
                     <AddCircle className={classes.secondary}/> :
                     <RemoveCircle className={classes.secondary}/>
                   }
                 </div> :
-                <div style={{width: allNonExcludable ? 0 : 48, height: 40}}/>
+                <div style={{ width: allNonExcludable ? 0 : 48, height: 40 }}/>
               }
             </div>
           </ButtonBase>
-        </div>
-      )}
+        </div>);
+      })}
 
       {addons.length > 0 && <Divider style={{marginTop: 16}} />}
 

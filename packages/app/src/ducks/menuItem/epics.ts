@@ -4,8 +4,35 @@ import { ofType, Epic } from 'redux-observable';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import { fetchMenuItemAsync } from './actions';
 import { getType } from 'typesafe-actions';
+import { MenuItemResponseNormalized } from 'MenuItemsModels';
+import { normalize, schema } from 'normalizr';
 
 const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
+
+const addon = new schema.Entity('addons');
+const ingredient = new schema.Entity('ingredients');
+const option = new schema.Entity('options');
+
+const createPivotId = (key: string) => (v: any, p: any) => `${p.id}.${v[key].id}`
+
+const menuAddon = new schema.Entity('menuAddons', {
+  addon
+}, { idAttribute: createPivotId('addon') });
+
+const menuIngredient = new schema.Entity('menuIngredients', {
+  ingredient
+}, { idAttribute: createPivotId('ingredient') });
+
+const menuOption = new schema.Entity('menuOptions', {
+  option
+}, { idAttribute: createPivotId('option') });
+
+
+const menuItem = new schema.Entity('menuItems', {
+  menuAddons: [menuAddon],
+  menuOptions: [menuOption],
+  menuIngredients: [menuIngredient],
+});
 
 
 const getMenuItemEpic: Epic = (action$) =>
@@ -18,7 +45,12 @@ const getMenuItemEpic: Epic = (action$) =>
       const promise = API.GetMenuItem({ menuItemId });
 
       return from(promise).pipe(
-        map(fetchMenuItemAsync.success),
+        map((res: any) => {
+
+          const normalized: MenuItemResponseNormalized = normalize(res, menuItem);
+
+          return fetchMenuItemAsync.success(normalized);
+        }),
         catchError(error => {
           console.log(error);
           return handleEpicAPIError({

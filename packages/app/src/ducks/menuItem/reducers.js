@@ -35,8 +35,8 @@ export default function reducer(state = initialState, action) {
     // }
 
     case getType(fetchMenuItemAsync.success): {
-      const menuItem = action.payload;
-      return assocPath(['all', menuItem.id], menuItem)(state)
+      const menuItems = action.payload.entities.menuItems;
+      return assoc('all', { ...state.all, ...menuItems })(state);
     }
 
     case getType(menuCategoriesActions.fetchMenuCategoriesAsync.success): {
