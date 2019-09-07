@@ -74,6 +74,7 @@ let Customizations = ({
   addons,
   ingredients,
   options,
+  choices,
   menuAddons,
   menuIngredients,
   menuOptions,
@@ -236,7 +237,8 @@ let Customizations = ({
               {option.translations[0].name}
             </Typography>
             <div className={classes.chipContainer}>
-              {option.choices.map((choice) => {
+              {option.choices.map((choiceId) => {
+                const choice = choices[choiceId];
                 const parsedAmt = choice.difference ? parseFloat(choice.difference.amount) : 0;
                 let selected = false;
                 const relevantSC = selectedChoices[menuItem.id];
@@ -295,6 +297,7 @@ Customizations = connect(
     addons: state.addon.all,
     ingredients: state.ingredient.all,
     options: state.option.all,
+    choices: state.option.choices,
     selectedAddons: state.menuItem.selectedAddons,
     selectedExcludes: state.menuItem.selectedExcludes,
     selectedChoices: state.menuItem.selectedChoices

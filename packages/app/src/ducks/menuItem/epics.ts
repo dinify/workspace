@@ -11,7 +11,10 @@ const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 
 const addon = new schema.Entity('addons');
 const ingredient = new schema.Entity('ingredients');
-const option = new schema.Entity('options');
+const choice = new schema.Entity('choices');
+const option = new schema.Entity('options', {
+  choices: [choice]
+});
 
 const createPivotId = (key: string) => (v: any, p: any) => `${p.id}.${v[key].id}`
 

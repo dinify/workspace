@@ -10,9 +10,16 @@ export const all = createReducer({} as OptionMap)
     return { ...state.all, ...options };
   });
 
+export const choices = createReducer({} as OptionMap)
+
+  .handleAction(fetchMenuItemAsync.success, (state, action) => {
+    const choices = action.payload.entities.choices;
+    return { ...state.all, ...choices };
+  });
 
 const optionReducer = combineReducers({
-  all
+  all,
+  choices
 });
 
 export default optionReducer;
