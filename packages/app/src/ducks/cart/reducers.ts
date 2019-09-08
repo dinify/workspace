@@ -33,7 +33,7 @@ import mapObjIndexed from 'ramda/src/mapObjIndexed';
 //  return newState;
 // }
 
-const identity = (o: any) => ((o && true) || o === 'pivotUndefined');
+const identity = (o: any) => !!o && o !== 'pivotUndefined';
 
 export const items = createReducer({} as OrderItemNMap)
 
