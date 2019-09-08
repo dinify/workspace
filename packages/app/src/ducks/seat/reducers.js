@@ -9,7 +9,7 @@ import forEach from 'ramda/src/forEach';
 import { selectedBillItems } from 'ducks/seat/selectors';
 import { orderAsync, rmFromCartAsync } from 'ducks/cart/actions.ts';
 import types from './types';
-import billTypes from '../bill/types';
+import billTypes from '../transaction/types';
 import * as serviceTypes from '../service/types';
 import wsTypes from '../../websockets/types';
 

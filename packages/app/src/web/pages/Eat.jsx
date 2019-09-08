@@ -7,7 +7,7 @@ import {
   splitBillInit,
   transferBillInit,
   initTransactionInit,
-} from 'ducks/bill/actions';
+} from 'ducks/transaction/actions';
 import { rmFromCartAsync, orderAsync, setOrderTypeAction } from 'ducks/cart/actions.ts';
 import {
   checkSelecting,

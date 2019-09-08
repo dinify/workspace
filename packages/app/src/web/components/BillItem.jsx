@@ -10,7 +10,7 @@ import { Motion, spring } from 'react-motion';
 import * as FN from '@dinify/common/dist/lib/FN';
 import Price from 'web/components/Price';
 
-import { selectBillItem as selectBillItemAction } from 'ducks/bill/actions';
+import { selectBillItem as selectBillItemAction } from 'ducks/transaction/actions';
 
 const styles = theme => ({
   cartItemImage: {

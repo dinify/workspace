@@ -14,7 +14,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import * as FN from '@dinify/common/dist/lib/FN';
-import { fetchReceiptInit } from 'ducks/bill/actions';
+import { fetchReceiptInit } from 'ducks/transaction/actions';
 import moment from 'moment';
 
 const styles = theme => ({
