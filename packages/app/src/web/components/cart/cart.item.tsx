@@ -64,6 +64,7 @@ const CartItemComponent: React.FC<{
         const addonId = orderAddonId.split('.')[1];
         const addon = addons[addonId];
         const orderAddon = orderAddons[`${orderItem.id}.${addonId}`];
+        console.log(addon, addonId, orderAddonId)
         return {
           name: getName(addon.translations),
           crossover: false,
