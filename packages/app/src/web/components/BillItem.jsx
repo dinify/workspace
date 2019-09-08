@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -62,6 +61,7 @@ class BillItem extends React.PureComponent {
       onClick,
       seat
     } = this.props;
+    
     const rippleRadius = Math.sqrt(56**2 + 56**2);
 
     const images = item.menu_item ? FN.MapToList(item.menu_item.images) : [];
