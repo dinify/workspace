@@ -7,10 +7,10 @@ import { RootState } from 'typesafe-actions';
 import CartBar from './cart.bar';
 import CartView from './cart.view';
 import { getOrderItemsList } from '../../../ducks/cart/selectors';
-import { OrderItem } from 'CartModels';
+import { OrderItemNormalized } from 'CartModels';
 
 const CartModal: React.FC<{
-    orderItemsList: OrderItem[]
+    orderItemsList: OrderItemNormalized[]
 }> = ({ orderItemsList, ...otherProps }) => {
 
     // TODO: move to global state with redux along with other modals

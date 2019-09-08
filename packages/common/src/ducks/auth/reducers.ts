@@ -9,7 +9,7 @@ const initialState = {
   credential: {}
 };
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state = initialState, action: any) {
   switch (action.type) {
     case types.SET_PAGE: {
       return assoc('page', action.payload)(state);

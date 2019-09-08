@@ -1,13 +1,11 @@
-import { Price, Translation } from 'CartModels';
-
 declare module 'OptionModels' {
+  import { Price, Translation } from 'CartModels';
 
   export type Choice = {
     id: string;
     optionId: string;
     price: Price;
     translations: [Translation];
-    price: Price;
     selected?: boolean;
   }
   
@@ -18,6 +16,10 @@ declare module 'OptionModels' {
 
   export type OptionMap = {
     [id: string]: Option;
+  }
+
+  export type ChoiceMap = {
+    [id: string]: Choice;
   }
 
 }

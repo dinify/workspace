@@ -1,15 +1,12 @@
 import { of } from 'rxjs';
 import toPairs from 'ramda/src/toPairs';
 import curry from 'ramda/src/curry';
-import apply from 'ramda/src/apply';
-import pipe from 'ramda/src/pipe';
+// import apply from 'ramda/src/apply';
+// import pipe from 'ramda/src/pipe';
 import assocPath from 'ramda/src/assocPath';
-import path from 'ramda/src/path';
-import keys from 'ramda/src/keys';
-import numeral from 'numeral';
-import { UNAUTHORIZED } from '../ducks/auth/types';
+// import keys from 'ramda/src/keys';
 
-export const MapToList = (items, _options) => {
+export const MapToList = (items: {[id: string]: any}, _options?: any) => {
   let { sortBy, sortType } = { sortBy: 'id', sortType: String };
   if (_options) {
     sortBy = _options.sortBy;
@@ -19,22 +16,17 @@ export const MapToList = (items, _options) => {
   if (sortType === String) {
     return list.sort((a, b) => b[sortBy].localeCompare(a[sortBy], 'en'));
   }
-  if (sortType === Number) {
-    return list.sort((a, b) => a[sortBy] - b[sortBy]);
-  }
   return list;
 }
 
-export const ListToMap = items => {
+export const ListToMap = (items: []) => {
   if (!items || !items.forEach) return {};
-  const obj = {};
-  items.forEach(item => {
+  const obj: {[id: string]: any} = {};
+  items.forEach((item: any) => {
     obj[item.id] = item;
   });
   return obj;
 };
-
-export const Identity = (val, cb) => cb(val);
 
 export function isInstalled() {
   const url = window.location.search;
@@ -52,24 +44,11 @@ export const MapPath = curry((path, f, obj) =>
   assocPath(path, f(path(path, obj)), obj),
 );
 
-export const UpdateOriginal = (originalMap, actual) => {
-  // always keep original keys
-  const actualMap = actual;
-  MapToList(originalMap).forEach(o => {
-    if (actualMap[o.id]) {
-      keys(o).forEach(originalKey => {
-        if (actualMap[o.id][originalKey] === undefined) {
-          actualMap[o.id][originalKey] = o[originalKey];
-        }
-      });
-    }
-  });
-  return actualMap;
-};
 
-export function parseLanguages(languages) {
-  return languages.map(lang => {
-    const countries = lang[3].map(c => ({
+
+export function parseLanguages(languages: any) {
+  return languages.map((lang: any) => {
+    const countries = lang[3].map((c: any) => ({
       langtag: c[0], // BCP 47    "en-US"
       regionCode: c[0].split('-')[c[0].split('-').length - 1], // ISO 3166-1 (alpha-2) or UN M.49    "US"
       nameNative: c[1]
@@ -84,28 +63,10 @@ export function parseLanguages(languages) {
 }
 
 function getUA() {
-  return navigator.userAgent || navigator.vendor || window.opera;
+  return navigator.userAgent || navigator.vendor;
 }
 
-export function formatPrice(price) {
-  const displayCurrencies = {
-    KWD: 'KD'
-  };
-  const formatAmount = {
-    KWD: (amount) => numeral(amount).format('0.000')
-  }
-  const amount = Math.ceil(price.amount * 1000) / 1000;
-  return `${formatAmount[price.currency](amount)} ${displayCurrencies[price.currency]}`;
-  /* const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: price.currency,
-    minimumFractionDigits: 3,
-  });
-
-  return formatter.format(price.amount); */
-}
-
-export function isMobile(ua) {
+export function isMobile(ua: any) {
   if (!ua && typeof navigator !== 'undefined') ua = getUA();
   if (ua && ua.headers && typeof ua.headers['user-agent'] === 'string') {
     ua = ua.headers['user-agent'];
@@ -122,7 +83,7 @@ export function isMobile(ua) {
   );
 }
 
-export function isTouchMobile(ua) {
+export function isTouchMobile(ua: any) {
   return isMobile(ua) && 'ontouchstart' in global;
 }
 
@@ -134,7 +95,7 @@ export function supportsScrollSnap() {
 }
 
 export function supportsWebp() {
-  if (!self.createImageBitmap) return new Promise((resolve, reject) => { resolve(false); });
+  if (!self.createImageBitmap) return new Promise((resolve) => { resolve(false); });
   
   const webpData = 'data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=';
   return new Promise((resolve, reject) => {
@@ -170,7 +131,7 @@ export function getPlatform() {
     }
 
     // iOS detection from: http://stackoverflow.com/a/9039885/177710
-    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    if (/iPad|iPhone|iPod/.test(userAgent)) {
       return 'ios';
     }
 
@@ -179,14 +140,14 @@ export function getPlatform() {
   return 'desktop';
 }
 
-export function setCookie(cname, cvalue, exdays) {
+export function setCookie(cname: string, cvalue: string, exdays: number) {
   const d = new Date();
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
   const expires = `expires=${d.toUTCString()}`;
   document.cookie = `${cname}=${cvalue};${expires};path=/`;
 }
 
-export function getCookie(cname) {
+export function getCookie(cname: string) {
   const name = `${cname}=`;
   const decodedCookie = decodeURIComponent(document.cookie);
   const ca = decodedCookie.split(';');
@@ -198,19 +159,19 @@ export function getCookie(cname) {
   return '';
 }
 
-export function getInitials(str = '', glue) {
+export function getInitials(str = '', glue: any) {
   if (str === '') return '';
   if (typeof glue === "undefined") glue = true;
   const initials = str.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g);
-  if (glue) return initials.join('');
+  if (glue && initials) return initials.join('');
   return initials;
 };
 
-export const handleEpicAPIError = ({ error, failActionType, initAction }) => {
+export const handleEpicAPIError = ({ error, failActionType, initAction }: any) => {
   const { payload, type, refreshTokenTried } = initAction;
   if (error && error.statusCode === 401 && !refreshTokenTried) {
     return of({
-      type: UNAUTHORIZED,
+      type: 'UNAUTHORIZED',
       payload: { payload, type }
     });
   } else {
@@ -223,7 +184,7 @@ export const handleEpicAPIError = ({ error, failActionType, initAction }) => {
   }
 };
 
-export const useOldPropIfNewNA = (oldItem, propName) => newItem => {
+export const useOldPropIfNewNA = (oldItem: any, propName: any) => (newItem: any) => {
   const updatedItem = newItem;
   if (updatedItem[propName] === undefined && oldItem[propName] !== undefined) {
     updatedItem[propName] = oldItem[propName];
@@ -231,8 +192,3 @@ export const useOldPropIfNewNA = (oldItem, propName) => newItem => {
   return updatedItem;
 }
 
-// use old propertioes of Object if they are not available in the new one
-export const useOldPropsIfNewNA = (oldItem, newItem, propArray) => {
-  if (!oldItem) return newItem;
-  return apply(pipe, propArray.map(p => useOldPropIfNewNA(oldItem, p)))(newItem)
-}

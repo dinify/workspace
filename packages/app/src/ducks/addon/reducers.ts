@@ -6,14 +6,13 @@ import { fetchCartAsync } from '../cart/actions';
 
 export const all = createReducer({} as AddonMap)
 
-
-  .handleAction(fetchCartAsync.success, (state, action) => {
-    const addons = action.payload.entities.addons;
+  .handleAction(fetchMenuItemAsync.success, (state, action) => {
+    const addons: AddonMap = action.payload.entities.addons;
     return { ...state, ...addons };
   })
 
-  .handleAction(fetchMenuItemAsync.success, (state, action) => {
-    const addons = action.payload.entities.addons;
+  .handleAction(fetchCartAsync.success, (state, action) => {
+    const addons: AddonMap = action.payload.entities.addons;
     return { ...state, ...addons };
   });
 

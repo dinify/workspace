@@ -1,7 +1,6 @@
-import { MenuItem, MenuItemMap } from 'MenuItemsModels';
-import { Translation } from 'CartModels';
-
 declare module 'MenuCategoriesModels' {
+  import { MenuItem, MenuItemMap } from 'MenuItemsModels';
+  import { Translation } from 'CartModels';
 
   export type MenuCategory = {
     id: string;

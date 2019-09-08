@@ -1,6 +1,6 @@
-import { Price, Translation } from 'CartModels';
-
 declare module 'IngredientModels' {
+  import { Price, Translation } from 'CartModels';
+
 
   export type Ingredient = {
     id: string;

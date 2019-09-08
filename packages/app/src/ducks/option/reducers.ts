@@ -1,6 +1,6 @@
 import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
-import { OptionMap } from 'OptionModels';
+import { OptionMap, ChoiceMap } from 'OptionModels';
 import { fetchMenuItemAsync } from '../menuItem/actions';
 import { fetchCartAsync } from '../cart/actions';
 
@@ -11,7 +11,7 @@ export const all = createReducer({} as OptionMap)
     return { ...state, ...options };
   });
 
-export const choices = createReducer({} as OptionMap)
+export const choices = createReducer({} as ChoiceMap)
 
   .handleAction(fetchCartAsync.success, (state, action) => {
     const choices = action.payload.entities.choices;

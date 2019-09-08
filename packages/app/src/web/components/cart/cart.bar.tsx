@@ -8,13 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CartIcon from '@material-ui/icons/ShoppingCartRounded';
 import { RootState } from 'typesafe-actions';
-import { Subtotal, OrderItem } from 'CartModels';
+import { Subtotal, OrderItemNormalized } from 'CartModels';
 
 const CartBar: React.FC<{
   style?: React.CSSProperties,
   onClick?: () => void,
   subtotal: Subtotal,
-  orderItemsList: OrderItem[]
+  orderItemsList: OrderItemNormalized[]
 }> = ({
   style,
   subtotal,

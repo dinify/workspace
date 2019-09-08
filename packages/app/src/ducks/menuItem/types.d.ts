@@ -1,9 +1,8 @@
-import { Price, Translation } from 'CartModels';
-import { Ingredient, IngredientMap } from 'IngredientModels';
-import { Addon, AddonMap } from 'AddonModels';
-import { Choice, Option, OptionMap } from 'OptionModels';
-
 declare module 'MenuItemsModels' {
+  import { Price, Translation } from 'CartModels';
+  import { Ingredient, IngredientMap } from 'IngredientModels';
+  import { Addon, AddonMap } from 'AddonModels';
+  import { Choice, Option, OptionMap, ChoiceMap } from 'OptionModels';
 
   export type MenuItemTranslation = {
     name: string;
@@ -51,6 +50,7 @@ declare module 'MenuItemsModels' {
       addons: AddonMap;
       ingredients: IngredientMap;
       options: OptionMap;
+      choices: ChoiceMap;
       menuAddons: any;
       menuOptions: any;
       menuIngredients: any;

@@ -1,6 +1,7 @@
-import { MenuItem, MenuItemMap, Choice, Addon, Ingredient } from 'MenuItemsModels';
-
 declare module 'CartModels' {
+  import { MenuItem, MenuItemMap, Choice, Addon, Ingredient } from 'MenuItemsModels';
+  import { AddonMap } from 'AddonModels';
+  import { IngredientMap } from 'IngredientModels';
 
   export type Translation = {
     locale: string;
@@ -49,12 +50,27 @@ declare module 'CartModels' {
     initiator: string; // uid
     status: string;
     meta: any; // TODO
+    subtotal: Subtotal;
     owners: [Owner]
     menuItem: MenuItem;
     orderAddons: [OrderAddon];
     orderChoices: [OrderChoice];
     orderExcludes: [OrderExclude];
+  }
+
+  export type OrderItemNormalized = {
+    id: string;
+    orderId: string | null;
+    menuItemId: string;
+    initiator: string; // uid
+    status: string;
+    meta: any; // TODO
     subtotal: Subtotal;
+    owners: [string]
+    menuItem: string;
+    orderAddons: [string];
+    orderChoices: [string];
+    orderExcludes: [string];
   }
 
   export type AddToCartResponse = OrderItem;
@@ -77,10 +93,17 @@ declare module 'CartModels' {
     [id: string]: OrderItem;
   }
 
+  export type OrderAddonMap = {
+    [id: string]: OrderAddon;
+  }
+
   export type CartResponseNormalized = {
     entities: {
       menuItems: MenuItemMap,
-      orderItems: OrderItemMap
+      orderItems: OrderItemMap,
+      addons: AddonMap,
+      orderAddons: OrderAddonMap,
+      excludes: IngredientMap
     },
     result: {
       subtotal: Subtotal

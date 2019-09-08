@@ -1,6 +1,6 @@
-import { Price, Translation } from 'CartModels';
-
 declare module 'AddonModels' {
+
+  import { Price, Translation } from 'CartModels';
 
   export type Addon = {
     id: string;

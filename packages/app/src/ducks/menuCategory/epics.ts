@@ -1,7 +1,6 @@
-import { of, from } from 'rxjs';
-import { map as rxMap, mergeMap, switchMap, catchError } from 'rxjs/operators';
+import { from } from 'rxjs';
+import { map as rxMap, mergeMap, catchError } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
-import { fetchSeatsInit } from '../seat/actions.js';
 import { getType } from 'typesafe-actions';
 import { normalize, schema } from 'normalizr';
 import {
@@ -27,7 +26,7 @@ const menuCategories = [menuCategory];
 const getMenuCategoriesEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(fetchMenuCategoriesAsync.request)),
-    switchMap((action) => {
+    mergeMap((action) => {
 
       const { subdomain } = action.payload;
 

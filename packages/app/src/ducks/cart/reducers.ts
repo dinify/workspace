@@ -2,7 +2,7 @@
 import * as actions from './actions';
 import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
-import { OrderItemMap, OrderItem, Subtotal } from 'CartModels';
+import { OrderItemMap, OrderAddonMap, Subtotal } from 'CartModels';
 import dissoc from 'ramda/src/dissoc';
 
 // case types.ADD_TO_CART_DONE: {
@@ -52,7 +52,7 @@ export const items = createReducer({} as OrderItemMap)
     return { ...state, [orderItem.id]: orderItem };
   });
 
-export const orderAddons = createReducer({} as OrderItemMap)
+export const orderAddons = createReducer({} as OrderAddonMap)
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     state;
@@ -71,6 +71,7 @@ export const subtotal = createReducer(defaultSubtotal as Subtotal)
     state;
     return action.payload.result.subtotal;
   });
+
 
 const cartReducer = combineReducers({
   items,

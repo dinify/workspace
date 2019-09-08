@@ -9,6 +9,7 @@ const { getCookie, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const API = require('@dinify/common/dist/api/restaurant');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
+
 const checkinEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(checkinAsync.request)),

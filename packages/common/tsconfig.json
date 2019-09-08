@@ -1,12 +1,16 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "baseUrl": "./packages",
+    "paths": {
+      "@dinify/common": ["common/src"],
+      "@dinify/app": ["app/src"],
+      "@dinify/dashboard": ["dashboard/src"],
+      "@dinify/waiterboard": ["waiterboard/src"],
+      "@dinify/*": ["*/src"]
+    },
+    "removeComments": true,
+
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -19,8 +23,5 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve"
-  },
-  "include": [
-    "src"
-  ]
+  }
 }

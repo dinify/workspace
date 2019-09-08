@@ -3,19 +3,25 @@ import { withTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteRounded';
-import { OrderItem, Translation, Price as PriceType, MenuItemMap } from 'CartModels';
+import { OrderItemNormalized, Translation, Price as PriceType, OrderAddonMap } from 'CartModels';
 import Price from '../../components/Price';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import { rmFromCartAsync } from '../../../ducks/cart/actions';
-import Image from '../Image';
+import { AddonMap, MenuItemMap } from 'MenuItemsModels';
+import { IngredientMap } from 'IngredientModels';
+import { ChoiceMap } from 'OptionModels';
 
 const CartItemComponent: React.FC<{
   theme?: any,
   editMode: boolean,
-  orderItem: OrderItem,
+  orderItem: OrderItemNormalized,
   menuItems: MenuItemMap,
-  removeFromCart: typeof rmFromCartAsync.request
+  removeFromCart: typeof rmFromCartAsync.request,
+  addons: AddonMap,
+  ingredients: IngredientMap,
+  choices: ChoiceMap,
+  orderAddons: OrderAddonMap
 }> = ({
   theme,
   editMode = false,
@@ -27,7 +33,7 @@ const CartItemComponent: React.FC<{
   choices,
   orderAddons
 }) => {
-  const testLocale = 'en';
+  // const testLocale = 'en';
   const getName = (arr: [Translation]) => {
     // const tr = arr.find(t => t.locale === testLocale);
     const tr = arr[0];
@@ -120,7 +126,7 @@ const CartItemComponent: React.FC<{
               }}
               variant="overline">
               {customization.amount && customization.amount > 1 ? `${customization.amount} × ` : ''}
-              {parseFloat(customization.price.amount) > 0 && (
+              {parseFloat(String(customization.price.amount)) > 0 && (
                 <Price price={customization.price} />
               )}
             </Typography>}

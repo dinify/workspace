@@ -184,7 +184,7 @@ export function ChangeAddress(payload) {
     { path: `restaurant/${restaurantId}` },
     {
       address: {
-        business: { ...payload },
+        business: payload,
       },
     },
   );

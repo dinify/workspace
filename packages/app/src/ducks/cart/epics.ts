@@ -1,12 +1,6 @@
-import pipe from 'ramda/src/pipe';
-import filter from 'ramda/src/filter';
-import map from 'ramda/src/map';
-import unnest from 'ramda/src/unnest';
 import prop from 'ramda/src/prop';
-import pluck from 'ramda/src/pluck';
-import zipObj from 'ramda/src/zipObj';
-import assocPath from 'ramda/src/assocPath';
-
+// import pluck from 'ramda/src/pluck';
+// import zipObj from 'ramda/src/zipObj';
 import { of, from } from 'rxjs';
 import { map as rxMap, mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
@@ -20,19 +14,13 @@ import {
   rmFromCartAsync,
 } from './actions';
 import {
-  MenuItem,
-  Option,
-  Choice,
-  Ingredient,
-  Addon,
   CartResponse,
   CartResponseNormalized,
-  OrderItem,
   RmFromCartRequest,
 } from 'CartModels';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 
-const { MapToList, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
+const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
 const createPivotId = (key: string) => (v: any, p: any) => `${p.id}.${v[key].id}`
@@ -68,8 +56,8 @@ const cart = {
   items: [orderItem]
 };
 
-const keyedPropsOfList = (keyProp: string, valProp: string) => 
-  (list: any[]) => zipObj(pluck(keyProp)(list), pluck(valProp)(list));
+// const keyedPropsOfList = (keyProp: string, valProp: string) => 
+// (list: any[]) => zipObj(pluck(keyProp)(list), pluck(valProp)(list));
 
 
 const getCartEpic: Epic = (action$) =>
@@ -78,9 +66,8 @@ const getCartEpic: Epic = (action$) =>
     switchMap((action) => from(API.GetCart()).pipe(
       rxMap((res: CartResponse) => {
 
-        const orderItems: OrderItem[] = res.items;
-        
-        const addonsByOrderItemId = keyedPropsOfList('id', 'orderAddons')(orderItems);
+        // const orderItems: OrderItem[] = res.items;
+        // const addonsByOrderItemId = keyedPropsOfList('id', 'orderAddons')(orderItems);
 
         let normalized: CartResponseNormalized = normalize(res, cart);
 

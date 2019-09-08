@@ -1,6 +1,6 @@
 import {
   MenuItemRequest,
-  MenuItemResponse
+  MenuItemResponseNormalized
 } from 'MenuItemsModels';
 import {
   createAsyncAction,
@@ -13,43 +13,43 @@ export const fetchMenuItemAsync = createAsyncAction(
   `${p}/GET_MENUITEM_INIT`, // { menuItemId }
   `${p}/GET_MENUITEM_DONE`,
   `${p}/GET_MENUITEM_FAIL`
-)<MenuItemRequest, MenuItemResponse, string>();
+)<MenuItemRequest, MenuItemResponseNormalized, string>();
 
 export const clearCustomizationsAction = createAction(`${p}/CLEAR_CUSTOMIZATIONS`, action => {
   return ({ menuItemId }: { menuItemId: string }) => action({ menuItemId });
 });
 
-export const fetchMenuitemsInit = ({ categoryId }) => ({
+export const fetchMenuitemsInit = (payload: any) => ({
   type: 'FETCH_MENUITEMS_INIT',
-  payload: { categoryId }
+  payload
 });
 
-export const fetchMenuitemInit = ({ id }) => ({
+export const fetchMenuitemInit = (payload: any) => ({
   type: 'FETCH_MENUITEM_INIT',
-  payload: { id }
+  payload
 });
 
-export const favMenuitemInit = ({ fav, id }) => ({
+export const favMenuitemInit = (payload: any) => ({
   type: 'FAV_MENUITEM_INIT',
-  payload: { fav, id }
+  payload
 });
 
-export const favMenuitemDone = ({ res, initPayload }) => ({
+export const favMenuitemDone = (payload: any) => ({
   type: 'FAV_MENUITEM_DONE',
-  payload: {res, initPayload }
+  payload
 });
 
-export const excludeIngredient = ({ menuItemId, ingredientId, excluded }) => ({
+export const excludeIngredient = (payload: any) => ({
   type: 'EXCLUDE_INGREDIENT',
-  payload: { menuItemId, ingredientId, excluded }
-})
+  payload
+});
 
-export const incAddonQty = ({ menuItemId, addonId, inc }) => ({
+export const incAddonQty = (payload: any) => ({
   type: 'INC_ADDON_QTY',
-  payload: { menuItemId, addonId, inc }
-})
+  payload
+});
 
-export const selectChoice = ({ menuItemId, optionId, choiceId }) => ({
+export const selectChoice = (payload: any) => ({
   type: 'SELECT_CHOICE',
-  payload: { menuItemId, optionId, choiceId }
-})
+  payload
+});

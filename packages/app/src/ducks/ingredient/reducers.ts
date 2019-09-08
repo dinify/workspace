@@ -17,6 +17,7 @@ export const all = createReducer({} as IngredientMap)
   });
 
 
+
 const ingredientReducer = combineReducers({
   all
 });

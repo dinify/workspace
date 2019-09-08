@@ -6,7 +6,7 @@ export const GetListOfRestaurants = () => {
   });
 }
 
-export const GetRestaurantById = ({ restaurantId, populateWith }) => {
+export const GetRestaurantById = ({ restaurantId, populateWith }: any) => {
   let scopes = '';
   if (populateWith) scopes = `?scopes=${populateWith}`;
   return Get({
@@ -14,24 +14,24 @@ export const GetRestaurantById = ({ restaurantId, populateWith }) => {
   });
 }
 
-export const GetMenuCategoriesOfSubdomain = ({ subdomain }) => Get({
+export const GetMenuCategoriesOfSubdomain = ({ subdomain }: any) => Get({
   path: `restaurant/subdomain/${subdomain}/menu/categories`
 });
 
-export const GetMenuItem = ({ menuItemId }) => Get({
+export const GetMenuItem = ({ menuItemId }: any) => Get({
   path: `menu/item/${menuItemId}`
 });
 
  // Used by dashboard only - subdomain is id in fact (TODO)
-export const GetMenucategories = ({ subdomain }) => Get({
+export const GetMenucategories = ({ subdomain }: any) => Get({
   path: `restaurant/${subdomain}/menuCategories`
 });
 
-export const GetRestaurantingredients = ({ restaurantId }) => Get({
+export const GetRestaurantingredients = ({ restaurantId }: any) => Get({
   path: `restaurant/${restaurantId}/ingredients`
 });
 
-export const GetSeatsOfWB = ({ waiterboardId }) => Get({
+export const GetSeatsOfWB = ({ waiterboardId }: any) => Get({
   path: `waiterboard/${waiterboardId}/seats/all`
 });
 
@@ -43,15 +43,15 @@ export const Checkin = (body: CheckinBody) => Post({
   path: `checkin`
 }, body);
 
-export const CheckOut = ({ tableId }) => Post({
+export const CheckOut = ({ tableId }: any) => Post({
   path: `table/${tableId}/checkout`
 });
 
-export const CheckOutUser = ({ userId }) => Post({
+export const CheckOutUser = ({ userId }: any) => Post({
   path: `checkout/user/${userId}`
 });
 
-export const GetCalls = ({ waiterboardId }) => Get({
+export const GetCalls = ({ waiterboardId }: any) => Get({
   path: `waiterboard/${waiterboardId}/calls`
 });
 
@@ -60,7 +60,7 @@ export const GetCart = (): Promise<any> => Get({
   path: `cart`
 });
 
-export const AddToCart = (body) => Post({
+export const AddToCart = (body: any) => Post({
   path: 'cart'
 }, body);
 
