@@ -23,7 +23,6 @@ const CartBar: React.FC<{
   onClick,
   ...otherProps
 }) => {
-  console.log(count);
   const { t } = useTranslation();
   return (
     <ButtonBase onClick={onClick} style={{
@@ -43,7 +42,7 @@ const CartBar: React.FC<{
           {t('cart.title')}
         </Typography>
         <Typography variant="caption" color="textSecondary">
-          FUCK
+          {t('cart.itemCount', { count, context: count === 0 ? 'none' : undefined })}
         </Typography>
       </div>
       <div style={{textAlign: 'end'}}>

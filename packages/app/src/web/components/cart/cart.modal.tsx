@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-// import { useSpring } from 'react-spring';
+import { useSpring, animated } from 'react-spring';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 
@@ -16,17 +16,18 @@ const CartModal: React.FC<{
 
     // TODO: move to global state with redux along with other modals
     const [open, setOpen] = useState(false);
-    // const cartVisible = orderItemsList.length > 0;
-    // const props = useSpring({
-    //     transform: cartVisible ? `translate3d(0, 0px, 0)` : `translate3d(0, 56px, 0)`
-    // });
-    // const AnimatedCartBar = animated(CartBar);
+    const cartVisible = orderItemsList.length > 0;
+    const props = useSpring({
+        transform: cartVisible ? `translate3d(0, 0px, 0)` : `translate3d(0, 56px, 0)`
+    });
+    const AnimatedCartBar = animated(CartBar);
     return (
         <div>
-            <CartBar
-                onClick={() => { setOpen(true); console.log('helloo'); }}
+            <AnimatedCartBar
+                onClick={() => { setOpen(true); }}
                 style={{
-                    bottom: 56
+                    bottom: 56,
+                    ...props
                 }}/>
             <Dialog fullScreen open={open} onClose={() => { setOpen(false); }}>
                 <CartView orderItemsList={orderItemsList} onClose={() => { setOpen(false); }} />

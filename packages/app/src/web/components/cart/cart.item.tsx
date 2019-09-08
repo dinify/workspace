@@ -14,6 +14,7 @@ import { ChoiceMap } from 'OptionModels';
 
 const CartItemComponent: React.FC<{
   theme?: any,
+  style?: React.CSSProperties,
   editMode: boolean,
   orderItem: OrderItemN,
   menuItems: MenuItemMap,
@@ -24,6 +25,7 @@ const CartItemComponent: React.FC<{
   orderAddons: OrderAddonMap
 }> = ({
   theme,
+  style,
   editMode = false,
   orderItem,
   menuItems,
@@ -88,7 +90,7 @@ const CartItemComponent: React.FC<{
     <div
       style={{
         minWidth: '100%', display: 'flex', alignItems: 'top',
-        padding: '0 16px'
+        ...style
       }} >
       <div style={{
         width: 56,

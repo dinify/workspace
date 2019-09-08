@@ -12,7 +12,7 @@ const TotalPrice = ({
   const { t, i18n } = useTranslation();
   return (
     <React.Fragment>
-      {profile && price && profile.displayCurrency !== price.currency && (
+      {profile && price && profile.displayCurrency && profile.displayCurrency !== price.currency && (
         <div style={{display: 'flex', alignItems: 'center'}}>
           <Typography style={{flex: 1}} variant="caption">
             {t('totalConverted', {currencyName: i18n.format(profile.displayCurrency, `currencyName:${price.amount}`)})}
@@ -22,7 +22,7 @@ const TotalPrice = ({
           </Typography>
         </div>
       )}
-      <div style={{display: 'flex', alignItems: 'center'}}>
+      <div style={{marginTop: 8, display: 'flex', alignItems: 'center'}}>
         <Typography style={{flex: 1}} variant="button">
           {t('total')}
         </Typography>

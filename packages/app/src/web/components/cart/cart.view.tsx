@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
-import CartPage from '../../pages/Cart';
 import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
 import CartItem from './cart.item';
 import { OrderItemN } from 'CartModels';
+import TotalPrice from '../TotalPrice';
+import { RootState } from 'typesafe-actions';
+
+import { Price } from 'CartModels';
 
 const CartView: React.FC<{
     onClose?: () => void,
-    orderItemsList: OrderItemN[]
-}> = ({ orderItemsList, onClose = () => {}, ...otherProps}) => {
+    orderItemsList: OrderItemN[],
+    subtotal: Price
+}> = ({ orderItemsList, subtotal, onClose = () => {}, ...otherProps}) => {
 
     const [editMode, setEditMode] = useState(false);
     const { t } = useTranslation();
@@ -18,19 +23,25 @@ const CartView: React.FC<{
     
     return (
         <div {...otherProps}>
-            <AppBar>
+            <AppBar style={{position: 'fixed', top: 0, left: 0, right: 0}}>
                 {!editMode && <AppBarAction type="close" onClick={onClose}/>}
                 <AppBarTitle 
                     title={t('cart.title')} 
                     subtitle={t('cart.itemCount', { count: cartItemCount, context: cartItemCount === 0 ? 'none' : undefined })}/>
                 <AppBarAction type={editMode ? 'done' : 'edit'} onClick={() => {setEditMode(!editMode)}}/>
             </AppBar>
-            {orderItemsList.map(item =>
-                <CartItem key={item.id} editMode={editMode} orderItem={item}/>
-            )}
-            <CartPage />
+            <div style={{padding: '0 16px', marginTop: 56}}>
+                {orderItemsList.map(item =>
+                    <CartItem style={{padding: '8px 0'}} key={item.id} editMode={editMode} orderItem={item}/>
+                )}
+                <TotalPrice price={subtotal} />
+            </div>
         </div>
     );
 }
 
-export default CartView;
+export default connect(
+    (state: RootState) => ({
+      subtotal: state.cart.subtotal
+    })
+  )(CartView);
