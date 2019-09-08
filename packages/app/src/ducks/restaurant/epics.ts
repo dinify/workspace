@@ -4,11 +4,11 @@ import { Epic, ofType } from 'redux-observable';
 import { push } from 'connected-react-router';
 import { checkinAsync, fetchStatusAsync, favRestaurantAsync } from './actions';
 import { getType } from 'typesafe-actions';
+import * as API from '@dinify/common/src/api/v2/restaurant';
 
 const { getCookie, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
-const API = require('@dinify/common/dist/api/restaurant');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
-
+const APIv1 = require('@dinify/common/src/api/restaurant');
 
 const checkinEpic: Epic = (action$) =>
   action$.pipe(
@@ -19,10 +19,7 @@ const checkinEpic: Epic = (action$) =>
       if (getCookie('access_token') === '') {
         return of(checkinAsync.failure([{ status: 401 }]));
       }
-      return from(API.Checkin({
-        qr,
-        node: true
-      })).pipe(
+      return from(API.Checkin({ qr })).pipe(
         mergeMap((res: any) => of(
           checkinAsync.success(res),
           fetchStatusAsync.request(),
@@ -48,7 +45,7 @@ const favEpic: Epic = (action$) =>
     debounceTime(500),
     exhaustMap((action: any) => {
       const { payload } = action;
-      return from(API.FavRestaurant(payload)).pipe(
+      return from(APIv1.FavRestaurant(payload)).pipe(
         map((res: any) => favRestaurantAsync.success({ res, initPayload: payload })),
         catchError(error => handleEpicAPIError({
           error,

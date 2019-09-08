@@ -3,7 +3,7 @@ import { combineEpics } from 'redux-observable';
 import auth from '@dinify/common/src/ducks/auth/epics';
 
 import app from '../ducks/app/epics';
-import bill from '../ducks/bill/epics';
+import transaction from '../ducks/transaction/epics';
 import cart from '../ducks/cart/epics';
 import language from '../ducks/language/epics';
 import menuCategory from '../ducks/menuCategory/epics';
@@ -26,7 +26,7 @@ export default combineEpics(
   ...menuCategory,
   ...menuItem,
   ...cart,
-  ...bill,
+  ...transaction,
   ...seat,
   ...ui,
   ...service

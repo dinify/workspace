@@ -51,11 +51,11 @@ declare module 'CartModels' {
     status: string;
     meta: any; // TODO
     subtotal: Subtotal;
-    owners: [Owner]
+    owners: Owner[]
     menuItem: MenuItem;
-    orderAddons: [OrderAddon];
-    orderChoices: [OrderChoice];
-    orderExcludes: [OrderExclude];
+    orderAddons: OrderAddon[];
+    orderChoices: OrderChoice[];
+    orderExcludes: OrderExclude[];
   }
 
   export type OrderItemN = {
@@ -78,14 +78,14 @@ declare module 'CartModels' {
 
   export type AddToCartRequest = {
     menuItemId: string;
-    excludes: [string];
-    addons: [];
-    choices: [];
+    excludes: any[];
+    addons: any[];
+    choices: any[];
   }
 
   export type Cart = {
     subtotal: Subtotal;
-    items: [OrderItem];
+    items: OrderItem[];
   }
 
   export type CartResponse = Cart;

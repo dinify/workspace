@@ -12,7 +12,7 @@ import menuCategory from '../ducks/menuCategory/reducers';
 import menuItem from '../ducks/menuItem/reducers';
 import booking from '../ducks/booking/reducers';
 import cart from '../ducks/cart/reducers';
-import bill from '../ducks/bill/reducers';
+import transaction from '../ducks/transaction/reducers';
 import service from '../ducks/service/reducers';
 import seat from '../ducks/seat/reducers';
 import ingredient from '../ducks/ingredient/reducers';
@@ -54,7 +54,7 @@ export const commonReducers = {
   menuItem: persistReducer(menuItemPersistConfig, menuItem),
   booking,
   cart,
-  bill,
+  transaction,
   service: persistReducer(servicePersistConfig, service),
   seat,
   snackbar: snackbarReducer,

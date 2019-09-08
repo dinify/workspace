@@ -74,3 +74,11 @@ export const RemoveFromCart = ({ orderItemId }: RemoveFromCartProps) => Delete({
 export const Order = () => Post({
   path: 'order/dinein'
 });
+
+type InitiateTransactionProps = {
+  gratuity: number;
+  type: 'CASH' | 'CARD' | 'ONLINE';
+}
+export const InitiateTransaction = ({ gratuity, type }: InitiateTransactionProps) => Post({
+  path: '/transaction/initiate'
+}, { gratuity, type });
