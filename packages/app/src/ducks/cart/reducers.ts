@@ -2,6 +2,7 @@
 import * as actions from './actions';
 import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
+import { map } from 'ramda';
 import { OrderItemMap, OrderAddonMap, Subtotal } from 'CartModels';
 import dissoc from 'ramda/src/dissoc';
 
@@ -35,7 +36,14 @@ export const items = createReducer({} as OrderItemMap)
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     state;
-    return action.payload.entities.orderItems;
+    const orderItems = map((orderItem: OrderItem) => {
+      const identity = (o: any) => ((o && true) || o === 'pivotUndefined');
+      orderItem.orderAddons = orderItem.orderAddons.filter(identity);
+      orderItem.orderExcludes = orderItem.orderExcludes.filter(identity);
+      orderItem.orderChoices = orderItem.orderChoices.filter(identity);
+      return orderItem;
+    }, action.payload.entities.orderItems);
+    return orderItems;
   })
 
   .handleAction(actions.addToCartAsync.request, (state, action) => {

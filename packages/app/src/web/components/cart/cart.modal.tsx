@@ -19,15 +19,13 @@ const CartModal: React.FC<{
     const props = useSpring({
         transform: cartVisible ? `translate3d(0, 0px, 0)` : `translate3d(0, 56px, 0)`
     });
-    const AnimatedCartBar = animated(CartBar);
+    // const AnimatedCartBar = animated(CartBar);
     return (
-        <div {...otherProps}>
-            <AnimatedCartBar
-                onClick={() => { setOpen(true); }}
-                orderItemsList={orderItemsList}
+        <div>
+            <CartBar
+                onClick={() => { setOpen(true); console.log('helloo'); }}
                 style={{
-                    bottom: 56,
-                    ...props
+                    bottom: 56
                 }}/>
             <Dialog fullScreen open={open} onClose={() => { setOpen(false); }}>
                 <CartView orderItemsList={orderItemsList} onClose={() => { setOpen(false); }} />

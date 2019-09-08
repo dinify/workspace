@@ -8,23 +8,25 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CartIcon from '@material-ui/icons/ShoppingCartRounded';
 import { RootState } from 'typesafe-actions';
-import { Subtotal, OrderItemNormalized } from 'CartModels';
+import { Subtotal, OrderItem } from 'CartModels';
+import { getOrderItemCount } from '../../../ducks/cart/selectors';
 
 const CartBar: React.FC<{
   style?: React.CSSProperties,
   onClick?: () => void,
   subtotal: Subtotal,
-  orderItemsList: OrderItemNormalized[]
+  count: number
 }> = ({
   style,
   subtotal,
-  orderItemsList,
+  count,
+  onClick,
   ...otherProps
 }) => {
+  console.log(count);
   const { t } = useTranslation();
-  const cartItemCount = orderItemsList.length;
   return (
-    <ButtonBase style={{
+    <ButtonBase onClick={onClick} style={{
       position: 'fixed',
       bottom: 0,
       height: 56,
@@ -34,14 +36,14 @@ const CartBar: React.FC<{
       padding: `8px 16px 8px 16px`,
       justifyContent: 'flex-start',
       ...style
-    }} {...otherProps}>
+    }}>
       <CartIcon color="action" />
       <div style={{textAlign: 'start', padding: '0 16px', flex: 1}}>
         <Typography variant="subtitle1">
           {t('cart.title')}
         </Typography>
         <Typography variant="caption" color="textSecondary">
-          {t('cart.itemCount', { count: cartItemCount, context: cartItemCount === 0 ? 'none' : undefined })}
+          FUCK
         </Typography>
       </div>
       <div style={{textAlign: 'end'}}>
@@ -63,5 +65,6 @@ const CartBar: React.FC<{
 export default connect(
   (state: RootState) => ({
     subtotal: state.cart.subtotal,
+    count: getOrderItemCount(state.cart)
   })
 )(CartBar);

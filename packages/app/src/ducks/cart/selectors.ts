@@ -9,7 +9,16 @@ export const getOrderItemsList = createSelector(
   [
     getOrderItems
   ],
-  (cartItemsMap) => {
-    return MapToList(cartItemsMap);
+  (orderItemsMap) => {
+    return MapToList(orderItemsMap);
+  }
+);
+
+export const getOrderItemCount = createSelector(
+  [
+    getOrderItemsList
+  ],
+  (orderItemsList) => {
+    return orderItemsList.length;
   }
 );

@@ -23,7 +23,10 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
-const createPivotId = (key: string) => (v: any, p: any) => `${p.id}.${v[key].id}`
+const createPivotId = (key: string) => (v: any, p: any): string => {
+  if (p && v[key]) return `${p.id}.${v[key].id}`;
+  return 'pivotUndefined';
+};
 
 const owner = new schema.Entity('owner');
 
