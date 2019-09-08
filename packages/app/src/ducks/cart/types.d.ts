@@ -58,7 +58,7 @@ declare module 'CartModels' {
     orderExcludes: [OrderExclude];
   }
 
-  export type OrderItemNormalized = {
+  export type OrderItemN = {
     id: string;
     orderId: string | null;
     menuItemId: string;
@@ -66,14 +66,15 @@ declare module 'CartModels' {
     status: string;
     meta: any; // TODO
     subtotal: Subtotal;
-    owners: [string]
+    owners: string[];
     menuItem: string;
-    orderAddons: [string];
-    orderChoices: [string];
-    orderExcludes: [string];
+    orderAddons: string[];
+    orderChoices: string[];
+    orderExcludes: string[];
   }
 
   export type AddToCartResponse = OrderItem;
+  export type AddToCartResponseN = OrderItemN;
 
   export type AddToCartRequest = {
     menuItemId: string;
@@ -89,6 +90,10 @@ declare module 'CartModels' {
 
   export type CartResponse = Cart;
 
+  export type OrderItemNMap = {
+    [id: string]: OrderItemN;
+  }
+
   export type OrderItemMap = {
     [id: string]: OrderItem;
   }
@@ -97,10 +102,10 @@ declare module 'CartModels' {
     [id: string]: OrderAddon;
   }
 
-  export type CartResponseNormalized = {
+  export type CartResponseN = {
     entities: {
       menuItems: MenuItemMap,
-      orderItems: OrderItemMap,
+      orderItems: OrderItemNMap,
       addons: AddonMap,
       orderAddons: OrderAddonMap,
       excludes: IngredientMap

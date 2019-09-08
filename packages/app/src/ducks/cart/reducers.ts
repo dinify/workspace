@@ -2,9 +2,11 @@
 import * as actions from './actions';
 import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
-import { map } from 'ramda';
-import { OrderItemMap, OrderAddonMap, Subtotal } from 'CartModels';
+import {
+  OrderItemNMap,
+  OrderAddonMap, Subtotal, OrderItemN } from 'CartModels';
 import dissoc from 'ramda/src/dissoc';
+import mapObjIndexed from 'ramda/src/mapObjIndexed';
 
 // case types.ADD_TO_CART_DONE: {
 //   const res = action.payload;
@@ -31,24 +33,27 @@ import dissoc from 'ramda/src/dissoc';
 //  return newState;
 // }
 
+const identity = (o: any) => ((o && true) || o === 'pivotUndefined');
 
-export const items = createReducer({} as OrderItemMap)
+export const items = createReducer({} as OrderItemNMap)
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
-    state;
-    const orderItems = map((orderItem: OrderItem) => {
-      const identity = (o: any) => ((o && true) || o === 'pivotUndefined');
-      orderItem.orderAddons = orderItem.orderAddons.filter(identity);
-      orderItem.orderExcludes = orderItem.orderExcludes.filter(identity);
-      orderItem.orderChoices = orderItem.orderChoices.filter(identity);
-      return orderItem;
+    const orderItems: OrderItemNMap = mapObjIndexed((orderItem: OrderItemN) => {
+      
+      const { orderAddons, orderExcludes, orderChoices } = orderItem;
+      return {
+        ...orderItem,
+        orderAddons: orderAddons.filter(identity),
+        orderExcludes: orderExcludes.filter(identity),
+        orderChoices: orderChoices.filter(identity)
+      };
     }, action.payload.entities.orderItems);
     return orderItems;
   })
 
-  .handleAction(actions.addToCartAsync.request, (state, action) => {
-    return state;
-  })
+  // .handleAction(actions.addToCartAsync.request, (state) => {
+  //   return state;
+  // })
 
   .handleAction(actions.rmFromCartAsync.request, (state, action) => {
     const { orderItemId } = action.payload;

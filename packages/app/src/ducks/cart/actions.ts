@@ -4,8 +4,8 @@ import {
   RmFromCartRequest,
   OrderRequest,
   OrderResponse,
-  CartResponseNormalized,
-  AddToCartResponse
+  CartResponseN,
+  AddToCartResponseN
 } from 'CartModels';
 import {
   createAction,
@@ -18,13 +18,13 @@ export const fetchCartAsync = createAsyncAction(
   `${p}/GET_CART_INIT`,
   `${p}/GET_CART_DONE`,
   `${p}/GET_CART_FAIL`
-)<undefined, CartResponseNormalized, string>();
+)<undefined, CartResponseN, string>();
 
 export const addToCartAsync = createAsyncAction(
   `${p}/ADD_TO_CART_INIT`,
   `${p}/ADD_TO_CART_DONE`,
   `${p}/ADD_TO_CART_FAIL`
-)<AddToCartRequest, AddToCartResponse, string>();
+)<AddToCartRequest, AddToCartResponseN, string>();
 
 export const rmFromCartAsync = createAsyncAction(
   `${p}/RM_FROM_CART_INIT`,

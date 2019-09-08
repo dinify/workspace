@@ -1,15 +1,16 @@
 import { createSelector } from 'reselect';
 import { CartState } from './reducers';
 import { MapToList } from '../../lib/FN';
+import { OrderItemNMap } from 'CartModels';
 
 
-export const getOrderItems = (state: CartState) => state.items;
+export const getOrderItems = (state: CartState): OrderItemNMap => state.items;
 
 export const getOrderItemsList = createSelector(
   [
     getOrderItems
   ],
-  (orderItemsMap) => {
+  (orderItemsMap: OrderItemNMap) => {
     return MapToList(orderItemsMap);
   }
 );

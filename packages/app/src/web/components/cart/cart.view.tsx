@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import CartPage from '../../pages/Cart';
 import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
 import CartItem from './cart.item';
-import { OrderItemNormalized } from 'CartModels';
+import { OrderItemN } from 'CartModels';
 
 const CartView: React.FC<{
     onClose?: () => void,
-    orderItemsList: OrderItemNormalized[]
+    orderItemsList: OrderItemN[]
 }> = ({ orderItemsList, onClose = () => {}, ...otherProps}) => {
 
     const [editMode, setEditMode] = useState(false);

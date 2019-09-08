@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CartIcon from '@material-ui/icons/ShoppingCartRounded';
 import { RootState } from 'typesafe-actions';
-import { Subtotal, OrderItem } from 'CartModels';
+import { Subtotal } from 'CartModels';
 import { getOrderItemCount } from '../../../ducks/cart/selectors';
 
 const CartBar: React.FC<{

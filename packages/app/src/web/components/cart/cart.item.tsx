@@ -3,7 +3,7 @@ import { withTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteRounded';
-import { OrderItemNormalized, Translation, Price as PriceType, OrderAddonMap } from 'CartModels';
+import { OrderItemN, Translation, Price as PriceType, OrderAddonMap } from 'CartModels';
 import Price from '../../components/Price';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
@@ -15,7 +15,7 @@ import { ChoiceMap } from 'OptionModels';
 const CartItemComponent: React.FC<{
   theme?: any,
   editMode: boolean,
-  orderItem: OrderItemNormalized,
+  orderItem: OrderItemN,
   menuItems: MenuItemMap,
   removeFromCart: typeof rmFromCartAsync.request,
   addons: AddonMap,

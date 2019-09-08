@@ -15,7 +15,7 @@ import {
 } from './actions';
 import {
   CartResponse,
-  CartResponseNormalized,
+  CartResponseN,
   RmFromCartRequest,
 } from 'CartModels';
 import * as API from '@dinify/common/src/api/v2/restaurant';
@@ -72,7 +72,7 @@ const getCartEpic: Epic = (action$) =>
         // const orderItems: OrderItem[] = res.items;
         // const addonsByOrderItemId = keyedPropsOfList('id', 'orderAddons')(orderItems);
 
-        let normalized: CartResponseNormalized = normalize(res, cart);
+        let normalized: CartResponseN = normalize(res, cart);
 
         return fetchCartAsync.success(normalized);
       }),
