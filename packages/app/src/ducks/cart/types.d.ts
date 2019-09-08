@@ -51,7 +51,8 @@ declare module 'CartModels' {
     status: string;
     meta: any; // TODO
     subtotal: Subtotal;
-    owners: Owner[]
+    owners: Owner[];
+    ownersCount: number;
     menuItem: MenuItem;
     orderAddons: OrderAddon[];
     orderChoices: OrderChoice[];

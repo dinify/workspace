@@ -1,4 +1,19 @@
 import types from './types';
+import { createAsyncAction } from 'typesafe-actions';
+import {
+  InitTransactionRequest,
+  InitTransactionResponse
+} from 'TransactionModels';
+
+
+const p = 'dinify/restaurant';
+
+export const initTransactionAsync = createAsyncAction(
+  `${p}/INIT_TRANSACTION_INIT`, // { populateWith: `images` }
+  `${p}/INIT_TRANSACTION_DONE`,
+  `${p}/INIT_TRANSACTION_FAIL`
+)<InitTransactionRequest, InitTransactionResponse, string>();
+
 
 export const fetchBillInit = () => ({
   type: types.FETCH_BILL_INIT,
