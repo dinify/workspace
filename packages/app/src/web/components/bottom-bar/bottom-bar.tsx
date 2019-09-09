@@ -6,13 +6,18 @@ import { useSpring, animated } from 'react-spring';
 
 import { Subtotal } from 'CartModels';
 
-import { ShoppingCartRounded as CartIcon } from '@material-ui/icons';
+import { 
+  ShoppingCartRounded as CartIcon,
+  ReceiptRounded as BillIcon
+} from '@material-ui/icons';
 import { Checkbox, MuiThemeProvider } from '@material-ui/core';
 // import { getOrderItemCount } from '../../../ducks/cart/selectors';
 import BottomBarAction from './bottom-bar-action';
 const getTheme = require('@dinify/common/dist/theme').default;
 
-const darkTheme = getTheme({type: 'dark'});
+const darkTheme = getTheme({type: 'light'});
+let prevCartVisible = false, 
+    prevBillVisible = false;
 let BottomBar: React.FC<{
   style?: React.CSSProperties,
   cartSubtotal: Subtotal,
@@ -27,35 +32,87 @@ let BottomBar: React.FC<{
   billItemCount,
 }) => {
   const { t } = useTranslation();
-  const showBottomBar = cartItemCount > 0 && billItemCount > 0;
+  const cartVisible = cartItemCount > 0;
+  const billVisible = billItemCount > 0;
+  const showBottomBar = cartVisible || billVisible;
+  // const cartOnly = !billVisible && cartVisible;
+  // const billOnly = billVisible && !cartVisible;
+  const getTransform = ({type}: {type: any}) => {
+    const getT = ({cartV, billV}: {cartV: boolean, billV: boolean}) => {
+      if (type === 'cart') {
+        if (cartV) return 'translate3d(0%, 0, 0)';
+        else return 'translate3d(-50%, 0, 0)';
+      }
+      else if (type === 'bill') {
+        // billVisible ? (!cartVisible ? 'translate3d(0%, 0, 0)' : 'translate3d(50%, 0, 0)') : 'translate3d(100%, 0, 0)'
+        if (billV) {
+          if (cartV) return 'translate3d(50%, 0, 0)';
+          else return 'translate3d(0%, 0, 0)';
+        }
+        else return 'translate3d(100%, 0, 0)';
+      }
+    };
+    if (cartVisible !== prevCartVisible || billVisible !== prevBillVisible) {
+      console.log(cartVisible, prevCartVisible, billVisible, prevBillVisible);
+    }
+    if (showBottomBar) return getT({cartV: cartVisible, billV: billVisible});
+    else return getT({cartV: prevCartVisible, billV: prevBillVisible});
+  };
   const animatedStyle = useSpring({
-    transform: showBottomBar ? 'transform3d(0, 0, 0)' : 'transform3d(0, 56px, 0)'
+    transform: showBottomBar ? 'translate3d(0, 0px, 0)' : 'translate3d(0, 56px, 0)'
   });
-  const CartAction = animated(() => (
+  const cartAnimatedStyle = useSpring({
+    transform: getTransform({type: 'cart'})
+  });
+  const billAnimatedStyle = useSpring({
+    transform: getTransform({type: 'bill'})
+  });
+  prevCartVisible = cartVisible;
+  prevBillVisible = billVisible;
+  const CartAction = animated(({...props}) => (
     <BottomBarAction 
       icon={<CartIcon color="action"/>}
       title={t('cart.title')}
       subtotal={cartSubtotal}
       count={cartItemCount}
+      {...props}
+    />
+  ));
+  const BillAction = animated(({...props}) => (
+    <BottomBarAction 
+      icon={<BillIcon color="action"/>}
+      title={t('bill.title')}
+      subtotal={billSubtotal}
+      count={billItemCount}
+      {...props}
     />
   ));
   const palette = darkTheme.palette;
+  const commonStyle = {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: palette.background.paper,
+    borderTop: `1px solid ${palette.divider}`,
+    borderLeft: `1px solid ${palette.divider}`,
+  };
   return (
     <MuiThemeProvider theme={darkTheme}>
       <animated.div style={{
         position: 'fixed', 
+        display: 'flex',
         height: 56,
         width: '100%',
-        backgroundColor: palette.background.paper,
         borderTop: `1px solid ${palette.divider}`,
+        backgroundColor: palette.background.paper,
         bottom: 0,
         color: darkTheme.palette.text.primary,
         ...animatedStyle,
         ...style
       }}>
-        <CartAction/>
-        {cartItemCount + ' '}
-        {billItemCount + ''}
+        <CartAction style={{...commonStyle, ...cartAnimatedStyle}}/>
+        <BillAction style={{...commonStyle, ...billAnimatedStyle}}/>
       </animated.div>
     </MuiThemeProvider>
   );

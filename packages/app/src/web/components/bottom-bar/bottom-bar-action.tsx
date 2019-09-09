@@ -26,12 +26,8 @@ const BottomBarAction: React.FC<{
   const { t } = useTranslation();
   return (
     <ButtonBase onClick={onClick} style={{
-      position: 'fixed',
       bottom: 0,
       height: 56,
-      width: '100vw',
-      backgroundColor: '#fff',
-      borderTop: '1px solid rgba(0,0,0,0.12)',
       padding: `8px 16px 8px 16px`,
       justifyContent: 'flex-start',
       ...style

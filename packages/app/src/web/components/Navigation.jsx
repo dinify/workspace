@@ -66,7 +66,7 @@ const Navigation = ({
     {...otherProps}>
       <div style={{
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
       }}>
@@ -75,12 +75,13 @@ const Navigation = ({
     </Button>
   );
   return (
-    <div style={style} className={classes.root}>
+    <div style={{height: 56, ...style}} className={classes.root}>
       <Divider/>
       <div style={{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: '100%'
       }} {...otherProps}>
         {tabs.map((tab, index) => {
           const selected = value === index;
@@ -88,7 +89,7 @@ const Navigation = ({
             <BottomNavItem key={`bottom-tab-${index}`} selected={selected}
             onClick={(e) => {handleChange(e, index);}}>
               {tab.icon(selected)}
-              <Typography variant="body2" color={selected ? 'primary' : 'textSecondary'}>
+              <Typography style={{marginLeft: 8}} variant="body2" color={selected ? 'primary' : 'textSecondary'}>
                 {tab.text}
               </Typography>
             </BottomNavItem>
