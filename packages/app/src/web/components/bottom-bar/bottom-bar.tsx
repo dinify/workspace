@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSpring, animated } from 'react-spring';
-import { connect } from 'react-redux';
-import { RootState } from 'typesafe-actions';
+// import { connect } from 'react-redux';
+// import { RootState } from 'typesafe-actions';
 
 import { Subtotal } from 'CartModels';
 
 import { ShoppingCartRounded as CartIcon } from '@material-ui/icons';
 import { Checkbox, MuiThemeProvider } from '@material-ui/core';
-import { getOrderItemCount } from '../../../ducks/cart/selectors';
+// import { getOrderItemCount } from '../../../ducks/cart/selectors';
 import BottomBarAction from './bottom-bar-action';
 const getTheme = require('@dinify/common/dist/theme').default;
 
@@ -27,6 +27,10 @@ let BottomBar: React.FC<{
   billItemCount,
 }) => {
   const { t } = useTranslation();
+  const showBottomBar = cartItemCount > 0 && billItemCount > 0;
+  const animatedStyle = useSpring({
+    transform: showBottomBar ? 'transform3d(0, 0, 0)' : 'transform3d(0, 56px, 0)'
+  });
   const CartAction = animated(() => (
     <BottomBarAction 
       icon={<CartIcon color="action"/>}
@@ -38,18 +42,21 @@ let BottomBar: React.FC<{
   const palette = darkTheme.palette;
   return (
     <MuiThemeProvider theme={darkTheme}>
-      <div style={{
+      <animated.div style={{
         position: 'fixed', 
         height: 56,
         width: '100%',
         backgroundColor: palette.background.paper,
         borderTop: `1px solid ${palette.divider}`,
         bottom: 0,
+        color: darkTheme.palette.text.primary,
+        ...animatedStyle,
         ...style
       }}>
+        <CartAction/>
         {cartItemCount + ' '}
         {billItemCount + ''}
-      </div>
+      </animated.div>
     </MuiThemeProvider>
   );
 };
@@ -77,7 +84,7 @@ const StateWrapper: React.FC = ({...otherProps}) => {
         cartSubtotal={subtotal} 
         billSubtotal={subtotal} 
         cartItemCount={cartVisible ? amount : 0}
-        billItemCount={cartVisible ? amount : 0}
+        billItemCount={billVisible ? amount : 0}
         {...otherProps}
       />
     </div>
