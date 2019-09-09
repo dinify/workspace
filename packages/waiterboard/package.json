@@ -10,7 +10,7 @@
     "start-dev": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
-    "deploy": "react-scripts build && firebase deploy --only hosting:waiterboard",
+    "deploy": "yarn build && firebase deploy --only hosting:waiterboard",
     "coverage": "jest --coverage --env=jsdom",
     "lint": "eslint --ext=jsx --ext=js src/",
     "flow": "flow",

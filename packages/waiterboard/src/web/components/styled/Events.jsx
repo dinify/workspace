@@ -192,7 +192,7 @@ const foodItemColors = [
 
 export const FoodItem = styled.div`
   display: inline-block;
-  background: ${p => foodItemColors[p.bgIndex]};
+  background: #666;
   margin: 3px;
   border-radius: 40px;
   color: white;

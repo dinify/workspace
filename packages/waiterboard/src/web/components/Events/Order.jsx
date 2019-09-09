@@ -30,7 +30,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
 		{!raw ?
 			<Header>
 				<TableId bg={color}>
-	        {order.table.number}
+	        {order.table ? order.table.number : 1}
 	      </TableId>
 
 	      <User userId={order.initiator} />
@@ -60,16 +60,26 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
           </tr>
         </thead>
         <tbody>
-					{order.items ? MapToList(order.items).map((item) =>
-						<Tr key={item.id}>
-	            <Td>{item.menu_item.name}</Td>
-							<Td items>
-								{item.choices ? MapToList(item.choices).map((choice) =>
+					{order.items ? MapToList(order.items).map((item) => {
+						return (<Tr key={item.id}>
+	            <Td>{item.menu_item ? item.menu_item.name : item.menuItem.translations[0].name}</Td>
+
+							{item.choices && <Td items>
+								{MapToList(item.choices).map((choice) =>
 									<FoodItem bgIndex={0} key={choice.id}>
 										<span style={{whiteSpace: 'nowrap'}}>{choice.name}</span>
 									</FoodItem>
-								) : ''}
-							</Td>
+								)}
+							</Td>}
+							{item.orderChoices && <Td items>
+								{MapToList(item.orderChoices).map((orderChoice) =>
+									<FoodItem bgIndex={0} key={orderChoice.choice.id}>
+										<span style={{whiteSpace: 'nowrap'}}>{orderChoice.choice.translations[0].name}</span>
+									</FoodItem>
+								)}
+							</Td>}
+
+
 							<Td items>
 								<ListOfCustomizations list={item.excludes}></ListOfCustomizations>
 							</Td>
@@ -77,15 +87,18 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
 								<ListOfCustomizations list={item.addons}></ListOfCustomizations>
 							</Td>
 							<Td>{N(item.subtotal.amount).format('0.000')}Kč</Td>
-	          </Tr>
-					): ''}
-					<Tr>
+	          </Tr>)
+					}): ''}
+					{order.subtotal &&
+						<Tr>
 						<Td>TOTAL</Td>
 						<Td></Td>
 						<Td></Td>
 						<Td></Td>
 						<Td>{N(order.subtotal.amount).format('0.000')}{order.subtotal.currency === 'CZK' ? 'Kč' : order.subtotal.currency}</Td>
-					</Tr>
+					</Tr>					
+					}
+
         </tbody>
       </TableTag>
 
