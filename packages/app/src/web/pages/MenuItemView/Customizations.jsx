@@ -275,7 +275,7 @@ let Customizations = ({
           addToCart({ menuItemId: menuItem.id });
           history.goBack();
         }} // add item to cart
-        style={{marginTop: 24, marginBottom: 16, width: '100%'}}
+        style={{marginTop: 24, marginBottom: 64, width: '100%'}}
         disabled={selectCount < options.length && options.length !== 0}
         variant="extended"
         color="primary"
