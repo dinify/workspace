@@ -28,6 +28,7 @@ const websockets = (store) => {
   });
 
   socket.on('order-status', (data) => {
+    console.log(data);
     if (data.order.status === 'CONFIRMED') {
       dispatch({ type: types.CONFIRMED_ORDER, payload: data });
       if (data.order.initiator === getState().user.loggedUserId) {

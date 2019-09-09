@@ -142,6 +142,7 @@ const rmFromCartEpic: Epic = (action$) =>
       return from(API.RemoveFromCart(payload)).pipe(
         mergeMap((res: any) => of(
           rmFromCartAsync.success(res),
+          fetchCartAsync.request(),
           snackbar.show({
             message: 'Removed from cart',
           })

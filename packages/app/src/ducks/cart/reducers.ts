@@ -51,6 +51,10 @@ export const items = createReducer({} as OrderItemNMap)
     return orderItems;
   })
 
+  .handleAction(actions.fetchCartAsync.failure, () => {
+    return {};
+  })
+
   // .handleAction(actions.addToCartAsync.request, (state) => {
   //   return state;
   // })
@@ -67,6 +71,10 @@ export const items = createReducer({} as OrderItemNMap)
 
 export const orderAddons = createReducer({} as OrderAddonMap)
 
+  .handleAction(actions.fetchCartAsync.failure, () => {
+    return {};
+  })
+
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     state;
     return action.payload.entities.orderAddons;
@@ -74,11 +82,15 @@ export const orderAddons = createReducer({} as OrderAddonMap)
 
 const defaultSubtotal: Subtotal = {
   amount: 0,
-  currency: 'EUR',
+  currency: 'CZK',
   precision: 2
 }
 
 export const subtotal = createReducer(defaultSubtotal as Subtotal)
+
+  .handleAction(actions.fetchCartAsync.failure, () => {
+    return defaultSubtotal;
+  })
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     state;
