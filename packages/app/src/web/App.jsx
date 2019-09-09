@@ -19,7 +19,7 @@ import Main from 'web/pages/Main';
 import AccountSignIn from 'web/components/AccountSignIn';
 import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
-import { Modal as CartModal } from 'web/components/cart/index.ts';
+import { BottomBar } from 'web/components/bottom-bar';
 
 import * as FN from '@dinify/common/dist/lib/FN';
 
@@ -111,7 +111,7 @@ class App extends React.Component {
               })()}/>
           }
         </Motion>
-        <CartModal/>
+        <BottomBar style={{bottom: 56}} />
         {FN.MapToList(dialogs).map(dialog =>
           dialog.component({
             key: dialog.id,

@@ -1,25 +1,25 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
 
 import Price from '../../../web/components/Price';
 
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import CartIcon from '@material-ui/icons/ShoppingCartRounded';
-import { RootState } from 'typesafe-actions';
 import { Subtotal } from 'CartModels';
-import { getOrderItemCount } from '../../../ducks/cart/selectors';
 
-const CartBar: React.FC<{
+const BottomBarAction: React.FC<{
   style?: React.CSSProperties,
+  icon?: any,
   onClick?: () => void,
   subtotal: Subtotal,
-  count: number
+  count: number,
+  title: string,
 }> = ({
   style,
+  icon,
   subtotal,
   count,
+  title,
   onClick,
   ...otherProps
 }) => {
@@ -36,10 +36,10 @@ const CartBar: React.FC<{
       justifyContent: 'flex-start',
       ...style
     }}>
-      <CartIcon color="action" />
+      {icon}
       <div style={{textAlign: 'start', padding: '0 16px', flex: 1}}>
         <Typography variant="subtitle1">
-          {t('cart.title')}
+          {title}
         </Typography>
         <Typography variant="caption" color="textSecondary">
           {t('cart.itemCount', { count, context: count === 0 ? 'none' : undefined })}
@@ -54,16 +54,4 @@ const CartBar: React.FC<{
   );
 };
 
-// export default connect(
-//   (state: any) => ({
-//     cart: state.cart,
-//   }),
-//   { }
-// )(CartBar);
-
-export default connect(
-  (state: RootState) => ({
-    subtotal: state.cart.subtotal,
-    count: getOrderItemCount(state.cart)
-  })
-)(CartBar);
+export default BottomBarAction;

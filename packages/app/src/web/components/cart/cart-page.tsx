@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Fab from '@material-ui/core/Fab';
 
 import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
-import CartItem from './cart.item';
+import CartItem from './cart-item';
 import { OrderItemN } from 'CartModels';
 import TotalPrice from '../TotalPrice';
 import { RootState } from 'typesafe-actions';
@@ -39,16 +39,16 @@ const CartView: React.FC<{
           <CartItem style={{padding: '8px 0'}} key={item.id} editMode={editMode} orderItem={item}/>
         )}
         <TotalPrice price={subtotal} />
+        <Fab
+          disabled={orderItemsList.length < 1}
+          style={{marginTop: 16, width: '100%'}}
+          variant="extended"
+          color="primary"
+          onClick={() => order()}>
+          <RestaurantMenu style={{marginRight: 16}} />
+          {t('order')}
+        </Fab>
       </div>
-      <Fab
-        disabled={orderItemsList.length < 1}
-        style={{marginTop: 16, width: '100%'}}
-        variant="extended"
-        color="primary"
-        onClick={() => order()}>
-        <RestaurantMenu style={{marginRight: 16}} />
-        {t('order')}
-      </Fab>
     </div>
   );
 }
