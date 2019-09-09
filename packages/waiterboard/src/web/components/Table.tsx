@@ -152,7 +152,7 @@ const Table: React.FC<{
   } = props;
 
   const presentGuests = seats.map((s: any) => {
-    s.user = (users as any)[s.user_id];
+    s.user = (users as any)[s.userId];
     return s;
   });
 
@@ -199,7 +199,7 @@ const Table: React.FC<{
         : ''}
 
         {presentGuests.map((guest: any, i: number) =>
-          <Guest key={i} onClick={() => guest.user ? toggleModal({ open: true, type: 'User', userId: guest.user_id }) : ''}>
+          <Guest key={i} onClick={() => guest.user ? toggleModal({ open: true, type: 'User', userId: guest.userId }) : ''}>
             <Photo url={guest.user ? guest.user.photoURL : ''} />
             {guest.user ?
               <Name title={guest.user.displayName}>{S(guest.user.displayName).truncate(16).s}</Name>

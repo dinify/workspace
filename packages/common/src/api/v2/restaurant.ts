@@ -1,4 +1,4 @@
-import { Get, Post, Delete } from './Network';
+import { Get, Post, Patch, Delete } from './Network';
 
 export const GetListOfRestaurants = () => {
   return Get({
@@ -78,6 +78,10 @@ export const RemoveFromCart = ({ orderItemId }: RemoveFromCartProps) => Delete({
 export const Order = () => Post({
   path: 'order/dinein'
 });
+
+export const ConfirmOrder = ({ orderId }: any): Promise<any> => Patch({
+  path: `order/${orderId}`
+})
 
 type InitiateTransactionProps = {
   gratuity: number;

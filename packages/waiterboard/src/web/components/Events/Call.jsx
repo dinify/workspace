@@ -34,7 +34,7 @@ const Call = ({ services, call, confirmCall, removed }) => {
 	        {tableNumber}
 	      </TableId>
 
-				<User userId={call.user_id} />
+				<User userId={call.userId} />
 
 
 				<Text color={color} style={{top: 16}}>

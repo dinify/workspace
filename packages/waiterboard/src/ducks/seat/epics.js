@@ -19,7 +19,7 @@ const loadSeatEpic = (action$, state$) =>
         mergeMap((allSeats) => {
 
           const seats = filter((seat) => seat.occupied, allSeats);
-          const userIds = pluck('user_id', seats);
+          const userIds = pluck('userId', seats);
 
           return [
             fetchAllUsers({ ids: userIds, cache: true }),

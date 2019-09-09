@@ -40,7 +40,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
 				</Text>
 
 				{!noconfirm ?
-					<CheckButton bg={color} onClick={() => confirmOrder({orderId: order.id, initiator: order.initiator})}>
+					<CheckButton bg={color} onClick={() => confirmOrder({ orderId: order.id })}>
 		        <i className="ion-checkmark" />
 		      </CheckButton>
 				: ''}

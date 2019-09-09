@@ -2,6 +2,8 @@ import { of, from } from 'rxjs';
 import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import * as API from '@dinify/common/dist/api/restaurant';
+import * as APIv2 from '@dinify/common/src/api/v2/restaurant.ts';
+
 import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as commonTypes from 'ducks/common/types';
 import { confirmationFail } from 'ducks/common/actions';
@@ -16,7 +18,7 @@ const confirmationEpic = (action$) =>
     filter(action => action.type.includes('CONFIRMATION') && action.type.includes('INIT')),
     switchMap((action) => {
       const { type, payload } = action;
-      const APIcall = API[`Confirm${actionEssence(type)}`]
+      const APIcall = APIv2[`Confirm${actionEssence(type)}`]
       return from(APIcall({...payload})).pipe(
         // delay(200)
         map(() => ({

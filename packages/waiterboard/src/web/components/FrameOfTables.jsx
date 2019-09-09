@@ -9,7 +9,7 @@ const FrameOfTables = ({
   seatList,
   toggleModal
 }) => {
-  const seatsByTable = groupBy((seat) => seat.table_id)(seatList);
+  const seatsByTable = groupBy((seat) => seat.tableId)(seatList);
   return (
     <Container>
       <Grid container spacing={8} justify="flex-start" alignItems="flex-start">

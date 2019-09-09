@@ -12,7 +12,7 @@ const User = ({
 }) => {
 	if (!seat && !userId) return (<span />);
 	let user = null;
-	if (seat) user = users[seat.user_id];
+	if (seat) user = users[seat.userId];
 	else if (userId) user = users[userId];
 	if (!user) return (<span />);
 	let checkinTime = null;
