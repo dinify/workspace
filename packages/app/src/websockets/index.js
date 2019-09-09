@@ -2,6 +2,8 @@
 import io from 'socket.io-client';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 import types from './types';
+import { getType } from 'typesafe-actions';
+import { fetchBillAsync } from '../ducks/transaction/actions';
 
 const socket = io('https://ws.dinify.app');
 
@@ -30,6 +32,7 @@ const websockets = (store) => {
   socket.on('order-status', (data) => {
     console.log(data);
     if (data.order.status === 'CONFIRMED') {
+      dispatch({ type: getType(fetchBillAsync.request) });
       dispatch({ type: types.CONFIRMED_ORDER, payload: data });
       if (data.order.initiator === getState().user.loggedUserId) {
         dispatch(snackbar.show({ message: 'Order confirmed' }));

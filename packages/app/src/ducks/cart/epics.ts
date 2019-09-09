@@ -1,4 +1,3 @@
-import prop from 'ramda/src/prop';
 // import pluck from 'ramda/src/pluck';
 // import zipObj from 'ramda/src/zipObj';
 import { of, from } from 'rxjs';
@@ -6,7 +5,8 @@ import { map as rxMap, mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
 import { fetchSeatsInit } from '../seat/actions.js';
 import { getType } from 'typesafe-actions';
-import { normalize, schema } from 'normalizr';
+import { normalize } from 'normalizr';
+import { cart } from './schemas';
 import {
   addToCartAsync,
   fetchCartAsync,
@@ -23,41 +23,6 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
-const createPivotId = (key: string) => (v: any, p: any): string => {
-  if (p && v[key]) return `${p.id}.${v[key].id}`;
-  return 'pivotUndefined';
-};
-
-const owner = new schema.Entity('owner');
-
-const menuItem = new schema.Entity('menuItems');
-
-const addon = new schema.Entity('addons');
-
-const orderAddon = new schema.Entity('orderAddons', {
-  addon
-}, {
-  idAttribute: createPivotId('addon'),
-})
-
-const orderChoice = new schema.Entity('choices', {}, {
-  idAttribute: 'choiceId',
-  processStrategy: prop('choice')
-});
-const orderExclude = new schema.Entity('excludes', {}, {
-  idAttribute: 'ingredientId',
-  processStrategy: prop('ingredient')
-});
-const orderItem = new schema.Entity('orderItems', {
-  owners: [owner],
-  menuItem: menuItem,
-  orderAddons: [orderAddon],
-  orderChoices: [orderChoice],
-  orderExcludes: [orderExclude]
-});
-const cart = {
-  items: [orderItem]
-};
 
 // const keyedPropsOfList = (keyProp: string, valProp: string) => 
 // (list: any[]) => zipObj(pluck(keyProp)(list), pluck(valProp)(list));

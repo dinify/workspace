@@ -1,10 +1,18 @@
 import { createAsyncAction } from 'typesafe-actions';
 import {
   InitTransactionRequest,
-  InitTransactionResponse
+  InitTransactionResponse,
+  BillResponseN
 } from 'TransactionModels';
 
 const p = 'dinify/transaction';
+
+export const fetchBillAsync = createAsyncAction(
+  `${p}/GET_BILL_INIT`,
+  `${p}/GET_BILL_DONE`,
+  `${p}/GET_BILL_FAIL`
+)<undefined, BillResponseN, string>();
+
 
 export const initTransactionAsync = createAsyncAction(
   `${p}/INIT_TRANSACTION_INIT`, // { populateWith: `images` }

@@ -21,6 +21,41 @@ declare module 'TransactionModels' {
     items: OrderItem[]
   }
 
+  export type OrderN = {
+    id: string;
+    initiator: string;
+    type: OrderTypes;
+    meta: any;
+    status: string;
+    restaurantId: string;
+    items: string[];
+  }
+
+  export type OrderNMap = {
+    [id: string]: OrderN
+  }
+
+  export type BillResponse = {
+    count: number;
+    orders: Order[];
+    subtotal: Subtotal;
+  }
+
+  export type BillResponseN = {
+    entities: {
+      menuItems: MenuItemMap,
+      orderItems: OrderItemNMap,
+      addons: AddonMap,
+      orderAddons: OrderAddonMap,
+      excludes: IngredientMap,
+      orders: OrderNMap
+    },
+    result: {
+      count: number,
+      subtotal: Subtotal
+    }
+  };
+
   export type InitTransactionResponse = {
     id: string,
     initiator: string,

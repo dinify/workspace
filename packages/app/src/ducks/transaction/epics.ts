@@ -1,12 +1,14 @@
 import { of, from } from 'rxjs';
-import { mergeMap, catchError } from 'rxjs/operators';
+import { map as rxMap, mergeMap, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import {
-  initTransactionAsync
+  initTransactionAsync, fetchBillAsync
 } from './actions';
+import { normalize } from 'normalizr';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import { getType } from 'typesafe-actions';
-import { InitTransactionResponse } from 'TransactionModels';
+import { InitTransactionResponse, BillResponse, BillResponseN } from 'TransactionModels';
+import { bill } from '../cart/schemas';
 
 const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
@@ -43,6 +45,26 @@ const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 //     })
 //   )
 
+const getBillEpic: Epic = (action$) =>
+  action$.pipe(
+    ofType(getType(fetchBillAsync.request)),
+    mergeMap((action) => from(API.GetBill()).pipe(
+      rxMap((res: BillResponse) => {
+
+        const normalized: BillResponseN = normalize(res, bill);
+
+        return fetchBillAsync.success(normalized);
+      }),
+      catchError(error => {
+        return handleEpicAPIError({
+          error,
+          failActionType: getType(fetchBillAsync.failure),
+          initAction: action
+        })
+      })
+    ))
+  );
+
 const initTransactionEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(initTransactionAsync.request)),
@@ -69,5 +91,6 @@ const initTransactionEpic: Epic = (action$) =>
 export default [
   // splitEpic,
   // transferEpic,
+  getBillEpic,
   initTransactionEpic
 ];

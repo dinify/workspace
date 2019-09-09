@@ -60,6 +60,10 @@ export const GetCart = (): Promise<any> => Get({
   path: `cart`
 });
 
+export const GetBill = (): Promise<any> => Get({
+  path: `bill`
+});
+
 export const AddToCart = (body: any) => Post({
   path: 'cart'
 }, body);
