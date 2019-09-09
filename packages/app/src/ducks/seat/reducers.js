@@ -9,7 +9,6 @@ import forEach from 'ramda/src/forEach';
 import { selectedBillItems } from 'ducks/seat/selectors';
 import { orderAsync, rmFromCartAsync } from 'ducks/cart/actions.ts';
 import types from './types';
-import billTypes from '../transaction/types';
 import * as serviceTypes from '../service/types';
 import wsTypes from '../../websockets/types';
 
@@ -116,17 +115,15 @@ export default function reducer(state = initialState, action) {
       return assocPath(['seats', seatIndex, 'selected'], selected)(state);
     }
 
-    case billTypes.SPLIT_BILL_INIT: {
-      return assocPath(['splitLoading'], true)(state);
-    }
-
-    case billTypes.SPLIT_BILL_DONE: {
-      return assocPath(['seats'], action.payload.seats)(assocPath(['splitLoading'], false)(state));
-    }
-
-    case billTypes.SPLIT_BILL_FAIL: {
-      return assocPath(['splitLoading'], false)(state);
-    }
+    // case billTypes.SPLIT_BILL_INIT: {
+    //   return assocPath(['splitLoading'], true)(state);
+    // }
+    // case billTypes.SPLIT_BILL_DONE: {
+    //   return assocPath(['seats'], action.payload.seats)(assocPath(['splitLoading'], false)(state));
+    // }
+    // case billTypes.SPLIT_BILL_FAIL: {
+    //   return assocPath(['splitLoading'], false)(state);
+    // }
 
     case types.CLEAR_SELECTED_BILLITEMS: {
       // TODO: ramda impl

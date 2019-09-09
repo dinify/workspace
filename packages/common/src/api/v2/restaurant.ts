@@ -79,6 +79,8 @@ type InitiateTransactionProps = {
   gratuity: number;
   type: 'CASH' | 'CARD' | 'ONLINE';
 }
-export const InitiateTransaction = ({ gratuity, type }: InitiateTransactionProps) => Post({
+export const InitiateTransaction = (
+  { gratuity, type }: InitiateTransactionProps
+): Promise<any> => Post({
   path: '/transaction/initiate'
 }, { gratuity, type });

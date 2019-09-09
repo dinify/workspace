@@ -3,11 +3,13 @@ import * as cartActions from '../ducks/cart/actions';
 import * as restaurantActions from '../ducks/restaurant/actions';
 import * as menuCatrgoryActions from '../ducks/menuItem/actions';
 import * as menuItemActions from '../ducks/menuItem/actions';
+import * as transactionActions from '../ducks/transaction/actions';
 
 export default {
   router: routerActions,
   cart: cartActions,
   restaurant: restaurantActions,
   menuCategory: menuCatrgoryActions,
-  menuItem: menuItemActions
+  menuItem: menuItemActions,
+  transaction: transactionActions
 };

@@ -1,11 +1,12 @@
 import { of, from } from 'rxjs';
-import { mergeMap, switchMap, catchError } from 'rxjs/operators';
+import { mergeMap, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import types from './types';
 import {
-  initTransactionDone,
+  initTransactionAsync
 } from './actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
+import { getType } from 'typesafe-actions';
+import { InitTransactionResponse } from 'TransactionModels';
 
 const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
@@ -42,22 +43,23 @@ const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 //     })
 //   )
 
-
 const initTransactionEpic: Epic = (action$) =>
   action$.pipe(
-    ofType(types.INIT_TRANSACTION_INIT),
-    switchMap((action) => {
+    ofType(getType(initTransactionAsync.request)),
+    mergeMap((action) => {
       const { payload: { type, gratuity } } = action;
-      return from(API.InitiateTransaction({ type, gratuity })).pipe(
-        mergeMap(res => of(
-          initTransactionDone(res),
+      const promise = API.InitiateTransaction({ type, gratuity });
+      
+      return from(promise).pipe(
+        mergeMap((res: InitTransactionResponse) => of(
+          initTransactionAsync.success(res),
           snackbar.show({
             message: 'Payment request sent'
           })
         )),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: types.INIT_TRANSACTION_FAIL,
+          failActionType: getType(initTransactionAsync.failure),
           initAction: action
         }))
       );

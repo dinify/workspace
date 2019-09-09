@@ -1,6 +1,5 @@
 import assoc from 'ramda/src/assoc';
 import pipe from 'ramda/src/pipe';
-import types from './types';
 
 const initialState = {
   bill: {},
@@ -8,6 +7,8 @@ const initialState = {
   receipt: {},
   gratitude: 10
 };
+
+const p = 'dinify/transaction';
 
 export default function reducer(state = initialState, action) {
   const { payload, type } = action;
@@ -19,18 +20,18 @@ export default function reducer(state = initialState, action) {
         assoc('lastBill', payload.bill.lastBill)
       )(state);
     }
-    case types.FETCH_BILL_DONE: {
+    case `${p}/FETCH_BILL_DONE`: {
       const bill = payload.res;
       return pipe(
         (state) => Object.keys(bill).length > 0 ? assoc('lastBill', bill)(state) : state,
         assoc('bill', bill)
       )(state);
     }
-    case types.FETCH_RECEIPT_DONE: {
+    case `${p}/FETCH_RECEIPT_DONE`: {
       const receipt = payload.res;
       return assoc('receipt', receipt)(state);
     }
-    case types.SET_GRATITUDE: {
+    case `${p}/SET_GRATITUDE`: {
       const { percentage } = payload;
       return assoc('gratitude', percentage)(state);
     }

@@ -98,7 +98,7 @@ const CartItemComponent: React.FC<{
         backgroundColor: theme.palette.divider,
         overflow: 'hidden'
       }}>
-        <img src={menuItem.images[0].url} style={{ width: 56, height: 56 }}/>
+        <img src={menuItem.images[0] && menuItem.images[0].url} style={{ width: 56, height: 56 }}/>
       </div>
       <div style={{flex: 1, marginLeft: 16, position: 'relative'}}>
         <div style={{display: 'flex'}}>

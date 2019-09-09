@@ -2,7 +2,6 @@ import {
   CartResponse,
   AddToCartRequest,
   RmFromCartRequest,
-  OrderRequest,
   OrderResponse,
   CartResponseN,
   AddToCartResponseN
@@ -36,7 +35,7 @@ export const orderAsync = createAsyncAction(
   `${p}/ORDER_INIT`, // items
   `${p}/ORDER_DONE`, // res
   `${p}/ORDER_FAIL`
-)<OrderRequest, OrderResponse, string>();
+)<undefined, OrderResponse, string>();
 
 export const setOrderTypeAction = createAction(`${p}/SET_ORDERTYPE`, action => {
   return (orderType: string) => action(orderType);
