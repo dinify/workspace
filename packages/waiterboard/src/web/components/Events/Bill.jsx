@@ -47,7 +47,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm }) => {
     <ActionBox className={removed ? 'vhs-zoom vhs-reverse Bill' : 'Bill'}>
       <Header>
         <TableId bg={color}>
-          {bill.table.number}
+          {bill.table ? bill.table.number : 1}
         </TableId>
         <User userId={bill.initiator} />
   			{bill.BillObject === 'DEBIT_CARD' && !noconfirm ?
@@ -107,19 +107,19 @@ const Bill = ({ bill, confirmBill, removed, noconfirm }) => {
                 <Tr key={item.id}>
     	            <Td>{item.menu_item.name}</Td>
     	            <Td>1</Td>
-    	            <Td>{N(item.subtotal.amount).format('0.000')}Kč</Td>
+    	            <Td>{N(item.subtotal.amount).format('0.00')}Kč</Td>
     	          </Tr>
               )]
   					)}
   					<Tr className="boldline">
   	          <Td>Gratuity</Td>
   	          <Td>{bill.gratuity}%</Td>
-  	          <Td>{N(gratuityAmount).format('0.000')}Kč</Td>
+  	          <Td>{N(gratuityAmount).format('0.00')}Kč</Td>
   	        </Tr>
   					<Tr>
   	          <Td bold color={color}>TOTAL</Td>
   	          <Td></Td>
-  	          <Td bold color={color}>{N(total).format('0.000')}Kč</Td>
+  	          <Td bold color={color}>{N(total).format('0.00')}Kč</Td>
   	        </Tr>
           </tbody>
         </TableTag>

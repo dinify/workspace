@@ -92,3 +92,8 @@ export const InitiateTransaction = (
 ): Promise<any> => Post({
   path: '/transaction/initiate'
 }, { gratuity, type });
+
+
+export const GetOrdersOfWaiterboard = ({ waiterboardId }: { waiterboardId: string}): Promise<any> => Get({
+  path: `waiterboard/${waiterboardId}/orders?status=confirmed,dispatched&today=true`
+})

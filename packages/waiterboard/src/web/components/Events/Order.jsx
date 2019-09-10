@@ -64,21 +64,13 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
 						return (<Tr key={item.id}>
 	            <Td>{item.menu_item ? item.menu_item.name : item.menuItem.translations[0].name}</Td>
 
-							{item.choices && <Td items>
-								{MapToList(item.choices).map((choice) =>
-									<FoodItem bgIndex={0} key={choice.id}>
-										<span style={{whiteSpace: 'nowrap'}}>{choice.name}</span>
-									</FoodItem>
-								)}
-							</Td>}
 							{item.orderChoices && <Td items>
-								{MapToList(item.orderChoices).map((orderChoice) =>
+								{item.orderChoices.map((orderChoice) =>
 									<FoodItem bgIndex={0} key={orderChoice.choice.id}>
 										<span style={{whiteSpace: 'nowrap'}}>{orderChoice.choice.translations[0].name}</span>
 									</FoodItem>
 								)}
 							</Td>}
-
 
 							<Td items>
 								<ListOfCustomizations list={item.excludes}></ListOfCustomizations>
@@ -86,7 +78,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
 							<Td items>
 								<ListOfCustomizations list={item.addons}></ListOfCustomizations>
 							</Td>
-							<Td>{N(item.subtotal.amount).format('0.000')}Kč</Td>
+							<Td>{N(item.subtotal.amount).format('0.00')}Kč</Td>
 	          </Tr>)
 					}): ''}
 					{order.subtotal &&
@@ -95,7 +87,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
 						<Td></Td>
 						<Td></Td>
 						<Td></Td>
-						<Td>{N(order.subtotal.amount).format('0.000')}{order.subtotal.currency === 'CZK' ? 'Kč' : order.subtotal.currency}</Td>
+						<Td>{N(order.subtotal.amount).format('0.00')}{order.subtotal.currency === 'CZK' ? 'Kč' : order.subtotal.currency}</Td>
 					</Tr>					
 					}
 

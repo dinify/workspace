@@ -192,10 +192,9 @@ const foodItemColors = [
 
 export const FoodItem = styled.div`
   display: inline-block;
-  background: #666;
   margin: 3px;
   border-radius: 40px;
-  color: white;
+  color: #;
   padding: 3px 8px;
   font-size: 12px;
   font-weight: 400;
