@@ -5,6 +5,8 @@ import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 import { Motion } from 'react-motion';
 
+import Dialog from '@material-ui/core/Dialog';
+
 import * as routes from 'web/routes';
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
@@ -20,12 +22,18 @@ import AccountSignIn from 'web/components/AccountSignIn';
 import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
 import { BottomBar } from 'web/components/bottom-bar';
+import { CartPage } from 'web/components/cart';
 
 import * as FN from '@dinify/common/dist/lib/FN';
 
 import withRoot from 'withRoot.js';
 
 class App extends React.Component {
+  state = {
+    cartOpen: false,
+    billOpen: false
+  };
+
   componentDidUpdate() {
     const { history } = this.props;
     if (history.action === 'PUSH') {
@@ -62,7 +70,15 @@ class App extends React.Component {
       history,
       user
     } = this.props;
+    const {
+      cartOpen,
+      billOpen
+    } = this.state;
 
+    const onBottomBarSelect = (type) => {
+      if (type === 'cart') this.setState({cartOpen: true});
+      if (type === 'bill') this.setState({billOpen: true});
+    };
     return (
       <div style={{position: 'relative'}}>
         <AppBar history={history}>
@@ -111,7 +127,13 @@ class App extends React.Component {
               })()}/>
           }
         </Motion>
-        <BottomBar style={{bottom: 56}} />
+        <BottomBar style={{bottom: 56}} onSelect={onBottomBarSelect} />
+        <Dialog fullScreen open={cartOpen} onClose={() => { this.setState({cartOpen: false}) }}>
+          <CartPage onClose={() => { this.setState({cartOpen: false}) }}/>
+        </Dialog>
+        <Dialog fullScreen open={billOpen} onClose={() => { this.setState({billOpen: false}) }}>
+          bill page
+        </Dialog>
         {FN.MapToList(dialogs).map(dialog =>
           dialog.component({
             key: dialog.id,

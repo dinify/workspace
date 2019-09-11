@@ -11,6 +11,7 @@ import { RootState } from 'typesafe-actions';
 
 import { Subtotal } from 'CartModels';
 import { orderAsync } from '../../../ducks/cart/actions';
+import { getOrderItemsList } from '../../../ducks/cart/selectors';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 
 const CartView: React.FC<{
@@ -55,7 +56,8 @@ const CartView: React.FC<{
 
 export default connect(
   (state: RootState) => ({
-    subtotal: state.cart.subtotal
+    subtotal: state.cart.subtotal,
+    orderItemsList: getOrderItemsList(state.cart)
   }), {
     order: orderAsync.request
 })(CartView);
