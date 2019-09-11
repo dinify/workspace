@@ -1,12 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import N from 'numeral';
 import moment from 'moment';
+import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { MapToList } from '@dinify/common/dist/lib/FN';
 import { confirmOrderInit } from 'ducks/order/actions';
 import User from './user';
 import { colorsByStages } from '../../colors';
 import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, FoodItem } from '../styled/Events';
+
+const styles = () => ({
+  progress: {
+    color: 'white'
+  },
+});
 
 const color = colorsByStages['s2'];
 
@@ -14,7 +23,7 @@ const ListOfCustomizations = ({ list }) => {
 	if (list) {
 		return (
 			<div>
-				{MapToList(list).map((option, i) =>
+				{list.map((option, i) =>
 					<FoodItem bgIndex={i} key={i}>
 						<span style={{whiteSpace: 'nowrap'}}>{option.name}</span>
 					</FoodItem>
@@ -22,10 +31,10 @@ const ListOfCustomizations = ({ list }) => {
 			</div>
 		)
 	}
-	return null
+	return null;
 }
 
-const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }) => (
+const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, raw, datetime }) => (
 	<ActionBox className={removed ? 'vhs-zoom vhs-reverse Order' : 'Order'}>
 		{!raw ?
 			<Header>
@@ -40,8 +49,16 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
 				</Text>
 
 				{!noconfirm ?
-					<CheckButton bg={color} onClick={() => confirmOrder({ orderId: order.id })}>
-		        <i className="ion-checkmark" />
+					<CheckButton
+						bg={color}
+						disabled={confirming[order.id]}
+						onClick={() => confirmOrder({ orderId: order.id })}
+					>
+		        {confirming[order.id] ?
+							<CircularProgress className={classes.progress} />
+							:
+							<i className="ion-checkmark" />
+						}
 		      </CheckButton>
 				: ''}
 	    </Header>
@@ -65,19 +82,35 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
 	            <Td>{item.menu_item ? item.menu_item.name : item.menuItem.translations[0].name}</Td>
 
 							{item.orderChoices && <Td items>
-								{item.orderChoices.map((orderChoice) =>
-									<FoodItem bgIndex={0} key={orderChoice.choice.id}>
-										<span style={{whiteSpace: 'nowrap'}}>{orderChoice.choice.translations[0].name}</span>
+								{item.orderChoices.map((orderChoice) => {
+									if (!orderChoice.choice) return null;
+									return <FoodItem bgIndex={0} key={orderChoice.choice.id}>
+										<span style={{ whiteSpace: 'nowrap' }}>{orderChoice.choice.translations[0].name}</span>
 									</FoodItem>
-								)}
+								})}
 							</Td>}
 
-							<Td items>
-								<ListOfCustomizations list={item.excludes}></ListOfCustomizations>
-							</Td>
-							<Td items>
-								<ListOfCustomizations list={item.addons}></ListOfCustomizations>
-							</Td>
+							{item.orderExcludes && <Td items>
+								{item.orderExcludes.map((orderExclude) => {
+									if (!orderExclude.ingredient) return null;
+									return <FoodItem bgIndex={0} key={orderExclude.ingredient.id}>
+										<span style={{ whiteSpace: 'nowrap' }}>{orderExclude.ingredient.translations[0].name}</span>
+									</FoodItem>;
+								})}
+							</Td>}
+
+							{item.orderAddons && <Td items>
+								{item.orderAddons.map((orderAddon) => {
+									if (!orderAddon.addon) return null;
+									return <FoodItem bgIndex={0} key={orderAddon.addon.id}>
+										<span style={{ whiteSpace: 'nowrap' }}>
+											<strong>{orderAddon.amount}× </strong>
+											{orderAddon.addon.translations[0].name}
+										</span>
+									</FoodItem>;
+								})}
+							</Td>}
+
 							<Td>{N(item.subtotal.amount).format('0.00')}Kč</Td>
 	          </Tr>)
 					}): ''}
@@ -88,7 +121,7 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
 						<Td></Td>
 						<Td></Td>
 						<Td>{N(order.subtotal.amount).format('0.00')}{order.subtotal.currency === 'CZK' ? 'Kč' : order.subtotal.currency}</Td>
-					</Tr>					
+					</Tr>
 					}
 
         </tbody>
@@ -97,11 +130,15 @@ const Order = ({ order, confirmOrder, removed, timer, noconfirm, raw, datetime }
 	</ActionBox>
 )
 
-export default connect(
-  state => ({
-		timer: state.restaurant.timer,
-	}),
-  {
-    confirmOrder: confirmOrderInit
-  },
+
+export default compose(
+  withStyles(styles),
+  connect(
+		state => ({
+			confirming: state.order.confirming,
+		}),
+		{
+			confirmOrder: confirmOrderInit
+		},
+	)
 )(Order);
