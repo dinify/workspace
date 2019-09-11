@@ -4,7 +4,8 @@ import { useSpring, animated } from 'react-spring';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import { Subtotal } from 'CartModels';
-import { getOrderItemCount } from '../../../ducks/cart/selectors';
+import { getOrderItemCount as getCartCount } from '../../../ducks/cart/selectors';
+import { getOrderItemCount as getBillCount } from '../../../ducks/transaction/selectors';
 import { withTheme } from '@material-ui/core/styles';
 import CartIcon from '@material-ui/icons/ShoppingCartRounded';
 import BillIcon from '@material-ui/icons/ReceiptRounded';
@@ -117,8 +118,8 @@ let BottomBar: React.FC<{
 export default withTheme()(connect(
   (state: RootState) => ({
     cartSubtotal: state.cart.subtotal,
-    cartItemCount: getOrderItemCount(state.cart),
-    billSubtotal: state.cart.subtotal,
-    billItemCount: getOrderItemCount(state.cart)
+    cartItemCount: getCartCount(state.cart),
+    billSubtotal: state.transaction.subtotal,
+    billItemCount: getBillCount(state.transaction)
   })
 )(BottomBar));
