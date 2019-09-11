@@ -6,7 +6,7 @@ import { useSpring, animated } from 'react-spring';
 
 import { Subtotal } from 'CartModels';
 
-import { 
+import {
   ShoppingCartRounded as CartIcon,
   ReceiptRounded as BillIcon
 } from '@material-ui/icons';

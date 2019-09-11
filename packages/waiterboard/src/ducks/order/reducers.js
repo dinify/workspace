@@ -4,9 +4,11 @@ import mergeDeepRight from 'ramda/src/mergeDeepRight';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 import * as orderTypes from 'ducks/order/types';
 import * as commonTypes from 'ducks/common/types';
+import pipe from 'ramda/es/pipe';
 
 const initialState = {
-  all: {}
+  all: {},
+  confirming: {}
 }
 
 export default function reducer(state = initialState, action) {
@@ -25,10 +27,18 @@ export default function reducer(state = initialState, action) {
       return assocPath(['all', order.id], order)(state);
     }
 
+    case orderTypes.ORDER_CONFIRMATION_INIT: {
+      const { orderId } = payload;
+      return assocPath(['confirming', orderId], true)(state);
+    }    
+
     case commonTypes.CONFIRMATION_DONE: {
       if (payload.type !== 'Order') return state;
       const { orderId } = payload;
-      return assocPath(['all', orderId, 'status'], 'CONFIRMED')(state);
+      return pipe(
+        assocPath(['confirming', orderId], false),
+        assocPath(['all', orderId, 'status'], 'CONFIRMED')
+      )(state);
     }
 
     default:
