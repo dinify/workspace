@@ -1,4 +1,4 @@
-import assocPath from 'ramda/src/assocPath';
+import assocPath from 'ramda/es/assocPath';
 import * as userTypes from 'ducks/user/types';
 
 const initialState = {

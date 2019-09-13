@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { MapToList } from '@dinify/common/dist/lib/FN';
 import { withFirebase } from 'react-redux-firebase';
 
-import sum from 'ramda/src/sum';
+import sum from 'ramda/es/sum';
 
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';

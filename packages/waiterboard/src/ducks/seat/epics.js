@@ -1,9 +1,9 @@
 import { of, from } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import pluck from 'ramda/src/pluck'
-import filter from 'ramda/src/filter'
-import * as API from '@dinify/common/dist/api/restaurant';
+import pluck from 'ramda/es/pluck'
+import filter from 'ramda/es/filter'
+import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as seatTypes from 'ducks/seat/types';
 import { fetchAllUsers } from 'ducks/user/actions';
@@ -15,7 +15,7 @@ const loadSeatEpic = (action$, state$) =>
 
       const waiterboardId = state$.value.app.selectedWBId;
 
-      return from(API.GetSeatsOfWB({ waiterboardId, node: true })).pipe(
+      return from(API.GetSeatsOfWaiterboard({ waiterboardId })).pipe(
         mergeMap((allSeats) => {
 
           const seats = filter((seat) => seat.occupied, allSeats);

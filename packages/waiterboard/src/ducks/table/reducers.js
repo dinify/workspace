@@ -1,6 +1,6 @@
-import assoc from 'ramda/src/assoc';
-import assocPath from 'ramda/src/assocPath';
-import keys from 'ramda/src/keys';
+import assoc from 'ramda/es/assoc';
+import assocPath from 'ramda/es/assocPath';
+import keys from 'ramda/es/keys';
 import { UpdateOriginal } from '@dinify/common/dist/lib/FN';
 import * as restaurantTypes from 'ducks/restaurant/types';
 import * as tableTypes from 'ducks/table/types';

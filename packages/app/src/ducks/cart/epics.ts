@@ -1,7 +1,5 @@
-// import pluck from 'ramda/src/pluck';
-// import zipObj from 'ramda/src/zipObj';
 import { of, from } from 'rxjs';
-import { map as rxMap, mergeMap, switchMap, catchError } from 'rxjs/operators';
+import { map as rxMap, mergeMap, switchMap, catchError, debounceTime } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
 import { fetchSeatsInit } from '../seat/actions.js';
 import { getType } from 'typesafe-actions';
@@ -59,7 +57,8 @@ const processCustomizations = (menuItemId: string, selectedCusomizations: any) =
 const addToCartEpic: Epic = (action$, state$) =>
   action$.pipe(
     ofType(getType(addToCartAsync.request)),
-    switchMap((action) => {
+    debounceTime(500),
+    mergeMap((action) => {
       
       const { payload: { menuItemId } } = action;
       const {

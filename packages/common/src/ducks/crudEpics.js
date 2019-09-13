@@ -1,5 +1,5 @@
 import { Observable, of, from } from 'rxjs';
-import { mergeMap, map, catchError, filter } from 'rxjs/operators';
+import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
 import API from '../api';
 import ramdaFilter from 'ramda/src/filter';
 import { handleEpicAPIError } from '../lib/FN';
@@ -82,7 +82,7 @@ const fetchEpic = (action$, state$) =>
 const fetchAllEpic = (action$, state$) =>
   action$.pipe(
     filter(action => filterAction(action.type, 'FETCHALL', 'INIT')),
-    mergeMap(({ payload, type }) => {
+    switchMap(({ payload, type }) => {
       const { subject, path } = getSubjectAndPath(type, 'FETCHALL', 'INIT');
       let ids = payload.ids;
       if (payload.cache) {

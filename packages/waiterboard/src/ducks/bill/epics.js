@@ -1,8 +1,8 @@
 import { of, from } from 'rxjs';
 import { mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import pluck from 'ramda/src/pluck';
-import uniq from 'ramda/src/uniq';
+import pluck from 'ramda/es/pluck';
+import uniq from 'ramda/es/uniq';
 import * as API from '@dinify/common/dist/api/restaurant';
 import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as billTypes from 'ducks/bill/types';

@@ -31,8 +31,8 @@ export const GetRestaurantingredients = ({ restaurantId }: any) => Get({
   path: `restaurant/${restaurantId}/ingredients`
 });
 
-export const GetSeatsOfWB = ({ waiterboardId }: any) => Get({
-  path: `waiterboard/${waiterboardId}/seats/all`
+export const GetSeatsOfWaiterboard = ({ waiterboardId }: any) => Get({
+  path: `waiterboard/${waiterboardId}/seats`
 });
 
 type CheckinBody = {
@@ -93,7 +93,15 @@ export const InitiateTransaction = (
   path: '/transaction/initiate'
 }, { gratuity, type });
 
-
 export const GetOrdersOfWaiterboard = ({ waiterboardId }: { waiterboardId: string}): Promise<any> => Get({
   path: `waiterboard/${waiterboardId}/orders?status=confirmed,dispatched&today=true`
-})
+});
+
+export const GetCallsOfWaiterboard = ({ waiterboardId }: { waiterboardId: string}): Promise<any> => Get({
+  path: `waiterboard/${waiterboardId}/calls?status=dispatched`
+});
+
+export const ConfirmCall = ({ callId }: { callId: string }): Promise<any> => Patch({
+  path: `service/call/${callId}/confirm`
+});
+

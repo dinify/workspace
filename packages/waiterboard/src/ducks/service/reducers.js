@@ -1,5 +1,5 @@
-import assoc from 'ramda/src/assoc';
-import filter from 'ramda/src/filter';
+import assoc from 'ramda/es/assoc';
+import filter from 'ramda/es/filter';
 
 const initialState = {
   all: {}

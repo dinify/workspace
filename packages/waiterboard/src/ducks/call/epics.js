@@ -1,11 +1,12 @@
 import { from } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import pluck from 'ramda/src/pluck'
-import * as API from '@dinify/common/dist/api/restaurant';
+import pluck from 'ramda/es/pluck'
+import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import { fetchAllUsers } from 'ducks/user/actions';
 import * as callTypes from 'ducks/call/types';
+import uniq from 'ramda/es/uniq';
 
 const loadCallEpic = (action$, $state) =>
   action$.pipe(
@@ -14,10 +15,10 @@ const loadCallEpic = (action$, $state) =>
 
       const waiterboardId = $state.value.app.selectedWBId;
 
-      return from(API.GetCalls({ waiterboardId, node: true })).pipe(
+      return from(API.GetCallsOfWaiterboard({ waiterboardId })).pipe(
         mergeMap((calls) => {
 
-          const userIds = pluck('user_id', calls);
+          const userIds = uniq(pluck('userId', calls));
           
           return [
             fetchAllUsers({ ids: userIds, cache: true }),

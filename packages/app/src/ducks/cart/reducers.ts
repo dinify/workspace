@@ -1,4 +1,3 @@
-// import assocPath from 'ramda/src/assocPath';
 import * as actions from './actions';
 import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';

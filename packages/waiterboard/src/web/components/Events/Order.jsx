@@ -17,22 +17,7 @@ const styles = () => ({
   },
 });
 
-const color = colorsByStages['s2'];
-
-const ListOfCustomizations = ({ list }) => {
-	if (list) {
-		return (
-			<div>
-				{list.map((option, i) =>
-					<FoodItem bgIndex={i} key={i}>
-						<span style={{whiteSpace: 'nowrap'}}>{option.name}</span>
-					</FoodItem>
-				)}
-			</div>
-		)
-	}
-	return null;
-}
+const color = colorsByStages.s2;
 
 const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, raw, datetime }) => (
 	<ActionBox className={removed ? 'vhs-zoom vhs-reverse Order' : 'Order'}>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { colorsByStages } from '../colors'
 import { ActionBox, Header, Text } from 'web/components/styled/Events'
 import User from 'web/components/Events/user'
-import filter from 'ramda/src/filter'
+import filter from 'ramda/es/filter'
 import Order from 'web/components/Events/Order'
 import { MapToList } from '@dinify/common/dist/lib/FN'
 

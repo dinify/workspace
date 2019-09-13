@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { MapToList } from '@dinify/common/dist/lib/FN';
-import filter from 'ramda/src/filter';
+import filter from 'ramda/es/filter';
 
 export const getOrderList = createSelector(
   [

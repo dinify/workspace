@@ -1,11 +1,13 @@
-import assoc from 'ramda/src/assoc'
-import assocPath from 'ramda/src/assocPath'
+import pipe from 'ramda/es/pipe';
+import assoc from 'ramda/es/assoc'
+import assocPath from 'ramda/es/assocPath'
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 import * as callTypes from 'ducks/call/types';
 import * as commonTypes from 'ducks/common/types';
 
 const initialState = {
-  all: {}
+  all: {},
+  confirming: {}
 }
 
 export default function reducer(state = initialState, action) {
@@ -26,13 +28,16 @@ export default function reducer(state = initialState, action) {
 
     case callTypes.CALL_CONFIRMATION_INIT: {
       const { callId } = payload;
-      return assocPath(['all', callId, 'status'], 'CONFIRMED')(state);
+      return assocPath(['confirming', callId], true)(state);
     }
 
     case commonTypes.CONFIRMATION_DONE: {
       if (payload.type !== 'Call') return state;
       const { callId } = payload;
-      return assocPath(['all', callId, 'status'], 'CONFIRMED')(state);
+      return pipe(
+        assocPath(['confirming', callId], false),
+        assocPath(['all', callId, 'status'], 'CONFIRMED')
+      )(state);
     }
 
     default:

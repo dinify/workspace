@@ -1,5 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { confirmCallInit } from 'ducks/call/actions';
 import { relevantServices } from 'ducks/service/selectors';
 import { ActionBox, Header, TableId, Text, CheckButton, Photo } from '../styled/Events';
@@ -8,7 +11,13 @@ import { colorsByStages } from '../../colors';
 
 const color = colorsByStages.s4;
 
-const Call = ({ services, call, confirmCall, removed }) => {
+const styles = () => ({
+  progress: {
+    color: 'white'
+  },
+});
+
+const Call = ({ services, call, confirmCall, removed, confirming, classes }) => {
 
 	let tableNumber = 0;
 	if (call.seat && call.seat.table) {
@@ -42,8 +51,16 @@ const Call = ({ services, call, confirmCall, removed }) => {
 					<Photo url={service && service.image.url}/>
 				</Text>
 
-	      <CheckButton bg={color} onClick={() => confirmCall({ callId: call.id })}>
-	        <i className="ion-checkmark" />
+	      <CheckButton
+					bg={color}
+					disabled={confirming[call.id]}
+					onClick={() => confirmCall({ callId: call.id })}
+				>
+					{confirming[call.id] ?
+						<CircularProgress className={classes.progress} />
+						:
+						<i className="ion-checkmark" />
+					}
 	      </CheckButton>
 
 	    </Header>
@@ -52,12 +69,16 @@ const Call = ({ services, call, confirmCall, removed }) => {
 	)
 }
 
-export default connect(
-  state => ({
-		timer: state.restaurant.timer,
-		services: relevantServices(state)
-	}),
-  {
-    confirmCall: confirmCallInit
-  },
+
+export default compose(
+  withStyles(styles),
+  connect(
+		state => ({
+			services: relevantServices(state),
+			confirming: state.order.confirming
+		}),
+		{
+			confirmCall: confirmCallInit
+		}
+	)
 )(Call);

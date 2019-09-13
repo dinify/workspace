@@ -1,7 +1,7 @@
 import { ListToMap } from '@dinify/common/dist/lib/FN';
-import mergeDeepRight from 'ramda/src/mergeDeepRight';
-import assoc from 'ramda/src/assoc';
-import assocPath from 'ramda/src/assocPath';
+import mergeDeepRight from 'ramda/es/mergeDeepRight';
+import assoc from 'ramda/es/assoc';
+import assocPath from 'ramda/es/assocPath';
 import * as billTypes from 'ducks/bill/types';
 import * as commonTypes from 'ducks/common/types';
 

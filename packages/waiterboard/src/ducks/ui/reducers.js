@@ -1,6 +1,6 @@
-import assoc from 'ramda/src/assoc';
-import evolve from 'ramda/src/evolve';
-import always from 'ramda/src/always';
+import assoc from 'ramda/es/assoc';
+import evolve from 'ramda/es/evolve';
+import always from 'ramda/es/always';
 import * as types from './types';
 
 const initialState = {

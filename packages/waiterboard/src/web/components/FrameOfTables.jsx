@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import groupBy from 'ramda/src/groupBy'
+import groupBy from 'ramda/es/groupBy'
 import Table from './Table.tsx';
 import Container from './Container';
 

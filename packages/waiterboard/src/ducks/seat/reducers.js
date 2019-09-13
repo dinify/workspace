@@ -1,6 +1,6 @@
-import assoc from 'ramda/src/assoc';
-import assocPath from 'ramda/src/assocPath';
-import filter from 'ramda/src/filter';
+import assoc from 'ramda/es/assoc';
+import assocPath from 'ramda/es/assocPath';
+import filter from 'ramda/es/filter';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 import * as seatTypes from 'ducks/seat/types';
 import * as tableTypes from 'ducks/table/types.ts';

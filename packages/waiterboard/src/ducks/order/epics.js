@@ -1,11 +1,12 @@
 import { from } from 'rxjs';
 import { mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import pluck from 'ramda/src/pluck';
+import pluck from 'ramda/es/pluck';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import { fetchAllUsers } from 'ducks/user/actions';
 import * as orderTypes from 'ducks/order/types';
+import uniq from 'ramda/es/uniq';
 
 const loadOrderEpic = (action$, $state) =>
   action$.pipe(
@@ -17,7 +18,7 @@ const loadOrderEpic = (action$, $state) =>
       return from(API.GetOrdersOfWaiterboard({ waiterboardId })).pipe(
         mergeMap((orders) => {
 
-          const userIds = pluck('initiator', orders);
+          const userIds = uniq(pluck('initiator', orders));
 
           return [
             fetchAllUsers({ ids: userIds, cache: true }),

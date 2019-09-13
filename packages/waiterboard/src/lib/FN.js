@@ -1,8 +1,8 @@
-import assocPath from 'ramda/src/assocPath'
-import keys from 'ramda/src/keys'
-import curry from 'ramda/src/curry'
-import toPairs from 'ramda/src/toPairs'
-import path from 'ramda/src/path'
+import assocPath from 'ramda/es/assocPath'
+import keys from 'ramda/es/keys'
+import curry from 'ramda/es/curry'
+import toPairs from 'ramda/es/toPairs'
+import path from 'ramda/es/path'
 
 // export const MapToList = (items, _options) => {
 //   let { sortBy, sortType } = { sortBy: 'id', sortType: String };

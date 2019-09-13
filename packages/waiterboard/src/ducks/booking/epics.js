@@ -1,7 +1,7 @@
 import { of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import pluck from 'ramda/src/pluck';
+import pluck from 'ramda/es/pluck';
 import { fetchAllUsers } from 'ducks/user/actions';
 import * as bookingTypes from 'ducks/booking/types';
 

@@ -1,10 +1,10 @@
-import assoc from 'ramda/src/assoc';
-import assocPath from 'ramda/src/assocPath';
+import pipe from 'ramda/es/pipe';
+import assoc from 'ramda/es/assoc';
+import assocPath from 'ramda/es/assocPath';
 import mergeDeepRight from 'ramda/src/mergeDeepRight';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 import * as orderTypes from 'ducks/order/types';
 import * as commonTypes from 'ducks/common/types';
-import pipe from 'ramda/es/pipe';
 
 const initialState = {
   all: {},
