@@ -23,10 +23,8 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
-
-// const keyedPropsOfList = (keyProp: string, valProp: string) => 
+// const keyedPropsOfList = (keyProp: string, valProp: string) =>
 // (list: any[]) => zipObj(pluck(keyProp)(list), pluck(valProp)(list));
-
 
 const getCartEpic: Epic = (action$) =>
   action$.pipe(
@@ -97,6 +95,19 @@ const addToCartEpic: Epic = (action$, state$) =>
     })
   );
 
+const addToCartErrorEpic: Epic = (action$) =>
+  action$.pipe(
+    ofType(getType(addToCartAsync.failure)),
+    switchMap((action) => {
+      const { payload: { message } } = action;
+      return of(
+        snackbar.show({
+          message
+        })
+      );
+    })
+  );
+
 const rmFromCartEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(rmFromCartAsync.request)),
@@ -157,6 +168,7 @@ const updateAfterEditEpic: Epic = (action$) =>
 export default [
   getCartEpic,
   addToCartEpic,
+  addToCartErrorEpic,
   rmFromCartEpic,
   orderEpic,
   updateAfterEditEpic

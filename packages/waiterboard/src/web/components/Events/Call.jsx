@@ -19,7 +19,7 @@ const Call = ({ services, call, confirmCall, removed }) => {
 		tableNumber = call.table.number;
 	}
 
-	const service = call.service || services[call.service_id];
+	const service = call.service || services[call.serviceId];
 
 	let serviceName = '';
 	if (service.translations && service.translations[0]) {

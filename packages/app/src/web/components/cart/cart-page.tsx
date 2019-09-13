@@ -27,25 +27,25 @@ const CartView: React.FC<{
     
   return (
     <div {...otherProps}>
-      <AppBar style={{position: 'fixed', top: 0, left: 0, right: 0}}>
+      <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
         {!editMode && <AppBarAction type="close" onClick={onClose}/>}
         <AppBarTitle 
           title={t('cart.title')} 
           subtitle={t('cart.itemCount', { count: cartItemCount, context: cartItemCount === 0 ? 'none' : undefined })}/>
         <AppBarAction type={editMode ? 'done' : 'edit'} onClick={() => {setEditMode(!editMode)}}/>
       </AppBar>
-      <div style={{padding: '0 16px', marginTop: 56}}>
+      <div style={{ padding: '0 16px', marginTop: 56 }}>
         {orderItemsList.map(item =>
-          <CartItem style={{padding: '8px 0'}} key={item.id} editMode={editMode} orderItem={item}/>
+          <CartItem style={{ padding: '8px 0' }} key={item.id} editMode={editMode} orderItem={item}/>
         )}
         <TotalPrice price={subtotal} />
         <Fab
           disabled={orderItemsList.length < 1}
-          style={{marginTop: 16, width: '100%'}}
+          style={{ marginTop: 16, width: '100%' }}
           variant="extended"
           color="primary"
           onClick={() => order()}>
-          <RestaurantMenu style={{marginRight: 16}} />
+          <RestaurantMenu style={{ marginRight: 16 }} />
           {t('order')}
         </Fab>
       </div>

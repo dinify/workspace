@@ -17,6 +17,7 @@ export const getCategoriesBySubdomain = createSelector(
     return MapToList(categoriesMap)
       .filter((c) => c.subdomain === subdomain)
       .map((c) => {
+        if (!c.items) return c;
         c.items = c.items.map((miId) => menuItemsMap[miId])
         return c;
       });
@@ -24,4 +25,3 @@ export const getCategoriesBySubdomain = createSelector(
   }
 )
 
-export const c = 's';
