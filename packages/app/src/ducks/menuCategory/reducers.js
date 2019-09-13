@@ -1,10 +1,6 @@
 import assoc from 'ramda/src/assoc';
-import dissoc from 'ramda/src/dissoc';
-import groupBy from 'ramda/src/groupBy';
-import { MapToList, ListToMap } from '@dinify/common/dist/lib/FN';
-import types from './types';
 import { getType } from 'typesafe-actions';
-import { fetchMenuCategoriesAsync } from './actions';
+import { fetchMenuCategoriesAsync } from './actions.ts';
 
 const initialState = {
   all: {},

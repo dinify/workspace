@@ -23,7 +23,6 @@ import TotalPrice from 'web/components/TotalPrice';
 
 import * as FN from '@dinify/common/dist/lib/FN';
 import { rmFromCartAsync, orderAsync } from 'ducks/cart/actions.ts';
-import { getCart } from 'ducks/cart/selectors.ts';
 
 const styles = theme => ({
   primary: {

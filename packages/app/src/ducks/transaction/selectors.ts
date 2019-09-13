@@ -1,34 +1,27 @@
 import { createSelector } from 'reselect';
 import { MapToList } from '../../lib/FN';
 import { TransactionState } from './reducers';
-import { OrderN, OrderNMap } from 'TransactionModels';
+import { OrderNMap } from 'TransactionModels';
+import pipe from 'ramda/es/pipe';
+import pluck from 'ramda/es/pluck';
+import unnest from 'ramda/es/unnest';
 
 export const getOrderItemIds = createSelector(
   [
     (state: TransactionState) => state.orders
   ],
   (orders: OrderNMap): string[] => {
-    // TODO: convert to ramda goodness
-    // mapObjIndexed((order: OrderN) => pluck('items', order), orders);
-
-    let arr: string[] = [];
-    MapToList(orders).forEach((order: OrderN) => {
-      arr.push(...order.items)
-    });
-    return arr;
+    return pipe(
+      MapToList,
+      (list) => pluck('items', list),
+      unnest
+    )(orders);
   }
 );
 
 export const getOrderItemCount = createSelector(
   [
-    (state: TransactionState) => state.orders
+    getOrderItemIds
   ],
-  (orders: OrderNMap): number => {
-    // TODO: convert to ramda goodness
-    let count = 0;
-    MapToList(orders).forEach((order: OrderN) => {
-      count += order.items.length;
-    });
-    return count;
-  }
+  (orderItemIds): number => orderItemIds.length
 );

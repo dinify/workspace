@@ -15,7 +15,6 @@ import AddCircle from '@material-ui/icons/AddCircleRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
 import Price from 'web/components/Price';
-import * as FN from '@dinify/common/dist/lib/FN';
 import {
   excludeIngredient as excludeIngredientAction,
   incAddonQty as incAddonQtyAction,

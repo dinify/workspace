@@ -1,8 +1,4 @@
-import { createSelector } from 'reselect'
-import find from 'ramda/src/find';
-import propEq from 'ramda/src/propEq';
-import filter from 'ramda/src/filter';
-import assoc from 'ramda/src/assoc';
+import { createSelector } from 'reselect';
 
 import { MapToList } from '@dinify/common/dist/lib/FN';
 
@@ -23,5 +19,5 @@ export const getCategoriesBySubdomain = createSelector(
       });
 
   }
-)
+);
 

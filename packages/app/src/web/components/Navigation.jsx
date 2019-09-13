@@ -2,13 +2,9 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
-import Rice from '@dinify/common/dist/icons/RiceRounded';
-import Silverware from '@dinify/common/dist/icons/SilverwareRounded';
 import Settings from '@material-ui/icons/SettingsRounded';
 import LocalLibrary from '@material-ui/icons/LocalLibrary';
 
-import RiceOutlined from '@dinify/common/dist/icons/RiceOutlined';
-import SilverwareVariant from '@dinify/common/dist/icons/SilverwareRoundedVariant';
 import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
 import LocalLibraryOutlined from '@material-ui/icons/LocalLibraryOutlined';
 
