@@ -38,12 +38,12 @@ export default function reducer(state = initialState, action) {
     }
 
     case commonTypes.CONFIRMATION_DONE: {
-      if (payload.type !== 'CASH' || payload.type !== 'CARD') return state;
+      if (!(payload.type === 'CASH' || payload.type === 'CARD')) return state;
       const { billId } = payload;
       return pipe(
         assocPath(['confirming', billId], false),
         assocPath(['all', billId, 'status'], 'PROCESSED')
-      )(state);  
+      )(state);
     }
 
     default:

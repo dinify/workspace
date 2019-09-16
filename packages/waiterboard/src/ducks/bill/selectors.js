@@ -8,7 +8,7 @@ export const getGroupedBills = createSelector(
   ],
   (all) => {
     return groupBy((b) => b.status === 'PROCESSED' ? 'PROCESSED' : 'INITIATED')(
-      MapToList(all, { sortBy: 'updated_at', sortType: String })
+      MapToList(all, { sortBy: 'updatedAt', sortType: String })
     );
   }
 );
