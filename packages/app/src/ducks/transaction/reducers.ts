@@ -1,8 +1,9 @@
 import * as actions from './actions';
 import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
-import { Subtotal } from 'CartModels';
+import { Subtotal, OrderItemNMap, OrderItemN } from 'CartModels';
 import { OrderNMap } from 'TransactionModels';
+import mapObjIndexed from 'ramda/es/mapObjIndexed';
 
 export const orders = createReducer({} as OrderNMap)
 
@@ -40,11 +41,32 @@ export const subtotal = createReducer(defaultSubtotal as Subtotal)
     return action.payload.result.subtotal;
   });
 
+const identity = (o: any) => !!o && o !== 'pivotUndefined';
+
+export const items = createReducer({} as OrderItemNMap)
+    .handleAction(actions.fetchBillAsync.success, (state, action) => {
+      const orderItems: OrderItemNMap = mapObjIndexed((orderItem: OrderItemN) => {
+        
+        const { orderAddons, orderExcludes, orderChoices } = orderItem;
+        return {
+          ...orderItem,
+          orderAddons: orderAddons.filter(identity),
+          orderExcludes: orderExcludes.filter(identity),
+          orderChoices: orderChoices.filter(identity)
+        };
+      }, action.payload.entities.orderItems);
+      return orderItems;
+    })
+    .handleAction(actions.fetchBillAsync.failure, () => {
+      return {};
+    });
+
 
 const transactionReducer = combineReducers({
   orders,
   orderItemsCount,
   subtotal,
+  items
   // receipt: {},
   // gratitude: 10
 });

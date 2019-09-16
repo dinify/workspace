@@ -142,12 +142,8 @@ const Header = ({
   const ordersList = MapToList(orders)
   const confirmedOrdersCount = ordersList.filter((o) => o.status === 'CONFIRMED').length
 
-  //console.log(confirmedOrders, 'confirmedOrders');
   const amounts = confirmedOrders.map((o) => {
-
-
     const itemSubtotals = o.items.map((item) => Number(item.subtotal.amount));
-
     return sum(itemSubtotals);
   });
 
