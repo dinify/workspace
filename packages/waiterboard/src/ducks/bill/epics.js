@@ -3,7 +3,7 @@ import { mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import pluck from 'ramda/es/pluck';
 import uniq from 'ramda/es/uniq';
-import * as API from '@dinify/common/dist/api/restaurant';
+import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as billTypes from 'ducks/bill/types';
 import { fetchAllUsers } from 'ducks/user/actions';
@@ -23,7 +23,7 @@ const loadBillEpic = (action$, $state) =>
     ofType(billTypes.LOAD_BILL_INIT),
     switchMap((action) => {
       const waiterboardId = $state.value.app.selectedWBId;
-      return from(API.GetBills({ waiterboardId })).pipe(
+      return from(API.GetTransactionsOfWaiterboard({ waiterboardId })).pipe(
         mergeMap((bills) => {
           const userIds = pluck('initiator', bills);
           return [

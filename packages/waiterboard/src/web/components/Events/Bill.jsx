@@ -41,7 +41,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm }) => {
   })
   let updatedAtDate = false;
   if (noconfirm) {
-    updatedAtDate = moment.utc(bill.updated_at).local().format('DD/MM/YYYY h:mm A');
+    updatedAtDate = moment.utc(bill.updatedAt).local().format('DD/MM/YYYY h:mm A');
   }
   return (
     <ActionBox className={removed ? 'vhs-zoom vhs-reverse Bill' : 'Bill'}>
@@ -50,33 +50,11 @@ const Bill = ({ bill, confirmBill, removed, noconfirm }) => {
           {bill.table ? bill.table.number : 1}
         </TableId>
         <User userId={bill.initiator} />
-  			{bill.BillObject === 'DEBIT_CARD' && !noconfirm ?
-  				<Form
-  					className="ssss"
-  					onSubmit={({ approvalNumber }) => {
-  						console.log('Success!', approvalNumber);
-  						confirmBill({ billId: bill.id, approvalNumber, initiator: bill.initiator })
-  					}}
-  					validate={({ approvalNumber }) => {
-  						return {
-  							approvalNumber: !approvalNumber ? 'Approval Number is required' : undefined
-  						}
-  					}}
-  				>
-  					{({submitForm}) => {
-  						return (
-  							<form onSubmit={submitForm}>
-  								<TextInput field="approvalNumber" placeholder="Card Approval Number" />
-  							</form>
-  						)
-  					}}
-  				</Form>
-  			: ''}
   			<Text color={color}>
           {updatedAtDate ?
             <span>{updatedAtDate}</span>
             :
-            <Elapsed startAt={bill.updated_at} />
+            <Elapsed startAt={bill.updatedAt} />
           } by {bill.type}
   			</Text>
         {!noconfirm ?
@@ -105,7 +83,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm }) => {
                 */
               order.items.map((item) =>
                 <Tr key={item.id}>
-    	            <Td>{item.menu_item.name}</Td>
+    	            <Td>{item.menuItem.translations[0].name}</Td>
     	            <Td>1</Td>
     	            <Td>{N(item.subtotal.amount).format('0.00')}Kč</Td>
     	          </Tr>
