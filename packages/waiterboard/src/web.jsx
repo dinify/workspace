@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { ConnectedRouter } from 'connected-react-router';
+import i18n from '@dinify/common/dist/i18n';
+import { getCookie } from '@dinify/common/dist/lib/FN';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import App from './web/components/App';
@@ -16,6 +18,22 @@ import websockets from './websockets';
 
 const history = createBrowserHistory();
 const { store, persistor } = configureStore(history);
+
+let language = { primary: navigator.language, other: [] };
+const langCookie = getCookie('language');
+if (langCookie) {
+  try {
+    language = JSON.parse(langCookie);
+  } catch (e) {
+    console.error('JSON parse error');
+  }
+}
+
+i18n({
+  namespace: 'waiterboard',
+  lang: language.primary,
+  fallback: language.other
+});
 
 // react-redux-firebase config
 const rrfConfig = {

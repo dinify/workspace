@@ -11,7 +11,7 @@ class ModalTable extends React.Component {
     if (!shown) return (<div />)
 
     const table = tableMap[tableId] || {};
-    const seats = seatList.filter((seat) => seat.table_id === tableId)
+    const seats = seatList.filter((seat) => seat.tableId === tableId)
 
     return (
     	<div>
@@ -36,7 +36,6 @@ class ModalTable extends React.Component {
 
 export default connect(
   state => ({
-    waiterboardId: state.app.selectedWBId,
     tableMap: state.table.all
   })
 )(ModalTable);
