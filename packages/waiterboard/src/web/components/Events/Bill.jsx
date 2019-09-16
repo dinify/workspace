@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import moment from 'moment';
 import N from 'numeral';
-import { Form, Text as FormText } from 'react-form';
-import styled from 'styled-components';
+import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import * as FN from '@dinify/common/dist/lib/FN';
 import { confirmBillInit } from 'ducks/bill/actions';
 import { ActionBox, Header, TableId, CheckButton, TableTag, Th, Tr, Td, Text } from '../styled/Events';
@@ -11,23 +12,15 @@ import { colorsByStages } from '../../colors';
 import User from './user';
 import Elapsed from './Elapsed';
 
-const TextInput = styled(FormText)`
-  background-color: rgba(0,0,0,0.06);
-  margin: 10px 0 0 10px;
-  outline: none;
-  padding: 5px 10px;
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 5px;
-  color: #666;
-  width: 145px;
-  &:focus {
-    border-color: rgba(255,255,255,0.4);
-  }
-`;
+const styles = () => ({
+  progress: {
+    color: 'white'
+  },
+});
 
 const color = colorsByStages.s5;
 
-const Bill = ({ bill, confirmBill, removed, noconfirm }) => {
+const Bill = ({ bill, confirmBill, removed, noconfirm, confirming, classes }) => {
   if (!bill || !bill.subtotal) return null
   const subtotal = Number(bill.subtotal.amount);
   const gratuityPercentage = Number(bill.gratuity/100);
@@ -43,6 +36,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm }) => {
   if (noconfirm) {
     updatedAtDate = moment.utc(bill.updatedAt).local().format('DD/MM/YYYY h:mm A');
   }
+
   return (
     <ActionBox className={removed ? 'vhs-zoom vhs-reverse Bill' : 'Bill'}>
       <Header>
@@ -58,9 +52,20 @@ const Bill = ({ bill, confirmBill, removed, noconfirm }) => {
           } by {bill.type}
   			</Text>
         {!noconfirm ?
-          <CheckButton bg={color} onClick={() => confirmBill({billId: bill.id, initiator: bill.initiator})} invisible={noconfirm}>
-            <i className="ion-checkmark" />
-          </CheckButton>
+          <CheckButton 
+            bg={color}
+            disabled={confirming[bill.id]}
+            onClick={() => confirmBill({
+              billId: bill.id,
+              type: bill.type,
+              initiator: bill.initiator
+            })} invisible={noconfirm}
+          >
+		        {confirming[bill.id] ?
+							<CircularProgress className={classes.progress} />
+							:
+							<i className="ion-checkmark" />
+						}          </CheckButton>
         : ''}
       </Header>
 
@@ -106,12 +111,14 @@ const Bill = ({ bill, confirmBill, removed, noconfirm }) => {
   )
 }
 
-
-export default connect(
-  state => ({
-    timer: state.restaurant.timer,
-  }),
-  {
-    confirmBill: confirmBillInit
-  },
+export default compose(
+  withStyles(styles),
+  connect(
+    state => ({
+      confirming: state.bill.confirming,
+    }),
+    {
+      confirmBill: confirmBillInit
+    },
+  )
 )(Bill);

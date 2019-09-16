@@ -1,3 +1,4 @@
+import pipe from 'ramda/es/pipe';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 import mergeDeepRight from 'ramda/es/mergeDeepRight';
 import assoc from 'ramda/es/assoc';
@@ -6,7 +7,8 @@ import * as billTypes from 'ducks/bill/types';
 import * as commonTypes from 'ducks/common/types';
 
 const initialState = {
-  all: {}
+  all: {},
+  confirming: {}
 }
 
 export default function reducer(state = initialState, action) {
@@ -30,10 +32,18 @@ export default function reducer(state = initialState, action) {
       return assocPath(['all', payment.id], payment)(state);
     }
 
-    case commonTypes.CONFIRMATION_DONE: {
-      if (payload.type !== 'Bill') return state;
+    case billTypes.BILL_CONFIRMATION_INIT: {
       const { billId } = payload;
-      return assocPath(['all', billId, 'status'], 'PROCESSED')(state);
+      return assocPath(['confirming', billId], true)(state);
+    }
+
+    case commonTypes.CONFIRMATION_DONE: {
+      if (payload.type !== 'CASH' || payload.type !== 'CARD') return state;
+      const { billId } = payload;
+      return pipe(
+        assocPath(['confirming', billId], false),
+        assocPath(['all', billId, 'status'], 'PROCESSED')
+      )(state);  
     }
 
     default:

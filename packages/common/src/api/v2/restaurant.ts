@@ -81,7 +81,7 @@ export const Order = () => Post({
 
 export const ConfirmOrder = ({ orderId }: any): Promise<any> => Patch({
   path: `order/${orderId}`
-})
+});
 
 type InitiateTransactionProps = {
   gratuity: number;
@@ -92,6 +92,13 @@ export const InitiateTransaction = (
 ): Promise<any> => Post({
   path: '/transaction/initiate'
 }, { gratuity, type });
+
+export const ConfirmBill = ({ billId, type }: any): Promise<any> => Patch({
+  path: `transaction`
+}, {
+  id: billId,
+  type
+});
 
 export const GetOrdersOfWaiterboard = ({ waiterboardId }: { waiterboardId: string}): Promise<any> => Get({
   path: `waiterboard/${waiterboardId}/orders?status=confirmed,dispatched&today=true`
