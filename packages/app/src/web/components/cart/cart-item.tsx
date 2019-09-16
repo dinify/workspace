@@ -163,8 +163,10 @@ const CartItemComponent: React.FC<CartItemProps & {
 };
 
 export default connect(
-  (state: RootState, props: CartItemProps) => ({
-    orderItem: state.cart.items[props.orderItemId],
+  (state: RootState, {
+    orderItemId
+  }: CartItemProps) => ({
+    orderItem: state.cart.items[orderItemId] || state.transaction.items[orderItemId],
     menuItems: state.menuItem.all,
     addons: state.addon.all,
     choices: state.option.choices,

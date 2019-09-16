@@ -23,6 +23,7 @@ import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
 import { BottomBar } from 'web/components/bottom-bar';
 import { CartPage } from 'web/components/cart';
+import { BillPage } from 'web/components/bill';
 
 import * as FN from '@dinify/common/dist/lib/FN';
 
@@ -132,7 +133,7 @@ class App extends React.Component {
           <CartPage onClose={() => { this.setState({cartOpen: false}) }}/>
         </Dialog>
         <Dialog fullScreen open={billOpen} onClose={() => { this.setState({billOpen: false}) }}>
-          bill page
+          <BillPage onClose={() => { this.setState({billOpen: false}) }}/>
         </Dialog>
         {FN.MapToList(dialogs).map(dialog =>
           dialog.component({

@@ -40,6 +40,7 @@ const AppBar: IAppBar = ({
     })
     return (
         <div style={{
+            zIndex: 50,
             display: 'flex',
             alignItems: 'center',
             height: 56,
