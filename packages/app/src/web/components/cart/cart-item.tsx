@@ -12,7 +12,11 @@ import { AddonMap, MenuItemMap } from 'MenuItemsModels';
 import { IngredientMap } from 'IngredientModels';
 import { ChoiceMap } from 'OptionModels';
 
-const CartItemComponent: React.FC<{
+export interface CartItemProps {
+  orderItemId: string
+}
+
+const CartItemComponent: React.FC<CartItemProps & {
   theme?: any,
   style?: React.CSSProperties,
   editMode: boolean,
@@ -158,10 +162,9 @@ const CartItemComponent: React.FC<{
   );
 };
 
-
-
 export default connect(
-  (state: RootState) => ({
+  (state: RootState, props: CartItemProps) => ({
+    orderItem: state.cart.items[props.orderItemId],
     menuItems: state.menuItem.all,
     addons: state.addon.all,
     choices: state.option.choices,

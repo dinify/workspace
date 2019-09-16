@@ -15,6 +15,15 @@ export const getOrderItemsList = createSelector(
   }
 );
 
+export const getOrderItemIds = createSelector(
+  [
+    getOrderItemsList
+  ],
+  (orderItemsList) => {
+    return orderItemsList.map(item => item.id);
+  }
+);
+
 export const getOrderItemCount = createSelector(
   [
     getOrderItemsList

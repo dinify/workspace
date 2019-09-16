@@ -11,20 +11,20 @@ import { RootState } from 'typesafe-actions';
 
 import { Subtotal } from 'CartModels';
 import { orderAsync } from '../../../ducks/cart/actions';
-import { getOrderItemsList } from '../../../ducks/cart/selectors';
+import { getOrderItemIds } from '../../../ducks/cart/selectors';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 
 const CartView: React.FC<{
   onClose?: () => void,
-  orderItemsList: OrderItemN[],
+  orderItemIds: string[],
   subtotal: Subtotal,
   order: typeof orderAsync.request
-}> = ({ orderItemsList, subtotal, order, onClose = () => {}, ...otherProps}) => {
+}> = ({ orderItemIds, subtotal, order, onClose = () => {}, ...otherProps}) => {
 
   const [editMode, setEditMode] = useState(false);
   const { t } = useTranslation();
 
-  const cartItemCount = orderItemsList.length;
+  const cartItemCount = orderItemIds.length;
     
   return (
     <div {...otherProps}>
@@ -36,12 +36,12 @@ const CartView: React.FC<{
         <AppBarAction type={editMode ? 'done' : 'edit'} onClick={() => {setEditMode(!editMode)}}/>
       </AppBar>
       <div style={{ padding: '0 16px', marginTop: 56 }}>
-        {orderItemsList.map(item =>
-          <CartItem style={{ padding: '8px 0' }} key={item.id} editMode={editMode} orderItem={item}/>
+        {orderItemIds.map(itemId =>
+          <CartItem style={{ padding: '8px 0' }} key={itemId} editMode={editMode} orderItemId={itemId}/>
         )}
         <TotalPrice price={subtotal} />
         <Fab
-          disabled={orderItemsList.length < 1}
+          disabled={cartItemCount < 1}
           style={{ marginTop: 16, width: '100%' }}
           variant="extended"
           color="primary"
@@ -57,7 +57,7 @@ const CartView: React.FC<{
 export default connect(
   (state: RootState) => ({
     subtotal: state.cart.subtotal,
-    orderItemsList: getOrderItemsList(state.cart)
+    orderItemIds: getOrderItemIds(state.cart)
   }), {
     order: orderAsync.request
 })(CartView);
