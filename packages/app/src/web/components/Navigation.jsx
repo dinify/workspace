@@ -8,13 +8,13 @@ import LocalLibrary from '@material-ui/icons/LocalLibrary';
 import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
 import LocalLibraryOutlined from '@material-ui/icons/LocalLibraryOutlined';
 
-import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: 'rgb(242,242,242)',
+    borderTop: '1px solid rgb(234,234,234)',
     width: '100%',
     position: 'fixed',
     bottom: 0,
@@ -72,7 +72,6 @@ const Navigation = ({
   );
   return (
     <div style={{height: 56, ...style}} className={classes.root}>
-      <Divider/>
       <div style={{
         display: 'flex',
         justifyContent: 'center',

@@ -1,4 +1,5 @@
 import React from 'react';
+import { compose } from 'redux';
 import { useTranslation } from 'react-i18next';
 import { useSpring, animated } from 'react-spring';
 import { connect } from 'react-redux';
@@ -66,6 +67,7 @@ let BottomBar: React.FC<{
   });
   prevCartVisible = cartVisible;
   prevBillVisible = billVisible;
+
   const CartAction = animated(({...props}) => (
     <BottomBarAction 
       icon={<CartIcon color="action"/>}
@@ -76,6 +78,7 @@ let BottomBar: React.FC<{
       {...props}
     />
   ));
+
   const BillAction = animated(({...props}) => (
     <BottomBarAction 
       icon={<BillIcon color="action"/>}
@@ -86,24 +89,27 @@ let BottomBar: React.FC<{
       {...props}
     />
   ));
-  const palette = theme.palette;
+
+  // const palette = theme.palette;
+
   const commonStyle = {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: palette.background.paper,
-    borderTop: `1px solid ${palette.divider}`,
-    borderLeft: `1px solid ${palette.divider}`,
+    backgroundColor: 'rgb(248,248,248)',
+    borderTop: '1px solid rgb(240,240,240)',
+    borderLeft: '1px solid rgb(240,240,240)',
   };
+
   return (
     <animated.div style={{
       position: 'fixed', 
       display: 'flex',
       height: 56,
       width: '100%',
-      borderTop: `1px solid ${palette.divider}`,
-      backgroundColor: palette.background.paper,
+      borderTop: commonStyle.borderTop,
+      backgroundColor: commonStyle.backgroundColor,
       bottom: 0,
       color: theme.palette.text.primary,
       ...animatedStyle,
@@ -115,11 +121,14 @@ let BottomBar: React.FC<{
   );
 };
 
-export default withTheme()(connect(
-  (state: RootState) => ({
-    cartSubtotal: state.cart.subtotal,
-    cartItemCount: getCartCount(state.cart),
-    billSubtotal: state.transaction.subtotal,
-    billItemCount: getBillCount(state.transaction)
-  })
-)(BottomBar));
+export default compose(
+  withTheme(),
+  connect(
+    (state: RootState) => ({
+      cartSubtotal: state.cart.subtotal,
+      cartItemCount: getCartCount(state.cart),
+      billSubtotal: state.transaction.subtotal,
+      billItemCount: getBillCount(state.transaction)
+    })
+  )
+)(BottomBar);

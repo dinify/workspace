@@ -12,7 +12,6 @@ import LightbulbToggle from 'web/components/LightbulbToggle';
 import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 import Menu from '@material-ui/icons/MenuRounded';
 
-import Divider from '@material-ui/core/Divider';
 import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,7 +21,8 @@ import * as FN from '@dinify/common/dist/lib/FN';
 const styles = theme => ({
   appBarDefault: {
     boxShadow: 'none',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: 'rgb(248,248,248)',
+    borderBottom: '1px solid rgb(240,240,240)'
   },
   appBar: {
 
@@ -84,10 +84,7 @@ const AppBar = ({
         <LightbulbToggle style={{marginRight: 16}} onChange={toggleTheme} checked={theme === 'light'} theme={theme}/>
         {children}
       </Toolbar>
-      {color === 'default' ?
-        <Divider ref={setAnchor} /> :
-        <div ref={setAnchor} style={{width: '100%'}}/>
-      }
+      <div ref={setAnchor} style={{width: '100%'}}/>
     </MuiAppBar>
   );
 };

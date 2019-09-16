@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Fab from '@material-ui/core/Fab';
 
 import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
-import CartItem from './cart-item';
+// import CartItem from './cart-item';
 import TotalPrice from '../TotalPrice';
 import { RootState } from 'typesafe-actions';
 

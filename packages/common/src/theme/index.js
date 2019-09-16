@@ -57,7 +57,7 @@ const getTheme = ({type = 'light'}) => {
         },
         background: {
           paper: dark ? "#1d1d1d" : "#ffffff",
-          default: dark ? "#212121" : "#fafafa"
+          default: dark ? "#212121" : "#ffffff"
         }
       },
       shape: {

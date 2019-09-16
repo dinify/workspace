@@ -96,7 +96,7 @@ const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, r
 								})}
 							</Td>}
 
-							<Td>{N(item.subtotal.amount).format('0.00')}Kč</Td>
+							<Td style={{textAlign: 'right'}}>{N(item.subtotal.amount).format('0.00')} Kč</Td>
 	          </Tr>)
 					}): ''}
 					{order.subtotal &&
@@ -105,7 +105,7 @@ const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, r
 						<Td></Td>
 						<Td></Td>
 						<Td></Td>
-						<Td>{N(order.subtotal.amount).format('0.00')}{order.subtotal.currency === 'CZK' ? 'Kč' : order.subtotal.currency}</Td>
+						<Td>{N(order.subtotal.amount).format('0.00')} {order.subtotal.currency === 'CZK' ? 'Kč' : order.subtotal.currency}</Td>
 					</Tr>
 					}
 
