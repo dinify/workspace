@@ -40,6 +40,8 @@ const BillPage: React.FC<BillPageProps & {
   const [splitMode, setSplitMode] = useState(false);
   const [gratitude, setGratitude] = useState(15);
   const { t } = useTranslation();
+  const billPayable = subtotal.amount > 0 && !splitMode && !waitingPayment;
+  const paymentTextColor = billPayable ? 'textPrimary' : 'textSecondary';
   const total = { 
     ...subtotal, 
     amount: subtotal ? (subtotal.amount * (1 + gratitude / 100)) : 0
@@ -60,12 +62,12 @@ const BillPage: React.FC<BillPageProps & {
         display: 'flex',
         marginTop: 16
       }}>
-        <Typography style={{
+        <Typography color={paymentTextColor} style={{
             flex: 1,
           }}>
           {t('subtotal')}
         </Typography>
-        <Typography>
+        <Typography color={paymentTextColor}>
           <Price price={subtotal} />
         </Typography>
       </div>
@@ -74,22 +76,22 @@ const BillPage: React.FC<BillPageProps & {
         marginTop: 8,
         marginBottom: 16,
       }}>
-      <Typography style={{
+      <Typography color={paymentTextColor} style={{
           fontWeight: 700,
           marginRight: 8
         }}>
         {gratitude}%
       </Typography>
-      <Typography style={{
+      <Typography color={paymentTextColor} style={{
           flex: 1
         }}>
         {t('gratuity')}
       </Typography>
-      <Typography>
+      <Typography color={paymentTextColor}>
         <Price price={total} />
       </Typography>
     </div>
-    <Slider style={{paddingTop: 16, paddingBottom: 16}} disabled={waitingPayment}
+    <Slider style={{paddingTop: 16, paddingBottom: 16}} disabled={!billPayable}
         value={gratitude} min={0} max={50} step={1} onChange={(event, val) => setGratitude(val)}/>
     <div style={{
       marginTop: 16,
@@ -100,7 +102,7 @@ const BillPage: React.FC<BillPageProps & {
       <Fab style={{
         width: '100%',
         maxWidth: 320
-      }} disabled={waitingPayment || splitMode} onClick={() => setPayMenuOpen(true)} color="primary" variant="extended" aria-label={t('pay')}>
+      }} disabled={!billPayable} onClick={() => setPayMenuOpen(true)} color="primary" variant="extended" aria-label={t('pay')}>
         <CreditCard style={{
           marginRight: 16
         }}/>
