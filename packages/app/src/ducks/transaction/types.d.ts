@@ -11,12 +11,14 @@ declare module 'TransactionModels' {
     gratuity: number;
   }
 
+  export type OrderStatus = 'PENDING'|'DISPATCHED'|'CONFIRMED'|'CANCELLED';
+
   export type Order = {
     id: string;
     initiator: string;
     type: OrderTypes;
     meta: any;
-    status: string;
+    status: OrderStatus;
     restaurantId: string;
     items: OrderItem[]
   }
@@ -26,7 +28,7 @@ declare module 'TransactionModels' {
     initiator: string;
     type: OrderTypes;
     meta: any;
-    status: string;
+    status: OrderStatus;
     restaurantId: string;
     items: string[];
   }

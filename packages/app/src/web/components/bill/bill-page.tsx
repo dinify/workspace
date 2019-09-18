@@ -9,21 +9,25 @@ import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import Slider from '@material-ui/lab/Slider';
 import Price from '../Price';
-import BillItem from './bill-item';
+import { BillSection } from './bill-section';
+import { getOrderItemCount } from '../../../ducks/transaction/selectors';
 import { initTransactionAsync } from '../../../ducks/transaction/actions';
-import { getOrderItemIds } from '../../../ducks/transaction/selectors';
 import { AppBar, AppBarAction, AppBarTitle } from '../app-bar';
 const PaymentOptionsDialog = require('@dinify/common/dist/components/dialogs/PaymentOptionsDialog').default;
 
-const BillPage: React.FC<{
-  subtotal?: Subtotal,
+export interface BillPageProps {
   onClose?: () => void,
-  orderItemIds?: string[],
-}> = ({
-  subtotal,
-  onClose = () => {},
-  orderItemIds,
-}) => {
+}
+
+const BillPage: React.FC<BillPageProps & {
+  subtotal: Subtotal,
+  orderItemCount: number
+}> = (props) => {
+  const {
+    subtotal,
+    orderItemCount,
+    onClose = () => {},
+  } = props;
   const onChoosePayment = (value: any) => {
     setPayMenuOpen(false);
     if (value) {
@@ -36,7 +40,6 @@ const BillPage: React.FC<{
   const [splitMode, setSplitMode] = useState(false);
   const [gratitude, setGratitude] = useState(15);
   const { t } = useTranslation();
-  const itemCount = orderItemIds ? orderItemIds.length : 0;
   const total = { 
     ...subtotal, 
     amount: subtotal ? (subtotal.amount * (1 + gratitude / 100)) : 0
@@ -46,17 +49,13 @@ const BillPage: React.FC<{
       {!splitMode && <AppBarAction type="close" onClick={onClose}/>}
       <AppBarTitle 
         title={t('bill.title')} 
-        subtitle={t('cart.itemCount', { count: itemCount, context: itemCount === 0 ? 'none' : undefined })}/>
+        subtitle={t('cart.itemCount', { count: orderItemCount, context: orderItemCount === 0 ? 'none' : undefined })}/>
       {false && <AppBarAction type={splitMode ? 'done' : 'edit'} onClick={() => {setSplitMode(!splitMode)}}/>}
     </AppBar>
     <PaymentOptionsDialog open={payMenuOpen} onClose={onChoosePayment}/>
     <div style={{ padding: '0 16px', marginTop: 56, width: '100vw', overflowX: 'hidden' }}>
-      {orderItemIds ? orderItemIds.map(itemId => 
-        <BillItem 
-        style={{ padding: '8px 0' }} 
-        key={itemId}
-        orderItemId={itemId}/>
-      ) : null}
+      <BillSection type="DISPATCHED"/>
+      <BillSection type="CONFIRMED"/>
       <div style={{
         display: 'flex',
         marginTop: 16
@@ -120,7 +119,7 @@ const BillPage: React.FC<{
 export default connect(
   (state: RootState) => ({
     subtotal: state.transaction.subtotal,
-    orderItemIds: getOrderItemIds(state.transaction)
+    orderItemCount: getOrderItemCount(state.transaction)
   }), {
     pay: initTransactionAsync.request
 })(BillPage);
