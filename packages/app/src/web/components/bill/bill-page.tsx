@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import Slider from '@material-ui/lab/Slider';
 import Price from '../Price';
-import { CartItem } from '../cart';
+import BillItem from './bill-item';
 import { initTransactionAsync } from '../../../ducks/transaction/actions';
 import { getOrderItemIds } from '../../../ducks/transaction/selectors';
 import { AppBar, AppBarAction, AppBarTitle } from '../app-bar';
@@ -47,16 +47,14 @@ const BillPage: React.FC<{
       <AppBarTitle 
         title={t('bill.title')} 
         subtitle={t('cart.itemCount', { count: itemCount, context: itemCount === 0 ? 'none' : undefined })}/>
-      <AppBarAction type={splitMode ? 'done' : 'edit'} onClick={() => {setSplitMode(!splitMode)}}/>
+      {false && <AppBarAction type={splitMode ? 'done' : 'edit'} onClick={() => {setSplitMode(!splitMode)}}/>}
     </AppBar>
     <PaymentOptionsDialog open={payMenuOpen} onClose={onChoosePayment}/>
-    <div style={{
-      transform: 'translate3d(0,0,0)'
-    }}>
+    <div style={{ padding: '0 16px', marginTop: 56, width: '100vw', overflowX: 'hidden' }}>
       {orderItemIds ? orderItemIds.map(itemId => 
-        <CartItem 
+        <BillItem 
         style={{ padding: '8px 0' }} 
-        key={itemId} editMode={false} 
+        key={itemId}
         orderItemId={itemId}/>
       ) : null}
       <div style={{
@@ -92,13 +90,18 @@ const BillPage: React.FC<{
         <Price price={total} />
       </Typography>
     </div>
-    <Slider disabled={waitingPayment}
+    <Slider style={{paddingTop: 16, paddingBottom: 16}} disabled={waitingPayment}
         value={gratitude} min={0} max={50} step={1} onChange={(event, val) => setGratitude(val)}/>
     <div style={{
       marginTop: 16,
-      marginBottom: 16
+      marginBottom: 16,
+      display: 'flex',
+      justifyContent: 'center'
     }}>
-      <Fab disabled={waitingPayment || splitMode} onClick={() => setPayMenuOpen(true)} color="primary" variant="extended" aria-label={t('pay')}>
+      <Fab style={{
+        width: '100%',
+        maxWidth: 320
+      }} disabled={waitingPayment || splitMode} onClick={() => setPayMenuOpen(true)} color="primary" variant="extended" aria-label={t('pay')}>
         <CreditCard style={{
           marginRight: 16
         }}/>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Fab from '@material-ui/core/Fab';
 
 import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
-// import CartItem from './cart-item';
+import CartItem from './cart-item';
 import TotalPrice from '../TotalPrice';
 import { RootState } from 'typesafe-actions';
 
@@ -35,9 +35,9 @@ const CartView: React.FC<{
         <AppBarAction type={editMode ? 'done' : 'edit'} onClick={() => {setEditMode(!editMode)}}/>
       </AppBar>
       <div style={{ padding: '0 16px', marginTop: 56 }}>
-        {/*orderItemIds.map(itemId =>
+        {orderItemIds.map(itemId =>
           <CartItem style={{ padding: '8px 0' }} key={itemId} editMode={editMode} orderItemId={itemId}/>
-        )*/}
+        )}
         <TotalPrice price={subtotal} />
         <Fab
           disabled={cartItemCount < 1}
