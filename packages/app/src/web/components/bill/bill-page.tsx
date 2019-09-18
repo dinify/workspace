@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'typesafe-actions';
 import { Subtotal } from 'CartModels';
@@ -19,22 +19,20 @@ export interface BillPageProps {
   onClose?: () => void,
 }
 
-const BillPage: React.FC<BillPageProps & {
-  subtotal: Subtotal,
-  orderItemCount: number
-}> = (props) => {
+export const BillPage: React.FC<BillPageProps> = (props) => {
   const {
-    subtotal,
-    orderItemCount,
     onClose = () => {},
   } = props;
-  const onChoosePayment = (value: any) => {
+  const dispatch = useDispatch();
+  const onChoosePayment = useCallback((value: any) => {
     setPayMenuOpen(false);
     if (value) {
       setWaitingPayment(true);
-      // initTransaction({gratuity: gratitude, type: value.type});
+      dispatch(initTransactionAsync.request({gratuity: gratitude, type: value.type}))
     }
-  };
+  }, [dispatch]);
+  const subtotal = useSelector((state: RootState) => state.transaction.subtotal);
+  const orderItemCount = useSelector((state: RootState) => getOrderItemCount(state.transaction));
   const [payMenuOpen, setPayMenuOpen] = useState(false);
   const [waitingPayment, setWaitingPayment] = useState(false);
   const [splitMode, setSplitMode] = useState(false);
@@ -117,11 +115,3 @@ const BillPage: React.FC<BillPageProps & {
   </div>
   </>;
 };
-
-export default connect(
-  (state: RootState) => ({
-    subtotal: state.transaction.subtotal,
-    orderItemCount: getOrderItemCount(state.transaction)
-  }), {
-    pay: initTransactionAsync.request
-})(BillPage);
