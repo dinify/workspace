@@ -10,7 +10,6 @@ import Fab from '@material-ui/core/Fab';
 import Slider from '@material-ui/lab/Slider';
 import Price from '../Price';
 import { BillSection } from './bill-section';
-import { getOrderItemCount } from '../../../ducks/transaction/selectors';
 import { initTransactionAsync } from '../../../ducks/transaction/actions';
 import { AppBar, AppBarAction, AppBarTitle } from '../app-bar';
 const PaymentOptionsDialog = require('@dinify/common/dist/components/dialogs/PaymentOptionsDialog').default;
@@ -31,8 +30,10 @@ export const BillPage: React.FC<BillPageProps> = (props) => {
       dispatch(initTransactionAsync.request({gratuity: gratitude, type: value.type}))
     }
   }, [dispatch]);
+  const transactionStatus = useSelector((state: RootState) => state.ui.transactionStatus);
+  console.log(`transactionStatus: ${transactionStatus}`);
   const subtotal = useSelector((state: RootState) => state.transaction.subtotal);
-  const orderItemCount = useSelector((state: RootState) => getOrderItemCount(state.transaction));
+  const orderItemCount = useSelector((state: RootState) => state.transaction.orderItemsCount);
   const [payMenuOpen, setPayMenuOpen] = useState(false);
   const [waitingPayment, setWaitingPayment] = useState(false);
   const [splitMode, setSplitMode] = useState(false);
@@ -44,6 +45,24 @@ export const BillPage: React.FC<BillPageProps> = (props) => {
     ...subtotal, 
     amount: subtotal ? (subtotal.amount * (1 + gratitude / 100)) : 0
   } as Subtotal;
+
+  
+  let fabContent = <>
+    <CreditCard style={{
+      marginRight: 16
+    }}/>
+    {t('pay')}
+  </>;
+  if (transactionStatus !== null) {
+    let captionText;
+    if (transactionStatus === 'INITIATED') captionText = t('paymentPending');
+    else if (transactionStatus === 'PROCESSED') captionText = 'Payment confirmed';
+    fabContent = (
+      <Typography style={{width: '100%', textAlign: 'center'}} variant="caption">
+        {captionText}
+      </Typography>
+    );
+  }
   return <>
     <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
       {!splitMode && <AppBarAction type="close" onClick={onClose}/>}
@@ -101,16 +120,8 @@ export const BillPage: React.FC<BillPageProps> = (props) => {
         width: '100%',
         maxWidth: 320
       }} disabled={!billPayable} onClick={() => setPayMenuOpen(true)} color="primary" variant="extended" aria-label={t('pay')}>
-        <CreditCard style={{
-          marginRight: 16
-        }}/>
-        {t('pay')}
+        {fabContent}
       </Fab>
-      {waitingPayment &&
-        <Typography style={{marginTop: 16, width: '100%', textAlign: 'center'}} variant="caption">
-          {t('paymentPending')}
-        </Typography>
-      }
     </div>
   </div>
   </>;

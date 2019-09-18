@@ -1,4 +1,5 @@
 import * as actions from './actions';
+// import * as wsActions from '../../websockets/actions';
 import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
 import { Subtotal, OrderItemNMap, OrderItemN } from 'CartModels';
@@ -60,6 +61,12 @@ export const items = createReducer({} as OrderItemNMap)
     .handleAction(actions.fetchBillAsync.failure, () => {
       return {};
     });
+
+// export const all = createReducer({} as TransactionMap)
+//     .handleAction(getType(wsActions.confirmedPayment), (state, action) => {
+//       console.log('hello', action.payload);
+//       return {};
+//     });
 
 
 const transactionReducer = combineReducers({

@@ -1,7 +1,7 @@
 import { createAsyncAction } from 'typesafe-actions';
 import {
   InitTransactionRequest,
-  InitTransactionResponse,
+  Transaction,
   BillResponseN
 } from 'TransactionModels';
 
@@ -18,7 +18,7 @@ export const initTransactionAsync = createAsyncAction(
   `${p}/INIT_TRANSACTION_INIT`, // { populateWith: `images` }
   `${p}/INIT_TRANSACTION_DONE`,
   `${p}/INIT_TRANSACTION_FAIL`
-)<InitTransactionRequest, InitTransactionResponse, string>();
+)<InitTransactionRequest, Transaction, string>();
 
 
 export const fetchBillInit = () => ({

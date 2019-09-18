@@ -58,7 +58,7 @@ declare module 'TransactionModels' {
     }
   };
 
-  export type InitTransactionResponse = {
+  export type Transaction = {
     id: string,
     initiator: string,
     status: 'INITIATED' | 'PROCESSED',
@@ -68,6 +68,10 @@ declare module 'TransactionModels' {
     total: Total;
     restaurantId: string;
     orders: Order[];
+  }
+
+  export type TransactionMap = {
+    [id: string]: Transaction
   }
 
 }

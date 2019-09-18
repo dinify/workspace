@@ -7,7 +7,7 @@ import {
 import { normalize } from 'normalizr';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import { getType } from 'typesafe-actions';
-import { InitTransactionResponse, BillResponse, BillResponseN } from 'TransactionModels';
+import { Transaction, BillResponse, BillResponseN } from 'TransactionModels';
 import { bill } from '../cart/schemas';
 
 const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
@@ -73,7 +73,7 @@ const initTransactionEpic: Epic = (action$) =>
       const promise = API.InitiateTransaction({ type, gratuity });
       
       return from(promise).pipe(
-        mergeMap((res: InitTransactionResponse) => of(
+        mergeMap((res: Transaction) => of(
           initTransactionAsync.success(res),
           snackbar.show({
             message: 'Payment request sent'
