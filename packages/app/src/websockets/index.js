@@ -23,6 +23,7 @@ const websockets = (store) => {
   socket.on('transaction-status', (data) => {
     const me = data.transaction.initiator === getState().firebase.auth.uid;
     if (data.transaction.status === 'PROCESSED') {
+      dispatch({ type: getType(fetchBillAsync.request) });
       dispatch({ type: types.CONFIRMED_PAYMENT, payload: data });
       if (me) dispatch(snackbar.show({ message: 'Payment confirmed' }));
     }
@@ -30,7 +31,6 @@ const websockets = (store) => {
   });
 
   socket.on('order-status', (data) => {
-    console.log(data);
     if (data.order.status === 'CONFIRMED') {
       dispatch({ type: getType(fetchBillAsync.request) });
       dispatch({ type: types.CONFIRMED_ORDER, payload: data });

@@ -1,11 +1,13 @@
 import assoc from 'ramda/src/assoc';
 import assocPath from 'ramda/src/assocPath';
 import * as types from './types';
+import wsTypes from '../../websockets/types';
 
 const initialState = {
   progressMap: {},
   errorsMap: {},
   dialogs: {},
+  transactionStatus: null,
   theme: 'light'
 };
 
@@ -39,6 +41,14 @@ export default function reducer(state = initialState, action) {
     }
   }
   switch (action.type) {
+    case 'dinify/transaction/INIT_TRANSACTION_DONE': {
+      return assocPath(['transactionStatus'], action.payload.status)(state);
+    }
+
+    case wsTypes.CONFIRMED_PAYMENT: {
+      return assocPath(['transactionStatus'], action.payload.transaction.status)(state);
+    }
+
     case types.DIALOG_OPEN: {
       // TODO: close other dialogs
       return assocPath(['dialogs', action.payload.id], {
