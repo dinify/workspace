@@ -11,6 +11,8 @@ import {
   orderAsync,
   rmFromCartAsync,
 } from './actions';
+import * as transactionActions from '../transaction/actions';
+import * as uiActions from '../ui/actions';
 import {
   CartResponse,
   CartResponseN,
@@ -78,11 +80,11 @@ const addToCartEpic: Epic = (action$, state$) =>
         mergeMap((res: any) => of(
           addToCartAsync.success(res),
           fetchCartAsync.request(),
-          // snackbar.show({
-          //   message: 'Added to cart',
-          //   handleAction: () => window.location.assign('/dinein'),
-          //   action: 'Go to cart'
-          // })
+          snackbar.show({
+            message: 'Added to cart',
+            handleAction: () => { throw new Error('Not implemented'); },
+            action: 'Undo'
+          })
         )),
         catchError(error => handleEpicAPIError({
           error,
@@ -139,6 +141,8 @@ const orderEpic: Epic = (action$) =>
         mergeMap((res: any) => of(
           orderAsync.success(res),
           fetchCartAsync.request(),
+          transactionActions.fetchBillAsync.request(),
+          uiActions.closeDialog('cart-page'),
           snackbar.show({
             message: 'Order has been placed'
           })

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { openDialog, closeDialog } from 'ducks/ui/actions';
 import { matchPath } from 'react-router';
@@ -63,6 +63,30 @@ class App extends React.Component {
     history.goBack();
   }
 
+  onBottomBarSelect = (type) => {
+    const { openDialog } = this.props;
+    if (type === 'cart') {
+      openDialog({
+        id: 'cart-page',
+        component: (props) => (
+          <Dialog fullScreen {...props}>
+            <CartPage onClose={props.onClose}/>
+          </Dialog>
+        )
+      });
+    }
+    if (type === 'bill') {
+      openDialog({
+        id: 'bill-page',
+        component: (props) => (
+          <Dialog fullScreen {...props}>
+            <BillPage onClose={props.onClose}/>
+          </Dialog>
+        )
+      });
+    }
+  }
+
   render() {
     const {
       checkedInRestaurant,
@@ -75,11 +99,6 @@ class App extends React.Component {
       cartOpen,
       billOpen
     } = this.state;
-
-    const onBottomBarSelect = (type) => {
-      if (type === 'cart') this.setState({cartOpen: true});
-      if (type === 'bill') this.setState({billOpen: true});
-    };
     return (
       <div style={{position: 'relative'}}>
         <AppBar history={history}>
@@ -128,13 +147,7 @@ class App extends React.Component {
               })()}/>
           }
         </Motion>
-        <BottomBar style={{bottom: 56}} onSelect={onBottomBarSelect} />
-        <Dialog fullScreen open={cartOpen} onClose={() => { this.setState({cartOpen: false}) }}>
-          <CartPage onClose={() => { this.setState({cartOpen: false}) }}/>
-        </Dialog>
-        <Dialog fullScreen open={billOpen} onClose={() => { this.setState({billOpen: false}) }}>
-          <BillPage onClose={() => { this.setState({billOpen: false}) }}/>
-        </Dialog>
+        <BottomBar style={{bottom: 56}} onSelect={this.onBottomBarSelect} />
         {FN.MapToList(dialogs).map(dialog =>
           dialog.component({
             key: dialog.id,
