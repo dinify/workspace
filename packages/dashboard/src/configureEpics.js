@@ -8,6 +8,7 @@ import { menuItemEpics } from './ducks/menuItem';
 import { addonEpics } from './ducks/addon';
 import { optionEpics } from './ducks/option';
 import { ingredientEpics } from './ducks/ingredient';
+import serviceEpics from './ducks/service/epics';
 
 import { translationEpics } from './ducks/translation';
 
@@ -20,6 +21,7 @@ const rootEpic = (action$, state$, firebase, ...rest) => {
     ...addonEpics,
     ...optionEpics,
     ...ingredientEpics,
+    ...serviceEpics,
     ...crud,
     ...reporting
   );

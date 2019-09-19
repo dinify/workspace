@@ -2,10 +2,19 @@ import { createSelector } from 'reselect';
 import pickBy from 'ramda/src/pickBy';
 import pipe from 'ramda/src/pipe';
 import sort from 'ramda/src/sort';
+import find from 'ramda/es/find';
+import propEq from 'ramda/es/propEq';
 import { MapToList } from '@dinify/common/dist/lib/FN';
+
+const getName = (translations, l) => {
+  const translation = find(propEq('locale', l))(translations);
+  return translation.name;
+}
 
 export const allServices = state => state.service.all;
 export const selectedRestaurantId = state => state.restaurant.selectedRestaurant;
+
+const locale = 'en';
 
 export const selectedServicesList = createSelector(
   allServices,
@@ -13,9 +22,13 @@ export const selectedServicesList = createSelector(
   (all, id) => {
     if (!id) return [];
     return pipe(
-      (col) => pickBy((s) => s.restaurant_id === id, col),
+      (col) => pickBy((s) => s.restaurantId === id, col),
       MapToList,
-      (arr) => sort((a, b) => a.name.localeCompare(b.name), arr)
+      (arr) => sort((a, b) => {
+        const aName = getName(a.translations, locale);
+        const bName = getName(b.translations, locale);
+        return aName.localeCompare(bName);
+      }, arr)
     )(all);
   }
 );

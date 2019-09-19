@@ -115,3 +115,7 @@ export const GetCallsOfWaiterboard = ({ waiterboardId }: { waiterboardId: string
 export const ConfirmCall = ({ callId }: { callId: string }): Promise<any> => Patch({
   path: `service/call/${callId}/confirm`
 });
+
+export const GetServicesOfRestaurant = ({ restaurantId }: { restaurantId: string }): Promise<any> => Get({
+  path: `restaurant/${restaurantId}/services`
+});

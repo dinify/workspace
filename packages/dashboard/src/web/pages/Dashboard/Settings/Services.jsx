@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { updateNameInitAction } from 'ducks/restaurant/actions';
-import { removeServiceInit } from 'ducks/service/actions';
+import { removeServiceInit, fetchServicesInit } from 'ducks/service/actions';
 import { useTranslation } from 'react-i18next';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import filter from 'ramda/src/filter';
-import find from 'ramda/src/find';
-import propEq from 'ramda/src/propEq';
+import filter from 'ramda/es/filter';
+import find from 'ramda/es/find';
+import propEq from 'ramda/es/propEq';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,6 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import { switchServicesTab as switchTab } from 'ducks/ui/actions';
 import AddServiceComponent from 'web/components/AddService';
 import { selectedServicesList } from 'ducks/service/selectors';
+
 
 function TabContainer(props) {
   const { children } = props;
@@ -51,8 +52,18 @@ const styles = () => ({
   }
 });
 
-const ServiceCalls = ({ removeService, servicesList, images, classes, tabIndex, switchTab }) => {
+const getName = (translations, l) => {
+  const translation = find(propEq('locale', l))(translations);
+  return translation.name;
+}
+
+const ServiceCalls = ({
+  removeService, servicesList, images, classes, tabIndex, switchTab, fetchServices
+}) => {
   const { t } = useTranslation();
+  useEffect(() => {
+    fetchServices();
+  }, []);
   const getImageUrl = (service) => {
     const img = find(propEq('id', service.image_id))(images);
     if (img) return img.url;
@@ -74,7 +85,7 @@ const ServiceCalls = ({ removeService, servicesList, images, classes, tabIndex, 
             <Card key={service.id} className={classes.card}>
               <CardContent className={classes.cardContent}>
                 <Avatar src={getImageUrl(service)} className={classes.avatar} />
-                <div className={classes.label}>{service.name}</div>
+                <div className={classes.label}>{getName(service.translations, 'en')}</div>
                 <IconButton aria-label="Remove" onClick={() => removeService({ id: service.id })}>
                   <DeleteForeverIcon />
                 </IconButton>
@@ -110,6 +121,7 @@ export default connect(
     tabIndex: state.ui.servicesTabIndex
   }),
   {
+    fetchServices: fetchServicesInit,
     updateName: updateNameInitAction,
     removeService: removeServiceInit,
     switchTab
