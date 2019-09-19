@@ -50,9 +50,7 @@ const getBillEpic: Epic = (action$) =>
     ofType(getType(fetchBillAsync.request)),
     mergeMap((action) => from(API.GetBill()).pipe(
       rxMap((res: BillResponse) => {
-
         const normalized: BillResponseN = normalize(res, bill);
-
         return fetchBillAsync.success(normalized);
       }),
       catchError(error => {

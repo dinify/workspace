@@ -1,26 +1,26 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { withTheme } from '@material-ui/core/styles';
 import { RootState } from 'typesafe-actions';
-import { Translation } from 'CartModels';
+import { Translation, OrderItemN } from 'CartModels';
 import Typography from '@material-ui/core/Typography';
 import Price from '../../components/Price';
+import { MenuItem, MenuItemMap } from 'MenuItemsModels';
 
 export interface BillItemProps {
-  orderItemId: string
-}
-
-const BillItem: React.FC<BillItemProps & {
   style?: any,
   theme?: any,
-}> = ({
+  orderItem: OrderItemN,
+  menuItems: MenuItemMap
+}
+
+const BillItem: React.FC<BillItemProps> = ({
   theme, 
   style,
-  orderItemId,
-  ...otherProps
+  orderItem,
+  menuItems,
 }) => {
-  const orderItem = useSelector((state: RootState) => state.transaction.items[orderItemId]);
-  const menuItem = useSelector((state: RootState) => (state.menuItem.all as any)[orderItem.menuItemId]);
+  const menuItem: MenuItem = menuItems[orderItem.menuItemId];
   const getName = (arr: [Translation]) => {
     const tr = arr[0];
     return tr ? tr.name : '';
@@ -56,4 +56,9 @@ const BillItem: React.FC<BillItemProps & {
   );
 };
 
-export default withTheme()(BillItem);
+export default connect(
+  (state: RootState, { orderItemId }: { orderItemId: string }) => ({
+    orderItem: state.transaction.items[orderItemId],
+    menuItems: state.menuItem.all
+  })
+)(withTheme()(BillItem));

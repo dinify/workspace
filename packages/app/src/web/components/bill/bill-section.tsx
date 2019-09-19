@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { OrderStatus } from 'TransactionModels';
 import { RootState } from 'typesafe-actions';
 import { getOrderItemIdsByStatus } from '../../../ducks/transaction/selectors';
@@ -8,14 +8,15 @@ import Typography from '@material-ui/core/Typography';
 import BillItem from './bill-item';
 
 export interface BillSectionProps {
-  type: OrderStatus
+  type: OrderStatus,
+  orderItemIds: string[]
 }
 
-export const BillSection: React.FC<BillSectionProps> = (props) => {
+const BillSectionComponent: React.FC<BillSectionProps> = (props) => {
   const {
-    type
+    type,
+    orderItemIds
   } = props;
-  const orderItemIds = useSelector((state: RootState) => getOrderItemIdsByStatus(state.transaction)(type))
   const emptySection = orderItemIds.length === 0;
   let sectionLabel;
 
@@ -44,3 +45,9 @@ export const BillSection: React.FC<BillSectionProps> = (props) => {
     </>
   );
 };
+
+export const BillSection = connect(
+  (state: RootState, { type }: { type: OrderStatus }) => ({
+    orderItemIds: getOrderItemIdsByStatus(state.transaction)(type)
+  })
+)(BillSectionComponent);

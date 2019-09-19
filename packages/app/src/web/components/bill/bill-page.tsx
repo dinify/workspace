@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'typesafe-actions';
 import { Subtotal } from 'CartModels';
@@ -17,22 +17,27 @@ const PaymentOptionsDialog = require('@dinify/common/dist/components/dialogs/Pay
 
 export interface BillPageProps {
   onClose?: () => void,
+  subtotal: Subtotal,
+  orderItemCount: number
+  initTransaction: typeof initTransactionAsync.request,
 }
 
-export const BillPage: React.FC<BillPageProps> = (props) => {
+const BillPageComponent: React.FC<BillPageProps> = (props) => {
   const {
     onClose = () => {},
+    subtotal,
+    orderItemCount,
+    initTransaction
   } = props;
-  const dispatch = useDispatch();
-  const onChoosePayment = useCallback((value: any) => {
+
+  const onChoosePayment = (value: any) => {
     setPayMenuOpen(false);
     if (value) {
       setWaitingPayment(true);
-      dispatch(initTransactionAsync.request({gratuity: gratitude, type: value.type}))
+      initTransaction({ gratuity: gratitude, type: value.type });
     }
-  }, [dispatch]);
-  const subtotal = useSelector((state: RootState) => state.transaction.subtotal);
-  const orderItemCount = useSelector((state: RootState) => getOrderItemCount(state.transaction));
+  };
+
   const [payMenuOpen, setPayMenuOpen] = useState(false);
   const [waitingPayment, setWaitingPayment] = useState(false);
   const [splitMode, setSplitMode] = useState(false);
@@ -115,3 +120,12 @@ export const BillPage: React.FC<BillPageProps> = (props) => {
   </div>
   </>;
 };
+
+export const BillPage = connect(
+  (state: RootState) => ({
+    subtotal: state.transaction.subtotal,
+    orderItemCount: getOrderItemCount(state.transaction)
+  }), {
+    initTransaction: initTransactionAsync.request
+  }
+)(BillPageComponent);
