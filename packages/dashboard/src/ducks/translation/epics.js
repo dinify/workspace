@@ -1,8 +1,8 @@
 import { of, from as fromPromise } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import find from 'ramda/src/find';
-import propEq from 'ramda/src/propEq';
+import find from 'ramda/es/find';
+import propEq from 'ramda/es/propEq';
 import * as API from '@dinify/common/dist/api/restaurant';
 import { Post } from '@dinify/common/dist/api/Network';
 import { change as changeForm } from 'redux-form';

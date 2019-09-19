@@ -1,4 +1,4 @@
-import assoc from 'ramda/src/assoc';
+import assoc from 'ramda/es/assoc';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 import { fetchRestaurantAsync } from 'ducks/restaurant/actions.ts';
 import * as types from './types';

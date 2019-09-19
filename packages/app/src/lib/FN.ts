@@ -1,10 +1,10 @@
 import { of } from 'rxjs';
-import toPairs from 'ramda/src/toPairs';
-import curry from 'ramda/src/curry';
-// import apply from 'ramda/src/apply';
-// import pipe from 'ramda/src/pipe';
-import assocPath from 'ramda/src/assocPath';
-// import keys from 'ramda/src/keys';
+import toPairs from 'ramda/es/toPairs';
+import curry from 'ramda/es/curry';
+// import apply from 'ramda/es/apply';
+// import pipe from 'ramda/es/pipe';
+import assocPath from 'ramda/es/assocPath';
+// import keys from 'ramda/es/keys';
 
 export const MapToList = (items: {[id: string]: any}, _options?: any) => {
   let { sortBy, sortType } = { sortBy: 'id', sortType: String };

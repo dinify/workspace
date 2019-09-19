@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { compose } from 'redux';
-import pluck from 'ramda/src/pluck';
-import sum from 'ramda/src/sum';
-import apply from 'ramda/src/apply';
-import last from 'ramda/src/last';
-import range from 'ramda/src/range';
+import pluck from 'ramda/es/pluck';
+import sum from 'ramda/es/sum';
+import apply from 'ramda/es/apply';
+import last from 'ramda/es/last';
+import range from 'ramda/es/range';
 
 import { withStyles } from '@material-ui/core/styles';
 import { MapToList } from '@dinify/common/dist/lib/FN';

@@ -1,13 +1,13 @@
 import { of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import findIndex from 'ramda/src/findIndex';
-import propEq from 'ramda/src/propEq';
-import pipe from 'ramda/src/pipe';
-import filter from 'ramda/src/filter';
-import assoc from 'ramda/src/assoc';
+import findIndex from 'ramda/es/findIndex';
+import propEq from 'ramda/es/propEq';
+import pipe from 'ramda/es/pipe';
+import filter from 'ramda/es/filter';
+import assoc from 'ramda/es/assoc';
 
-import assocPath from 'ramda/src/assocPath';
+import assocPath from 'ramda/es/assocPath';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 import * as types from './types';
 

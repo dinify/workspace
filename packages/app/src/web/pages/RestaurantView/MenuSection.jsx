@@ -9,7 +9,7 @@ import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import Typography from '@material-ui/core/Typography';
 import MenuItemCard from 'web/components/MenuItemCard';
 import * as FN from '@dinify/common/dist/lib/FN';
-import sort from 'ramda/src/sort';
+import sort from 'ramda/es/sort';
 import uniqueId from 'lodash.uniqueid';
 import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';
 

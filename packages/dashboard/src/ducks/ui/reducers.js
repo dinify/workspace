@@ -1,5 +1,5 @@
-import assoc from 'ramda/src/assoc';
-import assocPath from 'ramda/src/assocPath';
+import assoc from 'ramda/es/assoc';
+import assocPath from 'ramda/es/assocPath';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 
 const initialState = {

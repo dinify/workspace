@@ -1,6 +1,6 @@
 
 import React from 'react';
-import pluck from 'ramda/src/pluck';
+import pluck from 'ramda/es/pluck';
 import * as FN from '@dinify/common/dist/lib/FN';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';

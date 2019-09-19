@@ -1,7 +1,7 @@
 import { Observable, of, from } from 'rxjs';
 import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
 import API from '../api';
-import ramdaFilter from 'ramda/src/filter';
+import ramdaFilter from 'ramda/es/filter';
 import { handleEpicAPIError } from '../lib/FN';
 
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);

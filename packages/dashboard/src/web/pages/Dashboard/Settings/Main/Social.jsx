@@ -1,4 +1,4 @@
-import last from 'ramda/src/last';
+import last from 'ramda/es/last';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';

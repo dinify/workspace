@@ -10,10 +10,10 @@ import Tab from '@material-ui/core/Tab';
 import Chip from '@material-ui/core/Chip';
 import { MapToList, ListToMap } from  '@dinify/common/dist/lib/FN';
 import { connect } from 'react-redux';
-import mergeAll from 'ramda/src/mergeAll';
-import merge from 'ramda/src/merge';
-import groupBy from 'ramda/src/groupBy';
-import mapObjIndexed from 'ramda/src/mapObjIndexed';
+import mergeAll from 'ramda/es/mergeAll';
+import merge from 'ramda/es/merge';
+import groupBy from 'ramda/es/groupBy';
+import mapObjIndexed from 'ramda/es/mapObjIndexed';
 
 import { languageCountries as languagesArray } from '@dinify/common/dist/lib'
 import Typography from '@dinify/common/dist/components/Typography';

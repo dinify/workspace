@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import find from 'ramda/src/find';
-import includes from 'ramda/src/includes';
-import anyPass from 'ramda/src/anyPass';
+import find from 'ramda/es/find';
+import includes from 'ramda/es/includes';
+import anyPass from 'ramda/es/anyPass';
 import {
   FormBox,
   FormBoxHead,

@@ -1,10 +1,10 @@
-import pipe from 'ramda/src/pipe';
-import assoc from 'ramda/src/assoc';
-import over from 'ramda/src/over';
-import map from 'ramda/src/map';
-import lensProp from 'ramda/src/lensProp';
-import assocPath from 'ramda/src/assocPath';
-import dissocPath from 'ramda/src/dissocPath';
+import pipe from 'ramda/es/pipe';
+import assoc from 'ramda/es/assoc';
+import over from 'ramda/es/over';
+import map from 'ramda/es/map';
+import lensProp from 'ramda/es/lensProp';
+import assocPath from 'ramda/es/assocPath';
+import dissocPath from 'ramda/es/dissocPath';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';

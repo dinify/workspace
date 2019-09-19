@@ -12,7 +12,7 @@ import ServiceCallGraphic from 'web/components/ServiceCallGraphic';
 import { callServiceInit, fetchServicesInit } from 'ducks/service/actions';
 import { relevantServicesList } from 'ducks/service/selectors';
 import { Motion, spring } from 'react-motion';
-import filter from 'ramda/src/filter';
+import filter from 'ramda/es/filter';
 
 class Services extends React.Component {
   constructor(props) {

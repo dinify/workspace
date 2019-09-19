@@ -1,5 +1,5 @@
 import React from 'react';
-import omit from 'ramda/src/omit';
+import omit from 'ramda/es/omit';
 
 class ScrollLink extends React.Component {
   shouldComponentUpdate (nextProps, nextState) {

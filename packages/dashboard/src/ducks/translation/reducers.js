@@ -1,6 +1,6 @@
-import assoc from 'ramda/src/assoc';
-import assocPath from 'ramda/src/assocPath';
-import mapObjIndexed from 'ramda/src/mapObjIndexed';
+import assoc from 'ramda/es/assoc';
+import assocPath from 'ramda/es/assocPath';
+import mapObjIndexed from 'ramda/es/mapObjIndexed';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 

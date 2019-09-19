@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import numeral from 'numeral';
-import pluck from 'ramda/src/pluck';
+import pluck from 'ramda/es/pluck';
 
 import ReactTable from 'react-table';
 import { DateRangePicker } from 'react-dates';

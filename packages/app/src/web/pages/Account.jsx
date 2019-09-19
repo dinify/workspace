@@ -1,5 +1,5 @@
 import React from 'react';
-import remove from 'ramda/src/remove';
+import remove from 'ramda/es/remove';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase';

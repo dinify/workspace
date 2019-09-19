@@ -1,7 +1,7 @@
 import React from 'react';
-import last from 'ramda/src/last';
-import keys from 'ramda/src/keys';
-import without from 'ramda/src/without';
+import last from 'ramda/es/last';
+import keys from 'ramda/es/keys';
+import without from 'ramda/es/without';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { Field, reduxForm } from 'redux-form';

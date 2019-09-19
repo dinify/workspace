@@ -1,4 +1,4 @@
-import assoc from 'ramda/src/assoc';
+import assoc from 'ramda/es/assoc';
 import { getType } from 'typesafe-actions';
 import { fetchMenuCategoriesAsync } from './actions.ts';
 

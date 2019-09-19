@@ -9,7 +9,7 @@ import {
 } from 'react-sortable-hoc';
 import { useTranslation } from 'react-i18next';
 import { MapToList } from '@dinify/common/dist/lib/FN';
-import filter from 'ramda/src/filter';
+import filter from 'ramda/es/filter';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Checkbox from '@material-ui/core/Checkbox';

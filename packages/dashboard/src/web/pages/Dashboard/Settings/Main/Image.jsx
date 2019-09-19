@@ -1,6 +1,6 @@
 import React from 'react';
-import values from 'ramda/src/values';
-import sort from 'ramda/src/sort';
+import values from 'ramda/es/values';
+import sort from 'ramda/es/sort';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import {

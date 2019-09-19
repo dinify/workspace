@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
-import filter from 'ramda/src/filter';
-import forEach from 'ramda/src/forEach';
+import filter from 'ramda/es/filter';
+import forEach from 'ramda/es/forEach';
 
 export const selectedBillItems = createSelector(
   [

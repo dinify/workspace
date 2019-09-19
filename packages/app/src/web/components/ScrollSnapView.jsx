@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import omit from 'ramda/src/omit';
+import omit from 'ramda/es/omit';
 
 const styles = theme => ({
   container: {

@@ -1,6 +1,6 @@
-import pipe from 'ramda/src/pipe';
-import assocPath from 'ramda/src/assocPath';
-import dissocPath from 'ramda/src/dissocPath';
+import pipe from 'ramda/es/pipe';
+import assocPath from 'ramda/es/assocPath';
+import dissocPath from 'ramda/es/dissocPath';
 import { MapToList } from '@dinify/common/dist/lib/FN';
 import * as menuCategoryTypes from 'ducks/menuCategory/types';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';

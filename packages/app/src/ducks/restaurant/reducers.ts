@@ -1,6 +1,6 @@
 import { Restaurant, FavRestaurantRequest } from 'RestaurantModels';
-import assoc from 'ramda/src/assoc';
-import assocPath from 'ramda/src/assocPath';
+import assoc from 'ramda/es/assoc';
+import assocPath from 'ramda/es/assocPath';
 import * as actions from './actions';
 // import wsTypes from '../../websockets/types';
 import { createReducer, ActionType } from 'typesafe-actions';

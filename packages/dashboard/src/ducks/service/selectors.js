@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
-import pickBy from 'ramda/src/pickBy';
-import pipe from 'ramda/src/pipe';
-import sort from 'ramda/src/sort';
+import pickBy from 'ramda/es/pickBy';
+import pipe from 'ramda/es/pipe';
+import sort from 'ramda/es/sort';
 import find from 'ramda/es/find';
 import propEq from 'ramda/es/propEq';
 import { MapToList } from '@dinify/common/dist/lib/FN';

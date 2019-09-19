@@ -1,5 +1,5 @@
 import React from 'react';
-import filter from 'ramda/src/filter';
+import filter from 'ramda/es/filter';
 import { connect } from 'react-redux';
 import { Label } from 'web/components/styled/FormBox';
 import Avatar from '@material-ui/core/Avatar';

@@ -1,11 +1,11 @@
 import { getType } from 'typesafe-actions';
-import assoc from 'ramda/src/assoc';
-import assocPath from 'ramda/src/assocPath';
-import findIndex from 'ramda/src/findIndex';
-import propEq from 'ramda/src/propEq';
-import append from 'ramda/src/append';
-import remove from 'ramda/src/remove';
-import forEach from 'ramda/src/forEach';
+import assoc from 'ramda/es/assoc';
+import assocPath from 'ramda/es/assocPath';
+import findIndex from 'ramda/es/findIndex';
+import propEq from 'ramda/es/propEq';
+import append from 'ramda/es/append';
+import remove from 'ramda/es/remove';
+import forEach from 'ramda/es/forEach';
 import { selectedBillItems } from 'ducks/seat/selectors';
 import { orderAsync, rmFromCartAsync } from 'ducks/cart/actions.ts';
 import types from './types';

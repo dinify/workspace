@@ -1,4 +1,4 @@
-import assoc from 'ramda/src/assoc';
+import assoc from 'ramda/es/assoc';
 import types from './types';
 
 const initialState = {

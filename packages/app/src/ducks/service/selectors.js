@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
-import filter from 'ramda/src/filter';
-import propEq from 'ramda/src/propEq';
+import filter from 'ramda/es/filter';
+import propEq from 'ramda/es/propEq';
 import { MapToList } from '@dinify/common/dist/lib/FN';
 
 export const allServices = state => state.service.all;

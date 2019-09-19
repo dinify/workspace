@@ -4,8 +4,8 @@ import { combineReducers } from 'redux';
 import {
   OrderItemNMap,
   OrderAddonMap, Subtotal, OrderItemN } from 'CartModels';
-import dissoc from 'ramda/src/dissoc';
-import mapObjIndexed from 'ramda/src/mapObjIndexed';
+import dissoc from 'ramda/es/dissoc';
+import mapObjIndexed from 'ramda/es/mapObjIndexed';
 
 const identity = (o: any) => !!o && o !== 'pivotUndefined';
 

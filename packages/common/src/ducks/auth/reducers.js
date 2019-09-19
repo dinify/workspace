@@ -1,5 +1,5 @@
-import assoc from 'ramda/src/assoc';
-import pipe from 'ramda/src/pipe';
+import assoc from 'ramda/es/assoc';
+import pipe from 'ramda/es/pipe';
 import * as types from './types';
 
 const initialState = {

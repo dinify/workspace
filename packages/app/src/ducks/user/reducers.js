@@ -1,6 +1,6 @@
-import assoc from 'ramda/src/assoc';
-import assocPath from 'ramda/src/assocPath';
-import dissocPath from 'ramda/src/dissocPath';
+import assoc from 'ramda/es/assoc';
+import assocPath from 'ramda/es/assocPath';
+import dissocPath from 'ramda/es/dissocPath';
 import * as authTypes from '@dinify/common/dist/ducks/auth/types';
 import types from './types';
 
