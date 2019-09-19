@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 //  import registerServiceWorker from './registerServiceWorker'
 import { createBrowserHistory } from 'history';
 import { ConnectedRouter } from 'connected-react-router';
+import { getOrderItemCount as getCartCount } from './ducks/cart/selectors';
 import App from 'web/App';
 import { SnackbarProvider } from 'material-ui-snackbar-redux';
 import i18n from '@dinify/common/dist/i18n'
@@ -66,27 +67,45 @@ const rrfProps = {
   // createFirestoreInstance // <- needed if using firestore
 };
 
-const snackbarProps = {
-  autoHideDuration: 5000,
-  style: {
-    bottom: 56,
-    zIndex: 1200
-  },
-  anchorOrigin: {
-    vertical: 'bottom',
-    horizontal: 'left',
-  }
-};
+const SnackbarProviderWrapper = connect(
+  (state) => ({
+    cartItemCount: getCartCount(state.cart),
+    billItemCount: state.transaction.orderItemsCount
+  })
+)(({
+  cartItemCount,
+  billItemCount,
+  children, 
+  ...props
+}) => {
+  const bottomBarVisible = cartItemCount > 0 || billItemCount > 0;
+  const snackbarProps = {
+    autoHideDuration: 5000,
+    style: {
+      bottom: bottomBarVisible ? (56 + 56) : 56,
+      zIndex: 1200
+    },
+    anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'left',
+    }
+  };
+  return (
+    <SnackbarProvider SnackbarProps={snackbarProps} {...props}>
+      {children}
+    </SnackbarProvider>
+  );
+});
 
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <ReactReduxFirebaseProvider {...rrfProps}>
-        <SnackbarProvider SnackbarProps={snackbarProps}>
+        <SnackbarProviderWrapper>
           <ConnectedRouter history={history}>
             <App history={history} />
           </ConnectedRouter>
-        </SnackbarProvider>
+        </SnackbarProviderWrapper>
       </ReactReduxFirebaseProvider>
     </PersistGate>
   </Provider>,

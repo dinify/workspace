@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { openDialog, closeDialog } from 'ducks/ui/actions';
 import { matchPath } from 'react-router';
@@ -30,11 +30,6 @@ import * as FN from '@dinify/common/dist/lib/FN';
 import withRoot from 'withRoot.js';
 
 class App extends React.Component {
-  state = {
-    cartOpen: false,
-    billOpen: false
-  };
-
   componentDidUpdate() {
     const { history } = this.props;
     if (history.action === 'PUSH') {
@@ -95,10 +90,6 @@ class App extends React.Component {
       history,
       user
     } = this.props;
-    const {
-      cartOpen,
-      billOpen
-    } = this.state;
     return (
       <div style={{position: 'relative'}}>
         <AppBar history={history}>

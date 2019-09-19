@@ -104,7 +104,7 @@ let Customizations = ({
 
       {menuItem.menuIngredients.length > 0 && menuItem.menuIngredients.map(menuIngredientId => {
         const menuIngredient = menuIngredients[menuIngredientId];
-        if (!menuIngredient) return (<div />);
+        if (!menuIngredient) return null;
         const ingredient = ingredients[menuIngredient.ingredientId];
         
         let excluded = false;
@@ -167,7 +167,7 @@ let Customizations = ({
       }
       {menuItem.menuAddons.length > 0 && menuItem.menuAddons.map(menuAddonId => {
         const menuAddon = menuAddons[menuAddonId];
-        if (!menuAddon) return (<div />);
+        if (!menuAddon) return null;
         const addon = addons[menuAddon.addonId];
 
         let amount = 0;
@@ -224,7 +224,7 @@ let Customizations = ({
       {menuItem.menuOptions.length > 0 && menuItem.menuOptions.map(menuOptionId => {
 
         const menuOption = menuOptions[menuOptionId];
-        if (!menuOption) return (<div />);
+        if (!menuOption) return null;
         const option = options[menuOption.optionId];
 
         return (

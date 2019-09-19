@@ -35,7 +35,7 @@ const BillSectionComponent: React.FC<BillSectionProps> = (props) => {
         {sectionLabel}
       </Typography>
       {orderItemIds.map(itemId => (
-        <BillItem orderItemId={itemId}/>
+        <BillItem key={itemId} orderItemId={itemId}/>
       ))}
       {emptySection && (
         <Typography color="textSecondary" variant="caption">
