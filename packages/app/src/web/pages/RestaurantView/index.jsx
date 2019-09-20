@@ -66,6 +66,7 @@ class RestaurantView extends React.PureComponent {
       classes,
       restaurant,
       // router,
+      history,
       match: { params },
       location: { search },
       checkin,
@@ -135,7 +136,7 @@ class RestaurantView extends React.PureComponent {
                 </Typography>
               )}
               <Typography gutterBottom variant="h6">{restaurant.name}</Typography>
-              <Nav restaurant={restaurant} />
+              <Nav history={history} restaurant={restaurant} />
 
               { /* <Typography style={{marginTop: 8}} gutterBottom variant="subtitle1">{restaurant.description}</Typography>
               <Typography

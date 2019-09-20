@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import FacebookBox from '@dinify/common/dist/icons/FacebookBox';
 import Instagram from '@dinify/common/dist/icons/Instagram';
 import CalendarClock from '@dinify/common/dist/icons/CalendarClock';
@@ -21,6 +22,7 @@ let Nav = ({
   classes,
   restaurant,
   favRestaurant,
+  history
 }) => {
   const social = restaurant.social;
   const bookingElement = document.getElementById('booking');
@@ -83,6 +85,17 @@ let Nav = ({
           <CalendarClock className={classes.secondary} />
         </IconButton>
       </Grid>}
+
+      <Button style={{
+        height: 40, 
+        boxShadow: 'none',
+        alignSelf: 'center',
+        marginLeft: 'auto'
+      }} variant="contained" color="primary" onClick={() => {
+        history.push("/dinein/camera");
+      }}>
+        Check in
+      </Button>
     </Grid>
   )
 }
