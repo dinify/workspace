@@ -46,7 +46,9 @@ const styles = theme => ({
 
 const MenuItemCard = ({
   classes,
-  menuItem
+  menuItem,
+  getT,
+  userLang
 }) => {
   const images = FN.MapToList(menuItem.images).map(image => image.url)
   const MenuItemLink = props => <Link to={`/menu/item/${menuItem.id}${FN.isInstalled() ? '?source=pwa' : ''}`} {...props}/>
@@ -72,7 +74,7 @@ const MenuItemCard = ({
       <Typography style={{
         textOverflow: 'ellipsis',
         overflow: 'hidden'
-      }} variant="subtitle1">{menuItem.translations[0].name}</Typography>
+      }} variant="subtitle1">{getT(menuItem.translations, userLang)}</Typography>
       <Typography
         className={classes.price}
         variant="overline">

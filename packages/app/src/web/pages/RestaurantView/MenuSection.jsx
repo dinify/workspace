@@ -12,6 +12,8 @@ import * as FN from '@dinify/common/dist/lib/FN';
 import sort from 'ramda/es/sort';
 import uniqueId from 'lodash.uniqueid';
 import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';
+import find from 'ramda/es/find';
+import propEq from 'ramda/es/propEq';
 
 const styles = theme => ({
   primary: {
@@ -46,11 +48,20 @@ const styles = theme => ({
   }
 });
 
+export const getT = (translations, l, col = 'name') => {
+  if (!translations) return '';
+  let translation = find(propEq('locale', l))(translations);
+  if (!translation) translation = find(propEq('locale', 'en'))(translations);
+  if (!translation) return '';
+  return translation[col];
+}
+
 let MenuSection = ({
   width,
   classes,
   restaurant,
   menuCategoriesList,
+  userLang
 }) => {
   const { t } = useTranslation();
   if (!restaurant) {
@@ -76,7 +87,7 @@ let MenuSection = ({
         <div className={mobile ? classes.expand : null} style={{marginTop: i === 0 ? 32 : 0}} key={uniqueId()}>
           {i > 0 && <Divider className={mobile ? classes.margin : null} style={{marginTop: mobile ? 0 : 32, marginBottom: 32}} />}
           <Typography className={mobile ? classes.margin : null} gutterBottom variant="h6">
-            {category.translations[0].name}
+            {getT(category.translations, userLang)}
           </Typography>
           {mobile ?
             <div className={classes.scroller}>
@@ -88,7 +99,7 @@ let MenuSection = ({
                   marginRight: arr.length - 1 === i ? 16 : 0
                 }}>
                   <div>
-                    <MenuItemCard menuItem={menuItem}/>
+                    <MenuItemCard getT={getT} userLang={userLang} menuItem={menuItem}/>
                   </div>
                 </div>
               )}
@@ -98,7 +109,7 @@ let MenuSection = ({
               spacing={mediumScreen ? 24 : 16}>
               {sort((a,b) => a.precedence - b.precedence, FN.MapToList(category.items)).map(menuItem =>
                 <Grid item xs={6} sm={4} md={6} key={uniqueId()}>
-                  <MenuItemCard menuItem={menuItem}/>
+                  <MenuItemCard getT={getT} userLang={userLang} menuItem={menuItem}/>
                 </Grid>
               )}
             </Grid>
@@ -112,8 +123,17 @@ let MenuSection = ({
 }
 
 MenuSection = connect(
-  (state, { subdomain }) => ({
-    menuCategoriesList: getCategoriesBySubdomain(state, subdomain)
-  })
-)(MenuSection)
+  (state, { subdomain }) => {
+    let userLang = 'en';
+    if (state.firebase.profile
+     && state.firebase.profile.language
+     && state.firebase.profile.language.primary
+    ) userLang = state.firebase.profile.language.primary;
+    return {
+      menuCategoriesList: getCategoriesBySubdomain(state, subdomain),
+      userLang
+    }
+  }
+)(MenuSection);
+
 export default withStyles(styles)(withWidth()(MenuSection));

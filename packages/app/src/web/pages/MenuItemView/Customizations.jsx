@@ -6,22 +6,22 @@ import { useTranslation } from 'react-i18next';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Fab from '@material-ui/core/Fab';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Chip from '@material-ui/core/Chip';
 import AddCircle from '@material-ui/icons/AddCircleRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
-import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
 import Price from 'web/components/Price';
 import {
   excludeIngredient as excludeIngredientAction,
   incAddonQty as incAddonQtyAction,
   selectChoice as selectChoiceAction
-} from 'ducks/menuItem/actions';
+} from 'ducks/menuItem/actions.ts';
 import { addToCartAsync } from 'ducks/cart/actions.ts';
 import { getType } from 'typesafe-actions';
+import find from 'ramda/es/find';
+import propEq from 'ramda/es/propEq';
 
 const styles = theme => ({
   secondary: {
@@ -61,15 +61,19 @@ const styles = theme => ({
   }
 });
 
+export const getT = (translations, l, col = 'name') => {
+  let translation = find(propEq('locale', l))(translations);
+  if (!translation) translation = find(propEq('locale', 'en'))(translations);
+  if (!translation) return '';
+  return translation[col];
+}
+
 let Customizations = ({
   classes,
   menuItem,
   excludeIngredient,
   incAddonQty,
   selectChoice,
-  addToCart,
-  // onSnackClose, addToCartDone,
-  history,
   addons,
   ingredients,
   options,
@@ -79,12 +83,14 @@ let Customizations = ({
   menuOptions,
   selectedAddons,
   selectedExcludes,
-  selectedChoices
+  selectedChoices,
+  userLang
 }) => {
+  console.log(userLang,'b');
 
   const { t } = useTranslation();
 
-  const selectCount = 0;
+  // const selectCount = 0;
 
   const allNonExcludable = true;
 
@@ -139,7 +145,7 @@ let Customizations = ({
                   paddingLeft: 16,
                   textDecoration: excluded ? 'line-through' : 'none'
                 }}>
-                {ingredient.translations[0].name}
+                {getT(ingredient.translations, userLang)}
               </Typography>
               {menuIngredient.excludable ?
                 <div style={{width: 40, height: 40, marginRight: 8, padding: 8}}>
@@ -195,7 +201,7 @@ let Customizations = ({
               <Price price={addon.price} />
             </Typography>
             <Typography >
-              {addon.translations[0].name}
+              {getT(addon.translations, userLang)}
             </Typography>
           </Grid>
           <Grid item>
@@ -233,7 +239,7 @@ let Customizations = ({
               style={{marginTop: 32}}
               className={classes.secondary}
               variant="overline">
-              {option.translations[0].name}
+              {getT(option.translations, userLang)}
             </Typography>
             <div className={classes.chipContainer}>
               {option.choices.map((choiceId) => {
@@ -262,45 +268,39 @@ let Customizations = ({
                       })
                     }} // select choice
                     className={classes.chip}
-                    label={choice.translations[0].name}/>
+                    label={getT(choice.translations, userLang)}/>
                 );
               })}
             </div>
           </div>
         )
       })}
-      <Fab
-        onClick={() => {
-          addToCart({ menuItemId: menuItem.id });
-          history.goBack();
-        }} // add item to cart
-        style={{marginTop: 24, marginBottom: 64, width: '100%'}}
-        disabled={selectCount < options.length && options.length !== 0}
-        variant="extended"
-        color="primary"
-        className={classes.button}
-      >
-        <AddShoppingCart style={{marginRight: 16}} />
-        <span>{t('cart.add')}</span>
-      </Fab>
     </div>
   )
 }
 
 Customizations = connect(
-  (state) => ({
-    addToCartDone: state.ui.progressMap[getType(addToCartAsync.success)],
-    menuAddons: state.menuItem.menuAddons,
-    menuIngredients: state.menuItem.menuIngredients,
-    menuOptions: state.menuItem.menuOptions,
-    addons: state.addon.all,
-    ingredients: state.ingredient.all,
-    options: state.option.all,
-    choices: state.option.choices,
-    selectedAddons: state.menuItem.selectedAddons,
-    selectedExcludes: state.menuItem.selectedExcludes,
-    selectedChoices: state.menuItem.selectedChoices
-  }),
+  (state) => {
+    let userLang = 'en';
+    if (state.firebase.profile
+     && state.firebase.profile.language
+     && state.firebase.profile.language.primary
+    ) userLang = state.firebase.profile.language.primary;
+    return {
+      addToCartDone: state.ui.progressMap[getType(addToCartAsync.success)],
+      menuAddons: state.menuItem.menuAddons,
+      menuIngredients: state.menuItem.menuIngredients,
+      menuOptions: state.menuItem.menuOptions,
+      addons: state.addon.all,
+      ingredients: state.ingredient.all,
+      options: state.option.all,
+      choices: state.option.choices,
+      selectedAddons: state.menuItem.selectedAddons,
+      selectedExcludes: state.menuItem.selectedExcludes,
+      selectedChoices: state.menuItem.selectedChoices,
+      userLang
+    }
+  },
   {
     excludeIngredient: excludeIngredientAction,
     incAddonQty: incAddonQtyAction,
