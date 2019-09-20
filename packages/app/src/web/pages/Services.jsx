@@ -22,14 +22,11 @@ class Services extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidMount() {
     const { fetchServices, checkedInRestaurant } = this.props;
-    const prevCheckedInRestaurant = prevProps.checkedInRestaurant;
-    if (!prevCheckedInRestaurant && checkedInRestaurant) {
-      fetchServices({
-        restaurantId: checkedInRestaurant
-      })
-    }
+    fetchServices({
+      restaurantId: checkedInRestaurant
+    })
   }
 
   render() {

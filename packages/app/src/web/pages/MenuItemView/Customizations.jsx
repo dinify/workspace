@@ -86,7 +86,6 @@ let Customizations = ({
   selectedChoices,
   userLang
 }) => {
-  console.log(userLang,'b');
 
   const { t } = useTranslation();
 

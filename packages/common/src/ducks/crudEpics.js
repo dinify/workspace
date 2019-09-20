@@ -20,6 +20,9 @@ const filterAction = (type, kind, stage) => {
 };
 
 const getRestaurantId = (state) => {
+  if (state.restaurant && state.restaurant.checkedInRestaurant) {
+    return state.restaurant.checkedInRestaurant;
+  }
   if (state.restaurant && state.restaurant.selectedRestaurant) {
     return state.restaurant.selectedRestaurant;
   }
