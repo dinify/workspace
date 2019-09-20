@@ -38,8 +38,6 @@ const BillPageComponent: React.FC<BillPageProps> = (props) => {
       initTransaction({ gratuity: gratitude, type: value.type });
     }
   };
-  console.log(`transactionStatus: ${transactionStatus}`);
-
   const [payMenuOpen, setPayMenuOpen] = useState(false);
   const [waitingPayment, setWaitingPayment] = useState(false);
   const [splitMode, setSplitMode] = useState(false);

@@ -28,7 +28,6 @@ let BottomBar: React.FC<{
   billItemCount,
   onSelect = () => {},
 }) => {
-  console.log('bottom-bar render', `cartItemCount: ${cartItemCount}, billItemCount: ${billItemCount}`)
   const { t } = useTranslation();
   const cartVisible = cartItemCount > 0;
   const billVisible = billItemCount > 0;
