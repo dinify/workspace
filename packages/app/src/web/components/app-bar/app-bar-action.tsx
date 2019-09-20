@@ -4,12 +4,14 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/CloseRounded';
 import EditIcon from '@material-ui/icons/EditRounded';
 import DoneIcon from '@material-ui/icons/DoneRounded';
+import BackIcon from '@material-ui/icons/ArrowBackRounded';
+import BackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Button from '@material-ui/core/Button';
 
 import { select } from '../../../lib/platform';
 import { Typography } from '../../components/typography'
 
-type AppBarActionType = 'close' | 'cancel' | 'edit' | 'done';
+type AppBarActionType = 'close' | 'cancel' | 'edit' | 'done' | 'back';
 
 const AppBarAction: React.FC<{
   onClick?: () => void,
@@ -34,6 +36,17 @@ const AppBarAction: React.FC<{
     );
 
     const appBarActions: {[key: string]: any} = {
+      back: select({
+        ios: (
+          <Button onClick={onClick} {...otherProps}>
+            <BackIosIcon/>
+            <Typography color="primary" variant="button2">
+              Back {/* TODO: previous screen name */}
+            </Typography>
+          </Button>
+        ),
+        standard: getIconButton(<BackIcon/>)
+      }),
       close: select({
         ios: getTextButton('Cancel'),
         standard: getIconButton(<CloseIcon/>)
