@@ -62,7 +62,7 @@ const websockets = (store) => {
   });
 
   socket.on('checkout', (data) => {
-    if (data.seat.user_id === getState().user.loggedUserId) {
+    if (data.seat.userId === getState().firebase.auth.uid) {
       dispatch({ type: types.CHECKOUT_ALL, payload: data });
       dispatch(snackbar.show({ message: 'You have been checked out from the table.' }));
     }
