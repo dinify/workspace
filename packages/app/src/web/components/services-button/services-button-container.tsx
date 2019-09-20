@@ -6,9 +6,11 @@ import { RootState } from 'typesafe-actions';
 const ServicesButtonContainer: React.FC<{
   style?: React.CSSProperties,
   anchor?: number,
+  onClick?: () => void,
   checkedInRestaurant: string|null
 }> = ({
   style,
+  onClick = () => {},
   checkedInRestaurant,
   anchor = 0,
   ...otherProps
@@ -26,7 +28,7 @@ const ServicesButtonContainer: React.FC<{
       zIndex: 1300,
       ...style
     }}>
-      <ServicesButton onClick={() => {}} style={{ marginTop: -28 }} visible={checkedInRestaurant !== null}/>
+      <ServicesButton onClick={onClick} style={{ marginTop: -28 }} visible={checkedInRestaurant !== null}/>
     </div>
   );
 };

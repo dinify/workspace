@@ -18,9 +18,8 @@ import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
 
-import AccountSignIn from 'web/components/AccountSignIn';
-import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
+import { ServicesScreen } from 'web/screens/services';
 import { ServicesButtonContainer } from 'web/components/services-button';
 import { BottomBar } from 'web/components/bottom-bar';
 import { CartPage } from 'web/components/cart';
@@ -83,6 +82,18 @@ class App extends React.Component {
     }
   }
 
+  handleServicesClick = () => {
+    const { openDialog } = this.props;
+    openDialog({
+      id: 'services',
+      component: (props) => (
+        <Dialog fullScreen {...props}>
+          <ServicesScreen onClose={props.onClose}/>
+        </Dialog>
+      )
+    });
+  }
+
   render() {
     const {
       checkedInRestaurant,
@@ -93,9 +104,6 @@ class App extends React.Component {
     } = this.props;
     return (
       <div style={{position: 'relative'}}>
-        <AppBar history={history}>
-          <AccountSignIn visible={!this.match([routes.SIGNIN, routes.ACCOUNT])} history={history}/>
-        </AppBar>
         <div style={{ marginBottom: 56 }}>
           <Switch>
             <Route exact path={routes.HOMEPAGE} render={() => (
@@ -139,7 +147,7 @@ class App extends React.Component {
               })()}/>
           }
         </Motion>
-        <ServicesButtonContainer anchor={56} />
+        <ServicesButtonContainer anchor={56} onClick={this.handleServicesClick} />
         <BottomBar style={{bottom: 56}} onSelect={this.onBottomBarSelect} />
         {FN.MapToList(dialogs).map(dialog =>
           dialog.component({

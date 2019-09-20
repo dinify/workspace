@@ -2,6 +2,7 @@ import { Restaurant, FavRestaurantRequest } from 'RestaurantModels';
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import * as actions from './actions';
+import * as wsActions from '../../websockets/actions';
 // import wsTypes from '../../websockets/types';
 import { createReducer, ActionType } from 'typesafe-actions';
 import { combineReducers } from 'redux';
@@ -43,11 +44,13 @@ export const all = createReducer<State, Action>({})
 
 
 export const checkedInRestaurant = createReducer<State, Action>(null)
-
   .handleAction(actions.fetchStatusAsync.success, (state, action) => {
     const res = action.payload.res;
     if (!res.restaurant) return null;
     return res.restaurant.id;
+  })
+  .handleAction(wsActions.checkoutAllAction, () => {
+    return null;
   });
 
   

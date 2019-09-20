@@ -33,7 +33,7 @@ class Services extends React.Component {
   }
 
   render() {
-    const { servicesList, restaurant, call, services, t } = this.props;
+    const { servicesList, restaurant, call, services, t, style } = this.props;
     const { selectedTab } = this.state;
 
     const selectedServicesList = filter((s) => {
@@ -47,6 +47,7 @@ class Services extends React.Component {
         display: 'flex',
         height: 'calc(100vh - 56px)',
         flexDirection: 'column',
+        ...style
       }}>
         <div style={{
           flex: 1,
@@ -73,7 +74,7 @@ class Services extends React.Component {
     )
 
     return (
-      <div>
+      <div style={style}>
         <div style={{
           width: '100%',
           marginTop: 16
