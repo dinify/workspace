@@ -21,6 +21,7 @@ import Main from 'web/pages/Main';
 import AccountSignIn from 'web/components/AccountSignIn';
 import AppBar from 'web/components/AppBar';
 import Navigation from 'web/components/Navigation';
+import { ServicesButtonContainer } from 'web/components/services-button';
 import { BottomBar } from 'web/components/bottom-bar';
 import { CartPage } from 'web/components/cart';
 import { BillPage } from 'web/components/bill';
@@ -138,6 +139,7 @@ class App extends React.Component {
               })()}/>
           }
         </Motion>
+        <ServicesButtonContainer anchor={56} />
         <BottomBar style={{bottom: 56}} onSelect={this.onBottomBarSelect} />
         {FN.MapToList(dialogs).map(dialog =>
           dialog.component({
