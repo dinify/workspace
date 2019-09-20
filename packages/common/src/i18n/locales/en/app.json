@@ -104,5 +104,14 @@
     "carbs": "Carbs",
     "proteins": "Proteins",
     "calories": "Calories"
+  },
+  "successMessages": {
+    "added-to-cart": "Added to cart",
+    "removed-from-cart": "Removed from cart",
+    "order-has-been-placed": "Order has been placed",
+    "you-are-now-checked-in": "You are now checked in",
+    "service-called": "Service called",
+    "payment-request-sent": "Payment request sent"
   }
+
 }

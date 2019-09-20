@@ -45,7 +45,6 @@ export const all = createReducer<State, Action>({})
 export const checkedInRestaurant = createReducer<State, Action>(null)
 
   .handleAction(actions.fetchStatusAsync.success, (state, action) => {
-    state;
     const res = action.payload.res;
     if (!res.restaurant) return null;
     return res.restaurant.id;

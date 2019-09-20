@@ -119,3 +119,7 @@ export const ConfirmCall = ({ callId }: { callId: string }): Promise<any> => Pat
 export const GetServicesOfRestaurant = ({ restaurantId }: { restaurantId: string }): Promise<any> => Get({
   path: `restaurant/${restaurantId}/services`
 });
+
+export const GetLanguagesOfRestaurant = ({ restaurantId }: { restaurantId: string }): Promise<any> => Get({
+  path: `restaurant/${restaurantId}/languages`
+});

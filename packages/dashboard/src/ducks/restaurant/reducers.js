@@ -2,7 +2,7 @@ import pipe from 'ramda/es/pipe';
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
-import { MapToList, ListToMap, setCookie } from '@dinify/common/dist/lib/FN';
+import { ListToMap, setCookie } from '@dinify/common/dist/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 
@@ -40,14 +40,8 @@ export default function reducer(state = initialState, action) {
   switch (type) {
     case types.FETCH_RESTAURANT_DONE: {
       const restaurant = payload.res;
-      let defaultLanguage = 'en';
-      const menuLanguages = restaurant.menu_languages || {};
-      const defaultMenuLanguages = MapToList(menuLanguages).filter(lang => lang.default);
-      if (defaultMenuLanguages.length > 0) defaultLanguage = defaultMenuLanguages[0].language;
-      setCookie('lang', defaultLanguage, 30);
       return pipe(
         assocPath(['all', restaurant.id], restaurant),
-        assoc('defaultLanguage', defaultLanguage),
       )(state);
     }
     case 'BOOTSTRAP':
@@ -82,8 +76,17 @@ export default function reducer(state = initialState, action) {
       );
     case 'SET_ONGOINGREGISTRATION':
       return assoc('ongoingRegistration', !!payload)(state);
+
     case 'FETCH_MENULANGUAGES_DONE': {
-      return assoc('menuLanguages', payload.res)(state);
+      let defaultLanguage = 'en';
+      const menuLanguages = payload.res;
+      const defaultMenuLanguages = menuLanguages.filter(lang => lang.default);
+      if (defaultMenuLanguages.length > 0) defaultLanguage = defaultMenuLanguages[0].language;
+      setCookie('lang', defaultLanguage, 30);
+      return pipe(
+        assoc('menuLanguages', menuLanguages),
+        assoc('defaultLanguage', defaultLanguage)
+      )(state);
     }
     case 'CREATE_MENULANGUAGE_DONE': {
       const language = payload.initPayload.language;
