@@ -3,6 +3,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FacebookLogo from '../icons/FacebookLogo';
+import { useTranslation } from 'react-i18next';
 
 const styles = theme => ({
   leftGutter: {
@@ -32,10 +33,10 @@ const styles = theme => ({
 });
 
 const FacebookButton = ({
-  t,
   classes,
   ...props
 }) => {
+  const { t } = useTranslation();
   return (
     <Button
       fullWidth

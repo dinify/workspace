@@ -3,6 +3,7 @@ import React from 'react';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import GoogleLogo from '../icons/GoogleLogo';
+import { useTranslation } from 'react-i18next';
 
 const styles = theme => ({
   leftGutter: {
@@ -36,11 +37,11 @@ const styles = theme => ({
 });
 
 const GoogleButton = ({
-  t,
   classes,
   theme,
   ...props
 }) => {
+  const { t } = useTranslation();
   return (
     <Button
       fullWidth
