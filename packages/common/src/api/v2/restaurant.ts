@@ -112,6 +112,10 @@ export const GetCallsOfWaiterboard = ({ waiterboardId }: { waiterboardId: string
   path: `waiterboard/${waiterboardId}/calls?status=dispatched`
 });
 
+export const CallService = ({ serviceId }: { serviceId: string }): Promise<any> => Post({
+  path: `service/${serviceId}/call`
+});
+
 export const ConfirmCall = ({ callId }: { callId: string }): Promise<any> => Patch({
   path: `service/call/${callId}/confirm`
 });

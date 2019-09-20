@@ -2,7 +2,7 @@ import { of, from } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
-import * as API from '@dinify/common/dist/api/restaurant';
+import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as types from './types';
 import { callServiceDone } from './actions';
