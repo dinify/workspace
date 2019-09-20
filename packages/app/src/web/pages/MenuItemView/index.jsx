@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import FavoriteToggle from 'web/components/FavoriteToggle';
 import Typography from '@material-ui/core/Typography';
 import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
+import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
+import Fab from '@material-ui/core/Fab';
 import Carousel from 'web/components/Carousel';
 import Price from 'web/components/Price';
 import * as FN from '@dinify/common/dist/lib/FN';
@@ -17,11 +19,9 @@ import {
   fetchMenuItemAsync,
   clearCustomizationsAction
 } from 'ducks/menuItem/actions.ts';
-import find from 'ramda/es/find';
-import propEq from 'ramda/es/propEq';
+import { getT } from 'lib/translation.ts';
 import { addToCartAsync } from 'ducks/cart/actions.ts';
-import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
-import Fab from '@material-ui/core/Fab';
+import { getUserLang } from 'ducks/user/selectors.ts';
 import Customizations from './Customizations';
 import NutritionFacts from './NutritionFacts';
 
@@ -50,14 +50,6 @@ const styles = theme => ({
     color: theme.palette.text.secondary
   },
 });
-
-export const getT = (translations, l, col = 'name') => {
-  if (!translations) return '';
-  let translation = find(propEq('locale', l))(translations);
-  if (!translation) translation = find(propEq('locale', 'en'))(translations);
-  if (!translation) return '';
-  return translation[col];
-}
 
 let MenuItemView = props => {
 
@@ -168,18 +160,10 @@ let MenuItemView = props => {
 }
 
 MenuItemView = connect(
-  (state, { match }) => {
-    let userLang = 'en';
-    if (state.firebase.profile
-     && state.firebase.profile.language
-     && state.firebase.profile.language.primary
-    ) userLang = state.firebase.profile.language.primary;
-    return {
-      menuItem: state.menuItem.all[match.params.id],
-      userLang
-    }
-  },
-  {
+  (state, { match }) => ({
+    menuItem: state.menuItem.all[match.params.id],
+    userLang: getUserLang(state)
+  }), {
     fetchMenuItem: fetchMenuItemAsync.request,
     favMenuitem: favMenuitemInit,
     clearCustomizations: clearCustomizationsAction,

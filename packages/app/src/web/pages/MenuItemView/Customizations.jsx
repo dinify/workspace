@@ -20,8 +20,8 @@ import {
 } from 'ducks/menuItem/actions.ts';
 import { addToCartAsync } from 'ducks/cart/actions.ts';
 import { getType } from 'typesafe-actions';
-import find from 'ramda/es/find';
-import propEq from 'ramda/es/propEq';
+import { getT } from 'lib/translation.ts';
+import { getUserLang } from 'ducks/user/selectors.ts';
 
 const styles = theme => ({
   secondary: {
@@ -60,14 +60,6 @@ const styles = theme => ({
     color: theme.palette.text.secondary
   }
 });
-
-export const getT = (translations, l, col = 'name') => {
-  if (!translations) return '';
-  let translation = find(propEq('locale', l))(translations);
-  if (!translation) translation = find(propEq('locale', 'en'))(translations);
-  if (!translation) return '';
-  return translation[col];
-}
 
 let Customizations = ({
   classes,
@@ -280,28 +272,20 @@ let Customizations = ({
 }
 
 Customizations = connect(
-  (state) => {
-    let userLang = 'en';
-    if (state.firebase.profile
-     && state.firebase.profile.language
-     && state.firebase.profile.language.primary
-    ) userLang = state.firebase.profile.language.primary;
-    return {
-      addToCartDone: state.ui.progressMap[getType(addToCartAsync.success)],
-      menuAddons: state.menuItem.menuAddons,
-      menuIngredients: state.menuItem.menuIngredients,
-      menuOptions: state.menuItem.menuOptions,
-      addons: state.addon.all,
-      ingredients: state.ingredient.all,
-      options: state.option.all,
-      choices: state.option.choices,
-      selectedAddons: state.menuItem.selectedAddons,
-      selectedExcludes: state.menuItem.selectedExcludes,
-      selectedChoices: state.menuItem.selectedChoices,
-      userLang
-    }
-  },
-  {
+  (state) => ({
+    addToCartDone: state.ui.progressMap[getType(addToCartAsync.success)],
+    menuAddons: state.menuItem.menuAddons,
+    menuIngredients: state.menuItem.menuIngredients,
+    menuOptions: state.menuItem.menuOptions,
+    addons: state.addon.all,
+    ingredients: state.ingredient.all,
+    options: state.option.all,
+    choices: state.option.choices,
+    selectedAddons: state.menuItem.selectedAddons,
+    selectedExcludes: state.menuItem.selectedExcludes,
+    selectedChoices: state.menuItem.selectedChoices,
+    userLang: getUserLang(state)
+  }), {
     excludeIngredient: excludeIngredientAction,
     incAddonQty: incAddonQtyAction,
     selectChoice: selectChoiceAction,

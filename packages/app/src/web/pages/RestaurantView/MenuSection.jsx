@@ -12,8 +12,8 @@ import * as FN from '@dinify/common/dist/lib/FN';
 import sort from 'ramda/es/sort';
 import uniqueId from 'lodash.uniqueid';
 import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';
-import find from 'ramda/es/find';
-import propEq from 'ramda/es/propEq';
+import { getT } from 'lib/translation.ts';
+import { getUserLang } from 'ducks/user/selectors.ts';
 
 const styles = theme => ({
   primary: {
@@ -47,14 +47,6 @@ const styles = theme => ({
     }
   }
 });
-
-export const getT = (translations, l, col = 'name') => {
-  if (!translations) return '';
-  let translation = find(propEq('locale', l))(translations);
-  if (!translation) translation = find(propEq('locale', 'en'))(translations);
-  if (!translation) return '';
-  return translation[col];
-}
 
 let MenuSection = ({
   width,
@@ -123,17 +115,10 @@ let MenuSection = ({
 }
 
 MenuSection = connect(
-  (state, { subdomain }) => {
-    let userLang = 'en';
-    if (state.firebase.profile
-     && state.firebase.profile.language
-     && state.firebase.profile.language.primary
-    ) userLang = state.firebase.profile.language.primary;
-    return {
-      menuCategoriesList: getCategoriesBySubdomain(state, subdomain),
-      userLang
-    }
-  }
+  (state, { subdomain }) => ({
+    menuCategoriesList: getCategoriesBySubdomain(state, subdomain),
+    userLang: getUserLang(state)
+  })
 )(MenuSection);
 
 export default withStyles(styles)(withWidth()(MenuSection));
