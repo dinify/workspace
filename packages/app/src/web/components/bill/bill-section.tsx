@@ -21,7 +21,7 @@ const BillSectionComponent: React.FC<BillSectionProps> = (props) => {
   let sectionLabel;
 
   const t = (k: string) => ({
-    'bill.section.waiting': 'Waiting orders', 
+    'bill.section.waiting': 'Awaiting confirmation', 
     'bill.section.confirmed': 'Confirmed orders',
     'bill.section.empty': 'Once your orders are confirmed, they get added to your bill total',
   } as any)[k];
@@ -29,6 +29,7 @@ const BillSectionComponent: React.FC<BillSectionProps> = (props) => {
   if (type === 'DISPATCHED') sectionLabel = t('bill.section.waiting');
   else if (type === 'CONFIRMED') sectionLabel = t('bill.section.confirmed');
 
+  if (emptySection) return null;
   return (
     <>
       <Typography style={{marginTop: 16, marginBottom: 16}} variant="overline">

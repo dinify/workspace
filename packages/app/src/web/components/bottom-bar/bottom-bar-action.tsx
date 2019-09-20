@@ -11,13 +11,15 @@ const BottomBarAction: React.FC<{
   style?: React.CSSProperties,
   icon?: any,
   onClick?: () => void,
-  subtotal: Subtotal,
+  flipped?: boolean,
+  subtotal: Subtotal|null,
   count: number,
   title: string,
 }> = ({
   style,
   icon,
   subtotal,
+  flipped = false,
   count,
   title,
   onClick,
@@ -32,8 +34,13 @@ const BottomBarAction: React.FC<{
       justifyContent: 'flex-start',
       ...style
     }}>
-      {icon}
-      <div style={{textAlign: 'start', padding: '0 16px', flex: 1}}>
+      {!flipped && icon}
+      {flipped && subtotal && <div style={{textAlign: 'start'}}>
+        <Typography variant="overline">
+          <Price price={subtotal} />
+        </Typography>
+      </div>}
+      <div style={{textAlign: flipped ? 'end' : 'start', padding: '0 16px', flex: 1}}>
         <Typography variant="subtitle1">
           {title}
         </Typography>
@@ -41,11 +48,12 @@ const BottomBarAction: React.FC<{
           {t('cart.itemCount', { count, context: count === 0 ? 'none' : undefined })}
         </Typography>
       </div>
-      <div style={{textAlign: 'end'}}>
+      {!flipped && subtotal && <div style={{textAlign: 'end'}}>
         <Typography variant="overline">
           <Price price={subtotal} />
         </Typography>
-      </div>
+      </div>}
+      {flipped && icon}
     </ButtonBase>
   );
 };

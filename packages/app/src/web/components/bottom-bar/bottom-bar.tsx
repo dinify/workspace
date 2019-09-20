@@ -39,15 +39,13 @@ let BottomBar: React.FC<{
     transform: `translate3d(${(cartVisible ? 0 : -50)}%, 0, 0)`
   });
   const billAnimatedStyle = useSpring({
-    transform: `translate3d(${billVisible ? (cartVisible ? 50 : 0) : 100}%, 0, 0)`
+    transform: `translate3d(${billVisible ? 0 : 100}%, 0, 0)`
   });
   // const palette = theme.palette;
 
   const commonStyle: React.CSSProperties = {
     position: 'absolute',
     bottom: 0,
-    left: 0,
-    right: 0,
     backgroundColor: 'rgb(248,248,248)',
     borderTop: '1px solid rgb(240,240,240)',
     borderLeft: '1px solid rgb(240,240,240)',
@@ -67,7 +65,12 @@ let BottomBar: React.FC<{
       ...animatedStyle,
       ...style
     }}>
-      <animated.div style={{...commonStyle, ...cartAnimatedStyle}}>
+      <animated.div style={{
+        ...commonStyle, 
+        ...cartAnimatedStyle,
+        left: 0,
+        right: 0
+      }}>
         <BottomBarAction 
           style={{width: '100%', height: '100%'}}
           icon={<CartIcon color="action"/>}
@@ -77,12 +80,18 @@ let BottomBar: React.FC<{
           onClick={() => { onSelect('cart'); }}
         />
       </animated.div>
-      <animated.div style={{...commonStyle, ...billAnimatedStyle}}>
+      <animated.div style={{
+        ...commonStyle, 
+        ...billAnimatedStyle, 
+        width: cartVisible ? '50%' : '100%',
+        right: 0
+      }}>
         <BottomBarAction 
+          flipped={true}
           style={{width: '100%', height: '100%'}}
           icon={<BillIcon color="action"/>}
           title={t('bill.title')}
-          subtotal={billSubtotal}
+          subtotal={cartVisible ? null : billSubtotal}
           count={billItemCount}
           onClick={() => { onSelect('bill'); }}
         />
