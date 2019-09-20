@@ -52,7 +52,10 @@ const styles = theme => ({
 });
 
 export const getT = (translations, l, col = 'name') => {
-  const translation = find(propEq('locale', l))(translations);
+  if (!translations) return '';
+  let translation = find(propEq('locale', l))(translations);
+  if (!translation) translation = find(propEq('locale', 'en'))(translations);
+  if (!translation) return '';
   return translation[col];
 }
 
