@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import { Subtotal } from 'CartModels';
 import { getOrderItemCount as getCartCount } from '../../../ducks/cart/selectors';
+import { select } from '../../../lib/platform';
 import { withTheme } from '@material-ui/core/styles';
 import CartIcon from '@material-ui/icons/ShoppingCartRounded';
 import BillIcon from '@material-ui/icons/ReceiptRounded';
@@ -36,20 +37,38 @@ let BottomBar: React.FC<{
     transform: showBottomBar ? 'translate3d(0, 0px, 0)' : 'translate3d(0, 56px, 0)'
   });
   const cartAnimatedStyle = useSpring({
-    transform: `translate3d(${(cartVisible ? 0 : -50)}%, 0, 0)`
+    transform: `translate3d(${(cartVisible ? 0 : -50)}%, 0, 0)`,
+    opacity: cartVisible ? 1 : 0
   });
   const billAnimatedStyle = useSpring({
-    transform: `translate3d(${billVisible ? 0 : 100}%, 0, 0)`
+    transform: `translate3d(${billVisible ? 0 : 50}%, 0, 0)`,
+    opacity: billVisible ? 1 : 0
   });
-  // const palette = theme.palette;
+  const { palette: { type, background: { paper }, divider }} = theme;
 
   const commonStyle: React.CSSProperties = {
     position: 'absolute',
-    bottom: 0,
-    backgroundColor: 'rgb(248,248,248)',
-    borderTop: '1px solid rgb(240,240,240)',
-    borderLeft: '1px solid rgb(240,240,240)',
+    bottom: 0
   };
+
+  const getColor = (sw: boolean) => {
+    const alpha = (!sw ? 200 : 90) / 255;
+    const color = sw ? '0,0,0': '255,255,255';
+    return `rgba(${color}, ${alpha})`;
+  };
+  const appleStyle = {
+    backgroundColor: getColor(type === 'dark'),
+    WebkitBackdropFilter: 'blur(20px)',
+    borderTop: `0.5px solid ${getColor(type !== 'dark')}`
+  };
+  const conidionalStyle = select({
+    standard: {
+        backgroundColor: paper,
+        borderTop: `1px solid ${divider}`
+    },
+    osx: appleStyle,
+    ios: appleStyle
+  });
 
   return (
     <animated.div style={{
@@ -63,6 +82,7 @@ let BottomBar: React.FC<{
       bottom: 0,
       color: theme.palette.text.primary,
       ...animatedStyle,
+      ...conidionalStyle,
       ...style
     }}>
       <animated.div style={{

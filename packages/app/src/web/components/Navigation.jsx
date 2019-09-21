@@ -1,6 +1,7 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, withTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
+import { select } from 'lib/platform';
 
 // import Settings from '@material-ui/icons/SettingsRounded';
 import AccountCircle from '@material-ui/icons/AccountCircleRounded';
@@ -15,8 +16,6 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
-    backgroundColor: 'rgb(242,242,242)',
-    borderTop: '1px solid rgb(234,234,234)',
     width: '100%',
     position: 'fixed',
     bottom: 0,
@@ -29,9 +28,11 @@ const Navigation = ({
   handleChange,
   value,
   style,
+  theme,
   checkedInRestaurant,
   ...otherProps
 }) => {
+  const { palette: { type, background: { paper }, divider }} = theme;
   const { t } = useTranslation();
   const getColor = selected => selected ? 'primary' : 'action';
   const tabs = [
@@ -44,6 +45,25 @@ const Navigation = ({
       text: t('nav.account')
     }
   ];
+
+  const getColorString = (sw) => {
+    const alpha = (!sw ? 200 : 90) / 255;
+    const color = sw ? '0,0,0': '255,255,255';
+    return `rgba(${color}, ${alpha})`;
+  };
+  const appleStyle = {
+    backgroundColor: getColorString(type === 'dark'),
+    WebkitBackdropFilter: 'blur(20px)',
+    borderTop: `0.5px solid ${getColorString(type !== 'dark')}`
+  };
+  const conidionalStyle = select({
+    standard: {
+        backgroundColor: paper,
+        borderTop: `1px solid ${divider}`
+    },
+    osx: appleStyle,
+    ios: appleStyle
+  });
   const BottomNavItem = ({
     children,
     style,
@@ -73,7 +93,7 @@ const Navigation = ({
     </Button>
   );
   return (
-    <div style={{height: 56, ...style}} className={classes.root}>
+    <div style={{height: 56, ...conidionalStyle, ...style}} className={classes.root}>
       <div style={{
         display: 'flex',
         justifyContent: 'center',
@@ -97,4 +117,4 @@ const Navigation = ({
   );
 }
 
-export default withStyles(styles)(Navigation);
+export default withTheme()(withStyles(styles)(Navigation));
