@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { languageCountries as languageCountriesUnlocalized } from '../../lib';
+import defaultLanguages from '../../lib/default-languages.json';
 import match from 'autosuggest-highlight/umd/match';
 import parse from 'autosuggest-highlight/umd/parse';
 
@@ -27,15 +28,17 @@ const LanguagePickerDialog = ({
   const [filter, setFilter] = useState('');
   const { t, i18n } = useTranslation();
 
-  const languageCountries = languageCountriesUnlocalized.map(lang => {
-    const nameEnglish = lang.name;
-    const localizedName = i18n.format(lang.code, 'languageName');
-    return {
-      ...lang,
-      nameEnglish,
-      name: localizedName || nameEnglish
-    }
-  })
+  const languageCountries = languageCountriesUnlocalized
+    .filter(l => defaultLanguages.includes(l.code))
+    .map(lang => {
+      const nameEnglish = lang.name;
+      const localizedName = i18n.format(lang.code, 'languageName');
+      return {
+        ...lang,
+        nameEnglish,
+        name: localizedName || nameEnglish
+      }
+    });
 
   const filtered = languageCountries.filter(lang => {
     if (!filter) return true;
