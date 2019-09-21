@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import { selectedRestaurant } from 'ducks/restaurant/selectors';
 
 const Qr = ({ match, restaurant }) => {
+  let value = `https://web.dinify.app/restaurant/${restaurant.subdomain}?qr=${match.params.code}`;
+  if (match.params.code.includes('WIFI')) {
+    value = match.params.code;
+  }
   return (
     <div style={{
       position: 'absolute',
@@ -13,7 +17,7 @@ const Qr = ({ match, restaurant }) => {
       textAlign: 'center'
     }}>
       <QRCode
-        value={`https://web.dinify.app/restaurant/${restaurant.subdomain}?qr=${match.params.code}`}
+        value={value}
         size={256}
       />
     </div>

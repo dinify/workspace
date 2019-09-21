@@ -110,5 +110,6 @@
   "createOptionFail": "Přidání skupiny variant se nezdařilo",
   "createIngredientFail": "Přidání ingredience se nezdařilo",
   "changeRestaurant": "Změnit restauraci",
-  "publishRequestPending": "Žádost o zveřejnění odeslána"
+  "publishRequestPending": "Žádost o zveřejnění odeslána",
+  "wifiCredentials": "Přístup k wifi"
 }

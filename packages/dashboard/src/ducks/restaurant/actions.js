@@ -178,3 +178,8 @@ export const selectRestaurant = ({id}) => ({ type: 'SELECT_RESTAURANT', payload:
 export const publishRestaurant = () => ({
   type: types.SEND_PUBLISHREQUEST_INIT
 });
+
+export const updateWifiInitAction = (payload) => ({
+  type: 'UPD_WIFI_INIT',
+  payload
+});

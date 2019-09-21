@@ -12,6 +12,7 @@ import Contact from './Contact';
 import Image from './Image';
 // import Type from './Type';
 import Name from './Name';
+import Wifi from './Wifi';
 // import Tags from './Tags';
 
 const Column = styled.div`
@@ -41,6 +42,7 @@ const Main = ({ restaurant }) => {
 
         <Column>
           <Social social={restaurant.social} />
+          <Wifi wifi={restaurant.wifi} />
           <Banking payout={restaurant.payout} />
         </Column>
 
