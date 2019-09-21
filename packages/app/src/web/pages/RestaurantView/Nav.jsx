@@ -11,6 +11,7 @@ import Place from '@material-ui/icons/PlaceRounded';
 import FavoriteToggle from 'web/components/FavoriteToggle';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { favRestaurantAsync } from 'ducks/restaurant/actions.ts';
+import { useTranslation } from 'react-i18next';
 
 const styles = theme => ({
   secondary: {
@@ -28,6 +29,7 @@ let Nav = ({
   const social = restaurant.social;
   const bookingElement = document.getElementById('booking');
   const checkedInHere = checkedInRestaurant === restaurant.id;
+  const { t } = useTranslation();
   return (
     <Grid container style={{marginLeft: -16}} spacing={8}>
 
@@ -96,7 +98,7 @@ let Nav = ({
       }} variant="contained" color="primary" onClick={() => {
         history.push("/camera");
       }}>
-        {checkedInHere ? 'Checked in' : 'Check in'}
+        {checkedInHere ? t('checkedIn') : t('checkIn')}
       </Button>
     </Grid>
   )

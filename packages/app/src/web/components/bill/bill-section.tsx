@@ -6,6 +6,7 @@ import { getOrderItemIdsByStatus } from '../../../ducks/transaction/selectors';
 
 import Typography from '@material-ui/core/Typography';
 import BillItem from './bill-item';
+import { useTranslation } from 'react-i18next';
 
 export interface BillSectionProps {
   type: OrderStatus,
@@ -19,12 +20,7 @@ const BillSectionComponent: React.FC<BillSectionProps> = (props) => {
   } = props;
   const emptySection = orderItemIds.length === 0;
   let sectionLabel;
-
-  const t = (k: string) => ({
-    'bill.section.waiting': 'Awaiting confirmation', 
-    'bill.section.confirmed': 'Confirmed orders',
-    'bill.section.empty': 'Once your orders are confirmed, they get added to your bill total',
-  } as any)[k];
+  const { t } = useTranslation();
 
   if (type === 'DISPATCHED') sectionLabel = t('bill.section.waiting');
   else if (type === 'CONFIRMED') sectionLabel = t('bill.section.confirmed');

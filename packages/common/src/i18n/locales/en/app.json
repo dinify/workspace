@@ -13,6 +13,7 @@
   "website": "Website",
   "nav": {
     "explore": "Explore",
+    "browse": "Browse",
     "dineIn": "Dine in",
     "account": "Account",
     "menu": "Menu",
@@ -24,6 +25,8 @@
     "seeMenu": "See restaurant menu",
     "callService": "Call a service"
   },
+  "checkIn": "Check in",
+  "checkedIn": "Checked in",
   "ingredients": "Ingredients",
   "addons": "Addons",
   "subtotal": "Subtotal",
@@ -32,6 +35,7 @@
   "serviceFee": "Service fee",
   "order": "Order",
   "camera": {
+    "header": "Camera",
     "notAvailable": {
       "title": "Camera not available",
       "subtitle": "The in-browser camera is not available on this device"
@@ -39,6 +43,7 @@
     "takePhoto": "Take a photo"
   },
   "service": {
+    "header": "Services",
     "title": "Call a service",
     "subtitle": "With this feature, you can request a any kind of condiment or tableware to your table.",
     "instruction": "Check in by scanning the QR code in a restaurant near you to get started.",
@@ -48,6 +53,11 @@
     }
   },
   "bill": {
+    "section": {
+      "waiting": "Awaiting confirmation",
+      "confirmed": "Confirmed orders",
+      "empty": "Once your orders are confirmed, they get added to your bill total"
+    },
     "title": "Bill",
     "split": "Split",
     "selecting": "Select bill items to split with others",
@@ -63,6 +73,7 @@
   "gratuity": "Gratuity",
   "pay": "Pay",
   "paymentPending": "Awaiting payment confirmation...",
+  "paymentConfirmed": "Payment confirmed",
   "editing": "editing",
   "profile": "Profile",
   "dashboard": "Dashboard",

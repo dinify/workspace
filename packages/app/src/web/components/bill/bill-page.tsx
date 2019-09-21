@@ -56,7 +56,7 @@ const BillPageComponent: React.FC<BillPageProps> = (props) => {
   if (transactionStatus !== null) {
     let captionText;
     if (transactionStatus === 'INITIATED') captionText = t('paymentPending');
-    else if (transactionStatus === 'PROCESSED') captionText = 'Payment confirmed';
+    else if (transactionStatus === 'PROCESSED') captionText = t('paymentConfirmed');
     statusComponent = (
       <Typography style={{marginTop: 16, width: '100%', textAlign: 'center'}} variant="caption">
         {captionText}
