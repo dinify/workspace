@@ -27,17 +27,24 @@ const AppBar: IAppBar = ({
 }) => {
     const { palette: { type, background: { paper }, divider }} = theme;
     
-    const appBarStyle = select({
+    const getColor = (sw: boolean) => {
+        const alpha = (!sw ? 200 : 90) / 255;
+        const color = sw ? '0,0,0': '255,255,255';
+        return `rgba(${color}, ${alpha})`;
+      };
+      const appleStyle = {
+        backgroundColor: getColor(type === 'dark'),
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: `0.5px solid ${getColor(type !== 'dark')}`
+      };
+      const appBarStyle = select({
         standard: {
             backgroundColor: paper,
             borderBottom: `1px solid ${divider}`
         },
-        ios: {
-            backgroundColor: `rgba(${type === 'dark' ? '0,0,0': '255,255,255'}, ${90 / 255})`,
-            WebkitBackdropFilter: 'blur(20px)',
-            borderBottom: `0.5px solid rgba(0, 0, 0, ${(type === 'dark' ? 180 : 90) / 255})`,
-        }
-    })
+        osx: appleStyle,
+        ios: appleStyle
+      });
     return (
         <div style={{
             zIndex: 50,
