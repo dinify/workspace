@@ -2,10 +2,12 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
-import Settings from '@material-ui/icons/SettingsRounded';
+// import Settings from '@material-ui/icons/SettingsRounded';
+import AccountCircle from '@material-ui/icons/AccountCircleRounded';
 import LocalLibrary from '@material-ui/icons/LocalLibrary';
 
-import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
+// import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
+import AccountCircleOutlined from '@material-ui/icons/AccountCircleOutlined';
 import LocalLibraryOutlined from '@material-ui/icons/LocalLibraryOutlined';
 
 import Typography from '@material-ui/core/Typography';
@@ -38,8 +40,8 @@ const Navigation = ({
       text: t('nav.menu')
     },
     {
-      icon: selected => selected ? <Settings color={getColor(selected)}/> : <SettingsOutlined color={getColor(selected)}/>,
-      text: t('nav.settings')
+      icon: selected => selected ? <AccountCircle color={getColor(selected)}/> : <AccountCircleOutlined color={getColor(selected)}/>,
+      text: t('nav.account')
     }
   ];
   const BottomNavItem = ({

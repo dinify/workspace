@@ -291,10 +291,10 @@ class Fields extends React.Component {
               }}>
                 {direction === DOWN && separator}
                 <div style={{ paddingBottom: 16 }}>
-                  <GoogleButton t={t} onClick={() => firebase.login({ provider: 'google', type: mobile ? 'redirect' : 'popup' })} />
+                  <GoogleButton onClick={() => firebase.login({ provider: 'google', type: mobile ? 'redirect' : 'popup' })} />
                 </div>
                 <div style={{ paddingBottom: 16 }}>
-                  <FacebookButton t={t} onClick={() => firebase.login({ provider: 'facebook', type: mobile ? 'redirect' : 'popup' })} />
+                  <FacebookButton onClick={() => firebase.login({ provider: 'facebook', type: mobile ? 'redirect' : 'popup' })} />
                 </div>
                 {direction === UP && separator}
               </div>

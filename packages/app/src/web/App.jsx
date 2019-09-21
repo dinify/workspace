@@ -12,14 +12,12 @@ import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
 import MenuItemView from 'web/pages/MenuItemView';
 import SignIn from '@dinify/common/dist/components/SignIn';
-import Account from 'web/pages/Account';
-import Cart from 'web/pages/Cart';
 import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
 
 import Navigation from 'web/components/Navigation';
-import { ServicesScreen } from 'web/screens/services';
+import { ServicesScreen, AccountScreen } from 'web/screens';
 import { ServicesButtonContainer } from 'web/components/services-button';
 import { BottomBar } from 'web/components/bottom-bar';
 import { CartPage } from 'web/components/cart';
@@ -111,10 +109,10 @@ class App extends React.Component {
             )}/>
             <Route path={routes.SIGNIN} component={() => {
               return user.isEmpty ? <SignIn user={user}/> :
-              <Redirect to={routes.HOMEPAGE}/>
+              <Redirect to={routes.ACCOUNT}/>
             }} />
             <Route path={routes.ACCOUNT} component={() => {
-              return (!user.isEmpty || !user.isLoaded) ? <Account history={history}/> :
+              return (!user.isEmpty || !user.isLoaded) ? <AccountScreen history={history}/> :
               <Redirect to={routes.SIGNIN}/>
             }} />
 
@@ -123,9 +121,7 @@ class App extends React.Component {
 
             <Route path={routes.RESTAURANT} component={RestaurantView} />
             <Route path={routes.MENUITEM} component={MenuItemView} />
-
-            {/* <Route path={routes.DINEIN}  component={DineIn} /> */}
-            <Route path={routes.CART}  component={Cart} />
+            
             <Route path={routes.RECEIPT} component={Receipt} />
           </Switch>
         </div>

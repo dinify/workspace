@@ -20,7 +20,6 @@ import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
 import LanguagePickerDialog from '@dinify/common/dist/components/dialogs/LanguagePickerDialog';
 import CurrencyPickerDialog from '@dinify/common/dist/components/dialogs/CurrencyPickerDialog';
@@ -87,21 +86,9 @@ const Account = ({
   closeDialog,
   initialSelectedLanguage,
   restaurantsMap,
+  style,
   ...other
 }) => {
-
-  if (user.isEmpty || !user.isLoaded) return (
-    <div style={{
-      display: 'flex',
-      width: '100vw',
-      height: 'calc(100vh - 113px)',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
-      <CircularProgress />
-    </div>
-  );
-
   const { t, i18n } = useTranslation();
   let primaryLang;
   if (profile && profile.language) primaryLang = getLang(profile.language.primary);
@@ -116,6 +103,7 @@ const Account = ({
       marginLeft: 'auto',
       paddingLeft: 16,
       paddingRight: 16,
+      ...style
     }}>
       <div style={{
         padding: 32,
@@ -244,7 +232,7 @@ const Account = ({
         </Card>
       )}
       <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 16, paddingBottom: 16}}>
-        <Button variant="outlined" onClick={() => {
+        <Button style={{boxShadow: 'none', height: 40}} variant="contained" onClick={() => {
           firebase.logout();
         }} color="primary">
           {t('user.logOut')}
