@@ -37,7 +37,7 @@ const Navigation = ({
   const tabs = [
     {
       icon: selected => selected ? <LocalLibrary color={getColor(selected)} /> : <LocalLibraryOutlined color={getColor(selected)}/>,
-      text: t('nav.menu')
+      text: t('nav.browse')
     },
     {
       icon: selected => selected ? <AccountCircle color={getColor(selected)}/> : <AccountCircleOutlined color={getColor(selected)}/>,

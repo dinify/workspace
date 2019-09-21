@@ -20,12 +20,14 @@ const styles = theme => ({
 
 let Nav = ({
   classes,
+  checkedInRestaurant,
   restaurant,
   favRestaurant,
   history
 }) => {
   const social = restaurant.social;
   const bookingElement = document.getElementById('booking');
+  const checkedInHere = checkedInRestaurant === restaurant.id;
   return (
     <Grid container style={{marginLeft: -16}} spacing={8}>
 
@@ -86,23 +88,26 @@ let Nav = ({
         </IconButton>
       </Grid>}
 
-      <Button style={{
+      <Button disabled={checkedInHere} style={{
         height: 40, 
         boxShadow: 'none',
         alignSelf: 'center',
         marginLeft: 'auto'
       }} variant="contained" color="primary" onClick={() => {
-        history.push("/dinein/camera");
+        history.push("/camera");
       }}>
-        Check in
+        {checkedInHere ? 'Checked in' : 'Check in'}
       </Button>
     </Grid>
   )
 }
 
-Nav = connect(null,
+Nav = connect(
+  (state) => ({
+    checkedInRestaurant: state.restaurant.checkedInRestaurant
+  }), 
   {
-    favRestaurant: favRestaurantAsync.request
+    favRestaurant: favRestaurantAsync.request,
   }
 )(Nav)
 

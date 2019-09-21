@@ -5,6 +5,7 @@ import { RootState } from 'typesafe-actions';
 import { Subtotal } from 'CartModels';
 
 import CreditCard from '@material-ui/icons/CreditCardRounded';
+import Wallet from '@material-ui/icons/AccountBalanceWalletRounded';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import Slider from '@material-ui/lab/Slider';
@@ -51,18 +52,13 @@ const BillPageComponent: React.FC<BillPageProps> = (props) => {
   } as Subtotal;
 
   
-  let fabContent = <>
-    <CreditCard style={{
-      marginRight: 16
-    }}/>
-    {t('pay')}
-  </>;
+  let statusComponent = null;
   if (transactionStatus !== null) {
     let captionText;
     if (transactionStatus === 'INITIATED') captionText = t('paymentPending');
     else if (transactionStatus === 'PROCESSED') captionText = 'Payment confirmed';
-    fabContent = (
-      <Typography style={{width: '100%', textAlign: 'center'}} variant="caption">
+    statusComponent = (
+      <Typography style={{marginTop: 16, width: '100%', textAlign: 'center'}} variant="caption">
         {captionText}
       </Typography>
     );
@@ -121,12 +117,23 @@ const BillPageComponent: React.FC<BillPageProps> = (props) => {
       justifyContent: 'center'
     }}>
       <Fab style={{
-        width: '100%',
+        flex: 1,
+        marginRight: 8,
         maxWidth: 320
-      }} disabled={!billPayable} onClick={() => setPayMenuOpen(true)} color="primary" variant="extended" aria-label={t('pay')}>
-        {fabContent}
+      }} disabled={!billPayable} onClick={() => onChoosePayment({type: 'CASH'})} color="primary" variant="extended" aria-label={t('pay')}>
+        <Wallet style={{marginRight: 8}}/>
+        Cash
+      </Fab>
+      <Fab style={{
+        flex: 1,
+        marginLeft: 8,
+        maxWidth: 320
+      }} disabled={!billPayable} onClick={() => onChoosePayment({type: 'CARD'})} color="primary" variant="extended" aria-label={t('pay')}>
+        <CreditCard style={{marginRight: 8}}/>
+        Card
       </Fab>
     </div>
+    {statusComponent}
   </div>
   </>;
 };

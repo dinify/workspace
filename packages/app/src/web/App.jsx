@@ -102,7 +102,7 @@ class App extends React.Component {
     } = this.props;
     return (
       <div style={{position: 'relative'}}>
-        <div style={{ marginBottom: 56 }}>
+        <div style={{ marginBottom: this.match(routes.CHECKIN) ? 0 : 56 }}>
           <Switch>
             <Route exact path={routes.HOMEPAGE} render={() => (
               <Main/>
