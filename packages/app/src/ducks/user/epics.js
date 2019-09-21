@@ -1,5 +1,8 @@
-import { ignoreElements, tap } from 'rxjs/operators';
+import { ignoreElements, tap, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
+import { actionTypes } from 'react-redux-firebase';
+import { push } from 'connected-react-router';
+import { ACCOUNT } from 'web/routes';
 
 const meFetchedEpic = (action$) =>
   action$.pipe(
@@ -10,6 +13,13 @@ const meFetchedEpic = (action$) =>
     ignoreElements()
   );
 
+const redirectAfterSignInEpic = (action$) =>
+  action$.pipe(
+    ofType(actionTypes.LOGIN),
+    mapTo(push(ACCOUNT))
+  )
+
 export default [
-  meFetchedEpic
+  meFetchedEpic,
+  redirectAfterSignInEpic
 ];

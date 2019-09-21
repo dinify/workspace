@@ -107,10 +107,7 @@ class App extends React.Component {
             <Route exact path={routes.HOMEPAGE} render={() => (
               <Main/>
             )}/>
-            <Route path={routes.SIGNIN} component={() => {
-              return user.isEmpty ? <SignIn user={user}/> :
-              <Redirect to={routes.ACCOUNT}/>
-            }} />
+            <Route path={routes.SIGNIN} component={() => <SignIn user={user}/>} />
             <Route path={routes.ACCOUNT} component={() => {
               return (!user.isEmpty || !user.isLoaded) ? <AccountScreen history={history}/> :
               <Redirect to={routes.SIGNIN}/>
