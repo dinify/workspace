@@ -7,10 +7,13 @@ import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 
 const preferredLanguagesInitial = [
-  'cs', 'en', 'de', 'it',
-  'fr', 'ru', 'es', 'pl', 'pt',
-  'ja', 'ko', 'zh-Hans', 'zh-Hant'
-];
+  "ar", "az", "bg", "cs", "da", "de",
+  "el", "en", "es", "fa", "fi", "fil",
+  "fr", "he", "hi", "hu", "id", "it",
+  "ja", "ka", "ko", "lo", "ms", "nl",
+  "no", "pl", "pt", "ro", "ru", "sk",
+  "sl", "sq", "sv", "th", "tr", "uk",
+  "ur", "vi", "zh-Hans", "zh-Hant"];
 
 const initialState = {
   all: {},
