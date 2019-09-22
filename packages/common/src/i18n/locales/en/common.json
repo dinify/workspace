@@ -73,7 +73,7 @@
     "no-users-for-checkout": "No users for checkout",
     "order-already-confirmed": "Order was already confirmed",
     "transaction-unprocessed-exists": "There is at least one unprocessed transaction",
-    "cart-already-exists": "Cart already exists",
+    "cart-already-exists": "You already have some items in cart from different restaurant",
     "cart-empty": "Cart is empty",
     "transaction-processed-already": "Transaction was already processed"
   }

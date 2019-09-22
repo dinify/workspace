@@ -24,8 +24,6 @@ import websockets from './websockets';
 const history = createBrowserHistory();
 const { store, persistor } = configureStore(history);
 
-websockets(store);
-
 let language = { primary: navigator.language, other: [] };
 const langCookie = getCookie('language');
 if (langCookie) {
@@ -36,11 +34,13 @@ if (langCookie) {
   }
 }
 
-i18n({
+export const i18nInstance = i18n({
   namespace: 'app',
   lang: language.primary,
   fallback: language.other
 });
+
+websockets(store, i18nInstance);
 
 // react-redux-firebase config
 const rrfConfig = {

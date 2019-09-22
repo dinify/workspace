@@ -19,6 +19,7 @@ import {
   RmFromCartRequest,
 } from 'CartModels';
 import * as API from '@dinify/common/src/api/v2/restaurant';
+import { i18nInstance } from '../../web';
 
 const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
@@ -81,7 +82,7 @@ const addToCartEpic: Epic = (action$, state$) =>
           addToCartAsync.success(res),
           fetchCartAsync.request(),
           snackbar.show({
-            message: 'Added to cart',
+            message: i18nInstance.t('successMessages.added-to-cart'),
             handleAction: () => { throw new Error('Not implemented'); },
             action: 'Undo'
           })
@@ -100,10 +101,10 @@ const addToCartErrorEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(addToCartAsync.failure)),
     switchMap((action) => {
-      const { payload: { message } } = action;
+      const { payload: { errorType } } = action;
       return of(
         snackbar.show({
-          message
+          message: i18nInstance.t(`errorMessages.${errorType}`)
         })
       );
     })
@@ -121,7 +122,7 @@ const rmFromCartEpic: Epic = (action$) =>
           rmFromCartAsync.success(res),
           fetchCartAsync.request(),
           snackbar.show({
-            message: 'Removed from cart',
+            message: i18nInstance.t('successMessages.removed-from-cart')
           })
         )),
         catchError(error => handleEpicAPIError({
@@ -144,7 +145,7 @@ const orderEpic: Epic = (action$) =>
           transactionActions.fetchBillAsync.request(),
           uiActions.closeDialog('cart-page'),
           snackbar.show({
-            message: 'Order has been placed'
+            message: i18nInstance.t('successMessages.order-has-been-placed')
           })
         )),
         catchError(error => handleEpicAPIError({

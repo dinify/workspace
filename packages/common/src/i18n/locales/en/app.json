@@ -4,6 +4,12 @@
     "caption": "Everything you can get in {{restaurant.name}}"
   },
   "address": "Address",
+  "appBar": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "done": "Done"
+  },
   "hours": {
     "open": "Open now",
     "closed": "Closed",
@@ -34,6 +40,8 @@
   "totalConverted": "Total ({{currencyName}})",
   "serviceFee": "Service fee",
   "order": "Order",
+  "orderConfirmed": "Order confirmed",
+  "orderCancelled": "Order cancelled",
   "camera": {
     "header": "Camera",
     "notAvailable": {
@@ -74,6 +82,7 @@
   "pay": "Pay",
   "paymentPending": "Awaiting payment confirmation...",
   "paymentConfirmed": "Payment confirmed",
+  "paymentCancelled": "Payment cancelled",
   "editing": "editing",
   "profile": "Profile",
   "dashboard": "Dashboard",
@@ -123,6 +132,11 @@
     "you-are-now-checked-in": "You are now checked in",
     "service-called": "Service called",
     "payment-request-sent": "Payment request sent"
-  }
-
+  },
+  "guestJoinedTable": "New guest joined table",
+  "guestLeftTable": "Guest left table",
+  "newBillSplitItems": "Bill received split items",
+  "checkedOut": "You have been checked out from the table.",
+  "serviceCallConfirmed": "Service call confirmed",
+  "serviceCallCancelled": "Service call cancelled"
 }
