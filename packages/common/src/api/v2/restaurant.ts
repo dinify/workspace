@@ -35,11 +35,11 @@ export const GetSeatsOfWaiterboard = ({ waiterboardId }: any) => Get({
   path: `waiterboard/${waiterboardId}/seats`
 });
 
-type CheckinBody = {
-  qr: string;
-}
+export const CheckinStatus = () => Get({
+  path: 'checkin/status'
+});
 
-export const Checkin = (body: CheckinBody) => Post({
+export const Checkin = (body: { qr: string}) => Post({
   path: `checkin`
 }, body);
 

@@ -15,9 +15,7 @@ declare module 'RestaurantModels' {
   }
 
   export type StatusResponse = {
-    res: {
-      restaurant: Restaurant
-    }
+    checkedInRestaurant: Restaurant.id | null
   };
 
   export type FavRestaurantRequest = {

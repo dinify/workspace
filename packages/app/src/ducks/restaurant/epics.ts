@@ -11,6 +11,24 @@ const { getCookie, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 const APIv1 = require('@dinify/common/src/api/restaurant');
 
+const getCheckinStatusEpic: Epic = (action$) =>
+  action$.pipe(
+    ofType(getType(fetchStatusAsync.request)),
+    mergeMap((action) => from(API.CheckinStatus()).pipe(
+      map((res: any) => {
+        return fetchStatusAsync.success(res);
+      }),
+      catchError(error => {
+        console.log(error);
+        return handleEpicAPIError({
+          error,
+          failActionType: getType(fetchStatusAsync.failure),
+          initAction: action
+        })
+      })
+    ))
+  );
+
 const checkinEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(checkinAsync.request)),
@@ -58,6 +76,7 @@ const favEpic: Epic = (action$) =>
   );
 
 export default [
+  getCheckinStatusEpic,
   checkinEpic,
   favEpic
 ];

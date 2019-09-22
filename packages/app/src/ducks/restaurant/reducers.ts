@@ -45,27 +45,15 @@ export const all = createReducer<State, Action>({})
 
 export const checkedInRestaurant = createReducer<State, Action>(null)
   .handleAction(actions.fetchStatusAsync.success, (state, action) => {
-    const res = action.payload.res;
-    if (!res.restaurant) return null;
-    return res.restaurant.id;
+    return action.payload.checkedInRestaurant;
   })
   .handleAction(wsActions.checkoutAllAction, () => {
     return null;
   });
 
-  
-export const status = createReducer<State, Action>(null)
-
-  .handleAction(actions.fetchStatusAsync.success, (state, action) => {
-    state;
-    const res = action.payload.res;
-    return res;
-  });
-
 const restaurantReducer = combineReducers({
   all,
   checkedInRestaurant,
-  status
 });
 
 export default restaurantReducer;
