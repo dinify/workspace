@@ -20,7 +20,7 @@ const redirectAfterSignInEpic = (action$) =>
       if (action.auth.a.u > 0) {
         return push(ACCOUNT);
       }
-      return { type: 'x' };
+      return { type: 'NOTFIRSTLOGIN' };
     })
   )
 

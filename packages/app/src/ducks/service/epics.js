@@ -6,6 +6,7 @@ import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as types from './types';
 import { callServiceDone } from './actions';
+import { i18nInstance } from '../../web';
 
 const callServiceEpic = (action$) =>
   action$.pipe(
@@ -16,9 +17,7 @@ const callServiceEpic = (action$) =>
         mergeMap(res => of(
           callServiceDone(res),
           snackbar.show({
-            message: 'Service called',
-            action: 'See menu',
-            handleAction: () => window.location.assign('/')
+            message: i18nInstance.t('successMessages.service-called')
           })
         )),
         catchError(error => handleEpicAPIError({

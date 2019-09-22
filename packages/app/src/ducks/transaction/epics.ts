@@ -12,6 +12,7 @@ import { bill } from '../cart/schemas';
 
 const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
+import { i18nInstance } from '../../web';
 
 // const splitEpic = (action$) =>
 //   action$.pipe(
@@ -74,7 +75,7 @@ const initTransactionEpic: Epic = (action$) =>
         mergeMap((res: Transaction) => of(
           initTransactionAsync.success(res),
           snackbar.show({
-            message: 'Payment request sent'
+            message: i18nInstance.t('successMessages.payment-request-sent'),
           })
         )),
         catchError(error => handleEpicAPIError({

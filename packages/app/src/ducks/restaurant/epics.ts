@@ -5,6 +5,7 @@ import { push } from 'connected-react-router';
 import { checkinAsync, fetchStatusAsync, favRestaurantAsync } from './actions';
 import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
+import { i18nInstance } from '../../web';
 
 const { getCookie, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
@@ -25,7 +26,7 @@ const checkinEpic: Epic = (action$) =>
           fetchStatusAsync.request(),
           push(pathname),
           snackbar.show({
-            message: 'You are now checked in',
+            message: i18nInstance.t('successMessages.you-are-now-checked-in'),
             handleAction: () => window.location.assign(pathname),
             action: 'See menu'
           })
