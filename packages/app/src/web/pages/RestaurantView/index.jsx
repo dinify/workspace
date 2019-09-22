@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import * as FN from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/dist/lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
@@ -49,173 +49,168 @@ const styles = theme => ({
   },
 });
 
-class RestaurantView extends React.PureComponent {
-  componentWillMount() {
-    const {
-      fetchRestaurant,
-      fetchMenucategories,
-      match: { params },
-    } = this.props;
+let RestaurantView = (props) => {
+  const {
+    width,
+    classes,
+    restaurant,
+    // router,
+    history,
+    match: { params },
+    location: { search },
+    checkin,
+    user,
+    checkedInRestaurant,
+    fetchRestaurant,
+    fetchMenucategories,
+  } = props;
+
+  useEffect(() => {
     fetchRestaurant({ subdomain: params.subdomain });
     fetchMenucategories({ subdomain: params.subdomain });
+  }, []);
+
+  if (!restaurant) {
+    return <div />
+  }
+  const subdomain = params.subdomain;
+  const query = search.match(/qr=([^&]*)/);
+  if (!checkedInRestaurant && query && query[1]) {
+    const qr = query[1];
+    if (!user.isEmpty) {
+      checkin({ qr });
+    } // else history.push(`/login?qr=${qr}`);
   }
 
-  render() {
-    const {
-      width,
-      classes,
-      restaurant,
-      // router,
-      history,
-      match: { params },
-      location: { search },
-      checkin,
-      user,
-      checkedInRestaurant
-    } = this.props;
-    if (!restaurant) {
-      return <div />
+  const images = MapToList(restaurant.images);
+  const allTags = MapToList(restaurant.tags);
+  const tags = [];
+  allTags.forEach(tag => {
+    if (tags.join().length + tag.name.length <= 50) {
+      tags.push(tag.name.split('_').join(' '))
     }
-    const subdomain = params.subdomain;
-    const query = search.match(/qr=([^&]*)/);
-    if (!checkedInRestaurant && query && query[1]) {
-      const qr = query[1];
-      if (!user.isEmpty) {
-        checkin({ qr });
-      } // else history.push(`/login?qr=${qr}`);
-    }
+  });
 
+  const extraSmallScreen = isWidthDown('xs', width);
+  const smallScreen = isWidthDown('sm', width);
+  const mediumScreen = isWidthUp('md', width);
 
-    const images = FN.MapToList(restaurant.images);
-    const allTags = FN.MapToList(restaurant.tags);
-    const tags = [];
-    allTags.forEach(tag => {
-      if (tags.join().length + tag.name.length <= 50) {
-        tags.push(tag.name.split('_').join(' '))
+  const sm = isWidthDown('sm', width);
+  const md = !sm && isWidthDown('md', width);
+  const lg = !md && isWidthDown('lg', width);
+
+  return (
+    <div>
+      {extraSmallScreen &&
+        <Carousel images={images.map(image => image.url)}/>
       }
-    });
+      {!extraSmallScreen &&
+        <Grid container wrap="nowrap" spacing={8} className={classes.imageContainer}>
+          {images.map((image, i) =>
+            <Grid item key={uniqueId()} style={{minWidth: sm ? '50%' : (md ? '33.3333%' : (lg ? '25%' : '20%'))}} xs={12}>
+              <div
+                className={classes.imageSrc}
+                style={{
+                  borderRadius: i === 0 ? '0 0 4px 0' : (i === images.length - 1 ? '0 0 0 4px' : '0 0 4px 4px'),
+                  backgroundImage: `url(${image.url})`
+                }}
+              />
+            </Grid>
+          )}
+        </Grid>
+      }
 
-    const extraSmallScreen = isWidthDown('xs', width);
-    const smallScreen = isWidthDown('sm', width);
-    const mediumScreen = isWidthUp('md', width);
-
-    const sm = isWidthDown('sm', width);
-    const md = !sm && isWidthDown('md', width);
-    const lg = !md && isWidthDown('lg', width);
-
-    return (
-      <div>
-        {extraSmallScreen &&
-          <Carousel images={images.map(image => image.url)}/>
-        }
-        {!extraSmallScreen &&
-          <Grid container wrap="nowrap" spacing={8} className={classes.imageContainer}>
-            {images.map((image, i) =>
-              <Grid item key={uniqueId()} style={{minWidth: sm ? '50%' : (md ? '33.3333%' : (lg ? '25%' : '20%'))}} xs={12}>
-                <div
-                  className={classes.imageSrc}
-                  style={{
-                    borderRadius: i === 0 ? '0 0 4px 0' : (i === images.length - 1 ? '0 0 0 4px' : '0 0 4px 4px'),
-                    backgroundImage: `url(${image.url})`
-                  }}
-                />
-              </Grid>
-            )}
-          </Grid>
-        }
-
-        <ResponsiveContainer>
-          <Grid container spacing={mediumScreen ? 24 : 16} style={{marginTop: mediumScreen ? 24 : 16}}>
-            <Grid item xs={12} md={6}>
-              {tags && (
-                <Typography
-                  gutterBottom
-                  variant="overline"
-                  color="primary">
-                  {tags.join(' • ')}
-                </Typography>
-              )}
-              <Typography gutterBottom variant="h6">{restaurant.name}</Typography>
-              <Nav history={history} restaurant={restaurant} />
-
-              { /* <Typography style={{marginTop: 8}} gutterBottom variant="subtitle1">{restaurant.description}</Typography>
+      <ResponsiveContainer>
+        <Grid container spacing={mediumScreen ? 24 : 16} style={{marginTop: mediumScreen ? 24 : 16}}>
+          <Grid item xs={12} md={6}>
+            {tags && (
               <Typography
-                className={classes.secondary}
-                style={{ paddingTop: mediumScreen ? 24 : 16 }}
                 gutterBottom
-                variant="overline">
-                About
+                variant="overline"
+                color="primary">
+                {tags.join(' • ')}
               </Typography>
-              <Typography gutterBottom >{restaurant.about}</Typography> */ }
-              <Divider style={{marginTop: 16, marginBottom: 16}} />
-              { /* <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
-                <Grid item>
-                  <Today className={classes.primary} />
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle1">Recent orders</Typography>
-                </Grid>
-              </Grid>
-              <Grid container spacing={mediumScreen ? 24 : 16}>
-                <Grid item xs={6} sm={4} md={6}>
-                  <OrderItemCard orderItem={orderItemSample[0]}/>
-                </Grid>
-              </Grid>
+            )}
+            <Typography gutterBottom variant="h6">{restaurant.name}</Typography>
+            <Nav history={history} restaurant={restaurant} />
 
-              <Divider style={{marginTop: 16, marginBottom: 16}} />
-              <Grid container wrap="nowrap" style={{marginBottom: 8}} spacing={16}>
-                <Grid item>
-                  <Favorite className={classes.primary} />
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle1">Favorited</Typography>
-                </Grid>
+            { /* <Typography style={{marginTop: 8}} gutterBottom variant="subtitle1">{restaurant.description}</Typography>
+            <Typography
+              className={classes.secondary}
+              style={{ paddingTop: mediumScreen ? 24 : 16 }}
+              gutterBottom
+              variant="overline">
+              About
+            </Typography>
+            <Typography gutterBottom >{restaurant.about}</Typography> */ }
+            <Divider style={{marginTop: 16, marginBottom: 16}} />
+            { /* <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
+              <Grid item>
+                <Today className={classes.primary} />
               </Grid>
-              <Grid container spacing={mediumScreen ? 24 : 16}>
-                <Grid item xs={6} sm={4} md={6}>
-                  <OrderItemCard orderItem={orderItemSample[1]}/>
-                </Grid>
+              <Grid item>
+                <Typography variant="subtitle1">Recent orders</Typography>
               </Grid>
-
-              <Divider style={{marginTop: 16, marginBottom: 16}} /> */ }
-
-              <MenuSection restaurant={restaurant} subdomain={subdomain} />
             </Grid>
-            <Grid item xs={12} md={6}>
-              {smallScreen && <Divider/>}
-              {smallScreen && <InfoSection restaurant={restaurant}/>}
-              {!smallScreen && <Card>
-                {<InfoSection restaurant={restaurant}/>}
-              </Card>}
-              { /* <Typography
-                style={{ paddingTop: mediumScreen ? 24 : 16 }}
-                variant="subtitle1"
-                align="center"
-                gutterBottom>
-                Snatch a table
-              </Typography>
-              <Grid container justify="center">
-                <Grid item>
-                  {smallScreen && <div>
-                    <BookingForm classes={classes} />
-                  </div>}
-                  {!smallScreen && <Card>
-                    <CardContent>
-                      <BookingForm classes={classes} />
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small" color="primary">Book</Button>
-                    </CardActions>
-                  </Card>}
-                  <div style={{flex: 1}}/>
-                </Grid>
-              </Grid> */}
+            <Grid container spacing={mediumScreen ? 24 : 16}>
+              <Grid item xs={6} sm={4} md={6}>
+                <OrderItemCard orderItem={orderItemSample[0]}/>
+              </Grid>
             </Grid>
+
+            <Divider style={{marginTop: 16, marginBottom: 16}} />
+            <Grid container wrap="nowrap" style={{marginBottom: 8}} spacing={16}>
+              <Grid item>
+                <Favorite className={classes.primary} />
+              </Grid>
+              <Grid item>
+                <Typography variant="subtitle1">Favorited</Typography>
+              </Grid>
+            </Grid>
+            <Grid container spacing={mediumScreen ? 24 : 16}>
+              <Grid item xs={6} sm={4} md={6}>
+                <OrderItemCard orderItem={orderItemSample[1]}/>
+              </Grid>
+            </Grid>
+
+            <Divider style={{marginTop: 16, marginBottom: 16}} /> */ }
+
+            <MenuSection restaurant={restaurant} subdomain={subdomain} />
           </Grid>
-        </ResponsiveContainer>
-      </div>
-    );
-  }
+          <Grid item xs={12} md={6}>
+            {smallScreen && <Divider/>}
+            {smallScreen && <InfoSection restaurant={restaurant}/>}
+            {!smallScreen && <Card>
+              {<InfoSection restaurant={restaurant}/>}
+            </Card>}
+            { /* <Typography
+              style={{ paddingTop: mediumScreen ? 24 : 16 }}
+              variant="subtitle1"
+              align="center"
+              gutterBottom>
+              Snatch a table
+            </Typography>
+            <Grid container justify="center">
+              <Grid item>
+                {smallScreen && <div>
+                  <BookingForm classes={classes} />
+                </div>}
+                {!smallScreen && <Card>
+                  <CardContent>
+                    <BookingForm classes={classes} />
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" color="primary">Book</Button>
+                  </CardActions>
+                </Card>}
+                <div style={{flex: 1}}/>
+              </Grid>
+            </Grid> */}
+          </Grid>
+        </Grid>
+      </ResponsiveContainer>
+    </div>
+  );
 }
 
 RestaurantView = connect(
