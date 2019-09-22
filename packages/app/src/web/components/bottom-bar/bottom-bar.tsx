@@ -51,23 +51,19 @@ let BottomBar: React.FC<{
     bottom: 0
   };
 
-  const getColor = (sw: boolean) => {
-    const alpha = (!sw ? 200 : 90) / 255;
-    const color = sw ? '0,0,0': '255,255,255';
-    return `rgba(${color}, ${alpha})`;
-  };
-  const appleStyle = {
-    backgroundColor: getColor(type === 'dark'),
-    WebkitBackdropFilter: 'blur(20px)',
-    borderTop: `0.5px solid ${getColor(type !== 'dark')}`
+  const coupertino = {
+    backgroundColor: theme.coupertino.backgroundColor,
+    WebkitBackdropFilter: theme.coupertino.backdropFilter,
+    backdropFilter: theme.coupertino.backdropFilter,
+    borderTop: `1px solid ${theme.coupertino.borderColor}`
   };
   const conidionalStyle = select({
     standard: {
         backgroundColor: paper,
         borderTop: `1px solid ${divider}`
     },
-    osx: appleStyle,
-    ios: appleStyle
+    osx: coupertino,
+    ios: coupertino
   });
 
   return (
@@ -88,12 +84,17 @@ let BottomBar: React.FC<{
       <animated.div style={{
         ...commonStyle, 
         ...cartAnimatedStyle,
-        backgroundColor: `rgba(${type === 'dark' ? '255,255,255' : '0,0,0'}, 0.12)`,
         width: billVisible ? '50%' : '100%',
         left: 0,
         right: 0
       }}>
         <BottomBarAction 
+          scrim={select({
+            ios: type === 'dark' ? 'dark' : 'none', 
+            osx: type === 'dark' ? 'dark' : 'none', 
+            standard: type === 'light' ? 'dark' : 'none'
+          })}
+          scrimAlpha={select({ ios: 0.54, osx: 0.45, standard: 0.12 })}
           style={{width: '100%', height: '100%'}}
           icon={<CartIcon color="action"/>}
           title={t('cart.title')}
@@ -109,6 +110,12 @@ let BottomBar: React.FC<{
         right: 0
       }}>
         <BottomBarAction 
+          scrim={select({
+            ios: type === 'light' ? 'light' : 'none', 
+            osx: type === 'light' ? 'light' : 'none', 
+            standard: type === 'dark' ? 'light' : 'none'
+          })}
+          scrimAlpha={select({ ios: 0.54, osx: 0.45, standard: 0.12 })}
           flipped={true}
           style={{width: '100%', height: '100%'}}
           icon={<BillIcon color="action"/>}

@@ -8,6 +8,7 @@ const initialState = {
   errorsMap: {},
   dialogs: {},
   transactionStatus: null,
+  bottomBarOpen: false,
   theme: 'light'
 };
 
@@ -43,6 +44,12 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case 'dinify/transaction/INIT_TRANSACTION_DONE': {
       return assocPath(['transactionStatus'], action.payload.status)(state);
+    }
+
+    case 'dinify/transaction/GET_BILL_DONE':
+    case 'dinify/cart/GET_CART_DONE': {
+      // TODO: IF the bill item count or cart item count > 0
+      return assoc('bottomBarOpen', action.payload.orderItemCount > 0)(state);
     }
 
     case wsTypes.CONFIRMED_PAYMENT: {

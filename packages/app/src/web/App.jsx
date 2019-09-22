@@ -4,6 +4,7 @@ import { openDialog, closeDialog } from 'ducks/ui/actions';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 import { Motion } from 'react-motion';
+import { getOrderItemCount as getCartCount } from 'ducks/cart/selectors';
 
 import Dialog from '@material-ui/core/Dialog';
 
@@ -98,6 +99,7 @@ class App extends React.Component {
       dialogs,
       closeDialog,
       history,
+      bottomBarOpen,
       user
     } = this.props;
     const isAccountTab = this.match(routes.ACCOUNT) || this.match(routes.SIGNIN);
@@ -123,24 +125,15 @@ class App extends React.Component {
             <Route path={routes.RECEIPT} component={Receipt} />
           </Switch>
         </div>
-        <Motion
-          key="bottom-navigation-wrapper"
-          defaultStyle={{x: 0}}
-          style={{x: 0}}>
-          {style =>
-            <Navigation
-              key="bottom-navigation"
-              style={{
-                transform: `translate3d(0, ${style.x * 56}px, 0)`
-              }}
-              handleChange={this.onNavigate}
-              checkedInRestaurant={checkedInRestaurant}
-              value={(() => {
-                if (isAccountTab) return 1;
-                return 0;
-              })()}/>
-          }
-        </Motion>
+        <Navigation
+          key="bottom-navigation"
+          // borderVisible={!bottomBarOpen || isAccountTab}
+          handleChange={this.onNavigate}
+          checkedInRestaurant={checkedInRestaurant}
+          value={(() => {
+            if (isAccountTab) return 1;
+            return 0;
+          })()}/>
         <ServicesButtonContainer anchor={56} onClick={this.handleServicesClick} />
         {!isAccountTab && <BottomBar style={{bottom: 56}} onSelect={this.onBottomBarSelect} />}
         {FN.MapToList(dialogs).map(dialog =>
@@ -160,6 +153,7 @@ App = connect(
   (state) => ({
     user: state.firebase.auth,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
+    bottomBarOpen: getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0,
     dialogs: state.ui.dialogs,
     location: state.router.location
   }),

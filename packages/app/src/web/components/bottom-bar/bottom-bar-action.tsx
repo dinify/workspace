@@ -6,11 +6,15 @@ import Price from '../../../web/components/Price';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { Subtotal } from 'CartModels';
+import { BackgroundColorProperty } from 'csstype';
 
 const BottomBarAction: React.FC<{
   style?: React.CSSProperties,
   icon?: any,
   onClick?: () => void,
+  scrim?: 'none'|'dark'|'light'|null,
+  scrimAlpha?: number,
+  theme?: any,
   flipped?: boolean,
   subtotal: Subtotal|null,
   count: number,
@@ -18,6 +22,9 @@ const BottomBarAction: React.FC<{
 }> = ({
   style,
   icon,
+  scrim,
+  theme,
+  scrimAlpha = 0.12,
   subtotal,
   flipped = false,
   count,
@@ -26,12 +33,16 @@ const BottomBarAction: React.FC<{
   ...otherProps
 }) => {
   const { t } = useTranslation();
+  // const useScrimType  = inverse ? (scrim === 'dark' ? 'light' : (scrim === 'light' ? 'dark' : scrim)) : scrim;
+  const a = scrimAlpha;
+  const backgroundColor: BackgroundColorProperty = scrim === 'dark' ? `rgba(0,0,0,${a})` : (scrim === 'light' ? `rgba(255, 255, 255, ${a})` : '')
   return (
     <ButtonBase onClick={onClick} style={{
       bottom: 0,
       height: 56,
       padding: `8px 16px 8px 16px`,
       justifyContent: 'flex-start',
+      backgroundColor,
       ...style
     }}>
       {!flipped && icon}

@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { getClaims } from '@dinify/common/dist/ducks/auth/selectors';
 import { withStateHandlers } from 'recompose';
 import { languageCountries as languages } from '@dinify/common/dist/lib';
+import { toggleTheme as toggleThemeAction } from 'ducks/ui/actions';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import OpenInNew from '@material-ui/icons/OpenInNewRounded';
 import ArrowUpward from '@material-ui/icons/ArrowUpwardRounded';
@@ -24,6 +25,7 @@ import IconButton from '@material-ui/core/IconButton';
 import LanguagePickerDialog from '@dinify/common/dist/components/dialogs/LanguagePickerDialog';
 import CurrencyPickerDialog from '@dinify/common/dist/components/dialogs/CurrencyPickerDialog';
 import Image from 'web/components/Image';
+import LightbulbToggle from 'web/components/LightbulbToggle';
 // import Flag from '@dinify/common/dist/components/Flag';
 import Card from 'web/components/Card';
 import CashMultiple from '@dinify/common/dist/icons/CashMultiple';
@@ -74,6 +76,8 @@ const openInNewTab = (url) => {
 
 const Account = ({
   classes,
+  theme,
+  toggleTheme,
   user,
   profile,
   firebase,
@@ -130,6 +134,16 @@ const Account = ({
         {t('profile')}
       </Typography>
       <Card>
+        <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
+          Theme
+        </Typography>
+        <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={toggleTheme}>
+          <ListItemIcon>
+            <LightbulbToggle onChange={toggleTheme} checked={theme === 'light'} theme={theme}/>
+          </ListItemIcon>
+          <ListItemText primary="Turn on night mode" secondary="currently off" />
+          
+        </ListItem>
         <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
           {t('currency.title')}
         </Typography>
@@ -319,7 +333,11 @@ const enhance = compose(
       profile: state.firebase.profile,
       claims: getClaims(state),
       restaurantsMap: state.restaurant.all,
-    })
+      theme: state.ui.theme,
+    }),
+    {
+      toggleTheme: toggleThemeAction,
+    }
   )
 )
 
