@@ -25,25 +25,20 @@ const AppBar: IAppBar = ({
     children,
     ...otherProps
 }) => {
-    const { palette: { type, background: { paper }, divider }} = theme;
-    
-    const getColor = (sw: boolean) => {
-        const alpha = (!sw ? 200 : 90) / 255;
-        const color = sw ? '0,0,0': '255,255,255';
-        return `rgba(${color}, ${alpha})`;
-      };
-      const appleStyle = {
-        backgroundColor: getColor(type === 'dark'),
-        WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: `0.5px solid ${getColor(type !== 'dark')}`
+    const { palette: { background: { paper }, divider }} = theme;
+      const coupertino = {
+        backgroundColor: theme.coupertino.backgroundColor,
+        WebkitBackdropFilter: theme.coupertino.backdropFilter,
+        backdropFilter: theme.coupertino.backdropFilter,
+        borderBottom: `1px solid ${theme.coupertino.borderColor}`
       };
       const appBarStyle = select({
         standard: {
             backgroundColor: paper,
             borderBottom: `1px solid ${divider}`
         },
-        osx: appleStyle,
-        ios: appleStyle
+        osx: coupertino,
+        ios: coupertino
       });
     return (
         <div style={{
@@ -51,7 +46,8 @@ const AppBar: IAppBar = ({
             display: 'flex',
             alignItems: 'center',
             height: 56,
-            padding: 8,
+            paddingLeft: 16,
+            paddingRight: 16,
             ...appBarStyle,
             ...style
         }} {...otherProps}>

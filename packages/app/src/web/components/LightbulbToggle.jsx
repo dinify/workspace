@@ -1,5 +1,5 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
+// import IconButton from '@material-ui/core/IconButton';
 import LightbulbOutlined from '@dinify/common/dist/icons/LightbulbOutlined';
 import times from 'lodash.times';
 import { StaggeredMotion, Motion, spring } from 'react-motion';
@@ -8,26 +8,26 @@ const LightbulbToggle = ({
   onChange,
   theme,
   style,
-  defaultChecked = true,
+  defaultChecked = false,
   checked
 }) => {
 
   // console.log(checked);
   const isDark = theme === 'dark';
   return (
-    <IconButton
-      disableRipple
-      style={{width: 48, height: 48, ...style}}
-      onClick={onChange}>
       <div style={{
         position: 'relative',
-        opacity: isDark ? 0.54 : 0.38
+        pointerEvents: 'none',
+        width: 24,
+        height: 24,
+        opacity: isDark ? 0.54 : 0.38,
+        ...style
       }}>
       <Motion
-        defaultStyle={{x: defaultChecked ? 1 : 0}}
+        defaultStyle={{x: !checked ? 1 : 0}}
         style={{x: spring(checked ? 1 : 0, { stiffness: 480, damping: checked ? 12 : 48 })}}>
         {style =>
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: 'relative', transform: 'translate(12px, 12px)'}}>
             <LightbulbOutlined style={{
               color: isDark ? '#fff' : '#000',
               position: 'absolute',
@@ -65,7 +65,7 @@ const LightbulbToggle = ({
       </Motion>
       <StaggeredMotion
         defaultStyles={times(2, () => {
-          return { x: defaultChecked ? 1 : 0 };
+          return { x: !checked ? 1 : 0 };
         })}
         styles={styles =>
           styles.map((_, i) => {
@@ -73,7 +73,7 @@ const LightbulbToggle = ({
             return { x: spring(styles[i - 1].x, { stiffness: 250, damping: 48 }) };
           })
         }>
-        {stylesParent => <div>
+        {stylesParent => <div style={{transform: 'translate(12px, 12px)'}}>
           {[-90, -45, 0, +45, +90].map(angle => {
             const w = checked ? (stylesParent[0].x - stylesParent[1].x) : (stylesParent[1].x - stylesParent[0].x);
             return (
@@ -101,7 +101,6 @@ const LightbulbToggle = ({
       </StaggeredMotion>
 
     </div>
-    </IconButton>
   );
 
 }

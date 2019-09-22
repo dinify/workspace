@@ -60,6 +60,12 @@ const getTheme = ({type = 'light'}) => {
           default: dark ? "#212121" : "#ffffff"
         }
       },
+      coupertino: {
+        backdropFilter: 'saturate(180%) blur(20px)',
+        backgroundColor: dark ? 'rgba(29,29,31,0.7)' : 'rgba(255,255,255,0.7)',
+        borderColor: dark ? 'rgba(66,66,69,0.7)' : 'rgba(29, 29, 31, 0.1)',
+        borderThickColor: dark ? 'rgba(66,66,69,0.95)' : 'rgba(29, 29, 31, 0.2)',
+      },
       shape: {
         borderRadius: shapeBorderRadius
       },

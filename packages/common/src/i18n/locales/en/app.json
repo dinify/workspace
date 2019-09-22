@@ -110,6 +110,15 @@
     "other": "Other languages",
     "addOther": "Add another language"
   },
+  "toggle": {
+    "on": "currently on",
+    "off": "currently off"
+  },
+  "theme": {
+    "title": "Theme",
+    "nightModeOn": "Turn on night mode",
+    "nightModeOff": "Turn off night mode"
+  },
   "cart": {
     "title": "Cart",
     "itemCount": "{{count, number}} item",

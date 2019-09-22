@@ -81,7 +81,11 @@ const AppBar = ({
         }
         {!iosInstalled && logo}
         <div style={{flex: 1}} />
-        <LightbulbToggle style={{marginRight: 16}} onChange={toggleTheme} checked={theme === 'light'} theme={theme}/>
+        
+        <LightbulbToggle style={{
+          position: 'absolute',
+          right: 16
+        }} onChange={toggleTheme} checked={theme === 'light'} theme={theme}/>
         {children}
       </Toolbar>
       <div ref={setAnchor} style={{width: '100%'}}/>

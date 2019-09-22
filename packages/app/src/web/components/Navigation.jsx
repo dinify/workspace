@@ -25,6 +25,7 @@ const styles = theme => ({
 
 const Navigation = ({
   classes,
+  borderVisible = true,
   handleChange,
   value,
   style,
@@ -46,23 +47,19 @@ const Navigation = ({
     }
   ];
 
-  const getColorString = (sw) => {
-    const alpha = (!sw ? 200 : 90) / 255;
-    const color = sw ? '0,0,0': '255,255,255';
-    return `rgba(${color}, ${alpha})`;
-  };
-  const appleStyle = {
-    backgroundColor: getColorString(type === 'dark'),
-    WebkitBackdropFilter: 'blur(20px)',
-    borderTop: `0.5px solid ${getColorString(type !== 'dark')}`
+  const coupertino = {
+    backgroundColor: theme.coupertino.backgroundColor,
+    WebkitBackdropFilter: theme.coupertino.backdropFilter,
+    backdropFilter: theme.coupertino.backdropFilter,
+    borderTop: borderVisible ? `1px solid ${theme.coupertino.borderColor}` : 'none'
   };
   const conidionalStyle = select({
     standard: {
         backgroundColor: paper,
-        borderTop: `1px solid ${divider}`
+        borderTop: borderVisible ? `1px solid ${divider}` : 'none'
     },
-    osx: appleStyle,
-    ios: appleStyle
+    osx: coupertino,
+    ios: coupertino
   });
   const BottomNavItem = ({
     children,
