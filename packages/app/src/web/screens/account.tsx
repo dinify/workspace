@@ -1,12 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFirebase } from 'react-redux-firebase';
 import { useTransition } from 'react-spring';
 
 import Typography from '@material-ui/core/Typography';
 import { AppBar, AppBarTitle } from '../components/app-bar';
 import AccountPage from '../pages/Account';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+const { useFirebase } = require('react-redux-firebase');
 
 export const AccountScreen: React.FC = () => {
   const { t } = useTranslation();

@@ -64,7 +64,7 @@ const QRs = ({ waiterboards, waiterboardsLoaded, fetchWaiterboards, restaurant, 
               target="_blank"
             >
               <Typography gutterBottom variant="subtitle1" align="center">{wb.name}</Typography>
-            </Link> 
+            </Link>
           */}
           <div>
             {wb.tables.map(table => (
