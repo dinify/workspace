@@ -42,7 +42,7 @@ const Main = ({ restaurant }) => {
 
         <Column>
           <Social social={restaurant.social} />
-          <Wifi wifi={restaurant.wifi} />
+          <Wifi />
           <Banking payout={restaurant.payout} />
         </Column>
 

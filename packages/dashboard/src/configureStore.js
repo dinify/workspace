@@ -49,7 +49,8 @@ const restaurantPersistConfig = {
     'selectedRestaurant',
     'prefill',
     'ongoingRegistration',
-    'onboardingToken'
+    'onboardingToken',
+    'wifi'
   ]
 }
 

@@ -13,7 +13,9 @@ import { updateWifiInitAction } from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
+import { selectedRestaurantWifi } from 'ducks/restaurant/selectors';
 
+const formName = 'settings/wifi';
 
 let WifiForm = ({ handleSubmit, t }) => {
   return (
@@ -43,7 +45,7 @@ let WifiForm = ({ handleSubmit, t }) => {
   );
 };
 WifiForm = reduxForm({
-  form: 'settings/wifi',
+  form: formName,
   enableReinitialize: true,
   destroyOnUnmount: false
 })(WifiForm);
@@ -52,6 +54,7 @@ const AdapterLink = React.forwardRef((props, ref) => <RouterLink innerRef={ref} 
 
 
 const Wifi = ({ updateWifi, wifi, ssid, password }) => {
+  console.log(wifi);
   const { t } = useTranslation();
   const initialValues = { ssid: '', password: '' };
   if (wifi) {
@@ -74,6 +77,7 @@ const Wifi = ({ updateWifi, wifi, ssid, password }) => {
         <div style={{ padding: 16, textAlign: 'center' }}>
           <Link 
             component={AdapterLink}
+            target="_blank"
             to={`/qr/WIFI:S:${ssid};T:WPA2;P:${password};;`}
           >
             Print QR
@@ -84,9 +88,10 @@ const Wifi = ({ updateWifi, wifi, ssid, password }) => {
   );
 };
 
-const selector = formValueSelector('settings/wifi');
+const selector = formValueSelector(formName);
 
 export default connect((state) => ({
+  wifi: selectedRestaurantWifi(state),
   ssid: selector(state, 'ssid'),
   password: selector(state, 'password')
 }), {

@@ -227,6 +227,16 @@ const publishRestaurantEpic = (action$, state$) =>
     })
   );
 
+const onUpdateWifiSnackbarsEpic = (action$) =>
+  action$.pipe(
+    ofType('UPD_WIFI_INIT'),
+    mergeMap(() => {
+      return of(snackbar.show({
+        message: window.i18nInstance.t('saved'),
+      }));
+    })
+  );
+
 export default [
   loadRestaurant,
   bootstrapEpic,
@@ -240,5 +250,6 @@ export default [
   resetCategoriesEpic,
   resetMenuItemEpic,
   addLangSnackbar,
-  publishRestaurantEpic
+  publishRestaurantEpic,
+  onUpdateWifiSnackbarsEpic
 ];

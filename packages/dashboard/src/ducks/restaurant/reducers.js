@@ -32,7 +32,8 @@ const initialState = {
   preferredLanguages: preferredLanguagesInitial,
   defaultLanguage: 'en',
   waiterboards: [],
-  waiterboardsLoaded: false
+  waiterboardsLoaded: false,
+  wifi: {}
 };
 
 export default function reducer(state = initialState, action) {
@@ -111,6 +112,11 @@ export default function reducer(state = initialState, action) {
         assocPath(['all', restaurantId, 'longitude'], Number(longitude)),
         assocPath(['all', restaurantId, 'latitude'], Number(latitude),)        
       )(state);
+    }
+
+    case 'UPD_WIFI_INIT': {
+      const restaurantId = state.selectedRestaurant;
+      return assocPath(['wifi', restaurantId], payload)(state);
     }
 
     case 'GET_BILLS_DONE':
