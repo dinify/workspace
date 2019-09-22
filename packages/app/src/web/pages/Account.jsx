@@ -135,14 +135,15 @@ const Account = ({
       </Typography>
       <Card>
         <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
-          Theme
+          {t('theme.title')}
         </Typography>
         <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={toggleTheme}>
           <ListItemIcon>
             <LightbulbToggle onChange={toggleTheme} checked={theme === 'light'} theme={theme}/>
           </ListItemIcon>
-          <ListItemText primary="Turn on night mode" secondary="currently off" />
-          
+          <ListItemText 
+            primary={t(theme === 'light' ? 'theme.nightModeOn' : 'theme.nightModeOff')} 
+            secondary={t(theme === 'light' ? 'toggle.off' : 'toggle.on')} />
         </ListItem>
         <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
           {t('currency.title')}
