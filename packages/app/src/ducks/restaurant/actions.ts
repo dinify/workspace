@@ -11,9 +11,9 @@ import { createAsyncAction } from 'typesafe-actions';
 const p = 'dinify/restaurant';
 
 export const fetchRestaurantsAsync = createAsyncAction(
-  `${p}/FETCH_RESTAURANTS_INIT`, // { populateWith: `images` }
-  `${p}/FETCH_RESTAURANTS_DONE`,
-  `${p}/FETCH_RESTAURANTS_FAIL`
+  `${p}/GET_RESTAURANTS_INIT`, // { populateWith: `images` }
+  `${p}/GET_RESTAURANTS_DONE`,
+  `${p}/GET_RESTAURANTS_FAIL`
 )<undefined, RestaurantsResponse, string>();
 
 export const fetchRestaurantAsync = createAsyncAction(

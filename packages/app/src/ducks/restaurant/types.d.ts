@@ -10,9 +10,7 @@ declare module 'RestaurantModels' {
     res: Restaurant;
   }
 
-  export type RestaurantsResponse = {
-    res: Restaurant[];
-  }
+  export type RestaurantsResponse = Restaurant[];
 
   export type StatusResponse = {
     checkedInRestaurant: Restaurant.id | null

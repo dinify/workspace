@@ -18,7 +18,7 @@ export const all = createReducer<State, Action>({})
 
   .handleAction(actions.fetchRestaurantsAsync.success, (state, action) => {
     state;
-    const restaurants: Restaurant[] = action.payload.res;
+    const restaurants: Restaurant[] = action.payload;
     return ListToMap(restaurants);
   })
 

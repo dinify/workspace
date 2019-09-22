@@ -52,7 +52,10 @@ const InfoSection = ({
   if (restaurant && restaurant.address) addr = restaurant.address.postal;
   const { t, i18n } = useTranslation();
   const currentWeekDayIndex = new Date().getDay();
-  const currentHours = restaurant.open_hours[days[currentWeekDayIndex]];
+  let currentHours = null;
+  if (restaurant.openHours) {
+    currentHours = restaurant.openHours[days[currentWeekDayIndex]];
+  }
   return (
     <div>
       <a rel="noopener noreferrer" target="_blank" href={`https://www.google.com/maps/search/${restaurant.name}/@${restaurant.latitude},${restaurant.longitude},17z`}
@@ -74,7 +77,7 @@ const InfoSection = ({
         }
       </a>
 
-      {restaurant.open_hours !== undefined && currentHours !== undefined && (
+      {!!currentHours && (
         <ExpansionPanel classes={{root: classes.expansionRoot, expanded: classes.nopad}}>
           <ExpansionPanelSummary expandIcon={<ExpandMore />}>
             <ListItem disableGutters classes={{default: classes.nopad}}>
