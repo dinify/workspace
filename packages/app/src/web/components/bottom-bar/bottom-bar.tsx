@@ -88,6 +88,8 @@ let BottomBar: React.FC<{
       <animated.div style={{
         ...commonStyle, 
         ...cartAnimatedStyle,
+        backgroundColor: `rgba(${type === 'dark' ? '255,255,255' : '0,0,0'}, 0.12)`,
+        width: billVisible ? '50%' : '100%',
         left: 0,
         right: 0
       }}>
@@ -95,7 +97,7 @@ let BottomBar: React.FC<{
           style={{width: '100%', height: '100%'}}
           icon={<CartIcon color="action"/>}
           title={t('cart.title')}
-          subtotal={cartSubtotal}
+          subtotal={billVisible ? null : cartSubtotal}
           count={cartItemCount}
           onClick={() => { onSelect('cart'); }}
         />

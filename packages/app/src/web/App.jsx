@@ -100,6 +100,7 @@ class App extends React.Component {
       history,
       user
     } = this.props;
+    const isAccountTab = this.match(routes.ACCOUNT) || this.match(routes.SIGNIN);
     return (
       <div style={{position: 'relative'}}>
         <div style={{ marginBottom: this.match(routes.CHECKIN) ? 0 : 56 }}>
@@ -135,13 +136,13 @@ class App extends React.Component {
               handleChange={this.onNavigate}
               checkedInRestaurant={checkedInRestaurant}
               value={(() => {
-                if (this.match(routes.ACCOUNT) || this.match(routes.SIGNIN)) return 1;
+                if (isAccountTab) return 1;
                 return 0;
               })()}/>
           }
         </Motion>
         <ServicesButtonContainer anchor={56} onClick={this.handleServicesClick} />
-        <BottomBar style={{bottom: 56}} onSelect={this.onBottomBarSelect} />
+        {!isAccountTab && <BottomBar style={{bottom: 56}} onSelect={this.onBottomBarSelect} />}
         {FN.MapToList(dialogs).map(dialog =>
           dialog.component({
             key: dialog.id,
