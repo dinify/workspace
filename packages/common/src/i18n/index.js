@@ -4,23 +4,22 @@ import locales from './locales';
 import moment from 'moment';
 import globalize from './globalize';
 import formatters from './formatters';
-import { supplementalPaths } from './cldr';
 
 // TODO: move to backend with SSR for optimized loading
 
 const ROOT = 'https://static.dinify.app';
 
-const getMainFiles = (locale) => {
-  return [
-    `main/${locale}/currencies`,
-    `main/${locale}/languages`,
-    `main/${locale}/territories`,
-    `main/${locale}/numbers`,
-    `main/${locale}/ca-gregorian`,
-    `main/${locale}/units`,
-    `main/${locale}/listPatterns`
-  ];
-}
+const getMainFiles = (locale) => ([
+  `main/${locale}/currencies`,
+  `main/${locale}/languages`,
+  `main/${locale}/territories`,
+  `main/${locale}/numbers`,
+  `main/${locale}/ca-gregorian`,
+  `main/${locale}/units`,
+  `main/${locale}/listPatterns`
+]);
+
+const getTranslationFile = (lng, ns) => `i18n/translations/${lng}/${ns}`;
 
 const getGlobalizedInstance = (language) => {
   const instance = globalize(language);
@@ -30,6 +29,19 @@ const getGlobalizedInstance = (language) => {
   return instance;
 }
 
+const loadFiles = (requiredFiles, cb) => {
+  Promise.all(requiredFiles.map((file, index) =>
+    fetch(`${ROOT}/${file}`).then((response) => {
+      if (response.status >= 300) {
+        if (index === 0) console.error('File not available:', file);
+        return null;
+      }
+      return response.json();
+    }))
+  ).then((values) => {
+    cb(values);
+  });
+}
 
 export default ({ namespace, lang, fallback }) => {
   let defaultFallback = ['en']
@@ -67,12 +79,33 @@ export default ({ namespace, lang, fallback }) => {
         if (value instanceof Date) return moment(value).format(format);
         return value;
       }
+    },
+    react: {
+      useSuspense: false,
+      wait: false,
+      bindI18n: 'languageChanged loaded',
+      bindI18nStore: 'added removed',
+      nsMode: 'default'
+    },
+    backend: {
+      loadPath: `${ROOT}/i18n/translations/{{lng}}/{{ns}}`,
     }
   };
 
   let i18nInstanceReference;
   let previousInstanceReference;
 
+  let loadTranslations = (lng, currentNamespace) => {
+    // Load translations for current language
+    const namespaces = [currentNamespace, 'common'];
+    const translationFiles = namespaces.map(ns => getTranslationFile(lng, ns));
+    loadFiles(translationFiles, values => {
+      values.forEach((bundle, i) => {
+        i18n.addResourceBundle(lng, namespaces[i], bundle);
+      });
+    });
+  };
+  
   i18n
     .use(initReactI18next)
     .use({
@@ -80,11 +113,11 @@ export default ({ namespace, lang, fallback }) => {
       init(instance) {
         i18nInstanceReference = instance;
         ((callback) => {
+          // Load main + supplemental CLDR data
           fetch(`${ROOT}/cldr/supplemental/likelySubtags`)
             .then((response) => {
                 response.json().then((likelySubtagsSata) => {
                   globalize.load(likelySubtagsSata);
-
                   const globalizeInstance = getGlobalizedInstance(lang);
                   const supplemental = [
                     'cldr/supplemental/numberingSystems',
@@ -96,21 +129,13 @@ export default ({ namespace, lang, fallback }) => {
 
                   const requiredFiles = supplemental.concat(getMainFiles(globalizeInstance.locale));
 
-                  Promise.all(requiredFiles.map((file, index) =>
-                    fetch(`${ROOT}/${file}`).then((response) => {
-                      if (response.status >= 300) {
-                        if (index === 0) console.log('Locale not available:', lang);
-                        return null;
-                      }
-                      return response.json();
-                    }))
-                  ).then((values) => {
+                  loadFiles(requiredFiles, values => {
                     if (values[0]) {
                       globalize.load(...values);
                       callback(globalizeInstance);
                     }
                     else callback(globalized);
-                  })
+                  });
                 });
               }
             ).catch((err) => {
@@ -123,29 +148,28 @@ export default ({ namespace, lang, fallback }) => {
       },
     })
     .init(options);
+  
+  if (namespace === 'app') {
+    loadTranslations(lang, namespace);
+  }
 
   i18n.on('languageChanged', function(lng) {
+    if (namespace === 'app') {
+      loadTranslations(lng, namespace);
+    }
     moment.locale(lng);
     ((callback) => {
       let globalizeInstance = getGlobalizedInstance(lng);
 
       const requiredFiles = getMainFiles(globalizeInstance.locale)
 
-      Promise.all(requiredFiles.map((file, index) =>
-        fetch(`${ROOT}/${file}`).then((response) => {
-          if (response.status >= 300) {
-            if (index === 0) console.log('Locale not available:', lang);
-            return null;
-          }
-          return response.json();
-        }))
-      ).then((values) => {
+      loadFiles(requiredFiles, values => {
         if (values[0]) {
           globalize.load(...values);
           callback(globalizeInstance);
         }
         else callback(globalized);
-      })
+      });
     })((globalizeInstance) => {
       i18nInstanceReference.globalize = globalizeInstance;
       globalized = globalizeInstance;
