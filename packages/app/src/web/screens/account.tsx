@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTransition } from 'react-spring';
 
-import Typography from '@material-ui/core/Typography';
 import { AppBar, AppBarTitle } from '../components/app-bar';
 import AccountPage from '../pages/Account';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -43,11 +42,8 @@ export const AccountScreen: React.FC = () => {
   return (
     <>
       <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
-        <AppBarTitle title="Account" />
+        <AppBarTitle title={t('profile')} />
       </AppBar>
-      <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
-        {t('profile')}
-      </Typography>
       {isLoading ? loading : <Account style={{marginTop: 56}} firebase={firebase}/>}
       {/* {transitions.map(({ item, key, props }) => 
         item

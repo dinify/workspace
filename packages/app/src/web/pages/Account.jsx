@@ -131,7 +131,7 @@ const Account = ({
       </div>
 
       <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
-        {t('profile')}
+        {t('nav.settings')}
       </Typography>
       <Card>
         <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">

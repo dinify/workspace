@@ -43,7 +43,7 @@ const Navigation = ({
     },
     {
       icon: selected => selected ? <AccountCircle color={getColor(selected)}/> : <AccountCircleOutlined color={getColor(selected)}/>,
-      text: t('nav.account')
+      text: t('profile')
     }
   ];
 
