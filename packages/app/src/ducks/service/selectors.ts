@@ -2,15 +2,16 @@ import { createSelector } from 'reselect';
 import filter from 'ramda/es/filter';
 import propEq from 'ramda/es/propEq';
 import { MapToList } from '@dinify/common/dist/lib/FN';
+import { RootState } from 'typesafe-actions';
 
-export const allServices = state => state.service.all;
-export const checkedInRestaurant = state => state.restaurant.checkedInRestaurant;
+export const allServices = (state: RootState) => state.service.all;
+export const checkedInRestaurant = (state: RootState) => state.restaurant.checkedInRestaurant;
 
 export const relevantServicesList = createSelector(
   allServices,
   checkedInRestaurant,
   (all, id) => {
     if (!id) return [];
-    return filter(propEq('restaurant_id', id), MapToList(all));
+    return filter(propEq('restaurantId', id), MapToList(all));
   }
 );
