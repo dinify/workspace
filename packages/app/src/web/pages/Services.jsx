@@ -9,10 +9,12 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ServiceCallGraphic from 'web/components/ServiceCallGraphic';
-import { callServiceInit, fetchServicesInit } from 'ducks/service/actions';
-import { relevantServicesList } from 'ducks/service/selectors';
+import { callServiceAsync, fetchServicesAsync } from 'ducks/service/actions.ts';
+import { relevantServicesList } from 'ducks/service/selectors.ts';
 import { Motion, spring } from 'react-motion';
 import filter from 'ramda/es/filter';
+import { getUserLang } from 'ducks/user/selectors.ts';
+import { getT } from '../../lib/translation.ts';
 
 class Services extends React.Component {
   constructor(props) {
@@ -22,7 +24,7 @@ class Services extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { fetchServices, checkedInRestaurant } = this.props;
     fetchServices({
       restaurantId: checkedInRestaurant
@@ -30,7 +32,7 @@ class Services extends React.Component {
   }
 
   render() {
-    const { servicesList, restaurant, call, services, t, style } = this.props;
+    const { servicesList, restaurant, call, services, t, style, userLang } = this.props;
     const { selectedTab } = this.state;
 
     const selectedServicesList = filter((s) => {
@@ -143,7 +145,7 @@ class Services extends React.Component {
                       {status === 'SENT' && <CircularProgress style={{position: 'absolute'}} color="inherit"/>}
                     </div>
                     <Typography style={{marginTop: 8}}>
-                      {service.name}
+                      {getT(service.translations, userLang)}
                     </Typography>
                   </ButtonBase>
                 </Grid>
@@ -180,10 +182,11 @@ export default connect(
     restaurant: state.restaurant.all[state.restaurant.checkedInRestaurant],
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
     services: state.seat.services,
-    servicesList: relevantServicesList(state)
+    servicesList: relevantServicesList(state),
+    userLang: getUserLang(state)
   }),
   {
-    call: callServiceInit,
-    fetchServices: fetchServicesInit
+    call: callServiceAsync.request,
+    fetchServices: fetchServicesAsync.request
   }
 )(withTranslation()(Services));

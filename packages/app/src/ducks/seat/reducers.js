@@ -9,7 +9,6 @@ import forEach from 'ramda/es/forEach';
 import { selectedBillItems } from 'ducks/seat/selectors';
 import { orderAsync, rmFromCartAsync } from 'ducks/cart/actions.ts';
 import types from './types';
-import * as serviceTypes from '../service/types';
 import wsTypes from '../../websockets/types';
 
 const initialState = {
@@ -36,16 +35,16 @@ export default function reducer(state = initialState, action) {
       return assocPath(['seats', '0', 'cart'], action.payload)(state);
     }
 
-    case serviceTypes.CALL_SERVICE_INIT: {
-      const serviceId = action.payload.serviceId;
-      return assocPath(['services', serviceId], {id: serviceId, status: 'LOADING', calls: {}})(state);
-    }
-
-    case serviceTypes.CALL_SERVICE_DONE: {
-      const call = action.payload;
-      const newState = assocPath(['services', call.service_id, 'calls', call.id], call)(state);
-      return assocPath(['services', call.service_id, 'status'], 'SENT')(newState);
-    }
+//    case serviceTypes.CALL_SERVICE_INIT: {
+//      const serviceId = action.payload.serviceId;
+//      return assocPath(['services', serviceId], {id: serviceId, status: 'LOADING', calls: {}})(state);
+//    }
+//
+//    case serviceTypes.CALL_SERVICE_DONE: {
+//      const call = action.payload;
+//      const newState = assocPath(['services', call.service_id, 'calls', call.id], call)(state);
+//      return assocPath(['services', call.service_id, 'status'], 'SENT')(newState);
+//    }
 
     case wsTypes.CONFIRMED_CALL: {
       const call = action.payload.call;
