@@ -1,9 +1,8 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { openDialog, closeDialog } from 'ducks/ui/actions';
+import { openDialog } from 'ducks/ui/actions';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
-import { Motion } from 'react-motion';
 import { getOrderItemCount as getCartCount } from 'ducks/cart/selectors';
 
 import Dialog from '@material-ui/core/Dialog';
@@ -24,9 +23,9 @@ import { BottomBar } from 'web/components/bottom-bar';
 import { CartPage } from 'web/components/cart';
 import { BillPage } from 'web/components/bill';
 
-import * as FN from '@dinify/common/dist/lib/FN';
 
 import withRoot from 'withRoot.js';
+import Dialogs from './Dialogs.tsx';
 
 class App extends React.Component {
   componentDidUpdate() {
@@ -96,10 +95,7 @@ class App extends React.Component {
   render() {
     const {
       checkedInRestaurant,
-      dialogs,
-      closeDialog,
       history,
-      bottomBarOpen,
       user
     } = this.props;
     const isAccountTab = this.match(routes.ACCOUNT) || this.match(routes.SIGNIN);
@@ -136,14 +132,7 @@ class App extends React.Component {
           })()}/>
         <ServicesButtonContainer anchor={56} onClick={this.handleServicesClick} />
         {!isAccountTab && <BottomBar style={{bottom: 56}} onSelect={this.onBottomBarSelect} />}
-        {FN.MapToList(dialogs).map(dialog =>
-          dialog.component({
-            key: dialog.id,
-            id: dialog.id,
-            open: dialog.open,
-            onClose: () => { closeDialog(dialog.id) }
-          })
-        )}
+        <Dialogs />
       </div>
     );
   }
@@ -154,12 +143,10 @@ App = connect(
     user: state.firebase.auth,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
     bottomBarOpen: getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0,
-    dialogs: state.ui.dialogs,
     location: state.router.location
   }),
   {
-    openDialog,
-    closeDialog,
+    openDialog
   }
 )(App);
 
