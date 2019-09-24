@@ -71,8 +71,12 @@ const CurrencyPickerDialog = (props) => {
   }
 
   const sections = [];
-  const country = i18n.globalize.cldr.attributes.territory; // TODO: use ip-api.com/json countryCode as fallback
-  const suggestedCodes = defaultCurrencies[country];
+  
+  let suggestedCodes = [];
+  if (i18n.globalize) {
+    const country = i18n.globalize.cldr.attributes.territory; // TODO: use ip-api.com/json countryCode as fallback
+    suggestedCodes = defaultCurrencies[country];
+  }
   if (suggestedCodes && suggestedCodes.length > 0) {
     const items = searchFilter(localizeMap(suggestedCodes));
     if (items.length > 0) {
