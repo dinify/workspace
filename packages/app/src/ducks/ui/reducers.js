@@ -40,10 +40,10 @@ export default function reducer(state = initialState, action) {
     }
 
     case types.DIALOG_OPEN: {
-      return assocPath(['dialogs', action.payload], true)(state);
+      return assoc('dialogs', { [action.payload]: true })(state);
     }
     case types.DIALOG_CLOSE: {
-      return assocPath(['dialogs', action.payload], false)(state);
+      return assoc('dialogs', {})(state);
     }
     case types.TOGGLE_THEME: {
       return assoc('theme', state.theme === 'dark' ? 'light' : 'dark')(state);
