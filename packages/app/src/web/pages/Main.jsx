@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withTheme } from '@material-ui/core/styles';
 import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
@@ -6,9 +6,13 @@ import ResponsiveGrid from 'web/components/ResponsiveGrid';
 import Typography from '@material-ui/core/Typography';
 import RestaurantListItem from 'web/components/RestaurantListItem';
 import * as FN from '@dinify/common/dist/lib/FN';
+import { fetchRestaurantsAsync } from 'ducks/restaurant/actions.ts';
+import { getRestaurantsList } from 'ducks/restaurant/selectors';
 
-const Main = ({ restaurantsMap }) => {
-  const restaurantsList = FN.MapToList(restaurantsMap);
+const Main = ({ restaurantsList, fetchRestaurants }) => {
+  useEffect(() => {
+    fetchRestaurants();
+  }, [])
   return (
     <div>
       <ResponsiveContainer>
@@ -41,6 +45,8 @@ const Main = ({ restaurantsMap }) => {
 
 export default connect(
   state => ({
-    restaurantsMap: state.restaurant.all,
-  })
+    restaurantsList: getRestaurantsList(state),
+  }), {
+    fetchRestaurants: fetchRestaurantsAsync.request
+  }
 )(withTheme()(Main));

@@ -1,5 +1,5 @@
 import { of, from } from 'rxjs';
-import { mergeMap, catchError, map } from 'rxjs/operators';
+import { mergeMap, catchError, map, debounceTime } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
@@ -31,6 +31,7 @@ const fetchServicesEpic: Epic = (action$) =>
 const callServiceEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(callServiceAsync.request)),
+    debounceTime(1000),
     mergeMap((action) => {
       const { payload: { serviceId } } = action;
       return from(API.CallService({ serviceId })).pipe(

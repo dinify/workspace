@@ -1,5 +1,8 @@
 import React from 'react';
-import { animated, useSpring } from 'react-spring';
+import {
+  // animated,
+  useSpring
+} from 'react-spring';
 import Fab from '@material-ui/core/Fab';
 import NotificationsActive from '@material-ui/icons/NotificationsActive';
 
@@ -25,9 +28,9 @@ export const ServicesButton: React.FC<ServicesButtonProps> = ({
       friction: 26
     }
   });
-  const AnimatedFab = animated(Fab);
+  const AnimatedFab = Fab; // TODO animated() causes memory leak
   return (
-    <AnimatedFab 
+    <AnimatedFab
       color="primary" 
       onClick={onClick}
       style={{

@@ -1,8 +1,7 @@
 import { combineEpics } from 'redux-observable';
 
-import auth from '@dinify/common/src/ducks/auth/epics';
+import auth from '@dinify/common/src/ducks/auth/epicsTS';
 
-import app from '../ducks/app/epics';
 import transaction from '../ducks/transaction/epics';
 import cart from '../ducks/cart/epics';
 import language from '../ducks/language/epics';
@@ -17,7 +16,6 @@ import user from '../ducks/user/epics';
 const crud = require('@dinify/common/src/ducks/crudEpics.js').epics;
 
 export default combineEpics(
-  ...app,
   ...crud,
   ...auth,
   ...language,

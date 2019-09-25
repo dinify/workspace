@@ -16,7 +16,6 @@ type Action = ActionType<typeof actions>;
 export const all = createReducer<State, Action>({})
 
   .handleAction(actions.fetchRestaurantsAsync.success, (state, action) => {
-    state;
     const restaurants: Restaurant[] = action.payload;
     return ListToMap(restaurants);
   })
@@ -46,10 +45,10 @@ export const checkedInRestaurant = createReducer<State, any>(null)
   .handleAction(actions.fetchStatusAsync.success, (state, action) => {
     return action.payload.checkedInRestaurant;
   })
-  .handleAction(wsActions.checkoutAllAction, () => {
-    return null;
-  })
-  .handleAction(fActionTypes.LOGOUT, () => null);
+  .handleAction([
+    wsActions.checkoutAllAction,
+    fActionTypes.LOGOUT
+  ], () => null);
 
 const restaurantReducer = combineReducers({
   all,

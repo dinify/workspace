@@ -10,3 +10,10 @@ export const getRestaurantBySubdomain = createSelector(
   ],
   (subdomain, restaurantsMap) => find(propEq('subdomain', subdomain))(MapToList(restaurantsMap))
 )
+
+export const getRestaurantsList = createSelector(
+  [
+    (state) => state.restaurant.all
+  ],
+  (restaurantsMap) => MapToList(restaurantsMap)
+)

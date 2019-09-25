@@ -39,25 +39,25 @@ export const items = createReducer<any, any>({} as OrderItemNMap)
   })
   .handleAction(resetActions, () => ({}));
 
+
 export const orderAddons = createReducer<any, any>({} as OrderAddonMap)
-  .handleAction(actions.fetchCartAsync.success, (state, action) => {
-    state;
-    return action.payload.entities.orderAddons;
-  })
+  .handleAction(
+    actions.fetchCartAsync.success,
+    (state, action) => action.payload.entities.orderAddons
+  )
   .handleAction(resetActions, () => ({}));
+
 
 const defaultSubtotal: Subtotal = {
   amount: 0,
   currency: 'CZK',
   precision: 2
 }
-
 export const subtotal = createReducer<any, any>(defaultSubtotal as Subtotal)
 
-  .handleAction(actions.fetchCartAsync.success, (state, action) => {
-    state;
-    return action.payload.result.subtotal;
-  })
+  .handleAction(actions.fetchCartAsync.success, (state, action) => 
+    action.payload.result.subtotal
+  )
   .handleAction(resetActions, () => defaultSubtotal);
 
 const cartReducer = combineReducers({
