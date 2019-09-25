@@ -20,7 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import { switchServicesTab as switchTab } from 'ducks/ui/actions';
 import AddServiceComponent from 'web/components/AddService';
 import { selectedServicesList } from 'ducks/service/selectors';
-
+import { getT } from '@dinify/common/src/lib/translation.ts';
 
 function TabContainer(props) {
   const { children } = props;
@@ -52,13 +52,9 @@ const styles = () => ({
   }
 });
 
-const getName = (translations, l) => {
-  const translation = find(propEq('locale', l))(translations);
-  return translation.name;
-}
 
 const ServiceCalls = ({
-  removeService, servicesList, images, classes, tabIndex, switchTab, fetchServices
+  removeService, servicesList, images, classes, tabIndex, switchTab, fetchServices, defaultLang
 }) => {
   const { t } = useTranslation();
   useEffect(() => {
@@ -85,7 +81,7 @@ const ServiceCalls = ({
             <Card key={service.id} className={classes.card}>
               <CardContent className={classes.cardContent}>
                 <Avatar src={getImageUrl(service)} className={classes.avatar} />
-                <div className={classes.label}>{getName(service.translations, 'en')}</div>
+                <div className={classes.label}>{getT(service.translations, defaultLang)}</div>
                 <IconButton aria-label="Remove" onClick={() => removeService({ id: service.id })}>
                   <DeleteForeverIcon />
                 </IconButton>
@@ -118,7 +114,8 @@ export default connect(
   state => ({
     servicesList: selectedServicesList(state),
     images: state.service.images,
-    tabIndex: state.ui.servicesTabIndex
+    tabIndex: state.ui.servicesTabIndex,
+    defaultLang: state.restaurant.defaultLanguage
   }),
   {
     fetchServices: fetchServicesInit,
