@@ -12,13 +12,13 @@ const Dialogs = (props: {
 }) => {
   const { dialogs, closeDialog } = props;
   return (<>
-    <Dialog fullScreen open={dialogs['cart']}>
+    <Dialog fullScreen open={!!dialogs['cart']}>
       <CartPage onClose={() => closeDialog('cart')}/>
     </Dialog>
-    <Dialog fullScreen open={dialogs['bill']}>
+    <Dialog fullScreen open={!!dialogs['bill']}>
       <BillPage onClose={() => closeDialog('bill')}/>
     </Dialog>
-    <Dialog fullScreen open={dialogs['services']}>
+    <Dialog fullScreen open={!!dialogs['services']}>
       <ServicesScreen onClose={() => closeDialog('services')}/>
     </Dialog>
   </>);
