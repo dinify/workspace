@@ -90,7 +90,7 @@ type InitiateTransactionProps = {
 export const InitiateTransaction = (
   { gratuity, type }: InitiateTransactionProps
 ): Promise<any> => Post({
-  path: '/transaction/initiate'
+  path: 'transaction/initiate'
 }, { gratuity, type });
 
 export const ConfirmBill = ({ billId, type }: any): Promise<any> => Patch({

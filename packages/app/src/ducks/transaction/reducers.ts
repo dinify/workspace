@@ -5,26 +5,26 @@ import { combineReducers } from 'redux';
 import { Subtotal, OrderItemNMap, OrderItemN } from 'CartModels';
 import { OrderNMap } from 'TransactionModels';
 import mapObjIndexed from 'ramda/es/mapObjIndexed';
+import { actionTypes as fActionTypes } from 'react-redux-firebase';
 
-export const orders = createReducer({} as OrderNMap)
+const resetActions = [
+  actions.fetchBillAsync.failure,
+  fActionTypes.LOGOUT
+];
 
-  .handleAction(actions.fetchBillAsync.failure, () => {
-    return {};
-  })
-
+export const orders = createReducer<any, any>({} as OrderNMap)
   .handleAction(actions.fetchBillAsync.success, (state, action) => {
     return action.payload.entities.orders;
-  });
-
-export const orderItemsCount = createReducer(0 as number)
-
-  .handleAction(actions.fetchBillAsync.failure, () => {
-    return 0;
   })
+  .handleAction(resetActions, () => ({}));
 
+
+export const orderItemsCount = createReducer<any, any>(0 as number)
   .handleAction(actions.fetchBillAsync.success, (state, action) => {
     return action.payload.result.count;
-  });
+  })
+  .handleAction(resetActions, () => 0);
+
 
 const defaultSubtotal: Subtotal = {
   amount: 0,
@@ -32,35 +32,30 @@ const defaultSubtotal: Subtotal = {
   precision: 2
 }
 
-export const subtotal = createReducer(defaultSubtotal as Subtotal)
-
-  .handleAction(actions.fetchBillAsync.failure, () => {
-    return defaultSubtotal;
-  })
-
+export const subtotal = createReducer<any, any>(defaultSubtotal as Subtotal)
   .handleAction(actions.fetchBillAsync.success, (state, action) => {
     return action.payload.result.subtotal;
-  });
+  })
+  .handleAction(resetActions, () => defaultSubtotal);
+
 
 const identity = (o: any) => !!o && o !== 'pivotUndefined';
 
-export const items = createReducer({} as OrderItemNMap)
-    .handleAction(actions.fetchBillAsync.success, (state, action) => {
-      const orderItems: OrderItemNMap = mapObjIndexed((orderItem: OrderItemN) => {
-        
-        const { orderAddons, orderExcludes, orderChoices } = orderItem;
-        return {
-          ...orderItem,
-          orderAddons: orderAddons.filter(identity),
-          orderExcludes: orderExcludes.filter(identity),
-          orderChoices: orderChoices.filter(identity)
-        };
-      }, action.payload.entities.orderItems);
-      return orderItems;
-    })
-    .handleAction(actions.fetchBillAsync.failure, () => {
-      return {};
-    });
+export const items = createReducer<any, any>({} as OrderItemNMap)
+  .handleAction(actions.fetchBillAsync.success, (state, action) => {
+    const orderItems: OrderItemNMap = mapObjIndexed((orderItem: OrderItemN) => {
+      
+      const { orderAddons, orderExcludes, orderChoices } = orderItem;
+      return {
+        ...orderItem,
+        orderAddons: orderAddons.filter(identity),
+        orderExcludes: orderExcludes.filter(identity),
+        orderChoices: orderChoices.filter(identity)
+      };
+    }, action.payload.entities.orderItems);
+    return orderItems;
+  })
+  .handleAction(resetActions, () => ({}));
 
 // export const all = createReducer({} as TransactionMap)
 //     .handleAction(getType(wsActions.confirmedPayment), (state, action) => {

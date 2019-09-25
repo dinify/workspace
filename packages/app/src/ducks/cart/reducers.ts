@@ -6,10 +6,16 @@ import {
   OrderAddonMap, Subtotal, OrderItemN } from 'CartModels';
 import dissoc from 'ramda/es/dissoc';
 import mapObjIndexed from 'ramda/es/mapObjIndexed';
+import { actionTypes as fActionTypes } from 'react-redux-firebase';
+
+const resetActions = [
+  actions.fetchCartAsync.failure,
+  fActionTypes.LOGOUT
+];
 
 const identity = (o: any) => !!o && o !== 'pivotUndefined';
 
-export const items = createReducer({} as OrderItemNMap)
+export const items = createReducer<any, any>({} as OrderItemNMap)
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     const orderItems: OrderItemNMap = mapObjIndexed((orderItem: OrderItemN) => {
       
@@ -23,9 +29,6 @@ export const items = createReducer({} as OrderItemNMap)
     }, action.payload.entities.orderItems);
     return orderItems;
   })
-  .handleAction(actions.fetchCartAsync.failure, () => {
-    return {};
-  })
   .handleAction(actions.rmFromCartAsync.request, (state, action) => {
     const { orderItemId } = action.payload;
     return dissoc(orderItemId)(state);
@@ -33,16 +36,15 @@ export const items = createReducer({} as OrderItemNMap)
   .handleAction(actions.addToCartAsync.success, (state, action) => {
     const orderItem = action.payload;
     return { ...state, [orderItem.id]: orderItem };
-  });
+  })
+  .handleAction(resetActions, () => ({}));
 
-export const orderAddons = createReducer({} as OrderAddonMap)
+export const orderAddons = createReducer<any, any>({} as OrderAddonMap)
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     state;
     return action.payload.entities.orderAddons;
   })
-  .handleAction(actions.fetchCartAsync.failure, () => {
-    return {};
-  });
+  .handleAction(resetActions, () => ({}));
 
 const defaultSubtotal: Subtotal = {
   amount: 0,
@@ -50,16 +52,13 @@ const defaultSubtotal: Subtotal = {
   precision: 2
 }
 
-export const subtotal = createReducer(defaultSubtotal as Subtotal)
-
-  .handleAction(actions.fetchCartAsync.failure, () => {
-    return defaultSubtotal;
-  })
+export const subtotal = createReducer<any, any>(defaultSubtotal as Subtotal)
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     state;
     return action.payload.result.subtotal;
-  });
+  })
+  .handleAction(resetActions, () => defaultSubtotal);
 
 const cartReducer = combineReducers({
   items,

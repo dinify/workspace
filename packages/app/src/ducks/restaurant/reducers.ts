@@ -6,10 +6,9 @@ import * as wsActions from '../../websockets/actions';
 // import wsTypes from '../../websockets/types';
 import { createReducer, ActionType } from 'typesafe-actions';
 import { combineReducers } from 'redux';
+import { actionTypes as fActionTypes } from 'react-redux-firebase';
 
-// const authTypes = require('@dinify/common/dist/ducks/auth/types');
 const { ListToMap } = require('@dinify/common/dist/lib/FN');
-
 
 type State = any;
 type Action = ActionType<typeof actions>;
@@ -43,13 +42,14 @@ export const all = createReducer<State, Action>({})
   });
 
 
-export const checkedInRestaurant = createReducer<State, Action>(null)
+export const checkedInRestaurant = createReducer<State, any>(null)
   .handleAction(actions.fetchStatusAsync.success, (state, action) => {
     return action.payload.checkedInRestaurant;
   })
   .handleAction(wsActions.checkoutAllAction, () => {
     return null;
-  });
+  })
+  .handleAction(fActionTypes.LOGOUT, () => null);
 
 const restaurantReducer = combineReducers({
   all,
