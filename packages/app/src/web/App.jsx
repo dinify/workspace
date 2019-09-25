@@ -5,8 +5,6 @@ import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 import { getOrderItemCount as getCartCount } from 'ducks/cart/selectors';
 
-import Dialog from '@material-ui/core/Dialog';
-
 import * as routes from 'web/routes';
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
@@ -17,52 +15,15 @@ import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
 
 import Navigation from 'web/components/Navigation';
-import { ServicesScreen, AccountScreen } from 'web/screens';
+import { AccountScreen } from 'web/screens';
 import { ServicesButtonContainer } from 'web/components/services-button';
 import { BottomBar } from 'web/components/bottom-bar';
-import { CartPage } from 'web/components/cart';
-import { BillPage } from 'web/components/bill';
 import { fetchStatusAsync } from 'ducks/restaurant/actions.ts';
 import { fetchBillAsync } from 'ducks/transaction/actions.ts';
 import { fetchCartAsync } from 'ducks/cart/actions.ts';
 
-
 import withRoot from 'withRoot.js';
 import Dialogs from './Dialogs.tsx';
-
-const onBottomBarSelect = (type, openDialog) => {
-  if (type === 'cart') {
-    openDialog({
-      id: 'cart-page',
-      component: (props) => (
-        <Dialog fullScreen {...props}>
-          <CartPage onClose={props.onClose}/>
-        </Dialog>
-      )
-    });
-  }
-  if (type === 'bill') {
-    openDialog({
-      id: 'bill-page',
-      component: (props) => (
-        <Dialog fullScreen {...props}>
-          <BillPage onClose={props.onClose}/>
-        </Dialog>
-      )
-    });
-  }
-}
-
-const handleServicesClick = (openDialog) => {
-  openDialog({
-    id: 'services',
-    component: (props) => (
-      <Dialog fullScreen {...props}>
-        <ServicesScreen onClose={props.onClose}/>
-      </Dialog>
-    )
-  });
-}
 
 const App = (props) => {
   const { 
@@ -137,8 +98,8 @@ const App = (props) => {
           if (isAccountTab) return 1;
           return 0;
         })()}/>
-      <ServicesButtonContainer anchor={56} onClick={() => handleServicesClick(openDialog)} />
-      {!isAccountTab && <BottomBar style={{bottom: 56}} onSelect={(type) => onBottomBarSelect(type, openDialog)} />}
+      <ServicesButtonContainer anchor={56} onClick={() => openDialog('services')} />
+      {!isAccountTab && <BottomBar style={{bottom: 56}} onSelect={(type) => openDialog(type)} />}
       <Dialogs />
     </div>
   );
