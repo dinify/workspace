@@ -149,14 +149,11 @@ export default ({ namespace, lang, fallback }) => {
     })
     .init(options);
   
-  if (namespace === 'app') {
     loadTranslations(lang, namespace);
-  }
 
   i18n.on('languageChanged', function(lng) {
-    if (namespace === 'app') {
       loadTranslations(lng, namespace);
-    }
+    
     moment.locale(lng);
     ((callback) => {
       let globalizeInstance = getGlobalizedInstance(lng);

@@ -10,7 +10,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import i18n from '@dinify/common/dist/i18n/dashboard';
+import i18n from '@dinify/common/dist/i18n';
 import { getCookie, setCookie } from '@dinify/common/dist/lib/FN';
 import App from 'web/App';
 import configureStore from './configureStore';
