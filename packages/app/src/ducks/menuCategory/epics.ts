@@ -13,7 +13,7 @@ import {
 
 import * as API from '@dinify/common/src/api/v2/restaurant';
 
-const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
+import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 
 const menuItem = new schema.Entity('menuItems');
 

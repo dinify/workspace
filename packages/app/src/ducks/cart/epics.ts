@@ -21,7 +21,7 @@ import {
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import { i18nInstance } from '../../web';
 
-const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
+import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
 // const keyedPropsOfList = (keyProp: string, valProp: string) =>

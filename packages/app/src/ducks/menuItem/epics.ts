@@ -7,7 +7,7 @@ import { getType } from 'typesafe-actions';
 import { MenuItemResponseNormalized } from 'MenuItemsModels';
 import { normalize, schema } from 'normalizr';
 
-const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
+import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 
 const addon = new schema.Entity('addons');
 const ingredient = new schema.Entity('ingredients');
