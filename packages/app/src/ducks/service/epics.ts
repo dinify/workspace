@@ -2,7 +2,7 @@ import { of, from } from 'rxjs';
 import { mergeMap, catchError, map, debounceTime } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import * as API from '@dinify/common/src/api/v2/restaurant';
-import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
+import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { callServiceAsync, fetchServicesAsync } from './actions';
 import { i18nInstance } from '../../web';
 import { getType } from 'typesafe-actions';

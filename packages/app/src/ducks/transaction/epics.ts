@@ -10,7 +10,7 @@ import { getType } from 'typesafe-actions';
 import { Transaction, BillResponse, BillResponseN } from 'TransactionModels';
 import { bill } from '../cart/schemas';
 
-const { handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
+import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 import { i18nInstance } from '../../web';
 
