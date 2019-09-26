@@ -15,7 +15,7 @@ class AddServiceComponent extends React.PureComponent {
   }
 
   render() {
-    const { images, createService, serviceType, t } = this.props;
+    const { images, createService, serviceType, t, defaultLanguage, selectedRestaurant } = this.props;
     const { selectedImage } = this.state;
 
     const filteredImages = filter((img) => {
@@ -27,19 +27,26 @@ class AddServiceComponent extends React.PureComponent {
       <Label className="center">{t('selectServiceIcon')}</Label>
       <div style={{marginTop: 8}}>
         {filteredImages.map((image) =>
-          <Avatar
-            key={image.id}
-            style={{
-              display: 'inline-block',
-              margin: '5px',
-              height: 60,
-              width: 60,
-              cursor: 'pointer',
-              border: selectedImage === image.id ? '3px solid red' : 'none'
-            }}
-            onClick={() => this.setState({ selectedImage: image.id })}
-            src={image.url}
-          />
+          <div key={image.id} style={{
+            display: 'inline-block',
+            border: '1px solid white',
+            borderColor: selectedImage === image.id ? 'rgba(0,0,0,0.1)' : 'transparent',
+            background: selectedImage === image.id ? 'rgb(60,60,60)': 'white',
+            borderRadius: 10,
+            transition: 'all 200ms ease-in-out'
+          }}>
+            <Avatar
+              style={{
+                display: 'inline-block',
+                margin: '5px',
+                height: 60,
+                width: 60,
+                cursor: 'pointer',
+              }}
+              onClick={() => this.setState({ selectedImage: image.id })}
+              src={image.url}
+            />
+          </div>
         )}
       </div>
       <ServiceForm
@@ -47,8 +54,10 @@ class AddServiceComponent extends React.PureComponent {
         onSubmit={({ name }) =>
           createService({
             name,
+            restaurantId: selectedRestaurant,
             imageId: selectedImage || '587334ad-91f4-4179-8bd8-39b0abb1390c',
-            type: serviceType
+            type: serviceType,
+            locale: defaultLanguage
           })
         }
       />
@@ -59,7 +68,9 @@ class AddServiceComponent extends React.PureComponent {
 
 export default connect(
   (state) => ({
-    images: state.service.images
+    images: state.service.images,
+    defaultLanguage: state.restaurant.defaultLanguage,
+    selectedRestaurant: state.restaurant.selectedRestaurant
   }), {
     createService: createServiceInit,
   }

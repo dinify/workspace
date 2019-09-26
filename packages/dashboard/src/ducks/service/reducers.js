@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  const { type, payload } = action;
+  const { type, payload, meta } = action;
 
   switch (type) {
     case 'GET_SERVICES_DONE': {
@@ -37,10 +37,24 @@ export default function reducer(state = initialState, action) {
       return assoc('images', payload.res)(state);
     }
 
-    case 'CREATE_SERVICE_DONE': {
-      const newService = payload.res;
-      return assocPath(['all', newService.id], newService)(state);
+    case 'POST_SERVICE_INIT': {
+      const tempService = payload;
+      return assocPath(['all', tempService.id], tempService)(state);
     }
+
+    case 'POST_SERVICE_DONE': {
+      const tempId = meta.id;
+      const actualId = payload.id;
+      const actualService = {
+        ...state.all[tempId],
+        id: actualId
+      }
+      return pipe(
+        dissocPath(['all', tempId]),
+        assocPath(['all', actualId], actualService)
+      )(state);
+    }
+
     case firebaseTypes.LOGOUT: {
       return initialState;
     }
