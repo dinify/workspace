@@ -1,1 +1,3 @@
-declare module '@dinify/common/dist/lib/FN';
+declare module '@dinify/common/dist/lib/FN' {
+  
+}

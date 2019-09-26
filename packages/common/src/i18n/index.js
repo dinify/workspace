@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import locales from './locales';
 import moment from 'moment';
 import globalize from './globalize';
 import formatters from './formatters';
@@ -50,7 +49,7 @@ export default ({ namespace, lang, fallback }) => {
   let globalized;
   const options = {
     lng: lang, // the language to use for translations
-    resources: locales,
+    resources: [],
     ns: [ 'common', 'app', 'dashboard', 'landing' ], // array of namespaces to load
     defaultNS: namespace || 'common',
     fallbackNS: 'common',
