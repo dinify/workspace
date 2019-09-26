@@ -12,6 +12,10 @@ export const all = createReducer({} as ServiceMap)
   });
 
 export const status = createReducer<any, any>({})
+  .handleAction(actions.callServiceAsync.request, (state, action) => {
+    const service = action.payload;
+    return { ...state, [service.serviceId]: 'SENDING' };
+  })
   .handleAction(actions.callServiceAsync.success, (state, action) => {
     const service = action.payload;
     return { ...state, [service.serviceId]: 'SENT' };

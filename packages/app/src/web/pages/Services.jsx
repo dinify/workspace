@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Done from '@material-ui/icons/Done';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ServiceCallGraphic from 'web/components/ServiceCallGraphic';
 import { callServiceAsync, fetchServicesAsync } from 'ducks/service/actions.ts';
@@ -129,7 +130,7 @@ class Services extends React.Component {
                       <Avatar style={{position: 'absolute', width: 64, height: 64}} src={service.image && service.image.url}></Avatar>
                       <Motion
                         defaultStyle={{x: 0}}
-                        style={{x: spring(status === 'SENT' ? 1 : 0, { stiffness: 260, damping: 24 })}}>
+                        style={{x: spring(['SENT', 'SENDING'].includes(status) ? 1 : 0, { stiffness: 260, damping: 24 })}}>
                         {style =>
                           <div style={{
                             position: 'absolute',
@@ -142,7 +143,8 @@ class Services extends React.Component {
                           }}/>
                         }
                       </Motion>
-                      {status === 'SENT' && <CircularProgress style={{position: 'absolute'}} color="inherit"/>}
+                      {status === 'SENDING' && <CircularProgress style={{position: 'absolute'}} color="inherit"/>}
+                      {status === 'SENT' && <Done style={{position: 'absolute'}} color="inherit"/>}
                     </div>
                     <Typography style={{marginTop: 8}}>
                       {getT(service.translations, userLang)}
