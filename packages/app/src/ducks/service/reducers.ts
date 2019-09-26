@@ -11,8 +11,19 @@ export const all = createReducer({} as ServiceMap)
     return { ...state, ...services };
   });
 
+export const status = createReducer<any, any>({})
+  .handleAction(actions.callServiceAsync.success, (state, action) => {
+    const service = action.payload;
+    return { ...state, [service.serviceId]: 'SENT' };
+  })
+  .handleAction('dinify/ws/CONFIRMED_CALL', (state, action) => {
+    const call = action.payload.call;
+    return { ...state, [call.serviceId]: 'READY' };
+  });
+
 const serviceReducer = combineReducers({
-  all
+  all,
+  status
 });
 
 export default serviceReducer;

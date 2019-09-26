@@ -32,7 +32,7 @@ class Services extends React.Component {
   }
 
   render() {
-    const { servicesList, restaurant, call, services, t, style, userLang } = this.props;
+    const { servicesList, restaurant, call, serviceStatuses, t, style, userLang } = this.props;
     const { selectedTab } = this.state;
 
     const selectedServicesList = filter((s) => {
@@ -99,7 +99,7 @@ class Services extends React.Component {
         width: '100%',}}>
           <Grid container spacing={16}>
             {selectedServicesList.map((service) => {
-              const status = services[service.id] ? services[service.id].status : 'READY';
+              const status = serviceStatuses[service.id] ? serviceStatuses[service.id] : 'READY';
               return (
                 <Grid key={service.id} item xs={4} md={3} lg={3} style={{
                   display: 'flex',
@@ -181,7 +181,7 @@ export default connect(
   state => ({
     restaurant: state.restaurant.all[state.restaurant.checkedInRestaurant],
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
-    services: state.seat.services,
+    serviceStatuses: state.service.status,
     servicesList: relevantServicesList(state),
     userLang: getUserLang(state)
   }),
