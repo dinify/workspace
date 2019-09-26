@@ -57,19 +57,23 @@ const ServiceCalls = ({
   removeService, servicesList, images, classes, tabIndex, switchTab, fetchServices, defaultLang
 }) => {
   const { t } = useTranslation();
+
   useEffect(() => {
     fetchServices();
   }, []);
+
   const getImageUrl = (service) => {
-    const img = find(propEq('id', service.image_id))(images);
+    const img = find(propEq('id', service.imageId))(images);
     if (img) return img.url;
     if (!service.image) return '';
     return service.image.url;
   }
+
   const selectedType = tabIndex === 0 ? 'TABLEWARE' : 'CONDIMENT';
   const specificServicesList = filter((s) => s.type === selectedType, servicesList);
+
   return (
-    <div>
+    <>
       <Paper style={{borderRadius: '2px', margin: '14px 10px'}}>
         <Tabs value={tabIndex} onChange={(e, i) => switchTab(i)} style={{ background: 'rgba(0,0,0,0.04)'}}>
           <Tab label={t('tableware')} />
@@ -89,11 +93,11 @@ const ServiceCalls = ({
             </Card>
           ))
           :
-          <div style={{textAlign: 'center', margin: '40px 0 100px 0'}}>
+          <div style={{ textAlign: 'center', margin: '40px 0 100px 0' }}>
             <Typography component="h2" variant="display1" gutterBottom>
               {tabIndex === 0 ? t('services.noTableware') : t('services.noCondiments')}
             </Typography>
-            <div style={{width: 400, margin: '0 auto'}}>
+            <div style={{ width: 400, margin: '0 auto' }}>
               <Typography variant="caption" gutterBottom align="left">
                 <div>{t('services.step1')}</div>
                 <div>{t('services.step2')}</div>
@@ -106,7 +110,7 @@ const ServiceCalls = ({
           <AddServiceComponent serviceType={selectedType} t={t} />
         </TabContainer>
       </Paper>
-    </div>
+    </>
   );
 }
 

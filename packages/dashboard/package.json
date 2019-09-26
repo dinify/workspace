@@ -29,6 +29,7 @@
     "@types/react-redux": "^7.1.2",
     "@types/string": "^0.0.29",
     "connected-react-router": "^6.4.0",
+    "cuid": "^2.1.6",
     "date-fns": "^2.0.0-alpha.7",
     "firebase": "^6.0.2",
     "grid-styled": "4.0.0",
@@ -83,8 +84,8 @@
     "source-map-explorer": "^2.0.1",
     "string": "^3.3.3",
     "styled-components": "^2.0.1",
-    "validator": "8.2.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "validator": "8.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",

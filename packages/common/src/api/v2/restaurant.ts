@@ -127,3 +127,14 @@ export const GetServicesOfRestaurant = ({ restaurantId }: { restaurantId: string
 export const GetLanguagesOfRestaurant = ({ restaurantId }: { restaurantId: string }): Promise<any> => Get({
   path: `restaurant/${restaurantId}/languages`
 });
+
+type CreateServiceBody = {
+	name: string;
+	restaurantId: string;
+	imageId: string;
+	type: string;
+}
+
+export const CreateService = (body: CreateServiceBody): Promise<any> => Post({
+  path: `services`
+}, body);
