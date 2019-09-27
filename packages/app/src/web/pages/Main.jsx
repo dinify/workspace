@@ -5,7 +5,6 @@ import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContai
 import ResponsiveGrid from 'web/components/ResponsiveGrid';
 import Typography from '@material-ui/core/Typography';
 import RestaurantListItem from 'web/components/RestaurantListItem';
-import * as FN from '@dinify/common/dist/lib/FN';
 import { fetchRestaurantsAsync } from 'ducks/restaurant/actions.ts';
 import { getRestaurantsList } from 'ducks/restaurant/selectors';
 
@@ -19,14 +18,16 @@ const Main = ({ restaurantsList, fetchRestaurants }) => {
         <Typography
           style={{ paddingTop: 24 }}
           variant="h5"
-          gutterBottom>
+          gutterBottom
+        >
           Explore nearby places
         </Typography>
         <Typography
           style={{ paddingBottom: 24 }}
           variant="caption"
           color="textSecondary"
-          gutterBottom>
+          gutterBottom
+        >
           more places coming soon, as they join and host their menu on the platform
         </Typography>
         <ResponsiveGrid>

@@ -33,7 +33,7 @@ const Navigation = ({
   checkedInRestaurant,
   ...otherProps
 }) => {
-  const { palette: { type, background: { paper }, divider }} = theme;
+  const { palette: { background: { paper }, divider }} = theme;
   const { t } = useTranslation();
   const getColor = selected => selected ? 'primary' : 'action';
   const tabs = [

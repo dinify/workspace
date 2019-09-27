@@ -16,7 +16,7 @@ import groupBy from 'ramda/es/groupBy';
 import mapObjIndexed from 'ramda/es/mapObjIndexed';
 
 import { languageCountries as languagesArray } from '@dinify/common/dist/lib'
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 import Button from '@material-ui/core/Button';
 import ExpandMore from '@material-ui/icons/ExpandMore';

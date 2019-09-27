@@ -23,7 +23,7 @@ class AddServiceComponent extends React.PureComponent {
       return img.item_type === 'Internal\\Service\\Condiments';
     }, images);
 
-    return (<div>
+    return (<>
       <Label className="center">{t('selectServiceIcon')}</Label>
       <div style={{marginTop: 8}}>
         {filteredImages.map((image) =>
@@ -51,18 +51,18 @@ class AddServiceComponent extends React.PureComponent {
       </div>
       <ServiceForm
         t={t}
-        onSubmit={({ name }) =>
+        onSubmit={({ name }) => {
           createService({
             name,
             restaurantId: selectedRestaurant,
-            imageId: selectedImage || '587334ad-91f4-4179-8bd8-39b0abb1390c',
+            imageId: selectedImage,
             type: serviceType,
             locale: defaultLanguage
-          })
-        }
+          });
+          this.setState({ selectedImage: null });
+        }}
       />
-    </div>
-    );
+    </>);
   }
 }
 

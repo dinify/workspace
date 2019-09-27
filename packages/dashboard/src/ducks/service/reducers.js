@@ -55,6 +55,11 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
+    case 'POST_SERVICE_FAIL': {
+      const tempId = action.initPayload.id;
+      return dissocPath(['all', tempId])(state);
+    }
+
     case firebaseTypes.LOGOUT: {
       return initialState;
     }

@@ -4,6 +4,7 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
+import pick from 'ramda/es/pick';
 
 
 const fetchServicesEpic = (action$, state$) =>
@@ -29,14 +30,24 @@ const createServiceEpic = (action$, state$) =>
   action$.pipe(
     ofType('POST_SERVICE_INIT'),
     mergeMap((action) => {
+
       const restaurantId = state$.value.restaurant.selectedRestaurant;
       const payload = action.payload;
+
+      if (!payload.imageId) {
+        return of(
+          snackbar.show({
+            message: window.i18nInstance.t('Select service icon before submitting'),
+          }),
+          { type: 'POST_SERVICE_FAIL', initPayload: payload }
+        );
+      }
+
       const body = {
-        imageId: payload.imageId,
-        type: payload.type,
-        name: payload.name,
+        ...pick(['imageId', 'type', 'name'], payload),
         restaurantId
       };
+
       return fromPromise(API.CreateService(body)).pipe(
         map((res) => ({
           type: 'POST_SERVICE_DONE',
@@ -52,7 +63,7 @@ const createServiceEpic = (action$, state$) =>
     })
   );
 
-  const onCreateDoneSnackbarEpic = (action$) =>
+const onCreateDoneSnackbarEpic = (action$) =>
   action$.pipe(
     ofType('POST_SERVICE_DONE'),
     mergeMap(() => {

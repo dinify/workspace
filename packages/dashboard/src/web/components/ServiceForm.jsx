@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -11,6 +11,21 @@ const formStyles = () => ({
   }
 })
 
+const validateName = (val) => {
+  if (!val || val.length < 1) return 'Too short';
+  if (val.length > 24) return 'Too long';
+  return undefined;
+}
+
+const TextComponent = ({ meta: { touched, error, warning }, ...props }) => (
+  <>
+    <Text {...props} />
+    {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+  </>
+)
+
+const formName = 'settings/service';
+
 const ServiceForm = ({ handleSubmit, classes, t }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -18,7 +33,8 @@ const ServiceForm = ({ handleSubmit, classes, t }) => {
         <Grid item xs={9}>
         <Field
           name="name"
-          component={Text}
+          component={TextComponent}
+          validate={validateName}
           componentProps={{
             style: {marginTop: 10},
             variant: 'outlined',
@@ -40,6 +56,9 @@ const ServiceForm = ({ handleSubmit, classes, t }) => {
   );
 };
 
+const afterSubmit = (result, dispatch) => dispatch(reset(formName));
+
 export default reduxForm({
-  form: 'settings/service',
+  form: formName,
+  onSubmitSuccess: afterSubmit
 })(withStyles(formStyles)(ServiceForm));

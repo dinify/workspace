@@ -21,6 +21,7 @@ export const selectedServicesList = createSelector(
       (arr) => sort((a, b) => {
         const aName = getT(a.translations, locale);
         const bName = getT(b.translations, locale);
+        if (!aName || !bName) return 1;
         return aName.localeCompare(bName);
       }, arr)
     )(all);

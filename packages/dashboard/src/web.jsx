@@ -21,6 +21,10 @@ const { store, persistor } = configureStore(history);
 
 let language = navigator.language;
 const langCookie = getCookie('language');
+
+if (language.includes('cs')) language = 'cs';
+if (language.includes('en')) language = 'en';
+
 if (langCookie) {
   language = langCookie;
 } else {

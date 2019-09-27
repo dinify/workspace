@@ -35,7 +35,7 @@ import {
   selectFoodAction,
 } from 'ducks/restaurant/actions';
 
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 
 const FoodItem = styled.div`
   position: relative;

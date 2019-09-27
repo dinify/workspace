@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@dinify/common/dist/components/Typography';
+import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
 import { MapToList } from '@dinify/common/dist/lib/FN';
 import { fetchMenuCategoriesInit } from 'ducks/menuCategory/actions';
