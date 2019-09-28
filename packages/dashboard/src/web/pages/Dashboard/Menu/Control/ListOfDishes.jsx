@@ -36,6 +36,7 @@ import {
 } from 'ducks/restaurant/actions';
 
 import Typography from '@material-ui/core/Typography';
+import Translation from 'web/components/Translation';
 
 const FoodItem = styled.div`
   position: relative;
@@ -130,7 +131,7 @@ const SortableItem = SortableElement(
       disabled={!item.published}
       onClick={() => selectFood({ foodId: item.id })}
     >
-      <span>{item.name}</span>
+      <Translation object={item} />
       <BinContainer>
         {!item.published ? (
           <Tooltip placement="left" title={t('delete')}>

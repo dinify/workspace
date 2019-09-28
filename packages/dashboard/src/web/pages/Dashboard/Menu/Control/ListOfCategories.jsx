@@ -21,6 +21,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Text from 'web/components/MaterialInputs/Text';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Translation from 'web/components/Translation';
 
 import {
   updateMenucategoryInitAction,
@@ -132,7 +133,7 @@ const SortableItem = SortableElement(
       disabled={!category.published}
       onClick={() => selectCategory({ categoryId: category.id })}
     >
-      <span>{category.name}</span>
+      <Translation object={category} />
       <BinContainer>
         {!category.published ? (
           <Tooltip placement="left" title={t('delete')}>
