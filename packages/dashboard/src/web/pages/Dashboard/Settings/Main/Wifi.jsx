@@ -54,7 +54,6 @@ const AdapterLink = React.forwardRef((props, ref) => <RouterLink innerRef={ref} 
 
 
 const Wifi = ({ updateWifi, wifi, ssid, password }) => {
-  console.log(wifi);
   const { t } = useTranslation();
   const initialValues = { ssid: '', password: '' };
   if (wifi) {
@@ -75,7 +74,7 @@ const Wifi = ({ updateWifi, wifi, ssid, password }) => {
       <FormBoxBody material>
         <WifiForm onSubmit={onSubmit} initialValues={initialValues} t={t} />
         <div style={{ padding: 16, textAlign: 'center' }}>
-          <Link 
+          <Link
             component={AdapterLink}
             target="_blank"
             to={`/qr/WIFI:S:${ssid};T:WPA2;P:${password};;`}

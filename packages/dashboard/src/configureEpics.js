@@ -4,6 +4,7 @@ import { authEpics as auth } from '@dinify/common/dist/ducks/auth';
 import { reportingEpics as reporting } from '@dinify/common/dist/ducks/reporting';
 
 import { restaurantEpics } from './ducks/restaurant';
+import { menuCategoryEpics } from './ducks/menuCategory';
 import { menuItemEpics } from './ducks/menuItem';
 import { addonEpics } from './ducks/addon';
 import { optionEpics } from './ducks/option';
@@ -16,6 +17,7 @@ const rootEpic = (action$, state$, firebase, ...rest) => {
   const epic = combineEpics(
     ...auth,
     ...restaurantEpics,
+    ...menuCategoryEpics,
     ...menuItemEpics,
     ...translationEpics,
     ...addonEpics,

@@ -107,10 +107,6 @@ export const rmCategoryInitAction = payload => ({
   payload,
 });
 
-export const createMenucategoryInitAction = payload => ({
-  type: 'CREATE_MENUCATEGORY_INIT',
-  payload,
-});
 export const updateMenucategoryInitAction = payload => ({
   type: 'UPDATE_MENUCATEGORY_INIT',
   payload,

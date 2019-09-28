@@ -21,8 +21,8 @@ export default function reducer(state = initialState, action) {
       return assoc('all', categories)(state);
     }
 
-    case 'CREATE_MENUCATEGORY_DONE': {
-      const newCategory = payload.res;
+    case 'POST_MENUCATEGORY_DONE': {
+      const newCategory = payload;
       return assocPath(['all', newCategory.id], newCategory)(state);
     }
 

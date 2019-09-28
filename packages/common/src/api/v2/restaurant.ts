@@ -138,3 +138,13 @@ type CreateServiceBody = {
 export const CreateService = (body: CreateServiceBody): Promise<any> => Post({
   path: `services`
 }, body);
+
+type CreateMenuCategoryBody = {
+  name: string;
+	restaurantId: string;
+	precedence: number;
+}
+
+export const CreateMenuCategory = (body: CreateMenuCategoryBody): Promise<any> => Post({
+  path: `menuCategories`
+}, body);

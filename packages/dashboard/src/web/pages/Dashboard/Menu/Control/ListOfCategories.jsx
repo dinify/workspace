@@ -24,11 +24,14 @@ import CardContent from '@material-ui/core/CardContent';
 
 import {
   updateMenucategoryInitAction,
-  createMenucategoryInitAction,
   deleteMenucategoryInitAction,
   selectCategoryAction,
   reorderCategoriesAction,
 } from 'ducks/restaurant/actions';
+
+import {
+  createMenucategoryInit
+} from 'ducks/menuCategory/actions';
 
 const ToggleContainer = styled.div`
   position: absolute;
@@ -198,8 +201,8 @@ const ListOfCategories = ({
       <Card>
         <CardContent>
           <CreateCategoryForm
-            progress={progressMap['CREATE_MENUCATEGORY']}
-            errorMessage={errorsMap['CREATE_MENUCATEGORY']}
+            progress={progressMap.CREATE_MENUCATEGORY}
+            errorMessage={errorsMap.CREATE_MENUCATEGORY}
             onSubmit={({ name }) => {
               createCategory({
                 name,
@@ -212,8 +215,8 @@ const ListOfCategories = ({
       </Card>
       <SortableList
         distance={1}
-        axis={'y'}
-        lockAxis={'y'}
+        axis="y"
+        lockAxis="y"
         categories={categoriesList}
         onSortEnd={({ oldIndex, newIndex }) => {
           reorderCategories(arrayMove(categoriesList, oldIndex, newIndex));
@@ -238,7 +241,7 @@ export default connect(
   }),
   {
     updateCategory: updateMenucategoryInitAction,
-    createCategory: createMenucategoryInitAction,
+    createCategory: createMenucategoryInit,
     deleteCategory: deleteMenucategoryInitAction,
     reorderCategories: reorderCategoriesAction,
     selectCategory: selectCategoryAction,
