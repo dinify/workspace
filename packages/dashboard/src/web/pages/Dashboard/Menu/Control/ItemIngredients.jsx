@@ -14,6 +14,7 @@ import {
 import { listOfIngredients } from 'ducks/ingredient/selectors';
 import { fetchIngredients } from 'ducks/ingredient/actions';
 import ListOfCustomizations from './ListOfCustomizations';
+import { getT } from '@dinify/common/src/lib/translation.ts';
 
 const Excludability = ({ selectedFoodId, setIngredientExcludability }) => ({ ingredient }) => {
   const excludable = ingredient.pivot ? ingredient.pivot.excludable : true;
@@ -49,22 +50,23 @@ const ItemIngredients = ({
   assignIngredient,
   unassignIngredient,
   setIngredientExcludability,
+  defaultLang,
   t
 }) => {
   const shouldLoad = ingredientsList.length < 1 && !ingredientsLoaded;
   useEffect(() => {
-    if (shouldLoad) fetchIngredients()
+    if (shouldLoad) fetchIngredients();
   }, []);
   const selectedFood = menuItems[selectedFoodId];
   if (!selectedFood) {
     return <div />;
   }
-  const assignedIngredients = selectedFood.ingredients || [];
+  const assignedIngredients = selectedFood.menuIngredients || [];
   const assignedIngredientsIds = assignedIngredients.map(o => o.id);
 
   const dataSource = ingredientsList
     .filter(o => !assignedIngredientsIds.includes(o.id))
-    .map(o => ({ value: o.id, label: o.name }));
+    .map(o => ({ value: o.id, label: getT(o.translations, defaultLang)}));
     
   return (
     <div style={{ marginBottom: 30 }}>
@@ -102,6 +104,7 @@ export default connect(
     ingredientsList: listOfIngredients(state),
     ingredientsLoaded: state.ingredient.loaded,
     menuItems: state.menuItem.all,
+    defaultLang: state.restaurant.defaultLanguage
   }),
   {
     fetchIngredients,
@@ -110,3 +113,4 @@ export default connect(
     setIngredientExcludability
   },
 )(ItemIngredients);
+

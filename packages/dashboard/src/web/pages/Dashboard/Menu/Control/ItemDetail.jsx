@@ -15,6 +15,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { CardLabel } from 'web/components/styled/FormBox';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
+import { getT } from '@dinify/common/src/lib/translation.ts';
 
 import ItemIngredients from './ItemIngredients';
 import ItemAddons from './ItemAddons';
@@ -95,13 +96,16 @@ let ItemDetail = ({
   uploadItemImage,
   menuItems,
   classes,
-  fetchMenuitem
+  fetchMenuitem,
+  defaultLang
 }) => {
   const { t } = useTranslation();
   const selectedFood = menuItems[selectedFoodId];
+
   useEffect(() => {
     fetchMenuitem({ id: selectedFoodId })
   }, [selectedFoodId]);
+
   if (!selectedFood) return <div />;
   let foodImageUrl = '';
   if (selectedFood.images) {
@@ -110,13 +114,14 @@ let ItemDetail = ({
     );
     if (images.length > 0) foodImageUrl = images[0].url;
   }
+  const menuItemName = getT(selectedFood.translations, defaultLang);
   return (
     <div>
     <Card style={{overflow: 'inherit', marginBottom: 50}}>
       <CardMedia
         className={classes.media}
         image={foodImageUrl}
-        title={selectedFood.name}
+        title={menuItemName}
       >
         <MuiThemeProvider theme={theme}>
           <ItemNutrition selectedFoodId={selectedFoodId} />
@@ -150,19 +155,19 @@ let ItemDetail = ({
               price: {
                 amount: Number.parseFloat(fields.price).toFixed(0),
                 currency: 'CZK',
-              },
+               },
             });
           }}
           initialValues={{
-            name: selectedFood.name,
-            description: selectedFood.description || '',
+            name: menuItemName,
+            description: getT(selectedFood.translations, defaultLang, 'description'),
             price: Number.parseFloat(selectedFood.price.amount).toFixed(0),
           }}
         />
       </CardContent>
 
       <CardContent>
-        <CardLabel>{selectedFood.name} {t('nav.customizations')}</CardLabel>
+        <CardLabel>{menuItemName} {t('nav.customizations')}</CardLabel>
         <ItemIngredients t={t} selectedFoodId={selectedFoodId} />
         <ItemOptions t={t} selectedFoodId={selectedFoodId} />
         <ItemAddons t={t} selectedFoodId={selectedFoodId} />
@@ -174,9 +179,9 @@ let ItemDetail = ({
 
 ItemDetail = withStyles(styles)(ItemDetail);
 
-export default connect(
-  null,
-  {
+export default connect((state) => ({
+  defaultLang: state.restaurant.defaultLanguage
+  }), {
     fetchMenuitem: fetchMenuitemInit,
     updateFood: updateMenuitemInit,
     uploadItemImage: uploadItemImageInit,

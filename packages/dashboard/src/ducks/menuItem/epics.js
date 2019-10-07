@@ -1,5 +1,5 @@
-import { of } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { from as fromPromise, of } from 'rxjs';
+import { mergeMap, catchError, map } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import findIndex from 'ramda/es/findIndex';
 import propEq from 'ramda/es/propEq';
@@ -8,8 +8,29 @@ import filter from 'ramda/es/filter';
 import assoc from 'ramda/es/assoc';
 
 import assocPath from 'ramda/es/assocPath';
-import { ListToMap } from '@dinify/common/dist/lib/FN';
+import { ListToMap, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
+import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import * as types from './types';
+
+const fetchMenuItemEpic = (action$) =>
+  action$.pipe(
+    ofType('GET_MENUITEM_INIT'),
+    mergeMap((action) => {
+      const { id } = action.payload;
+
+      return fromPromise(API.GetMenuItem({ menuItemId: id })).pipe(
+        map((res) => ({
+          type: 'GET_MENUITEM_DONE',
+          payload: res
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: 'GET_MENUITEM_FAIL',
+          initAction: action
+        }))
+      );
+    })
+  );
 
 export const assignIngredientEpic = (action$, state$) => 
   action$.pipe(
@@ -219,6 +240,7 @@ export const unassignOptionEpic = (action$, state$) =>
   )
 
 export default [
+  fetchMenuItemEpic,
   assignIngredientEpic,
   unassignIngredientEpic,
   setIngredientExcludabilityEpic,

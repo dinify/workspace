@@ -31,7 +31,7 @@ const getCartEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(fetchCartAsync.request)),
     switchMap((action) => from(API.GetCart()).pipe(
-      filter((res: any) => !!res && !!res.item),
+      filter((res: any) => !!res && !!res.items),
       rxMap((res: CartResponse) => {
 
         // const orderItems: OrderItem[] = res.items;

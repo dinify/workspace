@@ -1,7 +1,7 @@
 import * as types from './types';
 
 export const fetchMenuitemInit = payload => ({
-  type: types.FETCH_MENUITEM_INIT,
+  type: 'GET_MENUITEM_INIT',
   payload,
 });
 

@@ -11,20 +11,6 @@ const initialState = {
   backup: {},
 };
 
-const convertItem = (item) => {
-  const newItem = item;
-  if (newItem.ingredients && newItem.ingredients instanceof Object) {
-    newItem.ingredients = MapToList(newItem.ingredients);
-  }
-  if (newItem.addons && newItem.addons instanceof Object) {
-    newItem.addons = MapToList(newItem.addons);
-  }
-  if (newItem.options && newItem.options instanceof Object) {
-    newItem.options = MapToList(newItem.options);
-  }
-  return newItem;
-}
-
 export default function reducer(state = initialState, action) {
   const { type, payload } = action;
 
@@ -42,10 +28,10 @@ export default function reducer(state = initialState, action) {
       return newState;
     }
 
-    case types.FETCH_MENUITEM_DONE: {
-      const { res } = payload;
+    case 'GET_MENUITEM_DONE': {
+      const res = payload;
       if (!res) return state;
-      return assocPath(['all', res.id], convertItem(res))(state);
+      return assocPath(['all', res.id], res)(state);
     }
 
     case types.CREATE_MENUITEM_DONE: {
