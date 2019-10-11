@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { openDialog } from 'ducks/ui/actions';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
@@ -109,8 +109,7 @@ export default connect(
   (state) => ({
     user: state.firebase.auth,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
-    bottomBarOpen: getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0,
-    location: state.router.location
+    bottomBarOpen: getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0
   }),
   {
     openDialog,
@@ -118,5 +117,5 @@ export default connect(
     fetchCart: fetchCartAsync.request,
     fetchBill: fetchBillAsync.request
   }
-)(withRoot(App));
+)(withRouter(withRoot(App)));
 

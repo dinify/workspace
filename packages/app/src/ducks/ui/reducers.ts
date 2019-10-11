@@ -2,23 +2,42 @@ import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import * as types from './types';
 import wsTypes from '../../websockets/types';
+import { getDetectedLocale } from '@dinify/common/src/lib/i18n';
+import { AnyAction } from 'redux';
+import { Locale } from '@phensley/cldr';
 
-const initialState = {
+export type ThemeType = 'light'|'dark';
+export interface UiState {
+  progressMap: any,
+  errorsMap: { [key: string]: ErrorMessage },
+  dialogs: any,
+  transactionStatus: any,
+  bottomBarOpen: boolean,
+  theme: ThemeType,
+  locale: Locale
+};
+export interface ErrorMessage {
+  message: string,
+  code: string
+}
+
+const initialState: UiState = {
   progressMap: {},
   errorsMap: {},
   dialogs: {},
   transactionStatus: null,
   bottomBarOpen: false,
-  theme: 'light'
+  theme: 'light',
+  locale: getDetectedLocale().locale
 };
 
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state: UiState = initialState, action: AnyAction): UiState {
   if (action.type.includes('_FAIL')) {
     const theMessage = action.payload;
     const theCode = action.payload;
     if (theMessage) {
-      state = assocPath(['errorsMap', action.type], {
+      state = assocPath<ErrorMessage, UiState>(['errorsMap', action.type], {
         message: theMessage,
         code: theCode,
       })(state);
@@ -26,7 +45,7 @@ export default function reducer(state = initialState, action) {
   }
   switch (action.type) {
     case 'dinify/transaction/INIT_TRANSACTION_DONE': {
-      return assocPath(['transactionStatus'], action.payload.status)(state);
+      return assocPath<any, UiState>(['transactionStatus'], action.payload.status)(state);
     }
 
     case 'dinify/transaction/GET_BILL_DONE':
@@ -34,9 +53,13 @@ export default function reducer(state = initialState, action) {
       // TODO: IF the bill item count or cart item count > 0
       return assoc('bottomBarOpen', action.payload.orderItemCount > 0)(state);
     }
+    
+    case types.SET_LOCALE: {
+      return assoc('locale', action.payload)(state);
+    }
 
     case wsTypes.CONFIRMED_PAYMENT: {
-      return assocPath(['transactionStatus'], action.payload.transaction.status)(state);
+      return assocPath<any, UiState>(['transactionStatus'], action.payload.transaction.status)(state);
     }
 
     case types.DIALOG_OPEN: {

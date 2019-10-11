@@ -6,16 +6,17 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { createBrowserHistory } from 'history';
 import { ConnectedRouter } from 'connected-react-router';
 import { getOrderItemCount as getCartCount } from './ducks/cart/selectors';
-import App from 'web/App';
+import App from './web/App';
 import { SnackbarProvider } from 'material-ui-snackbar-redux';
-import i18n from '@dinify/common/dist/i18n'
-import { getCookie } from '@dinify/common/dist/lib/FN';
-import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import i18n from '@dinify/common/src/i18n';
+import { getCookie } from '@dinify/common/src/lib/FN';
+import { ReactReduxFirebaseProvider, ReactReduxFirebaseProviderProps, ReactReduxFirebaseConfig } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-import configureStore from './store/index.ts';
+import configureStore from './store';
 import websockets from './websockets';
+import { RootState } from 'typesafe-actions';
 
 //  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 //  import HTML5Backend from 'react-dnd-html5-backend'
@@ -43,24 +44,13 @@ export const i18nInstance = i18n({
 websockets(store, i18nInstance);
 
 // react-redux-firebase config
-const rrfConfig = {
+const rrfConfig: Partial<ReactReduxFirebaseConfig> = {
   userProfile: 'profiles',
   updateProfileOnLogin: true,
-  useFirestoreForProfile: true,
-  profileFactory: (userData, profileData) => {
-    // make sure default profile values are populated
-    return {
-      ...profileData,
-      language: {
-        primary: navigator.language,
-        other: [],
-        ...profileData.language
-      }
-    };
-  }
+  useFirestoreForProfile: true
 };
 
-const rrfProps = {
+const rrfProps: ReactReduxFirebaseProviderProps = {
   firebase,
   config: rrfConfig,
   dispatch: store.dispatch,
@@ -68,7 +58,7 @@ const rrfProps = {
 };
 
 const SnackbarProviderWrapper = connect(
-  (state) => ({
+  (state: RootState) => ({
     cartItemCount: getCartCount(state.cart),
     billItemCount: state.transaction.orderItemsCount
   })
@@ -77,7 +67,7 @@ const SnackbarProviderWrapper = connect(
   billItemCount,
   children, 
   ...props
-}) => {
+}: any) => {
   const bottomBarVisible = cartItemCount > 0 || billItemCount > 0;
   const snackbarProps = {
     autoHideDuration: 5000,
@@ -103,7 +93,7 @@ ReactDOM.render(
       <ReactReduxFirebaseProvider {...rrfProps}>
         <SnackbarProviderWrapper>
           <ConnectedRouter history={history}>
-            <App history={history} />
+            <App />
           </ConnectedRouter>
         </SnackbarProviderWrapper>
       </ReactReduxFirebaseProvider>

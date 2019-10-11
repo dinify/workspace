@@ -14,3 +14,8 @@ export const toggleTheme = (e) => ({
   type: types.TOGGLE_THEME,
   payload: e
 })
+
+export const setLocale = (e) => ({
+  type: types.SET_LOCALE,
+  payload: e
+})
