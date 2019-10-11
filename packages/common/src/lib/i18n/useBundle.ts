@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Locale } from '@phensley/cldr';
-import { English, framework } from '.';
-import { useStore } from 'react-redux';
+import { English, framework, useLocaleState } from '.';
 
-export default (locale?: Locale) => {
-  const state = useStore().getState();
-  const l = locale ? locale : state.locale;
+export default (defaultLocale?: Locale) => {
+  const locale = useLocaleState(defaultLocale);
   const [cldr, setCldr] = useState(English);
   useEffect(() => {
-    framework.getAsync(l).then(cldr => {
+    framework.getAsync(locale).then(cldr => {
       setCldr(cldr);
     });
-  }, [l]);
+  }, [locale]);
   return cldr;
 };

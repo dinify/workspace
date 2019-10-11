@@ -7,7 +7,7 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
 import queryString from 'query-string';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 import LogoText from '../../icons/LogoText';
 
@@ -168,7 +168,7 @@ export class SignInForm extends React.Component {
 
     return (
       <>
-    {dialog !== null && <AccountExistsDialog {...dialog} open={dialog !== null} onClose={this.handleClose}/>}
+        {dialog !== null && <AccountExistsDialog {...dialog} open={dialog !== null} onClose={this.handleClose}/>}
         <form
           onSubmit={handleSubmit(submitFc)}
           style={{height: 'calc(100vh - 112px)'}}

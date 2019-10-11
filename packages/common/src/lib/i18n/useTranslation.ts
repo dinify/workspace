@@ -6,6 +6,7 @@ import * as util from '../util';
 import useBundle from "./useBundle";
 import { LRU } from "@phensley/cldr-utils";
 import { useStore } from "react-redux";
+import { useLocaleState, Namespace, namespace } from ".";
 
 const staticRoot = 'https://static.dinify.app';
 
@@ -42,11 +43,18 @@ const i18nextFormatter = (value: any, format: string, cldr: CLDR): any => {
 const cache = new LRU(8);
 const memcache = {};
 
+interface Params {
+  locale?: Locale, 
+  namespace?: Exclude<Namespace, 'common'>
+}
+
 // useTranslation hook
-export default (locale?: Locale) => {
-  const state = useStore().getState();
+export default (defaults: Params = {}) => {
+  const locale = useLocaleState(defaults.locale);
+  const ns = defaults.namespace || namespace;
+  const namespaces = ns === 'common' ? ['common'] : ['common', ns];
   const cldr = useBundle(locale);
-  const language = (locale ? locale : state.locale).tag.language();
+  const language = locale.tag.language();
   const cacheKey = `translation-${language}`;
   const cachedValue = cache.get(cacheKey);
   const [translations, setTranslations] = useState<any>({
@@ -56,12 +64,26 @@ export default (locale?: Locale) => {
   
   useEffect(() => {
     if (!cachedValue) {
-      wretch(`${staticRoot}/i18n/translations/${language}/app`)
-        .get()
-        .json(json => {
-          cache.set(cacheKey, json);
-          setTranslations({ language, json });
+      Promise.all(namespaces.map(cns => {
+        return new Promise((resolve, reject) => {
+          wretch(`${staticRoot}/i18n/translations/${language}/${cns}`)
+            .get()
+            .json(json => {
+              resolve(json);
+            })
+            .catch(err => reject(err));
         });
+      })).then(values => {
+        let aggr: any = {};
+        values.forEach(v => {
+          // TODO: some keys may get overwritten 
+          // (if overlap between keys in two different namespaces)
+          aggr = {...aggr, ...v};
+        });
+        console.log(aggr);
+        cache.set(cacheKey, aggr);
+        setTranslations({ language, aggr });
+      }).catch(err => console.log(err));
     }
   }, [language]);
   const t = (path: string[]|string, data: any = {}) => {

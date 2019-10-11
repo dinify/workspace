@@ -13,6 +13,7 @@ import { getCookie } from '@dinify/common/src/lib/FN';
 import { ReactReduxFirebaseProvider, ReactReduxFirebaseProviderProps, ReactReduxFirebaseConfig } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import { setNamespace as setTranslationsNamespace } from '@dinify/common/src/lib/i18n';
 
 import configureStore from './store';
 import websockets from './websockets';
@@ -21,6 +22,8 @@ import { RootState } from 'typesafe-actions';
 //  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 //  import HTML5Backend from 'react-dnd-html5-backend'
 //  import { DragDropContextProvider } from 'react-dnd'
+
+setTranslationsNamespace('app');
 
 const history = createBrowserHistory();
 const { store, persistor } = configureStore(history);

@@ -1,9 +1,10 @@
-import { CLDRFramework, LocaleMatcher, LocaleMatch } from "@phensley/cldr";
+import { CLDRFramework, LocaleMatcher, LocaleMatch, Locale } from "@phensley/cldr";
 // Import default language directly so it's always available
 import EnglishPack from '@phensley/cldr/packs/en.json';
 import localizedLanguagesResource from './localized-languages.json';
 import defaultLanguagesResource from './default-languages.json';
 import wretch from 'wretch';
+import { useStore } from "react-redux";
 
 // IDEA: use ICU compiled to webassembly !
 // or use @phensley/cldr
@@ -64,6 +65,18 @@ export const getRegionsForLanguage = (language: string): string[] => allLocales
 export const localeMatcher = new LocaleMatcher(supportedLocales);
 
 export const English = framework.get('en');
+
+export const useLocaleState = (defaultLocale?: Locale) => {
+  const state = useStore().getState();
+  return state.locale || state.ui.locale || defaultLocale;
+}
+
+export type Namespace = 'app'|'dashboard'|'landing'|'waiterboard'|'common';
+
+export let namespace: Namespace = 'common';
+export const setNamespace = (ns: Exclude<Namespace, 'common'>) => {
+  namespace = ns;
+};
 
 export { default as useBundle } from './useBundle';
 export { default as useTranslation } from './useTranslation';
