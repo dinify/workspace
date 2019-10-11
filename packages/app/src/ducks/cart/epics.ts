@@ -31,7 +31,7 @@ const getCartEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(fetchCartAsync.request)),
     switchMap((action) => from(API.GetCart()).pipe(
-      filter((res: any) => !!res && !!res.item),
+      filter((res: any) => !!res && !!res.items),
       rxMap((res: CartResponse) => {
 
         // const orderItems: OrderItem[] = res.items;
@@ -144,7 +144,7 @@ const orderEpic: Epic = (action$) =>
           orderAsync.success(res),
           fetchCartAsync.request(),
           transactionActions.fetchBillAsync.request(),
-          uiActions.closeDialog('cart-page'),
+          uiActions.closeDialogAction('cart-page'),
           snackbar.show({
             message: i18nInstance.t('successMessages.order-has-been-placed')
           })

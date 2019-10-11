@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { getClaims } from '@dinify/common/dist/ducks/auth/selectors';
 import { withStateHandlers } from 'recompose';
 import { languageCountries as languages } from '@dinify/common/dist/lib';
-import { toggleTheme as toggleThemeAction } from 'ducks/ui/actions';
+import { toggleThemeAction } from 'ducks/ui/actions';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import OpenInNew from '@material-ui/icons/OpenInNewRounded';
 import ArrowUpward from '@material-ui/icons/ArrowUpwardRounded';

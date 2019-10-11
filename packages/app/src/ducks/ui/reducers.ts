@@ -1,16 +1,17 @@
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
-import * as types from './types';
 import wsTypes from '../../websockets/types';
 import { getDetectedLocale } from '@dinify/common/src/lib/i18n';
 import { AnyAction } from 'redux';
 import { Locale } from '@phensley/cldr';
+import { getType } from 'typesafe-actions';
+import * as actions from './actions';
 
 export type ThemeType = 'light'|'dark';
 export interface UiState {
   progressMap: any,
   errorsMap: { [key: string]: ErrorMessage },
-  dialogs: any,
+  dialogs: { [key: string]: boolean },
   transactionStatus: any,
   bottomBarOpen: boolean,
   theme: ThemeType,
@@ -54,7 +55,7 @@ export default function reducer(state: UiState = initialState, action: AnyAction
       return assoc('bottomBarOpen', action.payload.orderItemCount > 0)(state);
     }
     
-    case types.SET_LOCALE: {
+    case getType(actions.setLocaleAction): {
       return assoc('locale', action.payload)(state);
     }
 
@@ -62,13 +63,13 @@ export default function reducer(state: UiState = initialState, action: AnyAction
       return assocPath<any, UiState>(['transactionStatus'], action.payload.transaction.status)(state);
     }
 
-    case types.DIALOG_OPEN: {
-      return assoc('dialogs', { [action.payload]: true })(state);
+    case getType(actions.openDialogAction): {
+      return assocPath<boolean, UiState>(['dialogs', action.payload], true)(state);
     }
-    case types.DIALOG_CLOSE: {
+    case getType(actions.closeDialogAction): {
       return assoc('dialogs', {})(state);
     }
-    case types.TOGGLE_THEME: {
+    case getType(actions.toggleThemeAction): {
       return assoc('theme', state.theme === 'dark' ? 'light' : 'dark')(state);
     }
     case 'persist/REHYDRATE': {
