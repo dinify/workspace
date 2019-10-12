@@ -3,7 +3,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FacebookLogo from '../icons/FacebookLogo';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../lib/i18n';
 
 const styles = theme => ({
   leftGutter: {

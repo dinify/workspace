@@ -57,7 +57,7 @@ export default (defaults: Params = {}) => {
   const language = locale.tag.language();
   const cacheKey = `translation-${language}`;
   const cachedValue = cache.get(cacheKey);
-  const [translations, setTranslations] = useState<any>({
+  const [translations, setTranslations] = useState({
     language,
     json: cachedValue
   });

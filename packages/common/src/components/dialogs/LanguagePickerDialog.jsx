@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../../lib/i18n';
 import { languageCountries as languageCountriesUnlocalized } from '../../lib';
 import defaultLanguages from '../../lib/default-languages.json';
 import match from 'autosuggest-highlight/umd/match';
