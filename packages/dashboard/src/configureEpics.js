@@ -6,7 +6,7 @@ import { reportingEpics as reporting } from '@dinify/common/dist/ducks/reporting
 import { restaurantEpics } from './ducks/restaurant';
 import menuCategoryEpics from './ducks/menuCategory/epics.ts';
 import menuItemEpics from './ducks/menuItem/epics';
-import { addonEpics } from './ducks/addon';
+import addonEpics from './ducks/addon/epics';
 import { optionEpics } from './ducks/option';
 import ingredientEpics from './ducks/ingredient/epics.ts';
 import serviceEpics from './ducks/service/epics';

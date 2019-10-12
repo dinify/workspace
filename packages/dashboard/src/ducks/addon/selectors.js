@@ -7,7 +7,7 @@ export const listOfAddons = createSelector(
   allAddons,
   (all) => {
     return MapToList(all).sort((a, b) =>
-      a.name.localeCompare(b.name),
+      a.id.localeCompare(b.id),
     );
   }
 );

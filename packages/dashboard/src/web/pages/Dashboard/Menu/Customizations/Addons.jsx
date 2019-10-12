@@ -19,8 +19,9 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 
 import Text from 'web/components/MaterialInputs/Text';
+import { getT } from '@dinify/common/src/lib/translation.ts';
 
-import { fetchAddons, createAddonInit, removeAddonInit } from 'ducks/addon/actions';
+import { fetchAddonsAsync, createAddonAsync, removeAddonInit } from 'ducks/addon/actions.ts';
 import { listOfAddons } from 'ducks/addon/selectors';
 
 let AddAddonForm = ({ t, handleSubmit, progress, errorMessage  }) => {
@@ -83,6 +84,7 @@ const Addons = ({
   fetchAddons,
   progressMap,
   errorsMap,
+  lang
 }) => {
   const { t } = useTranslation();
   
@@ -98,8 +100,8 @@ const Addons = ({
         <CardContent>
           <AddAddonForm
             t={t}
-            progress={progressMap['CREATE_ADDON']}
-            errorMessage={errorsMap['CREATE_ADDON']}
+            progress={progressMap.CREATE_ADDON}
+            errorMessage={errorsMap.CREATE_ADDON}
             onSubmit={({ name, price }) => createAddon({
               name,
               price,
@@ -112,7 +114,7 @@ const Addons = ({
         {addonsList.map((addon) => (
           <div key={addon.id}>
             <ListItem dense style={styles.ListItem}>
-              <ListItemText primary={addon.name} />
+              <ListItemText primary={getT(addon.translations, lang)} />
               {addon.price.amount} Kč
               <Tooltip placement="left" title={t('delete')}>
                 <IconButton
@@ -131,17 +133,16 @@ const Addons = ({
 };
 
 export default connect(
-  state => {
-    return {
-      addonsList: listOfAddons(state),
-      adddonsLoaded: state.addon.loaded,
-      progressMap: state.ui.progressMap,
-      errorsMap: state.ui.errorsMap,
-    }
-  },
+  state => ({
+    addonsList: listOfAddons(state),
+    adddonsLoaded: state.addon.loaded,
+    progressMap: state.ui.progressMap,
+    errorsMap: state.ui.errorsMap,
+    lang: state.restaurant.defaultLanguage
+  }),
   {
-    createAddon: createAddonInit,
+    fetchAddons: fetchAddonsAsync.request,
+    createAddon: createAddonAsync.request,
     removeAddon: removeAddonInit,
-    fetchAddons
   },
 )(Addons);

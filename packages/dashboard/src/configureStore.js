@@ -18,7 +18,7 @@ import menuCategory from 'ducks/menuCategory/reducers.ts';
 import menuItem from 'ducks/menuItem';
 import option from 'ducks/option';
 import ingredient from 'ducks/ingredient/reducers';
-import addon from 'ducks/addon';
+import addon from 'ducks/addon/reducers';
 import service from 'ducks/service';
 import translation from 'ducks/translation';
 

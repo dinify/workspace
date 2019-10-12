@@ -4,7 +4,7 @@ import { Label } from 'web/components/styled/FormBox';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 
 import { assignAddon, unassignAddon } from 'ducks/menuItem/actions';
-import { fetchAddons } from 'ducks/addon/actions';
+import { fetchAddonsAsync } from 'ducks/addon/actions';
 import { listOfAddons } from 'ducks/addon/selectors';
 
 import ListOfCustomizations from './ListOfCustomizations';
@@ -71,7 +71,7 @@ export default connect(
     menuItems: state.menuItem.all,
   }),
   {
-    fetchAddons,
+    fetchAddons: fetchAddonsAsync.request,
     assignAddon,
     unassignAddon,
   },

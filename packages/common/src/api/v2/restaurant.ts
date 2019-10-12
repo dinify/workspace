@@ -18,18 +18,6 @@ export const GetMenuCategoriesOfSubdomain = ({ subdomain }: any) => Get({
   path: `restaurant/subdomain/${subdomain}/menu/categories`
 });
 
-export const GetMenuItem = ({ menuItemId }: any): Promise<any> => Get({
-  path: `menu/item/${menuItemId}`
-});
-
-export const GetMenuCategories = ({ restaurantId }: any): Promise<any> => Get({
-  path: `restaurant/${restaurantId}/menuCategories`
-});
-
-export const GetRestaurantIngredients = ({ restaurantId }: any): Promise<any> => Get({
-  path: `restaurants/${restaurantId}/ingredients`
-});
-
 export const GetSeatsOfWaiterboard = ({ waiterboardId }: any): Promise<any> => Get({
   path: `waiterboard/${waiterboardId}/seats`
 });
@@ -138,21 +126,41 @@ export const CreateService = (body: CreateServiceBody): Promise<any> => Post({
   path: `services`
 }, body);
 
+export const GetMenuCategories = ({ restaurantId }: any): Promise<any> => Get({
+  path: `restaurant/${restaurantId}/menuCategories`
+});
+
 export const CreateMenuCategory = (body: any): Promise<any> => Post({
   path: `menuCategories`
 }, body);
+
+export const GetMenuItem = ({ menuItemId }: any): Promise<any> => Get({
+  path: `menu/item/${menuItemId}`
+});
 
 export const CreateMenuItem = (body: any): Promise<any> => Post({
   path: `menuItems`
 }, body);
 
+export const GetRestaurantIngredients = ({ restaurantId }: any): Promise<any> => Get({
+  path: `restaurants/${restaurantId}/ingredients`
+});
+
 export const CreateIngredient = (body: any): Promise<any> => Post({
   path: `ingredients`
 }, body);
 
+export const GetRestaurantAddons = ({ restaurantId }: any): Promise<any> => Get({
+  path: `restaurants/${restaurantId}/addons`
+});
+
 export const CreateAddon = (body: any): Promise<any> => Post({
   path: `addons`
 }, body);
+
+export const GetRestaurantOptions = ({ restaurantId }: any): Promise<any> => Get({
+  path: `restaurants/${restaurantId}/options`
+});
 
 export const CreateOption = (body: any): Promise<any> => Post({
   path: `options`
