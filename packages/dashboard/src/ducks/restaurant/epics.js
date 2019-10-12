@@ -143,8 +143,8 @@ const editImageEpic = (action$, state$) =>
     mergeMap((action) => {
       const { payload: { res } } = action;
       const { id } = res;
-      const selectRestaurant = state$.value.restaurant.selectRestaurant;
-      const images = state$.value.restaurant.all[selectRestaurant].images;
+      const selectedRestaurant = state$.value.restaurant.selectedRestaurant;
+      const images = state$.value.restaurant.all[selectedRestaurant].images;
       const maxPrecedence = sort((a, b) => b.precedence - a.precedence)(
         values(images),
       )[0].precedence;

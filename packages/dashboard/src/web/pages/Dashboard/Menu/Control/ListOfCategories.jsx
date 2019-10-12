@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import styled from 'styled-components';
@@ -27,12 +27,14 @@ import {
   updateMenucategoryInitAction,
   deleteMenucategoryInitAction,
   selectCategoryAction,
-  reorderCategoriesAction,
+  reorderCategoriesAction
 } from 'ducks/restaurant/actions';
 
 import {
-  createMenucategoryInit
-} from 'ducks/menuCategory/actions';
+  fetchMenuCategoriesAsync,
+  createMenuCategoryAsync
+} from 'ducks/menuCategory/actions.ts';
+import { relevantCategoriesList } from 'ducks/menuCategory/selectors';
 
 const ToggleContainer = styled.div`
   position: absolute;
@@ -60,8 +62,7 @@ const CategoryItem = styled.div`
   margin-top: 10px;
   font-weight: 300;
   background-color: ${p => {
-    if (p.disabled)
-      return p.selected ? 'rgb(30, 30, 50)' : '#7899b2';
+    if (p.disabled) return p.selected ? 'rgb(30, 30, 50)' : '#7899b2';
     return p.selected ? 'rgb(0, 20, 50)' : 'rgb(53, 75, 92)';
   }};
   font-size: 12px;
@@ -115,6 +116,7 @@ let CreateCategoryForm = ({ handleSubmit, progress, errorMessage }) => {
     </form>
   );
 };
+
 CreateCategoryForm = reduxForm({
   form: 'menu/createCategory',
 })(CreateCategoryForm);
@@ -186,6 +188,7 @@ const SortableList = SortableContainer(({ categories, deps }) => {
 });
 
 const ListOfCategories = ({
+  fetchCategories,
   categoriesList,
   selectedCategoryId,
   createCategory,
@@ -197,6 +200,11 @@ const ListOfCategories = ({
   errorsMap,
   lang
 }) => {
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   return (
     <div>
       <Card>
@@ -238,11 +246,13 @@ export default connect(
   state => ({
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
-    lang: state.restaurant.defaultLanguage
+    lang: state.restaurant.defaultLanguage,
+    categoriesList: relevantCategoriesList(state)
   }),
   {
+    fetchCategories: fetchMenuCategoriesAsync.request,
+    createCategory: createMenuCategoryAsync.request,
     updateCategory: updateMenucategoryInitAction,
-    createCategory: createMenucategoryInit,
     deleteCategory: deleteMenucategoryInitAction,
     reorderCategories: reorderCategoriesAction,
     selectCategory: selectCategoryAction,

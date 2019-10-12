@@ -1,17 +1,24 @@
+import {
+  createAsyncAction
+} from 'typesafe-actions';
 import * as types from './types';
 
-export const fetchMenuitemInit = payload => ({
-  type: 'GET_MENUITEM_INIT',
-  payload,
-});
+const p = 'dinify/menuItem';
+
+export const fetchMenuItemAsync = createAsyncAction(
+  `${p}/GET_ITEM_INIT`,
+  `${p}/GET_ITEM_DONE`,
+  `${p}/GET_ITEM_FAIL`
+)();
+
+export const createMenuItemAsync = createAsyncAction(
+  `${p}/POST_ITEM_INIT`,
+  `${p}/POST_ITEM_DONE`,
+  `${p}/POST_ITEM_FAIL`
+)();
 
 export const updateMenuitemInit = payload => ({
   type: types.UPDATE_MENUITEM_INIT,
-  payload,
-});
-
-export const createMenuitemInit = payload => ({
-  type: types.CREATE_MENUITEM_INIT,
   payload,
 });
 

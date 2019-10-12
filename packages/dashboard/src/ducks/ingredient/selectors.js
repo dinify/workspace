@@ -7,7 +7,7 @@ export const listOfIngredients = createSelector(
   allIngredients,
   (all) => {
     return MapToList(all).sort((a, b) =>
-      a.name.localeCompare(b.name),
+      a.id.localeCompare(b.id),
     );
   }
 );

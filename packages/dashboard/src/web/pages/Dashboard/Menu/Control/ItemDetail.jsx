@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as FN from '@dinify/common/dist/lib/FN';
 import Dropzone from 'react-dropzone';
-import { fetchMenuitemInit, updateMenuitemInit, uploadItemImageInit } from 'ducks/menuItem/actions';
+import { fetchMenuItemAsync, updateMenuitemInit, uploadItemImageInit } from 'ducks/menuItem/actions';
 import Progress from 'web/components/Progress';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@material-ui/core/Button';
@@ -182,7 +182,7 @@ ItemDetail = withStyles(styles)(ItemDetail);
 export default connect((state) => ({
   defaultLang: state.restaurant.defaultLanguage
   }), {
-    fetchMenuitem: fetchMenuitemInit,
+    fetchMenuitem: fetchMenuItemAsync.request,
     updateFood: updateMenuitemInit,
     uploadItemImage: uploadItemImageInit,
   },

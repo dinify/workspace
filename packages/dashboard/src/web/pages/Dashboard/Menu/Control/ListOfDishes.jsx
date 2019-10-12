@@ -8,8 +8,6 @@ import {
   arrayMove,
 } from 'react-sortable-hoc';
 import { useTranslation } from 'react-i18next';
-import { MapToList } from '@dinify/common/dist/lib/FN';
-import filter from 'ramda/es/filter';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -25,8 +23,10 @@ import CardContent from '@material-ui/core/CardContent';
 
 import IconButton from '@material-ui/core/IconButton';
 
+import { getT } from '@dinify/common/src/lib/translation.ts';
+
 import {
-  createMenuitemInit,
+  createMenuItemAsync,
   updateMenuitemInit,
   removeMenuitemInit,
   reorderItemsInit
@@ -34,6 +34,7 @@ import {
 import {
   selectFoodAction,
 } from 'ducks/restaurant/actions';
+import { selectedMenuItems } from 'ducks/menuItem/selectors';
 
 import Typography from '@material-ui/core/Typography';
 import Translation from 'web/components/Translation';
@@ -186,36 +187,38 @@ const ListOfDishes = ({
   selectedFoodId,
   selectedCategoryId,
   selectFood,
-  menuItemsMap,
+  menuItemsList,
   updateItem,
   createItem,
   removeItem,
   reorderItems,
   progressMap,
   errorsMap,
+  lang
 }) => {
   if (!selectedCategoryId || !categoriesMap[selectedCategoryId]) {
     return <div />;
   }
-  const menuItemsList = filter(
-    item => item.menu_category_id === selectedCategoryId,
-    MapToList(menuItemsMap),
-  ).sort((a, b) => a.precedence - b.precedence);
-  const categoryName = categoriesMap[selectedCategoryId].name;
+
+  const categoryName = getT(categoriesMap[selectedCategoryId].translations, lang);
   const { t } = useTranslation();
   return (
     <div>
       <Card>
         <CardContent>
           <CreateItemForm
-            progress={progressMap['CREATE_MENUITEM']}
-            errorMessage={errorsMap['CREATE_MENUITEM']}
+            progress={progressMap.CREATE_MENUITEM}
+            errorMessage={errorsMap.CREATE_MENUITEM}
             categoryName={categoryName}
             onSubmit={({ name }) => {
               createItem({
                 name,
                 precedence: menuItemsList.length,
-                categoryId: selectedCategoryId,
+                menuCategoryId: selectedCategoryId,
+                price: {
+                  amount: 100,
+                  currency: 'CZK'
+                },
                 form: 'menu/createItem'
               });
             }}
@@ -246,13 +249,14 @@ const ListOfDishes = ({
 };
 
 export default connect(
-  state => ({
-    menuItemsMap: state.menuItem.all,
+  (state, props) => ({
+    menuItemsList: selectedMenuItems(state.menuItem, props),
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
+    lang: state.restaurant.defaultLanguage,
   }), {
     updateItem: updateMenuitemInit,
-    createItem: createMenuitemInit,
+    createItem: createMenuItemAsync.request,
     removeItem: removeMenuitemInit,
     reorderItems: reorderItemsInit,
     selectFood: selectFoodAction,

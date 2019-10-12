@@ -22,14 +22,14 @@ const { store, persistor } = configureStore(history);
 let language = navigator.language;
 const langCookie = getCookie('language');
 
-if (language.includes('cs')) language = 'cs';
-if (language.includes('en')) language = 'en';
-
 if (langCookie) {
   language = langCookie;
 } else {
   setCookie('language', language, 30);
 }
+
+if (language.includes('cs')) language = 'cs';
+if (language.includes('en')) language = 'en';
 
 window.i18nInstance = i18n({
   namespace: 'dashboard',

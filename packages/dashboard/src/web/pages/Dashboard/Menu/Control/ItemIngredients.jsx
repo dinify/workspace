@@ -12,7 +12,7 @@ import {
   setIngredientExcludability
 } from 'ducks/menuItem/actions';
 import { listOfIngredients } from 'ducks/ingredient/selectors';
-import { fetchIngredients } from 'ducks/ingredient/actions';
+import { fetchIngredientsAsync } from 'ducks/ingredient/actions';
 import ListOfCustomizations from './ListOfCustomizations';
 import { getT } from '@dinify/common/src/lib/translation.ts';
 
@@ -26,8 +26,8 @@ const Excludability = ({ selectedFoodId, setIngredientExcludability }) => ({ ing
       <Checkbox
         style={{width: 28}}
         color="default"
-        icon={<RemoveCircleOutline style={{color: 'rgba(255,255,255,0.2)'}}/>}
-        checkedIcon={<RemoveCircle style={{color: 'rgba(255,255,255,1)'}}/>}
+        icon={<RemoveCircleOutline style={{ color: 'rgba(255,255,255,0.2)' }}/>}
+        checkedIcon={<RemoveCircle style={{ color: 'rgba(255,255,255,1)' }}/>}
         checked={excludable}
         onChange={ev =>
           setIngredientExcludability({
@@ -40,6 +40,7 @@ const Excludability = ({ selectedFoodId, setIngredientExcludability }) => ({ ing
     </Tooltip>
   )
 }
+
 
 const ItemIngredients = ({
   selectedFoodId,
@@ -107,10 +108,9 @@ export default connect(
     defaultLang: state.restaurant.defaultLanguage
   }),
   {
-    fetchIngredients,
+    fetchIngredients: fetchIngredientsAsync.request,
     assignIngredient,
     unassignIngredient,
     setIngredientExcludability
   },
 )(ItemIngredients);
-

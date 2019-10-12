@@ -6,15 +6,18 @@ import propEq from 'ramda/es/propEq';
 import pipe from 'ramda/es/pipe';
 import filter from 'ramda/es/filter';
 import assoc from 'ramda/es/assoc';
+import pick from 'ramda/es/pick';
 
 import assocPath from 'ramda/es/assocPath';
 import { ListToMap, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
+import { getType } from 'typesafe-actions';
+import { fetchMenuItemAsync, createMenuItemAsync } from './actions';
 import * as types from './types';
 
 const fetchMenuItemEpic = (action$) =>
   action$.pipe(
-    ofType('GET_MENUITEM_INIT'),
+    ofType(getType(fetchMenuItemAsync.request)),
     mergeMap((action) => {
       const { id } = action.payload;
 
@@ -26,6 +29,34 @@ const fetchMenuItemEpic = (action$) =>
         catchError(error => handleEpicAPIError({
           error,
           failActionType: 'GET_MENUITEM_FAIL',
+          initAction: action
+        }))
+      );
+    })
+  );
+
+const createMenuItemEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(getType(createMenuItemAsync.request)),
+    mergeMap((action) => {
+
+      const restaurantId = state$.value.restaurant.selectedRestaurant;
+      const payload = action.payload;
+
+      const body = {
+        ...pick(['precedence', 'name', 'menuCategoryId', 'price'], payload),
+        restaurantId
+      };
+
+      return fromPromise(API.CreateMenuItem(body)).pipe(
+        map((res) => ({
+          type: getType(createMenuItemAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(createMenuItemAsync.failure),
           initAction: action
         }))
       );
@@ -241,6 +272,7 @@ export const unassignOptionEpic = (action$, state$) =>
 
 export default [
   fetchMenuItemEpic,
+  createMenuItemEpic,
   assignIngredientEpic,
   unassignIngredientEpic,
   setIngredientExcludabilityEpic,

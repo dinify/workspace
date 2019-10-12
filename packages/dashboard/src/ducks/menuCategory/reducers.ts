@@ -2,26 +2,26 @@ import pipe from 'ramda/es/pipe';
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
-import { ListToMap } from '@dinify/common/dist/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
-import * as types from './types';
+import { getType } from 'typesafe-actions';
+import { fetchMenuCategoriesAsync, createMenuCategoryAsync } from './actions';
 
-const initialState = {
+const initialState: any = {
   all: {},
   backup: {},
 };
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state = initialState, action: any) {
   const { type, payload } = action;
 
   switch (type) {
 
-    case types.FETCH_MENUCATEGORIES_DONE: {
-      const categories = ListToMap(payload.res);
-      return assoc('all', categories)(state);
+    case getType(fetchMenuCategoriesAsync.success): {
+      const categories = payload.entities.menuCategories;
+      return assoc('all', {...state.all, ...categories})(state);
     }
 
-    case 'POST_MENUCATEGORY_DONE': {
+    case getType(createMenuCategoryAsync.success): {
       const newCategory = payload;
       return assocPath(['all', newCategory.id], newCategory)(state);
     }

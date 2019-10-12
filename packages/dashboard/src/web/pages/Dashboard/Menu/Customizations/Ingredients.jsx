@@ -19,13 +19,15 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 
 import Text from 'web/components/MaterialInputs/Text';
+import { getT } from '@dinify/common/src/lib/translation.ts';
+
 
 import {
-  fetchIngredients,
-  createIngredientInit,
+  fetchIngredientsAsync,
+  createIngredientAsync,
   removeIngredientInit,
   updateIngredientInit,
-} from 'ducks/ingredient/actions';
+} from 'ducks/ingredient/actions.ts';
 import { listOfIngredients } from 'ducks/ingredient/selectors';
 
 let AddIngredientForm = ({ handleSubmit, progress, errorMessage, t }) => {
@@ -82,6 +84,7 @@ const Ingredients = ({
   styles,
   progressMap,
   errorsMap,
+  lang
 }) => {
   const { t } = useTranslation();
 
@@ -109,7 +112,7 @@ const Ingredients = ({
       <List component="nav">
         {ingredientsList.map((ingredient) => (
           <ListItem dense style={styles.ListItem} key={ingredient.id}>
-            <ListItemText primary={ingredient.name} />
+            <ListItemText primary={getT(ingredient.translations, lang)} />
             <Tooltip placement="left" title={t('delete')}>
               <IconButton
                 aria-label={t('delete')}
@@ -131,11 +134,12 @@ export default connect(
     ingredientsLoaded: state.ingredient.loaded,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
+    lang: state.restaurant.defaultLanguage
   }),
   {
-    createIngredient: createIngredientInit,
+    createIngredient: createIngredientAsync.request,
     removeIngredient: removeIngredientInit,
     updateIngredient: updateIngredientInit,
-    fetchIngredients
+    fetchIngredients: fetchIngredientsAsync.request
   },
 )(Ingredients);

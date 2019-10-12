@@ -18,36 +18,35 @@ export const GetMenuCategoriesOfSubdomain = ({ subdomain }: any) => Get({
   path: `restaurant/subdomain/${subdomain}/menu/categories`
 });
 
-export const GetMenuItem = ({ menuItemId }: any) => Get({
+export const GetMenuItem = ({ menuItemId }: any): Promise<any> => Get({
   path: `menu/item/${menuItemId}`
 });
 
- // Used by dashboard only - subdomain is id in fact (TODO)
-export const GetMenucategories = ({ subdomain }: any) => Get({
-  path: `restaurant/${subdomain}/menuCategories`
+export const GetMenuCategories = ({ restaurantId }: any): Promise<any> => Get({
+  path: `restaurant/${restaurantId}/menuCategories`
 });
 
-export const GetRestaurantingredients = ({ restaurantId }: any) => Get({
-  path: `restaurant/${restaurantId}/ingredients`
+export const GetRestaurantIngredients = ({ restaurantId }: any): Promise<any> => Get({
+  path: `restaurants/${restaurantId}/ingredients`
 });
 
-export const GetSeatsOfWaiterboard = ({ waiterboardId }: any) => Get({
+export const GetSeatsOfWaiterboard = ({ waiterboardId }: any): Promise<any> => Get({
   path: `waiterboard/${waiterboardId}/seats`
 });
 
-export const CheckinStatus = () => Get({
+export const CheckinStatus = (): Promise<any> => Get({
   path: 'checkin/status'
 });
 
-export const Checkin = (body: { qr: string}) => Post({
+export const Checkin = (body: { qr: string}): Promise<any> => Post({
   path: `checkin`
 }, body);
 
-export const CheckOut = ({ tableId }: any) => Post({
+export const CheckOut = ({ tableId }: any): Promise<any> => Post({
   path: `table/${tableId}/checkout`
 });
 
-export const CheckOutUser = ({ userId }: any) => Post({
+export const CheckOutUser = ({ userId }: any): Promise<any> => Post({
   path: `checkout/user/${userId}`
 });
 
@@ -139,12 +138,26 @@ export const CreateService = (body: CreateServiceBody): Promise<any> => Post({
   path: `services`
 }, body);
 
-type CreateMenuCategoryBody = {
-  name: string;
-	restaurantId: string;
-	precedence: number;
-}
-
-export const CreateMenuCategory = (body: CreateMenuCategoryBody): Promise<any> => Post({
+export const CreateMenuCategory = (body: any): Promise<any> => Post({
   path: `menuCategories`
+}, body);
+
+export const CreateMenuItem = (body: any): Promise<any> => Post({
+  path: `menuItems`
+}, body);
+
+export const CreateIngredient = (body: any): Promise<any> => Post({
+  path: `ingredients`
+}, body);
+
+export const CreateAddon = (body: any): Promise<any> => Post({
+  path: `addons`
+}, body);
+
+export const CreateOption = (body: any): Promise<any> => Post({
+  path: `options`
+}, body);
+
+export const CreateChoice = (body: any): Promise<any> => Post({
+  path: `choices`
 }, body);

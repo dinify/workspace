@@ -1,10 +1,13 @@
 import pipe from 'ramda/es/pipe';
+import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
-import { MapToList } from '@dinify/common/dist/lib/FN';
 import * as menuCategoryTypes from 'ducks/menuCategory/types';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
+import { getType } from 'typesafe-actions';
+import { fetchMenuCategoriesAsync } from '../menuCategory/actions';
 import * as types from './types';
+import { fetchMenuItemAsync, createMenuItemAsync } from './actions';
 
 const initialState = {
   all: {},
@@ -15,27 +18,19 @@ export default function reducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {    
-    case menuCategoryTypes.FETCH_MENUCATEGORIES_DONE: {
-      const categories = payload.res;
-      let newState = state;
-      MapToList(categories).forEach(category => {
-        if (!category.items) return;
-        MapToList(category.items).forEach(item => {
-          item.menu_category_id = category.id;
-          if (!state.all[item.id]) newState = assocPath(['all', item.id], item)(newState);
-        });
-      });
-      return newState;
+    case getType(fetchMenuCategoriesAsync.success): {
+      const items = payload.entities.menuItems;
+      return assoc('all', {...state.all, ...items})(state);
     }
 
-    case 'GET_MENUITEM_DONE': {
+    case getType(fetchMenuItemAsync.success): {
       const res = payload;
       if (!res) return state;
       return assocPath(['all', res.id], res)(state);
     }
 
-    case types.CREATE_MENUITEM_DONE: {
-      const newItem = payload.res;
+    case getType(createMenuItemAsync.success): {
+      const newItem = payload;
       return assocPath(['all', newItem.id], newItem)(state);
     }
 
