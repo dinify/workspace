@@ -8,6 +8,8 @@ import dissocPath from 'ramda/es/dissocPath';
 import { ListToMap } from '@dinify/common/dist/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
+import { getType } from 'typesafe-actions';
+import { fetchOptionsAsync } from './actions';
 
 const initialState = {
   all: {},
@@ -20,8 +22,8 @@ export default function reducer(state = initialState, action) {
 
   switch (type) {
 
-    case types.FETCH_RESTAURANTOPTIONS_DONE: {
-      const addons = payload.res;
+    case getType(fetchOptionsAsync.success): {
+      const addons = payload;
       return pipe(
         assoc('all', ListToMap(addons)),
         assoc('loaded', true)

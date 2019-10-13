@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as FN from '@dinify/common/dist/lib/FN';
 import { Label } from 'web/components/styled/FormBox';
 import { assignOption, unassignOption } from 'ducks/menuItem/actions';
-import { fetchOptions } from 'ducks/option/actions';
+import { fetchOptionsAsync } from 'ducks/option/actions.ts';
 import { listOfOptions } from 'ducks/option/selectors';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 import Chip from '@material-ui/core/Chip';
@@ -31,7 +31,7 @@ const ItemOptions = ({
 }) => {
   const shouldLoad = optionsList.length < 1 && !optionsLoaded;
   useEffect(() => {
-    if (shouldLoad) fetchOptions()
+    if (shouldLoad) fetchOptions();
   }, []);
   const selectedFood = menuItems[selectedFoodId];
   if (!selectedFood) {
@@ -98,7 +98,7 @@ export default connect(
     menuItems: state.menuItem.all,
   }),
   {
-    fetchOptions,
+    fetchOptions: fetchOptionsAsync.request,
     assignOption,
     unassignOption,
   },

@@ -22,15 +22,16 @@ import CardContent from '@material-ui/core/CardContent';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Text from 'web/components/MaterialInputs/Text';
+import { getT } from '@dinify/common/src/lib/translation.ts';
 
 import {
-  fetchOptions,
+  fetchOptionsAsync,
   collapseOptionInit,
-  createOptionInit,
+  createOptionAsync,
   removeOptionInit,
-  createChoiceInit,
+  createChoiceAsync,
   removeChoiceInit,
-} from 'ducks/option/actions';
+} from 'ducks/option/actions.ts';
 import { listOfOptions } from 'ducks/option/selectors';
 
 let AddChoiceForm = ({ t, handleSubmit, progress, errorMessage }) => {
@@ -133,6 +134,7 @@ const Options = ({
   styles,
   progressMap,
   errorsMap,
+  lang
 }) => {
   const { t } = useTranslation();
 
@@ -161,7 +163,7 @@ const Options = ({
               dense={!option.collapsed}
               style={styles.ListItem}
             >
-              <ListItemText primary={option.name} />
+              <ListItemText primary={getT(option.translations, lang)} />
               <Tooltip placement="left" title={t('delete')}>
                 <IconButton
                   aria-label={t('delete')}
@@ -181,8 +183,8 @@ const Options = ({
                       inset
                       secondary={
                         <span>
-                          {choice.name}{' '}
-                          {choice.difference ? Number.parseFloat(choice.difference.amount).toFixed(2) : ''} Kč
+                          {getT(choice.translations, lang)}{' '}
+                          {choice.price ? Number.parseFloat(choice.price.amount).toFixed(2) : ''} Kč
                         </span>
                       }
                     />
@@ -204,11 +206,12 @@ const Options = ({
                       <CardContent>
                         <AddChoiceForm
                           t={t}
-                          progress={progressMap['CREATE_CHOICE']}
-                          errorMessage={errorsMap['CREATE_CHOICE']}
+                          progress={progressMap.CREATE_CHOICE}
+                          errorMessage={errorsMap.CREATE_CHOICE}
                           onSubmit={({ name, price }) =>
                             createChoice({
-                              name, price, optionId: option.id,
+                              name, price,
+                              optionId: option.id,
                               form: 'customizations/option/choice'
                             })
                           }
@@ -232,13 +235,14 @@ export default connect(
     optionsLoaded: state.option.loaded,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
+    lang: state.restaurant.defaultLanguage
   }),
   {
-    createOption: createOptionInit,
-    createChoice: createChoiceInit,
+    fetchOptions: fetchOptionsAsync.request,
+    createOption: createOptionAsync.request,
+    createChoice: createChoiceAsync.request,
     collapseOption: collapseOptionInit,
     removeChoice: removeChoiceInit,
     removeOption: removeOptionInit,
-    fetchOptions
   },
 )(Options);

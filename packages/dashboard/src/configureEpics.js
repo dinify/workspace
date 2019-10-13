@@ -3,11 +3,11 @@ import { epics as crud } from '@dinify/common/dist/ducks/crudEpics';
 import { authEpics as auth } from '@dinify/common/dist/ducks/auth';
 import { reportingEpics as reporting } from '@dinify/common/dist/ducks/reporting';
 
-import { restaurantEpics } from './ducks/restaurant';
+import restaurantEpics from './ducks/restaurant/epics';
 import menuCategoryEpics from './ducks/menuCategory/epics.ts';
 import menuItemEpics from './ducks/menuItem/epics';
-import addonEpics from './ducks/addon/epics';
-import { optionEpics } from './ducks/option';
+import addonEpics from './ducks/addon/epics.ts';
+import optionEpics from './ducks/option/epics.ts';
 import ingredientEpics from './ducks/ingredient/epics.ts';
 import serviceEpics from './ducks/service/epics';
 

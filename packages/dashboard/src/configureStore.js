@@ -12,15 +12,15 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 import auth from '@dinify/common/dist/ducks/auth';
-import restaurant from 'ducks/restaurant';
-import ui from 'ducks/ui';
+import restaurant from 'ducks/restaurant/reducers';
+import ui from 'ducks/ui/reducers';
 import menuCategory from 'ducks/menuCategory/reducers.ts';
-import menuItem from 'ducks/menuItem';
-import option from 'ducks/option';
+import menuItem from 'ducks/menuItem/reducers';
+import option from 'ducks/option/reducers';
 import ingredient from 'ducks/ingredient/reducers';
 import addon from 'ducks/addon/reducers';
-import service from 'ducks/service';
-import translation from 'ducks/translation';
+import service from 'ducks/service/reducers';
+import translation from 'ducks/translation/reducers';
 
 import firebaseConfig from '@dinify/common/firebaseConfig.json';
 
