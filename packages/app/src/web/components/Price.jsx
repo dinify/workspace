@@ -1,7 +1,7 @@
 import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 // TODO: fetch from https://static.dinify.app/misc/currencyRates
 import rates from '@dinify/common/dist/lib/currencyRates.json';

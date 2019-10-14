@@ -6,6 +6,8 @@ import { AnyAction } from 'redux';
 import { Locale } from '@phensley/cldr';
 import { getType } from 'typesafe-actions';
 import * as actions from './actions';
+import { getCookie } from '@dinify/common/src/lib/FN';
+import { localeMatcher } from '@dinify/common/src/lib/i18n';
 
 export type ThemeType = 'light'|'dark';
 export interface UiState {
@@ -22,6 +24,17 @@ export interface ErrorMessage {
   code: string
 }
 
+let locale = getDetectedLocale().locale;
+const langCookie = getCookie('language');
+if (langCookie) {
+  try {
+    const content = JSON.parse(langCookie);
+    locale = localeMatcher.match(content.primary).locale;
+  } catch (e) {
+    console.error('JSON parse error');
+  }
+}
+
 const initialState: UiState = {
   progressMap: {},
   errorsMap: {},
@@ -29,7 +42,7 @@ const initialState: UiState = {
   transactionStatus: null,
   bottomBarOpen: false,
   theme: 'light',
-  locale: getDetectedLocale().locale
+  locale
 };
 
 
@@ -56,6 +69,7 @@ export default function reducer(state: UiState = initialState, action: AnyAction
     }
     
     case getType(actions.setLocaleAction): {
+      console.log('reducer', action.payload);
       return assoc('locale', action.payload)(state);
     }
 

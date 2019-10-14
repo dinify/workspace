@@ -11,7 +11,7 @@ import Place from '@material-ui/icons/PlaceRounded';
 import FavoriteToggle from 'web/components/FavoriteToggle';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { favRestaurantAsync } from 'ducks/restaurant/actions.ts';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 const styles = theme => ({
   secondary: {

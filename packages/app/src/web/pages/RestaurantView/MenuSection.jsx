@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';

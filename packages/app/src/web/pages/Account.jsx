@@ -3,12 +3,12 @@ import remove from 'ramda/es/remove';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { withStyles } from '@material-ui/core/styles';
 import { getClaims } from '@dinify/common/dist/ducks/auth/selectors';
 import { withStateHandlers } from 'recompose';
 import { languageCountries as languages } from '@dinify/common/dist/lib';
-import { toggleThemeAction } from 'ducks/ui/actions';
+import { toggleThemeAction, setLocaleAction } from 'ducks/ui/actions';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import OpenInNew from '@material-ui/icons/OpenInNewRounded';
 import ArrowUpward from '@material-ui/icons/ArrowUpwardRounded';
@@ -91,6 +91,7 @@ const Account = ({
   initialSelectedLanguage,
   restaurantsMap,
   style,
+  setLocale,
   ...other
 }) => {
   const { t, i18n } = useTranslation();
@@ -274,6 +275,7 @@ const Account = ({
         onClose={(langtag) => {
           if (langtag) {
             if (dialogType === 'primary') {
+              setLocale(langtag);
               firebase.updateProfile({
                 language: {
                   ...profile.language,
@@ -338,6 +340,7 @@ const enhance = compose(
     }),
     {
       toggleTheme: toggleThemeAction,
+      setLocale: setLocaleAction
     }
   )
 )

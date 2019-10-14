@@ -80,9 +80,9 @@ export default (defaults: Params = {}) => {
           // (if overlap between keys in two different namespaces)
           aggr = {...aggr, ...v};
         });
-        console.log(aggr);
+        // console.log(aggr);
         cache.set(cacheKey, aggr);
-        setTranslations({ language, aggr });
+        setTranslations({ language, json: aggr });
       }).catch(err => console.log(err));
     }
   }, [language]);
@@ -103,5 +103,17 @@ export default (defaults: Params = {}) => {
     return util.substitute(template, data);
   };
 
-  return { t };
+  const i18n = {
+    format: (a: any, b: any) => {
+      if (!alreadyLogged.includes(b)) {
+        alreadyLogged.push(b);
+        console.log(a, b)
+      }
+    },
+    globalize: null
+  };
+
+  return { t, i18n };
 }
+
+let alreadyLogged: any[] = [];
