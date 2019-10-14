@@ -10,10 +10,12 @@ import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 import { getType } from 'typesafe-actions';
 import { fetchOptionsAsync } from './actions';
+import { fetchMenuItemAsync } from '../menuItem/actions';
 
 const initialState = {
   all: {},
   backup: {},
+  choices: {},
   loaded: false,
 };
 
@@ -23,10 +25,19 @@ export default function reducer(state = initialState, action) {
   switch (type) {
 
     case getType(fetchOptionsAsync.success): {
-      const addons = payload;
+      const { options, choices } = payload.entities;
       return pipe(
-        assoc('all', ListToMap(addons)),
+        assoc('all', { ...state.all, ...options }),
+        assoc('choices', { ...state.choices, ...choices }),
         assoc('loaded', true)
+      )(state);
+    }
+
+    case getType(fetchMenuItemAsync.success): {
+      const { options, choices } = payload.entities;
+      return pipe(
+        assoc('all', { ...state.all, ...options }),
+        assoc('choices', { ...state.choices, ...choices }),
       )(state);
     }
 

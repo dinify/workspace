@@ -7,6 +7,7 @@ import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 import { getType } from 'typesafe-actions';
 import { fetchAddonsAsync } from './actions';
+import { fetchMenuItemAsync } from '../menuItem/actions';
 
 const initialState = {
   all: {},
@@ -21,10 +22,16 @@ export default function reducer(state = initialState, action) {
     case getType(fetchAddonsAsync.success): {
       const addons = payload;
       return pipe(
-        assoc('all', ListToMap(addons)),
+        assoc('all', { ...state.all,...ListToMap(addons) }),
         assoc('loaded', true)
       )(state);
     }
+
+    case getType(fetchMenuItemAsync.success): {
+      const addons = payload.entities.addons;
+      return assoc('all', { ...state.all, ...addons })(state);
+    }
+
     case types.CREATE_ADDON_DONE: {
       const newAddon = payload.res;
       return assocPath(['all', newAddon.id], newAddon)(state);

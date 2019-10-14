@@ -12,6 +12,8 @@ const option = new schema.Entity('options', {
   choices: [choice]
 });
 
+export const options = [option];
+
 const createPivotId = (key: string) => (v: any, p: any) => `${p.id}.${v[key].id}`
 
 const menuAddon = new schema.Entity('menuAddons', {

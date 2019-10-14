@@ -8,41 +8,54 @@ import { fetchAddonsAsync } from 'ducks/addon/actions';
 import { listOfAddons } from 'ducks/addon/selectors';
 
 import ListOfCustomizations from './ListOfCustomizations';
+import { getT } from '@dinify/common/src/lib/translation.ts';
+
 
 const ItemAddons = ({
   addonsList,
+  addonsMap,
   fetchAddons,
   addonsLoaded,
-  menuItems,
   assignAddon,
   unassignAddon,
-  selectedFoodId,
+  selectedFood,
+  defaultLang,
   t
 }) => {
   const shouldLoad = addonsList.length < 1 && !addonsLoaded;
   useEffect(() => {
     if (shouldLoad) fetchAddons()
   }, []);
-  const selectedFood = menuItems[selectedFoodId];
   if (!selectedFood) {
     return <div />;
   }
-  const assignedAddons = selectedFood.addons || [];
+  let assignedAddons = [];
+
+  if (selectedFood.menuAddons) {
+    
+    assignedAddons = selectedFood.menuAddons.map((compoundId) => {
+      const addonId = compoundId.split('.')[1];
+      return addonsMap[addonId];
+    });
+  }
+
+  console.log(assignedAddons);
+
   const assignedAddonsIds = assignedAddons.map(o => o.id);
 
   const dataSource = addonsList
     .filter(o => !assignedAddonsIds.includes(o.id))
-    .map(o => ({ value: o.id, label: o.name }));
+    .map(o => ({ value: o.id, label: getT(o.translations, defaultLang)}));
 
   return (
     <div>
       <Label>{t('menu.addons')}</Label>
-      {selectedFood.addons ? (
+      {assignedAddons ? (
         <ListOfCustomizations
-          list={selectedFood.addons}
+          list={assignedAddons}
           rmButtonFunction={addon =>
             unassignAddon({
-              menuItemId: selectedFoodId,
+              menuItemId: selectedFood.id,
               addonId: addon.id
             })
           }
@@ -55,7 +68,7 @@ const ItemAddons = ({
         placeholder={(t('menu.selectAddons'))}
         onChange={addon =>
           assignAddon({
-            menuItemId: selectedFoodId,
+            menuItemId: selectedFood.id,
             addonId: addon.value
           })
         }
@@ -67,8 +80,9 @@ const ItemAddons = ({
 export default connect(
   state => ({
     addonsList: listOfAddons(state),
+    addonsMap: state.addon.all,
     addonsLoaded: state.addon.loaded,
-    menuItems: state.menuItem.all,
+    defaultLang: state.restaurant.defaultLanguage
   }),
   {
     fetchAddons: fetchAddonsAsync.request,

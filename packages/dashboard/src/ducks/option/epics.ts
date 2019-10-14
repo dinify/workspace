@@ -6,6 +6,8 @@ import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import { fetchOptionsAsync } from './actions';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
+import { normalize } from 'normalizr';
+import { options } from '../menuItem/schemas';
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
 const fetchOptionsEpic: Epic = (action$, state$) =>
@@ -16,7 +18,8 @@ const fetchOptionsEpic: Epic = (action$, state$) =>
       const lang = state$.value.restaurant.defaultLanguage;
       return fromPromise(API.GetRestaurantOptions({ restaurantId }, lang)).pipe(
         rxMap((res: any) => {
-          return fetchOptionsAsync.success(res);
+          const normalized = normalize(res, options);
+          return fetchOptionsAsync.success(normalized);
         }),
         catchError(error => {
           return handleEpicAPIError({

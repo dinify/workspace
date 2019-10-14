@@ -45,7 +45,7 @@ const Excludability = ({ selectedFoodId, setIngredientExcludability }) => ({ ing
 const ItemIngredients = ({
   selectedFood,
   ingredientsList,
-  ingredientMap,
+  ingredientsMap,
   fetchIngredients,
   ingredientsLoaded,
   assignIngredient,
@@ -70,7 +70,7 @@ const ItemIngredients = ({
   if (selectedFood.menuIngredients) {
     assignedIngredients = selectedFood.menuIngredients.map((compoundId) => {
       const ingredientId = compoundId.split('.')[1];
-      return ingredientMap[ingredientId];
+      return ingredientsMap[ingredientId];
     });
   }
 
@@ -113,7 +113,7 @@ const ItemIngredients = ({
 
 export default connect(
   state => ({
-    ingredientMap: state.ingredient.all,
+    ingredientsMap: state.ingredient.all,
     ingredientsList: listOfIngredients(state),
     ingredientsLoaded: state.ingredient.loaded,
     defaultLang: state.restaurant.defaultLanguage
