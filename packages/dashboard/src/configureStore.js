@@ -46,6 +46,7 @@ const restaurantPersistConfig = {
   whitelist: [
     'all',
     'loggedRestaurant',
+    'defaultLanguage',
     'selectedRestaurant',
     'prefill',
     'ongoingRegistration',

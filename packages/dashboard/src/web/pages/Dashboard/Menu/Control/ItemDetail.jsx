@@ -2,7 +2,11 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as FN from '@dinify/common/dist/lib/FN';
 import Dropzone from 'react-dropzone';
-import { fetchMenuItemAsync, updateMenuitemInit, uploadItemImageInit } from 'ducks/menuItem/actions';
+import {
+  fetchMenuItemAsync,
+  updateMenuItemAsync,
+  uploadItemImageInit
+} from 'ducks/menuItem/actions';
 import Progress from 'web/components/Progress';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@material-ui/core/Button';
@@ -92,7 +96,7 @@ const theme = createMuiTheme({
 
 let ItemDetail = ({
   selectedFoodId,
-  updateFood,
+  updateMenuItem,
   uploadItemImage,
   menuItems,
   classes,
@@ -146,12 +150,12 @@ let ItemDetail = ({
           <p>{t('uploadImageFormats')}</p>
         </Dropzone>
 
-        <Progress type={'UPDATE_MENUITEM'} />
+        <Progress type="UPDATE_MENUITEM" />
         <DetailForm
           onSubmit={fields => {
-            fields.id = selectedFoodId;
-            updateFood({
+            updateMenuItem({
               ...fields,
+              menuItemId: selectedFoodId,
               price: {
                 amount: Number.parseFloat(fields.price).toFixed(0),
                 currency: 'CZK',
@@ -183,7 +187,7 @@ export default connect((state) => ({
   defaultLang: state.restaurant.defaultLanguage
   }), {
     fetchMenuitem: fetchMenuItemAsync.request,
-    updateFood: updateMenuitemInit,
+    updateMenuItem: updateMenuItemAsync.request,
     uploadItemImage: uploadItemImageInit,
   },
 )(ItemDetail);

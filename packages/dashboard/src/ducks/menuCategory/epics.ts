@@ -16,7 +16,8 @@ const fetchMenuCategoriesEpic: Epic = (action$, state$) =>
     ofType(getType(fetchMenuCategoriesAsync.request)),
     mergeMap((action) => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
-      return fromPromise(API.GetMenuCategories({ restaurantId })).pipe(
+      const lang = state$.value.restaurant.defaultLanguage;
+      return fromPromise(API.GetMenuCategories({ restaurantId }, lang)).pipe(
         filter((res: any) => !!res),
         rxMap((res: any) => {
           const normalized: any = normalize(res, menuCategories);

@@ -17,6 +17,13 @@ export const createMenuItemAsync = createAsyncAction(
   `${p}/POST_ITEM_FAIL`
 )();
 
+
+export const updateMenuItemAsync = createAsyncAction(
+  `${p}/PATCH_ITEM_INIT`,
+  `${p}/PATCH_ITEM_DONE`,
+  `${p}/PATCH_ITEM_FAIL`
+)();
+
 export const updateMenuitemInit = payload => ({
   type: types.UPDATE_MENUITEM_INIT,
   payload,

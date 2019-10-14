@@ -4,6 +4,7 @@ type FetchOptions = {
   method?: string;
   body?: BodyInit;
   headers?: Record<string, string>;
+  lang?: string;
 }
 
 export const Request = (url: string, options: FetchOptions = {}) => new Promise((resolve, reject) => {
@@ -13,7 +14,8 @@ export const Request = (url: string, options: FetchOptions = {}) => new Promise(
   const token = getCookie('access_token');
 
   // Replace colons with semicolons to be able to store string in cookies
-  const lang = getCookie('lang').split(':').join(';');
+  let lang = getCookie('lang').split(':').join(';');
+  if (options.lang) lang = options.lang;
 
   const defaultOptions: FetchOptions = {};
   if (!options.headers) {
@@ -65,7 +67,8 @@ export const Request = (url: string, options: FetchOptions = {}) => new Promise(
 
 type UrlTypes = {
   path: string,
-  endpoint?: string
+  endpoint?: string,
+  lang?: string
 }
 
 const buildURL = ({
@@ -77,7 +80,7 @@ const buildURL = ({
 
 export const Get = (urlParts: UrlTypes) => Request(
   buildURL(urlParts),
-  { method: 'GET' }
+  { method: 'GET', lang: urlParts.lang }
 );
 
 export const Post = (urlParts: UrlTypes, body = {}) => Request(
@@ -85,6 +88,7 @@ export const Post = (urlParts: UrlTypes, body = {}) => Request(
   {
     method: 'POST',
     body: JSON.stringify(body),
+    lang: urlParts.lang
   }
 );
 
@@ -93,6 +97,7 @@ export const Put = (urlParts: UrlTypes, body = {}) => Request(
   {
     method: 'PUT',
     body: JSON.stringify(body),
+    lang: urlParts.lang
   }
 );
 
@@ -101,6 +106,7 @@ export const Patch = (urlParts: UrlTypes, body = {}) => Request(
   {
     method: 'PATCH',
     body: JSON.stringify(body),
+    lang: urlParts.lang
   }
 );
 

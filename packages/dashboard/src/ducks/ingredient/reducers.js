@@ -6,7 +6,7 @@ import { ListToMap } from '@dinify/common/dist/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 import { getType } from 'typesafe-actions';
-import { fetchIngredientsAsync } from './actions';
+import { fetchIngredientsAsync, createIngredientAsync } from './actions';
 
 const initialState = {
   all: {},
@@ -27,8 +27,8 @@ export default function reducer(state = initialState, action) {
       )(state);
     }    
 
-    case types.CREATE_INGREDIENT_DONE: {
-      const newIngredient = payload.res;
+    case getType(createIngredientAsync.success): {
+      const newIngredient = payload;
       return assocPath(['all', newIngredient.id], newIngredient)(state);
     }
 

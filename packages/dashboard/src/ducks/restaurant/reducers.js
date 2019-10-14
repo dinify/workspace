@@ -13,7 +13,8 @@ const preferredLanguagesInitial = [
   "ja", "ka", "ko", "lo", "ms", "nl",
   "no", "pl", "pt", "ro", "ru", "sk",
   "sl", "sq", "sv", "th", "tr", "uk",
-  "ur", "vi", "zh-Hans", "zh-Hant"];
+  "ur", "vi", "zh-Hans", "zh-Hant"
+];
 
 const initialState = {
   all: {},

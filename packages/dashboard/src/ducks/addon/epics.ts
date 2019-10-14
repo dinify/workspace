@@ -16,7 +16,8 @@ const fetchAddonsEpic: Epic = (action$, state$) =>
     ofType(getType(fetchAddonsAsync.request)),
     mergeMap((action) => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
-      return fromPromise(API.GetRestaurantAddons({ restaurantId })).pipe(
+      const lang = state$.value.restaurant.defaultLanguage;
+      return fromPromise(API.GetRestaurantAddons({ restaurantId }, lang)).pipe(
         rxMap((res: any) => {
           return fetchAddonsAsync.success(res);
         }),

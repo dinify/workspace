@@ -1,12 +1,12 @@
 import { from as fromPromise } from 'rxjs';
-
 import { mergeMap, map, catchError, map as rxMap} from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import * as types from './types';
 import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
-import { fetchIngredientsAsync } from './actions';
+import { fetchIngredientsAsync, createIngredientAsync } from './actions';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
+import pick from 'ramda/es/pick';
 
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 
@@ -15,7 +15,8 @@ const fetchIngredientsEpic: Epic = (action$, state$) =>
     ofType(getType(fetchIngredientsAsync.request)),
     mergeMap((action) => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
-      return fromPromise(API.GetRestaurantIngredients({ restaurantId })).pipe(
+      const lang = state$.value.restaurant.defaultLanguage;
+      return fromPromise(API.GetRestaurantIngredients({ restaurantId }, lang)).pipe(
         rxMap((res: any) => {
           return fetchIngredientsAsync.success(res);
         }),
@@ -26,6 +27,31 @@ const fetchIngredientsEpic: Epic = (action$, state$) =>
             initAction: action
           })
         })
+      );
+    })
+  );
+
+const createIngredientEpic: Epic = (action$, state$) =>
+  action$.pipe(
+    ofType(getType(createIngredientAsync.request)),
+    mergeMap((action) => {
+
+      const restaurantId = state$.value.restaurant.selectedRestaurant;
+      const payload = action.payload;
+
+      const body = {
+        ...pick(['name'], payload),
+        restaurantId
+      };
+      return fromPromise(API.CreateIngredient(body)).pipe(
+        rxMap((res: any) => {
+          return createIngredientAsync.success(res);
+        }),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(createIngredientAsync.failure),
+          initAction: action
+        }))
       );
     })
   );
@@ -41,5 +67,6 @@ const onCreateFailSnackbarsEpic: Epic = (action$, state$, { i18nInstance }) =>
 
 export default [
   fetchIngredientsEpic,
+  createIngredientEpic,
   onCreateFailSnackbarsEpic
 ]

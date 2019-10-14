@@ -13,7 +13,8 @@ const fetchOptionsEpic: Epic = (action$, state$) =>
     ofType(getType(fetchOptionsAsync.request)),
     mergeMap((action) => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
-      return fromPromise(API.GetRestaurantOptions({ restaurantId })).pipe(
+      const lang = state$.value.restaurant.defaultLanguage;
+      return fromPromise(API.GetRestaurantOptions({ restaurantId }, lang)).pipe(
         rxMap((res: any) => {
           return fetchOptionsAsync.success(res);
         }),

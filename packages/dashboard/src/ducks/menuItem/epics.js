@@ -12,16 +12,18 @@ import assocPath from 'ramda/es/assocPath';
 import { ListToMap, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { getType } from 'typesafe-actions';
-import { fetchMenuItemAsync, createMenuItemAsync } from './actions';
+import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync } from './actions';
 import * as types from './types';
 
-const fetchMenuItemEpic = (action$) =>
+const fetchMenuItemEpic = (action$, state$) =>
   action$.pipe(
     ofType(getType(fetchMenuItemAsync.request)),
     mergeMap((action) => {
       const { id } = action.payload;
 
-      return fromPromise(API.GetMenuItem({ menuItemId: id })).pipe(
+      const lang = state$.value.restaurant.defaultLanguage;
+
+      return fromPromise(API.GetMenuItem({ menuItemId: id }, lang)).pipe(
         map((res) => ({
           type: 'GET_MENUITEM_DONE',
           payload: res
@@ -57,6 +59,32 @@ const createMenuItemEpic = (action$, state$) =>
         catchError(error => handleEpicAPIError({
           error,
           failActionType: getType(createMenuItemAsync.failure),
+          initAction: action
+        }))
+      );
+    })
+  );
+
+const updateMenuItemEpic = (action$) =>
+  action$.pipe(
+    ofType(getType(updateMenuItemAsync.request)),
+    mergeMap((action) => {
+
+      const payload = action.payload;
+
+      const body = pick(['name', 'description', 'price'], payload);
+
+      const menuItemId = payload.menuItemId;
+
+      return fromPromise(API.UpdateMenuItem(menuItemId, body)).pipe(
+        map((res) => ({
+          type: getType(updateMenuItemAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(updateMenuItemAsync.failure),
           initAction: action
         }))
       );
@@ -273,6 +301,7 @@ export const unassignOptionEpic = (action$, state$) =>
 export default [
   fetchMenuItemEpic,
   createMenuItemEpic,
+  updateMenuItemEpic,
   assignIngredientEpic,
   unassignIngredientEpic,
   setIngredientExcludabilityEpic,

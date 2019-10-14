@@ -126,40 +126,49 @@ export const CreateService = (body: CreateServiceBody): Promise<any> => Post({
   path: `services`
 }, body);
 
-export const GetMenuCategories = ({ restaurantId }: any): Promise<any> => Get({
-  path: `restaurant/${restaurantId}/menuCategories`
+export const GetMenuCategories = ({ restaurantId }: any, lang?: string): Promise<any> => Get({
+  path: `restaurant/${restaurantId}/menuCategories`,
+  lang
 });
 
 export const CreateMenuCategory = (body: any): Promise<any> => Post({
   path: `menuCategories`
 }, body);
 
-export const GetMenuItem = ({ menuItemId }: any): Promise<any> => Get({
-  path: `menu/item/${menuItemId}`
+export const GetMenuItem = ({ menuItemId }: any, lang?: string): Promise<any> => Get({
+  path: `menu/item/${menuItemId}`,
+  lang
 });
 
 export const CreateMenuItem = (body: any): Promise<any> => Post({
   path: `menuItems`
 }, body);
 
-export const GetRestaurantIngredients = ({ restaurantId }: any): Promise<any> => Get({
-  path: `restaurants/${restaurantId}/ingredients`
+export const UpdateMenuItem = (menuItemId: string, body: any): Promise<any> => Patch({
+  path: `menuItems/${menuItemId}`
+}, body);
+
+export const GetRestaurantIngredients = ({ restaurantId }: any, lang?: string): Promise<any> => Get({
+  path: `restaurants/${restaurantId}/ingredients`,
+  lang
 });
 
 export const CreateIngredient = (body: any): Promise<any> => Post({
   path: `ingredients`
 }, body);
 
-export const GetRestaurantAddons = ({ restaurantId }: any): Promise<any> => Get({
-  path: `restaurants/${restaurantId}/addons`
+export const GetRestaurantAddons = ({ restaurantId }: any, lang?: string): Promise<any> => Get({
+  path: `restaurants/${restaurantId}/addons`,
+  lang
 });
 
 export const CreateAddon = (body: any): Promise<any> => Post({
   path: `addons`
 }, body);
 
-export const GetRestaurantOptions = ({ restaurantId }: any): Promise<any> => Get({
-  path: `restaurants/${restaurantId}/options`
+export const GetRestaurantOptions = ({ restaurantId }: any, lang?: string): Promise<any> => Get({
+  path: `restaurants/${restaurantId}/options`,
+  lang
 });
 
 export const CreateOption = (body: any): Promise<any> => Post({
