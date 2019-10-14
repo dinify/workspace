@@ -7,7 +7,7 @@ import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import { i18nInstance } from '../../web';
 
-const { getCookie, handleEpicAPIError } = require('@dinify/common/dist/lib/FN');
+import { getCookie, handleEpicAPIError } from '@dinify/common/src/lib/FN';
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
 const APIv1 = require('@dinify/common/src/api/restaurant');
 

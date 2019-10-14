@@ -25,6 +25,6 @@ export const substitute = (string: string, vars: any) => {
     return string;
   }
 }
-  
+
 // export const substitute = (string: string, vars: any) => 
 //   new Function(`(() => { const { ${Object.keys(vars).join(',')} } = this.vars; return \`${string}\`; })()`).call({vars});

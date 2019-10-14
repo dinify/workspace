@@ -7,8 +7,7 @@ import * as wsActions from '../../websockets/actions';
 import { createReducer, ActionType } from 'typesafe-actions';
 import { combineReducers } from 'redux';
 import { actionTypes as fActionTypes } from 'react-redux-firebase';
-
-const { ListToMap } = require('@dinify/common/dist/lib/FN');
+import { ListToMap } from '@dinify/common/src/lib/FN';
 
 type State = any;
 type Action = ActionType<typeof actions>;
