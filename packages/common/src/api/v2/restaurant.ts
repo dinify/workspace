@@ -148,6 +148,30 @@ export const UpdateMenuItem = (menuItemId: string, body: any): Promise<any> => P
   path: `menuItems/${menuItemId}`
 }, body);
 
+export const AssignIngredient = (menuItemId: string, body: any) => Post({
+  path: `menuItems/${menuItemId}/ingredients`
+}, body);
+
+export const UnassignIngredient = (menuItemId: string, body: any) => Delete({
+  path: `menuItems/${menuItemId}/ingredients/${body.ingredientId}`
+});
+
+export const AssignAddon = (menuItemId: string, body: any) => Post({
+  path: `menuItems/${menuItemId}/addons`
+}, body);
+
+export const UnassignAddon = (menuItemId: string, body: any) => Delete({
+  path: `menuItems/${menuItemId}/addons/${body.addonId}`
+});
+
+export const AssignOption = (menuItemId: string, body: any) => Post({
+  path: `menuItems/${menuItemId}/options`
+}, body);
+
+export const UnassignOption = (menuItemId: string, body: any) => Delete({
+  path: `menuItems/${menuItemId}/options/${body.optionId}`
+});
+
 export const GetRestaurantIngredients = ({ restaurantId }: any, lang?: string): Promise<any> => Get({
   path: `restaurants/${restaurantId}/ingredients`,
   lang

@@ -12,7 +12,7 @@ import assocPath from 'ramda/es/assocPath';
 import { ListToMap, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { getType } from 'typesafe-actions';
-import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync } from './actions';
+import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync, assignIngredientAsync, unassignIngredientAsync } from './actions';
 import { normalize } from 'normalizr';
 import * as types from './types';
 import { menuItem } from './schemas.ts';
@@ -94,62 +94,55 @@ const updateMenuItemEpic = (action$) =>
     })
   );
 
-export const assignIngredientEpic = (action$, state$) => 
+export const assignIngredientEpic = (action$) => 
   action$.pipe(
-    ofType(types.ASSIGN_INGREDIENT_INIT),
+    ofType(getType(assignIngredientAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, ingredientId } = payload;
-      const ingredient = state$.value.ingredient.all[ingredientId];
-      const menuItem = state$.value.menuItem.all[menuItemId];
-      if (!ingredient || !menuItem) {
-        return of({
-          type: types.ASSIGN_INGREDIENT_FAIL,
-          payload: 'ingredient and menuItem required'
-        });
-      }
-      if (ListToMap(menuItem.ingredients)[ingredientId]) {
-        return of({
-          type: types.ASSIGN_INGREDIENT_FAIL,
-          payload: 'ingredient already assigned'
-        });        
-      }
-      const updatePayload = {
-        id: menuItemId,
-        ingredients: [...menuItem.ingredients, ingredient]
-      }
-      return of({
-        type: types.UPDATE_MENUITEM_INIT,
-        payload: updatePayload,
-      });
-    })
-  )
 
-export const unassignIngredientEpic = (action$, state$) => 
+      const body = {
+        ingredientId,
+        published: true,
+        excludable: false
+      }
+
+      return fromPromise(API.AssignIngredient(menuItemId, body)).pipe(
+        map((res) => ({
+          type: getType(assignIngredientAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(assignIngredientAsync.failure),
+          initAction: action
+        }))
+      );
+    })
+  );
+
+export const unassignIngredientEpic = (action$) => 
   action$.pipe(
-    ofType(types.UNASSIGN_INGREDIENT_INIT),
+    ofType(getType(unassignIngredientAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, ingredientId } = payload;
-      const ingredient = state$.value.ingredient.all[ingredientId];
-      const menuItem = state$.value.menuItem.all[menuItemId];
-      if (!ingredient || !menuItem) {
-        return of({
-          type: types.UNASSIGN_INGREDIENT_FAIL,
-          payload: 'ingredient and menuItem required'
-        });
-      }
-      const newIngredients = filter((i) => i.id !== ingredientId, menuItem.ingredients);
-      const updatePayload = {
-        id: menuItemId,
-        ingredients: newIngredients
-      }
-      return of({
-        type: types.UPDATE_MENUITEM_INIT,
-        payload: updatePayload,
-      });
+
+      return fromPromise(API.UnassignIngredient(menuItemId, { ingredientId })).pipe(
+        map((res) => ({
+          type: getType(unassignIngredientAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(unassignIngredientAsync.failure),
+          initAction: action
+        }))
+      );
     })
-  )
+  );
 
 export const setIngredientExcludabilityEpic = (action$, state$) =>
   action$.pipe(

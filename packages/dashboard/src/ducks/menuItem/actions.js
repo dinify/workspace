@@ -24,6 +24,18 @@ export const updateMenuItemAsync = createAsyncAction(
   `${p}/PATCH_ITEM_FAIL`
 )();
 
+export const assignIngredientAsync = createAsyncAction(
+  `${p}/ASSIGN_INGREDIENT_INIT`,
+  `${p}/ASSIGN_INGREDIENT_DONE`,
+  `${p}/ASSIGN_INGREDIENT_FAIL`
+)();
+
+export const unassignIngredientAsync = createAsyncAction(
+  `${p}/UNASSIGN_INGREDIENT_INIT`,
+  `${p}/UNASSIGN_INGREDIENT_DONE`,
+  `${p}/UNASSIGN_INGREDIENT_FAIL`
+)();
+
 export const updateMenuitemInit = payload => ({
   type: types.UPDATE_MENUITEM_INIT,
   payload,

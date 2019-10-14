@@ -7,8 +7,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import RemoveCircle from '@material-ui/icons/RemoveCircle';
 import RemoveCircleOutline from '@material-ui/icons/RemoveCircleOutline';
 import {
-  assignIngredient,
-  unassignIngredient,
+  assignIngredientAsync,
+  unassignIngredientAsync,
   setIngredientExcludability
 } from 'ducks/menuItem/actions';
 import { listOfIngredients } from 'ducks/ingredient/selectors';
@@ -120,8 +120,8 @@ export default connect(
   }),
   {
     fetchIngredients: fetchIngredientsAsync.request,
-    assignIngredient,
-    unassignIngredient,
+    assignIngredient: assignIngredientAsync.request,
+    unassignIngredient: unassignIngredientAsync.request,
     setIngredientExcludability
   },
 )(ItemIngredients);

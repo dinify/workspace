@@ -2,12 +2,13 @@ import pipe from 'ramda/es/pipe';
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
+import uniq from 'ramda/es/uniq';
 import * as menuCategoryTypes from 'ducks/menuCategory/types';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import { getType } from 'typesafe-actions';
 import { fetchMenuCategoriesAsync } from '../menuCategory/actions';
 import * as types from './types';
-import { fetchMenuItemAsync, createMenuItemAsync } from './actions';
+import { fetchMenuItemAsync, createMenuItemAsync, assignIngredientAsync, unassignIngredientAsync } from './actions';
 
 const initialState = {
   all: {},
@@ -31,6 +32,27 @@ export default function reducer(state = initialState, action) {
     case getType(createMenuItemAsync.success): {
       const newItem = payload;
       return assocPath(['all', newItem.id], newItem)(state);
+    }
+
+    case getType(assignIngredientAsync.request): {
+      const { menuItemId, ingredientId } = payload;
+      const compoundId = `${menuItemId}.${ingredientId}`;
+      return assocPath(
+        ['all', menuItemId, 'menuIngredients'],
+        uniq([
+          ...state.all[menuItemId].menuIngredients,
+          compoundId
+        ])
+      )(state);
+    }
+
+    case getType(unassignIngredientAsync.request): {
+      const { menuItemId, ingredientId } = payload;
+      const compoundId = `${menuItemId}.${ingredientId}`;
+      return assocPath(
+        ['all', menuItemId, 'menuIngredients'],
+        state.all[menuItemId].menuIngredients.filter((id) => id !== compoundId)
+      )(state);
     }
 
     case types.UPDATE_MENUITEM_INIT: {
