@@ -13,7 +13,9 @@ import { ListToMap, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { getType } from 'typesafe-actions';
 import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync } from './actions';
+import { normalize } from 'normalizr';
 import * as types from './types';
+import { menuItem } from './schemas.ts';
 
 const fetchMenuItemEpic = (action$, state$) =>
   action$.pipe(
@@ -24,13 +26,14 @@ const fetchMenuItemEpic = (action$, state$) =>
       const lang = state$.value.restaurant.defaultLanguage;
 
       return fromPromise(API.GetMenuItem({ menuItemId: id }, lang)).pipe(
-        map((res) => ({
-          type: 'GET_MENUITEM_DONE',
-          payload: res
-        })),
+        map((res) => {
+          const normalized = normalize(res, menuItem);
+
+          return fetchMenuItemAsync.success(normalized);
+        }),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: 'GET_MENUITEM_FAIL',
+          failActionType: getType(fetchMenuItemAsync.failure),
           initAction: action
         }))
       );

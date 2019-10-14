@@ -43,26 +43,37 @@ const Excludability = ({ selectedFoodId, setIngredientExcludability }) => ({ ing
 
 
 const ItemIngredients = ({
-  selectedFoodId,
+  selectedFood,
   ingredientsList,
+  ingredientMap,
   fetchIngredients,
   ingredientsLoaded,
-  menuItems,
   assignIngredient,
   unassignIngredient,
   setIngredientExcludability,
-  defaultLang,
-  t
+  t,
+  defaultLang
 }) => {
+
   const shouldLoad = ingredientsList.length < 1 && !ingredientsLoaded;
+
   useEffect(() => {
     if (shouldLoad) fetchIngredients();
   }, []);
-  const selectedFood = menuItems[selectedFoodId];
+
   if (!selectedFood) {
     return <div />;
   }
-  const assignedIngredients = selectedFood.menuIngredients || [];
+
+  let assignedIngredients = [];
+
+  if (selectedFood.menuIngredients) {
+    assignedIngredients = selectedFood.menuIngredients.map((compoundId) => {
+      const ingredientId = compoundId.split('.')[1];
+      return ingredientMap[ingredientId];
+    });
+  }
+
   const assignedIngredientsIds = assignedIngredients.map(o => o.id);
 
   const dataSource = ingredientsList
@@ -77,11 +88,11 @@ const ItemIngredients = ({
           list={assignedIngredients}
           rmButtonFunction={ingredient =>
             unassignIngredient({
-              menuItemId: selectedFoodId,
+              menuItemId: selectedFood.id,
               ingredientId: ingredient.id
             })
           }
-          ActionComponent={Excludability({ selectedFoodId, setIngredientExcludability })}
+          ActionComponent={Excludability({ selectedFoodId: selectedFood.id, setIngredientExcludability })}
         />
       ) : (
         t('menu.noIngredients')
@@ -91,7 +102,7 @@ const ItemIngredients = ({
         placeholder={(t('menu.selectIngredients'))}
         onChange={ingredient =>
           assignIngredient({
-            menuItemId: selectedFoodId,
+            menuItemId: selectedFood.id,
             ingredientId: ingredient.value
           })
         }
@@ -102,9 +113,9 @@ const ItemIngredients = ({
 
 export default connect(
   state => ({
+    ingredientMap: state.ingredient.all,
     ingredientsList: listOfIngredients(state),
     ingredientsLoaded: state.ingredient.loaded,
-    menuItems: state.menuItem.all,
     defaultLang: state.restaurant.defaultLanguage
   }),
   {

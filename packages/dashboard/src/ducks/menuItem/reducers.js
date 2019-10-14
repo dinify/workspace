@@ -24,9 +24,8 @@ export default function reducer(state = initialState, action) {
     }
 
     case getType(fetchMenuItemAsync.success): {
-      const res = payload;
-      if (!res) return state;
-      return assocPath(['all', res.id], res)(state);
+      const menuItems = payload.entities.menuItems;
+      return assoc('all', { ...state.all, ...menuItems })(state);
     }
 
     case getType(createMenuItemAsync.success): {

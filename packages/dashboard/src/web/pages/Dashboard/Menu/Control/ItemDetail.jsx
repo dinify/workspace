@@ -172,7 +172,7 @@ let ItemDetail = ({
 
       <CardContent>
         <CardLabel>{menuItemName} {t('nav.customizations')}</CardLabel>
-        <ItemIngredients t={t} selectedFoodId={selectedFoodId} />
+        <ItemIngredients t={t} selectedFood={selectedFood} />
         <ItemOptions t={t} selectedFoodId={selectedFoodId} />
         <ItemAddons t={t} selectedFoodId={selectedFoodId} />
       </CardContent>

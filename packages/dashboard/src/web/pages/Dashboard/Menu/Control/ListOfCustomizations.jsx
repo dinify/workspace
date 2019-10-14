@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Chip from '@material-ui/core/Chip';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import { getT } from '@dinify/common/src/lib/translation.ts';
+import { connect } from 'react-redux';
 
 export const Customizations = styled.div`
   margin-top: 10px;
@@ -38,7 +40,7 @@ const styles = theme => ({
   },
 });
 
-const ListOfCustomizations = ({ list, rmButtonFunction, classes, ActionComponent }) => {
+const ListOfCustomizations = ({ list, rmButtonFunction, classes, ActionComponent, lang }) => {
   if (list && list.length > 0) {
     return (
       <MuiThemeProvider theme={theme}>
@@ -49,7 +51,7 @@ const ListOfCustomizations = ({ list, rmButtonFunction, classes, ActionComponent
               key={i}
               label={
                 <span style={{ whiteSpace: 'nowrap' }}>
-                  {customization.name}{' '}
+                  {getT(customization.translations, lang)}{' '}
                   {customization.price ? `${customization.price.amount}${customization.price.currency}` : ''}
                   {ActionComponent ? <ActionComponent ingredient={customization} /> : ''}
                 </span>
@@ -65,4 +67,8 @@ const ListOfCustomizations = ({ list, rmButtonFunction, classes, ActionComponent
   return null;
 };
 
-export default withStyles(styles)(ListOfCustomizations);
+export default connect(
+  (state) => ({
+    lang: state.restaurant.defaultLanguage,
+  })
+)(withStyles(styles)(ListOfCustomizations));

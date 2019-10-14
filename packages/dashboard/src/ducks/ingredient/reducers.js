@@ -7,6 +7,7 @@ import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 import { getType } from 'typesafe-actions';
 import { fetchIngredientsAsync, createIngredientAsync } from './actions';
+import { fetchMenuItemAsync } from '../menuItem/actions';
 
 const initialState = {
   all: {},
@@ -22,7 +23,7 @@ export default function reducer(state = initialState, action) {
     case getType(fetchIngredientsAsync.success): {
       const ingredients = payload;
       return pipe(
-        assoc('all', ListToMap(ingredients)),
+        assoc('all', { ...state.all, ...ListToMap(ingredients)}),
         assoc('loaded', true)
       )(state);
     }    
@@ -30,6 +31,11 @@ export default function reducer(state = initialState, action) {
     case getType(createIngredientAsync.success): {
       const newIngredient = payload;
       return assocPath(['all', newIngredient.id], newIngredient)(state);
+    }
+
+    case getType(fetchMenuItemAsync.success): {
+      const ingredients = payload.entities.ingredients;
+      return assoc('all', { ...state.all, ...ingredients })(state);
     }
 
 
