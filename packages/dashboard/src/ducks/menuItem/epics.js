@@ -12,7 +12,7 @@ import assocPath from 'ramda/es/assocPath';
 import { ListToMap, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { getType } from 'typesafe-actions';
-import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync, assignIngredientAsync, unassignIngredientAsync } from './actions';
+import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync, assignIngredientAsync, unassignIngredientAsync, assignAddonAsync, unassignAddonAsync } from './actions';
 import { normalize } from 'normalizr';
 import * as types from './types';
 import { menuItem } from './schemas.ts';
@@ -177,62 +177,55 @@ export const setIngredientExcludabilityEpic = (action$, state$) =>
     })    
   )
 
-export const assignAddonEpic = (action$, state$) => 
+export const assignAddonEpic = (action$) => 
   action$.pipe(
-    ofType(types.ASSIGN_ADDON_INIT),
+    ofType(getType(assignAddonAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, addonId } = payload;
-      const addon = state$.value.addon.all[addonId];
-      const menuItem = state$.value.menuItem.all[menuItemId];
-      if (!addon || !menuItem) {
-        return of({
-          type: types.ASSIGN_ADDON_FAIL,
-          payload: 'addon and menuItem required'
-        });
-      }
-      if (ListToMap(menuItem.addons)[addonId]) {
-        return of({
-          type: types.ASSIGN_ADDON_FAIL,
-          payload: 'addon already assigned'
-        });        
-      }
-      const updatePayload = {
-        id: menuItemId,
-        addons: [...menuItem.addons, addon]
-      }
-      return of({
-        type: types.UPDATE_MENUITEM_INIT,
-        payload: updatePayload,
-      });
-    })
-  )
 
-export const unassignAddonEpic = (action$, state$) => 
+      const body = {
+        addonId,
+        published: true,
+        excludable: false
+      }
+
+      return fromPromise(API.AssignAddon(menuItemId, body)).pipe(
+        map((res) => ({
+          type: getType(assignAddonAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(assignAddonAsync.failure),
+          initAction: action
+        }))
+      );
+    })
+  );
+
+export const unassignAddonEpic = (action$) => 
   action$.pipe(
-    ofType(types.UNASSIGN_ADDON_INIT),
+    ofType(getType(unassignAddonAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, addonId } = payload;
-      const addon = state$.value.addon.all[addonId];
-      const menuItem = state$.value.menuItem.all[menuItemId];
-      if (!addon || !menuItem) {
-        return of({
-          type: types.UNASSIGN_ADDON_FAIL,
-          payload: 'addon and menuItem required'
-        });
-      }
-      const newAddons = filter((i) => i.id !== addonId, menuItem.addons);
-      const updatePayload = {
-        id: menuItemId,
-        addons: newAddons
-      }
-      return of({
-        type: types.UPDATE_MENUITEM_INIT,
-        payload: updatePayload,
-      });
+
+      return fromPromise(API.UnassignAddon(menuItemId, { addonId })).pipe(
+        map((res) => ({
+          type: getType(unassignAddonAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(unassignAddonAsync.failure),
+          initAction: action
+        }))
+      );
     })
-  )
+  );
 
 export const assignOptionEpic = (action$, state$) => 
   action$.pipe(

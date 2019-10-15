@@ -36,6 +36,18 @@ export const unassignIngredientAsync = createAsyncAction(
   `${p}/UNASSIGN_INGREDIENT_FAIL`
 )();
 
+export const assignAddonAsync = createAsyncAction(
+  `${p}/ASSIGN_ADDON_INIT`,
+  `${p}/ASSIGN_ADDON_DONE`,
+  `${p}/ASSIGN_ADDON_FAIL`
+)();
+
+export const unassignAddonAsync = createAsyncAction(
+  `${p}/UNASSIGN_ADDON_INIT`,
+  `${p}/UNASSIGN_ADDON_DONE`,
+  `${p}/UNASSIGN_ADDON_FAIL`
+)();
+
 export const updateMenuitemInit = payload => ({
   type: types.UPDATE_MENUITEM_INIT,
   payload,
