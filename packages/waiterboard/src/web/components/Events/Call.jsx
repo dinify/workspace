@@ -74,7 +74,7 @@ export default compose(
   withStyles(styles),
   connect(
 		state => ({
-			services: relevantServices(state),
+			services: state.service.all,
 			confirming: state.order.confirming
 		}),
 		{

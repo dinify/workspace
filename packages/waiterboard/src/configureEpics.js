@@ -10,6 +10,7 @@ import { callEpics } from 'ducks/call';
 import { orderEpics } from 'ducks/order';
 import { seatEpics } from 'ducks/seat';
 import { billEpics } from 'ducks/bill';
+import serviceEpics from 'ducks/service/epics';
 
 const rootEpic = (action$, state$, firebase, ...rest) => {
   const epic = combineEpics(
@@ -23,6 +24,7 @@ const rootEpic = (action$, state$, firebase, ...rest) => {
     ...tableEpics,
     ...orderEpics,
     ...seatEpics,
+    ...serviceEpics,
     ...billEpics
   );
   const output = epic(
