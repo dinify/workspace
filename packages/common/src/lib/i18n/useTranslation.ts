@@ -105,7 +105,7 @@ export default (defaults: Params = {}) => {
     globalize: null
   };
 
-  return { t, i18n };
+  return { t, i18n, cldr };
 }
 
 let alreadyLogged: any[] = [];

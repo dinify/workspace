@@ -94,7 +94,7 @@ const Account = ({
   setLocale,
   ...other
 }) => {
-  const { t, i18n } = useTranslation();
+  const { t, cldr } = useTranslation();
   let primaryLang;
   if (profile && profile.language) primaryLang = getLang(profile.language.primary);
 
@@ -153,7 +153,7 @@ const Account = ({
           <ListItemIcon>
             <CashMultiple />
           </ListItemIcon>
-          <ListItemText primary={i18n.format(displayCurrency, 'currencyName')} secondary={displayCurrency} />
+          <ListItemText primary={cldr.Numbers.getCurrencyDisplayName(displayCurrency, { context: 'standalone' })} secondary={displayCurrency} />
           <ChevronRight color="action"/>
         </ListItem>}
         {!displayCurrency && <div style={{padding: '0 24px 16px 24px'}}>

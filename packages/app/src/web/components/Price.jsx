@@ -16,7 +16,7 @@ const Price = ({
   if (!price) return null;
 
   // eslint-disable-next-line no-unused-vars
-  const { t, i18n } = useTranslation();
+  const { t, cldr } = useTranslation();
 
   // TODO: move this to server side with precision and rounding based on currency
   const convert = (amt, from, to) => {
@@ -30,7 +30,7 @@ const Price = ({
   const number = convert(parseFloat(price.amount), price.currency, displayCurrency);
   return (
     <span style={{textTransform: 'none'}}>
-      {i18n.format(number, `currency:${displayCurrency}`)}
+      {cldr.Numbers.formatCurrency(number, displayCurrency)}
     </span>
   );
 }

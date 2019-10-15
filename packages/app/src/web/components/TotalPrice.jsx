@@ -9,13 +9,15 @@ const TotalPrice = ({
   price,
   ...props
 }) => {
-  const { t, i18n } = useTranslation();
+  const { t, cldr } = useTranslation();
   return (
     <React.Fragment>
       {profile && price && profile.displayCurrency && profile.displayCurrency !== price.currency && (
         <div style={{display: 'flex', alignItems: 'center'}}>
           <Typography style={{flex: 1}} variant="caption">
-            {t('totalConverted', {currencyName: i18n.format(profile.displayCurrency, `currencyName:${price.amount}`)})}
+            {t('totalConverted', {currencyName: cldr.Numbers.getCurrencyDisplayName(profile.displayCurrency, {
+              context: 'standalone'
+            })})}
           </Typography>
           <Typography variant="overline">
             <Price price={price} />
