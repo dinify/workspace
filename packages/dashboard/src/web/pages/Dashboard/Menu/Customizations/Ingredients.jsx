@@ -21,7 +21,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Text from 'web/components/MaterialInputs/Text';
 import { getT } from '@dinify/common/src/lib/translation.ts';
 
-
 import {
   fetchIngredientsAsync,
   createIngredientAsync,
@@ -78,7 +77,7 @@ const Ingredients = ({
   createIngredient,
   ingredientsList,
   fetchIngredients,
-  ingredientsLoaded,
+  // ingredientsLoaded,
   removeIngredient,
   // updateIngredient,
   styles,
@@ -88,11 +87,11 @@ const Ingredients = ({
 }) => {
   const { t } = useTranslation();
 
-  const shouldLoad = ingredientsList.length < 1 && !ingredientsLoaded;
+  // const shouldLoad = ingredientsList.length < 1 && !ingredientsLoaded;
   useEffect(() => {
-    if (shouldLoad) fetchIngredients()
+    fetchIngredients()
   }, []);
-  if (shouldLoad) return <Loading />;
+  // if (shouldLoad) return <Loading />;
 
   return (
     <React.Fragment>
@@ -104,8 +103,8 @@ const Ingredients = ({
               name,
               form: 'customizations/ingredient'
             })}
-            progress={progressMap['CREATE_INGREDIENT']}
-            errorMessage={errorsMap['CREATE_INGREDIENT']}
+            progress={progressMap.CREATE_INGREDIENT}
+            errorMessage={errorsMap.CREATE_INGREDIENT}
           />
         </CardContent>
       </Card>

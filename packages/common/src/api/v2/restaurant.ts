@@ -107,9 +107,15 @@ export const ConfirmCall = ({ callId }: { callId: string }): Promise<any> => Pat
   path: `service/call/${callId}/confirm`
 });
 
-export const GetServicesOfRestaurant = ({ restaurantId }: { restaurantId: string }): Promise<any> => Get({
-  path: `restaurant/${restaurantId}/services`
-});
+export const GetServicesOfRestaurant = ({ restaurantId, defLang }: any): Promise<any> => {
+  let append = '';
+  if (defLang) {
+    append = '?defLang=true'
+  }
+  return Get({
+    path: `restaurant/${restaurantId}/services${append}`
+  });
+}
 
 export const GetLanguagesOfRestaurant = ({ restaurantId }: { restaurantId: string }): Promise<any> => Get({
   path: `restaurant/${restaurantId}/languages`

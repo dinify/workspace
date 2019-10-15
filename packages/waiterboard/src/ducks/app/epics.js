@@ -44,7 +44,7 @@ const getLoggedEpic = (action$, state$) =>
       if (selectedRestaurant) reactions.push({
         type: restaurantTypes.FETCH_RESTAURANT_INIT,
         payload: {
-          populateWith: 'waiterboards.tables,services.image',
+          populateWith: 'waiterboards.tables',
           node: true
         }
       });
