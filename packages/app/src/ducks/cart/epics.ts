@@ -1,5 +1,5 @@
 import { of, from } from 'rxjs';
-import { map as rxMap, mergeMap, switchMap, catchError, debounceTime, filter } from 'rxjs/operators';
+import { map as rxMap, mergeMap, switchMap, catchError, debounceTime } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
 import { fetchSeatsInit } from '../seat/actions.js';
 import { getType } from 'typesafe-actions';
@@ -32,9 +32,14 @@ const getCartEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(fetchCartAsync.request)),
     switchMap((action) => from(API.GetCart()).pipe(
-      filter((res: any) => !!res && !!res.items),
+      rxMap(res => {
+        if (!!res && !!res.items && res.items.length > 0) {
+          return res; 
+        } else {
+          throw new Error('Invalid response structure');
+        }
+      }),
       rxMap((res: CartResponse) => {
-
         // const orderItems: OrderItem[] = res.items;
         // const addonsByOrderItemId = keyedPropsOfList('id', 'orderAddons')(orderItems);
 

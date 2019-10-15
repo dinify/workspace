@@ -1,5 +1,5 @@
 import { of, from } from 'rxjs';
-import { map as rxMap, mergeMap, catchError, filter } from 'rxjs/operators';
+import { map as rxMap, mergeMap, catchError } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import {
   initTransactionAsync, fetchBillAsync
@@ -52,7 +52,13 @@ const getBillEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(fetchBillAsync.request)),
     mergeMap((action) => from(API.GetBill()).pipe(
-      filter((res: any) => !!res && !!res.orders),
+      rxMap(res => { 
+        if (!!res && !!res.orders && res.orders.length > 0) {
+          return res; 
+        } else {
+          throw new Error('Invalid response structure');
+        }
+      }),
       rxMap((res: BillResponse) => {
         const normalized: BillResponseN = normalize(res, bill);
         return fetchBillAsync.success(normalized);
