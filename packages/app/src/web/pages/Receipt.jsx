@@ -15,7 +15,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import * as FN from '@dinify/common/dist/lib/FN';
 import { fetchReceiptInit } from 'ducks/transaction/actions';
-import moment from 'moment';
 
 const styles = theme => ({
   summary: {
@@ -57,7 +56,7 @@ class Receipt extends React.Component {
                 <ListItemIcon>
                   <Event />
                 </ListItemIcon>
-                <ListItemText style={{padding: 0}} primary={moment().format("MMM Do YYYY")} secondary="Checked in" />
+                <ListItemText style={{padding: 0}} primary={"current date"} secondary="Checked in" />
               </ListItem>
             </Grid>
             <Grid item xs={6} sm={4}>

@@ -9,7 +9,6 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import ValuePicker from 'web/components/ValuePicker';
-import addDays from 'date-fns/addDays'
 import { setGuestsInit, setTimeInit, setDateInit } from 'ducks/booking/actions';
 
 const BookingForm = ({
@@ -40,7 +39,6 @@ const BookingForm = ({
           <div className="picker">
             <Calendar
               disablePast
-              maxDate={addDays(selectedDate, 60)}
               leftArrowIcon={<ChevronLeft/>}
               rightArrowIcon={<ChevronRight/>}
               date={date}
