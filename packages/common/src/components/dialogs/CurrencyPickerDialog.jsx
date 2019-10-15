@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { withStateHandlers } from 'recompose';
 import { Motion, spring } from 'react-motion';
 import { withStyles } from '@material-ui/core/styles';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../../lib/i18n';
 
 import match from 'autosuggest-highlight/umd/match';
 import parse from 'autosuggest-highlight/umd/parse';
@@ -43,13 +43,14 @@ const CurrencyPickerDialog = (props) => {
     onClose,
     resetState,
     initialSelectedCurrency,
+    locale,
     ...other
   } = props;
 
-  const { t, i18n } = useTranslation();
+  const { t, cldr } = useTranslation(locale);
 
   const localizeMap = (list) => list.map(code => ({
-    code, name: i18n.format(code, 'currencyName')
+    code, name: cldr.Numbers.getCurrencyDisplayName(code)
   }));
 
   const searchFilter = (list) => R.filter(currency => {
@@ -71,12 +72,7 @@ const CurrencyPickerDialog = (props) => {
   }
 
   const sections = [];
-  
-  let suggestedCodes = [];
-  if (i18n.globalize) {
-    const country = i18n.globalize.cldr.attributes.territory; // TODO: use ip-api.com/json countryCode as fallback
-    suggestedCodes = defaultCurrencies[country];
-  }
+  let suggestedCodes = [cldr.Numbers.getCurrencyForRegion(cldr.General.locale().tag.region())];
   if (suggestedCodes && suggestedCodes.length > 0) {
     const items = searchFilter(localizeMap(suggestedCodes));
     if (items.length > 0) {

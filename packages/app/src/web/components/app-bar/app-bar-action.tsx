@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 
 import { select } from '../../../lib/platform';
 import { Typography } from '../../components/typography'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 type AppBarActionType = 'close' | 'cancel' | 'edit' | 'done' | 'back';
 

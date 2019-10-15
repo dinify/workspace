@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { openDialog } from 'ducks/ui/actions';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { openDialogAction } from 'ducks/ui/actions';
 import { matchPath } from 'react-router';
 import { connect } from 'react-redux';
 import { getOrderItemCount as getCartCount } from 'ducks/cart/selectors';
@@ -109,14 +109,13 @@ export default connect(
   (state) => ({
     user: state.firebase.auth,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
-    bottomBarOpen: getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0,
-    location: state.router.location
+    bottomBarOpen: getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0
   }),
   {
-    openDialog,
+    openDialog: openDialogAction,
     fetchStatus: fetchStatusAsync.request,
     fetchCart: fetchCartAsync.request,
     fetchBill: fetchBillAsync.request
   }
-)(withRoot(App));
+)(withRouter(withRoot(App)));
 

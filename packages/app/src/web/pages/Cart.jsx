@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { withStateHandlers } from 'recompose';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 import Delete from '@material-ui/icons/DeleteRounded';
 import Done from '@material-ui/icons/DoneRounded';

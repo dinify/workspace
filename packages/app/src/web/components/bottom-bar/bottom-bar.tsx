@@ -1,6 +1,6 @@
 import React from 'react';
 import { compose } from 'redux';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { useSpring, animated } from 'react-spring';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';

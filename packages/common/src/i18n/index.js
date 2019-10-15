@@ -85,9 +85,6 @@ export default ({ namespace, lang, fallback }) => {
       bindI18n: 'languageChanged loaded',
       bindI18nStore: 'added removed',
       nsMode: 'default'
-    },
-    backend: {
-      loadPath: `${ROOT}/i18n/translations/{{lng}}/{{ns}}`,
     }
   };
 

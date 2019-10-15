@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, AppBarAction, AppBarTitle } from '../components/app-bar';
 import Services from '../pages/Services';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 export const ServicesScreen: React.FC<{
   onClose?: () => void

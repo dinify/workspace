@@ -5,6 +5,7 @@ import { ofType } from 'redux-observable';
 import i18next from 'i18next';
 import { setCookie, getCookie } from '@dinify/common/dist/lib/FN';
 import { actionTypes } from 'react-redux-firebase';
+import { setLocaleAction } from '../ui/actions';
 
 const languageHeaderEpic = (action$, state$) =>
   action$.pipe(
@@ -44,7 +45,7 @@ const languageSettingEpic = (action$, state$) =>
           setCookie('language', val, 90);
 
           // TODO: Get i18n instance from context instead of direct import
-          i18next.changeLanguage(language.primary);
+          // i18next.changeLanguage(language.primary);
 
           return of({ type: 'LANGUAGE_UPDATED' });
         }

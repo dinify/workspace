@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { withTranslation } from 'react-i18next';
+import { withTranslation } from '@dinify/common/src/lib/i18n';
 import Person from '@material-ui/icons/PersonRounded';
 import Typography from '@material-ui/core/Typography';
 import ScrollSnapView from 'web/components/ScrollSnapView';

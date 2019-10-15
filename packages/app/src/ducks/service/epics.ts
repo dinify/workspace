@@ -4,7 +4,8 @@ import { ofType, Epic } from 'redux-observable';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { callServiceAsync, fetchServicesAsync } from './actions';
-import { i18nInstance } from '../../web';
+// TODO: fix this shit
+import { currentT as t } from '@dinify/common/src/lib/i18n/useTranslation';
 import { getType } from 'typesafe-actions';
 
 const snackbar = require('material-ui-snackbar-redux').snackbarActions;
@@ -38,7 +39,7 @@ const callServiceEpic: Epic = (action$) =>
         mergeMap(res => of(
           callServiceAsync.success(res),
           snackbar.show({
-            message: i18nInstance.t('successMessages.service-called')
+            message: t('successMessages.service-called')
           })
         )),
         catchError(error => handleEpicAPIError({

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getContext } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
-import { toggleTheme as toggleThemeAction } from 'ducks/ui/actions';
+import { toggleThemeAction } from 'ducks/ui/actions';
 
 import LogoText from '@dinify/common/dist/icons/LogoText';
 import Logo from '@dinify/common/dist/icons/Logo';

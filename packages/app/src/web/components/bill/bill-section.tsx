@@ -6,7 +6,7 @@ import { getOrderItemIdsByStatus } from '../../../ducks/transaction/selectors';
 
 import Typography from '@material-ui/core/Typography';
 import BillItem from './bill-item';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 export interface BillSectionProps {
   type: OrderStatus,

@@ -5,14 +5,18 @@ import { getType } from 'typesafe-actions';
 import types from './types';
 import { fetchBillAsync } from '../ducks/transaction/actions.ts';
 
+// TODO: fix this shit
+import { currentT as t } from '@dinify/common/src/lib/i18n/useTranslation';
+
 const socket = io('https://ws.dinify.app');
 
-const websockets = (store, i18nInstance) => {
+const websockets = (store) => {
   const { dispatch, getState } = store;
-  const getUID = () => getState().firebase.auth.uid;
+  const state = getState();
+  const getUID = () => state.firebase.auth.uid;
 
   const initSocket = () => {
-    const auth = getState().firebase.auth;
+    const auth = state.firebase.auth;
     if (auth.uid) socket.emit('init', `user/${auth.uid}`);
   }
   window.initSocket = initSocket;
@@ -33,13 +37,13 @@ const websockets = (store, i18nInstance) => {
       });
       if (me) {
         dispatch(snackbar.show({
-          message: i18nInstance.t('paymentConfirmed')
+          message: t('paymentConfirmed')
         }));
       }
     }
     else if (me) {
       dispatch(snackbar.show({
-        message: i18nInstance.t('paymentCancelled')
+        message: t('paymentCancelled')
       }));
     }
   });
@@ -54,13 +58,13 @@ const websockets = (store, i18nInstance) => {
       });
       if (payload.order.initiator === getUID()) {
         dispatch(snackbar.show({
-          message: i18nInstance.t('orderConfirmed')
+          message: t('orderConfirmed')
         }));
       }
     }
     else if (payload.order.status === 'CANCELLED' && payload.order.initiator === getUID()) {
       dispatch(snackbar.show({
-        message: i18nInstance.t('orderCancelled')
+        message: t('orderCancelled')
       }));
     }
   });
@@ -69,12 +73,12 @@ const websockets = (store, i18nInstance) => {
     if (payload.call.status === 'CONFIRMED') {
       dispatch({ type: types.CONFIRMED_CALL, payload });
       dispatch(snackbar.show({
-        message: i18nInstance.t('serviceCallConfirmed')
+        message: t('serviceCallConfirmed')
       }));
     }
     else if (payload.call.status === 'CANCELLED') {
       dispatch(snackbar.show({
-        message: i18nInstance.t('serviceCallCancelled')
+        message: t('serviceCallCancelled')
       }));
     }
   });
@@ -84,7 +88,7 @@ const websockets = (store, i18nInstance) => {
     dispatch({ type: types.CHECKIN, payload: { ...data, me } });
     if (!me) {
       dispatch(snackbar.show({
-        message: i18nInstance.t('guestJoinedTable')
+        message: t('guestJoinedTable')
       }));
     }
   });
@@ -93,13 +97,13 @@ const websockets = (store, i18nInstance) => {
     if (payload.seat.userId === getUID()) {
       dispatch({ type: types.CHECKOUT_ALL, payload });
       dispatch(snackbar.show({
-        message: i18nInstance.t('checkedOut')
+        message: t('checkedOut')
       }));
     }
     else {
       dispatch({ type: types.CHECKOUT, payload });
       dispatch(snackbar.show({
-        message: i18nInstance.t('guestLeftTable')
+        message: t('guestLeftTable')
       }));
     }
   });
@@ -107,7 +111,7 @@ const websockets = (store, i18nInstance) => {
   socket.on('checkout-all', (payload) => {
     dispatch({ type: types.CHECKOUT_ALL, payload });
     dispatch(snackbar.show({
-      message: i18nInstance.t('checkedOut')
+      message: t('checkedOut')
     }));
   });
 
@@ -118,7 +122,7 @@ const websockets = (store, i18nInstance) => {
   socket.on('split', (payload) => {
     dispatch({ type: types.SPLIT, payload });
     dispatch(snackbar.show({
-      message: i18nInstance.t('newBillSplitItems')
+      message: t('newBillSplitItems')
     }))
   });
 

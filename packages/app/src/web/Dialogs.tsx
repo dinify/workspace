@@ -1,5 +1,5 @@
 import React from 'react';
-import { openDialog, closeDialog } from '../ducks/ui/actions';
+import { closeDialogAction } from '../ducks/ui/actions';
 import { connect } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import { ServicesScreen } from './screens';
@@ -7,8 +7,8 @@ import { CartPage } from './components/cart';
 import { BillPage } from './components/bill';
 
 const Dialogs = (props: {
-  dialogs: {[type: string]: boolean},
-  closeDialog: (type: string) => void
+  dialogs: {[dialogId: string]: boolean},
+  closeDialog: (dialogId: string) => void
 }) => {
   const { dialogs, closeDialog } = props;
   return (<>
@@ -29,7 +29,6 @@ export default connect(
     dialogs: state.ui.dialogs,
   }),
   {
-    openDialog,
-    closeDialog,
+    closeDialog: closeDialogAction,
   }
 )(Dialogs);

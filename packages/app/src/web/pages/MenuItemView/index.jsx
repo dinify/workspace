@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import FavoriteToggle from 'web/components/FavoriteToggle';
 import Typography from '@material-ui/core/Typography';
 import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';

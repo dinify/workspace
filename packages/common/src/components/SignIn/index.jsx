@@ -7,7 +7,7 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
 import queryString from 'query-string';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 import LogoText from '../../icons/LogoText';
 
@@ -39,6 +39,10 @@ const styles = theme => ({
 
 
 export class SignInForm extends React.Component {
+  state = {
+    dialog: null
+  };
+
   validateEmail = (email) => {
     const errors = {};
     if (!email) {
@@ -89,14 +93,19 @@ export class SignInForm extends React.Component {
       }
       // present user with dialog with options
       else {
-        openDialog({
-          id: 'account-exists',
-          component: (props) => <AccountExistsDialog
-            providerName="password"
-            email={email}
-            methods={methods}
-            {...props}/>
-        });
+        this.setState({dialog: {
+          providerName: "password",
+          email,
+          methods
+        }});
+        // openDialog({
+        //   id: 'account-exists',
+        //   component: (props) => <AccountExistsDialog
+        //     providerName="password"
+        //     email={email}
+        //     methods={methods}
+        //     {...props}/>
+        // });
       }
     });
   }
@@ -104,6 +113,10 @@ export class SignInForm extends React.Component {
   forgotPassword = ({ email }) => {
     const { firebase } = this.props;
     return firebase.auth().sendPasswordResetEmail(email);
+  }
+
+  handleClose = () => {
+    this.setState({ dialog: null });
   }
 
   render() {
@@ -117,6 +130,7 @@ export class SignInForm extends React.Component {
       setPage,
       env,
     } = this.props;
+    const { dialog } = this.state;
 
     const Button = ({children, ...otherProps}) => <MuiButton classes={{root: classes.button2}} {...otherProps}>{children}</MuiButton>;
 
@@ -153,84 +167,87 @@ export class SignInForm extends React.Component {
     }
 
     return (
-      <form
-        onSubmit={handleSubmit(submitFc)}
-        style={{height: 'calc(100vh - 112px)'}}
-      >
-        <ResponsiveContainer style={{
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <div style={{
-            marginLeft: 32,
-            marginRight: 32,
-            maxWidth: 512
+      <>
+        {dialog !== null && <AccountExistsDialog {...dialog} open={dialog !== null} onClose={this.handleClose}/>}
+        <form
+          onSubmit={handleSubmit(submitFc)}
+          style={{height: 'calc(100vh - 112px)'}}
+        >
+          <ResponsiveContainer style={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}>
             <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-              marginBottom: 16
+              marginLeft: 32,
+              marginRight: 32,
+              maxWidth: 512
             }}>
-              <Link to="/" style={{height: 40}}>
-                <div style={{
-                  height: 40,
-                  backgroundColor: "#c13939",
-                  color: "rgba(255, 255, 255, 1)",
-                  fill: "rgba(255, 255, 255, 1)",
-                  borderRadius: 20,
-                  padding: '8px 16px'
-                }}>
-                  <LogoText color="inherit"/>
-                </div>
-              </Link>
-              <Typography style={{marginTop: 16, marginBottom: 8}} variant="h6">
-                {formTitle}
-              </Typography>
-              <Typography align="center" variant="caption">
-                {formSubtitle}
-              </Typography>
-            </div>
-            <div style={{height: 185, overflow: 'hidden'}}>
-              <Fields env={env} t={t} />
-            </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+                marginBottom: 16
+              }}>
+                <Link to="/" style={{height: 40}}>
+                  <div style={{
+                    height: 40,
+                    backgroundColor: "#c13939",
+                    color: "rgba(255, 255, 255, 1)",
+                    fill: "rgba(255, 255, 255, 1)",
+                    borderRadius: 20,
+                    padding: '8px 16px'
+                  }}>
+                    <LogoText color="inherit"/>
+                  </div>
+                </Link>
+                <Typography style={{marginTop: 16, marginBottom: 8}} variant="h6">
+                  {formTitle}
+                </Typography>
+                <Typography align="center" variant="caption">
+                  {formSubtitle}
+                </Typography>
+              </div>
+              <div style={{height: 185, overflow: 'hidden'}}>
+                <Fields env={env} t={t} />
+              </div>
 
-            <div style={{
-              display: 'flex',
-              marginTop: 16
-            }}>
-              <Button onClick={leftButtonAction} variant="text" className={classes && classes.uncapitalized}>
-                {formOpen && <ChevronLeft style={{fontSize: '1.3125rem', marginLeft: -12}} />}
-                {formOpen ? t('back') : t('auth.newAccount')}
-              </Button>
-              <div style={{flex: 1}}/>
-              <Button
-                type="submit"
-                disabled={submitting}
-                variant="outlined"
-                color="primary"
-                className={classes && classes.uncapitalized}>
-                <Motion
-                  defaultStyle={{x: 1}}
-                  style={{x: spring(submitting ? 0 : 1, animConfig)}}>
-                  {style =>
-                    <div style={{ display: 'flex', opacity: style.x }}>
-                      {submitButtonText}
-                      {page === 'default' && <ChevronRight style={{fontSize: '1.3125rem', marginRight: -12}} />}
-                    </div>
-                  }
-                </Motion>
-                {submitting && <CircularProgress className={classes && classes.colorTextSecondary} style={{
-                    position: 'absolute'
-                }} size={16} thickness={6}/>}
-              </Button>
+              <div style={{
+                display: 'flex',
+                marginTop: 16
+              }}>
+                <Button onClick={leftButtonAction} variant="text" className={classes && classes.uncapitalized}>
+                  {formOpen && <ChevronLeft style={{fontSize: '1.3125rem', marginLeft: -12}} />}
+                  {formOpen ? t('back') : t('auth.newAccount')}
+                </Button>
+                <div style={{flex: 1}}/>
+                <Button
+                  type="submit"
+                  disabled={submitting}
+                  variant="outlined"
+                  color="primary"
+                  className={classes && classes.uncapitalized}>
+                  <Motion
+                    defaultStyle={{x: 1}}
+                    style={{x: spring(submitting ? 0 : 1, animConfig)}}>
+                    {style =>
+                      <div style={{ display: 'flex', opacity: style.x }}>
+                        {submitButtonText}
+                        {page === 'default' && <ChevronRight style={{fontSize: '1.3125rem', marginRight: -12}} />}
+                      </div>
+                    }
+                  </Motion>
+                  {submitting && <CircularProgress className={classes && classes.colorTextSecondary} style={{
+                      position: 'absolute'
+                  }} size={16} thickness={6}/>}
+                </Button>
+              </div>
             </div>
-          </div>
-        </ResponsiveContainer>
-      </form>
+          </ResponsiveContainer>
+        </form>
+      </>
     );
   }
 }

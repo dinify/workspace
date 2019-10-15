@@ -20,7 +20,7 @@ export const MapToList = (items: {[id: string]: any}, _options?: any) => {
   return list;
 }
 
-export const ListToMap = (items: []) => {
+export const ListToMap = (items: any[]) => {
   if (!items || !items.forEach) return {};
   const obj: {[id: string]: any} = {};
   items.forEach((item: any) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { useTransition } from 'react-spring';
 
 import { AppBar, AppBarTitle } from '../components/app-bar';

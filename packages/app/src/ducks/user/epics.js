@@ -13,6 +13,7 @@ const meFetchedEpic = (action$) =>
     ignoreElements()
   );
 
+// TODO reimplement redirect after signup in a cleaner way
 const redirectAfterSignInEpic = (action$) =>
   action$.pipe(
     ofType(actionTypes.LOGIN),

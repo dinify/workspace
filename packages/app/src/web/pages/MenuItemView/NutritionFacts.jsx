@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
@@ -13,7 +13,7 @@ const NutritionFacts = ({
   classes,
   calories
 }) => {
-  const { t, i18n } = useTranslation();
+  const { t, cldr } = useTranslation();
   if (!calories) return <div />;
   return (
     <div>
@@ -23,36 +23,18 @@ const NutritionFacts = ({
         variant="overline">
         {t('nutrition.facts')}
       </Typography>
-      <div style={{display: 'flex'}}>
-        <Typography style={{flex: 1}} >
-          {t('nutrition.fats')}
-        </Typography>
-        <Typography
-          style={{alignSelf: 'flex-end', textTransform: 'none'}}
-          variant="overline">
-          {i18n.format(calories.fats, 'unit:mass-gram,narrow')}
-        </Typography>
-      </div>
-      <div style={{display: 'flex'}}>
-        <Typography style={{flex: 1}} >
-          {t('nutrition.carbs')}
-        </Typography>
-        <Typography
-          style={{alignSelf: 'flex-end', textTransform: 'none'}}
-          variant="overline">
-          {i18n.format(calories.carbs, 'unit:mass-gram,narrow')}
-        </Typography>
-      </div>
-      <div style={{display: 'flex'}}>
-        <Typography style={{flex: 1}} >
-          {t('nutrition.proteins')}
-        </Typography>
-        <Typography
-          style={{alignSelf: 'flex-end', textTransform: 'none'}}
-          variant="overline">
-          {i18n.format(calories.proteins, 'unit:mass-gram,narrow')}
-        </Typography>
-      </div>
+      {['fats', 'carbs', 'proteins'].map(key => 
+        <div style={{display: 'flex'}}>
+          <Typography style={{flex: 1}} >
+            {t('nutrition.fats')}
+          </Typography>
+          <Typography
+            style={{alignSelf: 'flex-end', textTransform: 'none'}}
+            variant="overline">
+            {cldr.Units.formatQuantity({value: calories.fats, unit: 'gram'}, { length: 'narrow' })}
+          </Typography>
+        </div>
+      )}
       <div style={{display: 'flex'}}>
         <Typography style={{flex: 1}} >
           {t('nutrition.calories')}
@@ -60,7 +42,7 @@ const NutritionFacts = ({
         <Typography
           style={{alignSelf: 'flex-end', textTransform: 'none'}}
           variant="overline">
-          {i18n.format(calories.total, 'unit:energy-foodcalorie,narrow')}
+          {cldr.Units.formatQuantity({ value: calories.total, unit: 'foodcalorie' }, { length: 'narrow'})}
         </Typography>
       </div>
     </div>
