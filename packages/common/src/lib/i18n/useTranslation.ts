@@ -39,8 +39,8 @@ const i18nextFormatter = (value: any, format: string, cldr: CLDR): any => {
 // "Testing interpolation ${cldr.Calendars.formatDate(time, { time: 'short' })}";
 
 interface Params {
-  locale?: Locale, 
-  namespace?: Exclude<Namespace, 'common'>
+  locale: Locale, 
+  namespace: Exclude<Namespace, 'common'>
 }
 
 const getPromiseCreator = (language: string, namespaces: string[]) => () => {
@@ -62,8 +62,10 @@ const getPromiseCreator = (language: string, namespaces: string[]) => () => {
   }).catch(err => console.log(err));
 };
 
+type TFunction = (path: string[]|string, data?: any) => string;
+
 // useTranslation hook
-export default (defaults: Params = {}) => {
+export default (defaults: Partial<Params> = {}) => {
   const locale = useLocaleState(defaults.locale);
   const ns = defaults.namespace || namespace;
   const namespaces = ns === 'common' ? ['common'] : ['common', ns];
@@ -72,40 +74,45 @@ export default (defaults: Params = {}) => {
   const [translations, setTranslations] = useState(English);
   
   useEffect(() => {
-    once(`useTranslation-${language}`, getPromiseCreator(language, namespaces))
+    once(`translation-${language}`, getPromiseCreator(language, namespaces))
     .then(result => {
       setTranslations(result);
     });
   }, [language]);
 
-  const t = (path: string[]|string, data: any = {}) => {
-    const p: string[] = util.path(path);
-    let template = icepick.getIn(translations, p) || path;
-    data['cldr'] = cldr;
-    data['_i'] = (key: string, format: string) => {
-      const pi = util.path(key);
-      const val = icepick.getIn(data, pi);
-      return i18nextFormatter(val, format, cldr);
-    };
-    
-    if (template.includes('{{')) {
-      template = i18next2es6(template);
-    }
+  const _t: TFunction = (path, data) => t(path, data, cldr, translations);
 
-    return util.substitute(template, data);
-  };
+  currentT = _t;
 
-  const i18n = {
-    format: (a: any, b: any) => {
-      if (!alreadyLogged.includes(b)) {
-        alreadyLogged.push(b);
-        console.log(a, b)
-      }
-    },
-    globalize: null
-  };
-
-  return { t, i18n, cldr };
+  return { t: _t, cldr };
 }
 
-let alreadyLogged: any[] = [];
+export let currentT: TFunction;
+
+export const getTranslation = (defaults: Params) => {
+  const ns = defaults.namespace || namespace;
+  const namespaces = ['common', ns];
+  const language = defaults.locale.tag.language();
+  return once(`translation-${language}`, getPromiseCreator(language, namespaces))
+  .then(result => {
+    const _t: TFunction = (path, data) => t(path, data, null, result);
+    return _t;
+  });
+};
+
+export const t = (path: string[]|string, data: any = {}, cldr: CLDR|null, translations: any) => {
+  const p: string[] = util.path(path);
+  let template = icepick.getIn(translations, p) || path;
+  data['cldr'] = cldr;
+  data['_i'] = (key: string, format: string) => {
+    const pi = util.path(key);
+    const val = icepick.getIn(data, pi);
+    return cldr ? i18nextFormatter(val, format, cldr) : val;
+  };
+  
+  if (template.includes('{{')) {
+    template = i18next2es6(template);
+  }
+
+  return util.substitute(template, data);
+};

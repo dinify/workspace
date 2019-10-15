@@ -43,13 +43,14 @@ const CurrencyPickerDialog = (props) => {
     onClose,
     resetState,
     initialSelectedCurrency,
+    locale,
     ...other
   } = props;
 
-  const { t, i18n } = useTranslation();
+  const { t, cldr } = useTranslation(locale);
 
   const localizeMap = (list) => list.map(code => ({
-    code, name: i18n.format(code, 'currencyName')
+    code, name: cldr.Numbers.getCurrencyDisplayName(code)
   }));
 
   const searchFilter = (list) => R.filter(currency => {
@@ -71,12 +72,7 @@ const CurrencyPickerDialog = (props) => {
   }
 
   const sections = [];
-  
-  let suggestedCodes = [];
-  if (i18n.globalize) {
-    const country = i18n.globalize.cldr.attributes.territory; // TODO: use ip-api.com/json countryCode as fallback
-    suggestedCodes = defaultCurrencies[country];
-  }
+  let suggestedCodes = [cldr.Numbers.getCurrencyForRegion(cldr.General.locale().tag.region())];
   if (suggestedCodes && suggestedCodes.length > 0) {
     const items = searchFilter(localizeMap(suggestedCodes));
     if (items.length > 0) {

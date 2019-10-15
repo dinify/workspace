@@ -95,6 +95,7 @@ const Account = ({
   ...other
 }) => {
   const { t, cldr } = useTranslation();
+  const locale = cldr.General.locale();
   let primaryLang;
   if (profile && profile.language) primaryLang = getLang(profile.language.primary);
 
@@ -256,6 +257,7 @@ const Account = ({
       </div>
 
       <CurrencyPickerDialog
+        locale={locale}
         open={currencyDialogOpen}
         onClose={(currencyCode) => {
           if (currencyCode) {
@@ -270,6 +272,7 @@ const Account = ({
         }}/>
 
       <LanguagePickerDialog
+        locale={locale}
         open={langDialogOpen}
         initialSelectedLanguage={initialSelectedLanguage}
         onClose={(langtag) => {

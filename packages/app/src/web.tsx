@@ -8,8 +8,6 @@ import { ConnectedRouter } from 'connected-react-router';
 import { getOrderItemCount as getCartCount } from './ducks/cart/selectors';
 import App from './web/App';
 import { SnackbarProvider } from 'material-ui-snackbar-redux';
-import i18n from '@dinify/common/src/i18n';
-import { getCookie } from '@dinify/common/src/lib/FN';
 import { ReactReduxFirebaseProvider, ReactReduxFirebaseProviderProps, ReactReduxFirebaseConfig } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -28,23 +26,7 @@ setTranslationsNamespace('app');
 const history = createBrowserHistory();
 const { store, persistor } = configureStore(history);
 
-let language = { primary: navigator.language, other: [] };
-const langCookie = getCookie('language');
-if (langCookie) {
-  try {
-    language = JSON.parse(langCookie);
-  } catch (e) {
-    console.error('JSON parse error');
-  }
-}
-
-export const i18nInstance = i18n({
-  namespace: 'app',
-  lang: language.primary,
-  fallback: language.other
-});
-
-websockets(store, i18nInstance);
+websockets(store);
 
 // react-redux-firebase config
 const rrfConfig: Partial<ReactReduxFirebaseConfig> = {

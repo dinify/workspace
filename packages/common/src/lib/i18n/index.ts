@@ -3,13 +3,13 @@ import { CLDRFramework, LocaleMatcher, LocaleMatch, Locale } from "@phensley/cld
 import EnglishPack from '@phensley/cldr/packs/en.json';
 import localizedLanguagesResource from './localized-languages.json';
 import defaultLanguagesResource from './default-languages.json';
-import wretch from 'wretch';
 import { useStore } from "react-redux";
+import wretch from 'wretch';
 
 // IDEA: use ICU compiled to webassembly !
 // or use @phensley/cldr
 
-const packurl = `https://cdn.jsdelivr.net/npm/@phensley/cldr@0.19.1/packs`;
+const packurl = `https://cdn.jsdelivr.net/npm/@phensley/cldr@0.19.3/packs`;
 
 export const getDetectedLocale = (): LocaleMatch => {
   let value = navigator.language;
@@ -74,6 +74,7 @@ export const useLocaleState = (defaultLocale?: Locale) => {
 export type Namespace = 'app'|'dashboard'|'landing'|'waiterboard'|'common';
 
 export let namespace: Namespace = 'common';
+
 export const setNamespace = (ns: Exclude<Namespace, 'common'>) => {
   namespace = ns;
 };
