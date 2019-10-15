@@ -239,11 +239,11 @@ const Account = ({
             );
           })}
           <ListItem button onClick={() => {openInNewTab('https://dashboard.dinify.app/')}} style={{paddingLeft: 80, paddingRight: 24}}>
-            <ListItemText primary={t('dashboard')}/>
+            <ListItemText primary="Dashboard"/>
             <OpenInNew style={{opacity: 0.54}}/>
           </ListItem>
           <ListItem button onClick={() => {openInNewTab('https://waiterboard.dinify.app/')}} style={{paddingLeft: 80, paddingRight: 24}}>
-            <ListItemText primary={t('waiterboard')}/>
+            <ListItemText primary="Waiterboard"/>
             <OpenInNew style={{opacity: 0.54}}/>
           </ListItem>
         </Card>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "@dinify/common/src/lib/i18n";
 import { connect } from 'react-redux';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
@@ -179,6 +179,11 @@ class Services extends React.Component {
   }
 }
 
+const Wrapper = (props) => {
+  const { t } = useTranslation();
+  return <Services t={t} {...props} />
+};
+
 export default connect(
   state => ({
     restaurant: state.restaurant.all[state.restaurant.checkedInRestaurant],
@@ -191,4 +196,4 @@ export default connect(
     call: callServiceAsync.request,
     fetchServices: fetchServicesAsync.request
   }
-)(withTranslation()(Services));
+)(Wrapper);

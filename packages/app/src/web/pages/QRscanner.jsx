@@ -1,5 +1,5 @@
 import React from "react";
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "@dinify/common/src/lib/i18n";
 import PhotoCamera from '@material-ui/icons/PhotoCameraRounded';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -170,4 +170,9 @@ class QRscanner extends React.Component {
   }
 }
 
-export default withTranslation()(QRscanner);
+const Wrapper = (props) => {
+  const { t } = useTranslation();
+  return <QRscanner t={t} {...props} />
+}; 
+
+export default Wrapper;
