@@ -9,7 +9,7 @@ import { ListToMap } from '@dinify/common/dist/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 import { getType } from 'typesafe-actions';
-import { fetchOptionsAsync } from './actions';
+import { fetchOptionsAsync, createOptionAsync, createChoiceAsync } from './actions';
 import { fetchMenuItemAsync } from '../menuItem/actions';
 
 const initialState = {
@@ -30,6 +30,21 @@ export default function reducer(state = initialState, action) {
         assoc('all', { ...state.all, ...options }),
         assoc('choices', { ...state.choices, ...choices }),
         assoc('loaded', true)
+      )(state);
+    }
+
+    case getType(createOptionAsync.success): {
+      const newOption = { ...payload, choices: [] };
+      return assocPath(['all', newOption.id], newOption)(state);
+    }
+
+    case getType(createChoiceAsync.success): {
+      const price = action.meta.difference;
+      const newChoice = { ...payload, price };
+      const oldChoicesIds = state.all[newChoice.optionId].choices;
+      return pipe(
+        assocPath(['all', newChoice.optionId, 'choices'], [...oldChoicesIds, newChoice.id]),
+        assocPath(['choices', newChoice.id], newChoice)
       )(state);
     }
 
@@ -76,16 +91,12 @@ export default function reducer(state = initialState, action) {
 
     case types.REMOVE_CHOICE_INIT: {
       const { id, optionId } = payload;
-      const choiceObj = state.all[optionId].choices[id];
+      const oldChoicesIds = state.all[optionId].choices;
+      const newChoicesIds = oldChoicesIds.filter(ch => ch !== id);
       return pipe(
-        assocPath(['backup', id], choiceObj),
-        dissocPath(['all', optionId, 'choices', id]),
+        assocPath(['all', optionId, 'choices'], newChoicesIds),
+        dissocPath(['choices', id]),
       )(state);
-    }
-
-    case types.REMOVE_CHOICE_FAIL: {
-      const { id, optionId } = payload.initPayload;
-      return assocPath(['all', optionId, 'choices', id], state.backup[id])(state);
     }
 
     case firebaseTypes.LOGOUT: {

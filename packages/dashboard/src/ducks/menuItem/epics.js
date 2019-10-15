@@ -12,7 +12,7 @@ import assocPath from 'ramda/es/assocPath';
 import { ListToMap, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { getType } from 'typesafe-actions';
-import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync, assignIngredientAsync, unassignIngredientAsync, assignAddonAsync, unassignAddonAsync } from './actions';
+import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync, assignIngredientAsync, unassignIngredientAsync, assignAddonAsync, unassignAddonAsync, assignOptionAsync, unassignOptionAsync } from './actions';
 import { normalize } from 'normalizr';
 import * as types from './types';
 import { menuItem } from './schemas.ts';
@@ -227,65 +227,55 @@ export const unassignAddonEpic = (action$) =>
     })
   );
 
-export const assignOptionEpic = (action$, state$) => 
-  action$.pipe(
-    ofType(types.ASSIGN_OPTION_INIT),
-    mergeMap((action) => {
-      const { payload } = action;
-      const { menuItemId, optionId } = payload;
-      const option = state$.value.option.all[optionId];
-      const menuItem = state$.value.menuItem.all[menuItemId];
-      if (!option || !menuItem) {
-        return of({
-          type: types.ASSIGN_OPTION_FAIL,
-          payload: 'option and menuItem required'
-        });
-      }
-      if (ListToMap(menuItem.options)[optionId]) {
-        return of({
-          type: types.ASSIGN_OPTION_FAIL,
-          payload: 'option already assigned'
-        });        
-      }
-      const updatePayload = {
-        id: menuItemId,
-        options: [...menuItem.options, {
-          ...option,
-          difference: { amount: '0', currency: 'CZK' }
-        }]// .map((o) => dissoc('choices')(o))
-      }
-      return of({
-        type: types.UPDATE_MENUITEM_INIT,
-        payload: updatePayload,
-      });
-    })
-  )
 
-export const unassignOptionEpic = (action$, state$) => 
+export const assignOptionEpic = (action$) => 
   action$.pipe(
-    ofType(types.UNASSIGN_OPTION_INIT),
+    ofType(getType(assignOptionAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, optionId } = payload;
-      const option = state$.value.option.all[optionId];
-      const menuItem = state$.value.menuItem.all[menuItemId];
-      if (!option || !menuItem) {
-        return of({
-          type: types.UNASSIGN_OPTION_FAIL,
-          payload: 'option and menuItem required'
-        });
+
+      const body = {
+        optionId,
+        published: true
       }
-      const newOptions = filter((i) => i.id !== optionId, menuItem.options);
-      const updatePayload = {
-        id: menuItemId,
-        options: newOptions
-      }
-      return of({
-        type: types.UPDATE_MENUITEM_INIT,
-        payload: updatePayload,
-      });
+
+      return fromPromise(API.AssignOption(menuItemId, body)).pipe(
+        map((res) => ({
+          type: getType(assignOptionAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(assignOptionAsync.failure),
+          initAction: action
+        }))
+      );
     })
-  )
+  );
+
+export const unassignOptionEpic = (action$) => 
+  action$.pipe(
+    ofType(getType(unassignOptionAsync.request)),
+    mergeMap((action) => {
+      const { payload } = action;
+      const { menuItemId, optionId } = payload;
+
+      return fromPromise(API.UnassignOption(menuItemId, { optionId })).pipe(
+        map((res) => ({
+          type: getType(unassignOptionAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(unassignOptionAsync.failure),
+          initAction: action
+        }))
+      );
+    })
+  );  
 
 export default [
   fetchMenuItemEpic,

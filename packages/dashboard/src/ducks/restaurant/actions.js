@@ -151,24 +151,6 @@ export const addRangeToBusinessHours = payload => ({
   payload,
 });
 
-export const createAddonInit = payload => ({
-  type: 'CREATE_ADDON_INIT',
-  payload,
-});
-export const createIngredientInit = payload => ({
-  type: 'CREATE_INGREDIENT_INIT',
-  payload,
-});
-export const createOptionInit = payload => ({
-  type: 'CREATE_OPTION_INIT',
-  payload,
-});
-
-export const updateAddonInit = payload => ({
-  type: 'UPDATE_ADDON_INIT',
-  payload,
-});
-
 export const selectRestaurant = ({id}) => ({ type: 'SELECT_RESTAURANT', payload: { id } });
 
 export const publishRestaurant = () => ({

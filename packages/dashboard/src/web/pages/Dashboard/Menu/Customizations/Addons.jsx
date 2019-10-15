@@ -115,7 +115,7 @@ const Addons = ({
           <div key={addon.id}>
             <ListItem dense style={styles.ListItem}>
               <ListItemText primary={getT(addon.translations, lang)} />
-              {addon.price.amount} Kč
+              {addon.price ? addon.price.amount : '0'} Kč
               <Tooltip placement="left" title={t('delete')}>
                 <IconButton
                   aria-label={t('delete')}

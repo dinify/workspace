@@ -8,7 +8,7 @@ import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import { getType } from 'typesafe-actions';
 import { fetchMenuCategoriesAsync } from '../menuCategory/actions';
 import * as types from './types';
-import { fetchMenuItemAsync, createMenuItemAsync, assignIngredientAsync, unassignIngredientAsync, assignAddonAsync, unassignAddonAsync } from './actions';
+import { fetchMenuItemAsync, createMenuItemAsync, assignIngredientAsync, unassignIngredientAsync, assignAddonAsync, unassignAddonAsync, assignOptionAsync, unassignOptionAsync } from './actions';
 
 const initialState = {
   all: {},
@@ -73,6 +73,27 @@ export default function reducer(state = initialState, action) {
       return assocPath(
         ['all', menuItemId, 'menuAddons'],
         state.all[menuItemId].menuAddons.filter((id) => id !== compoundId)
+      )(state);
+    }
+
+    case getType(assignOptionAsync.request): {
+      const { menuItemId, optionId } = payload;
+      const compoundId = `${menuItemId}.${optionId}`;
+      return assocPath(
+        ['all', menuItemId, 'menuOptions'],
+        uniq([
+          ...state.all[menuItemId].menuOptions,
+          compoundId
+        ])
+      )(state);
+    }
+
+    case getType(unassignOptionAsync.request): {
+      const { menuItemId, optionId } = payload;
+      const compoundId = `${menuItemId}.${optionId}`;
+      return assocPath(
+        ['all', menuItemId, 'menuOptions'],
+        state.all[menuItemId].menuOptions.filter((id) => id !== compoundId)
       )(state);
     }
 

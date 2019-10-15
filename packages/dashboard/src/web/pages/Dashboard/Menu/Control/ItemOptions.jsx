@@ -2,53 +2,68 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as FN from '@dinify/common/dist/lib/FN';
 import { Label } from 'web/components/styled/FormBox';
-import { assignOption, unassignOption } from 'ducks/menuItem/actions';
 import { fetchOptionsAsync } from 'ducks/option/actions.ts';
 import { listOfOptions } from 'ducks/option/selectors';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import S from 'string';
+import { assignOptionAsync, unassignOptionAsync } from 'ducks/menuItem/actions';
+import { getT } from '@dinify/common/src/lib/translation.ts';
+import assoc from 'ramda/es/assoc';
 
-const choicesEnumText = (choices) => {
+const choicesEnumText = (choicesList, defaultLang) => {
   let text = ''
-  const choicesList = FN.MapToList(choices)
   choicesList.forEach((choice, i) => {
-    text = `${text}${choice.name}${choicesList.length > (i + 1) ? ' | ' : ''}`;
+    text = `${text}${getT(choice.translations, defaultLang)}${choicesList.length > (i + 1) ? ' | ' : ''}`;
   })
   return S(text).truncate(40).s
 }
 
 const ItemOptions = ({
   optionsList,
+  optionsMap,
+  choicesMap,
   fetchOptions,
   optionsLoaded,
-  selectedFoodId,
+  selectedFood,
   assignOption,
   unassignOption,
-  menuItems,
-  t
+  t,
+  defaultLang
 }) => {
   const shouldLoad = optionsList.length < 1 && !optionsLoaded;
+  
   useEffect(() => {
     if (shouldLoad) fetchOptions();
   }, []);
-  const selectedFood = menuItems[selectedFoodId];
+
   if (!selectedFood) {
     return <div />;
   }
-  const assignedOptions = selectedFood.options || [];
+
+  let assignedOptions = [];
+
+  if (selectedFood.menuOptions) {
+    assignedOptions = selectedFood.menuOptions.map((compoundId) => {
+      const optionId = compoundId.split('.')[1];
+      const option = optionsMap[optionId];
+      const choices = option.choices.map((chId) => choicesMap[chId]);
+      return assoc('choices', choices)(option);
+    });
+  }
+
   const assignedOptionsIds = assignedOptions.map(o => o.id);
 
   const dataSource = optionsList
     .filter(o => !assignedOptionsIds.includes(o.id))
-    .map(o => ({ value: o.id, label: o.name }));
+    .map(o => ({ value: o.id, label: getT(o.translations, defaultLang) }));
 
   return (
     <div style={{ marginBottom: 30 }}>
       <Label>{t('menu.optionGroups')}</Label>
 
-      {selectedFood.options ? (
+      {selectedFood.menuOptions ? (
         <div>
           {assignedOptions.map((option, i) => (
             <div key={i}>
@@ -56,17 +71,17 @@ const ItemOptions = ({
                 style={{marginTop: '10px', maxWidth: '100%'}}
                 avatar={
                   <Avatar style={{width: 'auto', borderRadius: '32px', padding: '0 10px'}}>
-                    {option.name}
+                    {getT(option.translations, defaultLang)}
                   </Avatar>
                 }
                 onDelete={() =>
                   unassignOption({
-                    menuItemId: selectedFoodId,
+                    menuItemId: selectedFood.id,
                     optionId: option.id
                   })
                 }
                 label={<div style={{maxWidth: '280px', overflow: 'hidden'}}>
-                  {choicesEnumText(option.choices)}
+                  {choicesEnumText(option.choices, defaultLang)}
                 </div>}
               />
             </div>
@@ -82,7 +97,7 @@ const ItemOptions = ({
         dataSource={dataSource}
         onChange={option =>
           assignOption({
-            menuItemId: selectedFoodId,
+            menuItemId: selectedFood.id,
             optionId: option.value
           })
         }
@@ -94,12 +109,14 @@ const ItemOptions = ({
 export default connect(
   state => ({
     optionsList: listOfOptions(state),
+    optionsMap: state.option.all,
+    choicesMap: state.option.choices,
     optionsLoaded: state.option.loaded,
-    menuItems: state.menuItem.all,
+    defaultLang: state.restaurant.defaultLanguage
   }),
   {
     fetchOptions: fetchOptionsAsync.request,
-    assignOption,
-    unassignOption,
+    assignOption: assignOptionAsync.request,
+    unassignOption: unassignOptionAsync.request,
   },
 )(ItemOptions);
