@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
-import { select } from 'lib/platform';
+import { select } from '@dinify/common/src/lib/platform';
 
 // import Settings from '@material-ui/icons/SettingsRounded';
 import AccountCircle from '@material-ui/icons/AccountCircleRounded';

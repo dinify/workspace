@@ -23,7 +23,7 @@ import { fetchBillAsync } from 'ducks/transaction/actions.ts';
 import { fetchCartAsync } from 'ducks/cart/actions.ts';
 
 import withRoot from 'withRoot.js';
-import Dialogs from './Dialogs.tsx';
+import Dialogs from './dialogs.tsx';
 
 const App = (props) => {
   const { 
@@ -50,8 +50,12 @@ const App = (props) => {
   }
 
   const onNavigate = (evt, val) => {
-    if (val === 0) history.push(routes.HOMEPAGE);
-    else if (val === 1) history.push(routes.ACCOUNT);
+    if (val === 0 && isAccountTab) {
+      history.push(routes.HOMEPAGE);
+    }
+    else if (val === 1 && !isAccountTab) {
+      history.push(routes.ACCOUNT);
+    }
   }
 
   const match = (...paths) => {

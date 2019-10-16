@@ -6,7 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { createBrowserHistory } from 'history';
 import { ConnectedRouter } from 'connected-react-router';
 import { getOrderItemCount as getCartCount } from './ducks/cart/selectors';
-import App from './web/App';
+import App from './web/app';
 import { SnackbarProvider } from 'material-ui-snackbar-redux';
 import { ReactReduxFirebaseProvider, ReactReduxFirebaseProviderProps, ReactReduxFirebaseConfig } from 'react-redux-firebase';
 import firebase from 'firebase/app';
