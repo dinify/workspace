@@ -47,7 +47,8 @@ export const select = (options: PlatformOptions<any>) => {
   
   const osFamily = normalize(platform.os.family);
   const browserName = normalize(getBrowserName());
-  const isStandalone: boolean = (window.navigator as any).standalone;
+  const navigator: any = window.navigator;
+  const isStandalone: boolean = navigator.standalone;
   // const product = normalize(platform.product);
   // const browserAgentName = normalize(platform.name);
   // const isDevtools = browserAgentName !== browserName;

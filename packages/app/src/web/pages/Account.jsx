@@ -68,11 +68,6 @@ const getLang = (languageId) => {
   return result;
 }
 
-const openInNewTab = (url) => {
-  const win = window.open(url, '_blank');
-  win.focus();
-}
-
 const Account = ({
   classes,
   theme,
@@ -189,43 +184,6 @@ const Account = ({
           </Button>
         </div>
       </Card>
-      {claims && claims.roles && (
-        <Card style={{marginTop: 16}}>
-          <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
-            {t('roles.title')}
-          </Typography>
-
-          {claims.roles.map(role => {
-            let secondary = '';
-            if (restaurantsMap[role.resource]) {
-              secondary = t('roles.at', {restaurant: restaurantsMap[role.resource].name})
-            }
-            return (
-              <ListItem key={role.resource} style={{paddingLeft: 24, paddingRight: 24}}>
-                <Avatar className={classes[role.id.split('.')[role.id.split('.').length - 1]]}>
-                  <Person />
-                </Avatar>
-                <ListItemText primary={t(`roles.${role.id}`)} secondary={secondary} />
-              </ListItem>
-            );
-          })}
-          <ListItem button onClick={() => {openInNewTab('https://dashboard.dinify.app/')}} style={{paddingLeft: 80, paddingRight: 24}}>
-            <ListItemText primary="Dashboard"/>
-            <OpenInNew style={{opacity: 0.54}}/>
-          </ListItem>
-          <ListItem button onClick={() => {openInNewTab('https://waiterboard.dinify.app/')}} style={{paddingLeft: 80, paddingRight: 24}}>
-            <ListItemText primary="Waiterboard"/>
-            <OpenInNew style={{opacity: 0.54}}/>
-          </ListItem>
-        </Card>
-      )}
-      <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 16, paddingBottom: 16}}>
-        <Button style={{boxShadow: 'none', height: 40}} variant="contained" onClick={() => {
-          firebase.logout();
-        }} color="primary">
-          {t('user.logOut')}
-        </Button>
-      </div>
 
       <CurrencyPickerDialog
         locale={locale}

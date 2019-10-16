@@ -10,6 +10,8 @@ export default ({ user }: { user: User | null }) => {
   const fadeStyle = useSpring({opacity: user === null ? 0 : 1});
   const AnimatedImage = animated(Image);
   const AnimatedTypography = animated(Typography);
+
+  // user.isAnonymous
   return (
     <div style={{
       padding: 32,
