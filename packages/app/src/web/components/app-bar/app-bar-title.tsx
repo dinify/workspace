@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { select } from '../../../lib/platform';
+import { select } from '@dinify/common/src/lib/platform';
 import { Typography } from '../../components/typography'
 
 const AppBarTitle: React.FC<{

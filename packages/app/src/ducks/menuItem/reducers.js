@@ -1,6 +1,6 @@
 import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
-// import { MapToList, useOldPropsIfNewNA } from '@dinify/common/dist/lib/FN';
+// import { MapToList, useOldPropsIfNewNA } from '@dinify/common/src/lib/FN';
 // import menuCategoryTypes from 'ducks/menuCategory/types';
 import { getType } from 'typesafe-actions';
 import * as cartActions from '../cart/actions.ts';
@@ -9,7 +9,7 @@ import { fetchMenuItemAsync, clearCustomizationsAction } from './actions.ts';
 import * as menuCategoriesActions from '../menuCategory/actions.ts';
 import assoc from 'ramda/es/assoc';
 import pipe from 'ramda/es/pipe';
-// import * as FN from '@dinify/common/dist/lib/FN';
+// import * as FN from '@dinify/common/src/lib/FN';
 
 
 const initialState = {

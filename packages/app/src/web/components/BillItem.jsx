@@ -6,7 +6,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import CheckCircle from '@material-ui/icons/CheckCircleRounded';
 import { Motion, spring } from 'react-motion';
-import * as FN from '@dinify/common/dist/lib/FN';
+import * as FN from '@dinify/common/src/lib/FN';
 import Price from 'web/components/Price';
 
 import { selectBillItem as selectBillItemAction } from 'ducks/transaction/actions';

@@ -16,7 +16,7 @@ import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 
-import * as FN from '@dinify/common/dist/lib/FN';
+import * as FN from '@dinify/common/src/lib/FN';
 
 const styles = theme => ({
   appBarDefault: {

@@ -1,5 +1,6 @@
 import React from 'react';
-import { useTransition } from 'react-spring';
+import { useTransition, animated } from 'react-spring';
+import { spec } from '../../../lib/transitions';
 
 import Header from './header';
 import AccountPage from '../../pages/Account';
@@ -11,15 +12,7 @@ export const AccountScreen: React.FC = () => {
   const firebase = useFirebase();
   const user = firebase.auth();
   const isLoading = user.currentUser === null;
-  const transitions = useTransition(isLoading, null, {
-    from:  { transform: 'translate(0, -8px)', opacity: 0 },
-    enter: { transform: 'translate(0,   0px)', opacity: 1 },
-    leave: { transform: 'translate(0, -8px)', opacity: 0 },
-    config: {
-      tension: 300,
-      friction: 26
-    }
-  });
+  const transitions = useTransition(isLoading, null, spec.lateral);
   transitions.length;
   // TODO: remove this temporary fix
   const Account = AccountPage as any;
@@ -40,12 +33,12 @@ export const AccountScreen: React.FC = () => {
   return (
     <>
       <Header/>
-      {isLoading ? loading : <Account style={{marginTop: 56}} firebase={firebase}/>}
-      {/* {transitions.map(({ item, key, props }) => 
+      {/* {isLoading ? loading : <Account style={{marginTop: 56}} firebase={firebase}/>} */}
+      {transitions.map(({ item, key, props }) => 
         item
-          ? <animated.div style={props}>{loading}</animated.div>
-          : <animated.div style={props}><Account style={{marginTop: 56}} firebase={firebase}/></animated.div>
-      )} */}
+          ? <animated.div key="account-screen-loading" style={props}>{loading}</animated.div>
+          : <animated.div key="account-screen" style={props}><Account style={{marginTop: 56}} firebase={firebase}/></animated.div>
+      )}
     </>
   );
 };

@@ -3,7 +3,7 @@ import AppBarAction from './app-bar-action';
 import AppBarTitle from './app-bar-title';
 
 import { withTheme } from '@material-ui/core/styles';
-import { select } from '../../../lib/platform';
+import { select } from '@dinify/common/src/lib/platform';
 
 interface AppBarProps {
     style?: React.CSSProperties,

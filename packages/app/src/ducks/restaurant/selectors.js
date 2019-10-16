@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import find from 'ramda/es/find';
 import propEq from 'ramda/es/propEq';
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 
 export const getRestaurantBySubdomain = createSelector(
   [

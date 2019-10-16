@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { CartState } from './reducers';
-import { MapToList } from '../../lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 import { OrderItemNMap } from 'CartModels';
 
 

@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import Typography from '@material-ui/core/Typography';
 import MenuItemCard from 'web/components/MenuItemCard';
-import * as FN from '@dinify/common/dist/lib/FN';
+import * as FN from '@dinify/common/src/lib/FN';
 import sort from 'ramda/es/sort';
 import uniqueId from 'lodash.uniqueid';
 import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';

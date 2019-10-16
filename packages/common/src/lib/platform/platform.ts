@@ -46,10 +46,10 @@ export const select = (options: PlatformOptions<any>) => {
   const normalize = (str: string|null) => str !== null ? str.toLowerCase().split(' ').join('') : 'standard';
   
   const osFamily = normalize(platform.os.family);
-  // const product = normalize(platform.product);
-  // const browserAgentName = normalize(platform.name);
   const browserName = normalize(getBrowserName());
   const isStandalone: boolean = (window.navigator as any).standalone;
+  // const product = normalize(platform.product);
+  // const browserAgentName = normalize(platform.name);
   // const isDevtools = browserAgentName !== browserName;
 
   const viewportWidth = window.innerWidth;
@@ -71,7 +71,7 @@ export const show = (options: PlatformOptions<React.Component|null>) => {
   return select(options);
 }
 
-export const run = (options: PlatformOptions<() => {}>) => {
+export const run = (options: PlatformOptions<() => void>) => {
   const result = select(options);
   if (result instanceof Function) {
     result();

@@ -21,7 +21,7 @@ import TotalPrice from 'web/components/TotalPrice';
 // import RadioGroup from '@material-ui/core/RadioGroup';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import * as FN from '@dinify/common/dist/lib/FN';
+import * as FN from '@dinify/common/src/lib/FN';
 import { rmFromCartAsync, orderAsync } from 'ducks/cart/actions.ts';
 
 const styles = theme => ({

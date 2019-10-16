@@ -39,7 +39,7 @@ import Done from '@material-ui/icons/DoneRounded';
 
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/lab/Slider';
-import * as FN from '@dinify/common/dist/lib/FN';
+import * as FN from '@dinify/common/src/lib/FN';
 
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';

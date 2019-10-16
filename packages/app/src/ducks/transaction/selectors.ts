@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { MapToList } from '../../lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 import { TransactionState } from './reducers';
 import { OrderStatus, OrderN, OrderNMap } from 'TransactionModels';
 import pipe from 'ramda/es/pipe';

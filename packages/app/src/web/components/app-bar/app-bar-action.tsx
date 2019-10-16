@@ -8,7 +8,7 @@ import BackIcon from '@material-ui/icons/ArrowBackRounded';
 import BackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Button from '@material-ui/core/Button';
 
-import { select } from '../../../lib/platform';
+import { select } from '@dinify/common/src/lib/platform';
 import { Typography } from '../../components/typography'
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 

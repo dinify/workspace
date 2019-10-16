@@ -10,7 +10,7 @@ import {
   isMobile,
   getPlatform,
   supportsScrollSnap,
-} from '@dinify/common/dist/lib/FN';
+} from '@dinify/common/src/lib/FN';
 import { Motion, spring } from 'react-motion';
 import isFunction from 'lodash.isfunction';
 

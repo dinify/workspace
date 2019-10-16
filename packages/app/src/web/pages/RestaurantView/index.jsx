@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';

@@ -12,7 +12,7 @@ import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
 import Fab from '@material-ui/core/Fab';
 import Carousel from 'web/components/Carousel';
 import Price from 'web/components/Price';
-import * as FN from '@dinify/common/dist/lib/FN';
+import * as FN from '@dinify/common/src/lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import {
   favMenuitemInit,
