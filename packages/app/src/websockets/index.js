@@ -15,10 +15,8 @@ const websockets = (store) => {
   const getUID = () => getState().firebase.auth.uid;
 
   const initSocket = () => {
-    console.log('initSocekt');
     const uid = getUID();
     if (uid) {
-      console.log('connecting as', uid);
       socket.emit('init', `user/${uid}`);
     }
   }
@@ -29,7 +27,6 @@ const websockets = (store) => {
   });
 
   socket.on('transaction-status', (payload) => {
-    console.log('transaction-status', payload);
     const me = payload.transaction.initiator === getUID();
     if (payload.transaction.status === 'PROCESSED') {
       dispatch({
@@ -53,7 +50,6 @@ const websockets = (store) => {
   });
 
   socket.on('order-status', (payload) => {
-    console.log('order-status', payload);
     if (payload.order.status === 'CONFIRMED') {
       dispatch({
         type: getType(fetchBillAsync.request)
