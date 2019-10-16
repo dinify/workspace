@@ -107,7 +107,7 @@ export const t = (path: string[]|string, data: any = {}, cldr: CLDR|null, transl
   data['_i'] = (key: string, format: string) => {
     const pi = util.path(key);
     const val = icepick.getIn(data, pi);
-    return cldr ? i18nextFormatter(val, format, cldr) : val;
+    return (cldr && format) ? i18nextFormatter(val, format, cldr) : val;
   };
   
   if (template.includes('{{')) {

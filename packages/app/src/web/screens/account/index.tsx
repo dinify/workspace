@@ -1,15 +1,13 @@
 import React from 'react';
-import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { useTransition } from 'react-spring';
 
-import { AppBar, AppBarTitle } from '../components/app-bar';
-import AccountPage from '../pages/Account';
+import Header from './header';
+import AccountPage from '../../pages/Account';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const { useFirebase } = require('react-redux-firebase');
 
 export const AccountScreen: React.FC = () => {
-  const { t } = useTranslation();
   const firebase = useFirebase();
   const user = firebase.auth();
   const isLoading = user.currentUser === null;
@@ -41,9 +39,7 @@ export const AccountScreen: React.FC = () => {
 
   return (
     <>
-      <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
-        <AppBarTitle title={t('profile')} />
-      </AppBar>
+      <Header/>
       {isLoading ? loading : <Account style={{marginTop: 56}} firebase={firebase}/>}
       {/* {transitions.map(({ item, key, props }) => 
         item

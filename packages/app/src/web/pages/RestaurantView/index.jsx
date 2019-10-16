@@ -4,7 +4,6 @@ import { MapToList } from '@dinify/common/dist/lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import Card from '@material-ui/core/Card';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import Typography from '@material-ui/core/Typography';
@@ -179,10 +178,7 @@ let RestaurantView = (props) => {
           </Grid>
           <Grid item xs={12} md={6}>
             {smallScreen && <Divider/>}
-            {smallScreen && <InfoSection restaurant={restaurant}/>}
-            {!smallScreen && <Card>
-              {<InfoSection restaurant={restaurant}/>}
-            </Card>}
+            <InfoSection restaurant={restaurant}/>
             { /* <Typography
               style={{ paddingTop: mediumScreen ? 24 : 16 }}
               variant="subtitle1"
