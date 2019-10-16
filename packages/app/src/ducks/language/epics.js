@@ -1,11 +1,8 @@
 import { of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-
-import i18next from 'i18next';
 import { setCookie, getCookie } from '@dinify/common/dist/lib/FN';
 import { actionTypes } from 'react-redux-firebase';
-import { setLocaleAction } from '../ui/actions';
 
 const languageHeaderEpic = (action$, state$) =>
   action$.pipe(

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import getTheme from "@dinify/common/dist/theme";

@@ -15,7 +15,6 @@ import Place from '@material-ui/icons/PlaceRounded';
 import Schedule from '@material-ui/icons/ScheduleRounded';
 import StaticMap from 'web/components/StaticMap';
 import Typography from '@material-ui/core/Typography';
-import uniqueId from 'lodash.uniqueid';
 
 const styles = theme => ({
   secondary: {
@@ -34,16 +33,6 @@ const styles = theme => ({
   }
 });
 
-const days = [
-  'sun',
-  'mon',
-  'tue',
-  'wed',
-  'thu',
-  'fri',
-  'sat',
-]
-
 const InfoSection = ({
   classes,
   restaurant
@@ -52,7 +41,7 @@ const InfoSection = ({
   if (restaurant && restaurant.address) addr = restaurant.address.postal;
   const { t, cldr } = useTranslation();
   const openHours = restaurant.openHours || restaurant.open_hours;
-  const displayOpenHours = false;
+  let displayOpenHours = false;
   if (openHours !== null && openHours !== undefined && openHours !== [] && openHours['mon']) displayOpenHours = true;
   const weekdays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   const localizedWeekdays = {};
