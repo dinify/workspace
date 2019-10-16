@@ -9,7 +9,7 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 import { currentT as t } from '@dinify/common/src/lib/i18n/useTranslation';
 
 import { getCookie, handleEpicAPIError } from '@dinify/common/src/lib/FN';
-const snackbar = require('material-ui-snackbar-redux').snackbarActions;
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 const APIv1 = require('@dinify/common/src/api/restaurant');
 
 const fetchRestaurantsEpic: Epic = (action$) =>

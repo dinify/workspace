@@ -7,6 +7,12 @@ const Image = ({
   title,
   children,
   aspect = 16/9
+}: {
+  style?: React.CSSProperties;
+  image?: string,
+  title?: string,
+  children?: any,
+  aspect?: number
 }) => {
   const ratio = Math.round((1 / aspect) * 100 * 10000) / 10000;
   return (

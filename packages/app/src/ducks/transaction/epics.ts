@@ -14,7 +14,7 @@ import { bill } from '../cart/schemas';
 import { currentT as t } from '@dinify/common/src/lib/i18n/useTranslation';
 
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
-const snackbar = require('material-ui-snackbar-redux').snackbarActions;
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 
 // const splitEpic = (action$) =>
 //   action$.pipe(

@@ -23,7 +23,7 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 import { currentT as t } from '@dinify/common/src/lib/i18n/useTranslation';
 
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
-const snackbar = require('material-ui-snackbar-redux').snackbarActions;
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 
 // const keyedPropsOfList = (keyProp: string, valProp: string) =>
 // (list: any[]) => zipObj(pluck(keyProp)(list), pluck(valProp)(list));

@@ -18,8 +18,7 @@ import seat from '../ducks/seat/reducers';
 import ingredient from '../ducks/ingredient/reducers';
 import addon from '../ducks/addon/reducers';
 import option from '../ducks/option/reducers';
-
-const snackbarReducer = require('material-ui-snackbar-redux').snackbarReducer;
+import { snackbarReducer } from 'material-ui-snackbar-redux';
 
 const restaurantPersistConfig = {
   key: 'restaurant',

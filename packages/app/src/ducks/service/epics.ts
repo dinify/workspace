@@ -8,7 +8,7 @@ import { callServiceAsync, fetchServicesAsync } from './actions';
 import { currentT as t } from '@dinify/common/src/lib/i18n/useTranslation';
 import { getType } from 'typesafe-actions';
 
-const snackbar = require('material-ui-snackbar-redux').snackbarActions;
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 
 const fetchServicesEpic: Epic = (action$) =>
   action$.pipe(

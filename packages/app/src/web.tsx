@@ -9,9 +9,10 @@ import { getOrderItemCount as getCartCount } from './ducks/cart/selectors';
 import App from './web/app';
 import { SnackbarProvider } from 'material-ui-snackbar-redux';
 import { ReactReduxFirebaseProvider, ReactReduxFirebaseProviderProps, ReactReduxFirebaseConfig } from 'react-redux-firebase';
-import firebase from 'firebase/app';
-import 'firebase/auth';
 import { setNamespace as setTranslationsNamespace } from '@dinify/common/src/lib/i18n';
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 
 import configureStore from './store';
 import websockets from './websockets';

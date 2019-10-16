@@ -79,10 +79,7 @@ const App = (props) => {
             <Main/>
           )}/>
           <Route path={routes.SIGNIN} component={() => <SignIn user={user}/>} />
-          <Route path={routes.ACCOUNT} component={() => {
-            return (!user.isEmpty || !user.isLoaded) ? <AccountScreen history={history}/> :
-            <Redirect to={routes.SIGNIN}/>
-          }} />
+          <Route path={routes.ACCOUNT} component={AccountScreen} />
 
           <Route path={routes.CHECKIN} component={Checkin} />
           <Route path={routes.SERVICES} component={Services} />

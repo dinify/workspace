@@ -24,7 +24,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import IconButton from '@material-ui/core/IconButton';
 import LanguagePickerDialog from '@dinify/common/dist/components/dialogs/LanguagePickerDialog';
 import CurrencyPickerDialog from '@dinify/common/dist/components/dialogs/CurrencyPickerDialog';
-import Image from 'web/components/Image';
 import LightbulbToggle from 'web/components/LightbulbToggle';
 // import Flag from '@dinify/common/dist/components/Flag';
 import Card from 'web/components/Card';
@@ -103,35 +102,7 @@ const Account = ({
   if (profile && profile.displayCurrency) displayCurrency = profile.displayCurrency;
 
   return (
-    <div style={{
-      maxWidth: 660,
-      marginRight: 'auto',
-      marginLeft: 'auto',
-      paddingLeft: 16,
-      paddingRight: 16,
-      ...style
-    }}>
-      <div style={{
-        padding: 32,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        <Avatar style={{width: 96, height: 96}}>
-          {user.photoURL ?
-            <Image aspect={1} image={user.photoURL} title={user.displayName} /> :
-            <Person style={{width: 56, height: 56}} />
-          }
-        </Avatar>
-        <Typography style={{marginTop: 8}} variant="h5">
-          {user.displayName}
-        </Typography>
-        <Typography variant="subtitle1">
-          {user.email}
-        </Typography>
-      </div>
-
+    <>
       <Typography variant="overline" color="textSecondary" style={{marginBottom: 8}}>
         {t('nav.settings')}
       </Typography>
@@ -299,7 +270,7 @@ const Account = ({
           }
           closeDialog()
         }}/>
-    </div>
+    </>
   );
 };
 
