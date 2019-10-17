@@ -11,7 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import { setLocaleAction, openDialogAction } from '../../../../ducks/ui/actions';
-import { useStore } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { RootState } from 'typesafe-actions';
 import { LanguageIdType } from '@phensley/cldr';
@@ -20,10 +20,9 @@ import localizedLanguages from '@dinify/common/src/lib/i18n/localized-languages.
 
 export default () => {
   const { t } = useTranslation();
-  const store = useStore();
+  const dispatch = useDispatch();
   const firebase = useFirebase();
-  const state: RootState = store.getState();
-  const profile = state.firebase.profile as Profile;
+  const profile = useSelector((state: RootState) => state.firebase.profile);
   const isLanguageSet = profile ? !!profile.language : false;
   const language = profile.language as Profile['language'];
   const isPrimarySet = isLanguageSet && !!language.primary;
@@ -31,10 +30,10 @@ export default () => {
 
   const handlePrimary = (langtag: LanguageIdType|null) => {
     if (langtag) {
-      store.dispatch(setLocaleAction(langtag));
+      dispatch(setLocaleAction(langtag));
       firebase.updateProfile({
         language: {
-          ...profile.language,
+          ...language,
           primary: langtag,
         }
       });
@@ -51,9 +50,10 @@ export default () => {
     }
   };
   const getSwapHandler = (i: number) => () => {
-    const other = profile.language.other;
+    const other = language.other;
     const tmp = other[i];
-    other[i] = profile.language.primary;
+    other[i] = language.primary;
+    dispatch(setLocaleAction(tmp));
     firebase.updateProfile({
       language: {
         primary: tmp,
@@ -64,21 +64,19 @@ export default () => {
   const getRemoveHandler = (i: number) => () => {
     firebase.updateProfile({
       language: {
-        ...profile.language,
-        other: remove(i, 1, profile.language.other)
+        ...language,
+        other: remove(i, 1, language.other)
       }
     });
   };
   const getClickHandler = (primary = true) => () => {
-    store.dispatch(openDialogAction({
-      type: 'currency',
+    dispatch(openDialogAction({
+      type: 'language',
       handler: primary ? handlePrimary : handleOther
     }));
   };
   const getLocalName = (language: string) => {
-    const result = (localizedLanguages as any)[language];
-    console.log('Local name for ', language, result);
-    return result;
+    return (localizedLanguages as any)[language];
   };
 
   // TODO className={classes.button2}

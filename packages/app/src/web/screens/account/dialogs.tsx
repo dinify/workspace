@@ -1,18 +1,17 @@
 import React from 'react';
-import { useStore } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import LanguagePickerDialog from '@dinify/common/src/components/dialogs/LanguagePickerDialog';
 import CurrencyPickerDialog from '@dinify/common/src/components/dialogs/CurrencyPickerDialog';
 import { closeDialogAction, Dialog, DialogType } from '../../../ducks/ui/actions';
 
 export default () => {
-  const store = useStore();
-  const state: RootState = store.getState();
-  const { dialogs, locale } = state.ui;
+  const dispatch = useDispatch();
+  const { dialogs, locale } = useSelector((state: RootState) => state.ui);
 
   const getHandler = (type: DialogType) => (...params: any[]) => {
-    (dialogs['language'] as Dialog).handler(...params);
-    store.dispatch(closeDialogAction(type));
+    (dialogs[type] as Dialog).handler(...params);
+    dispatch(closeDialogAction(type));
   };
 
   return <>

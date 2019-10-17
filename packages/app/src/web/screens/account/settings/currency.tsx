@@ -7,17 +7,16 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import CashMultiple from '@dinify/common/src/icons/CashMultiple';
-import { useStore } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { RootState } from 'typesafe-actions';
 import { openDialogAction } from '../../../../ducks/ui/actions';
 
 export default () => {
   const { t, cldr } = useTranslation();
-  const store = useStore();
+  const dispatch = useDispatch();
   const firebase = useFirebase();
-  const state: RootState = store.getState();
-  const { displayCurrency } = state.firebase.profile;
+  const displayCurrency = useSelector((state: RootState) => state.firebase.profile.displayCurrency);
 
   const handleCurrency = (result: any) => {
     if (result) {
@@ -31,7 +30,7 @@ export default () => {
   };
 
   const openDialog = () => {
-    store.dispatch(openDialogAction({
+    dispatch(openDialogAction({
       type: 'currency',
       handler: handleCurrency
     }));

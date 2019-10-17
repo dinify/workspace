@@ -70,7 +70,6 @@ export default function reducer(state: UiState = initialState, action: AnyAction
     }
     
     case getType(actions.setLocaleAction): {
-      console.log('reducer', action.payload);
       return assoc('locale', action.payload)(state);
     }
 
@@ -79,14 +78,14 @@ export default function reducer(state: UiState = initialState, action: AnyAction
     }
 
     case getType(actions.openDialogAction): {
-      let path;
-      let value = true;
-      if (typeof action.payload === 'string') path = action.payload;
-      else {
-        path = action.payload.type;
-        value = action.payload;
+      let path = action.payload;
+      let value: boolean|Dialog = true;
+      if (typeof action.payload === 'object') {
+        const payload = action.payload as Dialog;
+        path = payload.type;
+        value = payload;
       }
-      return assocPath<boolean, UiState>(['dialogs', path], value)(state);
+      return assocPath<boolean|Dialog, UiState>(['dialogs', path], value)(state);
     }
     case getType(actions.closeDialogAction): {
       return assoc('dialogs', {})(state);

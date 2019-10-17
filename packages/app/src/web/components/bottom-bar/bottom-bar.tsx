@@ -86,7 +86,8 @@ let BottomBar: React.FC<{
         ...cartAnimatedStyle,
         width: billVisible ? '50%' : '100%',
         left: 0,
-        right: 0
+        right: 0,
+        pointerEvents: cartVisible ? 'auto' : 'none'
       }}>
         <BottomBarAction 
           scrim={select({
@@ -107,7 +108,8 @@ let BottomBar: React.FC<{
         ...commonStyle, 
         ...billAnimatedStyle, 
         width: cartVisible ? '50%' : '100%',
-        right: 0
+        right: 0,
+        pointerEvents: billVisible ? 'auto' : 'none'
       }}>
         <BottomBarAction 
           scrim={select({
