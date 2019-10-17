@@ -4,14 +4,20 @@ import { localeMatcher } from '@dinify/common/src/lib/i18n';
 
 const p = 'dinify/ui';
 
+export type DialogType = 'cart'|'bill'|'services'|'language'|'currency';
+export interface Dialog {
+  type: DialogType,
+  handler: (...params: any[]) => any
+}
+
 export const openDialogAction = createAction(
   `${p}/DIALOG_OPEN`,
-  action => (payload: any) => action(payload)
+  action => (dialog: DialogType|Dialog) => action(dialog)
 );
 
 export const closeDialogAction = createAction(
   `${p}/DIALOG_CLOSE`,
-  action => (dialogId: string) => action(dialogId)
+  action => (dialogType: DialogType) => action(dialogType)
 );
 
 export const toggleThemeAction = createAction(

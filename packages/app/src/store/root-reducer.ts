@@ -19,6 +19,7 @@ import ingredient from '../ducks/ingredient/reducers';
 import addon from '../ducks/addon/reducers';
 import option from '../ducks/option/reducers';
 import { snackbarReducer } from 'material-ui-snackbar-redux';
+import { LanguageIdType, RegionIdType, CurrencyType } from '@phensley/cldr';
 
 const restaurantPersistConfig = {
   key: 'restaurant',
@@ -44,6 +45,17 @@ const servicePersistConfig = {
   whitelist: ['all']
 }
 
+export interface Profile {
+  language: {
+    primary: LanguageIdType,
+    other: LanguageIdType[]
+  },
+  region: RegionIdType,
+  displayCurrency: CurrencyType
+}
+
+const firebaseReducerWrapper = (state: any, action: any) => firebaseReducer<Partial<Profile>>(state, action);
+
 export const commonReducers = {
   auth,
   ui,
@@ -57,7 +69,7 @@ export const commonReducers = {
   service: persistReducer(servicePersistConfig, service),
   seat,
   snackbar: snackbarReducer,
-  firebase: firebaseReducer,
+  firebase: firebaseReducerWrapper,
   form: formReducer,
   ingredient,
   addon,

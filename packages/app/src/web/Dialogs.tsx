@@ -1,34 +1,27 @@
 import React from 'react';
-import { closeDialogAction } from '../ducks/ui/actions';
-import { connect } from 'react-redux';
+import { closeDialogAction, DialogType } from '../ducks/ui/actions';
+import { useStore } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import { ServicesScreen } from './screens';
 import { CartPage } from './components/cart';
 import { BillPage } from './components/bill';
+import { RootState } from 'typesafe-actions';
 
-const Dialogs = (props: {
-  dialogs: {[dialogId: string]: boolean},
-  closeDialog: (dialogId: string) => void
-}) => {
-  const { dialogs, closeDialog } = props;
+export default () => {
+  const store = useStore();
+  const getHandler = (id: DialogType) => () => store.dispatch(closeDialogAction(id));
+  const state: RootState = store.getState();
+  const { dialogs } = state.ui;
+  
   return (<>
-    <Dialog fullScreen open={!!dialogs['cart']}>
-      <CartPage onClose={() => closeDialog('cart')}/>
+    <Dialog fullScreen open={!!dialogs['cart']} onClose={getHandler('cart')}>
+      <CartPage onClose={getHandler('cart')}/>
     </Dialog>
-    <Dialog fullScreen open={!!dialogs['bill']}>
-      <BillPage onClose={() => closeDialog('bill')}/>
+    <Dialog fullScreen open={!!dialogs['bill']} onClose={getHandler('cart')}>
+      <BillPage onClose={getHandler('bill')}/>
     </Dialog>
-    <Dialog fullScreen open={!!dialogs['services']}>
-      <ServicesScreen onClose={() => closeDialog('services')}/>
+    <Dialog fullScreen open={!!dialogs['services']} onClose={getHandler('cart')}>
+      <ServicesScreen onClose={getHandler('services')}/>
     </Dialog>
   </>);
 }
-
-export default connect(
-  (state: any) => ({
-    dialogs: state.ui.dialogs,
-  }),
-  {
-    closeDialog: closeDialogAction,
-  }
-)(Dialogs);

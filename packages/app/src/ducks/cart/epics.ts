@@ -150,7 +150,7 @@ const orderEpic: Epic = (action$) =>
           orderAsync.success(res),
           fetchCartAsync.request(),
           transactionActions.fetchBillAsync.request(),
-          uiActions.closeDialogAction('cart-page'),
+          uiActions.closeDialogAction('cart'),
           snackbar.show({
             message: t('successMessages.order-has-been-placed')
           })

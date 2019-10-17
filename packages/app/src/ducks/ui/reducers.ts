@@ -8,12 +8,13 @@ import { getType } from 'typesafe-actions';
 import * as actions from './actions';
 import { getCookie } from '@dinify/common/src/lib/FN';
 import { localeMatcher } from '@dinify/common/src/lib/i18n';
+import { Dialog } from './actions';
 
 export type ThemeType = 'light'|'dark';
 export interface UiState {
   progressMap: any,
   errorsMap: { [key: string]: ErrorMessage },
-  dialogs: { [key: string]: boolean },
+  dialogs: { [key: string]: boolean|Dialog },
   transactionStatus: any,
   bottomBarOpen: boolean,
   theme: ThemeType,
@@ -78,7 +79,14 @@ export default function reducer(state: UiState = initialState, action: AnyAction
     }
 
     case getType(actions.openDialogAction): {
-      return assocPath<boolean, UiState>(['dialogs', action.payload], true)(state);
+      let path;
+      let value = true;
+      if (typeof action.payload === 'string') path = action.payload;
+      else {
+        path = action.payload.type;
+        value = action.payload;
+      }
+      return assocPath<boolean, UiState>(['dialogs', path], value)(state);
     }
     case getType(actions.closeDialogAction): {
       return assoc('dialogs', {})(state);

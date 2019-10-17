@@ -6,8 +6,9 @@ import Button from '@material-ui/core/Button';
 import { spec } from '../../../lib/transitions';
 import Header from './header';
 import Avatar from './avatar';
+import Settings from './settings';
 import RolesSection from './roles-section';
-import AccountPage from '../../pages/Account';
+import Dialogs from './dialogs';
 
 export const AccountScreen: React.FC = () => {
   const firebase = useFirebase();
@@ -24,9 +25,6 @@ export const AccountScreen: React.FC = () => {
   const transitions = useTransition(mounted, null, spec.lateral);
   const { t } = useTranslation();
 
-  // TODO: remove this temporary fix
-  const Account = AccountPage as any;
-
   const account = (
     <div style={{
       maxWidth: 660,
@@ -37,7 +35,7 @@ export const AccountScreen: React.FC = () => {
       paddingRight: 16
     }}>
       <Avatar user={auth.currentUser}/>
-      <Account firebase={firebase}/>
+      <Settings />
       {claims && claims.roles && <RolesSection roles={claims.roles}/>}
       <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 16, paddingBottom: 16}}>
         <Button style={{boxShadow: 'none', height: 40}} variant="contained" onClick={() => {
@@ -51,10 +49,12 @@ export const AccountScreen: React.FC = () => {
 
   return (
     <>
+      <Dialogs />
       <Header/>
-      {/* {isLoading ? loading : <Account style={{marginTop: 56}} firebase={firebase}/>} */}
       {transitions.map(({ item, key, props }) => 
-        <animated.div key="account-screen" style={props}>{account}</animated.div>
+        item
+          ? <animated.div key="account-screen" style={props}>{account}</animated.div>
+          : <React.Fragment key="account-transition-fragment"/>
       )}
     </>
   );
