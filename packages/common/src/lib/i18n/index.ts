@@ -7,7 +7,7 @@ import wretch from 'wretch';
 // IDEA: use ICU compiled to webassembly !
 
 // TODO: move this to static.dinify.app
-const packurl = `https://cdn.jsdelivr.net/npm/@phensley/cldr@0.19.3/packs`;
+const packurl = `https://cdn.jsdelivr.net/npm/@phensley/cldr@0.19.4/packs`;
 const staticRoot = 'https://static.dinify.app';
 
 export type Namespace = 'app'|'dashboard'|'landing'|'waiterboard'|'common';

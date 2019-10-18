@@ -5,11 +5,9 @@ import { push } from 'connected-react-router';
 import { checkinAsync, fetchStatusAsync, favRestaurantAsync, fetchRestaurantsAsync } from './actions';
 import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
-// TODO: fix this shit
-import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 import { getCookie, handleEpicAPIError } from '@dinify/common/src/lib/FN';
-import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
+import * as uiActions from '../ui/actions';
 const APIv1 = require('@dinify/common/src/api/restaurant');
 
 const fetchRestaurantsEpic: Epic = (action$) =>
@@ -60,10 +58,10 @@ const checkinEpic: Epic = (action$) =>
           checkinAsync.success(res),
           fetchStatusAsync.request(),
           push(pathname),
-          snackbar.show({
-            message: t('successMessages.you-are-now-checked-in'),
-            handleAction: () => window.location.assign(pathname),
-            action: 'See menu'
+          uiActions.showSnackbarAction({
+            message: t => t('successMessages.you-are-now-checked-in'),
+            handler: () => window.location.assign(pathname),
+            action: t => t('seeMenu')
           })
         )),
         catchError(error => handleEpicAPIError({

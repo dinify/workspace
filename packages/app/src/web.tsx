@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 //  import registerServiceWorker from './registerServiceWorker'
 import { createBrowserHistory } from 'history';
 import { ConnectedRouter } from 'connected-react-router';
-import { getOrderItemCount as getCartCount } from './ducks/cart/selectors';
 import App from './web/app';
-import { SnackbarProvider } from 'material-ui-snackbar-redux';
 import { ReactReduxFirebaseProvider, ReactReduxFirebaseProviderProps, ReactReduxFirebaseConfig } from 'react-redux-firebase';
 import { localeMatcher, IntlConfig, IntlProvider } from '@dinify/common/src/lib/i18n';
 import { getCookie } from '@dinify/common/src/lib/FN';
@@ -17,7 +15,6 @@ import "firebase/firestore";
 
 import configureStore from './store';
 import { SocketReduxProvider, SocketConfig } from './lib/socket';
-import { RootState } from 'typesafe-actions';
 
 //  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 //  import HTML5Backend from 'react-dnd-html5-backend'
@@ -61,47 +58,15 @@ const rrfProps: ReactReduxFirebaseProviderProps = {
   // createFirestoreInstance // <- needed if using firestore
 };
 
-const SnackbarProviderWrapper = connect(
-  (state: RootState) => ({
-    cartItemCount: getCartCount(state.cart),
-    billItemCount: state.transaction.orderItemsCount
-  })
-)(({
-  cartItemCount,
-  billItemCount,
-  children, 
-  ...props
-}: any) => {
-  const bottomBarVisible = cartItemCount > 0 || billItemCount > 0;
-  const snackbarProps = {
-    autoHideDuration: 5000,
-    style: {
-      bottom: bottomBarVisible ? (56 + 56) : 56,
-      zIndex: 1200
-    },
-    anchorOrigin: {
-      vertical: 'bottom',
-      horizontal: 'left',
-    }
-  };
-  return (
-    <SnackbarProvider SnackbarProps={snackbarProps} {...props}>
-      {children}
-    </SnackbarProvider>
-  );
-});
-
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <IntlProvider {...intlConfig}>
         <ReactReduxFirebaseProvider {...rrfProps}>
           <SocketReduxProvider {...socketConfig}>
-            <SnackbarProviderWrapper>
-              <ConnectedRouter history={history}>
-                <App />
-              </ConnectedRouter>
-            </SnackbarProviderWrapper>
+            <ConnectedRouter history={history}>
+              <App />
+            </ConnectedRouter>
           </SocketReduxProvider>
         </ReactReduxFirebaseProvider>
       </IntlProvider>

@@ -10,11 +10,9 @@ import { getType } from 'typesafe-actions';
 import { Transaction, BillResponse, BillResponseN } from 'TransactionModels';
 import { bill } from '../cart/schemas';
 
-// TODO: fix this shit
-import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
-import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
+import * as uiActions from '../ui/actions';
 
 // const splitEpic = (action$) =>
 //   action$.pipe(
@@ -83,8 +81,8 @@ const initTransactionEpic: Epic = (action$) =>
       return from(promise).pipe(
         mergeMap((res: Transaction) => of(
           initTransactionAsync.success(res),
-          snackbar.show({
-            message: t('successMessages.payment-request-sent'),
+          uiActions.showSnackbarAction({
+            message: t => t('successMessages.payment-request-sent'),
           })
         )),
         catchError(error => handleEpicAPIError({

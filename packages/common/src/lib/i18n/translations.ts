@@ -32,7 +32,7 @@ const i18nextFormatter = (value: any, format: string, cldr: CLDR): any => {
 // example template
 // "Testing interpolation ${cldr.Calendars.formatDate(time, { time: 'short' })}";
 
-type TFunction = (path: string[]|string, data?: any) => string;
+export type TFunction = (path: string[]|string, data?: any) => string;
 interface TArgs {
   path: string[]|string, 
   data: { [key: string]: any }, 

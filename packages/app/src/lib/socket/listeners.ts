@@ -1,4 +1,4 @@
-import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
+import { showSnackbarAction } from '../../ducks/ui/actions';
 import { getType, RootState } from 'typesafe-actions';
 import * as actions from '../../ducks/socket/actions';
 import { fetchBillAsync } from '../../ducks/transaction/actions';
@@ -24,13 +24,13 @@ export const useListeners = () => {
         });
         dispatch(actions.confirmedPaymentAction(payload));
         if (me) {
-          dispatch(snackbar.show({
+          dispatch(showSnackbarAction({
             message: t('paymentConfirmed')
           }));
         }
       }
       else if (me) {
-        dispatch(snackbar.show({
+        dispatch(showSnackbarAction({
           message: t('paymentCancelled')
         }));
       }
@@ -42,13 +42,13 @@ export const useListeners = () => {
         });
         dispatch(actions.confirmedOrderAction(payload));
         if (payload.order.initiator === uid) {
-          dispatch(snackbar.show({
+          dispatch(showSnackbarAction({
             message: t('orderConfirmed')
           }));
         }
       }
       else if (payload.order.status === 'CANCELLED' && payload.order.initiator === uid) {
-        dispatch(snackbar.show({
+        dispatch(showSnackbarAction({
           message: t('orderCancelled')
         }));
       }
@@ -56,12 +56,12 @@ export const useListeners = () => {
     'call-status': (payload: any) => {
       if (payload.call.status === 'CONFIRMED') {
         dispatch(actions.confirmedCallAction(payload));
-        dispatch(snackbar.show({
+        dispatch(showSnackbarAction({
           message: t('serviceCallConfirmed')
         }));
       }
       else if (payload.call.status === 'CANCELLED') {
-        dispatch(snackbar.show({
+        dispatch(showSnackbarAction({
           message: t('serviceCallCancelled')
         }));
       }
@@ -70,7 +70,7 @@ export const useListeners = () => {
       const me = data.seat.user_id === uid;
       dispatch(actions.checkinAction({ ...data, me }));
       if (!me) {
-        dispatch(snackbar.show({
+        dispatch(showSnackbarAction({
           message: t('guestJoinedTable')
         }));
       }
@@ -78,20 +78,20 @@ export const useListeners = () => {
     'checkout': (payload: any) => {
       if (payload.seat.userId === uid) {
         dispatch(actions.checkoutAllAction(payload));
-        dispatch(snackbar.show({
+        dispatch(showSnackbarAction({
           message: t('checkedOut')
         }));
       }
       else {
         dispatch(actions.checkoutAction(payload));
-        dispatch(snackbar.show({
+        dispatch(showSnackbarAction({
           message: t('guestLeftTable')
         }));
       }
     },
     'checkout-all': (payload: any) => {
       dispatch(actions.checkoutAllAction(payload));
-      dispatch(snackbar.show({
+      dispatch(showSnackbarAction({
         message: t('checkedOut')
       }));
     },
@@ -100,7 +100,7 @@ export const useListeners = () => {
     },
     'split': (payload: any) => {
       dispatch(actions.splitAction(payload));
-      dispatch(snackbar.show({
+      dispatch(showSnackbarAction({
         message: t('newBillSplitItems')
       }))
     },

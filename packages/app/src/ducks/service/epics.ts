@@ -4,11 +4,9 @@ import { ofType, Epic } from 'redux-observable';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { callServiceAsync, fetchServicesAsync } from './actions';
-// TODO: fix this shit
-import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 import { getType } from 'typesafe-actions';
 
-import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
+import * as uiActions from '../ui/actions';
 
 const fetchServicesEpic: Epic = (action$) =>
   action$.pipe(
@@ -38,8 +36,8 @@ const callServiceEpic: Epic = (action$) =>
       return from(API.CallService({ serviceId })).pipe(
         mergeMap(res => of(
           callServiceAsync.success(res),
-          snackbar.show({
-            message: t('successMessages.service-called')
+          uiActions.showSnackbarAction({
+            message: t => t('successMessages.service-called')
           })
         )),
         catchError(error => handleEpicAPIError({

@@ -13,7 +13,7 @@ import { getDetectedLocale, framework, localeMatcher, IntlConfig, IntlContext, l
  export const IntlProvider = (props: React.PropsWithChildren<IntlConfig>) => {
   const [state, setState] = useState<IntlState>({
     cldr: English,
-    ...props,
+    namespace: props.namespace,
     locale: props.locale || getDetectedLocale().locale,
   });
 
@@ -25,11 +25,14 @@ import { getDetectedLocale, framework, localeMatcher, IntlConfig, IntlContext, l
       return;
     }
     // TODO: combine bundles somehow for better performance
-    framework.getAsync(locale).then(cldr => {
-      loadTranslations({ locale, namespace }).then(translations => {
+    loadTranslations({ locale, namespace }).then(translations => {
+      framework.getAsync(locale).then(cldr => {
         setState({ ...state, cldr, translations });
+      }).catch(err => {
+        setState({ ...state, translations });
+        console.error(err);
       });
-    }).catch(err => console.error(err));
+    });
     
   }, [state.locale]);
   

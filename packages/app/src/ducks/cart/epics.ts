@@ -19,11 +19,8 @@ import {
   RmFromCartRequest,
 } from 'CartModels';
 import * as API from '@dinify/common/src/api/v2/restaurant';
-// TODO: fix this shit
-import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
-import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 
 // const keyedPropsOfList = (keyProp: string, valProp: string) =>
 // (list: any[]) => zipObj(pluck(keyProp)(list), pluck(valProp)(list));
@@ -88,10 +85,10 @@ const addToCartEpic: Epic = (action$, state$) =>
         mergeMap((res: any) => of(
           addToCartAsync.success(res),
           fetchCartAsync.request(),
-          snackbar.show({
-            message: t('successMessages.added-to-cart'),
-            handleAction: () => { throw new Error('Not implemented'); },
-            action: 'Undo'
+          uiActions.showSnackbarAction({
+            message: t => t('successMessages.added-to-cart'),
+            handler: () => { throw new Error('Not implemented'); },
+            action: t => t('undo')
           })
         )),
         catchError(error => handleEpicAPIError({
@@ -110,8 +107,8 @@ const addToCartErrorEpic: Epic = (action$) =>
     switchMap((action) => {
       const { payload: { errorType } } = action;
       return of(
-        snackbar.show({
-          message: t(`errorMessages.${errorType}`)
+        uiActions.showSnackbarAction({
+          message: t => t(`errorMessages.${errorType}`)
         })
       );
     })
@@ -128,8 +125,8 @@ const rmFromCartEpic: Epic = (action$) =>
         mergeMap((res: any) => of(
           rmFromCartAsync.success(res),
           fetchCartAsync.request(),
-          snackbar.show({
-            message: t('successMessages.removed-from-cart')
+          uiActions.showSnackbarAction({
+            message: t => t('successMessages.removed-from-cart')
           })
         )),
         catchError(error => handleEpicAPIError({
@@ -151,8 +148,8 @@ const orderEpic: Epic = (action$) =>
           fetchCartAsync.request(),
           transactionActions.fetchBillAsync.request(),
           uiActions.closeDialogAction('cart'),
-          snackbar.show({
-            message: t('successMessages.order-has-been-placed')
+          uiActions.showSnackbarAction({
+            message: t => t('successMessages.order-has-been-placed')
           })
         )),
         catchError(error => handleEpicAPIError({

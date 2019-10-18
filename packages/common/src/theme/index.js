@@ -87,6 +87,12 @@ const getTheme = ({type = 'light'}) => {
         ...nextVariants
       },
       overrides: {
+        MuiSnackbarContent: {
+          root: {
+            margin: 8,
+            borderRadius: 8
+          }
+        },
         MuiInputBase: {
           root: {
             ...nextVariants['body2'],

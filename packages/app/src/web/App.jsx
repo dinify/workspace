@@ -24,6 +24,7 @@ import { fetchCartAsync } from 'ducks/cart/actions.ts';
 
 import withRoot from 'withRoot.js';
 import Dialogs from './dialogs.tsx';
+import Snackbars from './snackbars.tsx';
 
 const App = (props) => {
   const { 
@@ -102,6 +103,7 @@ const App = (props) => {
       <ServicesButtonContainer anchor={56} onClick={() => openDialog('services')} />
       {!isAccountTab && <BottomBar style={{bottom: 56}} onSelect={(type) => openDialog(type)} />}
       <Dialogs />
+      <Snackbars style={{ bottom: 56 + 56 / 2 }} />
     </div>
   );
 }

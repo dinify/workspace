@@ -4,13 +4,14 @@ import * as wsActions from '../socket/actions';
 import { AnyAction } from 'redux';
 import { getType } from 'typesafe-actions';
 import * as actions from './actions';
-import { Dialog } from './actions';
+import { Dialog, Snackbar } from './actions';
 
 export type ThemeType = 'light'|'dark';
 export interface UiState {
   progressMap: any,
   errorsMap: { [key: string]: ErrorMessage },
   dialogs: { [key: string]: boolean|Dialog },
+  snackbars: { [key: string]: boolean|Snackbar },
   transactionStatus: any,
   bottomBarOpen: boolean,
   theme: ThemeType
@@ -24,6 +25,7 @@ const initialState: UiState = {
   progressMap: {},
   errorsMap: {},
   dialogs: {},
+  snackbars: {},
   transactionStatus: null,
   bottomBarOpen: false,
   theme: 'light'
@@ -68,6 +70,19 @@ export default function reducer(state: UiState = initialState, action: AnyAction
     }
     case getType(actions.closeDialogAction): {
       return assoc('dialogs', {})(state);
+    }
+    case getType(actions.showSnackbarAction): {
+      let type = action.payload;
+      let value: boolean|Snackbar = true;
+      if (typeof action.payload === 'object') {
+        const payload = action.payload as Snackbar;
+        type = payload.type || Math.random().toString(36).substring(7);
+        value = { ...payload, type, visible: true };
+      }
+      return assocPath<boolean|Snackbar, UiState>(['snackbars', type], value)(state);
+    }
+    case getType(actions.hideSnackbarAction): {
+      return assocPath(['snackbars', action.payload, 'visible'], false)(state);
     }
     case getType(actions.toggleThemeAction): {
       return assoc('theme', state.theme === 'dark' ? 'light' : 'dark')(state);
