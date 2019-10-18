@@ -16,7 +16,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 import configureStore from './store';
-import websockets from './websockets';
+import { SocketReduxProvider, SocketConfig } from './lib/socket';
 import { RootState } from 'typesafe-actions';
 
 //  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -47,7 +47,9 @@ export const i18nContext = context;
 const history = createBrowserHistory();
 const { store, persistor } = configureStore(history);
 
-websockets(store);
+const socketConfig: SocketConfig = {
+  uri: 'https://ws.dinify.app'
+};
 
 // react-redux-firebase config
 const rrfConfig: Partial<ReactReduxFirebaseConfig> = {
@@ -98,11 +100,13 @@ ReactDOM.render(
     <PersistGate loading={null} persistor={persistor}>
       <I18nProvider>
         <ReactReduxFirebaseProvider {...rrfProps}>
-          <SnackbarProviderWrapper>
-            <ConnectedRouter history={history}>
-              <App />
-            </ConnectedRouter>
-          </SnackbarProviderWrapper>
+          <SocketReduxProvider {...socketConfig}>
+            <SnackbarProviderWrapper>
+              <ConnectedRouter history={history}>
+                <App />
+              </ConnectedRouter>
+            </SnackbarProviderWrapper>
+          </SocketReduxProvider>
         </ReactReduxFirebaseProvider>
       </I18nProvider>
     </PersistGate>

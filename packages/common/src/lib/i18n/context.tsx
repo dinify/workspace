@@ -69,11 +69,11 @@ export const init = ({
 
       setState({ ...state, locale });
     };
-    console.log('State', {
-      locale: state.locale.id, 
-      cldr: state.cldr.General.locale().id, 
-      translations: state.translations ? state.translations.gratuity : ''
-    });
+    // console.log('State', {
+    //   locale: state.locale.id, 
+    //   cldr: state.cldr.General.locale().id, 
+    //   translations: state.translations ? state.translations.gratuity : ''
+    // });
     return (
       <context.Provider value={{
         state,

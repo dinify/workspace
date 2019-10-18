@@ -1,6 +1,6 @@
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
-import wsTypes from '../../websockets/types';
+import * as wsActions from '../socket/actions';
 import { AnyAction } from 'redux';
 import { getType } from 'typesafe-actions';
 import * as actions from './actions';
@@ -52,7 +52,7 @@ export default function reducer(state: UiState = initialState, action: AnyAction
       return assoc('bottomBarOpen', action.payload.orderItemCount > 0)(state);
     }
 
-    case wsTypes.CONFIRMED_PAYMENT: {
+    case getType(wsActions.confirmedPaymentAction): {
       return assocPath<any, UiState>(['transactionStatus'], action.payload.transaction.status)(state);
     }
 

@@ -1,17 +1,8 @@
-import { ignoreElements, tap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { actionTypes } from 'react-redux-firebase';
 import { push } from 'connected-react-router';
 import { ACCOUNT } from 'web/routes';
-
-const meFetchedEpic = (action$) =>
-  action$.pipe(
-    ofType('ACCESSTOKEN_HANDLED'),
-    tap(() => {
-      window.initSocket();
-    }),
-    ignoreElements()
-  );
 
 // TODO reimplement redirect after signup in a cleaner way
 const redirectAfterSignInEpic = (action$) =>
@@ -26,6 +17,5 @@ const redirectAfterSignInEpic = (action$) =>
   )
 
 export default [
-  meFetchedEpic,
   redirectAfterSignInEpic
 ];
