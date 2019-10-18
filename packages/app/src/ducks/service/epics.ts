@@ -5,7 +5,7 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { callServiceAsync, fetchServicesAsync } from './actions';
 // TODO: fix this shit
-import { currentT as t } from '@dinify/common/src/lib/i18n/useTranslation';
+import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 import { getType } from 'typesafe-actions';
 
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';

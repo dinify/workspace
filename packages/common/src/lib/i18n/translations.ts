@@ -1,7 +1,7 @@
 import { CLDR } from "@phensley/cldr";
 import * as icepick from 'icepick';
 import * as util from '../util';
-import { usei18n } from ".";
+import { useIntl } from ".";
 
 // parse i18next template language to ES6 template
 const i18next2es6 = (template: string) => {
@@ -44,7 +44,7 @@ export let currentT: TFunction;
 
 // useTranslation hook
 export default () => {
-  const { translations, cldr } = usei18n().state;
+  const { translations, cldr } = useIntl().state;
   const _t: TFunction = (path, data) => t({ path, data, cldr, translations });
   currentT = _t;
   return { t: _t, cldr };

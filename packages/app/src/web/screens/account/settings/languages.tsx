@@ -1,6 +1,6 @@
 import React from 'react';
 import remove from 'ramda/es/remove';
-import { usei18n, useTranslation, localizedLanguages } from '@dinify/common/src/lib/i18n';
+import { useIntl, useTranslation, localizedLanguages } from '@dinify/common/src/lib/i18n';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import ArrowUpward from '@material-ui/icons/ArrowUpwardRounded';
 import Delete from '@material-ui/icons/DeleteRounded';
@@ -19,7 +19,7 @@ import { Profile } from '../../../../store/root-reducer';
 
 export default () => {
   const { t } = useTranslation();
-  const { setLocale } = usei18n();
+  const { setLocale } = useIntl();
   const dispatch = useDispatch();
   const firebase = useFirebase();
   const profile = useSelector((state: RootState) => state.firebase.profile);

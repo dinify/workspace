@@ -9,7 +9,7 @@ import { getOrderItemCount as getCartCount } from './ducks/cart/selectors';
 import App from './web/app';
 import { SnackbarProvider } from 'material-ui-snackbar-redux';
 import { ReactReduxFirebaseProvider, ReactReduxFirebaseProviderProps, ReactReduxFirebaseConfig } from 'react-redux-firebase';
-import { init as initi18n, localeMatcher } from '@dinify/common/src/lib/i18n';
+import { localeMatcher, IntlConfig, IntlProvider } from '@dinify/common/src/lib/i18n';
 import { getCookie } from '@dinify/common/src/lib/FN';
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -23,33 +23,29 @@ import { RootState } from 'typesafe-actions';
 //  import HTML5Backend from 'react-dnd-html5-backend'
 //  import { DragDropContextProvider } from 'react-dnd'
 
-let locale;
+// TODO: move these to environment variables
+
+const intlConfig: IntlConfig = {
+  namespace: 'app'
+  // bundleUri: 'https://cdn.jsdelivr.net/npm/@phensley/cldr@0.19.3/packs', // TODO: move this to static.dinify.app
+  // translationsUri: 'https://static.dinify.app/i18n/translations'
+};
 const langCookie = getCookie('language');
 if (langCookie) {
   try {
     const content = JSON.parse(langCookie);
-    locale = localeMatcher.match(content.primary).locale;
+    intlConfig.locale = localeMatcher.match(content.primary).locale;
   } catch (e) {
     console.error('JSON parse error', e);
   }
 }
 
-const { 
-  context, 
-  I18nProvider 
-} = initi18n({
-  locale,
-  namespace: 'app'
-});
-
-export const i18nContext = context;
-
-const history = createBrowserHistory();
-const { store, persistor } = configureStore(history);
-
 const socketConfig: SocketConfig = {
   uri: 'https://ws.dinify.app'
 };
+
+const history = createBrowserHistory();
+const { store, persistor } = configureStore(history);
 
 // react-redux-firebase config
 const rrfConfig: Partial<ReactReduxFirebaseConfig> = {
@@ -98,7 +94,7 @@ const SnackbarProviderWrapper = connect(
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <I18nProvider>
+      <IntlProvider {...intlConfig}>
         <ReactReduxFirebaseProvider {...rrfProps}>
           <SocketReduxProvider {...socketConfig}>
             <SnackbarProviderWrapper>
@@ -108,7 +104,7 @@ ReactDOM.render(
             </SnackbarProviderWrapper>
           </SocketReduxProvider>
         </ReactReduxFirebaseProvider>
-      </I18nProvider>
+      </IntlProvider>
     </PersistGate>
   </Provider>,
   document.getElementById('root'),

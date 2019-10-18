@@ -5,16 +5,16 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import LightbulbToggle from '../../../components/LightbulbToggle';
-import { useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import { toggleThemeAction } from '../../../../ducks/ui/actions';
+import { ThemeType } from 'app/src/ducks/ui/reducers';
 
 export default () => {
   const { t } = useTranslation();
-  const store = useStore();
-  const state: RootState = store.getState();
-  const { theme } = state.ui;
-  const toggleTheme = () => store.dispatch(toggleThemeAction());
+  const dispatch = useDispatch();
+  const theme = useSelector<RootState, ThemeType>(state => state.ui.theme);
+  const toggleTheme = () => dispatch(toggleThemeAction());
 
   // TODO: fix this
   const LightbulbToggleTS = LightbulbToggle as any;

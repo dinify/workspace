@@ -1,4 +1,4 @@
-import { CLDRFramework, LocaleMatcher, LocaleMatch } from "@phensley/cldr";
+import { CLDR, CLDRFramework, LocaleMatcher, LocaleMatch, Locale } from "@phensley/cldr";
 import EnglishPack from '@phensley/cldr/packs/en.json';
 import localizedLanguagesResource from './localized-languages.json';
 import defaultLanguagesResource from './default-languages.json';
@@ -8,6 +8,23 @@ import wretch from 'wretch';
 
 // TODO: move this to static.dinify.app
 const packurl = `https://cdn.jsdelivr.net/npm/@phensley/cldr@0.19.3/packs`;
+const staticRoot = 'https://static.dinify.app';
+
+export type Namespace = 'app'|'dashboard'|'landing'|'waiterboard'|'common';
+
+export interface IntlState {
+  namespace?: Exclude<Namespace, 'common'>,
+  locale?: Locale,
+  translations?: any,
+  cldr: CLDR
+};
+
+export type IntlConfig = Pick<IntlState, 'namespace'|'locale'>;
+
+export interface IntlContextType {
+  state: IntlState,
+  setLocale: (locale: Locale|string) => any
+};
 
 export const getDetectedLocale = (): LocaleMatch => {
   let value = navigator.language;
@@ -15,7 +32,7 @@ export const getDetectedLocale = (): LocaleMatch => {
     value = 'und';
   }
   return localeMatcher.match(value);
-}
+};
 
 // load English synchronously so it's always available
 const loader = (language: string): any => {
@@ -29,6 +46,30 @@ const asyncLoader = (language: string) =>
     .get()
     .json()
     .catch((err: Error) => console.log(err));
+
+// translation loader
+export const loadTranslations = ({ 
+  locale = getDetectedLocale().locale, 
+  namespace 
+}: Pick<IntlState, 'namespace'|'locale'>) => {
+  const language = locale.tag.language();
+  return Promise.all(['common', namespace].map(cns => {
+    return new Promise((resolve, reject) => {
+      wretch(`${staticRoot}/i18n/translations/${language}/${cns}`)
+        .get()
+        .json(json => {
+          resolve(json);
+        })
+        .catch(err => reject(err));
+    });
+  })).then(values => {
+    let aggr: any = {};
+    values.forEach(v => {
+      aggr = {...aggr, ...v};
+    });
+    return aggr;
+  }).catch(err => console.log(err));
+};
 
 export const framework = new CLDRFramework({
   loader,
@@ -64,5 +105,6 @@ export const localeMatcher = new LocaleMatcher(supportedLocales);
 
 export const English = framework.get('en');
 
-export * from './context';
-export { default as useTranslation } from './useTranslation';
+export { IntlContext, useIntl } from './context';
+export * from './provider';
+export { default as useTranslation } from './translations';

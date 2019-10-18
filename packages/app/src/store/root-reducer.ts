@@ -45,6 +45,12 @@ const servicePersistConfig = {
   whitelist: ['all']
 }
 
+const uiPersistConfig = {
+  key: 'ui',
+  storage,
+  whitelist: ['theme']
+}
+
 export interface Profile {
   language: {
     primary: LanguageIdType,
@@ -58,7 +64,7 @@ const firebaseReducerWrapper = (state: any, action: any) => firebaseReducer<Part
 
 export const commonReducers = {
   auth,
-  ui,
+  ui: persistReducer(uiPersistConfig, ui),
   user,
   restaurant: persistReducer(restaurantPersistConfig, restaurant),
   menuCategory: persistReducer(menuCategoryPersistConfig, menuCategory),

@@ -9,7 +9,7 @@ import forEach from 'ramda/es/forEach';
 import { selectedBillItems } from 'ducks/seat/selectors';
 import { orderAsync, rmFromCartAsync } from 'ducks/cart/actions.ts';
 import types from './types';
-import wsTypes from '../../websockets/types';
+import * as wsActions from '../socket/actions';
 
 const initialState = {
   seats: [],
@@ -34,14 +34,14 @@ export default function reducer(state = initialState, action) {
       return assocPath(['seats', '0', 'cart'], action.payload)(state);
     }
 
-    case wsTypes.SEATS:
-    case wsTypes.SPLIT:
-    case wsTypes.CONFIRMED_ORDER:
-    case wsTypes.CONFIRMED_PAYMENT: {
+    case getType(wsActions.seatsAction):
+    case getType(wsActions.splitAction):
+    case getType(wsActions.confirmedOrderAction):
+    case getType(wsActions.confirmedPaymentAction): {
       return assocPath(['seats'], action.payload.seats)(state);
     }
 
-    case wsTypes.CHECKIN: {
+    case getType(wsActions.checkinAction): {
       const seat = action.payload.seat;
       let newState = state;
       if (findIndex(propEq('id', seat.id))(state.seats) < 0) {
@@ -51,12 +51,12 @@ export default function reducer(state = initialState, action) {
       return newState;
     }
 
-    case wsTypes.CHECKOUT: {
+    case getType(wsActions.checkoutAction): {
       const seat = action.payload.seat;
       return assoc('seats', remove(findIndex(propEq('id', seat.id))(state.seats), 1, state.seats))(state);
     }
 
-    case wsTypes.CHECKOUT_ALL: {
+    case getType(wsActions.checkoutAllAction): {
       return assoc('seats', [])(assoc('checkedin', false)(state));
     }
 

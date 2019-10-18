@@ -11,7 +11,7 @@ import { Transaction, BillResponse, BillResponseN } from 'TransactionModels';
 import { bill } from '../cart/schemas';
 
 // TODO: fix this shit
-import { currentT as t } from '@dinify/common/src/lib/i18n/useTranslation';
+import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
