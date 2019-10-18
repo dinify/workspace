@@ -9,7 +9,8 @@ import { getOrderItemCount as getCartCount } from './ducks/cart/selectors';
 import App from './web/app';
 import { SnackbarProvider } from 'material-ui-snackbar-redux';
 import { ReactReduxFirebaseProvider, ReactReduxFirebaseProviderProps, ReactReduxFirebaseConfig } from 'react-redux-firebase';
-import { setNamespace as setTranslationsNamespace } from '@dinify/common/src/lib/i18n';
+import { init as initi18n, localeMatcher } from '@dinify/common/src/lib/i18n';
+import { getCookie } from '@dinify/common/src/lib/FN';
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
@@ -22,7 +23,26 @@ import { RootState } from 'typesafe-actions';
 //  import HTML5Backend from 'react-dnd-html5-backend'
 //  import { DragDropContextProvider } from 'react-dnd'
 
-setTranslationsNamespace('app');
+let locale;
+const langCookie = getCookie('language');
+if (langCookie) {
+  try {
+    const content = JSON.parse(langCookie);
+    locale = localeMatcher.match(content.primary).locale;
+  } catch (e) {
+    console.error('JSON parse error', e);
+  }
+}
+
+const { 
+  context, 
+  I18nProvider 
+} = initi18n({
+  locale,
+  namespace: 'app'
+});
+
+export const i18nContext = context;
 
 const history = createBrowserHistory();
 const { store, persistor } = configureStore(history);
@@ -76,13 +96,15 @@ const SnackbarProviderWrapper = connect(
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <ReactReduxFirebaseProvider {...rrfProps}>
-        <SnackbarProviderWrapper>
-          <ConnectedRouter history={history}>
-            <App />
-          </ConnectedRouter>
-        </SnackbarProviderWrapper>
-      </ReactReduxFirebaseProvider>
+      <I18nProvider>
+        <ReactReduxFirebaseProvider {...rrfProps}>
+          <SnackbarProviderWrapper>
+            <ConnectedRouter history={history}>
+              <App />
+            </ConnectedRouter>
+          </SnackbarProviderWrapper>
+        </ReactReduxFirebaseProvider>
+      </I18nProvider>
     </PersistGate>
   </Provider>,
   document.getElementById('root'),

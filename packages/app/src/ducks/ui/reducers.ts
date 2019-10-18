@@ -1,13 +1,9 @@
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import wsTypes from '../../websockets/types';
-import { getDetectedLocale } from '@dinify/common/src/lib/i18n';
 import { AnyAction } from 'redux';
-import { Locale } from '@phensley/cldr';
 import { getType } from 'typesafe-actions';
 import * as actions from './actions';
-import { getCookie } from '@dinify/common/src/lib/FN';
-import { localeMatcher } from '@dinify/common/src/lib/i18n';
 import { Dialog } from './actions';
 
 export type ThemeType = 'light'|'dark';
@@ -17,23 +13,11 @@ export interface UiState {
   dialogs: { [key: string]: boolean|Dialog },
   transactionStatus: any,
   bottomBarOpen: boolean,
-  theme: ThemeType,
-  locale: Locale
+  theme: ThemeType
 };
 export interface ErrorMessage {
   message: string,
   code: string
-}
-
-let locale = getDetectedLocale().locale;
-const langCookie = getCookie('language');
-if (langCookie) {
-  try {
-    const content = JSON.parse(langCookie);
-    locale = localeMatcher.match(content.primary).locale;
-  } catch (e) {
-    console.error('JSON parse error');
-  }
 }
 
 const initialState: UiState = {
@@ -42,8 +26,7 @@ const initialState: UiState = {
   dialogs: {},
   transactionStatus: null,
   bottomBarOpen: false,
-  theme: 'light',
-  locale
+  theme: 'light'
 };
 
 
@@ -67,10 +50,6 @@ export default function reducer(state: UiState = initialState, action: AnyAction
     case 'dinify/cart/GET_CART_DONE': {
       // TODO: IF the bill item count or cart item count > 0
       return assoc('bottomBarOpen', action.payload.orderItemCount > 0)(state);
-    }
-    
-    case getType(actions.setLocaleAction): {
-      return assoc('locale', action.payload)(state);
     }
 
     case wsTypes.CONFIRMED_PAYMENT: {

@@ -18,7 +18,7 @@ export const path = (path: string|string[]) =>
     path.map((p: string) => p.split('.')).reduce((acc, curr) => [ ...acc, ...curr]) : 
     path.split('.');
 
-export const substitute = (string: string, vars: any) => {
+export const substitute = (string: string, vars: any): string => {
   try {
     return eval(`(() => { const { ${Object.keys(vars).join(',')} } = vars; return \`${string}\`; })()`);
   } catch(e) {

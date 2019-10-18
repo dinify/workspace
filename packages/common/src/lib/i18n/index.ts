@@ -1,14 +1,12 @@
-import { CLDRFramework, LocaleMatcher, LocaleMatch, Locale } from "@phensley/cldr";
-// Import default language directly so it's always available
+import { CLDRFramework, LocaleMatcher, LocaleMatch } from "@phensley/cldr";
 import EnglishPack from '@phensley/cldr/packs/en.json';
 import localizedLanguagesResource from './localized-languages.json';
 import defaultLanguagesResource from './default-languages.json';
-import { useStore } from "react-redux";
 import wretch from 'wretch';
 
 // IDEA: use ICU compiled to webassembly !
-// or use @phensley/cldr
 
+// TODO: move this to static.dinify.app
 const packurl = `https://cdn.jsdelivr.net/npm/@phensley/cldr@0.19.3/packs`;
 
 export const getDetectedLocale = (): LocaleMatch => {
@@ -19,13 +17,13 @@ export const getDetectedLocale = (): LocaleMatch => {
   return localeMatcher.match(value);
 }
 
-// Load English synchronously (see below)
+// load English synchronously so it's always available
 const loader = (language: string): any => {
   // return require(`@phensley/cldr/packs/${language}.json`);
   return EnglishPack;
 };
 
-// Fetch the language resource pack for this version.
+// fetch the language resource pack for this version
 const asyncLoader = (language: string) =>
   wretch(`${packurl}/${language}.json`)
     .get()
@@ -66,18 +64,5 @@ export const localeMatcher = new LocaleMatcher(supportedLocales);
 
 export const English = framework.get('en');
 
-export const useLocaleState = (defaultLocale?: Locale) => {
-  const state = useStore().getState();
-  return state.locale || state.ui.locale || defaultLocale;
-}
-
-export type Namespace = 'app'|'dashboard'|'landing'|'waiterboard'|'common';
-
-export let namespace: Namespace = 'common';
-
-export const setNamespace = (ns: Exclude<Namespace, 'common'>) => {
-  namespace = ns;
-};
-
-export { default as useBundle } from './useBundle';
+export * from './context';
 export { default as useTranslation } from './useTranslation';
