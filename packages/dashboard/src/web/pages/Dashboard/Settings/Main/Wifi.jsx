@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import {
   FormBox,
   FormBoxHead,

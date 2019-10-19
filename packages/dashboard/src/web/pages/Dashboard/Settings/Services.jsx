@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { updateNameInitAction } from 'ducks/restaurant/actions';
 import { removeServiceInit, fetchServicesInit } from 'ducks/service/actions';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Tabs from '@material-ui/core/Tabs';

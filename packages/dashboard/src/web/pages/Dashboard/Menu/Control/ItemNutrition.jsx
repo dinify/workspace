@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 import { updateFoodNutritionInit } from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';

@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import queryString from 'query-string';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
 import Select from 'web/components/MaterialInputs/Select';

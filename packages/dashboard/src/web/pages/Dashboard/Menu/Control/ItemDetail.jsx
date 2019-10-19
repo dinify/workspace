@@ -11,7 +11,7 @@ import Progress from 'web/components/Progress';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';

@@ -10,7 +10,7 @@ import {
 } from 'web/components/styled/FormBox';
 import { uploadMainImageInitAction } from 'ducks/restaurant/actions';
 import Progress from 'web/components/Progress';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 const Image = ({ uploadMainImage, restaurant }) => {
   if (!restaurant) return <div />;

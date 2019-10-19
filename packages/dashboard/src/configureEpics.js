@@ -25,16 +25,15 @@ const rootEpic = (action$, state$, firebase, ...rest) => {
     ...ingredientEpics,
     ...serviceEpics,
     ...crud,
-    ...reporting
+    ...reporting,
   );
   const output = epic(
     action$,
     state$,
     {
       firebase,
-      i18nInstance: window.i18nInstance
     },
-    ...rest
+    ...rest,
   );
   return output;
 };

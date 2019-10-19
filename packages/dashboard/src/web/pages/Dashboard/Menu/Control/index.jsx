@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { MapToList } from '@dinify/common/dist/lib/FN';
 import ListOfCategories from './ListOfCategories';
 import ListOfDishes from './ListOfDishes';
