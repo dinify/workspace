@@ -11,8 +11,10 @@ export interface Dialog {
 
 export type TResolver = (t: TFunction) => string;
 export type SnackbarType = 'test';
+export type SnackbarId = SnackbarType|string;
 export interface Snackbar {
-  type?: SnackbarType,
+  id?: SnackbarId,
+  visible?: boolean,
   message: string|TResolver,
   handler?: (...params: any[]) => any,
   action?: string|TResolver,
@@ -20,12 +22,12 @@ export interface Snackbar {
 
 export const showSnackbarAction = createAction(
   `${p}/SNACKBAR_SHOW`,
-  action => (payload: SnackbarType|Snackbar) => action(payload)
+  action => (payload: Snackbar) => action(payload)
 );
 
 export const hideSnackbarAction = createAction(
   `${p}/SNACKBAR_HIDE`,
-  action => (type: SnackbarType) => action(type)
+  action => (id: SnackbarId) => action(id)
 );
 
 export const openDialogAction = createAction(

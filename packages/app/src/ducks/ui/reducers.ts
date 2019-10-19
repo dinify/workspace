@@ -11,7 +11,7 @@ export interface UiState {
   progressMap: any,
   errorsMap: { [key: string]: ErrorMessage },
   dialogs: { [key: string]: boolean|Dialog },
-  snackbars: { [key: string]: boolean|Snackbar },
+  snackbars: { [key: string]: Snackbar },
   transactionStatus: any,
   bottomBarOpen: boolean,
   theme: ThemeType
@@ -72,17 +72,13 @@ export default function reducer(state: UiState = initialState, action: AnyAction
       return assoc('dialogs', {})(state);
     }
     case getType(actions.showSnackbarAction): {
-      let type = action.payload;
-      let value: boolean|Snackbar = true;
-      if (typeof action.payload === 'object') {
-        const payload = action.payload as Snackbar;
-        type = payload.type || Math.random().toString(36).substring(7);
-        value = { ...payload, type, visible: true };
-      }
-      return assocPath<boolean|Snackbar, UiState>(['snackbars', type], value)(state);
+      let snackbar = action.payload as Snackbar;
+      const id = snackbar.id || Math.random().toString(36).substring(7);
+      const value = { ...snackbar, id, visible: true };
+      return assocPath<Snackbar, UiState>(['snackbars', id], value)(state);
     }
     case getType(actions.hideSnackbarAction): {
-      return assocPath(['snackbars', action.payload, 'visible'], false)(state);
+      return assocPath<boolean, UiState>(['snackbars', action.payload, 'visible'], false)(state);
     }
     case getType(actions.toggleThemeAction): {
       return assoc('theme', state.theme === 'dark' ? 'light' : 'dark')(state);

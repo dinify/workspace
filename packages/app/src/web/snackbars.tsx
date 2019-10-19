@@ -1,12 +1,12 @@
 import React from 'react';
 import Snackbar, { SnackbarProps } from '@material-ui/core/Snackbar';
 import Grow from '@material-ui/core/Grow';
-import { TResolver } from './ducks/ui/actions';
+import { TResolver } from '../ducks/ui/actions';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { UiState } from '../ducks/ui/reducers';
 import { RootState } from 'typesafe-actions';
-import { Snackbar as SnackbarPayload, hideSnackbarAction, SnackbarType } from '../ducks/ui/actions';
+import { hideSnackbarAction } from '../ducks/ui/actions';
 import { Button } from '@material-ui/core';
 import toPairs from 'ramda/es/toPairs';
 
@@ -16,17 +16,17 @@ const defaultProps: Partial<SnackbarProps> = {
     vertical: 'bottom',
     horizontal: 'left',
   },
-  TransitionComponent: Grow
+  TransitionComponent: Grow as any
 };
 
 export default (props: any) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const snackbars = useSelector<RootState, UiState['snackbars']>(state => state.ui.snackbars);
-  const fullScreenDialogOpen = useSelector<RootState, UiState['snackbars']>(state => {
-    return !!state.ui.dialogs['cart'] || !!state.ui.dialogs['bill'];
+  const fullScreenDialogOpen = useSelector<RootState, boolean>(state => {
+    return !!state.ui.dialogs['cart'] || !!state.ui.dialogs['bill'] || !!state.ui.dialogs['services'];;
   });
-  const getHandler = (id: SnackbarType) => () => dispatch(hideSnackbarAction(id));
+  const getHandler = (id: string) => () => dispatch(hideSnackbarAction(id));
   const interpolate = (s: string|TResolver) => {
     if (typeof s === 'string') return s;
     else return s(t);
@@ -34,13 +34,11 @@ export default (props: any) => {
   
   return (<>
     {toPairs(snackbars)
-    .filter(([,v]) => v !== true)
-    .map(([type, v]) => {
+    .map(([id, snackbar]) => {
       let rest: any = {};
-      const snackbar = v as SnackbarPayload;
-      const closeHandler = getHandler(type as SnackbarType);
+      const closeHandler = getHandler(id);
       if (snackbar.action) {
-        const closeHandler = getHandler(type as SnackbarType);
+        const closeHandler = getHandler(id);
         const actionHandler = () => {
           if (snackbar.handler) snackbar.handler();
           closeHandler();
@@ -56,7 +54,7 @@ export default (props: any) => {
       }
 
       const messageComponent = (
-        <span id={`${type}-message-id`}>
+        <span id={`${id}-message-id`}>
           {interpolate(snackbar.message)}
         </span>
       );
@@ -65,10 +63,10 @@ export default (props: any) => {
         <Snackbar
           {...props}
           {...defaultProps}
-          key={type}
-          open={!!snackbars[type].visible}
+          key={id}
+          open={!!snackbars[id].visible}
           onClose={closeHandler}
-          ContentProps={{ 'aria-describedby': `${type}-message-id` }}
+          ContentProps={{ 'aria-describedby': `${id}-message-id` }}
           message={messageComponent}
           {...rest}
         />

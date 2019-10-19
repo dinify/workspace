@@ -16,7 +16,8 @@ const p = 'dinify/cart';
 export const fetchCartAsync = createAsyncAction(
   `${p}/GET_CART_INIT`,
   `${p}/GET_CART_DONE`,
-  `${p}/GET_CART_FAIL`
+  `${p}/GET_CART_FAIL`,
+  `${p}/GET_CART_CANCEL`
 )<undefined, CartResponseN, string>();
 
 export const addToCartAsync = createAsyncAction(
