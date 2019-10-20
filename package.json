@@ -32,6 +32,6 @@
     "jest": "jest --coverage --verbose --color"
   },
   "devDependencies": {
-    "lerna": "^3.10.7"
+    "lerna": "^3.18.1"
   }
 }

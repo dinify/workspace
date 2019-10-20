@@ -33,8 +33,9 @@ const saveReviews = (locID, limit, page, done) => {
       }
     )
   }).catch((err) => {
-    console.log('404');
-    done();
+    console.log('404', err);
+    setTimeout(() => saveReviews(locID, limit, page, done), 60000)
+    // done();
   });
 }
 
@@ -46,8 +47,8 @@ const doStuff = (restaurant, cb) => {
 
 const doIt = (limit, page) => {
   MongoRestaurants
-  .find()
-  .sort({ _id: -1 })
+  .find({ langDist: null })
+  .sort({ num_reviews: -1 })
   .skip(limit*page)
   .limit(limit)
   .exec((e, restaurants) => {

@@ -5,7 +5,10 @@ import RestaurantsTa from '../models/RestaurantsTa';
 const locations = {
   brno: 274714,
   prague: 274707,
-  berlin: 187323
+  berlin: 187323,
+  sanSebastian: 187457,
+  bilbao: 187454,
+  madrid: 187514
 }
 
 export const taRestaurantForSQL = (restaurant) => {
@@ -31,7 +34,7 @@ export const taRestaurantForSQL = (restaurant) => {
 }
 
 const doIt = (limit, page) => {
-  taAPI.getRestaurants({ locID: locations.brno, limit, offset: page*limit }).then((res) => {
+  taAPI.getRestaurants({ locID: locations.madrid, limit, offset: page*limit }).then((res) => {
 
     res.data.forEach((restaurant) => {
       console.log(restaurant.email);

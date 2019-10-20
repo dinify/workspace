@@ -22,7 +22,7 @@ if ((process.env.NODE_ENV || '').trim() === 'production') { // prod
     dialect: 'mysql',
     port: 3307,
     host: '127.0.0.1',
-    logging: console.log
+    logging: false
   });
 }
 

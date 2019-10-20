@@ -1,12 +1,14 @@
 {
   "extends": "../../tsconfig.json",
+  
   "compilerOptions": {
+    "types": ["node"],
     "noImplicitAny": false,
     "skipLibCheck": true,
     "allowJs": true,
     "noUnusedParameters": false,
     "noUnusedLocals": false,
-    "lib": ["es6"],
+    "lib": ["es6", "dom"],
     "module": "commonjs",
     "noImplicitReturns": true,
     "outDir": "dist",

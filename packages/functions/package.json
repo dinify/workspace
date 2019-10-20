@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.134",
+    "@types/node": "^12.11.1",
     "tslint": "~5.18.0",
     "typescript": "~3.5.2"
   },
