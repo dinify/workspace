@@ -48,8 +48,8 @@ const doStuff = (restaurant, cb) => {
 const doIt = (limit, page) => {
   MongoRestaurants
   .find({ langDist: null })
-  .sort({ num_reviews: -1 })
-  .skip(limit*page)
+  //.sort()
+  //.skip(limit*page)
   .limit(limit)
   .exec((e, restaurants) => {
     eachOf(
