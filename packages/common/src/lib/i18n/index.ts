@@ -109,8 +109,7 @@ const allLocales = CLDRFramework.availableLocales();
 
 export const supportedLocales = allLocales
   // place the default locale at the front of the supported list
-  .sort(l => (l.tag.expanded() === "en-Latn-US" ? -1 : 1))
-  .map(l => l.id);
+  .sort(l => (l.tag.expanded() === "en-Latn-US" ? -1 : 1));
 
 export const supportedLanguages: string[] = allLocales
   .sort(l => (l.tag.expanded() === "en-Latn-US" ? -1 : 1))
@@ -140,7 +139,7 @@ export const getRegionsForLanguage = (language: string): string[] =>
       []
     );
 
-export const localeMatcher = new LocaleMatcher(supportedLocales);
+export const localeMatcher = new LocaleMatcher(supportedLocales.map(l => l.id));
 
 export const English = framework.get("en");
 

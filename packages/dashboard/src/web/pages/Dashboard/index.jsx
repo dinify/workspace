@@ -199,7 +199,10 @@ const Dashboard = ({
   publishRestaurant,
 }) => {
   const { t } = useTranslation();
-  const { setLocale } = useIntl();
+  const { state, setLocale } = useIntl();
+  const selectedLocale = state.locale;
+  console.log(selectedLocale, locales);
+
   const changeLocale = locale => {
     setLocale(locale);
     setCookie('language', locale.id, 30);
@@ -276,16 +279,6 @@ const Dashboard = ({
   ];
   const publishable = true;
   const publised = restaurant && restaurant.published;
-  let selectedLocale;
-  const langCookie = getCookie('language');
-  if (langCookie) {
-    try {
-      const content = JSON.parse(langCookie);
-      selectedLocale = localeMatcher.match(content.primary).locale;
-    } catch (e) {
-      console.error('JSON parse error', e);
-    }
-  }
 
   return (
     <div>

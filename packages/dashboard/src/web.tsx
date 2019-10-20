@@ -33,8 +33,8 @@ const intlConfig: IntlConfig = {
 const langCookie = getCookie('language');
 if (langCookie) {
   try {
-    const content = JSON.parse(langCookie);
-    intlConfig.locale = localeMatcher.match(content.primary).locale;
+    // const content = JSON.parse(langCookie);
+    intlConfig.locale = localeMatcher.match(langCookie).locale;
   } catch (e) {
     console.error('JSON parse error', e);
   }
