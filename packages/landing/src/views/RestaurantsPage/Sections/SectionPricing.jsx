@@ -12,7 +12,6 @@ import Phone from "@material-ui/icons/PhoneRounded";
 
 import productStyle from "styles/productStyle.jsx";
 
-const countryCode = 'CZ'; // TODO: get from locality (IP address or Geo)
 const key = 'restaurantsPage.sections.pricing';
 const SectionPricing = ({t, registrationURL, classes, theme, ...otherProps}) => {
   const flexCenterStyle = {
@@ -61,21 +60,6 @@ const SectionPricing = ({t, registrationURL, classes, theme, ...otherProps}) => 
           <OpenInNew style={{ marginRight: 8 }}/>
           {t(`${key}.cta`)}
         </Button>
-        <Typography variant="caption" color="textSecondary" style={{marginTop: 16, marginBottom: 8}}>
-          {t(`${key}.price.or`)}
-        </Typography>
-        <div style={flexCenterStyle}>
-          <Phone style={{marginRight: -24}} color="action"/>
-          <Typography style={{paddingLeft: 40, marginRight: 40}} variant="h4" color="textPrimary">
-            <Link href={t(`support.phone.${countryCode}.link`)} color="inherit">
-              {t(`support.phone.${countryCode}.text`)}
-            </Link>
-          </Typography>
-          <div style={{content: '""'}}/>
-        </div>
-        <Typography variant="caption" color="textSecondary" style={{marginTop: 4}}>
-          {t('support.caption')}
-        </Typography>
       </div>
     </div>
   );

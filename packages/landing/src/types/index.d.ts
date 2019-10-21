@@ -1,0 +1,1 @@
+declare module "@dinify/common/src/theme";

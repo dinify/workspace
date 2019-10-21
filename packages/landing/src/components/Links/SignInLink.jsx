@@ -5,8 +5,10 @@ import OpenInNew from "@material-ui/icons/OpenInNewRounded";
 
 import { withStyles } from '@material-ui/core/styles';
 import linksStyle from './linksStyle';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 const SignInLink = ({classes, ...other}) => {
+  const { t } = useTranslation();
   return (
     <ListItem
       className={classes.listItem}
@@ -19,7 +21,7 @@ const SignInLink = ({classes, ...other}) => {
         disableRipple
       >
         <OpenInNew style={{ fontSize: 16, marginRight: 4 }}/>
-        Sign in
+        {t('user.signIn')}
       </Button>
     </ListItem>
   );

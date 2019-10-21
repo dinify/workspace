@@ -2,6 +2,8 @@ import { CLDR } from "@phensley/cldr";
 import * as icepick from 'icepick';
 import * as util from '../util';
 import { useIntl } from ".";
+import React from 'react';
+import toPairs from 'ramda/es/toPairs';
 
 // parse i18next template language to ES6 template
 const i18next2es6 = (template: string) => {
@@ -66,3 +68,12 @@ export const t = ({ path, data = {}, cldr, translations }: TArgs) => {
 
   return util.substitute(template, data);
 };
+
+const render = (template: string, data: any): React.ReactNode => {
+  return 'a';
+  const hasElement = toPairs(util.flatten(data)).map(([k,v]: [any,any]) => React.isValidElement(v)).reduce((p,c) => p || c);
+  if (!hasElement) return util.substitute(template, data);
+  else {
+    return 'REACT ELEMENT'
+  }
+}

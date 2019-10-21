@@ -28,7 +28,7 @@ import SectionMultilingual from "./Sections/SectionMultilingual.jsx";
 import SectionFAQ from "./Sections/SectionFAQ.jsx";
 import SectionProduct from "./Sections/SectionProduct.jsx";
 // import SectionMailingList from "./Sections/SectionMailingList.jsx";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { ReportCampaignAction } from '@dinify/common/dist/api/restaurant';
 
 class LandingPage extends React.Component {
@@ -91,7 +91,7 @@ class LandingPage extends React.Component {
           }} {...rest}>
           <HeaderLink name={t('features')} anchor="features" />
           <HeaderLink name={t('sectionProduct.header')} anchor="howitworks" />
-          <HeaderLink name="FAQ" anchor="faq" />
+          <HeaderLink name={t('sectionFAQ.title')} anchor="faq" />
           <HeaderDivider />
           <SignInLink className={classes.headerListItem}/>
         </Header>

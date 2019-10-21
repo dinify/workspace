@@ -21,7 +21,7 @@ class SectionProduct extends React.Component {
         style={{ textAlign: "left" }}
       >
         <Typography variant="h2" align="center" style={{width: '100%'}}>
-          FAQ
+          {t('sectionFAQ.title')}
         </Typography>
         <GridContainer justify="center">
           <GridItem xs={12} sm={8} md={8}>
@@ -42,19 +42,7 @@ class SectionProduct extends React.Component {
                 },
                 {
                   title: t('sectionFAQ.scan.title'),
-                  content: (
-                    <span>
-                      {t('sectionFAQ.scan.start')}
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="https://web.dinify.app/checkin"
-                      >
-                        {t('sectionFAQ.scan.checkinPage')}
-                      </a>
-                      {t('sectionFAQ.scan.end')}
-                    </span>
-                  )
+                  content: t('sectionFAQ.scan.content')
                 },
                 {
                   title: t('sectionFAQ.useful.title'),
@@ -64,11 +52,6 @@ class SectionProduct extends React.Component {
                   title: t('sectionFAQ.free.title'),
                   content: t('sectionFAQ.free.content')
                 },
-                {
-                  title: t('sectionFAQ.available.title'),
-                  content: t('sectionFAQ.available.content')
-                },
-
               ]}
             />
           </GridItem>

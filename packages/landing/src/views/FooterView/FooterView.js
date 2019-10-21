@@ -2,7 +2,7 @@ import React from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import style from './footerStyle';
 import { getCookie, setCookie } from '@dinify/common/dist/lib/FN';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 // material-ui
 import Grid from "@material-ui/core/Grid";

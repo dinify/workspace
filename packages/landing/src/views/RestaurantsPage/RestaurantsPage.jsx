@@ -12,7 +12,7 @@ import SectionWaiterboard from "./Sections/SectionWaiterboard.jsx";
 import SectionStatement from "./Sections/SectionStatement.jsx";
 import SectionPricing from "./Sections/SectionPricing.jsx";
 import restaurantsPageStyle from "./restaurantsPageStyle.jsx";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import classNames from "classnames";
 import queryString from "query-string";
 import { ReportCampaignAction } from '@dinify/common/dist/api/restaurant';

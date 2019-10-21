@@ -18,7 +18,7 @@ import Twitter from "@dinify/common/dist/icons/Twitter";
 import Youtube from "@dinify/common/dist/icons/Youtube";
 import Github from "@dinify/common/dist/icons/Github";
 
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 import footerStyle from "styles/material-kit-pro-react/components/footerStyle.jsx";
 import getTheme from "@dinify/common/dist/theme";
@@ -106,12 +106,16 @@ const Footer = (props) => {
 
         </div>
         <Typography variant="caption" color="textSecondary">
-          <Trans i18nKey="footer.copyright">
+          {t('footer.copyright')}
+          <Copyright className={classes.smallCopyright} />
+          {`${1900 + new Date().getYear()}, `}
+          {t('footer.withlove', { love: <Favorite className={classes.smallHeart}/> })}
+          {/* <Trans i18nKey="footer.copyright">
             <Copyright className={classes.smallCopyright} />
             {`${1900 + new Date().getYear()}`}
-            <Favorite className={classes.smallHeart}/>
+            
             <Link href="/" color="inherit" />
-          </Trans>
+          </Trans> */}
         </Typography>
         <div className={classes.clearFix} />
       </div>

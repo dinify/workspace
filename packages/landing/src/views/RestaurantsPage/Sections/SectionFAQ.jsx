@@ -23,13 +23,13 @@ class SectionFAQ extends React.Component {
         style={{ textAlign: "left" }}
       >
         <Typography variant="h2" align="center" style={{width: '100%'}}>
-          FAQ
+          {t('restaurantsPage.sections.faq.title')}
         </Typography>
         <GridContainer justify="center">
           <GridItem xs={12} sm={8} md={8}>
             <Accordion
               active={0}
-              collapses={['translation', 'correct', 'devices', 'training', 'trial', 'modify'].map(key => ({
+              collapses={['business', 'translation', 'correct', 'devices', 'training', 'trial', 'modify'].map(key => ({
                 title: t(`${tKey}.${key}.title`),
                 content: t(`${tKey}.${key}.content`)
               }))}

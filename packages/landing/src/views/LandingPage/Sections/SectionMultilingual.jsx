@@ -10,7 +10,7 @@ import GridItem from "components/Grid/GridItem.jsx";
 import PhoneRestaurantMenu from "../Components/PhoneRestaurantMenu.jsx";
 
 import productStyle from "styles/productStyle.jsx";
-import "flag-icon-css/css/flag-icon.min.css";
+// import "flag-icon-css/css/flag-icon.min.css";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
@@ -121,16 +121,6 @@ class SectionProduct extends React.Component {
                 </Grid>
               ))}
             </Grid>
-            <Typography
-              style={{ marginTop: 16, marginBottom: 16 }}
-              variant="caption"
-              color="textSecondary"
-            >
-              {t('sectionMultilingual.note')}
-              {/*<a href="#" style={{ marginLeft: 8 }}>
-                Learn More
-                    </a>*/}
-            </Typography>
           </GridItem>
           <GridItem md={5} className={classes.mlAuto}>
             <PhoneRestaurantMenu selected={selected} />
