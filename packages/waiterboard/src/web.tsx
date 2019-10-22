@@ -1,13 +1,21 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { PersistGate } from 'redux-persist/integration/react'
+import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history';
-import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import {
+  ReactReduxFirebaseProvider,
+  ReactReduxFirebaseProviderProps,
+  ReactReduxFirebaseConfig,
+} from 'react-redux-firebase';
 import { ConnectedRouter } from 'connected-react-router';
-import i18n from '@dinify/common/dist/i18n';
+import {
+  localeMatcher,
+  IntlProvider,
+  IntlConfig,
+} from '@dinify/common/src/lib/i18n';
+
 import { getCookie } from '@dinify/common/dist/lib/FN';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -19,41 +27,27 @@ import websockets from './websockets';
 const history = createBrowserHistory();
 const { store, persistor } = configureStore(history);
 
-let language = { primary: navigator.language, other: [] };
+const intlConfig: IntlConfig = {
+  namespace: 'waiterboard',
+};
 const langCookie = getCookie('language');
 if (langCookie) {
   try {
-    language = JSON.parse(langCookie);
+    const content = JSON.parse(langCookie);
+    intlConfig.locale = localeMatcher.match(content.primary).locale;
   } catch (e) {
-    console.error('JSON parse error');
+    console.error('JSON parse error', e);
   }
 }
 
-i18n({
-  namespace: 'waiterboard',
-  lang: language.primary,
-  fallback: language.other
-});
-
 // react-redux-firebase config
-const rrfConfig = {
+const rrfConfig: Partial<ReactReduxFirebaseConfig> = {
   userProfile: 'profiles',
   updateProfileOnLogin: true,
   useFirestoreForProfile: true,
-  profileFactory: (userData, profileData) => {
-    // make sure default profile values are populated
-    return {
-      ...profileData,
-      language: {
-        primary: navigator.language,
-        other: [],
-        ...profileData.language
-      }
-    };
-  }
 };
 
-const rrfProps = {
+const rrfProps: ReactReduxFirebaseProviderProps = {
   firebase,
   config: rrfConfig,
   dispatch: store.dispatch,
@@ -64,22 +58,24 @@ const theme = createMuiTheme({
   palette: {
     type: 'dark',
   },
-})
+});
 
 websockets(store);
 
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <ReactReduxFirebaseProvider {...rrfProps}>
-        <ConnectedRouter history={history}>
-          <MuiThemeProvider theme={theme}>
-            <App />
-          </MuiThemeProvider>
-        </ConnectedRouter>
-      </ReactReduxFirebaseProvider>
+      <IntlProvider {...intlConfig}>
+        <ReactReduxFirebaseProvider {...rrfProps}>
+          <ConnectedRouter history={history}>
+            <MuiThemeProvider theme={theme}>
+              <App history={history} />
+            </MuiThemeProvider>
+          </ConnectedRouter>
+        </ReactReduxFirebaseProvider>
+      </IntlProvider>
     </PersistGate>
   </Provider>,
   document.getElementById('root'),
-)
+);
 // service worker register function was here

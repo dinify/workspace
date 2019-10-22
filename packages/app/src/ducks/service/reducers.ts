@@ -8,7 +8,7 @@ import { ListToMap } from '@dinify/common/src/lib/FN';
 export const all = createReducer({} as ServiceMap)
   .handleAction(actions.fetchServicesAsync.success, (state, action) => {
     const services = ListToMap(action.payload);
-    return { ...state, ...services };
+    return { ...services };
   });
 
 export const status = createReducer<any, any>({})

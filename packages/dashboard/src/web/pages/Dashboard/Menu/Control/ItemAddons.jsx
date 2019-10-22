@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Label } from 'web/components/styled/FormBox';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 
-import { assignAddon, unassignAddon } from 'ducks/menuItem/actions';
+import { assignAddonAsync, unassignAddonAsync } from 'ducks/menuItem/actions';
 import { fetchAddonsAsync } from 'ducks/addon/actions';
 import { listOfAddons } from 'ducks/addon/selectors';
 
@@ -86,7 +86,7 @@ export default connect(
   }),
   {
     fetchAddons: fetchAddonsAsync.request,
-    assignAddon,
-    unassignAddon,
+    assignAddon: assignAddonAsync.request,
+    unassignAddon: unassignAddonAsync.request,
   },
 )(ItemAddons);

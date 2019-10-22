@@ -6,6 +6,6 @@ export const getTableList = createSelector(
     (state) => state.table.all,
   ],
   (all) => {
-    return MapToList(all, { sortType: Number, sortBy: 'number' });
+    return MapToList(all).sort((a, b) => a.number - b.number);
   }
 )

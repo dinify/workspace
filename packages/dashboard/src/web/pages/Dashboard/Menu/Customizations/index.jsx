@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 import Addons from './Addons';
 import Ingredients from './Ingredients';

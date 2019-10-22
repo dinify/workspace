@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { MapToList } from '@dinify/common/dist/lib/FN';
 import { Field, reduxForm } from 'redux-form';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Loading from 'web/components/Loading';
 
 import List from '@material-ui/core/List';
@@ -127,7 +127,7 @@ const Options = ({
   createChoice,
   fetchOptions,
   optionsList,
-  optionsLoaded,
+  // optionsLoaded,
   collapseOption,
   removeChoice,
   removeOption,
@@ -138,11 +138,11 @@ const Options = ({
 }) => {
   const { t } = useTranslation();
 
-  const shouldLoad = optionsList.length < 1 && !optionsLoaded;
+  // const shouldLoad = optionsList.length < 1 && !optionsLoaded;
   useEffect(() => {
-    if (shouldLoad) fetchOptions()
+    fetchOptions();
   }, []);
-  if (shouldLoad) return <Loading />;
+  // if (shouldLoad) return <Loading />;
 
   return (
     <React.Fragment>
@@ -210,7 +210,8 @@ const Options = ({
                           errorMessage={errorsMap.CREATE_CHOICE}
                           onSubmit={({ name, price }) =>
                             createChoice({
-                              name, price,
+                              name, 
+                              price,
                               optionId: option.id,
                               form: 'customizations/option/choice'
                             })

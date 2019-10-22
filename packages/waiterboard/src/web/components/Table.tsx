@@ -11,6 +11,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Chip from '@material-ui/core/Chip';
 import IconButton from '@material-ui/core/IconButton';
 import { colorsByStages } from '../colors';
+import { getUserName } from '../../lib/utils';
 
 const TableBox = styled.div`
   display: inline-block;
@@ -202,7 +203,7 @@ const Table: React.FC<{
           <Guest key={i} onClick={() => guest.user ? toggleModal({ open: true, type: 'User', userId: guest.userId }) : ''}>
             <Photo url={guest.user ? guest.user.photoURL : ''} />
             {guest.user ?
-              <Name title={guest.user.displayName}>{S(guest.user.displayName).truncate(16).s}</Name>
+              <Name title={getUserName(guest.user)}>{S(getUserName(guest.user)).truncate(16).s}</Name>
             : ''}
             <Sign guest={guest} />
           </Guest>

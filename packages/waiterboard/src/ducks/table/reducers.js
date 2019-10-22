@@ -1,7 +1,6 @@
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import keys from 'ramda/es/keys';
-import { UpdateOriginal } from '@dinify/common/dist/lib/FN';
 import * as restaurantTypes from 'ducks/restaurant/types';
 import * as tableTypes from 'ducks/table/types';
 
@@ -20,7 +19,7 @@ export default function reducer(state = initialState, action) {
       const waiterboards = restaurant.waiterboards;
       const selectedWBid = keys(waiterboards)[0];
       const wb = waiterboards[selectedWBid];
-      return assoc('all', UpdateOriginal(state.all, wb.tables))(state);
+      return assoc('all', {...state.all, ...wb.tables})(state);
     }
 
     case tableTypes.UPDATE_TABLE_INIT: {

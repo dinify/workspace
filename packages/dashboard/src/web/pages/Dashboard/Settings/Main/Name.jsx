@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import {
   FormBox,
   FormBoxHead,

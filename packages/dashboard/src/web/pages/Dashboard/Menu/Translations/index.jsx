@@ -2,7 +2,7 @@ import React from 'react';
 import { createSelector } from 'reselect'
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Paper from '@material-ui/core/Paper';
 import CardContent from '@material-ui/core/CardContent';
 import Tabs from '@material-ui/core/Tabs';

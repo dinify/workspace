@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Loading from 'web/components/Loading';
 
 import List from '@material-ui/core/List';
@@ -20,7 +20,6 @@ import FormControl from '@material-ui/core/FormControl';
 
 import Text from 'web/components/MaterialInputs/Text';
 import { getT } from '@dinify/common/src/lib/translation.ts';
-
 
 import {
   fetchIngredientsAsync,
@@ -78,7 +77,7 @@ const Ingredients = ({
   createIngredient,
   ingredientsList,
   fetchIngredients,
-  ingredientsLoaded,
+  // ingredientsLoaded,
   removeIngredient,
   // updateIngredient,
   styles,
@@ -88,11 +87,11 @@ const Ingredients = ({
 }) => {
   const { t } = useTranslation();
 
-  const shouldLoad = ingredientsList.length < 1 && !ingredientsLoaded;
+  // const shouldLoad = ingredientsList.length < 1 && !ingredientsLoaded;
   useEffect(() => {
-    if (shouldLoad) fetchIngredients()
+    fetchIngredients()
   }, []);
-  if (shouldLoad) return <Loading />;
+  // if (shouldLoad) return <Loading />;
 
   return (
     <React.Fragment>
@@ -104,8 +103,8 @@ const Ingredients = ({
               name,
               form: 'customizations/ingredient'
             })}
-            progress={progressMap['CREATE_INGREDIENT']}
-            errorMessage={errorsMap['CREATE_INGREDIENT']}
+            progress={progressMap.CREATE_INGREDIENT}
+            errorMessage={errorsMap.CREATE_INGREDIENT}
           />
         </CardContent>
       </Card>

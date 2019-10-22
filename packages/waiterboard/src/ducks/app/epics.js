@@ -41,13 +41,18 @@ const getLoggedEpic = (action$, state$) =>
       const reactions = [{ type: restaurantTypes.FETCH_MANAGEDRESTAURANTS_INIT }];
 
       const selectedRestaurant = state$.value.app.selectedRestaurant;
-      if (selectedRestaurant) reactions.push({
-        type: restaurantTypes.FETCH_RESTAURANT_INIT,
-        payload: {
-          populateWith: 'waiterboards.tables,services.image',
-          node: true
-        }
-      });
+      if (selectedRestaurant) {
+        reactions.push({
+          type: restaurantTypes.FETCH_RESTAURANT_INIT,
+          payload: {
+            populateWith: 'waiterboards.tables',
+            node: true
+          }
+        });
+        reactions.push({
+          type: 'GET_SERVICES_INIT',
+        });
+      }
 
       const waiterboardId = state$.value.app.selectedWBId;
       if (waiterboardId) reactions.push({ type: appTypes.LOAD_STATE_INIT });

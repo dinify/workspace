@@ -6,7 +6,7 @@ import { ListToMap } from '@dinify/common/dist/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 import { getType } from 'typesafe-actions';
-import { fetchAddonsAsync } from './actions';
+import { fetchAddonsAsync, createAddonAsync } from './actions';
 import { fetchMenuItemAsync } from '../menuItem/actions';
 
 const initialState = {
@@ -32,8 +32,8 @@ export default function reducer(state = initialState, action) {
       return assoc('all', { ...state.all, ...addons })(state);
     }
 
-    case types.CREATE_ADDON_DONE: {
-      const newAddon = payload.res;
+    case getType(createAddonAsync.success): {
+      const newAddon = payload;
       return assocPath(['all', newAddon.id], newAddon)(state);
     }
     case types.REMOVE_ADDON_INIT: {

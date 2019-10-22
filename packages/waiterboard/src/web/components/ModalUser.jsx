@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { clearUser } from 'ducks/table/actions';
 import numeral from 'numeral';
+import { getUserName } from '../../lib/utils';
 
 import Bill from './Events/Bill';
 import Order from './Events/Order';
@@ -87,8 +88,6 @@ class ModalUser extends React.Component {
 
     const { payload: { userId }, users, clearUser, shown } = this.props;
 
-
-
     const user = users[userId];
 
     if (!shown) return (<div />);
@@ -113,7 +112,7 @@ class ModalUser extends React.Component {
           <SmallTable>
             <tr>
               <TdLabel>Name</TdLabel>
-              <TdValue>{user  ? user.displayName : ''}</TdValue>
+              <TdValue>{user  ? getUserName(user) : ''}</TdValue>
             </tr>
             <tr>
               <TdLabel>No. of visits</TdLabel>

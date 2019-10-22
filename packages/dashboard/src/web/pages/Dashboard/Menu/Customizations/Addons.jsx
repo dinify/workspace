@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Loading from 'web/components/Loading';
 
 import List from '@material-ui/core/List';
@@ -115,7 +115,7 @@ const Addons = ({
           <div key={addon.id}>
             <ListItem dense style={styles.ListItem}>
               <ListItemText primary={getT(addon.translations, lang)} />
-              {addon.price.amount} Kč
+              {addon.price ? addon.price.amount : '0'} Kč
               <Tooltip placement="left" title={t('delete')}>
                 <IconButton
                   aria-label={t('delete')}
