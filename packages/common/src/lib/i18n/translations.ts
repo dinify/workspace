@@ -34,7 +34,7 @@ const i18nextFormatter = (value: any, format: string, cldr: CLDR): any => {
 // example template
 // "Testing interpolation ${cldr.Calendars.formatDate(time, { time: 'short' })}";
 
-export type TFunction = (path: string[]|string, data?: any) => string;
+export type TFunction = (path: string[]|string, data?: any) => string|React.ReactNode;
 interface TArgs {
   path: string[]|string, 
   data: { [key: string]: any }, 
@@ -69,11 +69,15 @@ export const t = ({ path, data = {}, cldr, translations }: TArgs) => {
   return util.substitute(template, data);
 };
 
-const render = (template: string, data: any): React.ReactNode => {
-  return 'a';
-  const hasElement = toPairs(util.flatten(data)).map(([k,v]: [any,any]) => React.isValidElement(v)).reduce((p,c) => p || c);
-  if (!hasElement) return util.substitute(template, data);
-  else {
-    return 'REACT ELEMENT'
-  }
-}
+// const render = (template: string, data: any): React.ReactNode|string => {
+//   const { _i, cldr, ...rest } = data;
+//   const hasElement = toPairs(rest).map(([,v]: any) => React.isValidElement(v)).reduce((p:any,c:any) => p || c, false);
+//   if (!hasElement) return util.substitute(template, data);
+//   else {
+//     // split into chunks
+//     const temp = util.substitute(template, {});
+
+//     // render to component tree
+//     return temp;
+//   }
+// }

@@ -109,11 +109,11 @@ const Footer = (props) => {
           {t('footer.copyright')}
           <Copyright className={classes.smallCopyright} />
           {`${1900 + new Date().getYear()}, `}
-          {t('footer.withlove', { love: <Favorite className={classes.smallHeart}/> })}
+          {t('footer.withlove', { love: '❤' })}
           {/* <Trans i18nKey="footer.copyright">
             <Copyright className={classes.smallCopyright} />
             {`${1900 + new Date().getYear()}`}
-            
+            <Favorite className={classes.smallHeart}/>
             <Link href="/" color="inherit" />
           </Trans> */}
         </Typography>

@@ -2,7 +2,7 @@ import React from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import style from './footerStyle';
 import { getCookie, setCookie } from '@dinify/common/dist/lib/FN';
-import { useTranslation } from '@dinify/common/src/lib/i18n';
+import { useIntl, useTranslation, supportedLocales, localizedLanguages } from '@dinify/common/src/lib/i18n';
 
 // material-ui
 import Grid from "@material-ui/core/Grid";
@@ -17,24 +17,22 @@ import Flag from "@dinify/common/dist/components/Flag";
 import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 
-const langs = [{
-  lang:'en', country: 'gb', name: 'English'
- },
- {
-  lang: 'cs', country: 'cz', name: 'Čeština'
-}];
+const availableLanguages = ['en-GB', 'cs', 'es', 'it', 'de', 'fr', 'ru'];
+const locales = supportedLocales.filter(l => availableLanguages.includes(l.id));
 
-const changeLanguage = (lang) => {
-  window.i18nInstance.changeLanguage(lang);
-  setCookie('language', lang, 30);
-}
+
 
 const FooterView = ({
   classes,
   ...otherProps
 }) => {
   const { t } = useTranslation();
+  const { setLocale } = useIntl();
   let selectedLanguage = getCookie('language');
+  const changeLocale = (localeId) => {
+    setLocale(locales.find(l => l.id === localeId));
+    setCookie('language', localeId, 30);
+  }
 
   return (
     <Footer {...otherProps}>
@@ -47,11 +45,14 @@ const FooterView = ({
             classes={{selectMenu: classes.selectMenu}}
             input={<FilledInput disableUnderline name="language" id="language-picker" />}
             value={selectedLanguage}
-            onChange={(event) => {changeLanguage(event.target.value);}}
+            onChange={(event) => {changeLocale(event.target.value);}}
           >
-            {langs.map((l) => (
-              <MenuItem key={l.lang} value={l.lang}>
-                <ListItem style={{padding: 0}}><Flag country={l.country.toUpperCase()} style={{marginRight: 8}}/>{l.name}</ListItem>
+            {locales.map((locale) => (
+              <MenuItem key={locale.id} value={locale.id}>
+                <ListItem component="span" style={{padding: 0}}>
+                  <Flag country={locale.tag.region()} style={{marginRight: 8}}/>
+                  {localizedLanguages[locale.tag.language()]}
+                </ListItem>
               </MenuItem>
             ))}
           </Select>
@@ -63,9 +64,9 @@ const FooterView = ({
           {['home', 'restaurants'].map(link => (
             <React.Fragment key={link}>
               <Link
+                color="textPrimary"
                 href={`/${link}?source=footer`}
-                variant="body2"
-                color="textPrimary">
+                variant="body2">
                 {t(`footer.links.${link}`)}
               </Link>
               <br/>
