@@ -23,7 +23,7 @@ import { fetchBillAsync } from 'ducks/transaction/actions.ts';
 import { fetchCartAsync } from 'ducks/cart/actions.ts';
 
 import withRoot from 'withRoot.js';
-import Dialogs from './dialogs.tsx';
+import Dialogs from './Dialogs.tsx';
 import Snackbars from './snackbars.tsx';
 
 const App = (props) => {

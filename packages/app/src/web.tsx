@@ -5,7 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 //  import registerServiceWorker from './registerServiceWorker'
 import { createBrowserHistory } from 'history';
 import { ConnectedRouter } from 'connected-react-router';
-import App from './web/app';
+import App from './web/App';
 import { ReactReduxFirebaseProvider, ReactReduxFirebaseProviderProps, ReactReduxFirebaseConfig } from 'react-redux-firebase';
 import { localeMatcher, IntlConfig, IntlProvider } from '@dinify/common/src/lib/i18n';
 import { getCookie } from '@dinify/common/src/lib/FN';
