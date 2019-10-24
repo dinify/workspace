@@ -6,8 +6,8 @@ import { getContext } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import { toggleThemeAction } from 'ducks/ui/actions';
 
-import LogoText from '@dinify/common/dist/icons/LogoText';
-import Logo from '@dinify/common/dist/icons/Logo';
+import LogoText from '@dinify/common/src/icons/LogoText';
+import Logo from '@dinify/common/src/icons/Logo';
 import LightbulbToggle from 'web/components/LightbulbToggle';
 import ChevronLeft from '@material-ui/icons/ChevronLeftRounded';
 import Menu from '@material-ui/icons/MenuRounded';

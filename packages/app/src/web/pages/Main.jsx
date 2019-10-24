@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withTheme } from '@material-ui/core/styles';
-import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
+import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContainer';
 import ResponsiveGrid from 'web/components/ResponsiveGrid';
 import Typography from '@material-ui/core/Typography';
 import RestaurantListItem from 'web/components/RestaurantListItem';

@@ -13,7 +13,7 @@ import Price from '../Price';
 import { BillSection } from './bill-section';
 import { initTransactionAsync } from '../../../ducks/transaction/actions';
 import { AppBar, AppBarAction, AppBarTitle } from '../app-bar';
-const PaymentOptionsDialog = require('@dinify/common/dist/components/dialogs/PaymentOptionsDialog').default;
+const PaymentOptionsDialog = require('@dinify/common/src/components/dialogs/PaymentOptionsDialog').default;
 
 export interface BillPageProps {
   onClose?: () => void,

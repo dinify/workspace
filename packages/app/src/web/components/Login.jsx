@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import Text from '@dinify/common/dist/components/Inputs/Text';
+import Text from '@dinify/common/src/components/Inputs/Text';
 import { loginInit } from 'ducks/auth/actions';
 import Grid from '@material-ui/core/Grid';
 import FormHelperText from '@material-ui/core/FormHelperText';

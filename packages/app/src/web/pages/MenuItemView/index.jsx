@@ -7,7 +7,7 @@ import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import FavoriteToggle from 'web/components/FavoriteToggle';
 import Typography from '@material-ui/core/Typography';
-import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
+import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContainer';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
 import Fab from '@material-ui/core/Fab';
 import Carousel from 'web/components/Carousel';

@@ -9,7 +9,7 @@ import * as routes from 'web/routes';
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
 import MenuItemView from 'web/pages/MenuItemView';
-import SignIn from '@dinify/common/dist/components/SignIn';
+import SignIn from '@dinify/common/src/components/SignIn';
 import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';

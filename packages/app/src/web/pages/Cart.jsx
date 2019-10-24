@@ -12,7 +12,7 @@ import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 
 // import SwipableItem from 'web/components/SwipableItem';
-import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
+import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContainer';
 import Typography from '@material-ui/core/Typography';
 import CartItem from 'web/components/CartItem';
 import Price from 'web/components/Price';

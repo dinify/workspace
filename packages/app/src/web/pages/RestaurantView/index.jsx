@@ -7,7 +7,7 @@ import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import Typography from '@material-ui/core/Typography';
-import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
+import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContainer';
 import Carousel from 'web/components/Carousel';
 import { fetchMenuCategoriesAsync } from 'ducks/menuCategory/actions.ts';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';

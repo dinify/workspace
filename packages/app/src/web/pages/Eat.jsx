@@ -21,12 +21,12 @@ import {
   clearSelectedBillItems as clearSelectedBillItemsAction
 } from 'ducks/seat/actions';
 
-import ResponsiveContainer from '@dinify/common/dist/components/ResponsiveContainer';
+import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContainer';
 import GuestList from 'web/components/GuestList';
 import ScrollSnapView from 'web/components/ScrollSnapView';
 import CartItem from 'web/components/CartItem';
 import BillItem from 'web/components/BillItem';
-import PaymentOptionsDialog from '@dinify/common/dist/components/dialogs/PaymentOptionsDialog';
+import PaymentOptionsDialog from '@dinify/common/src/components/dialogs/PaymentOptionsDialog';
 import ContextMenu from 'web/components/ContextMenu';
 import Price from 'web/components/Price';
 import TotalPrice from 'web/components/TotalPrice';

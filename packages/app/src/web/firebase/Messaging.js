@@ -1,4 +1,4 @@
-import * as API from '@dinify/common/dist/api/user';
+import * as API from '@dinify/common/src/api/user';
 
 export default class Messaging {
   static initialize() {
