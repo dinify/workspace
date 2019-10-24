@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { openDialogAction } from 'ducks/ui/actions';
-import { matchPath } from 'react-router';
+import { matchPath, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { getOrderItemCount as getCartCount } from 'ducks/cart/selectors';
 
@@ -50,6 +50,16 @@ const App = (props) => {
     window.scrollTo(0, 0);
   }
 
+  const match = (...paths) => {
+    let matched = false;
+    paths.forEach(path => {
+      matched = matched || matchPath(location.pathname, { path }) != null;
+    });
+    return matched;
+  }
+
+  const isAccountTab = match(routes.ACCOUNT) || match(routes.SIGNIN);
+
   const onNavigate = (evt, val) => {
     if (val === 0 && isAccountTab) {
       history.push(routes.HOMEPAGE);
@@ -59,18 +69,10 @@ const App = (props) => {
     }
   }
 
-  const match = (...paths) => {
-    let matched = false;
-    paths.forEach(path => {
-      matched = matched || matchPath(location.pathname, { path }) != null;
-    });
-    return matched;
-  }
   // const back = e => {
   //   e.stopPropagation();
   //   history.goBack();
   // }
-  const isAccountTab = match(routes.ACCOUNT) || match(routes.SIGNIN);
 
   return (
     <div style={{position: 'relative'}}>
@@ -79,15 +81,20 @@ const App = (props) => {
           <Route exact path={routes.HOMEPAGE} render={() => (
             <Main/>
           )}/>
-          <Route path={routes.SIGNIN} component={() => <SignIn user={user}/>} />
-          <Route path={routes.ACCOUNT} component={AccountScreen} />
+          <Route path={routes.SIGNIN} component={() => 
+            !user.isEmpty ? <Redirect to={routes.ACCOUNT} /> : <SignIn user={user}/>  
+          } />
+
+          <Route path={routes.ACCOUNT} component={() =>
+            user.isEmpty ? <Redirect to={routes.SIGNIN} /> : <AccountScreen />
+          } />
 
           <Route path={routes.CHECKIN} component={Checkin} />
           <Route path={routes.SERVICES} component={Services} />
 
           <Route path={routes.RESTAURANT} component={RestaurantView} />
           <Route path={routes.MENUITEM} component={MenuItemView} />
-          
+
           <Route path={routes.RECEIPT} component={Receipt} />
         </Switch>
       </div>
