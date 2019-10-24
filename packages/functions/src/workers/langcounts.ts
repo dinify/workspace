@@ -38,7 +38,7 @@ export const langDistForRestaurant = (restaurant, cb) => {
     const langs = _.map(langDist, '_id');
     const counts = _.map(langDist, 'count');
     const total = _.sum(counts);
-    const targetLangDist = _.filter(langDist, (o) => o._id !== 'en');
+    const targetLangDist = _.filter(langDist, (o) => o._id !== 'es');
     const targetLangs = _.map(targetLangDist, 'count');
     const targetLang = _.sum(targetLangs);
     const targetLangRel = total ? targetLang/total : 0;
@@ -86,7 +86,7 @@ export const langDistForRestaurant = (restaurant, cb) => {
 
 const doIt = (limit, page) => {
   Restaurants
-  .find({ranking_geo: 'Berlin'})
+  .find() // {location_string: { $regex : ".*San Sebastian.*" }}
   .sort({ num_reviews: -1, _id: 1 })
   .skip(limit*page)
   .limit(limit)

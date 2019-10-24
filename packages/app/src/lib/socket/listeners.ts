@@ -2,7 +2,6 @@ import { showSnackbarAction } from '../../ducks/ui/actions';
 import { getType, RootState } from 'typesafe-actions';
 import * as actions from '../../ducks/socket/actions';
 import { fetchBillAsync } from '../../ducks/transaction/actions';
-import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { useEffect } from 'react';
 import { useSocket } from '.';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +11,6 @@ import { Order } from 'TransactionModels';
 export const useListeners = () => {
   const dispatch = useDispatch();
   const uid = useSelector<RootState, string>(state => state.firebase.auth.uid);
-  const { t } = useTranslation();
   const socket = useSocket();
 
   const listeners = {
@@ -25,13 +23,13 @@ export const useListeners = () => {
         dispatch(actions.confirmedPaymentAction(payload));
         if (me) {
           dispatch(showSnackbarAction({
-            message: t('paymentConfirmed')
+            message: t => t('paymentConfirmed')
           }));
         }
       }
       else if (me) {
         dispatch(showSnackbarAction({
-          message: t('paymentCancelled')
+          message: t => t('paymentCancelled')
         }));
       }
     },
@@ -43,13 +41,13 @@ export const useListeners = () => {
         dispatch(actions.confirmedOrderAction(payload));
         if (payload.order.initiator === uid) {
           dispatch(showSnackbarAction({
-            message: t('orderConfirmed')
+            message: t => t('orderConfirmed')
           }));
         }
       }
       else if (payload.order.status === 'CANCELLED' && payload.order.initiator === uid) {
         dispatch(showSnackbarAction({
-          message: t('orderCancelled')
+          message: t => t('orderCancelled')
         }));
       }
     },
@@ -57,12 +55,12 @@ export const useListeners = () => {
       if (payload.call.status === 'CONFIRMED') {
         dispatch(actions.confirmedCallAction(payload));
         dispatch(showSnackbarAction({
-          message: t('serviceCallConfirmed')
+          message: t => t('serviceCallConfirmed')
         }));
       }
       else if (payload.call.status === 'CANCELLED') {
         dispatch(showSnackbarAction({
-          message: t('serviceCallCancelled')
+          message: t => t('serviceCallCancelled')
         }));
       }
     },
@@ -71,7 +69,7 @@ export const useListeners = () => {
       dispatch(actions.checkinAction({ ...data, me }));
       if (!me) {
         dispatch(showSnackbarAction({
-          message: t('guestJoinedTable')
+          message: t => t('guestJoinedTable')
         }));
       }
     },
@@ -79,20 +77,20 @@ export const useListeners = () => {
       if (payload.seat.userId === uid) {
         dispatch(actions.checkoutAllAction(payload));
         dispatch(showSnackbarAction({
-          message: t('checkedOut')
+          message: t => t('checkedOut')
         }));
       }
       else {
         dispatch(actions.checkoutAction(payload));
         dispatch(showSnackbarAction({
-          message: t('guestLeftTable')
+          message: t => t('guestLeftTable')
         }));
       }
     },
     'checkout-all': (payload: any) => {
       dispatch(actions.checkoutAllAction(payload));
       dispatch(showSnackbarAction({
-        message: t('checkedOut')
+        message: t => t('checkedOut')
       }));
     },
     'seats': (payload: any) => {
@@ -101,7 +99,7 @@ export const useListeners = () => {
     'split': (payload: any) => {
       dispatch(actions.splitAction(payload));
       dispatch(showSnackbarAction({
-        message: t('newBillSplitItems')
+        message: t => t('newBillSplitItems')
       }))
     },
   };

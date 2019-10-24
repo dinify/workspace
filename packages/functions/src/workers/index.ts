@@ -18,6 +18,6 @@ import langcounts from './langcounts';
 //    console.log(locations);
 //})
 
-//restaurants();
-reviews(); // previous restaurants() run needed
-// langcounts(); // previous reviews() run needed
+// restaurants();
+// reviews(); // previous restaurants() run needed
+langcounts(); // previous reviews() run needed
