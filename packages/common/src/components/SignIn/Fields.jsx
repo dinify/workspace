@@ -129,6 +129,8 @@ const Fields = ({
     />
   );
 
+  let socialSection;
+
   const signupForm = style => (
     <div className={classes && classes.background} style={{
       position: 'absolute',
@@ -186,14 +188,14 @@ const Fields = ({
         style={{x: spring(page === 'forgotPassword' ? 0 : 1, animConfig)}}>
         {style =>
           <div style={{position: 'relative', zIndex: 60}}>
-          <div ref={node => {this.socialSection = node}} style={{
+          <div ref={node => {socialSection = node}} style={{
             willChange: 'transform',
             overflow: 'hidden',
             opacity: style.x**(1/3),
             transformOrigin: 'top center',
             transform: `scale(1, ${style.x}) translate3d(0, 0, 0)`
           }}>
-            <div ref={node => {this.socialSection = node}} style={{
+            <div ref={node => {socialSection = node}} style={{
               transformOrigin: 'top center',
               transform: `scale(1, ${1 / style.x}) translate3d(0, 0, 0)`
             }}>
