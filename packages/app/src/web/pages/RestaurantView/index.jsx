@@ -11,7 +11,7 @@ import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContain
 import Carousel from 'web/components/Carousel';
 import { fetchMenuCategoriesAsync } from 'ducks/menuCategory/actions.ts';
 import { getRestaurantBySubdomain } from 'ducks/restaurant/selectors';
-import { checkinAsync, fetchRestaurantAsync } from 'ducks/restaurant/actions.ts';
+import { fetchRestaurantAsync } from 'ducks/restaurant/actions.ts';
 import InfoSection from './InfoSection';
 import MenuSection from './MenuSection';
 import Nav from './Nav';
@@ -56,10 +56,6 @@ let RestaurantView = (props) => {
     // router,
     history,
     match: { params },
-    location: { search },
-    checkin,
-    user,
-    checkedInRestaurant,
     fetchRestaurant,
     fetchMenucategories,
   } = props;
@@ -73,13 +69,6 @@ let RestaurantView = (props) => {
     return <div />
   }
   const subdomain = params.subdomain;
-  const query = search.match(/qr=([^&]*)/);
-  if (!checkedInRestaurant && query && query[1]) {
-    const qr = query[1];
-    if (!user.isEmpty) {
-      checkin({ qr });
-    } // else history.push(`/login?qr=${qr}`);
-  }
 
   const images = MapToList(restaurant.images);
   const allTags = MapToList(restaurant.tags);
@@ -213,12 +202,11 @@ RestaurantView = connect(
   (state, { match }) => ({
     user: state.firebase.auth,
     restaurant: getRestaurantBySubdomain(state, match.params.subdomain),
-    checkedInRestaurant: state.restaurant.checkedInRestaurant
+    checkedInRestaurant: state.restaurant.checkedInRestaurant,
   }),
   {
     fetchMenucategories: fetchMenuCategoriesAsync.request,
-    fetchRestaurant: fetchRestaurantAsync.request,
-    checkin: checkinAsync.request,
+    fetchRestaurant: fetchRestaurantAsync.request
   }
 )(RestaurantView)
 

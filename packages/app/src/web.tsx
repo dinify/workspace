@@ -15,6 +15,7 @@ import "firebase/firestore";
 
 import configureStore from './store';
 import { SocketReduxProvider, SocketConfig } from './lib/socket';
+import CheckinExecutor from './ducks/restaurant/checkin-executor';
 
 //  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 //  import HTML5Backend from 'react-dnd-html5-backend'
@@ -65,6 +66,7 @@ ReactDOM.render(
         <ReactReduxFirebaseProvider {...rrfProps}>
           <SocketReduxProvider {...socketConfig}>
             <ConnectedRouter history={history}>
+              <CheckinExecutor />
               <App />
             </ConnectedRouter>
           </SocketReduxProvider>

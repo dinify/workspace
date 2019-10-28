@@ -35,7 +35,7 @@ const App = (props) => {
     openDialog,
     fetchStatus,
     fetchCart,
-    fetchBill
+    fetchBill,
   } = props;
 
   useEffect(() => {
@@ -125,7 +125,7 @@ export default connect(
     openDialog: openDialogAction,
     fetchStatus: fetchStatusAsync.request,
     fetchCart: fetchCartAsync.request,
-    fetchBill: fetchBillAsync.request
+    fetchBill: fetchBillAsync.request,
   }
 )(withRouter(withRoot(App)));
 

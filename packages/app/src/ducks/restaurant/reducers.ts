@@ -48,9 +48,19 @@ export const checkedInRestaurant = createReducer<State, any>(null)
     fActionTypes.LOGOUT
   ], () => null);
 
+export const checkinPlan = createReducer<State, any>(null)
+  .handleAction(actions.planCheckinAction, (state, action) => {
+    return action.payload;
+  })
+  .handleAction([
+    actions.execCheckinAsync.success,
+    fActionTypes.LOGOUT
+  ], () => null);
+
 const restaurantReducer = combineReducers({
   all,
   checkedInRestaurant,
+  checkinPlan
 });
 
 export default restaurantReducer;

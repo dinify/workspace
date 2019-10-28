@@ -2,11 +2,11 @@ import { of, from } from 'rxjs';
 import { mergeMap, exhaustMap, map, catchError, debounceTime } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
 import { push } from 'connected-react-router';
-import { checkinAsync, fetchStatusAsync, favRestaurantAsync, fetchRestaurantsAsync } from './actions';
+import { execCheckinAsync, fetchStatusAsync, favRestaurantAsync, fetchRestaurantsAsync } from './actions';
 import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 
-import { getCookie, handleEpicAPIError } from '@dinify/common/src/lib/FN';
+import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import * as uiActions from '../ui/actions';
 const APIv1 = require('@dinify/common/src/api/restaurant');
 
@@ -44,29 +44,31 @@ const fetchCheckinStatusEpic: Epic = (action$) =>
     ))
   );
 
-const checkinEpic: Epic = (action$) =>
+const checkinEpic: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(getType(checkinAsync.request)),
-    debounceTime(500),
+    ofType(getType(execCheckinAsync.request)),
     exhaustMap((action: any) => {
-      const { payload: { qr, pathname } } = action;
-      if (getCookie('access_token') === '') {
-        return of(checkinAsync.failure([{ status: 401 }]));
+
+      const { checkinPlan } = state$.value.restaurant;
+
+      if (!checkinPlan) {
+        return of(execCheckinAsync.failure('no-checkin-plan'));
       }
+
+      const { qr, pathname } = checkinPlan;
+
       return from(API.Checkin({ qr })).pipe(
         mergeMap((res: any) => of(
-          checkinAsync.success(res),
+          execCheckinAsync.success(res),
           fetchStatusAsync.request(),
           push(pathname),
           uiActions.showSnackbarAction({
-            message: t => t('successMessages.you-are-now-checked-in'),
-            handler: () => window.location.assign(pathname),
-            action: t => t('seeMenu')
+            message: t => t('successMessages.you-are-now-checked-in')
           })
         )),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(checkinAsync.failure),
+          failActionType: getType(execCheckinAsync.failure),
           initAction: action
         }))
       );

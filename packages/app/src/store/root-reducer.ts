@@ -23,7 +23,7 @@ import { LanguageIdType, RegionIdType, CurrencyType } from '@phensley/cldr';
 const restaurantPersistConfig = {
   key: 'restaurant',
   storage,
-  whitelist: []
+  whitelist: ['checkinPlan']
 }
 
 const menuCategoryPersistConfig = {

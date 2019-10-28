@@ -6,7 +6,7 @@ import {
   RestaurantsResponse,
   FavRestaurantError
 } from 'RestaurantModels';
-import { createAsyncAction } from 'typesafe-actions';
+import { createAsyncAction, createAction } from 'typesafe-actions';
 
 const p = 'dinify/restaurant';
 
@@ -28,11 +28,24 @@ export const fetchStatusAsync = createAsyncAction(
   `${p}/GET_STATUS_FAIL`
 )<undefined, StatusResponse, string>();
 
-export const checkinAsync = createAsyncAction(
+type PlanCheckinPayload = {
+  qr: string;
+  pathname: string;
+}
+
+export const planCheckinAction = createAction(
+  `${p}/PLAN_CHECKIN`,
+  action => (payload: PlanCheckinPayload) => action({
+    createdAt: Date.now(),
+    ...payload
+  })
+);
+
+export const execCheckinAsync = createAsyncAction(
   `${p}/CHECKIN_INIT`,
   `${p}/CHECKIN_DONE`,
   `${p}/CHECKIN_FAIL`
-)<undefined, object, [object]>();
+)<undefined, object, any>();
 
 export const favRestaurantAsync = createAsyncAction(
   `${p}/FAV_RESTAURANT_INIT`, // { fav, id }
