@@ -1,12 +1,11 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
-import { execCheckinAsync } from 'ducks/restaurant/actions.ts';
+import { planCheckinAction } from 'ducks/restaurant/actions.ts';
 import QRscanner from './QRscanner';
 
 class Checkin extends React.PureComponent {
   render() {
-    const { checkedInRestaurant, checkin } = this.props;
+    const { checkinPlan, planCheckin } = this.props;
     let initiated = false;
 
     const onData = (list) => {
@@ -14,9 +13,9 @@ class Checkin extends React.PureComponent {
         try {
           const url = new URL(data.data);
           const qr = url.searchParams.get('qr');
-          if (!checkedInRestaurant && qr && !initiated) {
+          if (!checkinPlan && qr && !initiated) {
             initiated = true;
-            checkin({ qr, pathname: url.pathname });
+            planCheckin({ qr, pathname: url.pathname });
           }
         } catch (e) {
           console.error('Invalid URL in QR');
@@ -47,9 +46,10 @@ class Checkin extends React.PureComponent {
 
 export default connect(
   (state) => ({
-    checkedInRestaurant: state.restaurant.checkedInRestaurant
+    checkedInRestaurant: state.restaurant.checkedInRestaurant,
+    checkinPlan: state.restaurant.checkinPlan
   }),
   {
-    checkin: execCheckinAsync.request,
+    planCheckin: planCheckinAction,
   }
 )(Checkin);

@@ -54,6 +54,7 @@ export const checkinPlan = createReducer<State, any>(null)
   })
   .handleAction([
     actions.execCheckinAsync.success,
+    actions.execCheckinAsync.failure,
     fActionTypes.LOGOUT
   ], () => null);
 

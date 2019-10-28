@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 //  import registerServiceWorker from './registerServiceWorker'
-import { createBrowserHistory } from 'history';
-import { ConnectedRouter } from 'connected-react-router';
+import { Router } from "react-router";
 import App from './web/app';
 import { ReactReduxFirebaseProvider, ReactReduxFirebaseProviderProps, ReactReduxFirebaseConfig } from 'react-redux-firebase';
 import { localeMatcher, IntlConfig, IntlProvider } from '@dinify/common/src/lib/i18n';
@@ -13,9 +12,10 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-import configureStore from './store';
+import { store, persistor} from './store';
 import { SocketReduxProvider, SocketConfig } from './lib/socket';
 import CheckinExecutor from './ducks/restaurant/checkin-executor';
+import history from './services/history'
 
 //  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 //  import HTML5Backend from 'react-dnd-html5-backend'
@@ -42,8 +42,6 @@ const socketConfig: SocketConfig = {
   uri: 'https://ws.dinify.app'
 };
 
-const history = createBrowserHistory();
-const { store, persistor } = configureStore(history);
 
 // react-redux-firebase config
 const rrfConfig: Partial<ReactReduxFirebaseConfig> = {
@@ -59,16 +57,17 @@ const rrfProps: ReactReduxFirebaseProviderProps = {
   // createFirestoreInstance // <- needed if using firestore
 };
 
+
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <IntlProvider {...intlConfig}>
         <ReactReduxFirebaseProvider {...rrfProps}>
           <SocketReduxProvider {...socketConfig}>
-            <ConnectedRouter history={history}>
+            <Router history={history}>
               <CheckinExecutor />
               <App />
-            </ConnectedRouter>
+            </Router>
           </SocketReduxProvider>
         </ReactReduxFirebaseProvider>
       </IntlProvider>

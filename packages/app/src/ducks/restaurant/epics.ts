@@ -1,7 +1,6 @@
 import { of, from } from 'rxjs';
-import { mergeMap, exhaustMap, map, catchError, debounceTime } from 'rxjs/operators';
+import { mergeMap, exhaustMap, map, catchError, debounceTime, tap } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
-import { push } from 'connected-react-router';
 import { execCheckinAsync, fetchStatusAsync, favRestaurantAsync, fetchRestaurantsAsync } from './actions';
 import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
@@ -44,10 +43,10 @@ const fetchCheckinStatusEpic: Epic = (action$) =>
     ))
   );
 
-const checkinEpic: Epic = (action$, state$) =>
+const checkinEpic: Epic = (action$, state$, { history }) =>
   action$.pipe(
     ofType(getType(execCheckinAsync.request)),
-    exhaustMap((action: any) => {
+    mergeMap((action: any) => {
 
       const { checkinPlan } = state$.value.restaurant;
 
@@ -58,10 +57,13 @@ const checkinEpic: Epic = (action$, state$) =>
       const { qr, pathname } = checkinPlan;
 
       return from(API.Checkin({ qr })).pipe(
+        tap(() => {
+          history.push(pathname)
+          console.log(pathname)
+        }),
         mergeMap((res: any) => of(
           execCheckinAsync.success(res),
           fetchStatusAsync.request(),
-          push(pathname),
           uiActions.showSnackbarAction({
             message: t => t('successMessages.you-are-now-checked-in')
           })

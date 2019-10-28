@@ -1,4 +1,3 @@
-import { routerActions } from 'connected-react-router';
 import * as cartActions from '../ducks/cart/actions';
 import * as restaurantActions from '../ducks/restaurant/actions';
 import * as menuCatrgoryActions from '../ducks/menuItem/actions';
@@ -8,7 +7,6 @@ import * as serviceActions from '../ducks/service/actions';
 
 
 export default {
-  router: routerActions,
   cart: cartActions,
   restaurant: restaurantActions,
   menuCategory: menuCatrgoryActions,

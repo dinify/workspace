@@ -1,6 +1,5 @@
 import { createEpicMiddleware } from 'redux-observable';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -10,8 +9,6 @@ import { RootAction, RootState, Services } from 'typesafe-actions';
 import { commonReducers } from './root-reducer';
 import rootEpic from './root-epic';
 import services from '../services';
-
-
 
 export const epicMiddleware = createEpicMiddleware<
   RootAction,
@@ -28,34 +25,24 @@ const rootPersistConfig = {
   whitelist: []
 }
 
-export default (history: any) => {
-  const rootReducer = combineReducers({
-    router: connectRouter(history),
-    ...commonReducers,
-  });
 
-  const persistedReducers = persistReducer(rootPersistConfig, rootReducer);
+const rootReducer = combineReducers(commonReducers);
 
-  const middlewares = [
-    epicMiddleware,
-    routerMiddleware(history)
-  ];
+const persistedReducers = persistReducer(rootPersistConfig, rootReducer);
 
-  if (process.env.NODE_ENV === 'development') {
-    middlewares.push(createLogger({ diff: true, collapsed: true }));
-  }
+const middlewares = [];
 
-  const store = createStore(
-    persistedReducers,
-    applyMiddleware(...middlewares)
-  );
+if (process.env.NODE_ENV === 'development') {
+  middlewares.push(createLogger({ diff: true, collapsed: true }));
+}
 
-  epicMiddleware.run(rootEpic);
+middlewares.push(epicMiddleware);
 
-  const persistor = persistStore(store);
+export const store = createStore(
+  persistedReducers,
+  applyMiddleware(...middlewares)
+);
 
-  return {
-    store,
-    persistor,
-  };
-};
+epicMiddleware.run(rootEpic);
+
+export const persistor = persistStore(store);
