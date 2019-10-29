@@ -22,8 +22,8 @@ const getGeolocationEpic: Epic = (action$, state$) =>
       const { timestamp } = geolocation;
       const currentTimestamp = new Date().getTime();
       const diff = currentTimestamp - timestamp;
-      // if geolocation is older than 10 minutes, continue to refetch
-      if (diff > (10 * 60 * 1000)) {
+      // if geolocation is older than 60 minutes, continue to refetch
+      if (diff > (60 * 60 * 1000)) {
         return true;
       }
 

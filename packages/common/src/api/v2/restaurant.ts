@@ -96,7 +96,7 @@ export const GetTransactionsOfWaiterboard = ({ waiterboardId }: { waiterboardId:
 });
 
 export const GetCallsOfWaiterboard = ({ waiterboardId }: { waiterboardId: string}): Promise<any> => Get({
-  path: `waiterboard/${waiterboardId}/calls?status=dispatched`
+  path: `waiterboard/${waiterboardId}/calls?status=pending`
 });
 
 export const CallService = ({ serviceId }: { serviceId: string }): Promise<any> => Post({

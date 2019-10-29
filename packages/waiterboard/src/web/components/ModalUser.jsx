@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { clearUser } from 'ducks/table/actions';
 import numeral from 'numeral';
 import { getUserName } from '../../lib/utils';
+import Button from '@material-ui/core/Button';
 
 import Bill from './Events/Bill';
 import Order from './Events/Order';
+import Typography from '@material-ui/core/Typography';
 
 const Header = styled.div`
   position: absolute;
@@ -15,39 +17,19 @@ const Header = styled.div`
   height: 180px;
   width: 100%;
   padding: 30px;
+  text-align: center;
 `;
+
 const Photo = styled.div`
   background-color: white;
   background-image: url(${props => props.url});
-  width: 80px;
-  height: 80px;
-  background-size: 84px;
+  width: 50px;
+  height: 50px;
+  background-size: 50px;
+  margin: 20px;
   border-radius: 50%;
   background-position: center;
   display: inline-block;
-`;
-
-const SmallTable = styled.table`
-  width: width;
-  border-spacing: 0;
-  display: inline-block;
-  margin: 0 0 0 30px;
-`;
-const TdLabel = styled.td`
-  color: #999;
-  font-weight: 300;
-  padding: 0 25px 5px 0;
-  padding-left: left;
-  font-size: 14px;
-  text-align: left;
-`;
-const TdValue = styled.td`
-  color: black;
-  font-weight: 300;
-  padding: 5px 0;
-  font-size: 16px;
-  color: #666;
-  text-align: left;
 `;
 
 const Body = styled.div`
@@ -64,23 +46,6 @@ const Body = styled.div`
   }
 `;
 
-const CornerButton = styled.button`
-  position: absolute;
-  top: 30px;
-  right: 20px;
-  height: 40px;
-  padding: 10px;
-  cursor: pointer;
-  border: none;
-  background: rgba(0,0,0,0.1);
-  font-size: 14px;
-  text-transform: uppercase;
-  i {
-    margin-right: 10px;
-    font-size: 16px;
-  }
-`
-
 class ModalUser extends React.Component {
 
 
@@ -93,11 +58,6 @@ class ModalUser extends React.Component {
     if (!shown) return (<div />);
     if (!user) return (<div />);
 
-    let totalSpend = 0;
-    let aveTicket = 0;
-    let visitsCount = 0;
-    let favs = [];
-
     // TODO check-out kick him out
 
     return (
@@ -105,52 +65,16 @@ class ModalUser extends React.Component {
         <Header>
 
           <Photo url={user.photoURL} />
-          <CornerButton onClick={() => clearUser({ userId })}>
-            <i className="ion-android-exit" />
+
+          <Typography variant="h6" style={{color: '#000', marginBottom: 40}}>{user  ? getUserName(user) : ''}</Typography>
+
+          <Button
+            color="primary"
+            variant="contained"          
+            onClick={() => clearUser({ userId })}
+          >
             <span>Check Out</span>
-          </CornerButton>
-          <SmallTable>
-            <tr>
-              <TdLabel>Name</TdLabel>
-              <TdValue>{user  ? getUserName(user) : ''}</TdValue>
-            </tr>
-            <tr>
-              <TdLabel>No. of visits</TdLabel>
-              <TdValue>{visitsCount}</TdValue>
-            </tr>
-            <tr>
-              <TdLabel>Ave. Ticket</TdLabel>
-              <TdValue>{numeral(aveTicket).format('0.000')}Kč</TdValue>
-            </tr>
-          </SmallTable>
-
-          <SmallTable>
-            <tr>
-              <TdLabel>Reviews</TdLabel>
-              <TdValue>-</TdValue>
-            </tr>
-            <tr>
-              <TdLabel>Evaluation</TdLabel>
-              <TdValue>-</TdValue>
-            </tr>
-            <tr>
-              <TdLabel>Total Spend</TdLabel>
-              <TdValue>{numeral(totalSpend).format('0.000')}Kč</TdValue>
-            </tr>
-          </SmallTable>
-
-          {/*
-              <SmallTable width="550px">
-                <tr>
-                  <TdLabel left="80px">Favorites</TdLabel>
-                  <TdValue>
-                    {favs.map((fav, i) =>
-                      <Label key={i}>{fav.count}× {fav.food}</Label>
-                    )}
-                  </TdValue>
-                </tr>
-              </SmallTable>
-            */}
+          </Button>
 
 
         </Header>
