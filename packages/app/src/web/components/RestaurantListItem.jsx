@@ -1,11 +1,21 @@
-
 import React from 'react';
+import { connect } from 'react-redux';
 import pluck from 'ramda/es/pluck';
 import * as FN from '@dinify/common/src/lib/FN';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Carousel from './Carousel';
+import convertDistance from 'geolib/es/convertDistance';
+
+const formatDistance = (m) => {
+  if (!m) return '';
+  if (m < 1000) {
+    return `${Math.round(m)} m`;
+  }
+  const km = convertDistance(m, 'km');
+  return `${Math.round(km)} km`;
+}
 
 const styles = theme => ({
   image: {
@@ -45,10 +55,13 @@ const styles = theme => ({
   },
 });
 
+
 const RestaurantListItem = ({
   classes,
-  restaurant,
+  restaurant
 }) => {
+
+
   const images = pluck('url')(FN.MapToList(restaurant.images));
   const allTags = FN.MapToList(restaurant.tags);
   const tags = [];
@@ -57,7 +70,6 @@ const RestaurantListItem = ({
       tags.push(tag.name.split('_').join(' '))
     }
   });
-
 
   const RestaurantLink = props => <Link to={`/restaurant/${restaurant.subdomain}${FN.isInstalled() ? '?source=pwa' : ''}`} {...props}/>
   return (
@@ -87,10 +99,17 @@ const RestaurantListItem = ({
           </Typography>
         )}
         <Typography variant="h6">{restaurant.name}</Typography>
+        <Typography variant="caption" color="textSecondary">
+          {formatDistance(restaurant.distance)}
+        </Typography>
         { /* <Typography >{restaurant.description}</Typography> */}
       </div>
     </RestaurantLink>
   );
 };
 
-export default withStyles(styles)(RestaurantListItem);
+export default connect(
+  (state) => ({
+    userGeolocation: state.user.geolocation
+  })
+)(withStyles(styles)(RestaurantListItem));

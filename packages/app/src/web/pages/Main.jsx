@@ -7,11 +7,15 @@ import Typography from '@material-ui/core/Typography';
 import RestaurantListItem from 'web/components/RestaurantListItem';
 import { fetchRestaurantsAsync } from 'ducks/restaurant/actions.ts';
 import { getRestaurantsList } from 'ducks/restaurant/selectors';
+import { getGeolocationAsync } from 'ducks/user/actions.ts';
 
-const Main = ({ restaurantsList, fetchRestaurants }) => {
+const Main = ({ restaurantsList, fetchRestaurants, getGeolocation }) => {
+  
   useEffect(() => {
     fetchRestaurants();
-  }, [])
+    getGeolocation();
+  }, []);
+
   return (
     <div>
       <ResponsiveContainer>
@@ -48,6 +52,7 @@ export default connect(
   state => ({
     restaurantsList: getRestaurantsList(state),
   }), {
-    fetchRestaurants: fetchRestaurantsAsync.request
+    fetchRestaurants: fetchRestaurantsAsync.request,
+    getGeolocation: getGeolocationAsync.request
   }
 )(withTheme()(Main));
