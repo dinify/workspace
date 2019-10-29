@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { MapToList } from '@dinify/common/dist/lib/FN';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import { selectedRestaurant } from 'ducks/restaurant/selectors';
 import { fetchWaiterboards } from 'ducks/restaurant/actions';
@@ -13,28 +12,56 @@ import Loading from 'web/components/Loading';
 const styles = () => ({
   wb: {
     background: 'white',
-    boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)',
     padding: '10px',
-    height: '100vh',
-    margin: 0,
-    '& a': {
-      color: 'black',
-    },
-    '&.button': {
-      background: '#2c9df1',
-      color: 'white',
-      textAlign: 'center',
-      textTransform: 'uppercase',
-      cursor: 'pointer'
+    height: '100%',
+    margin: 0
+  },
+  card: {
+    display: 'inline-block',
+    position: 'relative',
+    background: 'rgb(82, 82, 82)',
+    width: '5.5cm',
+    height: '10cm',
+    textAlign: 'center',
+    borderRadius: '2.8mm',
+    margin: '1cm',
+    padding: '0.25cm 0',
+    overflow: 'hidden',
+    fontWeight: 100,
+    fontSize: '3.5mm',
+    letterSpacing: '0.3mm',
+    textTransform: 'uppercase',
+    fontFamily: 'Helvetica Neue'
+  },
+  qrContainer: {
+    display: 'inline-block',
+    textAlign: 'center',
+    width: '5cm',
+    height: '5cm',
+    borderRadius: '1mm',
+    background: 'rgb(255,255,255)',
+    '& canvas': {
+      width: '4.5cm !important',
+      height: '4.5cm !important',
+      margin: '0.25cm'
     }
   },
-  table: {
-    display: 'inline-block',
-    margin: 10,
-    textAlign: 'center',
-    fontSize: 12,
-    width: '5cm',
-    overflow: 'hidden',
+  logo: {
+    height: '1cm',
+    width: '1cm',
+    verticalAlign: 'middle'
+  },
+  footer: {
+    background: 'rgb(240,240,240)',
+    verticalAlign: 'middle',
+    position: 'absolute',
+    bottom: '0',
+    width: '100%',
+    height: '2cm',
+    lineHeight: '1.8cm'
+  },
+  tableTitle: {
+    margin: '10mm 0'
   }
 });
 
@@ -68,13 +95,22 @@ const QRs = ({ waiterboards, waiterboardsLoaded, fetchWaiterboards, restaurant, 
           */}
           <div>
             {wb.tables.map(table => (
-              <Link to={`/qr/${table.qr}`} target="_blank" key={table.id}>
-                <div className={classes.table}>
-                  <div># {table.number}</div>
-                  <QRCode value={`https://web.dinify.app/restaurant/${restaurant.subdomain}?qr=${table.qr}`} />
-                  <div>CODE: {table.code}</div>
+              <div className={classes.card}>
+                
+                <div className={classes.qrContainer}>
+                  <QRCode
+                    bgColor='rgba(255,255,255,0)'
+                    fgColor='rgb(82, 82, 82)'
+                    size={512}
+                    value={`https://web.dinify.app/restaurant/${restaurant.subdomain}?qr=${table.qr}`}
+                  />
+                  <div className={classes.tableTitle}>Table no. {table.number}</div>
+                  
                 </div>
-              </Link>
+                <div className={classes.footer}>
+                  <img className={classes.logo} alt="Rebelbean" src='/rebelbean.png' />
+                </div>
+              </div>
             ))}
           </div>
         </div>
