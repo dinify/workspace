@@ -51,6 +51,12 @@ const uiPersistConfig = {
   whitelist: ['theme']
 }
 
+const userPersistConfig = {
+  key: 'user',
+  storage,
+  whitelist: ['geolocation']
+}
+
 export interface Profile {
   language: {
     primary: LanguageIdType,
@@ -65,7 +71,7 @@ const firebaseReducerWrapper = (state: any, action: any) => firebaseReducer<Part
 export const commonReducers = {
   auth,
   ui: persistReducer(uiPersistConfig, ui),
-  user,
+  user: persistReducer(userPersistConfig, user),
   restaurant: persistReducer(restaurantPersistConfig, restaurant),
   menuCategory: persistReducer(menuCategoryPersistConfig, menuCategory),
   menuItem: persistReducer(menuItemPersistConfig, menuItem),

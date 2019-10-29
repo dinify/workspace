@@ -164,14 +164,15 @@ const Header = ({
               </SwipeButton>
             </Grid>
             <Grid item xs={2}>
-
-              <IconButton onClick={() => toggleModal({ open: true, type: 'ListOfBookings' })}>
-                <BookingBadge>
-                  <Badge badgeContent={acceptedBookings.length}>
-                    <Event />
-                  </Badge>
-                </BookingBadge>
-              </IconButton>
+              {/*
+                  <IconButton onClick={() => toggleModal({ open: true, type: 'ListOfBookings' })}>
+                    <BookingBadge>
+                      <Badge badgeContent={acceptedBookings.length}>
+                        <Event />
+                      </Badge>
+                    </BookingBadge>
+                  </IconButton>
+                */}
 
               <IconButton onClick={() => toggleModal({ open: true, type: 'ListOfOrders' })}>
                 <BillsBadge>

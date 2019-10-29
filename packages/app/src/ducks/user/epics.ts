@@ -1,5 +1,5 @@
 import { of, from } from 'rxjs';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
 import { getType } from 'typesafe-actions';
 
@@ -12,15 +12,30 @@ const geoPromise = new Promise((resolve, reject) => {
   );
 });
 
-const getGeolocationEpic: Epic = (action$) =>
+const getGeolocationEpic: Epic = (action$, state$) =>
   action$.pipe(
     ofType(getType(getGeolocationAsync.request)),
+    filter(() => {
+      const geolocation = state$.value.user.geolocation;
+      if (!geolocation) return true;
+
+      const { timestamp } = geolocation;
+      const currentTimestamp = new Date().getTime();
+      const diff = currentTimestamp - timestamp;
+      // if geolocation is older than 10 minutes, continue to refetch
+      if (diff > (10 * 60 * 1000)) {
+        return true;
+      }
+
+      return false;
+    }),
     mergeMap(() => from(geoPromise).pipe(
       map((position: any) => {
         const { coords } = position;
         return getGeolocationAsync.success({
           latitude: coords.latitude,
-          longitude: coords.longitude
+          longitude: coords.longitude,
+          timestamp: new Date().getTime()
         });
       }),
       catchError(error => {
