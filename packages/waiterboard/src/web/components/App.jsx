@@ -4,7 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { appIsRunning } from 'ducks/app/selectors';
 import media from 'common/helpers/media';
-import SignIn from '@dinify/common/dist/components/SignIn';
+import SignIn from '@dinify/common/src/components/SignIn';
 import withRoot from 'withRoot.js';
 import Board from './Board';
 import SelectWB from './SelectWB';

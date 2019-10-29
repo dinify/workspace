@@ -9,7 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
-import { MapToList, getInitials } from '@dinify/common/dist/lib/FN';
+import { MapToList, getInitials } from '@dinify/common/src/lib/FN';
 import { withFirebase } from 'react-redux-firebase';
 import { FormBox, FormBoxHead, FormBoxBody } from './styled/FormBox';
 

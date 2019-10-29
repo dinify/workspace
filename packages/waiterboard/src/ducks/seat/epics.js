@@ -4,7 +4,7 @@ import { ofType } from 'redux-observable';
 import pluck from 'ramda/es/pluck'
 import filter from 'ramda/es/filter'
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
-import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
+import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import * as seatTypes from 'ducks/seat/types';
 import { fetchAllUsers } from 'ducks/user/actions';
 

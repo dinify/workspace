@@ -1,7 +1,7 @@
 import { of, from } from 'rxjs';
 import { switchMap, map, catchError, filter } from 'rxjs/operators';
-import * as API from '@dinify/common/dist/api/restaurant';
-import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
+import * as API from '@dinify/common/src/api/restaurant';
+import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import * as tableTypes from 'ducks/table/types';
 
 const clearTableEpic = (action$) =>

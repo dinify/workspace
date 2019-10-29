@@ -1,10 +1,10 @@
 import { of, from } from 'rxjs';
 import { mergeMap, switchMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import * as API from '@dinify/common/dist/api/restaurant';
+import * as API from '@dinify/common/src/api/restaurant';
 import * as APIv2 from '@dinify/common/src/api/v2/restaurant.ts';
 
-import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
+import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import * as commonTypes from 'ducks/common/types';
 import { confirmationFail } from 'ducks/common/actions';
 

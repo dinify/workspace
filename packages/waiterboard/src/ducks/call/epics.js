@@ -3,7 +3,7 @@ import { mergeMap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import pluck from 'ramda/es/pluck'
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
-import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
+import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { fetchAllUsers } from 'ducks/user/actions';
 import * as callTypes from 'ducks/call/types';
 import uniq from 'ramda/es/uniq';

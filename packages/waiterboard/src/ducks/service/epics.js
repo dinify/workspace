@@ -1,7 +1,7 @@
 import { from as fromPromise, of } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { mergeMap, map, catchError } from 'rxjs/operators';
-import { handleEpicAPIError } from '@dinify/common/dist/lib/FN';
+import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 
 

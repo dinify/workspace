@@ -1,7 +1,7 @@
 import pipe from 'ramda/es/pipe';
 import assoc from 'ramda/es/assoc'
 import assocPath from 'ramda/es/assocPath'
-import { ListToMap } from '@dinify/common/dist/lib/FN';
+import { ListToMap } from '@dinify/common/src/lib/FN';
 import * as callTypes from 'ducks/call/types';
 import * as commonTypes from 'ducks/common/types';
 

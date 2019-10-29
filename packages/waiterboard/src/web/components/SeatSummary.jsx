@@ -6,7 +6,7 @@ import { ActionBox, Header, Text } from 'web/components/styled/Events'
 import User from 'web/components/Events/user'
 import filter from 'ramda/es/filter'
 import Order from 'web/components/Events/Order'
-import { MapToList } from '@dinify/common/dist/lib/FN'
+import { MapToList } from '@dinify/common/src/lib/FN'
 
 class SeatSummary extends React.Component {
 

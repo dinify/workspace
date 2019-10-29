@@ -1,5 +1,5 @@
 import pipe from 'ramda/es/pipe';
-import { ListToMap } from '@dinify/common/dist/lib/FN';
+import { ListToMap } from '@dinify/common/src/lib/FN';
 import mergeDeepRight from 'ramda/es/mergeDeepRight';
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';

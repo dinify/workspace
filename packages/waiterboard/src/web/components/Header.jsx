@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import numeral from 'numeral';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 import { withFirebase } from 'react-redux-firebase';
 
 import sum from 'ramda/es/sum';

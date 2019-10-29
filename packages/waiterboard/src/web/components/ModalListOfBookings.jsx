@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 import Booking from './Events/Booking';
 import { colorsByStages } from '../colors';
 

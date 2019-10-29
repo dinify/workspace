@@ -5,7 +5,7 @@ import N from 'numeral';
 import moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 import { confirmOrderInit } from 'ducks/order/actions';
 import User from './user';
 import { colorsByStages } from '../../colors';

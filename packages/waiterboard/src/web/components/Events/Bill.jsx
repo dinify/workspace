@@ -5,7 +5,7 @@ import moment from 'moment';
 import N from 'numeral';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import * as FN from '@dinify/common/dist/lib/FN';
+import * as FN from '@dinify/common/src/lib/FN';
 import { confirmBillInit } from 'ducks/bill/actions';
 import { ActionBox, Header, TableId, CheckButton, TableTag, Th, Tr, Td, Text } from '../styled/Events';
 import { colorsByStages } from '../../colors';

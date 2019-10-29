@@ -2,7 +2,7 @@ import pipe from 'ramda/es/pipe';
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import mergeDeepRight from 'ramda/es/mergeDeepRight';
-import { ListToMap } from '@dinify/common/dist/lib/FN';
+import { ListToMap } from '@dinify/common/src/lib/FN';
 import * as orderTypes from 'ducks/order/types';
 import * as commonTypes from 'ducks/common/types';
 

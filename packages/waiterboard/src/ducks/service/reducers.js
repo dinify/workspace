@@ -1,6 +1,6 @@
 import assoc from 'ramda/es/assoc';
 import filter from 'ramda/es/filter';
-import { ListToMap } from '@dinify/common/dist/lib/FN';
+import { ListToMap } from '@dinify/common/src/lib/FN';
 
 const initialState = {
   all: {}
