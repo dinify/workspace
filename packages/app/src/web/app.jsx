@@ -66,9 +66,10 @@ const App = (props) => {
     
     if (val === 0) {
       if (matchPath(location.pathname, { path: routes.MENUITEM })) {
-        const lastRpath = findLast((p) => p.includes('restaurant'))(pathnames);
-        history.push(lastRpath);
-        return;
+
+        const lastRpath = findLast((p) => matchPath(p, { path: routes.RESTAURANT }))(pathnames);
+
+        if (lastRpath) return history.push(lastRpath);
       }
 
       history.push(routes.HOMEPAGE);
@@ -146,4 +147,3 @@ export default connect(
     fetchBill: fetchBillAsync.request,
   }
 )(withRouter(withRoot(App)));
-
