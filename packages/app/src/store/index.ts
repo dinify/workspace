@@ -25,7 +25,6 @@ const rootPersistConfig = {
   whitelist: []
 }
 
-
 const rootReducer = combineReducers(commonReducers);
 
 const persistedReducers = persistReducer(rootPersistConfig, rootReducer);

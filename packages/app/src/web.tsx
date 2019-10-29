@@ -15,7 +15,8 @@ import "firebase/firestore";
 import { store, persistor} from './store';
 import { SocketReduxProvider, SocketConfig } from './lib/socket';
 import CheckinExecutor from './ducks/restaurant/checkin-executor';
-import history from './services/history'
+import history from './services/history';
+import syncHistoryWithStore from './ducks/routing/sync';
 
 //  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 //  import HTML5Backend from 'react-dnd-html5-backend'
@@ -57,6 +58,8 @@ const rrfProps: ReactReduxFirebaseProviderProps = {
   // createFirestoreInstance // <- needed if using firestore
 };
 
+const syncedHistory = syncHistoryWithStore(history, store);
+
 
 ReactDOM.render(
   <Provider store={store}>
@@ -64,7 +67,7 @@ ReactDOM.render(
       <IntlProvider {...intlConfig}>
         <ReactReduxFirebaseProvider {...rrfProps}>
           <SocketReduxProvider {...socketConfig}>
-            <Router history={history}>
+            <Router history={syncedHistory}>
               <CheckinExecutor />
               <App />
             </Router>

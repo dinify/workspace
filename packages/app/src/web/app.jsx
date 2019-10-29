@@ -4,7 +4,7 @@ import { openDialogAction } from 'ducks/ui/actions';
 import { matchPath, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { getOrderItemCount as getCartCount } from 'ducks/cart/selectors';
-
+import last from 'ramda/es/last';
 import * as routes from 'web/routes';
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
@@ -25,6 +25,7 @@ import { fetchCartAsync } from 'ducks/cart/actions.ts';
 import withRoot from 'withRoot.js';
 import Dialogs from './dialogs.tsx';
 import Snackbars from './snackbars.tsx';
+import findLast from 'ramda/es/findLast';
 
 const App = (props) => {
   const { 
@@ -36,6 +37,7 @@ const App = (props) => {
     fetchStatus,
     fetchCart,
     fetchBill,
+    pathnames
   } = props;
 
   useEffect(() => {
@@ -61,12 +63,21 @@ const App = (props) => {
   const isAccountTab = match(routes.ACCOUNT) || match(routes.SIGNIN);
 
   const onNavigate = (evt, val) => {
-    if (val === 0 && isAccountTab) {
+    
+    if (val === 0) {
+      if (matchPath(location.pathname, { path: routes.MENUITEM })) {
+        const lastRpath = findLast((p) => p.includes('restaurant'))(pathnames);
+        history.push(lastRpath);
+        return;
+      }
+
       history.push(routes.HOMEPAGE);
     }
+
     else if (val === 1 && !isAccountTab) {
       history.push(routes.ACCOUNT);
     }
+
   }
 
   // const back = e => {
@@ -98,6 +109,7 @@ const App = (props) => {
           <Route path={routes.RECEIPT} component={Receipt} />
         </Switch>
       </div>
+
       <Navigation
         key="bottom-navigation"
         // borderVisible={!bottomBarOpen || isAccountTab}
@@ -106,10 +118,15 @@ const App = (props) => {
         value={(() => {
           if (isAccountTab) return 1;
           return 0;
-        })()}/>
+        })()}
+      />
+
       <ServicesButtonContainer anchor={56} onClick={() => openDialog('services')} />
+
       {!isAccountTab && <BottomBar style={{bottom: 56}} onSelect={(type) => openDialog(type)} />}
+
       <Dialogs />
+
       <Snackbars style={{ bottom: 56 + 56 / 2 }} />
     </div>
   );
@@ -119,7 +136,8 @@ export default connect(
   (state) => ({
     user: state.firebase.auth,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
-    bottomBarOpen: getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0
+    bottomBarOpen: getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0,
+    pathnames: state.routing.pathnames
   }),
   {
     openDialog: openDialogAction,
