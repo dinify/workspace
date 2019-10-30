@@ -133,13 +133,11 @@ const Translations = ({
     }
   })
   .filter((o) => o.value && !menuLanguagesList.includes(o.value))
-  .sort((a, b) => {
-    if (a.label < b.label) return -1;
-    if (a.label > b.label) return 1;
-    return 0;
-  });
+  .sort((a, b) => a.label.localeCompare(b.label));
 
-  menuLanguagesList = menuLanguagesList.filter((l) => l !== defaultLanguage);
+  menuLanguagesList = menuLanguagesList
+    .filter((l) => l !== defaultLanguage)
+    .sort((a, b) => a.localeCompare(b));
 
   if (menuLanguagesList.length < 1) {
     let selectFrom = autocompleteData.map((o) => ({...o, preferred: preferredLanguages.includes(o.value) }));
@@ -214,21 +212,26 @@ const Translations = ({
             )}
           </div>
           <Divider style={{marginBottom: '10px'}} />
-          <Typography color="textSecondary" gutterBottom>
-            {t('addLanguage')}
-          </Typography>
-          <div style={{maxWidth: '300px'}} className={classes.chip}>
-            <AutoComplete
-              dataSource={autocompleteData}
-              placeholder={t('selectLanguagePlaceholder')}
-              outlined
-              onChange={l =>
-                l && addLanguage({language: l.value})
-              }
-            />
-          </div>
-        </CardContent>
-        <Divider style={{marginBottom: '10px'}} />
+
+          {/*
+              <Typography color="textSecondary" gutterBottom>
+                {t('addLanguage')}
+              </Typography>
+              <div style={{maxWidth: '300px'}} className={classes.chip}>
+                <AutoComplete
+                  dataSource={autocompleteData}
+                  placeholder={t('selectLanguagePlaceholder')}
+                  outlined
+                  onChange={l =>
+                    l && addLanguage({language: l.value})
+                  }
+                />
+              </div>
+            
+            <Divider style={{marginBottom: '10px'}} />
+            */}
+      </CardContent>
+
       {defaultLanguage !== selectedLocale ?
         <div>
           <Tabs
