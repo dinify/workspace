@@ -209,13 +209,12 @@ const Waiterboards = ({
   classes,
   fetchWaiterboards,
   waiterboards,
-  waiterboardsLoaded
 }) => {
   const { t } = useTranslation();
 
-  const shouldLoad = waiterboards.length < 1 && !waiterboardsLoaded;
+  const shouldLoad = waiterboards.length < 1 ;
   useEffect(() => {
-    if (shouldLoad) fetchWaiterboards()
+    fetchWaiterboards();
   }, []);
   if (shouldLoad) return <Loading />;
 

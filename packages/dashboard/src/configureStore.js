@@ -52,6 +52,7 @@ const restaurantPersistConfig = {
     'ongoingRegistration',
     'onboardingToken',
     'wifi',
+    'waiterboards'
   ],
 };
 

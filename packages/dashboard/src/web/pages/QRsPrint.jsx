@@ -9,6 +9,8 @@ import { selectedRestaurant } from 'ducks/restaurant/selectors';
 import { fetchWaiterboards } from 'ducks/restaurant/actions';
 import Loading from 'web/components/Loading';
 
+const bgColor = 'rgb(82, 82, 82)';
+
 const styles = () => ({
   wb: {
     background: 'white',
@@ -19,7 +21,7 @@ const styles = () => ({
   card: {
     display: 'inline-block',
     position: 'relative',
-    background: 'rgb(82, 82, 82)',
+    background: bgColor,
     width: '5.5cm',
     height: '10cm',
     textAlign: 'center',
@@ -27,10 +29,7 @@ const styles = () => ({
     margin: '1cm',
     padding: '0.25cm 0',
     overflow: 'hidden',
-    fontWeight: 100,
     fontSize: '3.5mm',
-    letterSpacing: '0.3mm',
-    textTransform: 'uppercase',
     fontFamily: 'Helvetica Neue'
   },
   qrContainer: {
@@ -49,6 +48,7 @@ const styles = () => ({
   logo: {
     height: '1cm',
     width: '1cm',
+    marginTop: '2mm',
     verticalAlign: 'middle'
   },
   footer: {
@@ -58,20 +58,34 @@ const styles = () => ({
     bottom: '0',
     width: '100%',
     height: '2cm',
-    lineHeight: '1.8cm'
+    lineHeight: '0.8cm'
+  },
+  title: {
+    fontWeight: 500,
+    margin: '0 0 2mm',
+    textTransform: 'uppercase',
   },
   tableTitle: {
-    margin: '10mm 0'
+    fontWeight: 100,
+    margin: '8mm 0',
+    letterSpacing: '0.3mm',
+    textTransform: 'uppercase',
+  },
+  link: {
+    color: bgColor,
+    fontSize: '3mm',
+    fontWeight: 600,
   }
 });
 
-const QRs = ({ waiterboards, waiterboardsLoaded, fetchWaiterboards, restaurant, classes }) => {
+const QRs = ({ waiterboards, fetchWaiterboards, restaurant, classes }) => {
 
-  const shouldLoad = waiterboards.length < 1 && !waiterboardsLoaded;
+  const shouldLoad = waiterboards.length < 1;
   useEffect(() => {
     if (shouldLoad) fetchWaiterboards()
   }, []);
   if (shouldLoad) return <Loading />;
+
 
   const wbs = MapToList(waiterboards).map(wb => {
     const tables = MapToList(wb.tables).sort(
@@ -96,11 +110,12 @@ const QRs = ({ waiterboards, waiterboardsLoaded, fetchWaiterboards, restaurant, 
           <div>
             {wb.tables.map(table => (
               <div className={classes.card}>
+                <div className={classes.title}>SCAN TO ORDER</div>
                 
                 <div className={classes.qrContainer}>
                   <QRCode
                     bgColor='rgba(255,255,255,0)'
-                    fgColor='rgb(82, 82, 82)'
+                    fgColor={bgColor}
                     size={512}
                     value={`https://web.dinify.app/restaurant/${restaurant.subdomain}?qr=${table.qr}`}
                   />
@@ -109,6 +124,7 @@ const QRs = ({ waiterboards, waiterboardsLoaded, fetchWaiterboards, restaurant, 
                 </div>
                 <div className={classes.footer}>
                   <img className={classes.logo} alt="Rebelbean" src='/rebelbean.png' />
+                  <div className={classes.link}>web.dinify.app/restaurant/vlnena</div>
                 </div>
               </div>
             ))}

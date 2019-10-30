@@ -39,11 +39,11 @@ const styles = () => ({
   }
 });
 
-const QRs = ({ waiterboards, waiterboardsLoaded, fetchWaiterboards, restaurant, classes }) => {
+const QRs = ({ waiterboards, fetchWaiterboards, restaurant, classes }) => {
 
-  const shouldLoad = waiterboards.length < 1 && !waiterboardsLoaded;
+  const shouldLoad = waiterboards.length < 1 ;
   useEffect(() => {
-    if (shouldLoad) fetchWaiterboards()
+    fetchWaiterboards();
   }, []);
   if (shouldLoad) return <Loading />;
 
