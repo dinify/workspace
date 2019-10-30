@@ -3,17 +3,25 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 //  import registerServiceWorker from './registerServiceWorker'
-import { Router } from "react-router";
+import { Router } from 'react-router';
 import App from './web/app';
-import { ReactReduxFirebaseProvider, ReactReduxFirebaseProviderProps, ReactReduxFirebaseConfig } from 'react-redux-firebase';
-import { localeMatcher, IntlConfig, IntlProvider } from '@dinify/common/src/lib/i18n';
+import {
+  ReactReduxFirebaseProvider,
+  ReactReduxFirebaseProviderProps,
+  ReactReduxFirebaseConfig,
+} from 'react-redux-firebase';
+import {
+  localeMatcher,
+  IntlConfig,
+  IntlProvider,
+} from '@dinify/common/src/lib/i18n';
 import { getCookie } from '@dinify/common/src/lib/FN';
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 
-import { store, persistor} from './store';
-import { SocketReduxProvider, SocketConfig } from './lib/socket';
+import { store, persistor } from './store';
+import { SocketReduxProvider } from './lib/socket';
 import CheckinExecutor from './ducks/restaurant/checkin-executor';
 import history from './services/history';
 import syncHistoryWithStore from './ducks/routing/sync';
@@ -25,7 +33,7 @@ import syncHistoryWithStore from './ducks/routing/sync';
 // TODO: move these to environment variables
 
 const intlConfig: IntlConfig = {
-  namespace: 'app'
+  namespace: 'app',
   // bundleUri: 'https://cdn.jsdelivr.net/npm/@phensley/cldr@0.19.3/packs', // TODO: move this to static.dinify.app
   // translationsUri: 'https://static.dinify.app/i18n/translations'
 };
@@ -39,16 +47,11 @@ if (langCookie) {
   }
 }
 
-const socketConfig: SocketConfig = {
-  uri: 'https://ws.dinify.app'
-};
-
-
 // react-redux-firebase config
 const rrfConfig: Partial<ReactReduxFirebaseConfig> = {
   userProfile: 'profiles',
   updateProfileOnLogin: true,
-  useFirestoreForProfile: true
+  useFirestoreForProfile: true,
 };
 
 const rrfProps: ReactReduxFirebaseProviderProps = {
@@ -60,13 +63,12 @@ const rrfProps: ReactReduxFirebaseProviderProps = {
 
 const syncedHistory = syncHistoryWithStore(history, store);
 
-
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <IntlProvider {...intlConfig}>
         <ReactReduxFirebaseProvider {...rrfProps}>
-          <SocketReduxProvider {...socketConfig}>
+          <SocketReduxProvider>
             <Router history={syncedHistory}>
               <CheckinExecutor />
               <App />

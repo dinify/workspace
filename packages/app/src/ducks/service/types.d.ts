@@ -1,7 +1,7 @@
 declare module 'ServiceModels' {
-  import { Restaurant } from "RestaurantModels";
-  import { Image } from "MenuItemsModels";
-  import { Translation } from "CartModels";
+  import { Restaurant } from 'RestaurantModels';
+  import { Image } from 'MenuItemsModels';
+  import { Translation } from 'CartModels';
 
   export type Service = {
     id: string;
@@ -16,20 +16,33 @@ declare module 'ServiceModels' {
     imageId: string;
     restaurantId: Restaurant.id;
     translations: Translation[];
-    type: "TABLEWARE" | "CONDIMENT";
+    type: 'TABLEWARE' | 'CONDIMENT';
+  };
 
-  }
+  export type Call = {
+    status: 'CONFIRMED' | 'PENDING' | 'CANCELLED';
+  };
+
+  export type Seat = {
+    id: string;
+    bookingId: string | null;
+    checkin: Date;
+    checkout: Date;
+    occupied: boolean;
+    table: any;
+    tableId: string;
+    userId: string;
+  };
 
   export type ServiceMap = {
     [id: string]: Service;
-  }
+  };
 
   export type ServicesRequest = {
     restaurantId: Restaurant.id;
-  }
+  };
 
   export type CallServiceRequest = {
-    serviceId: Service.id
-  }
-
+    serviceId: Service.id;
+  };
 }
