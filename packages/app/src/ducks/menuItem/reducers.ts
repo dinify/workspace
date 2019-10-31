@@ -3,31 +3,46 @@ import dissocPath from 'ramda/es/dissocPath';
 // import { MapToList, useOldPropsIfNewNA } from '@dinify/common/src/lib/FN';
 // import menuCategoryTypes from 'ducks/menuCategory/types';
 import { getType } from 'typesafe-actions';
-import * as cartActions from '../cart/actions.ts';
-import { fetchMenuItemAsync, clearCustomizationsAction } from './actions.ts';
+import * as cartActions from '../cart/actions';
+import { fetchMenuItemAsync, clearCustomizationsAction } from './actions';
 
-import * as menuCategoriesActions from '../menuCategory/actions.ts';
+import * as menuCategoriesActions from '../menuCategory/actions';
 import assoc from 'ramda/es/assoc';
 import pipe from 'ramda/es/pipe';
+import { MenuItemMap, AddonMap } from 'MenuItemsModels';
+import { AnyAction } from 'redux';
+import { OptionMap } from 'OptionModels';
+import { IngredientMap } from 'IngredientModels';
 // import * as FN from '@dinify/common/src/lib/FN';
 
+export interface MenuItemState {
+  all: MenuItemMap;
+  menuAddons: AddonMap;
+  menuIngredients: IngredientMap;
+  menuOptions: OptionMap;
+  selectedAddons: { [key: string]: any };
+  selectedChoices: { [key: string]: any };
+  selectedExcludes: { [key: string]: any };
+}
 
-const initialState = {
+const initialState: MenuItemState = {
   all: {},
   menuAddons: {},
   menuIngredients: {},
   menuOptions: {},
   selectedAddons: {}, // {[menuItemId]: { [addonId]: { amount: 0 } }}
   selectedChoices: {},
-  selectedExcludes: {}
+  selectedExcludes: {},
 };
 
 // const keepProps = ['ingredients', 'addons', 'options', 'favorite'];
 
-export default function reducer(state = initialState, action) {
+export default function reducer(
+  state = initialState,
+  action: AnyAction,
+): MenuItemState {
   const { payload, type } = action;
   switch (type) {
-
     // case types.FETCH_MENUITEMS_DONE: {
     //   const items = action.payload.res;
     //   let newState = state;
@@ -45,12 +60,15 @@ export default function reducer(state = initialState, action) {
         menuItems,
         menuAddons,
         menuIngredients,
-        menuOptions
+        menuOptions,
       } = action.payload.entities;
       return pipe(
         assoc('all', { ...state.all, ...menuItems }),
         assoc('menuAddons', { ...state.menuAddons, ...menuAddons }),
-        assoc('menuIngredients', { ...state.menuIngredients, ...menuIngredients }),
+        assoc('menuIngredients', {
+          ...state.menuIngredients,
+          ...menuIngredients,
+        }),
         assoc('menuOptions', { ...state.menuOptions, ...menuOptions }),
       )(state);
     }
@@ -68,9 +86,9 @@ export default function reducer(state = initialState, action) {
     case getType(clearCustomizationsAction): {
       const { menuItemId } = action.payload;
       return pipe(
-        assocPath(['selectedAddons', menuItemId], {}),
-        assocPath(['selectedExcludes', menuItemId], {}),
-        assocPath(['selectedChoices', menuItemId], {}),
+        assocPath<{}, MenuItemState>(['selectedAddons', menuItemId], {}),
+        assocPath<{}, MenuItemState>(['selectedExcludes', menuItemId], {}),
+        assocPath<{}, MenuItemState>(['selectedChoices', menuItemId], {}),
       )(state);
     }
 
@@ -78,7 +96,8 @@ export default function reducer(state = initialState, action) {
       const { menuItemId, addonId, inc } = payload;
 
       let preAmount = 0;
-      const relevantSA = state.selectedAddons[menuItemId];
+      // TODO: fix typechecking here
+      const relevantSA: any = state.selectedAddons[menuItemId];
       if (relevantSA && relevantSA[addonId]) {
         preAmount = relevantSA[addonId].amount;
       }
@@ -88,36 +107,32 @@ export default function reducer(state = initialState, action) {
       let newAmount = preAmount + inc;
       if (newAmount < 0) newAmount = 0;
 
-      return assocPath([
-        'selectedAddons',
-        menuItemId,
-        addonId,
-        'amount'
-      ], newAmount)(state);
+      return assocPath<number, MenuItemState>(
+        ['selectedAddons', menuItemId, addonId, 'amount'],
+        newAmount,
+      )(state);
     }
 
     case 'EXCLUDE_INGREDIENT': {
       const { menuItemId, ingredientId, excluded } = payload;
       if (!excluded) {
-        return dissocPath([
+        return dissocPath<MenuItemState>([
           'selectedExcludes',
           menuItemId,
           ingredientId,
         ])(state);
       }
-      return assocPath([
-        'selectedExcludes',
-        menuItemId,
-        ingredientId,
-      ], {})(state);
+      return assocPath<any, MenuItemState>(
+        ['selectedExcludes', menuItemId, ingredientId],
+        {},
+      )(state);
     }
 
     case 'SELECT_CHOICE': {
       const { menuItemId, choiceId } = payload;
-      return assocPath([
-        'selectedChoices',
-        menuItemId
-      ], {[choiceId]: {}})(state);
+      return assocPath<any, MenuItemState>(['selectedChoices', menuItemId], {
+        [choiceId]: {},
+      })(state);
     }
 
     // case menuCategoryTypes.FETCH_MENUCATEGORIES_DONE: {
@@ -137,17 +152,22 @@ export default function reducer(state = initialState, action) {
 
     case 'FAV_MENUITEM_INIT': {
       const { id, fav } = payload;
-      return assocPath(['all', id, 'favorite'], fav)(state);
+      return assocPath<boolean, MenuItemState>(['all', id, 'favorite'], fav)(
+        state,
+      );
     }
     case 'FAV_MENUITEM_DONE': {
       const { id, fav } = payload.initPayload;
-      return assocPath(['all', id, 'favorite'], fav)(state);
+      return assocPath<boolean, MenuItemState>(['all', id, 'favorite'], fav)(
+        state,
+      );
     }
     case 'FAV_MENUITEM_FAIL': {
       const { id, fav } = payload.initPayload;
-      return assocPath(['all', id, 'favorite'], !fav)(state);
+      return assocPath<boolean, MenuItemState>(['all', id, 'favorite'], !fav)(
+        state,
+      );
     }
-
 
     default:
       return state;

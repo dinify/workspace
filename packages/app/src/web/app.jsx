@@ -15,7 +15,6 @@ import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
 
 import Navigation from 'web/components/Navigation';
-import { AccountScreen } from 'web/screens';
 import { ServicesButtonContainer } from 'web/components/services-button';
 import { BottomBar } from 'web/components/bottom-bar';
 import { fetchStatusAsync } from 'ducks/restaurant/actions.ts';
@@ -26,9 +25,10 @@ import withRoot from 'withRoot.js';
 import Dialogs from './dialogs.tsx';
 import Snackbars from './snackbars.tsx';
 import findLast from 'ramda/es/findLast';
+import { MenuItemScreen, AccountScreen } from './screens';
 
-const App = (props) => {
-  const { 
+const App = props => {
+  const {
     checkedInRestaurant,
     history,
     location,
@@ -37,7 +37,7 @@ const App = (props) => {
     fetchStatus,
     fetchCart,
     fetchBill,
-    pathnames
+    pathnames,
   } = props;
 
   useEffect(() => {
@@ -58,28 +58,25 @@ const App = (props) => {
       matched = matched || matchPath(location.pathname, { path }) != null;
     });
     return matched;
-  }
+  };
 
   const isAccountTab = match(routes.ACCOUNT) || match(routes.SIGNIN);
 
   const onNavigate = (evt, val) => {
-    
     if (val === 0) {
       if (matchPath(location.pathname, { path: routes.MENUITEM })) {
-
-        const lastRpath = findLast((p) => matchPath(p, { path: routes.RESTAURANT }))(pathnames);
+        const lastRpath = findLast(p =>
+          matchPath(p, { path: routes.RESTAURANT }),
+        )(pathnames);
 
         if (lastRpath) return history.push(lastRpath);
       }
 
       history.push(routes.HOMEPAGE);
-    }
-
-    else if (val === 1 && !isAccountTab) {
+    } else if (val === 1 && !isAccountTab) {
       history.push(routes.ACCOUNT);
     }
-
-  }
+  };
 
   // const back = e => {
   //   e.stopPropagation();
@@ -87,25 +84,33 @@ const App = (props) => {
   // }
 
   return (
-    <div style={{position: 'relative'}}>
+    <div style={{ position: 'relative' }}>
       <div style={{ marginBottom: match(routes.CHECKIN) ? 0 : 56 }}>
         <Switch>
-          <Route exact path={routes.HOMEPAGE} render={() => (
-            <Main/>
-          )}/>
-          <Route path={routes.SIGNIN} component={() => 
-            !user.isEmpty ? <Redirect to={routes.ACCOUNT} /> : <SignIn user={user}/>  
-          } />
+          <Route exact path={routes.HOMEPAGE} render={() => <Main />} />
+          <Route
+            path={routes.SIGNIN}
+            component={() =>
+              !user.isEmpty ? (
+                <Redirect to={routes.ACCOUNT} />
+              ) : (
+                <SignIn user={user} />
+              )
+            }
+          />
 
-          <Route path={routes.ACCOUNT} component={() =>
-            user.isEmpty ? <Redirect to={routes.SIGNIN} /> : <AccountScreen />
-          } />
+          <Route
+            path={routes.ACCOUNT}
+            component={() =>
+              user.isEmpty ? <Redirect to={routes.SIGNIN} /> : <AccountScreen />
+            }
+          />
 
           <Route path={routes.CHECKIN} component={Checkin} />
           <Route path={routes.SERVICES} component={Services} />
 
           <Route path={routes.RESTAURANT} component={RestaurantView} />
-          <Route path={routes.MENUITEM} component={MenuItemView} />
+          <Route path={routes.MENUITEM} component={MenuItemScreen} />
 
           <Route path={routes.RECEIPT} component={Receipt} />
         </Switch>
@@ -122,28 +127,34 @@ const App = (props) => {
         })()}
       />
 
-      <ServicesButtonContainer anchor={56} onClick={() => openDialog('services')} />
+      <ServicesButtonContainer
+        anchor={56}
+        onClick={() => openDialog('services')}
+      />
 
-      {!isAccountTab && <BottomBar style={{bottom: 56}} onSelect={(type) => openDialog(type)} />}
+      {!isAccountTab && (
+        <BottomBar style={{ bottom: 56 }} onSelect={type => openDialog(type)} />
+      )}
 
       <Dialogs />
 
       <Snackbars style={{ bottom: 56 + 56 / 2 }} />
     </div>
   );
-}
+};
 
 export default connect(
-  (state) => ({
+  state => ({
     user: state.firebase.auth,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
-    bottomBarOpen: getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0,
-    pathnames: state.routing.pathnames
+    bottomBarOpen:
+      getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0,
+    pathnames: state.routing.pathnames,
   }),
   {
     openDialog: openDialogAction,
     fetchStatus: fetchStatusAsync.request,
     fetchCart: fetchCartAsync.request,
     fetchBill: fetchBillAsync.request,
-  }
+  },
 )(withRouter(withRoot(App)));

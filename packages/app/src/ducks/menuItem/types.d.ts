@@ -8,15 +8,16 @@ declare module 'MenuItemsModels' {
     name: string;
     description: string;
     locale: string;
-  }
+  };
 
   export type Image = {
     url: string;
     precedence: number;
-  }
+  };
 
   export type MenuItem = {
     id: string;
+    favorite: boolean;
     menuCategoryId: string;
     published: boolean;
     calories: any;
@@ -30,19 +31,19 @@ declare module 'MenuItemsModels' {
     options: [Option];
     addons: [Addon];
     ingredients: [Ingredient];
-  }
+  };
 
   export type MenuItemMap = {
     [id: string]: MenuItem;
-  }
+  };
 
   export type AddonMap = {
     [id: string]: Addon;
-  }
+  };
 
   export type MenuItemRequest = {
     menuItemId: string;
-  }
+  };
 
   export type MenuItemResponseNormalized = {
     entities: {
@@ -54,7 +55,6 @@ declare module 'MenuItemsModels' {
       menuAddons: any;
       menuOptions: any;
       menuIngredients: any;
-    }
+    };
   };
-
 }
