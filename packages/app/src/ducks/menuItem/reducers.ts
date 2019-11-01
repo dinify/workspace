@@ -9,20 +9,21 @@ import { fetchMenuItemAsync, clearCustomizationsAction } from './actions';
 import * as menuCategoriesActions from '../menuCategory/actions';
 import assoc from 'ramda/es/assoc';
 import pipe from 'ramda/es/pipe';
-import { MenuItemMap, AddonMap } from 'MenuItemsModels';
+import { MenuItemMap } from 'MenuItemsModels';
 import { AnyAction } from 'redux';
-import { OptionMap } from 'OptionModels';
-import { IngredientMap } from 'IngredientModels';
+import { MenuIngredient } from 'IngredientModels';
 // import * as FN from '@dinify/common/src/lib/FN';
+
+export type MenuIngredientsMap = { [key: string]: MenuIngredient };
 
 export interface MenuItemState {
   all: MenuItemMap;
-  menuAddons: AddonMap;
-  menuIngredients: IngredientMap;
-  menuOptions: OptionMap;
-  selectedAddons: { [key: string]: any };
-  selectedChoices: { [key: string]: any };
-  selectedExcludes: { [key: string]: any };
+  menuAddons: { [key: string]: { menuItemId: string; addonId: string } };
+  menuIngredients: MenuIngredientsMap;
+  menuOptions: { [key: string]: { menuItemId: string; optionId: string } };
+  selectedAddons: { [key: string]: { [key: string]: boolean } };
+  selectedChoices: { [key: string]: { [key: string]: boolean } };
+  selectedExcludes: { [key: string]: { [key: string]: boolean } };
 }
 
 const initialState: MenuItemState = {

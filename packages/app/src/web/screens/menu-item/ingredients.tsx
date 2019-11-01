@@ -1,0 +1,125 @@
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
+import { RootState } from 'typesafe-actions';
+import { useSelector, useDispatch } from 'react-redux';
+// import { useMenuItem } from '.';
+import toPairs from 'ramda/es/toPairs';
+import { IngredientTranslated } from 'IngredientModels';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import AddCircle from '@material-ui/icons/AddCircleRounded';
+import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
+import { excludeIngredient } from '../../../ducks/menuItem/actions';
+
+type IngredientView = IngredientTranslated & {
+  excludable: boolean;
+  excluded: boolean;
+};
+
+export default ({ menuItemId }: { menuItemId: string }) => {
+  const { t } = useTranslation();
+  // const menuItem = useMenuItem(menuItemId);
+  const dispatch = useDispatch();
+  const ingredients = useSelector<RootState, IngredientView[]>(state =>
+    toPairs(state.menuItem.menuIngredients).map(([, value]) => {
+      const ingredient = state.ingredient.all[value.ingredientId];
+      const menuItemExcludes = state.menuItem.selectedExcludes[menuItemId];
+      const excluded = menuItemExcludes
+        ? menuItemExcludes[value.ingredientId]
+        : false;
+      return {
+        ...ingredient,
+        ...ingredient.translations[0],
+        excludable: value.excludable,
+        excluded,
+      };
+    }),
+  );
+
+  return (
+    <div>
+      <Typography style={{ marginTop: 32 }} color="primary" variant="overline">
+        {t('ingredients')}
+      </Typography>
+      {ingredients.map(ingredient => {
+        return (
+          <div key={ingredient.id} style={{ width: '100%' }}>
+            <ButtonBase
+              style={{ borderRadius: 4, width: '100%' }}
+              disabled={!ingredient.excludable}
+              onClick={() => {
+                dispatch(
+                  excludeIngredient({
+                    menuItemId,
+                    ingredientId: ingredient.id,
+                    excluded: !ingredient.excluded,
+                  }),
+                );
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'start',
+                  width: '100%',
+                }}
+              >
+                <Typography
+                  color={ingredient.excluded ? 'textSecondary' : 'default'}
+                  style={{
+                    flex: 1,
+                    textAlign: 'start',
+                    paddingLeft: 16,
+                    textDecoration: ingredient.excluded
+                      ? 'line-through'
+                      : 'none',
+                  }}
+                >
+                  {ingredient.name}
+                </Typography>
+                {ingredient.excludable ? (
+                  <div
+                    style={{
+                      width: 40,
+                      height: 40,
+                      marginRight: 8,
+                      padding: 8,
+                    }}
+                  >
+                    {ingredient.excluded ? (
+                      <AddCircle color="action" />
+                    ) : (
+                      <RemoveCircle color="action" />
+                    )}
+                  </div>
+                ) : (
+                  <div style={{ height: 40 }} />
+                )}
+              </div>
+            </ButtonBase>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+// const menuIngredient = menuIngredients[menuIngredientId];
+//         if (!menuIngredient) return null;
+//         const ingredient = ingredients[menuIngredient.ingredientId];
+
+//         let excluded = false;
+//         const relevantSE = selectedExcludes[menuItem.id];
+//         if (relevantSE && relevantSE[ingredient.id]) {
+//           excluded = true;
+//         }
+
+//         return (
+//           <div
+//             key={ingredient.id}
+//             style={{ width: '100%', marginTop: allNonExcludable ? 0 : 8 }}
+//           >
+
+//           </div>
+//         );
