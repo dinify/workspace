@@ -1,5 +1,4 @@
 declare module 'AddonModels' {
-
   import { Price, Translation } from 'CartModels';
 
   export type Addon = {
@@ -7,10 +6,15 @@ declare module 'AddonModels' {
     price: Price;
     translations: [Translation];
     qty?: number;
-  }
+  };
+
+  export type MenuAddon = {
+    maximum: number;
+    menuItemId: string;
+    addonId: string;
+  };
 
   export type AddonMap = {
     [id: string]: Addon;
-  }
-
+  };
 }

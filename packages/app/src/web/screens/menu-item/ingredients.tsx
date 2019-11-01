@@ -1,40 +1,17 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
-import { RootState } from 'typesafe-actions';
-import { useSelector, useDispatch } from 'react-redux';
-// import { useMenuItem } from '.';
-import toPairs from 'ramda/es/toPairs';
-import { IngredientTranslated } from 'IngredientModels';
+import { useDispatch } from 'react-redux';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import AddCircle from '@material-ui/icons/AddCircleRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
 import { excludeIngredient } from '../../../ducks/menuItem/actions';
-
-type IngredientView = IngredientTranslated & {
-  excludable: boolean;
-  excluded: boolean;
-};
+import { useIngredientView } from '../../../ducks/ingredient/selectors';
 
 export default ({ menuItemId }: { menuItemId: string }) => {
   const { t } = useTranslation();
-  // const menuItem = useMenuItem(menuItemId);
   const dispatch = useDispatch();
-  const ingredients = useSelector<RootState, IngredientView[]>(state =>
-    toPairs(state.menuItem.menuIngredients).map(([, value]) => {
-      const ingredient = state.ingredient.all[value.ingredientId];
-      const menuItemExcludes = state.menuItem.selectedExcludes[menuItemId];
-      const excluded = menuItemExcludes
-        ? menuItemExcludes[value.ingredientId]
-        : false;
-      return {
-        ...ingredient,
-        ...ingredient.translations[0],
-        excludable: value.excludable,
-        excluded,
-      };
-    }),
-  );
+  const ingredients = useIngredientView(menuItemId);
 
   return (
     <div>
@@ -104,22 +81,3 @@ export default ({ menuItemId }: { menuItemId: string }) => {
     </div>
   );
 };
-
-// const menuIngredient = menuIngredients[menuIngredientId];
-//         if (!menuIngredient) return null;
-//         const ingredient = ingredients[menuIngredient.ingredientId];
-
-//         let excluded = false;
-//         const relevantSE = selectedExcludes[menuItem.id];
-//         if (relevantSE && relevantSE[ingredient.id]) {
-//           excluded = true;
-//         }
-
-//         return (
-//           <div
-//             key={ingredient.id}
-//             style={{ width: '100%', marginTop: allNonExcludable ? 0 : 8 }}
-//           >
-
-//           </div>
-//         );

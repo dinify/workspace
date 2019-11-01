@@ -12,18 +12,21 @@ import pipe from 'ramda/es/pipe';
 import { MenuItemMap } from 'MenuItemsModels';
 import { AnyAction } from 'redux';
 import { MenuIngredient } from 'IngredientModels';
+import { MenuAddon } from 'AddonModels';
 // import * as FN from '@dinify/common/src/lib/FN';
-
-export type MenuIngredientsMap = { [key: string]: MenuIngredient };
 
 export interface MenuItemState {
   all: MenuItemMap;
-  menuAddons: { [key: string]: { menuItemId: string; addonId: string } };
-  menuIngredients: MenuIngredientsMap;
+  menuAddons: { [key: string]: MenuAddon };
+  menuIngredients: { [key: string]: MenuIngredient };
   menuOptions: { [key: string]: { menuItemId: string; optionId: string } };
-  selectedAddons: { [key: string]: { [key: string]: boolean } };
-  selectedChoices: { [key: string]: { [key: string]: boolean } };
-  selectedExcludes: { [key: string]: { [key: string]: boolean } };
+  selectedAddons: {
+    [menuItemId: string]: { [addonId: string]: { amount: number } };
+  };
+  selectedChoices: { [menuItemId: string]: { [choiceId: string]: boolean } };
+  selectedExcludes: {
+    [menuItemId: string]: { [ingredientId: string]: boolean };
+  };
 }
 
 const initialState: MenuItemState = {

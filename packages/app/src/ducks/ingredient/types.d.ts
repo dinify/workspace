@@ -6,13 +6,6 @@ declare module 'IngredientModels' {
     translations: [Translation];
   };
 
-  export type IngredientTranslation = {
-    name: string;
-    locale: string;
-  };
-
-  export type IngredientTranslated = Ingredient & IngredientTranslation;
-
   export type MenuIngredient = {
     excludable: boolean;
     menuItemId: string;

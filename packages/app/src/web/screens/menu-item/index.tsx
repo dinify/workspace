@@ -10,6 +10,7 @@ import {
   clearCustomizationsAction,
 } from '../../../ducks/menuItem/actions';
 import Carousel from '../../components/Carousel';
+import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
@@ -22,7 +23,7 @@ import { addToCartAsync } from '../../../ducks/cart/actions';
 import { AddToCartRequest } from 'CartModels';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Ingredients from './ingredients';
-import Divider from '@material-ui/core/Divider';
+import Addons from './addons';
 
 type MenuItemTranslated = MenuItem & MenuItemTranslation;
 
@@ -102,6 +103,7 @@ export const MenuItemScreen = ({  }: {}) => {
         <Grid item xs={12} md={6}>
           <Divider style={{ marginTop: 16 }} />
           <Ingredients menuItemId={menuItem.id} />
+          <Addons menuItemId={menuItem.id} />
 
           <Fab
             onClick={() => handleAddToCart({ menuItemId: menuItem.id })}
