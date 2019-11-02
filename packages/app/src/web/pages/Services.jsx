@@ -1,6 +1,9 @@
 import React from 'react';
-import { useTranslation } from "@dinify/common/src/lib/i18n";
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
+import { closeDialogAction } from 'ducks/ui/actions.ts';
+import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
@@ -21,70 +24,102 @@ class Services extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 0
+      selectedTab: 0,
     };
   }
 
   componentWillMount() {
     const { fetchServices, checkedInRestaurant } = this.props;
     fetchServices({
-      restaurantId: checkedInRestaurant
-    })
+      restaurantId: checkedInRestaurant,
+    });
   }
 
   render() {
-    const { servicesList, restaurant, call, serviceStatuses, t, style, userLang } = this.props;
+    const {
+      servicesList,
+      restaurant,
+      history,
+      call,
+      serviceStatuses,
+      t,
+      style,
+      userLang,
+      closeDialog,
+    } = this.props;
     const { selectedTab } = this.state;
 
-    const selectedServicesList = filter((s) => {
+    const selectedServicesList = filter(s => {
       if (selectedTab === 0) return s.type === 'TABLEWARE';
       if (selectedTab === 1) return s.type === 'CONDIMENT';
       return false;
     }, servicesList);
 
-    if (!restaurant) return (
-      <div style={{
-        display: 'flex',
-        height: 'calc(100vh - 56px)',
-        flexDirection: 'column',
-        ...style
-      }}>
-        <div style={{
-          flex: 1,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-            <div style={{maxWidth: 220}}>
-              <div style={{marginBottom: 32}}>
-                <ServiceCallGraphic/>
+    if (!restaurant)
+      return (
+        <div
+          style={{
+            display: 'flex',
+            height: 'calc(100vh - 56px)',
+            flexDirection: 'column',
+            ...style,
+          }}
+        >
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <div style={{ maxWidth: 220 }}>
+              <div style={{ marginBottom: 32 }}>
+                <ServiceCallGraphic />
               </div>
               <Typography gutterBottom variant="subtitle1">
                 {t('service.title')}
               </Typography>
               <Typography variant="caption">
-                {t('service.subtitle')}
+                {t('service.subtitle') + ' '}
+                {t('service.instruction')}
               </Typography>
+              <Button
+                style={{
+                  marginTop: 16,
+                  height: 40,
+                  boxShadow: 'none',
+                }}
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  closeDialog('services');
+                  history.push('/camera');
+                }}
+              >
+                {t('checkIn')}
+              </Button>
             </div>
+          </div>
         </div>
-        <Typography style={{margin: 16}}>
-          {t('service.instruction')}
-        </Typography>
-      </div>
-    )
+      );
 
     return (
       <div style={style}>
-        <div style={{
-          width: '100%',
-          marginTop: 16
-        }}>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
+        <div
+          style={{
             width: '100%',
-            marginTop: 16
-          }}>
+            marginTop: 16,
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%',
+              marginTop: 16,
+            }}
+          >
             <Tabs
               value={selectedTab}
               indicatorColor="primary"
@@ -96,16 +131,24 @@ class Services extends React.Component {
             </Tabs>
           </div>
         </div>
-        <div style={{marginTop: 16,
-        width: '100%',}}>
+        <div style={{ marginTop: 16, width: '100%' }}>
           <Grid container spacing={16}>
-            {selectedServicesList.map((service) => {
-              const status = serviceStatuses[service.id] ? serviceStatuses[service.id] : 'READY';
+            {selectedServicesList.map(service => {
+              const status = serviceStatuses[service.id]
+                ? serviceStatuses[service.id]
+                : 'READY';
               return (
-                <Grid key={service.id} item xs={4} md={3} lg={3} style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}>
+                <Grid
+                  key={service.id}
+                  item
+                  xs={4}
+                  md={3}
+                  lg={3}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
                   <ButtonBase
                     disabled={status === 'SENT'}
                     style={{
@@ -116,37 +159,63 @@ class Services extends React.Component {
                       alignItems: 'center',
                     }}
                     onClick={() => {
-                      if (status === 'READY') call({ serviceId: service.id })
+                      if (status === 'READY') call({ serviceId: service.id });
                     }}
                   >
-                    <div style={{
-                      width: 64,
-                      height: 64,
-                      color: 'rgba(255, 255, 255, 0.87)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                      <Avatar style={{position: 'absolute', width: 64, height: 64}} src={service.image && service.image.url}></Avatar>
+                    <div
+                      style={{
+                        width: 64,
+                        height: 64,
+                        color: 'rgba(255, 255, 255, 0.87)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Avatar
+                        style={{ position: 'absolute', width: 64, height: 64 }}
+                        src={service.image && service.image.url}
+                      ></Avatar>
                       <Motion
-                        defaultStyle={{x: 0}}
-                        style={{x: spring(['SENT', 'SENDING'].includes(status) ? 1 : 0, { stiffness: 260, damping: 24 })}}>
-                        {style =>
-                          <div style={{
-                            position: 'absolute',
-                            backgroundColor: '#c13939',
-                            borderRadius: '50%',
-                            minHeight: 64,
-                            minWidth: 64,
-                            opacity: Math.min(1, style.x * 2),
-                            transform: `scale(${Math.max(style.x, 1/64)}, ${Math.max(style.x, 1/64)})`,
-                          }}/>
-                        }
+                        defaultStyle={{ x: 0 }}
+                        style={{
+                          x: spring(
+                            ['SENT', 'SENDING'].includes(status) ? 1 : 0,
+                            { stiffness: 260, damping: 24 },
+                          ),
+                        }}
+                      >
+                        {style => (
+                          <div
+                            style={{
+                              position: 'absolute',
+                              backgroundColor: '#c13939',
+                              borderRadius: '50%',
+                              minHeight: 64,
+                              minWidth: 64,
+                              opacity: Math.min(1, style.x * 2),
+                              transform: `scale(${Math.max(
+                                style.x,
+                                1 / 64,
+                              )}, ${Math.max(style.x, 1 / 64)})`,
+                            }}
+                          />
+                        )}
                       </Motion>
-                      {status === 'SENDING' && <CircularProgress style={{position: 'absolute'}} color="inherit"/>}
-                      {status === 'SENT' && <Done style={{position: 'absolute'}} color="inherit"/>}
+                      {status === 'SENDING' && (
+                        <CircularProgress
+                          style={{ position: 'absolute' }}
+                          color="inherit"
+                        />
+                      )}
+                      {status === 'SENT' && (
+                        <Done
+                          style={{ position: 'absolute' }}
+                          color="inherit"
+                        />
+                      )}
                     </div>
-                    <Typography style={{marginTop: 8}}>
+                    <Typography style={{ marginTop: 8 }}>
                       {getT(service.translations, userLang)}
                     </Typography>
                   </ButtonBase>
@@ -155,7 +224,7 @@ class Services extends React.Component {
             })}
           </Grid>
         </div>
-        { /* <div style={{padding: 16, width: '100%', marginBottom: 56}}>
+        {/* <div style={{padding: 16, width: '100%', marginBottom: 56}}>
           <Typography variant="caption" style={{marginTop: 8}}>
             {"Can't find what you need?"}
           </Typography>
@@ -173,15 +242,16 @@ class Services extends React.Component {
               <Send />
             </IconButton>
           </div>
-        </div> */ }
+        </div> */}
       </div>
-    )
+    );
   }
 }
 
-const Wrapper = (props) => {
+const Wrapper = props => {
   const { t } = useTranslation();
-  return <Services t={t} {...props} />
+  const history = useHistory();
+  return <Services history={history} t={t} {...props} />;
 };
 
 export default connect(
@@ -190,10 +260,11 @@ export default connect(
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
     serviceStatuses: state.service.status,
     servicesList: relevantServicesList(state),
-    userLang: getUserLang(state)
+    userLang: getUserLang(state),
   }),
   {
     call: callServiceAsync.request,
-    fetchServices: fetchServicesAsync.request
-  }
+    fetchServices: fetchServicesAsync.request,
+    closeDialog: closeDialogAction,
+  },
 )(Wrapper);
