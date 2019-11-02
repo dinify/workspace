@@ -3,25 +3,17 @@ import { connect } from 'react-redux';
 import { compose } from 'redux'
 import { useFirebase } from 'react-redux-firebase'
 import { withStyles } from '@material-ui/core/styles';
-import { Field } from 'redux-form';
 import { Motion, spring } from 'react-motion';
-import ToggleIcon from 'material-ui-toggle-icon';
-
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import MuiButton from '@material-ui/core/Button';
-
-import Text from '../Inputs/Text';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import GoogleButton from '../GoogleButton';
 import FacebookButton from '../FacebookButton';
-
 import { setPage, setShowPassword } from '../../ducks/auth/actions';
 import { openDialog as openDialogAction } from '../../ducks/ui/actions';
 import { getPlatform } from '../../lib/FN';
 import { SignupForm } from './signup-form';
 import { Separator } from './separator';
 
-const styles = theme => ({
+const styles = (theme: any) => ({
   grow: {
     flex: 1,
   },
@@ -49,7 +41,6 @@ const UP = 1;
 const DOWN = -1;
 
 const Fields = ({
-  t,
   classes,
   page,
   showPassword,
@@ -57,12 +48,14 @@ const Fields = ({
   setShowPassword,
   env,
   authError
-}) => {
+}: any) => {
 
   const [errors, setErrors] = useState({});
+  const { t } = useTranslation();
+
 
   useEffect(() => {
-    let errors = {};
+    let errors: any = {};
     if (!authError) return;
     switch (authError.code) {
       case 'auth/invalid-email':
@@ -98,11 +91,6 @@ const Fields = ({
   const formOpen = page !== 'default';
 
   const direction = env === 'DASHBOARD' ? DOWN : UP;
-
-  const Button = ({children, ...otherProps}) => 
-    <MuiButton classes={{root: classes.button2}} {...otherProps}>
-      {children}
-    </MuiButton>;
 
   const mobile = getPlatform() !== 'desktop';
   const singupFormProps = {
@@ -154,7 +142,7 @@ const Fields = ({
 export default compose(
   withStyles(styles),
   connect(
-    state => ({
+    (state: any) => ({
       authError: state.firebase.authError,
       page: state.auth.page,
       showPassword: state.auth.showPassword
