@@ -12,6 +12,15 @@ export type OptionView = Omit<Option, 'choices'> &
 
 export type ChoiceView = Choice & Translation & { selected: boolean };
 
+// TODO: memoizing selectors
+// state.menuItem.menuOptions -> optionId -> option -> choiceId -> choice
+// export const getOptionView = createSelector<RootState, any, any>(
+//   [
+//     state => state.menuItem.menuOptions,
+//     state => state.
+//   ]
+// );
+
 export const useOptionView = (menuItemId: string) => {
   return useSelector<RootState, OptionView[]>(state =>
     values(state.menuItem.menuOptions)

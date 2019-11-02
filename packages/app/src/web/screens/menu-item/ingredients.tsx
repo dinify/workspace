@@ -1,16 +1,16 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
-import { useDispatch } from 'react-redux';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import AddCircle from '@material-ui/icons/AddCircleRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
-import { excludeIngredient } from '../../../ducks/menuItem/actions';
+import { excludeIngredient as excludeIngredientAction } from '../../../ducks/menuItem/actions';
 import { useIngredientView } from '../../../ducks/ingredient/selectors';
+import { useAction } from '@dinify/common/src/lib/util';
 
 export default ({ menuItemId }: { menuItemId: string }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const excludeIngredient = useAction(excludeIngredientAction);
   const ingredients = useIngredientView(menuItemId);
 
   return (
@@ -25,13 +25,11 @@ export default ({ menuItemId }: { menuItemId: string }) => {
               style={{ borderRadius: 4, width: '100%' }}
               disabled={!ingredient.excludable}
               onClick={() => {
-                dispatch(
-                  excludeIngredient({
-                    menuItemId,
-                    ingredientId: ingredient.id,
-                    excluded: !ingredient.excluded,
-                  }),
-                );
+                excludeIngredient({
+                  menuItemId,
+                  ingredientId: ingredient.id,
+                  excluded: !ingredient.excluded,
+                });
               }}
             >
               <div

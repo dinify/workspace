@@ -7,53 +7,75 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import CashMultiple from '@dinify/common/src/icons/CashMultiple';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { RootState } from 'typesafe-actions';
 import { openDialogAction } from '../../../../ducks/ui/actions';
+import { useAction } from '@dinify/common/src/lib/util';
 
 export default () => {
   const { t, cldr } = useTranslation();
-  const dispatch = useDispatch();
+  const openDialog = useAction(openDialogAction);
   const firebase = useFirebase();
-  const displayCurrency = useSelector((state: RootState) => state.firebase.profile.displayCurrency);
+  const displayCurrency = useSelector(
+    (state: RootState) => state.firebase.profile.displayCurrency,
+  );
 
   const handleCurrency = (result: any) => {
     if (result) {
-      if (result.clear) firebase.updateProfile({
-        displayCurrency: null
-      });
-      else firebase.updateProfile({
-        displayCurrency: result
-      });
+      if (result.clear)
+        firebase.updateProfile({
+          displayCurrency: null,
+        });
+      else
+        firebase.updateProfile({
+          displayCurrency: result,
+        });
     }
   };
 
-  const openDialog = () => {
-    dispatch(openDialogAction({
+  const openCurrencyDialog = () => {
+    openDialog({
       type: 'currency',
-      handler: handleCurrency
-    }));
+      handler: handleCurrency,
+    });
   };
   // TODO className={classes.button2}
-  return <>
-    <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
-      {t('currency.title')}
-    </Typography>
-    {displayCurrency && <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={openDialog}>
-      <ListItemIcon>
-        <CashMultiple />
-      </ListItemIcon>
-      <ListItemText primary={cldr.Numbers.getCurrencyDisplayName(displayCurrency, { context: 'standalone' })} secondary={displayCurrency} />
-      <ChevronRight color="action"/>
-    </ListItem>}
-    {!displayCurrency && <div style={{padding: '0 24px 16px 24px'}}>
-      <Typography variant="body2">
-        {t('currency.original')}
+  return (
+    <>
+      <Typography
+        style={{ padding: '16px 24px' }}
+        variant="subtitle2"
+        color="textSecondary"
+      >
+        {t('currency.title')}
       </Typography>
-      <Button onClick={openDialog} variant="text" color="primary">
-        {t('currency.set')}
-      </Button>
-    </div>}
-  </>;
+      {displayCurrency && (
+        <ListItem
+          style={{ paddingLeft: 24, paddingRight: 24 }}
+          button
+          onClick={openCurrencyDialog}
+        >
+          <ListItemIcon>
+            <CashMultiple />
+          </ListItemIcon>
+          <ListItemText
+            primary={cldr.Numbers.getCurrencyDisplayName(displayCurrency, {
+              context: 'standalone',
+            })}
+            secondary={displayCurrency}
+          />
+          <ChevronRight color="action" />
+        </ListItem>
+      )}
+      {!displayCurrency && (
+        <div style={{ padding: '0 24px 16px 24px' }}>
+          <Typography variant="body2">{t('currency.original')}</Typography>
+          <Button onClick={openCurrencyDialog} variant="text" color="primary">
+            {t('currency.set')}
+          </Button>
+        </div>
+      )}
+    </>
+  );
 };

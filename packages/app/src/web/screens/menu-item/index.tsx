@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { MenuItem, MenuItemTranslation } from 'MenuItemsModels';
 import { RootState } from 'typesafe-actions';
 import { useRouteMatch, useHistory } from 'react-router';
@@ -19,7 +19,6 @@ import FavoriteToggle from '../../components/FavoriteToggle';
 import NutritionFacts from '../../pages/MenuItemView/NutritionFacts';
 import Fab from '@material-ui/core/Fab';
 import { addToCartAsync } from '../../../ducks/cart/actions';
-import { AddToCartRequest } from 'CartModels';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Ingredients from './ingredients';
 import Addons from './addons';
@@ -27,6 +26,7 @@ import Options from './options';
 import { useAddonView } from '../../../ducks/addon/selectors';
 import { useIngredientView } from '../../../ducks/ingredient/selectors';
 import { useOptionView } from '../../../ducks/option/selectors';
+import { useAction } from '@dinify/common/src/lib/util';
 
 type MenuItemTranslated = MenuItem & MenuItemTranslation;
 
@@ -44,7 +44,10 @@ export const useMenuItem = (menuItemId: string | null) => {
 };
 
 export const MenuItemScreen = ({  }: {}) => {
-  const dispatch = useDispatch();
+  const clearCustomizations = useAction(clearCustomizationsAction);
+  const fetchMenuItem = useAction(fetchMenuItemAsync.request);
+  const favMenuitem = useAction(favMenuitemInit);
+  const addToCart = useAction(addToCartAsync.request);
   const match = useRouteMatch<{ id: string }>();
   const history = useHistory();
   const { t } = useTranslation();
@@ -66,23 +69,21 @@ export const MenuItemScreen = ({  }: {}) => {
 
   useEffect(() => {
     if (menuItemId) {
-      dispatch(clearCustomizationsAction({ menuItemId }));
-      dispatch(fetchMenuItemAsync.request({ menuItemId }));
+      clearCustomizations({ menuItemId });
+      fetchMenuItem({ menuItemId });
     }
   }, [menuItemId]);
 
   if (!menuItem) return null;
 
   const handleToggleFavorite = () =>
-    dispatch(
-      favMenuitemInit({
-        fav: !menuItem.favorite,
-        id: menuItem.id,
-      }),
-    );
+    favMenuitem({
+      fav: !menuItem.favorite,
+      id: menuItem.id,
+    });
 
-  const handleAddToCart = (payload: Partial<AddToCartRequest>) => {
-    dispatch(addToCartAsync.request(payload as any));
+  const handleAddCart = () => {
+    addToCart({ menuItemId: menuItem.id });
     history.goBack();
   };
 
@@ -135,7 +136,7 @@ export const MenuItemScreen = ({  }: {}) => {
           )}
 
           <Fab
-            onClick={() => handleAddToCart({ menuItemId: menuItem.id })}
+            onClick={handleAddCart}
             style={{ marginTop: 24, marginBottom: 64, width: '100%' }}
             disabled={!canAddCart}
             variant="extended"

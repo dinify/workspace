@@ -1,18 +1,18 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
-import { useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircle from '@material-ui/icons/AddCircleRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
 import Price from '../../components/Price';
-import { incAddonQty } from '../../../ducks/menuItem/actions';
+import { incAddonQty as incAddonQtyAction } from '../../../ducks/menuItem/actions';
 import { useAddonView } from '../../../ducks/addon/selectors';
+import { useAction } from '@dinify/common/src/lib/util';
 
 export default ({ menuItemId }: { menuItemId: string }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const incAddonQty = useAction(incAddonQtyAction);
   const addons = useAddonView(menuItemId);
   return (
     <div>
@@ -30,14 +30,13 @@ export default ({ menuItemId }: { menuItemId: string }) => {
           <Grid item>
             <IconButton
               onClick={() => {
-                if (addon.amount > 0)
-                  dispatch(
-                    incAddonQty({
-                      menuItemId,
-                      addonId: addon.id,
-                      inc: -1,
-                    }),
-                  );
+                if (addon.amount > 0) {
+                  incAddonQty({
+                    menuItemId,
+                    addonId: addon.id,
+                    inc: -1,
+                  });
+                }
               }} // remove addon if amount > 0
               disabled={addon.amount < 1}
             >
@@ -58,13 +57,11 @@ export default ({ menuItemId }: { menuItemId: string }) => {
           <Grid item>
             <IconButton
               onClick={() => {
-                dispatch(
-                  incAddonQty({
-                    menuItemId,
-                    addonId: addon.id,
-                    inc: 1,
-                  }),
-                );
+                incAddonQty({
+                  menuItemId,
+                  addonId: addon.id,
+                  inc: 1,
+                });
               }} // add addon if amount < max - 1
               disabled={addon.amount >= addon.maximum && addon.maximum !== null}
             >
