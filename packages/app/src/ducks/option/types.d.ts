@@ -6,20 +6,35 @@ declare module 'OptionModels' {
     optionId: string;
     price: Price;
     translations: [Translation];
-    selected?: boolean;
-  }
-  
+  };
+
   export type Option = {
     id: string;
+    translations: [Translation];
     choices: [Choice];
-  }
+  };
+
+  export type OptionN = {
+    id: string;
+    translations: [Translation];
+    choices: [string];
+  };
+
+  export type MenuOption = {
+    published: boolean;
+    menuItemId: string;
+    optionId: string;
+  };
 
   export type OptionMap = {
     [id: string]: Option;
-  }
+  };
+
+  export type OptionNMap = {
+    [id: string]: OptionN;
+  };
 
   export type ChoiceMap = {
     [id: string]: Choice;
-  }
-
+  };
 }

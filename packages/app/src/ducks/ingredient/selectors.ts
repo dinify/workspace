@@ -15,9 +15,10 @@ export const useIngredientView = (menuItemId: string) => {
     values(state.menuItem.menuIngredients).map(value => {
       const ingredient = state.ingredient.all[value.ingredientId];
       const menuItemExcludes = state.menuItem.selectedExcludes[menuItemId];
-      const excluded = menuItemExcludes
-        ? menuItemExcludes[value.ingredientId]
-        : false;
+      const excluded =
+        menuItemExcludes && menuItemExcludes[value.ingredientId]
+          ? menuItemExcludes[value.ingredientId]
+          : false;
       return {
         ...value,
         ...ingredient,

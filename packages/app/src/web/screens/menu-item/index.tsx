@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { MenuItem, MenuItemTranslation } from 'MenuItemsModels';
 import { RootState } from 'typesafe-actions';
 import { useRouteMatch } from 'react-router';
-import { toPairs } from 'ramda';
 import {
   favMenuitemInit,
   fetchMenuItemAsync,
@@ -24,6 +23,7 @@ import { AddToCartRequest } from 'CartModels';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Ingredients from './ingredients';
 import Addons from './addons';
+import Options from './options';
 
 type MenuItemTranslated = MenuItem & MenuItemTranslation;
 
@@ -48,9 +48,9 @@ export const MenuItemScreen = ({  }: {}) => {
   const menuItem = useMenuItem(menuItemId);
   const imageUrls = useSelector<RootState, string[]>(state => {
     if (!menuItem) return [];
-    return toPairs(menuItem.images)
-      .sort(([, a], [, b]) => b.precedence - a.precedence)
-      .map(([, img]) => img.url);
+    return menuItem.images
+      .sort((a, b) => b.precedence - a.precedence)
+      .map(img => img.url);
   });
   useEffect(() => {
     if (menuItemId) {
@@ -104,6 +104,7 @@ export const MenuItemScreen = ({  }: {}) => {
           <Divider style={{ marginTop: 16 }} />
           <Ingredients menuItemId={menuItem.id} />
           <Addons menuItemId={menuItem.id} />
+          <Options menuItemId={menuItem.id} />
 
           <Fab
             onClick={() => handleAddToCart({ menuItemId: menuItem.id })}

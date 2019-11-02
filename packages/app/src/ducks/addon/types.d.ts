@@ -9,6 +9,7 @@ declare module 'AddonModels' {
   };
 
   export type MenuAddon = {
+    published: boolean;
     maximum: number;
     menuItemId: string;
     addonId: string;

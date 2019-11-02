@@ -7,6 +7,7 @@ declare module 'IngredientModels' {
   };
 
   export type MenuIngredient = {
+    published: boolean;
     excludable: boolean;
     menuItemId: string;
     ingredientId: string;

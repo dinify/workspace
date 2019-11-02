@@ -15,7 +15,10 @@ export const useAddonView = (menuItemId: string) => {
     values(state.menuItem.menuAddons).map(value => {
       const addon = state.addon.all[value.addonId];
       const menuItemAddons = state.menuItem.selectedAddons[menuItemId];
-      const amount = menuItemAddons ? menuItemAddons[addon.id].amount : 0;
+      const amount =
+        menuItemAddons && menuItemAddons[addon.id]
+          ? menuItemAddons[addon.id].amount
+          : 0;
       return {
         ...value,
         ...addon,

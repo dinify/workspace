@@ -13,13 +13,14 @@ import { MenuItemMap } from 'MenuItemsModels';
 import { AnyAction } from 'redux';
 import { MenuIngredient } from 'IngredientModels';
 import { MenuAddon } from 'AddonModels';
+import { MenuOption } from 'OptionModels';
 // import * as FN from '@dinify/common/src/lib/FN';
 
 export interface MenuItemState {
   all: MenuItemMap;
   menuAddons: { [key: string]: MenuAddon };
   menuIngredients: { [key: string]: MenuIngredient };
-  menuOptions: { [key: string]: { menuItemId: string; optionId: string } };
+  menuOptions: { [key: string]: MenuOption };
   selectedAddons: {
     [menuItemId: string]: { [addonId: string]: { amount: number } };
   };
