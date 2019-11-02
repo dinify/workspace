@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MenuItem, MenuItemTranslation } from 'MenuItemsModels';
 import { RootState } from 'typesafe-actions';
-import { useRouteMatch } from 'react-router';
+import { useRouteMatch, useHistory } from 'react-router';
 import {
   favMenuitemInit,
   fetchMenuItemAsync,
@@ -46,6 +46,7 @@ export const useMenuItem = (menuItemId: string | null) => {
 export const MenuItemScreen = ({  }: {}) => {
   const dispatch = useDispatch();
   const match = useRouteMatch<{ id: string }>();
+  const history = useHistory();
   const { t } = useTranslation();
   const menuItemId = match ? match.params.id : '';
   const menuItem = useMenuItem(menuItemId);
@@ -80,8 +81,10 @@ export const MenuItemScreen = ({  }: {}) => {
       }),
     );
 
-  const handleAddToCart = (payload: Partial<AddToCartRequest>) =>
+  const handleAddToCart = (payload: Partial<AddToCartRequest>) => {
     dispatch(addToCartAsync.request(payload as any));
+    history.goBack();
+  };
 
   return (
     <div>
