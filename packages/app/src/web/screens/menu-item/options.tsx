@@ -5,8 +5,8 @@ import Chip from '@material-ui/core/Chip';
 import { withStyles, StyleRulesCallback } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Price from '../../components/Price';
-import { useDispatch } from 'react-redux';
-import { selectChoice } from '../../../ducks/menuItem/actions';
+import { selectChoice as selectChoiceAction } from '../../../ducks/menuItem/actions';
+import { useAction } from '@dinify/common/src/lib/util';
 
 const styles: StyleRulesCallback = theme => ({
   chipContainer: {
@@ -46,7 +46,7 @@ const styles: StyleRulesCallback = theme => ({
 export default withStyles(styles)(
   ({ classes, menuItemId }: { classes: any; menuItemId: string }) => {
     const options = useOptionView(menuItemId);
-    const dispatch = useDispatch();
+    const selectChoice = useAction(selectChoiceAction);
     return (
       <>
         {options.map(option => (
@@ -79,13 +79,11 @@ export default withStyles(styles)(
                     root: choice.selected ? classes.selected : null,
                   }} // add class if selected
                   onClick={() => {
-                    dispatch(
-                      selectChoice({
-                        menuItemId,
-                        optionId: option.id,
-                        choiceId: choice.id,
-                      }),
-                    );
+                    selectChoice({
+                      menuItemId,
+                      optionId: option.id,
+                      choiceId: choice.id,
+                    });
                   }} // select choice
                   className={classes.chip}
                   label={choice.name}

@@ -1,6 +1,10 @@
 import React from 'react';
 import remove from 'ramda/es/remove';
-import { useIntl, useTranslation, localizedLanguages } from '@dinify/common/src/lib/i18n';
+import {
+  useIntl,
+  useTranslation,
+  localizedLanguages,
+} from '@dinify/common/src/lib/i18n';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import ArrowUpward from '@material-ui/icons/ArrowUpwardRounded';
 import Delete from '@material-ui/icons/DeleteRounded';
@@ -11,16 +15,17 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import { openDialogAction } from '../../../../ducks/ui/actions';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { RootState } from 'typesafe-actions';
 import { LanguageIdType } from '@phensley/cldr';
 import { Profile } from '../../../../store/root-reducer';
+import { useAction } from '@dinify/common/src/lib/util';
 
 export default () => {
   const { t } = useTranslation();
   const { setLocale } = useIntl();
-  const dispatch = useDispatch();
+  const openDialog = useAction(openDialogAction);
   const firebase = useFirebase();
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const isLanguageSet = profile ? !!profile.language : false;
@@ -28,24 +33,24 @@ export default () => {
   const isPrimarySet = isLanguageSet && !!language.primary;
   const isOtherSet = isLanguageSet && !!language.other;
 
-  const handlePrimary = (langtag: LanguageIdType|null) => {
+  const handlePrimary = (langtag: LanguageIdType | null) => {
     if (langtag) {
       setLocale(langtag);
       firebase.updateProfile({
         language: {
           ...language,
           primary: langtag,
-        }
+        },
       });
     }
   };
-  const handleOther = (langtag: LanguageIdType|null) => {
+  const handleOther = (langtag: LanguageIdType | null) => {
     if (langtag) {
       firebase.updateProfile({
         language: {
           ...language,
-          other: [...language.other, langtag]
-        }
+          other: [...language.other, langtag],
+        },
       });
     }
   };
@@ -57,23 +62,25 @@ export default () => {
     firebase.updateProfile({
       language: {
         primary: tmp,
-        other
-      }
+        other,
+      },
     });
   };
   const getRemoveHandler = (i: number) => () => {
     firebase.updateProfile({
       language: {
         ...language,
-        other: remove(i, 1, language.other)
-      }
+        other: remove(i, 1, language.other),
+      },
     });
   };
-  const getClickHandler = (handler: (langtag: LanguageIdType|null) => any) => () => {
-    dispatch(openDialogAction({
+  const getClickHandler = (
+    handler: (langtag: LanguageIdType | null) => any,
+  ) => () => {
+    openDialog({
       type: 'language',
-      handler
-    }));
+      handler,
+    });
   };
   const getLocalName = (language: string) => {
     return (localizedLanguages as any)[language];
@@ -82,40 +89,56 @@ export default () => {
   // TODO className={classes.button2}
   const primaryClickHandler = getClickHandler(handlePrimary);
   const otherClickHandler = getClickHandler(handleOther);
-  return <>
-    <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
-      {t('language.default')}
-    </Typography>
-    {isPrimarySet 
-    ? <ListItem style={{paddingLeft: 24, paddingRight: 24}} button onClick={primaryClickHandler}>
-        <ListItemText primary={getLocalName(language.primary)} />
-        <ChevronRight color="action"/>
-      </ListItem>
-    : <div style={{padding: '16px 24px'}}>
-        <Button onClick={primaryClickHandler} variant="text" color="primary">
-          {t('language.setPrimary')}
+  return (
+    <>
+      <Typography
+        style={{ padding: '16px 24px' }}
+        variant="subtitle2"
+        color="textSecondary"
+      >
+        {t('language.default')}
+      </Typography>
+      {isPrimarySet ? (
+        <ListItem
+          style={{ paddingLeft: 24, paddingRight: 24 }}
+          button
+          onClick={primaryClickHandler}
+        >
+          <ListItemText primary={getLocalName(language.primary)} />
+          <ChevronRight color="action" />
+        </ListItem>
+      ) : (
+        <div style={{ padding: '16px 24px' }}>
+          <Button onClick={primaryClickHandler} variant="text" color="primary">
+            {t('language.setPrimary')}
+          </Button>
+        </div>
+      )}
+      <Divider />
+      <Typography
+        style={{ padding: '16px 24px' }}
+        variant="subtitle2"
+        color="textSecondary"
+      >
+        {t('language.other')}
+      </Typography>
+      {isOtherSet &&
+        language.other.map((lang, i) => (
+          <ListItem key={lang} style={{ paddingLeft: 24, paddingRight: 24 }}>
+            <ListItemText primary={getLocalName(lang)} />
+            <IconButton onClick={getRemoveHandler(i)}>
+              <Delete />
+            </IconButton>
+            <IconButton onClick={getSwapHandler(i)}>
+              <ArrowUpward />
+            </IconButton>
+          </ListItem>
+        ))}
+      <div style={{ padding: '16px 24px' }}>
+        <Button onClick={otherClickHandler} variant="text" color="primary">
+          {t('language.addOther')}
         </Button>
       </div>
-    }
-    <Divider />
-    <Typography style={{padding: '16px 24px'}} variant="subtitle2" color="textSecondary">
-      {t('language.other')}
-    </Typography>
-    {isOtherSet && language.other.map((lang, i) => (
-      <ListItem key={lang} style={{paddingLeft: 24, paddingRight: 24}}>
-        <ListItemText primary={getLocalName(lang)} />
-        <IconButton onClick={getRemoveHandler(i)}>
-          <Delete />
-        </IconButton>
-        <IconButton onClick={getSwapHandler(i)}>
-          <ArrowUpward />
-        </IconButton>
-      </ListItem>
-    ))}
-    <div style={{padding: '16px 24px'}}>
-      <Button onClick={otherClickHandler} variant="text" color="primary">
-        {t('language.addOther')}
-      </Button>
-    </div>
-  </>;
+    </>
+  );
 };
