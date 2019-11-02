@@ -24,7 +24,11 @@ export interface MenuItemState {
   selectedAddons: {
     [menuItemId: string]: { [addonId: string]: { amount: number } };
   };
-  selectedChoices: { [menuItemId: string]: { [choiceId: string]: boolean } };
+  selectedChoices: {
+    [menuItemId: string]: {
+      [optionId: string]: { [choiceId: string]: boolean };
+    };
+  };
   selectedExcludes: {
     [menuItemId: string]: { [ingredientId: string]: boolean };
   };
@@ -134,10 +138,13 @@ export default function reducer(
     }
 
     case 'SELECT_CHOICE': {
-      const { menuItemId, choiceId } = payload;
-      return assocPath<any, MenuItemState>(['selectedChoices', menuItemId], {
-        [choiceId]: {},
-      })(state);
+      const { menuItemId, optionId, choiceId } = payload;
+      return assocPath<any, MenuItemState>(
+        ['selectedChoices', menuItemId, optionId],
+        {
+          [choiceId]: {},
+        },
+      )(state);
     }
 
     // case menuCategoryTypes.FETCH_MENUCATEGORIES_DONE: {

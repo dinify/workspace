@@ -81,7 +81,7 @@ export default withStyles(styles)(
                   onClick={() => {
                     dispatch(
                       selectChoice({
-                        menuItemId: menuItemId,
+                        menuItemId,
                         optionId: option.id,
                         choiceId: choice.id,
                       }),

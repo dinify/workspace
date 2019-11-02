@@ -24,6 +24,8 @@ import { CartResponse, CartResponseN, RmFromCartRequest } from 'CartModels';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
+import keys from 'ramda/es/keys';
+import values from 'ramda/es/values';
 
 // const keyedPropsOfList = (keyProp: string, valProp: string) =>
 // (list: any[]) => zipObj(pluck(keyProp)(list), pluck(valProp)(list));
@@ -86,7 +88,9 @@ const addToCartEpic: Epic = (action$, state$) =>
 
       const apiPayload = {
         menuItemId,
-        choices: processCustomizations(menuItemId, selectedChoices),
+        choices: values(selectedChoices[menuItemId]).map(o => ({
+          id: keys(o)[0],
+        })),
         excludes: processCustomizations(menuItemId, selectedExcludes),
         addons: processCustomizations(menuItemId, selectedAddons),
       };

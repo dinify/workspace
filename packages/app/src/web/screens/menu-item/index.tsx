@@ -24,6 +24,9 @@ import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Ingredients from './ingredients';
 import Addons from './addons';
 import Options from './options';
+import { useAddonView } from '../../../ducks/addon/selectors';
+import { useIngredientView } from '../../../ducks/ingredient/selectors';
+import { useOptionView } from '../../../ducks/option/selectors';
 
 type MenuItemTranslated = MenuItem & MenuItemTranslation;
 
@@ -44,7 +47,7 @@ export const MenuItemScreen = ({  }: {}) => {
   const dispatch = useDispatch();
   const match = useRouteMatch<{ id: string }>();
   const { t } = useTranslation();
-  const menuItemId = match ? match.params.id : null;
+  const menuItemId = match ? match.params.id : '';
   const menuItem = useMenuItem(menuItemId);
   const imageUrls = useSelector<RootState, string[]>(state => {
     if (!menuItem) return [];
@@ -52,6 +55,14 @@ export const MenuItemScreen = ({  }: {}) => {
       .sort((a, b) => b.precedence - a.precedence)
       .map(img => img.url);
   });
+  const addons = useAddonView(menuItemId);
+  const ingredients = useIngredientView(menuItemId);
+  const options = useOptionView(menuItemId);
+  const canAddCart =
+    options
+      .map(option => option.choices.filter(choice => choice.selected).length)
+      .filter(num => num > 0).length === options.length;
+
   useEffect(() => {
     if (menuItemId) {
       dispatch(clearCustomizationsAction({ menuItemId }));
@@ -101,15 +112,29 @@ export const MenuItemScreen = ({  }: {}) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Divider style={{ marginTop: 16 }} />
-          <Ingredients menuItemId={menuItem.id} />
-          <Addons menuItemId={menuItem.id} />
-          <Options menuItemId={menuItem.id} />
+          {ingredients.length > 0 && (
+            <>
+              <Divider style={{ marginTop: 16 }} />
+              <Ingredients menuItemId={menuItem.id} />
+            </>
+          )}
+          {addons.length > 0 && (
+            <>
+              <Divider style={{ marginTop: 16 }} />
+              <Addons menuItemId={menuItem.id} />
+            </>
+          )}
+          {options.length > 0 && (
+            <>
+              <Divider style={{ marginTop: 16 }} />
+              <Options menuItemId={menuItem.id} />
+            </>
+          )}
 
           <Fab
             onClick={() => handleAddToCart({ menuItemId: menuItem.id })}
             style={{ marginTop: 24, marginBottom: 64, width: '100%' }}
-            // disabled={selectCount < options.length && options.length !== 0}
+            disabled={!canAddCart}
             variant="extended"
             color="primary"
           >
