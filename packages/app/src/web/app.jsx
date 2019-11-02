@@ -4,7 +4,6 @@ import { openDialogAction } from 'ducks/ui/actions';
 import { matchPath, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { getOrderItemCount as getCartCount } from 'ducks/cart/selectors';
-import last from 'ramda/es/last';
 import * as routes from 'web/routes';
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';

@@ -45,6 +45,10 @@ const websockets = (store) => {
     playChime();
   })
 
+  socket.on('seat-change', (payload) => {
+    console.log(payload);
+  })
+
   socket.on('checkout', (data) => {
     console.log('checkout', data);
     dispatch({ type: seatTypes.LOAD_SEATS_INIT });
