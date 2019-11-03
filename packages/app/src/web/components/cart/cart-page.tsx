@@ -31,7 +31,7 @@ const CartView: React.FC<{
   const { t } = useTranslation();
 
   const cartItemCount = orderItemIds.length;
-  const canOrder = cartItemCount < 1 && checkedInRestaurant;
+  const canOrder = cartItemCount > 0 && checkedInRestaurant;
   return (
     <div {...otherProps}>
       <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
