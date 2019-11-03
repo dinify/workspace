@@ -74,7 +74,7 @@ const createChoiceEpic: Epic = (action$, state$) =>
         optionId: payload.optionId,
         difference: {
           amount: payload.price,
-          currency: 'CZK',
+          currency: 'EUR',
         },
       };
       return fromPromise(API.CreateChoice(body)).pipe(

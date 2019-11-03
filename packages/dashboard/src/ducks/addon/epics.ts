@@ -42,7 +42,7 @@ const createAddonEpic: Epic = (action$, state$) =>
         name: payload.name,
         price: {
           amount: payload.price,
-          currency: 'CZK',
+          currency: 'EUR',
         },
         maximum: '1',
         restaurantId,

@@ -158,7 +158,7 @@ let ItemDetail = ({
               menuItemId: selectedFoodId,
               price: {
                 amount: Number.parseFloat(fields.price).toFixed(0),
-                currency: 'CZK',
+                currency: 'EUR',
                },
             });
           }}

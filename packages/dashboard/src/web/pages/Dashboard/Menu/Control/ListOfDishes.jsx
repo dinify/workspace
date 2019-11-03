@@ -217,7 +217,7 @@ const ListOfDishes = ({
                 menuCategoryId: selectedCategoryId,
                 price: {
                   amount: 100,
-                  currency: 'CZK'
+                  currency: 'EUR'
                 },
                 form: 'menu/createItem'
               });
