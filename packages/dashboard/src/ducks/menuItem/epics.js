@@ -9,7 +9,7 @@ import assoc from 'ramda/es/assoc';
 import pick from 'ramda/es/pick';
 
 import assocPath from 'ramda/es/assocPath';
-import { ListToMap, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
+import { ListToMap, handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { getType } from 'typesafe-actions';
 import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync, assignIngredientAsync, unassignIngredientAsync, assignAddonAsync, unassignAddonAsync, assignOptionAsync, unassignOptionAsync } from './actions';

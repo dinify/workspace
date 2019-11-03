@@ -2,7 +2,7 @@ import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import mapObjIndexed from 'ramda/es/mapObjIndexed';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
-import { ListToMap } from '@dinify/common/dist/lib/FN';
+import { ListToMap } from '@dinify/common/src/lib/FN';
 
 const initialState = {
   all: {},

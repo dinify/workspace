@@ -3,10 +3,10 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import find from 'ramda/es/find';
 import propEq from 'ramda/es/propEq';
-import * as API from '@dinify/common/dist/api/restaurant';
-import { Post } from '@dinify/common/dist/api/Network';
+import * as API from '@dinify/common/src/api/restaurant';
+import { Post } from '@dinify/common/src/api/Network';
 import { change as changeForm } from 'redux-form';
-import { MapToList, handleEpicAPIError } from '@dinify/common/dist/lib/FN';
+import { MapToList, handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'
 
 const saveTranslationDone = () => {

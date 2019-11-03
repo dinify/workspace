@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 import { connect } from 'react-redux';
 import QRCode from 'qrcode.react';
 import { selectedRestaurant } from 'ducks/restaurant/selectors';

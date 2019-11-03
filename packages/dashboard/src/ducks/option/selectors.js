@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 import assoc from 'ramda/es/assoc';
 
 export const allOptions = state => state.option.all;

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 
 export const allIngredients = state => state.ingredient.all;
 

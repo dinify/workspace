@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import pickBy from 'ramda/es/pickBy';
 import pipe from 'ramda/es/pipe';
 import sort from 'ramda/es/sort';
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 import { getT } from '@dinify/common/src/lib/translation.ts';
 
 export const allServices = state => state.service.all;

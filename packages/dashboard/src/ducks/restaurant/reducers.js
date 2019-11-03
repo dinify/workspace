@@ -2,7 +2,7 @@ import pipe from 'ramda/es/pipe';
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
-import { ListToMap, setCookie } from '@dinify/common/dist/lib/FN';
+import { ListToMap, setCookie } from '@dinify/common/src/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 

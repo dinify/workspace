@@ -18,8 +18,8 @@ import {
 } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
-import Flag from '@dinify/common/dist/components/Flag';
-import { getCookie, setCookie } from '@dinify/common/dist/lib/FN';
+import Flag from '@dinify/common/src/components/Flag';
+import { getCookie, setCookie } from '@dinify/common/src/lib/FN';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';

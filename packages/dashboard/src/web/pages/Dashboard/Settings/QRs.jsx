@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import Print from '@material-ui/icons/Print';
 
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import QRCode from 'qrcode.react';

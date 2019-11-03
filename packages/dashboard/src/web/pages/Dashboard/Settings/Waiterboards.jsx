@@ -7,7 +7,7 @@ import last from 'ramda/es/last';
 import range from 'ramda/es/range';
 
 import { withStyles } from '@material-ui/core/styles';
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 import { connect } from 'react-redux';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import 'react-switch-button/dist/react-switch-button.css';

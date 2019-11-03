@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import * as FN from '@dinify/common/dist/lib/FN';
+import * as FN from '@dinify/common/src/lib/FN';
 import { Label } from 'web/components/styled/FormBox';
 import { fetchOptionsAsync } from 'ducks/option/actions.ts';
 import { listOfOptions } from 'ducks/option/selectors';

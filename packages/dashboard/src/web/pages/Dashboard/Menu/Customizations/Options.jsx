@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { MapToList } from '@dinify/common/dist/lib/FN';
+import { MapToList } from '@dinify/common/src/lib/FN';
 import { Field, reduxForm } from 'redux-form';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Loading from 'web/components/Loading';

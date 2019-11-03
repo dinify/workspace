@@ -5,11 +5,11 @@ import queryString from 'query-string';
 import { appIsRunning } from 'selectors/restaurant';
 import { withStyles } from '@material-ui/core/styles';
 
-import SignIn from '@dinify/common/dist/components/SignIn';
+import SignIn from '@dinify/common/src/components/SignIn';
 import Dashboard from 'web/pages/Dashboard';
 import Qr from 'web/pages/Qr';
 import RegisterRestaurant from 'web/pages/RegisterRestaurant';
-import { reportCampaignAction } from '@dinify/common/dist/ducks/reporting/actions';
+import { reportCampaignAction } from '@dinify/common/src/ducks/reporting/actions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import withRoot from 'withRoot.js';
 import QRsPrint from './pages/QRsPrint';

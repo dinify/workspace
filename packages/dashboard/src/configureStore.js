@@ -11,7 +11,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import auth from '@dinify/common/dist/ducks/auth';
+import auth from '@dinify/common/src/ducks/auth';
 import restaurant from 'ducks/restaurant/reducers';
 import ui from 'ducks/ui/reducers';
 import menuCategory from 'ducks/menuCategory/reducers.ts';
