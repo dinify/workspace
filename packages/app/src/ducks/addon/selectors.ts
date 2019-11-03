@@ -3,6 +3,8 @@ import { RootState } from 'typesafe-actions';
 import values from 'ramda/es/values';
 import { Addon, MenuAddon } from 'AddonModels';
 import { Translation } from 'CartModels';
+import { useIntl } from '@dinify/common/src/lib/i18n';
+import { Locale } from '@phensley/cldr';
 
 export type AddonView = Addon &
   MenuAddon &
@@ -11,6 +13,15 @@ export type AddonView = Addon &
   };
 
 export const useAddonView = (menuItemId: string) => {
+  const locale: Locale | undefined = useIntl(ctx => ctx.state.locale);
+  const selectTranslation = (translations: [Translation]): Translation => {
+    if (locale)
+      return (
+        translations.find(t => t.locale === locale.tag.language()) ||
+        translations[0]
+      );
+    else return translations[0];
+  };
   return useSelector<RootState, AddonView[]>(state =>
     values(state.menuItem.menuAddons)
       .filter(item => item.menuItemId === menuItemId)
@@ -24,7 +35,7 @@ export const useAddonView = (menuItemId: string) => {
         return {
           ...value,
           ...addon,
-          ...addon.translations[0],
+          ...selectTranslation(addon.translations),
           amount,
         };
       }),

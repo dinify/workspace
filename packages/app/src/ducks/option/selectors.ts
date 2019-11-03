@@ -3,6 +3,8 @@ import { RootState } from 'typesafe-actions';
 import { Option, MenuOption, Choice } from 'OptionModels';
 import { Translation } from 'CartModels';
 import values from 'ramda/es/values';
+import { Locale } from '@phensley/cldr';
+import { useIntl } from '@dinify/common/src/lib/i18n';
 
 export type OptionView = Omit<Option, 'choices'> &
   MenuOption &
@@ -22,6 +24,15 @@ export type ChoiceView = Choice & Translation & { selected: boolean };
 // );
 
 export const useOptionView = (menuItemId: string) => {
+  const locale: Locale | undefined = useIntl(ctx => ctx.state.locale);
+  const selectTranslation = (translations: [Translation]): Translation => {
+    if (locale)
+      return (
+        translations.find(t => t.locale === locale.tag.language()) ||
+        translations[0]
+      );
+    else return translations[0];
+  };
   return useSelector<RootState, OptionView[]>(state =>
     values(state.menuItem.menuOptions)
       .filter(item => item.menuItemId === menuItemId)
@@ -41,14 +52,14 @@ export const useOptionView = (menuItemId: string) => {
               : false;
           return {
             ...choice,
-            ...choice.translations[0],
+            ...selectTranslation(choice.translations),
             selected,
           };
         }) as [ChoiceView];
         return {
           ...value,
           ...option,
-          ...option.translations[0],
+          ...selectTranslation(option.translations),
           choices,
         };
       }),

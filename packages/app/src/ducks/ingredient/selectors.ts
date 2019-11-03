@@ -3,6 +3,8 @@ import { Ingredient, MenuIngredient } from 'IngredientModels';
 import { Translation } from 'CartModels';
 import { RootState } from 'typesafe-actions';
 import { values } from 'ramda';
+import { Locale } from '@phensley/cldr';
+import { useIntl } from '@dinify/common/src/lib/i18n';
 
 export type IngredientView = Ingredient &
   MenuIngredient &
@@ -11,6 +13,15 @@ export type IngredientView = Ingredient &
   };
 
 export const useIngredientView = (menuItemId: string) => {
+  const locale: Locale | undefined = useIntl(ctx => ctx.state.locale);
+  const selectTranslation = (translations: [Translation]): Translation => {
+    if (locale)
+      return (
+        translations.find(t => t.locale === locale.tag.language()) ||
+        translations[0]
+      );
+    else return translations[0];
+  };
   return useSelector<RootState, IngredientView[]>(state =>
     values(state.menuItem.menuIngredients)
       .filter(item => item.menuItemId === menuItemId)
@@ -24,7 +35,7 @@ export const useIngredientView = (menuItemId: string) => {
         return {
           ...value,
           ...ingredient,
-          ...ingredient.translations[0],
+          ...selectTranslation(ingredient.translations),
           excluded,
         };
       }),
