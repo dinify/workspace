@@ -184,7 +184,7 @@ const Options = ({
                       secondary={
                         <span>
                           {getT(choice.translations, lang)}{' '}
-                          {choice.price ? Number.parseFloat(choice.price.amount).toFixed(2) : ''} Kč
+                          {choice.price ? Number.parseFloat(choice.price.amount).toFixed(2) : ''} €
                         </span>
                       }
                     />
