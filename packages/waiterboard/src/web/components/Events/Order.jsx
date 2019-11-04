@@ -30,7 +30,7 @@ const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, r
 	      <User userId={order.initiator} />
 
 				<Text color={color}>
-					{datetime ? moment(order.createrdAt).format('DD/MM/YYYY HH:mm') : ''}
+					{datetime ? moment(order.createdAt).format('DD/MM/YYYY HH:mm') : ''}
 				</Text>
 
 				{!noconfirm ?
