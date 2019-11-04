@@ -196,7 +196,7 @@ const Header = ({
               <Value></Value>
               <Label>Tables</Label><Value>{tablesCount}</Value>
               <Label>Orders</Label><Value>{totalOrdersCount}</Value>
-              <Label>Sales</Label><Value>{numeral(salesVolume).format('0')}Kč</Value>
+              <Label>Sales</Label><Value>{numeral(salesVolume).format('0')}€</Value>
 
               <IconButton onClick={() => firebase.logout()}>
                 <ExitToApp />

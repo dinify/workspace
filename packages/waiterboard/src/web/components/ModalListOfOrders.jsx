@@ -1,36 +1,30 @@
-
-import React from 'react'
+import React from 'react';
 import { connect } from 'react-redux';
-import Order from './Events/Order'
-import { colorsByStages } from '../colors'
 import { getOrderList } from 'ducks/order/selectors';
+import Order from './Events/Order';
+import { colorsByStages } from '../colors';
 
-import { Head, Body, BodyPlaceholder } from './styled/Modal'
+import { Head, Body, BodyPlaceholder } from './styled/Modal';
 
+const ModalListOfOrders = ({
+  orders, shown
+}) => {
 
-class ModalListOfOrders extends React.Component {
+  if (!shown) return (<div />)
 
-
-  render(){
-
-
-    const { orders, shown } = this.props;
-    if (!shown) return (<div />)
-
-    return (
-    	<div>
-        <Head bg={colorsByStages.s2}>
-          Orders of today
-        </Head>
-        <Body>
-          {orders.length < 1 ? <BodyPlaceholder>No confirmed orders</BodyPlaceholder> : ''}
-          {orders.map((order) =>
-            <Order key={order.id} order={order} noconfirm />
-          )}
-        </Body>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <Head bg={colorsByStages.s2}>
+        Orders of today
+      </Head>
+      <Body>
+        {orders.length < 1 ? <BodyPlaceholder>No confirmed orders</BodyPlaceholder> : ''}
+        {orders.map((order) =>
+          <Order key={order.id} order={order} noconfirm datetime />
+        )}
+      </Body>
+    </div>
+  );
 }
 
 export default connect(

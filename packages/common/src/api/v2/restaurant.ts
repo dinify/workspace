@@ -121,6 +121,16 @@ export const GetLanguagesOfRestaurant = ({ restaurantId }: { restaurantId: strin
   path: `restaurant/${restaurantId}/languages`
 });
 
+type CreateRestaurantBody = {
+  name: string;
+  subdomain: string;
+  language: string;
+}
+
+export const CreateRestaurant = (body: CreateRestaurantBody): Promise<any> => Post({
+  path: `restaurants`
+}, body);
+
 type CreateServiceBody = {
 	name: string;
 	restaurantId: string;

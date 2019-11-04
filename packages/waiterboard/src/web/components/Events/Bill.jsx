@@ -83,26 +83,26 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, confirming, classes }) =>
                   <Tr key={order.id} className="headline">
                   <Td>{orderTypes[order.type]} order</Td>
                   <Td>{order.items.length}</Td>
-                  <Td>{N(order.subtotal.amount).format('0.000')}Kč</Td>
+                  <Td>{N(order.subtotal.amount).format('0.000')}€</Td>
                 </Tr>, 
                 */
               order.items.map((item) =>
                 <Tr key={item.id}>
     	            <Td>{item.menuItem.translations[0].name}</Td>
     	            <Td>1</Td>
-    	            <Td style={{textAlign: 'right'}}>{N(item.subtotal.amount).format('0.00')} Kč</Td>
+    	            <Td style={{textAlign: 'right'}}>{N(item.subtotal.amount).format('0.00')} €</Td>
     	          </Tr>
               )]
   					)}
   					<Tr className="boldline">
   	          <Td>Gratuity</Td>
   	          <Td>{bill.gratuity}%</Td>
-  	          <Td style={{textAlign: 'right'}}>{N(gratuityAmount).format('0.00')} Kč</Td>
+  	          <Td style={{textAlign: 'right'}}>{N(gratuityAmount).format('0.00')} €</Td>
   	        </Tr>
   					<Tr>
   	          <Td bold color={color}>TOTAL</Td>
   	          <Td></Td>
-  	          <Td bold color={color} style={{textAlign: 'right'}}>{N(total).format('0.00')} Kč</Td>
+  	          <Td bold color={color} style={{textAlign: 'right'}}>{N(total).format('0.00')} €</Td>
   	        </Tr>
           </tbody>
         </TableTag>

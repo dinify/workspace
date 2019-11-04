@@ -4,11 +4,11 @@ import { MapToList } from '@dinify/common/src/lib/FN';
 import Booking from './Events/Booking';
 import { colorsByStages } from '../colors';
 
-import { Head, Body, BodyPlaceholder } from './styled/Modal'
+import { Head, Body, BodyPlaceholder } from './styled/Modal';
 
 const ModalListOfBookings = ({ bookings, shown }) => {
-  if (!shown) return (<div />)
-  const accepted = MapToList(bookings).filter((b) => b.status === 'CONFIRMED')
+  if (!shown) return (<div />);
+  const accepted = MapToList(bookings).filter((b) => b.status === 'CONFIRMED');
 
   return (
   	<div>
@@ -22,7 +22,7 @@ const ModalListOfBookings = ({ bookings, shown }) => {
         )}
       </Body>
     </div>
-  )
+  );
 
 }
 

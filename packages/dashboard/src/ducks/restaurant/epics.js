@@ -9,7 +9,8 @@ import { actionTypes } from 'react-redux-firebase';
 import { setCookie, handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 import { reportCampaignAction } from '@dinify/common/src/ducks/reporting/actions';
-import * as API from '@dinify/common/src/api/restaurant';
+import * as APIv1 from '@dinify/common/src/api/restaurant';
+import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import * as types from './types';
 import { selectRestaurant } from './actions';
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
@@ -96,7 +97,11 @@ const registerRestaurantEpic = (action$, state$, { firebase }) =>
         payload: { restaurantName, subdomain, language },
       } = action;
       const onboardingToken = state$.value.restaurant.onboardingToken;
-      const createRestaurantPayload = { restaurantName, subdomain, language };
+      const createRestaurantPayload = {
+        name: restaurantName,
+        subdomain,
+        language
+      };
       if (onboardingToken) {
         createRestaurantPayload.token = onboardingToken;
       }
@@ -171,7 +176,7 @@ const editImageEpic = (action$, state$) =>
       const maxPrecedence = sort((a, b) => b.precedence - a.precedence)(
         values(images),
       )[0].precedence;
-      return from(API.EditImage({ id, precedence: maxPrecedence + 1 })).pipe(
+      return from(APIv1.EditImage({ id, precedence: maxPrecedence + 1 })).pipe(
         map(res => ({ type: ' EDIT_IMAGE_DONE', payload: res })),
         catchError(error =>
           handleEpicAPIError({
@@ -242,7 +247,7 @@ const publishRestaurantEpic = (action$, state$) =>
     ofType(types.SEND_PUBLISHREQUEST_INIT),
     mergeMap(action => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
-      return from(API.SendPublishRequest({ restaurantId })).pipe(
+      return from(APIv1.SendPublishRequest({ restaurantId })).pipe(
         map(res => ({ type: types.SEND_PUBLISHREQUEST_DONE, payload: res })),
         catchError(error =>
           handleEpicAPIError({

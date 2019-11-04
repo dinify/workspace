@@ -1,46 +1,42 @@
-
-import React from 'react'
+import React from 'react';
 import { connect } from 'react-redux';
-import { colorsByStages } from '../colors'
-import { ActionBox, Header, Text } from 'web/components/styled/Events'
-import User from 'web/components/Events/user'
-import filter from 'ramda/es/filter'
-import Order from 'web/components/Events/Order'
-import { MapToList } from '@dinify/common/src/lib/FN'
+import { ActionBox, Header, Text } from 'web/components/styled/Events';
+import User from 'web/components/Events/user';
+import Order from 'web/components/Events/Order';
+import { MapToList } from '@dinify/common/src/lib/FN';
 
-class SeatSummary extends React.Component {
+const SeatSummary = ({
+  seat
+}) => {
 
-  render(){
-    const { seat } = this.props;
-    if (!seat) return (<div />)
+  if (!seat) return (<div />)
 
-    console.log(seat.bill,'dd');
-    let orders = {};
-    let subtotal = null;
-    if (seat.bill && seat.bill.orders) {
-      orders = seat.bill.orders;
-      subtotal = seat.bill.subtotal.amount;
-    }
-
-    return (<ActionBox className='FullWidth'>
-      <Header>
-
-	      <User seat={seat} />
-
-        {subtotal ?
-          <Text>
-  					{subtotal}Kč
-  				</Text>
-          :
-          ''
-        }
-
-	    </Header>
-      {MapToList(orders).map((order) =>
-        <Order order={order} noconfirm raw />
-      )}
-    </ActionBox>)
+  let orders = {};
+  let subtotal = null;
+  if (seat.bill && seat.bill.orders) {
+    orders = seat.bill.orders;
+    subtotal = seat.bill.subtotal.amount;
   }
+
+  return (<ActionBox className='FullWidth'>
+    <Header>
+
+      <User seat={seat} />
+
+      {subtotal ?
+        <Text>
+          {subtotal}€
+        </Text>
+        :
+        ''
+      }
+
+    </Header>
+    {MapToList(orders).map((order) =>
+      <Order order={order} noconfirm raw />
+    )}
+  </ActionBox>);
+
 }
 
 export default connect(

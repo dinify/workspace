@@ -24,13 +24,13 @@ const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, r
 		{!raw ?
 			<Header>
 				<TableId bg={color}>
-	        {order.table ? order.table.number : 1}
+	        {order.seat ? order.seat.table.number : 1}
 	      </TableId>
 
 	      <User userId={order.initiator} />
 
 				<Text color={color}>
-					{datetime ? moment(order.processed).format('DD/MM/YYYY HH:mm') : ''}
+					{datetime ? moment(order.createrdAt).format('DD/MM/YYYY HH:mm') : ''}
 				</Text>
 
 				{!noconfirm ?
@@ -96,7 +96,7 @@ const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, r
 								})}
 							</Td>}
 
-							<Td style={{textAlign: 'right'}}>{N(item.subtotal.amount).format('0.00')} Kč</Td>
+							<Td style={{textAlign: 'right'}}>{N(item.subtotal.amount).format('0.00')} €</Td>
 	          </Tr>)
 					}): ''}
 					{order.subtotal &&
@@ -105,7 +105,7 @@ const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, r
 						<Td></Td>
 						<Td></Td>
 						<Td></Td>
-						<Td>{N(order.subtotal.amount).format('0.00')} {order.subtotal.currency === 'CZK' ? 'Kč' : order.subtotal.currency}</Td>
+						<Td>{N(order.subtotal.amount).format('0.00')} {order.subtotal.currency === 'EUR' ? '€' : order.subtotal.currency}</Td>
 					</Tr>
 					}
 
