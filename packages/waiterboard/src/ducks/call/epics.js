@@ -33,7 +33,7 @@ const loadCallEpic = (action$, $state) =>
           error,
           failActionType: callTypes.LOAD_CALL_FAIL,
           initAction: action
-        }))        
+        }))
       )
 
     })
