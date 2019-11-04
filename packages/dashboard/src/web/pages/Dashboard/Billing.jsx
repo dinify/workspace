@@ -13,35 +13,6 @@ import 'react-dates/lib/css/_datepicker.css';
 
 import { getBillsInitAction } from 'ducks/restaurant/actions';
 
-// const Header = styled.div`
-//   position: fixed;
-//   left: 240px;
-//   z-index: 1000000;
-//   top: 0;
-//   height: 60px;
-//   width: calc(100% - 240px);
-//   background: #fff;
-//   padding-left: 30px;
-// `;
-// 
-// const Title = styled.span`
-//   margin-right: 50px;
-//   line-height: 60px;
-// `;
-// 
-// const BillingPage = styled.div`
-//   font-family: sans-serif;
-//   .rt-td {
-//     font-size: 12px;
-//     strong {
-//       color: black;
-//     }
-//   }
-//   .rt-thead {
-//     font-size: 12px;
-//   }
-// `;
-
 class Billing extends React.Component {
   constructor(props) {
     super(props);
@@ -51,18 +22,20 @@ class Billing extends React.Component {
       endDate: moment(),
     };
   }
+
   componentDidMount() {
     const { getBills } = this.props;
     const { startDate, endDate } = this.state;
     getBills({ from: startDate, to: endDate });
   }
+
   render() {
-    let { bills, getBills } = this.props;
+    const { bills, getBills } = this.props;
 
     return (
-      <BillingPage>
-        <Header>
-          <Title>Billing</Title>
+      <>
+        <div>
+          <div>Billing</div>
           <div style={{ float: 'right', padding: '6px 20px 7px 0' }}>
             <DateRangePicker
               isOutsideRange={() => false}
@@ -77,7 +50,7 @@ class Billing extends React.Component {
               onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
             />
           </div>
-        </Header>
+        </div>
 
         <ReactTable
           data={bills}
@@ -187,7 +160,7 @@ class Billing extends React.Component {
           defaultPageSize={25}
           className="-striped -highlight"
         />
-      </BillingPage>
+      </>
     );
   }
 }

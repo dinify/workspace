@@ -39,13 +39,14 @@ import Settings from '@material-ui/icons/Settings';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenu';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import AttachMoney from '@material-ui/icons/AttachMoney';
 
 import { toggleSection } from 'ducks/ui/actions';
 import { publishRestaurant } from 'ducks/restaurant/actions';
 import { selectedRestaurant } from 'ducks/restaurant/selectors';
 import SettingsSection from './Settings';
 import MenuSection from './Menu';
-// import BillingSection from './Billing';
+import BillingSection from './Billing';
 
 const theme = createMuiTheme({
   palette: {
@@ -189,6 +190,11 @@ const shouldOpen = (openedIndex, index, location, section) => {
   return openedIndex === index;
 };
 
+const ConditionalLink = ({ condition, children, ...otherProps}) => {
+  if (condition) return (<Link {...otherProps}>{children}</Link>);
+  return <>{children}</>;
+}
+
 const Dashboard = ({
   firebase,
   classes,
@@ -250,15 +256,17 @@ const Dashboard = ({
         },
       ],
     },
-    // {
-    //   name: 'Billing',
-    //   icon: <AttachMoney />,
-    //   path: '/billing'
-    // },
+    {
+      name: 'Transactions',
+      icon: <AttachMoney />,
+      path: '/transactions',
+    },
   ];
   let subsectionNames = [];
   sections.forEach(section => {
-    subsectionNames = [...subsectionNames, ...section.subsections];
+    if (section.subsections) {
+      subsectionNames = [...subsectionNames, ...section.subsections];
+    }
   });
   const activeSubsection = subsectionNames.filter(s =>
     location.pathname.includes(s.path),
@@ -307,27 +315,32 @@ const Dashboard = ({
 
             {sections.map((section, index) => (
               <div key={`nav-section-${index}`}>
-                <ListItem
-                  className={classes.navItem}
-                  button
-                  onClick={() => toggleSection(index)}
+                <ConditionalLink
+                  to={section.path}
+                  condition={!section.subsections}
                 >
-                  <ListItemIcon className={classes.navIcon}>
-                    {!!section.icon && section.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    inset
-                    primary={section.name}
-                    disableTypography
-                    className={classes.navText}
-                  />
-                  {section.subsections &&
-                    (shouldOpen(openedIndex, index, location, section) ? (
-                      <ExpandLess className={classes.anchor} />
-                    ) : (
-                      <ExpandMore className={classes.anchor} />
-                    ))}
-                </ListItem>
+                  <ListItem
+                    className={classes.navItem}
+                    button
+                    onClick={() => toggleSection(index)}
+                  >
+                    <ListItemIcon className={classes.navIcon}>
+                      {!!section.icon && section.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      inset
+                      primary={section.name}
+                      disableTypography
+                      className={classes.navText}
+                    />
+                    {section.subsections &&
+                      (shouldOpen(openedIndex, index, location, section) ? (
+                        <ExpandLess className={classes.anchor} />
+                      ) : (
+                        <ExpandMore className={classes.anchor} />
+                      ))}
+                  </ListItem>
+                </ConditionalLink>
                 {section.subsections && (
                   <Collapse
                     in={shouldOpen(openedIndex, index, location, section)}
@@ -492,9 +505,8 @@ const Dashboard = ({
               <Redirect exact from="/" to="/settings" />
               <Route path="/settings" component={SettingsSection} />
               <Route path="/menu" component={MenuSection} />
-
+              <Route path="/transactions" component={BillingSection} />
               {
-                // <Route path="/billing" component={BillingSection} />
                 // <Route path="/guests" component={GuestsSection} />
                 // <Route path="/sales" component={SalesSection} />
                 // <Route path="/engagement" component={EngagementSection} />
