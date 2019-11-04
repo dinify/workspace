@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import Order from './Events/Order'
 import { colorsByStages } from '../colors'
-import { getConfirmedOrderList } from 'ducks/order/selectors';
+import { getOrderList } from 'ducks/order/selectors';
 
 import { Head, Body, BodyPlaceholder } from './styled/Modal'
 
@@ -35,6 +35,6 @@ class ModalListOfOrders extends React.Component {
 
 export default connect(
   state => ({
-    orders: getConfirmedOrderList(state)
+    orders: getOrderList({ confirmed: true })(state)
   })
 )(ModalListOfOrders);

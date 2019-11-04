@@ -19,7 +19,8 @@ import RestaurantMenu from '@material-ui/icons/RestaurantMenu';
 import Event from '@material-ui/icons/Event';
 
 import { toggleFrames, toggleModal } from 'ducks/ui/actions';
-import { getConfirmedOrderList } from 'ducks/order/selectors';
+import { getOrderList } from 'ducks/order/selectors';
+import { selectedRestaurant } from 'ducks/restaurant/selectors';
 import { colorsByStages } from '../colors';
 
 const Label = styled.span`
@@ -128,19 +129,22 @@ const Header = ({
   toggleFrames,
   toggleModal,
   frameIndex,
-  bookings,
+  // bookings,
   anyAction,
-  orders,
-  confirmedOrders
+  confirmedOrders,
+  unconfirmedOrders
 }) => {
   const frames = ['actions','tables']
+
   let restaurantName = '';
   if (restaurant) restaurantName = restaurant.name;
-  const bookingsList = MapToList(bookings)
-  const acceptedBookings = bookingsList.filter((b) => b.status === 'CONFIRMED')
 
-  const ordersList = MapToList(orders)
-  const confirmedOrdersCount = ordersList.filter((o) => o.status === 'CONFIRMED').length
+  // const bookingsList = MapToList(bookings);
+
+  // const acceptedBookings = bookingsList.filter((b) => b.status === 'CONFIRMED')
+
+  const confirmedOrdersCount = confirmedOrders.length;
+  const totalOrdersCount = confirmedOrdersCount + unconfirmedOrders.length;
 
   const amounts = confirmedOrders.map((o) => {
     const itemSubtotals = o.items.map((item) => Number(item.subtotal.amount));
@@ -189,8 +193,9 @@ const Header = ({
                 <Value>{restaurantName}</Value>
               </Link>
 
+              <Value></Value>
               <Label>Tables</Label><Value>{tablesCount}</Value>
-              <Label>Orders</Label><Value>{ordersList.length}</Value>
+              <Label>Orders</Label><Value>{totalOrdersCount}</Value>
               <Label>Sales</Label><Value>{numeral(salesVolume).format('0')}Kč</Value>
 
               <IconButton onClick={() => firebase.logout()}>
@@ -209,9 +214,10 @@ export default connect(
   state => ({
     selectedWBId: state.app.selectedWBId,
     frameIndex: state.ui.frameIndex,
-    bookings: state.booking.all,
-    orders: state.order.all,
-    confirmedOrders: getConfirmedOrderList(state)
+    // bookings: state.booking.all,
+    restaurant: selectedRestaurant(state),
+    confirmedOrders: getOrderList({ confirmed: true })(state),
+    unconfirmedOrders: getOrderList({ confirmed: false })(state)
   }),
   {
     toggleFrames,

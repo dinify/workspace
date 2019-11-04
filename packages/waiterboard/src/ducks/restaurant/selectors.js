@@ -1,13 +1,15 @@
 import { createSelector } from 'reselect';
 
 export const allRestaurants = state => state.restaurant.all;
-export const selectedRestaurantId = state => state.restaurant.selectedRestaurant;
+export const selectedRestaurantId = state => state.app.selectedRestaurant;
 
 export const selectedRestaurant = createSelector(
-  allRestaurants,
-  selectedRestaurantId,
+  [
+    allRestaurants,
+    selectedRestaurantId,
+  ],
   (all, id) => {
-    if (!id) return false;
+    if (!id) return null;
     return all[id];
   }
 );

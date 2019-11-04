@@ -156,7 +156,7 @@ const Board = ({
 export default connect(
   state => ({
     bookingList: getBookingList(state),
-    orderList: getOrderList(state),
+    orderList: getOrderList({ confirmed: false })(state),
     callList: getCallList(state),
     billsGroupedLists: getGroupedBills(state),
     tableList: getTableList(state),
