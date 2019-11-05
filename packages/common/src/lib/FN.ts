@@ -168,7 +168,14 @@ export function getInitials(str = '', glue: any) {
   return initials;
 };
 
-export const handleEpicAPIError = ({ error, failActionType, initAction }: any) => {
+type HandleAPIError = {
+  error: any;
+  failActionType: string;
+  initAction: any;
+  nextActions?: any;
+}
+
+export const handleEpicAPIError = ({ error, failActionType, initAction, nextActions = [] }: HandleAPIError) => {
   const { payload, type, refreshTokenTried } = initAction;
   if (error && error.statusCode === 401 && !refreshTokenTried) {
     return of({
@@ -181,7 +188,7 @@ export const handleEpicAPIError = ({ error, failActionType, initAction }: any) =
       payload: error,
       initPayload: payload,
       error: true
-    });
+    }, ...nextActions);
   }
 };
 

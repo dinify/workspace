@@ -6,7 +6,6 @@ import * as APIv2 from '@dinify/common/src/api/v2/restaurant.ts';
 
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import * as commonTypes from 'ducks/common/types';
-import { confirmationFail } from 'ducks/common/actions';
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const camel = (str) => capitalize(str.toLowerCase());
@@ -27,7 +26,7 @@ const confirmationEpic = (action$) =>
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: confirmationFail(error),
+          failActionType: commonTypes.CONFIRMATION_FAIL,
           initAction: action
         }))
       )
@@ -52,7 +51,7 @@ const confirmationSyncEpic = (action$, state$) =>
         map(() => ({ type: commonTypes.CONFIRMATIONSYNC_DONE })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: confirmationFail(error),
+          failActionType: commonTypes.CONFIRMATION_FAIL,
           initAction: action
         }))
       )

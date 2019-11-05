@@ -1,5 +1,8 @@
 import { of, from } from 'rxjs';
-import { mergeMap, catchError, map, debounceTime } from 'rxjs/operators';
+import {
+  mergeMap, catchError, map as rxMap, 
+  // debounceTime 
+} from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
@@ -11,26 +14,26 @@ import * as uiActions from '../ui/actions';
 const fetchServicesEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(fetchServicesAsync.request)),
-    mergeMap((action) => from(API.GetServicesOfRestaurant({
-      restaurantId: action.payload.restaurantId
-    })).pipe(
-      map((res: any) => {
-        return fetchServicesAsync.success(res);
-      }),
-      catchError(error => {
-        return handleEpicAPIError({
-          error,
-          failActionType: getType(fetchServicesAsync.failure),
-          initAction: action
+    mergeMap((action) =>
+      from(API.GetServicesOfRestaurant({
+        restaurantId: action.payload.restaurantId
+      })).pipe(
+        rxMap((res: any) => {
+          return fetchServicesAsync.success(res);
+        }),
+        catchError(error => {
+          return handleEpicAPIError({
+            error,
+            failActionType: getType(fetchServicesAsync.failure),
+            initAction: action
+          })
         })
-      })
-    ))
+      ))
   );
 
 const callServiceEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(callServiceAsync.request)),
-    debounceTime(1000),
     mergeMap((action) => {
       const { payload: { serviceId } } = action;
       return from(API.CallService({ serviceId })).pipe(
@@ -42,9 +45,14 @@ const callServiceEpic: Epic = (action$) =>
         )),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: callServiceAsync.failure,
-          initAction: action
-        }))
+          failActionType: getType(callServiceAsync.failure),
+          initAction: action,
+          nextActions: [
+            uiActions.showSnackbarAction({
+              message: t => 'Error'
+            })            
+          ]
+        })),
     )})
   );
 

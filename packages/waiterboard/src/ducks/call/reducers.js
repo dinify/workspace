@@ -40,6 +40,18 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
+    case commonTypes.CONFIRMATION_FAIL: {
+      const { callId } = action.initPayload;
+      if (!callId) return state;
+      if (payload.message && payload.message.includes('already')) {
+        return pipe(
+          assocPath(['confirming', callId], false),
+          assocPath(['all', callId, 'status'], 'CONFIRMED')
+        )(state);
+      }
+      return state;
+    }
+
     default:
       return state;
   }

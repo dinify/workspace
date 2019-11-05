@@ -39,7 +39,7 @@ middlewares.push(epicMiddleware);
 
 export const store = createStore(
   persistedReducers,
-  applyMiddleware(...middlewares)
+  applyMiddleware(...middlewares),
 );
 
 epicMiddleware.run(rootEpic);

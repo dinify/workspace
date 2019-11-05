@@ -24,7 +24,7 @@ import configureStore from './configureStore';
 import './index.css';
 import websockets from './websockets';
 
-if (process.env.NODE_ENV !== 'development') {
+if (process.env.NODE_ENV === 'development') {
   Sentry.init({dsn: "https://0ae6895f32aa473eba9f327856e94927@sentry.io/1808388"});
 }
 

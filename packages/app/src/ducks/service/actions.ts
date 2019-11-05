@@ -12,5 +12,5 @@ export const fetchServicesAsync = createAsyncAction(
 export const callServiceAsync = createAsyncAction(
   `${p}/CALL_SERVICE_INIT`, // { serviceId }
   `${p}/CALL_SERVICE_DONE`,
-  `${p}/CALL_SERVICE_FAIL`
+  `${p}/CALL_SERVICE_FAIL`,
 )<CallServiceRequest, any, string>();
