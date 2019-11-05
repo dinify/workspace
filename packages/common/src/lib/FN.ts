@@ -15,7 +15,7 @@ export const MapToList = (items: {[id: string]: any}, _options?: any) => {
   }
   const list = toPairs(items).map((pair) => ({ id: pair[0], ...pair[1] }));
   if (sortType === String) {
-    return list.sort((a, b) => b[sortBy].localeCompare(a[sortBy], 'en'));
+    return list.sort((a, b) => a && b ? b[sortBy].localeCompare(a[sortBy], 'en') : 1);
   }
   return list;
 }
@@ -44,8 +44,6 @@ export function isInstalled() {
 export const MapPath = curry((path, f, obj) =>
   assocPath(path, f(path(path, obj)), obj),
 );
-
-
 
 export function parseLanguages(languages: any) {
   return languages.map((lang: any) => {
@@ -199,4 +197,3 @@ export const useOldPropIfNewNA = (oldItem: any, propName: any) => (newItem: any)
   }
   return updatedItem;
 }
-

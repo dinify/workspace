@@ -19,7 +19,7 @@ export const GetMenuCategoriesOfSubdomain = ({ subdomain }: any) => Get({
 });
 
 export const GetSeatsOfWaiterboard = ({ waiterboardId }: any): Promise<any> => Get({
-  path: `waiterboard/${waiterboardId}/seats`
+  path: `waiterboards/${waiterboardId}/seats`
 });
 
 export const CheckinStatus = (): Promise<any> => Get({
@@ -36,10 +36,6 @@ export const CheckOut = ({ tableId }: any): Promise<any> => Post({
 
 export const CheckOutUser = ({ userId }: any): Promise<any> => Post({
   path: `checkout/user/${userId}`
-});
-
-export const GetCalls = ({ waiterboardId }: any) => Get({
-  path: `waiterboard/${waiterboardId}/calls`
 });
 
 // replace any with Cart
@@ -88,11 +84,11 @@ export const ConfirmBill = ({ billId, type }: any): Promise<any> => Patch({
 });
 
 export const GetOrdersOfWaiterboard = ({ waiterboardId }: { waiterboardId: string}): Promise<any> => Get({
-  path: `waiterboard/${waiterboardId}/orders?status=confirmed,dispatched&today=true`
+  path: `waiterboards/${waiterboardId}/orders?status=confirmed,dispatched&today=true`
 });
 
 export const GetTransactionsOfWaiterboard = ({ waiterboardId }: { waiterboardId: string}): Promise<any> => Get({
-  path: `waiterboard/${waiterboardId}/transactions/today`
+  path: `waiterboards/${waiterboardId}/transactions?status=initiated`
 });
 
 export const GetTransactionsHistory = ({ from, to }: any): Promise<any> => Get({
@@ -100,7 +96,11 @@ export const GetTransactionsHistory = ({ from, to }: any): Promise<any> => Get({
 });
 
 export const GetCallsOfWaiterboard = ({ waiterboardId }: { waiterboardId: string}): Promise<any> => Get({
-  path: `waiterboard/${waiterboardId}/calls?status=pending`
+  path: `waiterboards/${waiterboardId}/calls?status=pending`
+});
+
+export const GetCalls = ({ waiterboardId }: any) => Get({
+  path: `waiterboards/${waiterboardId}/calls`
 });
 
 export const CallService = ({ serviceId }: { serviceId: string }): Promise<any> => Post({
