@@ -4,8 +4,6 @@ import * as menuCatrgoryActions from '../ducks/menuItem/actions';
 import * as menuItemActions from '../ducks/menuItem/actions';
 import * as transactionActions from '../ducks/transaction/actions';
 import * as serviceActions from '../ducks/service/actions';
-import * as routerActions from '../ducks/routing/actions';
-
 
 export default {
   cart: cartActions,
@@ -14,5 +12,4 @@ export default {
   menuItem: menuItemActions,
   transaction: transactionActions,
   service: serviceActions,
-  routing: routerActions
 };

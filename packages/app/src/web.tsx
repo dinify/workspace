@@ -25,7 +25,7 @@ import { store, persistor } from './store';
 import { SocketReduxProvider } from './lib/socket';
 import CheckinExecutor from './ducks/restaurant/checkin-executor';
 import history from './services/history';
-import syncHistoryWithStore from './ducks/routing/sync';
+import syncHistoryWithStore from './ducks/router/sync';
 
 if (process.env.NODE_ENV !== 'development') {
   Sentry.init({ dsn: "https://5b5ebbbbdbcd4c8cac74a6b6115afcc8@sentry.io/1808340" });

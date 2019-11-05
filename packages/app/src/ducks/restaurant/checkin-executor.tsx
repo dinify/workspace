@@ -7,14 +7,12 @@ import { planCheckinAction, execCheckinAsync } from './actions';
 import queryString from 'query-string';
 import { RootState } from 'typesafe-actions';
 import { FirebaseReducer } from 'react-redux-firebase';
-import last from 'ramda/es/last';
 
 type CheckinExecutorProps = {
   checkinPlan: object;
   user: FirebaseReducer.AuthState;
   planCheckin: (o: any) => void;
   execCheckin: () => void;
-  pathnames: string[]
 }
 
 let redirectedOnce = false;
@@ -23,14 +21,12 @@ const CheckinExecutor: React.FC<CheckinExecutorProps> = ({
   checkinPlan,
   user,
   planCheckin,
-  execCheckin,
-  pathnames
+  execCheckin
 }) => {
 
   const { location, push } = useHistory();
   
-  const { search } = location;
-  const pathname = last(pathnames);
+  const { search, pathname } = location;
 
   const match = (path: string) => matchPath(pathname, { path });
 
@@ -65,8 +61,7 @@ const CheckinExecutor: React.FC<CheckinExecutorProps> = ({
 export default connect(
   (state: RootState) => ({
     user: state.firebase.auth,
-    checkinPlan: state.restaurant.checkinPlan,
-    pathnames: state.routing.pathnames
+    checkinPlan: state.restaurant.checkinPlan
   }),
   {
     planCheckin: planCheckinAction,

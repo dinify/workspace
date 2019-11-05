@@ -59,7 +59,6 @@ const checkinEpic: Epic = (action$, state$, { history }) =>
       return from(API.Checkin({ qr })).pipe(
         tap(() => {
           history.push(pathname)
-          console.log(pathname)
         }),
         mergeMap((res: any) => of(
           execCheckinAsync.success(res),

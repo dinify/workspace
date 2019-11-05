@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 import { openDialogAction } from 'ducks/ui/actions';
 import { matchPath, Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import { getOrderItemCount as getCartCount } from 'ducks/cart/selectors';
+// import { getOrderItemCount as getCartCount } from 'ducks/cart/selectors';
 import * as routes from 'web/routes';
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
@@ -28,8 +29,6 @@ import { MenuItemScreen, AccountScreen } from './screens';
 const App = props => {
   const {
     checkedInRestaurant,
-    history,
-    location,
     user,
     openDialog,
     fetchStatus,
@@ -46,7 +45,9 @@ const App = props => {
     }
   }, [user]);
 
-  if (history.action === 'PUSH') {
+  const { action, push, location } = useHistory();
+
+  if (action === 'PUSH') {
     window.scrollTo(0, 0);
   }
 
@@ -67,12 +68,12 @@ const App = props => {
           matchPath(p, { path: routes.RESTAURANT }),
         )(pathnames);
 
-        if (lastRpath) return history.push(lastRpath);
+        if (lastRpath) return push(lastRpath);
       }
 
-      history.push(routes.HOMEPAGE);
+      push(routes.HOMEPAGE);
     } else if (val === 1 && !isAccountTab) {
-      history.push(routes.ACCOUNT);
+      push(routes.ACCOUNT);
     }
   };
 
@@ -145,9 +146,8 @@ export default connect(
   state => ({
     user: state.firebase.auth,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
-    bottomBarOpen:
-      getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0,
-    pathnames: state.routing.pathnames,
+    // bottomBarOpen: getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0,
+    pathnames: state.router.pathnames,
   }),
   {
     openDialog: openDialogAction,
@@ -155,4 +155,4 @@ export default connect(
     fetchCart: fetchCartAsync.request,
     fetchBill: fetchBillAsync.request,
   },
-)(withRouter(withRoot(App)));
+)(withRoot(App));

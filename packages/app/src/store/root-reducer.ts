@@ -18,7 +18,7 @@ import seat from '../ducks/seat/reducers';
 import ingredient from '../ducks/ingredient/reducers';
 import addon from '../ducks/addon/reducers';
 import option from '../ducks/option/reducers';
-import routerReducer from '../ducks/routing/reducer';
+import router from '../ducks/router/reducer';
 import { LanguageIdType, RegionIdType, CurrencyType } from '@phensley/cldr';
 
 const restaurantPersistConfig = {
@@ -85,7 +85,7 @@ export const commonReducers = {
   ingredient,
   addon,
   option,
-  routing: routerReducer
+  router
 };
 
 const rootReducer = combineReducers(commonReducers);
