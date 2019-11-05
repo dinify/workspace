@@ -4,7 +4,6 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import Raven from 'raven-js';
 import { firebaseReducer } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -26,10 +25,6 @@ import firebaseConfig from '@dinify/common/firebaseConfig.json';
 import { reducer as formReducer } from 'redux-form';
 import { snackbarReducer } from 'material-ui-snackbar-redux';
 import rootEpic from './configureEpics';
-
-Raven.config('https://e8c54e0fdec04337b8f4ee65a1164dee@sentry.io/1199917', {
-  // options
-}).install();
 
 // react-redux-firebase config
 firebase.initializeApp(firebaseConfig);
