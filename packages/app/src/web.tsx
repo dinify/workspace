@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -26,6 +27,9 @@ import CheckinExecutor from './ducks/restaurant/checkin-executor';
 import history from './services/history';
 import syncHistoryWithStore from './ducks/routing/sync';
 
+if (process.env.NODE_ENV !== 'development') {
+  Sentry.init({ dsn: "https://5b5ebbbbdbcd4c8cac74a6b6115afcc8@sentry.io/1808340" });
+}
 //  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 //  import HTML5Backend from 'react-dnd-html5-backend'
 //  import { DragDropContextProvider } from 'react-dnd'

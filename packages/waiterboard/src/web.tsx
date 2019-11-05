@@ -15,7 +15,6 @@ import {
   IntlProvider,
   IntlConfig,
 } from '@dinify/common/src/lib/i18n';
-
 import { getCookie } from '@dinify/common/src/lib/FN';
 import firebase from 'firebase/app';
 import 'firebase/auth';
