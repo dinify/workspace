@@ -41,7 +41,7 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, confirming, classes }) =>
     <ActionBox className={removed ? 'vhs-zoom vhs-reverse Bill' : 'Bill'}>
       <Header>
         <TableId bg={color}>
-          {bill.table ? bill.table.number : 1}
+          {bill.seat.table ? bill.seat.table.number : '-'}
         </TableId>
         <User userId={bill.initiator} />
   			<Text color={color}>

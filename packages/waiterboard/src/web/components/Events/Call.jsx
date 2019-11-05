@@ -19,7 +19,7 @@ const styles = () => ({
 
 const Call = ({ services, call, confirmCall, removed, confirming, classes }) => {
 
-	let tableNumber = 0;
+	let tableNumber = '-';
 	if (call.seat && call.seat.table) {
 		tableNumber = call.seat.table.number;
 	}

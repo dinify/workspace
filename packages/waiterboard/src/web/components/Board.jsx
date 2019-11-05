@@ -134,7 +134,6 @@ const Board = ({
               :
               <EventsPlaceholder>Everything is done.</EventsPlaceholder>
             }
-          
         </Frame>
         <Frame n={1}>
           <FrameOfTables tableList={tableList} seatList={seatList} toggleModal={toggleModal} />

@@ -24,7 +24,7 @@ const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, r
 		{!raw ?
 			<Header>
 				<TableId bg={color}>
-	        {order.seat ? order.seat.table.number : 1}
+	        {order.seat ? order.seat.table.number : '-'}
 	      </TableId>
 
 	      <User userId={order.initiator} />
