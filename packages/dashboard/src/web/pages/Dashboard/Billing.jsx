@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import numeral from 'numeral';
-import pluck from 'ramda/es/pluck';
 
 import ReactTable from 'react-table';
 import { DateRangePicker } from 'react-dates';
@@ -22,8 +21,6 @@ const Billing = ({
   const [startDate, setStartDate] = useState(moment().subtract(30, 'days'));
   const [endDate, setEndDate] = useState(moment());
   const [focusedInput, setFocusedInput] = useState(null);
-
-  console.log(transactions);
 
   useEffect(() => {
     getTransactions({ from: startDate, to: endDate });

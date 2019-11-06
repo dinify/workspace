@@ -65,7 +65,7 @@
     "react-select": "^2.3.0",
     "react-sortable-hoc": "^0.6.8",
     "react-switch-button": "2.2.2",
-    "react-table": "^6.8.6",
+    "react-table": "^6.10.3",
     "react-tap-event-plugin": "2.0.1",
     "recompose": "^0.30.0",
     "redux": "^4.0.4",
