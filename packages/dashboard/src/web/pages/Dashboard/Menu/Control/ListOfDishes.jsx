@@ -30,11 +30,11 @@ import {
   updateMenuitemInit,
   removeMenuitemInit,
   reorderItemsInit
-} from 'ducks/menuItem/actions';
+} from 'features/menuItem/actions';
 import {
   selectFoodAction,
-} from 'ducks/restaurant/actions';
-import { selectedMenuItems } from 'ducks/menuItem/selectors';
+} from 'features/restaurant/actions';
+import { selectedMenuItems } from 'features/menuItem/selectors';
 
 import Typography from '@material-ui/core/Typography';
 import Translation from 'web/components/Translation';

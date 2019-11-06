@@ -22,7 +22,7 @@ import {
   setOngoingRegistration,
   selectRestaurant,
   setOnboardingToken
-} from 'ducks/restaurant/actions';
+} from 'features/restaurant/actions';
 
 const styles = {
   wrapperCard: {

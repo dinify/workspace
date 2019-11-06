@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Label } from 'web/components/styled/FormBox';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 
-import { assignAddonAsync, unassignAddonAsync } from 'ducks/menuItem/actions';
-import { fetchAddonsAsync } from 'ducks/addon/actions';
-import { listOfAddons } from 'ducks/addon/selectors';
+import { assignAddonAsync, unassignAddonAsync } from 'features/menuItem/actions';
+import { fetchAddonsAsync } from 'features/addon/actions';
+import { listOfAddons } from 'features/addon/selectors';
 
 import ListOfCustomizations from './ListOfCustomizations';
 import { getT } from '@dinify/common/src/lib/translation.ts';

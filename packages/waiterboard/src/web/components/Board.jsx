@@ -24,7 +24,6 @@ import Call from './Events/Call';
 import Order from './Events/Order';
 import Bill from './Events/Bill';
 
-
 const EventsPlaceholder = styled.div`
   font-size: 32px;
   text-align: center;
@@ -57,14 +56,12 @@ const Container = styled.div`
   min-width: 630px;
   margin: 0 auto;
   overflow: auto;
-
   -webkit-column-count: 2;
   -moz-column-count: 2;
   column-count: 2;
   -webkit-column-gap:20px;
   -moz-column-gap:20px;
   column-gap:20px;
-
   ${(p) => p.noHeight ? '': 'height: 100vh;'}
   ${(p) => p.noHeight ? '': 'padding-bottom: 200px;'}
   @media (max-width: 1200px) {

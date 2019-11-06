@@ -91,8 +91,8 @@ export const GetTransactionsOfWaiterboard = ({ waiterboardId }: { waiterboardId:
   path: `waiterboards/${waiterboardId}/transactions?status=initiated`
 });
 
-export const GetTransactionsHistory = ({ from, to }: any): Promise<any> => Get({
-  path: `restaurants/:id/transactions?to=${to}&from=${from}`
+export const GetTransactionsHistory = ({ restaurantId, from, to }: any): Promise<any> => Get({
+  path: `restaurants/${restaurantId}/transactions?to=${to}&from=${from}`
 });
 
 export const GetCallsOfWaiterboard = ({ waiterboardId }: { waiterboardId: string}): Promise<any> => Get({

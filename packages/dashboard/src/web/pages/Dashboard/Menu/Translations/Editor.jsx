@@ -17,7 +17,7 @@ import Save from '@material-ui/icons/Save';
 import GTranslate from '@material-ui/icons/GTranslate';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { suggestTranslation, suggestAllTranslations } from 'ducks/translation/actions';
+import { suggestTranslation, suggestAllTranslations } from 'features/translation/actions';
 
 const styles = theme => ({
   root: {

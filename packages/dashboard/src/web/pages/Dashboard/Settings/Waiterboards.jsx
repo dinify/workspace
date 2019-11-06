@@ -31,7 +31,7 @@ import {
   deleteTableInitAction,
   updateTableInitAction,
   fetchWaiterboards
-} from 'ducks/restaurant/actions';
+} from 'features/restaurant/actions';
 
 import styles from './WaiterboardsStyles';
 

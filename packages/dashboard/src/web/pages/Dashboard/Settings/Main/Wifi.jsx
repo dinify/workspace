@@ -9,11 +9,11 @@ import {
   FormBoxHead,
   FormBoxBody,
 } from 'web/components/styled/FormBox';
-import { updateWifiInitAction } from 'ducks/restaurant/actions';
+import { updateWifiInitAction } from 'features/restaurant/actions';
 import Progress from 'web/components/Progress';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
-import { selectedRestaurantWifi } from 'ducks/restaurant/selectors';
+import { selectedRestaurantWifi } from 'features/restaurant/selectors';
 
 const formName = 'settings/wifi';
 

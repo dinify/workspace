@@ -3,7 +3,7 @@ import filter from 'ramda/es/filter';
 import { connect } from 'react-redux';
 import { Label } from 'web/components/styled/FormBox';
 import Avatar from '@material-ui/core/Avatar';
-import { createServiceInit } from 'ducks/service/actions';
+import { createServiceInit } from 'features/service/actions';
 import ServiceForm from 'web/components/ServiceForm';
 
 class AddServiceComponent extends React.PureComponent {

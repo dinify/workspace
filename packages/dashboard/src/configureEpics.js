@@ -3,15 +3,16 @@ import { epics as crud } from '@dinify/common/src/ducks/crudEpics';
 import { authEpics as auth } from '@dinify/common/src/ducks/auth';
 import { reportingEpics as reporting } from '@dinify/common/src/ducks/reporting';
 
-import restaurantEpics from './ducks/restaurant/epics';
-import menuCategoryEpics from './ducks/menuCategory/epics.ts';
-import menuItemEpics from './ducks/menuItem/epics';
-import addonEpics from './ducks/addon/epics.ts';
-import optionEpics from './ducks/option/epics.ts';
-import ingredientEpics from './ducks/ingredient/epics.ts';
-import serviceEpics from './ducks/service/epics';
+import restaurantEpics from './features/restaurant/epics';
+import menuCategoryEpics from './features/menuCategory/epics.ts';
+import menuItemEpics from './features/menuItem/epics';
+import addonEpics from './features/addon/epics.ts';
+import optionEpics from './features/option/epics.ts';
+import ingredientEpics from './features/ingredient/epics.ts';
+import serviceEpics from './features/service/epics';
+import transactionEpics from './features/transaction/epics.ts';
 
-import { translationEpics } from './ducks/translation';
+import { translationEpics } from './features/translation';
 
 const rootEpic = (action$, state$, firebase, ...rest) => {
   const epic = combineEpics(
@@ -26,6 +27,7 @@ const rootEpic = (action$, state$, firebase, ...rest) => {
     ...serviceEpics,
     ...crud,
     ...reporting,
+    ...transactionEpics
   );
   const output = epic(
     action$,

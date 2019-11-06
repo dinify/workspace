@@ -3,7 +3,7 @@ import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
 import uniq from 'ramda/es/uniq';
-import * as menuCategoryTypes from 'ducks/menuCategory/types';
+import * as menuCategoryTypes from 'features/menuCategory/types';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import { getType } from 'typesafe-actions';
 import { fetchMenuCategoriesAsync } from '../menuCategory/actions';

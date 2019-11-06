@@ -28,13 +28,13 @@ import {
   deleteMenucategoryInitAction,
   selectCategoryAction,
   reorderCategoriesAction
-} from 'ducks/restaurant/actions';
+} from 'features/restaurant/actions';
 
 import {
   fetchMenuCategoriesAsync,
   createMenuCategoryAsync
-} from 'ducks/menuCategory/actions.ts';
-import { relevantCategoriesList } from 'ducks/menuCategory/selectors';
+} from 'features/menuCategory/actions.ts';
+import { relevantCategoriesList } from 'features/menuCategory/selectors';
 
 const ToggleContainer = styled.div`
   position: absolute;

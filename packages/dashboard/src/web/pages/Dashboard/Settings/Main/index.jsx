@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Loading from 'web/components/Loading';
-import { selectedRestaurant } from 'ducks/restaurant/selectors';
+import { selectedRestaurant } from 'features/restaurant/selectors';
 // import BusinessHours from './BusinessHours';
 import Banking from './Banking';
 import Social from './Social';

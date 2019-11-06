@@ -10,9 +10,9 @@ import {
   assignIngredientAsync,
   unassignIngredientAsync,
   setIngredientExcludability
-} from 'ducks/menuItem/actions';
-import { listOfIngredients } from 'ducks/ingredient/selectors';
-import { fetchIngredientsAsync } from 'ducks/ingredient/actions';
+} from 'features/menuItem/actions';
+import { listOfIngredients } from 'features/ingredient/selectors';
+import { fetchIngredientsAsync } from 'features/ingredient/actions';
 import ListOfCustomizations from './ListOfCustomizations';
 import { getT } from '@dinify/common/src/lib/translation.ts';
 

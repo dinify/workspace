@@ -21,8 +21,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Text from 'web/components/MaterialInputs/Text';
 import { getT } from '@dinify/common/src/lib/translation.ts';
 
-import { fetchAddonsAsync, createAddonAsync, removeAddonInit } from 'ducks/addon/actions.ts';
-import { listOfAddons } from 'ducks/addon/selectors';
+import { fetchAddonsAsync, createAddonAsync, removeAddonInit } from 'features/addon/actions.ts';
+import { listOfAddons } from 'features/addon/selectors';
 
 let AddAddonForm = ({ t, handleSubmit, progress, errorMessage  }) => {
   return (

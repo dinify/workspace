@@ -6,7 +6,7 @@ import {
   fetchMenuItemAsync,
   updateMenuItemAsync,
   uploadItemImageInit
-} from 'ducks/menuItem/actions';
+} from 'features/menuItem/actions';
 import Progress from 'web/components/Progress';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@material-ui/core/Button';

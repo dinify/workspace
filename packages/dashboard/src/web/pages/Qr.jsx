@@ -1,7 +1,7 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import { connect } from 'react-redux';
-import { selectedRestaurant } from 'ducks/restaurant/selectors';
+import { selectedRestaurant } from 'features/restaurant/selectors';
 
 const Qr = ({ match, restaurant }) => {
   let value = `https://web.dinify.app/restaurant/${restaurant.subdomain}?qr=${match.params.code}`;

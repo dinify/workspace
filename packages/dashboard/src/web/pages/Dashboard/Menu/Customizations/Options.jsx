@@ -31,8 +31,8 @@ import {
   removeOptionInit,
   createChoiceAsync,
   removeChoiceInit,
-} from 'ducks/option/actions.ts';
-import { listOfOptions } from 'ducks/option/selectors';
+} from 'features/option/actions.ts';
+import { listOfOptions } from 'features/option/selectors';
 
 let AddChoiceForm = ({ t, handleSubmit, progress, errorMessage }) => {
   return (

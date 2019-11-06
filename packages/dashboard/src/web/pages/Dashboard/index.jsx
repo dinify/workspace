@@ -41,9 +41,9 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import AttachMoney from '@material-ui/icons/AttachMoney';
 
-import { toggleSection } from 'ducks/ui/actions';
-import { publishRestaurant } from 'ducks/restaurant/actions';
-import { selectedRestaurant } from 'ducks/restaurant/selectors';
+import { toggleSection } from 'features/ui/actions';
+import { publishRestaurant } from 'features/restaurant/actions';
+import { selectedRestaurant } from 'features/restaurant/selectors';
 import SettingsSection from './Settings';
 import MenuSection from './Menu';
 import BillingSection from './Billing';
@@ -268,6 +268,9 @@ const Dashboard = ({
       subsectionNames = [...subsectionNames, ...section.subsections];
     }
   });
+  const activeSection = sections.filter(s =>
+    location.pathname.includes(s.path)
+  )[0];
   const activeSubsection = subsectionNames.filter(s =>
     location.pathname.includes(s.path),
   )[0];
@@ -496,7 +499,7 @@ const Dashboard = ({
       <MuiThemeProvider theme={contentTheme}>
         <div className={classes.header}>
           <Typography style={{ marginLeft: 10, marginTop: 7 }} variant="h6">
-            {activeSubsection && activeSubsection.name}
+            {activeSubsection ? activeSubsection.name : (activeSection && activeSection.name)}
           </Typography>
         </div>
         <div className={classes.content}>

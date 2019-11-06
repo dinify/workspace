@@ -1,5 +1,5 @@
 import 'react-dates/initialize';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import numeral from 'numeral';
@@ -11,165 +11,119 @@ import { DateRangePicker } from 'react-dates';
 import 'react-table/react-table.css';
 import 'react-dates/lib/css/_datepicker.css';
 
-import { getBillsInitAction } from 'ducks/restaurant/actions';
+import { fetchTransactionsAsync } from 'features/transaction/actions';
+import { getTransactionsList } from 'features/transaction/selectors';
 
-class Billing extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      focusedInput: null,
-      startDate: moment().subtract(30, 'days'),
-      endDate: moment(),
-    };
-  }
+const Billing = ({
+  transactions,
+  getTransactions
+}) => {
 
-  componentDidMount() {
-    const { getBills } = this.props;
-    const { startDate, endDate } = this.state;
-    getBills({ from: startDate, to: endDate });
-  }
+  const [startDate, setStartDate] = useState(moment().subtract(30, 'days'));
+  const [endDate, setEndDate] = useState(moment());
+  const [focusedInput, setFocusedInput] = useState(null);
 
-  render() {
-    const { bills, getBills } = this.props;
+  console.log(transactions);
 
-    return (
-      <>
-        <div>
-          <div>Billing</div>
-          <div style={{ float: 'right', padding: '6px 20px 7px 0' }}>
-            <DateRangePicker
-              isOutsideRange={() => false}
-              anchorDirection="right"
-              startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-              endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-              onDatesChange={({ startDate, endDate }) => {
-                this.setState({ startDate, endDate });
-                getBills({ from: startDate, to: endDate });
-              }} // PropTypes.func.isRequired,
-              focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-              onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-            />
-          </div>
+  useEffect(() => {
+    getTransactions({ from: startDate, to: endDate });
+  }, []);
+
+  return (
+    <>
+      <div>
+        <div style={{ padding: '2px 0 12px 0' }}>
+          <DateRangePicker
+            isOutsideRange={() => false}
+            anchorDirection="right"
+            startDate={startDate} // momentPropTypes.momentObj or null,
+            endDate={endDate} // momentPropTypes.momentObj or null,
+            onDatesChange={({ startDate, endDate }) => {
+              setStartDate(startDate);
+              setEndDate(endDate);
+              getTransactions({ from: startDate, to: endDate });
+            }} // PropTypes.func.isRequired,
+            focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+            onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
+          />
         </div>
+      </div>
 
-        <ReactTable
-          data={bills}
-          columns={[
-            {
-              Header: 'Year/Month/Date',
-              accessor: bill => moment(bill.check_in).format('YYYY/MM/DD'),
-              id: 'check_in_date',
-              Footer: 'TOTAL',
+      <ReactTable
+        data={transactions}
+        columns={[
+          {
+            Header: 'Created at',
+            accessor: bill => moment(bill.createdAt).format('YYYY/MM/DD'),
+            id: 'check_in_date',
+            Footer: 'TOTAL',
+          },
+          {
+            Header: 'Transaction No.',
+            accessor: bill => bill.id,
+            id: 'id',
+          },
+          {
+            Header: 'Guest ID',
+            minWidth: 200,
+            accessor: bill => (
+              <span>
+                <strong>{bill.initiator}</strong>
+              </span>
+            ),
+            id: 'user',
+          },
+          {
+            Header: 'Order Type',
+            accessor: () => 'Dine-in',
+            id: 'orderType',
+          },
+          {
+            Header: 'Sales',
+            accessor: bill => `${numeral(bill.subtotal.amount).format('0.00')} €`,
+            id: 'sales',
+            style: {
+              textAlign: 'right',
             },
-            {
-              Header: 'Transaction No.',
-              accessor: bill => numeral(bill.id).format('00000000'),
-              id: 'id',
-            },
-            {
-              Header: 'Guest E-Mail',
-              minWidth: 200,
-              accessor: bill => (
-                <span>
-                  <strong>{bill.UserObject.email.split('@')[0]}</strong>
-                  <span>@</span>
-                  <span>{bill.UserObject.email.split('@')[1]}</span>
-                </span>
+            Footer: `${numeral(
+              transactions.map(b => b.subtotal.amount).reduce(
+                (a, b) => Number(a) + Number(b),
+                0,
               ),
-              id: 'user',
+            ).format('0.00')} €`,
+          },
+          {
+            Header: 'Payment type',
+            accessor: bill => bill.type,
+            id: 'payment',
+          },
+          {
+            Header: 'Gratuity',
+            accessor: bill => `${numeral(bill.total.amount - bill.subtotal.amount).format('0.00')} €`,
+            id: 'gratitude',
+            style: {
+              textAlign: 'right',
             },
-            {
-              Header: 'Order Type',
-              accessor: bill =>
-                Number(bill.TableObject.position) === 0
-                  ? 'Order Ahead'
-                  : 'Dine-in',
-              id: 'orderType',
-            },
-            {
-              Header: 'Check-in',
-              accessor: bill =>
-                moment(bill.check_in)
-                  .subtract(3, 'h')
-                  .format('HH:mm'),
-              id: 'check_in',
-            },
-            {
-              Header: 'Check-out',
-              accessor: bill =>
-                moment(bill.check_out)
-                  .subtract(3, 'h')
-                  .format('HH:mm'),
-              id: 'check_out',
-            },
-            {
-              Header: 'Sales',
-              accessor: bill => `${bill.sub_total} KD`,
-              id: 'sales',
-              style: {
-                textAlign: 'right',
-              },
-              Footer: `${numeral(
-                pluck('sub_total')(bills).reduce(
-                  (a, b) => Number(a) + Number(b),
-                  0,
-                ),
-              ).format('0.000')} KD`,
-            },
-            {
-              Header: 'Payment',
-              accessor: bill =>
-                bill.payment_method
-                  .replace('K_NET', 'ONLINE')
-                  .replace('_', ' '),
-              id: 'payment',
-            },
-            {
-              Header: 'Transaction Fee',
-              accessor: bill =>
-                `${numeral(bill.sub_total * 0.025).format('0.000')} KD`,
-              id: 'fee',
-              Footer: (
-                <span>
-                  <span>
-                    {numeral(
-                      pluck('sub_total')(bills).reduce(
-                        (a, b) => Number(a) + Number(b) * 0.025,
-                        0,
-                      ),
-                    ).format('0.000')}KD
-                  </span>
-                </span>
-              ),
-            },
-            {
-              Header: 'Gratitude',
-              accessor: bill => `${bill.gratitude} KD`,
-              id: 'gratitude',
-              style: {
-                textAlign: 'right',
-              },
-              Footer: `${numeral(
-                pluck('gratitude')(bills).reduce(
-                  (a, b) => Number(a) + Number(b),
-                  0,
-                ),
-              ).format('0.000')} KD`,
-            },
-          ]}
-          defaultPageSize={25}
-          className="-striped -highlight"
-        />
-      </>
-    );
-  }
+            Footer: `${numeral(
+              transactions
+              .map((bill) => bill.total.amount - bill.subtotal.amount)
+              .reduce((a, b) => Number(a) + Number(b), 0),
+            ).format('0.00')} €`,
+          },
+        ]}
+        defaultPageSize={25}
+        className="-striped -highlight"
+      />
+    </>
+  );
+
 }
 
 export default connect(
   state => ({
-    bills: state.restaurant.bills,
+    transactions: getTransactionsList(state),
   }),
   {
-    getBills: getBillsInitAction,
+    getTransactions: fetchTransactionsAsync.request,
   },
 )(Billing);

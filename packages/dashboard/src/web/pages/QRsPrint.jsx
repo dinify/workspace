@@ -5,8 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { MapToList } from '@dinify/common/src/lib/FN';
 import { connect } from 'react-redux';
 import QRCode from 'qrcode.react';
-import { selectedRestaurant } from 'ducks/restaurant/selectors';
-import { fetchWaiterboards } from 'ducks/restaurant/actions';
+import { selectedRestaurant } from 'features/restaurant/selectors';
+import { fetchWaiterboards } from 'features/restaurant/actions';
 import Loading from 'web/components/Loading';
 
 const bgColor = 'rgb(40, 40, 40)';

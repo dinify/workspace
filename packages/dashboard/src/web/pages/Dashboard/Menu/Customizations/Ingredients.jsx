@@ -26,8 +26,8 @@ import {
   createIngredientAsync,
   removeIngredientInit,
   updateIngredientInit,
-} from 'ducks/ingredient/actions.ts';
-import { listOfIngredients } from 'ducks/ingredient/selectors';
+} from 'features/ingredient/actions.ts';
+import { listOfIngredients } from 'features/ingredient/selectors';
 
 let AddIngredientForm = ({ handleSubmit, progress, errorMessage, t }) => {
   return (

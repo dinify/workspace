@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { updateNameInitAction } from 'ducks/restaurant/actions';
-import { removeServiceInit, fetchServicesInit } from 'ducks/service/actions';
+import { updateNameInitAction } from 'features/restaurant/actions';
+import { removeServiceInit, fetchServicesInit } from 'features/service/actions';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
@@ -17,9 +17,9 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import { switchServicesTab as switchTab } from 'ducks/ui/actions';
+import { switchServicesTab as switchTab } from 'features/ui/actions';
 import AddServiceComponent from 'web/components/AddService';
-import { selectedServicesList } from 'ducks/service/selectors';
+import { selectedServicesList } from 'features/service/selectors';
 import { getT } from '@dinify/common/src/lib/translation.ts';
 
 function TabContainer(props) {

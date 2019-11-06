@@ -10,15 +10,16 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 import auth from '@dinify/common/src/ducks/auth';
-import restaurant from 'ducks/restaurant/reducers';
-import ui from 'ducks/ui/reducers';
-import menuCategory from 'ducks/menuCategory/reducers.ts';
-import menuItem from 'ducks/menuItem/reducers';
-import option from 'ducks/option/reducers';
-import ingredient from 'ducks/ingredient/reducers';
-import addon from 'ducks/addon/reducers';
-import service from 'ducks/service/reducers';
-import translation from 'ducks/translation/reducers';
+import restaurant from 'features/restaurant/reducers';
+import ui from 'features/ui/reducers';
+import menuCategory from 'features/menuCategory/reducers.ts';
+import menuItem from 'features/menuItem/reducers';
+import option from 'features/option/reducers';
+import ingredient from 'features/ingredient/reducers';
+import addon from 'features/addon/reducers';
+import service from 'features/service/reducers';
+import translation from 'features/translation/reducers';
+import transaction from 'features/transaction/reducers';
 
 import firebaseConfig from '@dinify/common/firebaseConfig.json';
 
@@ -70,6 +71,7 @@ const commonReducers = {
   translation,
   firebase: firebaseReducer,
   snackbar: snackbarReducer,
+  transaction
 };
 
 const epicMiddleware = createEpicMiddleware();

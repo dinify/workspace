@@ -8,7 +8,7 @@ import {
   FormBoxHead,
   FormBoxBody,
 } from 'web/components/styled/FormBox';
-import { uploadMainImageInitAction } from 'ducks/restaurant/actions';
+import { uploadMainImageInitAction } from 'features/restaurant/actions';
 import Progress from 'web/components/Progress';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 

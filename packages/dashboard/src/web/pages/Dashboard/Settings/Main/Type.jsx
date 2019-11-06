@@ -7,7 +7,7 @@ import {
   FormBoxHead,
   FormBoxBody,
 } from 'web/components/styled/FormBox';
-import { updateCategoryInitAction } from 'ducks/restaurant/actions';
+import { updateCategoryInitAction } from 'features/restaurant/actions';
 import Progress from 'web/components/Progress';
 
 const Type = ({ updateCategory, type }) => {

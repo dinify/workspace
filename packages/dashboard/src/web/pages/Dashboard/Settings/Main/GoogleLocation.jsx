@@ -12,7 +12,7 @@ import {
 import {
 	updateLocationInitAction,
 	updateAddressInitAction
-} from 'ducks/restaurant/actions';
+} from 'features/restaurant/actions';
 import Progress from 'web/components/Progress';
 import PlacesAutocomplete, {
 	geocodeByPlaceId,

@@ -32,8 +32,8 @@ import {
   selectLanguage,
   confirmPreferredLanguages,
   translateAll
-} from 'ducks/translation/actions';
-import { switchTranslationsTab as switchTab } from 'ducks/ui/actions';
+} from 'features/translation/actions';
+import { switchTranslationsTab as switchTab } from 'features/ui/actions';
 import { withStateHandlers } from 'recompose';
 import diff from 'object-diff'
 import types from './types';

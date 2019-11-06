@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as FN from '@dinify/common/src/lib/FN';
 import { Label } from 'web/components/styled/FormBox';
-import { fetchOptionsAsync } from 'ducks/option/actions.ts';
-import { listOfOptions } from 'ducks/option/selectors';
+import { fetchOptionsAsync } from 'features/option/actions.ts';
+import { listOfOptions } from 'features/option/selectors';
 import AutoComplete from 'web/components/MaterialInputs/AutoComplete';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import S from 'string';
-import { assignOptionAsync, unassignOptionAsync } from 'ducks/menuItem/actions';
+import { assignOptionAsync, unassignOptionAsync } from 'features/menuItem/actions';
 import { getT } from '@dinify/common/src/lib/translation.ts';
 import assoc from 'ramda/es/assoc';
 
