@@ -1,6 +1,8 @@
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import * as restaurantTypes from 'ducks/restaurant/types';
+import { getType } from 'typesafe-actions';
+import { fetchManagedAsync } from './actions';
 
 const initialState = {
   all: {},
@@ -18,13 +20,8 @@ export default function reducer(state = initialState, action) {
       return assocPath(['all', res.id], res)(state);
     }
 
-    case restaurantTypes.FETCH_MANAGEDRESTAURANTS_DONE: {
-      const { res } = payload;
-      let managedRestaurants = [];
-      if (res && res instanceof Array) {
-        managedRestaurants = res;
-      }
-      return assoc('managedRestaurants', managedRestaurants)(state);
+    case getType(fetchManagedAsync.success): {
+      return assoc('managedRestaurants', payload)(state);
     }
 
     default:

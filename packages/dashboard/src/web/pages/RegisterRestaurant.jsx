@@ -131,7 +131,7 @@ const RegisterRestaurant = (props) => {
     if (params.t) setOnboardingToken({ token: params.t });
     if (params.email) prefillEmail({ email: params.email });
     if (params.restaurantName) prefillRestaurantName({ restaurantName: params.restaurantName });
-  }, []);  
+  }, []);
   const initialValues = {
     restaurantName: params.restaurantName || '',
     subdomain: params.name || '',
@@ -143,7 +143,6 @@ const RegisterRestaurant = (props) => {
   if (initialValues.restaurantName) {
     initialValues.subdomain = createSubdomain(initialValues.restaurantName);
   }
-
   return (
     <div>
       {managedRestaurants.length > 0 &&

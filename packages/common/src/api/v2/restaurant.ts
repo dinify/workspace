@@ -6,6 +6,12 @@ export const GetListOfRestaurants = () => {
   });
 }
 
+export const GetManagedRestaurants = () => {
+  return Get({
+    path: `restaurants/managed`
+  });
+}
+
 export const GetRestaurantById = ({ restaurantId, populateWith }: any) => {
   let scopes = '';
   if (populateWith) scopes = `?scopes=${populateWith}`;

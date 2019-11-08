@@ -53,6 +53,7 @@
     "socket.io-client": "^2.3.0",
     "string": "^3.3.3",
     "styled-components": "2.0.1",
+    "typesafe-actions": "^5.1.0",
     "typescript": "^3.5.3"
   },
   "devDependencies": {

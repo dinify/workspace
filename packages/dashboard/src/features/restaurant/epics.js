@@ -1,6 +1,7 @@
 import { of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
+import { getType } from 'typesafe-actions';
 import { push } from 'connected-react-router';
 import { reset } from 'redux-form';
 import sort from 'ramda/es/sort';
@@ -12,7 +13,7 @@ import { reportCampaignAction } from '@dinify/common/src/ducks/reporting/actions
 import * as APIv1 from '@dinify/common/src/api/restaurant';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import * as types from './types';
-import { selectRestaurant } from './actions';
+import { selectRestaurant, fetchManagedAsync } from './actions';
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
@@ -44,11 +45,28 @@ const getLoggedEpic = (action$, state$) =>
       return triggerOn.includes(action.type);
     }),
     mergeMap(() => {
-      const reactions = [{ type: 'FETCH_MANAGEDRESTAURANTS_INIT' }];
+      const reactions = [fetchManagedAsync.request()];
       const selectedRestaurant = state$.value.restaurant.selectedRestaurant;
       if (selectedRestaurant) reactions.push({ type: 'LOAD_RESTAURANT' });
       return reactions;
     }),
+  );
+
+const getManagedEpic = (action$) =>
+  action$.pipe(
+    ofType(getType(fetchManagedAsync.request)),
+    mergeMap((action) => {
+      return from(API.GetManagedRestaurants()).pipe(
+        map(fetchManagedAsync.success),
+        catchError(error =>
+          handleEpicAPIError({
+            error,
+            failActionType: getType(fetchManagedAsync.failure),
+            initAction: action,
+          }),
+        ),
+      );
+    })
   );
 
 const loadRestaurant = action$ =>
@@ -273,6 +291,7 @@ const onUpdateWifiSnackbarsEpic = action$ =>
   );
 
 export default [
+  getManagedEpic,
   loadRestaurant,
   bootstrapEpic,
   getLoggedEpic,

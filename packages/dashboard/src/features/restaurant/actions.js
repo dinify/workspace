@@ -1,4 +1,13 @@
+import { createAsyncAction } from 'typesafe-actions';
 import * as types from './types';
+
+const p = 'dinify/restaurant';
+
+export const fetchManagedAsync = createAsyncAction(
+  `${p}/GET_MANAGED_INIT`,
+  `${p}/GET_MANAGED_DONE`,
+  `${p}/GET_MANAGED_FAIL`,
+)();
 
 export const fetchWaiterboards = payload => ({
   type: types.FETCH_RESTAURANTWAITERBOARDS_INIT,

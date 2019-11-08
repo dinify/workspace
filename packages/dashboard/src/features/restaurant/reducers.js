@@ -5,6 +5,8 @@ import dissocPath from 'ramda/es/dissocPath';
 import { ListToMap, setCookie } from '@dinify/common/src/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
+import { getType } from 'typesafe-actions';
+import { fetchManagedAsync } from './actions';
 
 const preferredLanguagesInitial = [
   "ar", "az", "bg", "cs", "da", "de",
@@ -72,9 +74,11 @@ export default function reducer(state = initialState, action) {
 
     case 'FETCH_LANGUAGES_DONE':
       return assoc('languages', payload.res)(state);
-    case 'FETCH_MANAGEDRESTAURANTS_DONE': {
-      return assoc('managedRestaurants', payload.res)(state);
+
+    case getType(fetchManagedAsync.success): {
+      return assoc('managedRestaurants', payload)(state);
     }
+
     case 'PREFILL_RESTAURANTNAME':
       return assocPath(['prefill', 'restaurantName'], payload.restaurantName)(
         state,
