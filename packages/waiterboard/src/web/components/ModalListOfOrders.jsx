@@ -29,6 +29,6 @@ const ModalListOfOrders = ({
 
 export default connect(
   state => ({
-    orders: getOrderList({ confirmed: true })(state)
+    orders: getOrderList({ confirmed: true, today: true })(state)
   })
 )(ModalListOfOrders);

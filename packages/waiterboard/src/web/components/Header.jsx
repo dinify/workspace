@@ -216,7 +216,7 @@ export default connect(
     frameIndex: state.ui.frameIndex,
     // bookings: state.booking.all,
     restaurant: selectedRestaurant(state),
-    confirmedOrders: getOrderList({ confirmed: true })(state),
+    confirmedOrders: getOrderList({ confirmed: true, today: true })(state),
     unconfirmedOrders: getOrderList({ confirmed: false })(state)
   }),
   {
