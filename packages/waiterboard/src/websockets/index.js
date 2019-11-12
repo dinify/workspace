@@ -1,10 +1,10 @@
 import io from 'socket.io-client';
-import * as orderTypes from 'ducks/order/types';
-import * as billTypes from 'ducks/bill/types';
-import * as callTypes from 'ducks/call/types';
-import * as seatTypes from 'ducks/seat/types';
-import * as commonTypes from 'ducks/common/types';
-import { fetchAllUsers } from 'ducks/user/actions';
+import * as orderTypes from 'features/order/types';
+import * as billTypes from 'features/bill/types';
+import * as callTypes from 'features/call/types';
+import * as seatTypes from 'features/seat/types';
+import * as commonTypes from 'features/common/types';
+import { fetchAllUsers } from 'features/user/actions';
 // import * as types from './types';
 
 const socket = io('https://ws.dinify.app');

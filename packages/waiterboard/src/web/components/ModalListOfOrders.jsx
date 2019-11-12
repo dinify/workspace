@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getOrderList } from 'ducks/order/selectors';
+import { getOrderList } from 'features/order/selectors';
 import Order from './Events/Order';
 import { colorsByStages } from '../colors';
 

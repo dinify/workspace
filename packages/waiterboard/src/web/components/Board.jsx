@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Swipeable from 'react-swipeable';
 
-import { toggleFrames, toggleModal } from 'ducks/ui/actions';
-import { setOHEnabled, setWBidAction } from 'ducks/restaurant/actions';
-import { getGroupedBills } from 'ducks/bill/selectors';
-import { getTableList } from 'ducks/table/selectors';
-import { getBookingList } from 'ducks/booking/selectors';
-import { getOrderList } from 'ducks/order/selectors';
-import { getCallList } from 'ducks/call/selectors';
-import { getSeatList } from 'ducks/seat/selectors';
+import { toggleFrames, toggleModal } from 'features/ui/actions';
+import { setOHEnabled, setWBidAction } from 'features/restaurant/actions';
+import { getGroupedBills } from 'features/bill/selectors';
+import { getTableList } from 'features/table/selectors';
+import { getBookingList } from 'features/booking/selectors';
+import { getOrderList } from 'features/order/selectors';
+import { getCallList } from 'features/call/selectors';
+import { getSeatList } from 'features/seat/selectors';
 
 import Header from './Header';
 import FrameOfTables from './FrameOfTables';

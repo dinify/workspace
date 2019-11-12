@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { clearUser } from 'ducks/table/actions';
+import { clearUser } from 'features/table/actions';
 import { getUserName } from '../../lib/utils';
 import Bill from './Events/Bill';
 import Order from './Events/Order';

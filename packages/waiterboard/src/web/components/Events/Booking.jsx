@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 
-import { confirmBookingInit, cancelBookingInit } from 'ducks/booking/actions'
+import { confirmBookingInit, cancelBookingInit } from 'features/booking/actions'
 
 import { ActionBox, Header, TableId, Text, CheckButton } from '../styled/Events'
 

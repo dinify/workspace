@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { selectWaiterboard } from 'ducks/app/actions';
+import { selectWaiterboard } from 'features/app/actions';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';

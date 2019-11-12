@@ -18,9 +18,9 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenu';
 import Event from '@material-ui/icons/Event';
 
-import { toggleFrames, toggleModal } from 'ducks/ui/actions';
-import { getOrderList } from 'ducks/order/selectors';
-import { selectedRestaurant } from 'ducks/restaurant/selectors';
+import { toggleFrames, toggleModal } from 'features/ui/actions';
+import { getOrderList } from 'features/order/selectors';
+import { selectedRestaurant } from 'features/restaurant/selectors';
 import { colorsByStages } from '../colors';
 
 const Label = styled.span`

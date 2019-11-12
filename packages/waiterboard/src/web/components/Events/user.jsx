@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { toggleModal } from 'ducks/ui/actions';
+import { toggleModal } from 'features/ui/actions';
 import { Photo, Name, Time, UserDetails } from '../styled/Events';
 
 const User = ({

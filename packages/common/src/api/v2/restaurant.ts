@@ -228,3 +228,19 @@ export const CreateOption = (body: any): Promise<any> => Post({
 export const CreateChoice = (body: any): Promise<any> => Post({
   path: `choices`
 }, body);
+
+type NotifyBody = {
+  sendTo: string;
+  type: string;
+  payload: any;
+}
+
+export const Notify = ({ sendTo, type, payload }: NotifyBody) => {
+  return Post(
+    {
+      endpoint: 'https://ws.dinify.app/',
+      path: `notify`
+    },
+    { sendTo, type, payload },
+  );
+}

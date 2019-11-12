@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
-import { appIsRunning } from 'ducks/app/selectors';
+import { appIsRunning } from 'features/app/selectors';
 import media from 'common/helpers/media';
 import SignIn from '@dinify/common/src/components/SignIn';
 import withRoot from 'withRoot.js';
