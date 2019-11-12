@@ -6,12 +6,11 @@ import { actionTypes } from 'react-redux-firebase';
 import * as appTypes from './types';
 import { appBootstrap } from './actions';
 import * as restaurantTypes from '../restaurant/types';
-import * as bookingTypes from '../booking/types';
-import * as orderTypes from '../order/types';
-import * as billTypes from '../bill/types';
-import * as callTypes from '../call/types';
-import * as seatTypes from '../seat/types';
 import { fetchManagedAsync } from '../restaurant/actions';
+import { fetchBillsAsync } from '../bill/actions';
+import { fetchOrdersAsync } from '../order/actions';
+import { fetchCallsAsync } from '../call/actions';
+import { fetchSeatsAsync } from '../seat/actions';
 
 const fetchRestaurantInit = () => ({
   type: restaurantTypes.FETCH_RESTAURANT_INIT,
@@ -69,7 +68,7 @@ declare global {
   interface Window { initSocket: any; }
 }
 
-window.initSocket = window.initSocket || {};
+window.initSocket = window.initSocket || null;
 
 const guestsPollingEpic: Epic = (action$, state$) =>
   action$.pipe(
@@ -77,15 +76,13 @@ const guestsPollingEpic: Epic = (action$, state$) =>
     mergeMap(() => {
       const waiterboardId = state$.value.app.selectedWBId;
       window.initSocket(waiterboardId);
-      let actions = [
-        { type: bookingTypes.FETCH_BOOKINGS_INIT }
-      ]
+      let actions: any[] = [];
       if (waiterboardId) {
         actions = [
-          { type: orderTypes.LOAD_ORDER_INIT },
-          { type: billTypes.LOAD_BILL_INIT },
-          { type: callTypes.LOAD_CALL_INIT },
-          { type: seatTypes.LOAD_SEATS_INIT },
+          fetchOrdersAsync.request(),
+          fetchBillsAsync.request(),
+          fetchCallsAsync.request(),
+          fetchSeatsAsync.request(),
           ...actions
         ]
       }

@@ -5,7 +5,7 @@ import curry from 'ramda/es/curry';
 // import pipe from 'ramda/es/pipe';
 import assocPath from 'ramda/es/assocPath';
 // import keys from 'ramda/es/keys';
-import { UNAUTHORIZED } from '../ducks/auth/types';
+import { UNAUTHORIZED } from '../features/auth/types';
 
 export const MapToList = (items: {[id: string]: any}, _options?: any) => {
   let { sortBy, sortType } = { sortBy: 'id', sortType: String };

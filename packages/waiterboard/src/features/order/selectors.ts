@@ -16,16 +16,19 @@ export const getOrderList = ({ confirmed, today = false }: getOrderListParams) =
     selectedRestaurantId
   ],
   (all, rId) => {
+    
     const todayCondition = (date: string) => {
       if (today) {
         return moment(date).isSame(new Date(), "day");
       }
       return true;
     }
+
     const statusCondition = (status: string) => {
       if (confirmed) return status === 'CONFIRMED';
       else return status !== 'CONFIRMED';
     }
+
     return pipe(
       (m: any) => MapToList(m),
       filter((o: any) => todayCondition(o.createdAt)),

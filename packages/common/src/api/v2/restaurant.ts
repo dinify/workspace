@@ -40,6 +40,10 @@ export const CheckOut = ({ tableId }: any): Promise<any> => Post({
   path: `table/${tableId}/checkout`
 });
 
+export const UpdateTable = ({ id, ...otherProps }: any): Promise<any> => Patch({
+  path: `tables/${id}`
+}, otherProps);
+
 export const CheckOutUser = ({ userId }: any): Promise<any> => Post({
   path: `checkout/user/${userId}`
 });
@@ -230,7 +234,7 @@ export const CreateChoice = (body: any): Promise<any> => Post({
 }, body);
 
 type NotifyBody = {
-  sendTo: string;
+  sendTo: string | string[];
   type: string;
   payload: any;
 }

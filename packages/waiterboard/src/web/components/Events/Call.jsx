@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { confirmCallInit } from 'features/call/actions';
+import { confirmCallAsync } from 'features/call/actions';
 import { relevantServices } from 'features/service/selectors';
 import { ActionBox, Header, TableId, Text, CheckButton, Photo } from '../styled/Events';
 import User from './user';
@@ -78,7 +78,7 @@ export default compose(
 			confirming: state.order.confirming
 		}),
 		{
-			confirmCall: confirmCallInit
+			confirmCall: confirmCallAsync.request
 		}
 	)
 )(Call);

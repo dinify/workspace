@@ -6,7 +6,7 @@ import N from 'numeral';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as FN from '@dinify/common/src/lib/FN';
-import { confirmBillInit } from 'features/bill/actions';
+import { confirmBillAsync } from 'features/bill/actions';
 import { ActionBox, Header, TableId, CheckButton, TableTag, Th, Tr, Td, Text } from '../styled/Events';
 import { colorsByStages } from '../../colors';
 import User from './user';
@@ -118,7 +118,7 @@ export default compose(
       confirming: state.bill.confirming,
     }),
     {
-      confirmBill: confirmBillInit
+      confirmBill: confirmBillAsync.request
     },
   )
 )(Bill);

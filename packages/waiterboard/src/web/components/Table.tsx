@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import S from 'string';
-import { clearTable, updateTableInit } from '../../features/table/actions';
+import { checkoutTableAsync, updateTableAsync } from '../../features/table/actions';
 import { toggleModal } from '../../features/ui/actions';
 import Block from '@material-ui/icons/Block';
 import ExitToApp from '@material-ui/icons/ExitToApp';
@@ -137,15 +137,15 @@ const Sign = ({ guest }: { guest: Guest }) => {
 
 const Table: React.FC<{
   table: any;
-  clearTable: typeof clearTable;
+  checkoutTable: typeof checkoutTableAsync.request;
   toggleModal: typeof toggleModal;
   seats: any;
   users: object;
-  updateTable: typeof updateTableInit;
+  updateTable: typeof updateTableAsync.request;
 }> = (props) => {
   const {
     table,
-    clearTable,
+    checkoutTable,
     toggleModal,
     seats = [],
     users,
@@ -179,7 +179,7 @@ const Table: React.FC<{
           </Grid>
           <Grid item>
             <Tooltip placement="right" title="Clear table">
-              <IconButton onClick={() => clearTable({ table })}>
+              <IconButton onClick={() => checkoutTable({ table })}>
                 <ExitToApp />
               </IconButton>
             </Tooltip>
@@ -220,8 +220,8 @@ export default connect(
     users: state.user.all,
   }),
   {
-    clearTable,
+    checkoutTable: checkoutTableAsync.request,
     toggleModal,
-    updateTable: updateTableInit
+    updateTable: updateTableAsync.request
   },
 )(Table)
