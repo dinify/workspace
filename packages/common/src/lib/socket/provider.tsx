@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import io from "socket.io-client";
-import { SocketContext, Socket } from ".";
+import { SocketContext, Socket, SocketStatus } from ".";
 
 export interface SocketConfig {
   uri: string;
@@ -9,32 +9,42 @@ export interface SocketConfig {
 
 export class SocketProvider extends Component {
   socket: Socket;
+  state: {
+    status: SocketStatus;
+  } = {
+    status: "initialized"
+  };
 
   constructor(props: SocketConfig) {
     super(props);
     this.socket = io(props.uri, props.options);
-    this.socket.status = "initialized";
     this.socket.on("connect", () => {
+      this.setState({ status: "connected" });
       this.socket.status = "connected";
     });
 
     this.socket.on("disconnect", () => {
+      this.setState({ status: "disconnected" });
       this.socket.status = "disconnected";
     });
 
     this.socket.on("error", (error: any) => {
+      this.setState({ status: "failed" });
       this.socket.status = "failed";
     });
 
     this.socket.on("reconnect", (data: any) => {
+      this.setState({ status: "connected" });
       this.socket.status = "connected";
     });
 
     this.socket.on("reconnecting", () => {
+      this.setState({ status: "reconnecting" });
       this.socket.status = "reconnecting";
     });
 
     this.socket.on("reconnect_failed", (error: any) => {
+      this.setState({ status: "failed" });
       this.socket.status = "failed";
     });
   }
