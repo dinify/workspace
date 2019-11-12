@@ -11,6 +11,7 @@ import * as orderTypes from 'ducks/order/types';
 import * as billTypes from 'ducks/bill/types';
 import * as callTypes from 'ducks/call/types';
 import * as seatTypes from 'ducks/seat/types';
+import { fetchManagedAsync } from '../restaurant/actions';
 
 const bootstrapEpic = (action$) =>
   action$.pipe(
@@ -38,7 +39,7 @@ const getLoggedEpic = (action$, state$) =>
     }),
     mergeMap(() => {
 
-      const reactions = [{ type: restaurantTypes.FETCH_MANAGEDRESTAURANTS_INIT }];
+      const reactions = [fetchManagedAsync.request()];
 
       const selectedRestaurant = state$.value.app.selectedRestaurant;
       if (selectedRestaurant) {

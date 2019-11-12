@@ -18,8 +18,7 @@ export const getOrderList = ({ confirmed, today = false }: getOrderListParams) =
   (all, rId) => {
     const todayCondition = (date: string) => {
       if (today) {
-        const startTime = moment(date);
-        return startTime.isSame(new Date(), "day");
+        return moment(date).isSame(new Date(), "day");
       }
       return true;
     }
