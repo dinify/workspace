@@ -1,14 +1,14 @@
 import { createContext, useContext } from "react";
 
+export type SocketStatus =
+  | "initialized"
+  | "connected"
+  | "failed"
+  | "disconnected"
+  | "reconnecting";
+
 export interface Socket extends SocketIOClient.Socket {
-  status?:
-    | "initialized"
-    | "connected"
-    | "disconnected"
-    | "failed"
-    | "connected"
-    | "reconnecting"
-    | "failed";
+  status?: SocketStatus;
 }
 
 export const SocketContext = createContext<Socket | null>(null);

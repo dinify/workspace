@@ -1,6 +1,14 @@
 import { useEffect, useRef } from "react";
 import { useSocket } from ".";
 
+export type SocketEvent =
+  | "connect"
+  | "disconnect"
+  | "error"
+  | "reconnect"
+  | "reconnecting"
+  | "reconnect_failed";
+
 export function makeSubscriber<EventType extends string>() {
   return function wrap<T>(eventKey: EventType, callback: (payload: T) => any) {
     useSubscription<EventType, T>(eventKey, callback);
