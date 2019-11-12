@@ -1,7 +1,7 @@
 import { combineEpics } from 'redux-observable';
-import { epics as crud } from '@dinify/common/src/ducks/crudEpics';
-import { authEpics as auth } from '@dinify/common/src/ducks/auth';
-import { reportingEpics as reporting } from '@dinify/common/src/ducks/reporting';
+import { epics as crud } from '@dinify/common/src/features/crudEpics';
+import { authEpics as auth } from '@dinify/common/src/features/auth';
+import { reportingEpics as reporting } from '@dinify/common/src/features/reporting';
 
 import restaurantEpics from './features/restaurant/epics';
 import menuCategoryEpics from './features/menuCategory/epics.ts';

@@ -5,8 +5,8 @@ import { ofType } from 'redux-observable';
 import AccountExistsDialog from '../../components/dialogs/AccountExistsDialog';
 
 import * as API from '../../api/user';
-// import { checkinInit } from 'ducks/restaurant/actions';
-// import { loadUserData } from 'ducks/app/actions';
+// import { checkinInit } from 'features/restaurant/actions';
+// import { loadUserData } from 'features/app/actions';
 import { setCookie } from '../../lib/FN';
 import { actionTypes } from 'react-redux-firebase';
 import { change as changeForm } from 'redux-form';

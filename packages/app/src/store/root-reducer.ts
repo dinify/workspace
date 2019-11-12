@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage';
 
 import { reducer as formReducer } from 'redux-form';
 import { firebaseReducer } from 'react-redux-firebase';
-import auth from '@dinify/common/src/ducks/auth/reducers';
+import auth from '@dinify/common/src/features/auth/reducers';
 import ui from '../features/ui/reducers';
 import user from '../features/user/reducers';
 import restaurant from '../features/restaurant/reducers';

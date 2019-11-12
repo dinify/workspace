@@ -9,7 +9,7 @@ import values from 'ramda/es/values';
 import { actionTypes } from 'react-redux-firebase';
 import { setCookie, handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
-import { reportCampaignAction } from '@dinify/common/src/ducks/reporting/actions';
+import { reportCampaignAction } from '@dinify/common/src/features/reporting/actions';
 import * as APIv1 from '@dinify/common/src/api/restaurant';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import * as types from './types';

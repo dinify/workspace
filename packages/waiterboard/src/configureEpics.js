@@ -1,6 +1,6 @@
 import { combineEpics } from 'redux-observable';
-import { authEpics as auth } from '@dinify/common/src/ducks/auth';
-import { epics as crud } from '@dinify/common/src/ducks/crudEpics';
+import { authEpics as auth } from '@dinify/common/src/features/auth';
+import { epics as crud } from '@dinify/common/src/features/crudEpics';
 import appEpics from 'features/app/epics.ts';
 import commonEpics from 'features/common/epics';
 import restaurantEpics from 'features/restaurant/epics.ts';

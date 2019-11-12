@@ -9,7 +9,7 @@ import SignIn from '@dinify/common/src/components/SignIn';
 import Dashboard from 'web/pages/Dashboard';
 import Qr from 'web/pages/Qr';
 import RegisterRestaurant from 'web/pages/RegisterRestaurant';
-import { reportCampaignAction } from '@dinify/common/src/ducks/reporting/actions';
+import { reportCampaignAction } from '@dinify/common/src/features/reporting/actions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import withRoot from 'withRoot.js';
 import QRsPrint from './pages/QRsPrint';
