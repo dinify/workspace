@@ -7,7 +7,7 @@ import {
   favMenuitemInit,
   fetchMenuItemAsync,
   clearCustomizationsAction,
-} from '../../../ducks/menuItem/actions';
+} from '../../../features/menuItem/actions';
 import Carousel from '../../components/Carousel';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
@@ -18,14 +18,14 @@ import Price from '../../components/Price';
 import FavoriteToggle from '../../components/FavoriteToggle';
 import NutritionFacts from '../../pages/MenuItemView/NutritionFacts';
 import Fab from '@material-ui/core/Fab';
-import { addToCartAsync } from '../../../ducks/cart/actions';
+import { addToCartAsync } from '../../../features/cart/actions';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Ingredients from './ingredients';
 import Addons from './addons';
 import Options from './options';
-import { useAddonView } from '../../../ducks/addon/selectors';
-import { useIngredientView } from '../../../ducks/ingredient/selectors';
-import { useOptionView } from '../../../ducks/option/selectors';
+import { useAddonView } from '../../../features/addon/selectors';
+import { useIngredientView } from '../../../features/ingredient/selectors';
+import { useOptionView } from '../../../features/option/selectors';
 import { useAction } from '@dinify/common/src/lib/util';
 
 type MenuItemTranslated = MenuItem & MenuItemTranslation;

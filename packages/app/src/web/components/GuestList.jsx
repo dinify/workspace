@@ -9,7 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { Motion, spring } from 'react-motion';
 import CheckCircle from '@material-ui/icons/CheckCircleRounded';
-import { checkSelecting } from 'ducks/seat/selectors';
+import { checkSelecting } from 'features/seat/selectors';
 
 
 const styles = theme => ({

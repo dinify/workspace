@@ -7,7 +7,7 @@ import { OrderItemN, Translation, Price as PriceType, OrderAddonMap } from 'Cart
 import Price from '../../components/Price';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
-import { rmFromCartAsync } from '../../../ducks/cart/actions';
+import { rmFromCartAsync } from '../../../features/cart/actions';
 import { AddonMap, MenuItemMap } from 'MenuItemsModels';
 import { IngredientMap } from 'IngredientModels';
 import { ChoiceMap } from 'OptionModels';

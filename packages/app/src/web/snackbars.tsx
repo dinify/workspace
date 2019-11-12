@@ -1,12 +1,12 @@
 import React from 'react';
 import Snackbar, { SnackbarProps } from '@material-ui/core/Snackbar';
 import Grow from '@material-ui/core/Grow';
-import { TResolver } from '../ducks/ui/actions';
+import { TResolver } from '../features/ui/actions';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { useSelector } from 'react-redux';
-import { UiState } from '../ducks/ui/reducers';
+import { UiState } from '../features/ui/reducers';
 import { RootState } from 'typesafe-actions';
-import { hideSnackbarAction } from '../ducks/ui/actions';
+import { hideSnackbarAction } from '../features/ui/actions';
 import { Button } from '@material-ui/core';
 import toPairs from 'ramda/es/toPairs';
 import { useAction } from '@dinify/common/src/lib/util';

@@ -22,7 +22,7 @@ import TotalPrice from 'web/components/TotalPrice';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import * as FN from '@dinify/common/src/lib/FN';
-import { rmFromCartAsync, orderAsync } from 'ducks/cart/actions.ts';
+import { rmFromCartAsync, orderAsync } from 'features/cart/actions.ts';
 
 const styles = theme => ({
   primary: {

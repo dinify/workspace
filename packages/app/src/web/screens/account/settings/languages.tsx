@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
-import { openDialogAction } from '../../../../ducks/ui/actions';
+import { openDialogAction } from '../../../../features/ui/actions';
 import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { RootState } from 'typesafe-actions';

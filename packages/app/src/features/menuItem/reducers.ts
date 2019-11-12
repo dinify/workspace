@@ -1,7 +1,7 @@
 import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
 // import { MapToList, useOldPropsIfNewNA } from '@dinify/common/src/lib/FN';
-// import menuCategoryTypes from 'ducks/menuCategory/types';
+// import menuCategoryTypes from 'features/menuCategory/types';
 import { getType } from 'typesafe-actions';
 import * as cartActions from '../cart/actions';
 import { fetchMenuItemAsync, clearCustomizationsAction } from './actions';

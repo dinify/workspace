@@ -1,11 +1,11 @@
 import React from 'react';
-import { useOptionView } from '../../../ducks/option/selectors';
+import { useOptionView } from '../../../features/option/selectors';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import { withStyles, StyleRulesCallback } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Price from '../../components/Price';
-import { selectChoice as selectChoiceAction } from '../../../ducks/menuItem/actions';
+import { selectChoice as selectChoiceAction } from '../../../features/menuItem/actions';
 import { useAction } from '@dinify/common/src/lib/util';
 
 const styles: StyleRulesCallback = theme => ({

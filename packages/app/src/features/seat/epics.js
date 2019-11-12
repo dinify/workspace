@@ -2,7 +2,7 @@
 // import { switchMap } from 'rxjs/operators';
 // import { ofType } from 'redux-observable';
 // import pluck from 'ramda/es/pluck';
-// import { fetchAllUsersInit } from 'ducks/user/actions';
+// import { fetchAllUsersInit } from 'features/user/actions';
 // import types from './types';
 // 
 // const fetchUsersOfSeatsEpic = (action$) =>

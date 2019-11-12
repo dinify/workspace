@@ -11,7 +11,7 @@ import Fab from '@material-ui/core/Fab';
 import Slider from '@material-ui/lab/Slider';
 import Price from '../Price';
 import { BillSection } from './bill-section';
-import { initTransactionAsync } from '../../../ducks/transaction/actions';
+import { initTransactionAsync } from '../../../features/transaction/actions';
 import { AppBar, AppBarAction, AppBarTitle } from '../app-bar';
 const PaymentOptionsDialog = require('@dinify/common/src/components/dialogs/PaymentOptionsDialog').default;
 

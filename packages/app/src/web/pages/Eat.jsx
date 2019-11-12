@@ -7,19 +7,19 @@ import {
   splitBillInit,
   transferBillInit,
   initTransactionInit,
-} from 'ducks/transaction/actions';
-import { rmFromCartAsync, orderAsync, setOrderTypeAction } from 'ducks/cart/actions.ts';
+} from 'features/transaction/actions';
+import { rmFromCartAsync, orderAsync, setOrderTypeAction } from 'features/cart/actions.ts';
 import {
   checkSelecting,
   selectedBillItems as selectedBillItemsSelector,
   selectedSeats as selectedSeatsSelector,
-} from 'ducks/seat/selectors';
+} from 'features/seat/selectors';
 import {
   fetchSeatsInit,
   selectBillItem as selectBillItemAction,
   selectSeat as selectSeatAction,
   clearSelectedBillItems as clearSelectedBillItemsAction
-} from 'ducks/seat/actions';
+} from 'features/seat/actions';
 
 import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContainer';
 import GuestList from 'web/components/GuestList';

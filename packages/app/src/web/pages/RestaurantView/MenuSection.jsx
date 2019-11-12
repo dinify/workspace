@@ -11,9 +11,9 @@ import MenuItemCard from 'web/components/MenuItemCard';
 import * as FN from '@dinify/common/src/lib/FN';
 import sort from 'ramda/es/sort';
 import uniqueId from 'lodash.uniqueid';
-import { getCategoriesBySubdomain } from 'ducks/menuCategory/selectors';
+import { getCategoriesBySubdomain } from 'features/menuCategory/selectors';
 import { getT } from 'lib/translation.ts';
-import { getUserLang } from 'ducks/user/selectors.ts';
+import { getUserLang } from 'features/user/selectors.ts';
 
 const styles = theme => ({
   primary: {

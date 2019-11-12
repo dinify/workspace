@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import Text from '@dinify/common/src/components/Inputs/Text';
-import { loginInit } from 'ducks/auth/actions';
+import { loginInit } from 'features/auth/actions';
 import Grid from '@material-ui/core/Grid';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import ErrorMessage from 'web/components/ErrorMessage';
-import authTypes from 'ducks/auth/types';
+import authTypes from 'features/auth/types';
 import FormControl from '@material-ui/core/FormControl';
 
 const gridItemStyle = {

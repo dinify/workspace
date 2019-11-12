@@ -7,8 +7,8 @@ import { useTranslation } from '@dinify/common/src/lib/i18n';
 import LightbulbToggle from '../../../components/LightbulbToggle';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typesafe-actions';
-import { toggleThemeAction } from '../../../../ducks/ui/actions';
-import { ThemeType } from 'app/src/ducks/ui/reducers';
+import { toggleThemeAction } from '../../../../features/ui/actions';
+import { ThemeType } from '../../../../features/ui/reducers';
 import { useAction } from '@dinify/common/src/lib/util';
 
 export default () => {

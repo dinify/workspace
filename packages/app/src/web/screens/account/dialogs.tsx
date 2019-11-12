@@ -7,7 +7,7 @@ import {
   closeDialogAction,
   Dialog,
   DialogType,
-} from '../../../ducks/ui/actions';
+} from '../../../features/ui/actions';
 import { useIntl } from '@dinify/common/src/lib/i18n';
 import { useAction } from '@dinify/common/src/lib/util';
 

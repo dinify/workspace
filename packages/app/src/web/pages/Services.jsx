@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import { closeDialogAction } from 'ducks/ui/actions.ts';
+import { closeDialogAction } from 'features/ui/actions.ts';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
@@ -13,11 +13,11 @@ import Tab from '@material-ui/core/Tab';
 import Done from '@material-ui/icons/Done';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ServiceCallGraphic from 'web/components/ServiceCallGraphic';
-import { callServiceAsync, fetchServicesAsync } from 'ducks/service/actions.ts';
-import { relevantServicesList } from 'ducks/service/selectors.ts';
+import { callServiceAsync, fetchServicesAsync } from 'features/service/actions.ts';
+import { relevantServicesList } from 'features/service/selectors.ts';
 import { Motion, spring } from 'react-motion';
 import filter from 'ramda/es/filter';
-import { getUserLang } from 'ducks/user/selectors.ts';
+import { getUserLang } from 'features/user/selectors.ts';
 import { getT } from '../../lib/translation.ts';
 
 const Services = ({

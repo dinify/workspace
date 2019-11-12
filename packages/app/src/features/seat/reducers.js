@@ -6,8 +6,8 @@ import propEq from 'ramda/es/propEq';
 import append from 'ramda/es/append';
 import remove from 'ramda/es/remove';
 import forEach from 'ramda/es/forEach';
-import { selectedBillItems } from 'ducks/seat/selectors';
-import { orderAsync, rmFromCartAsync } from 'ducks/cart/actions.ts';
+import { selectedBillItems } from 'features/seat/selectors';
+import { orderAsync, rmFromCartAsync } from 'features/cart/actions.ts';
 import types from './types';
 import * as wsActions from '../socket/actions';
 

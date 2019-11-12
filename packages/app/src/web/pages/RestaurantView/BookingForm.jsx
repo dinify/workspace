@@ -9,7 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import ValuePicker from 'web/components/ValuePicker';
-import { setGuestsInit, setTimeInit, setDateInit } from 'ducks/booking/actions';
+import { setGuestsInit, setTimeInit, setDateInit } from 'features/booking/actions';
 
 const BookingForm = ({
   classes,

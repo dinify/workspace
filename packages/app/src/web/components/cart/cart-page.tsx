@@ -9,8 +9,8 @@ import TotalPrice from '../TotalPrice';
 import { RootState } from 'typesafe-actions';
 
 import { Subtotal } from 'CartModels';
-import { orderAsync } from '../../../ducks/cart/actions';
-import { getOrderItemIds } from '../../../ducks/cart/selectors';
+import { orderAsync } from '../../../features/cart/actions';
+import { getOrderItemIds } from '../../../features/cart/selectors';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 
 const CartView: React.FC<{

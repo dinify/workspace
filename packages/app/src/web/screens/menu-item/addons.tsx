@@ -6,8 +6,8 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircle from '@material-ui/icons/AddCircleRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
 import Price from '../../components/Price';
-import { incAddonQty as incAddonQtyAction } from '../../../ducks/menuItem/actions';
-import { useAddonView } from '../../../ducks/addon/selectors';
+import { incAddonQty as incAddonQtyAction } from '../../../features/menuItem/actions';
+import { useAddonView } from '../../../features/addon/selectors';
 import { useAction } from '@dinify/common/src/lib/util';
 
 export default ({ menuItemId }: { menuItemId: string }) => {

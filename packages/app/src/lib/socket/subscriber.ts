@@ -1,9 +1,9 @@
 import { makeSubscriber } from '@dinify/common/src/lib/socket';
 import { useDispatch } from 'react-redux';
 import { getType } from 'typesafe-actions';
-import * as actions from '../../ducks/socket/actions';
-import { fetchBillAsync } from '../../ducks/transaction/actions';
-import { showSnackbarAction } from '../../ducks/ui/actions';
+import * as actions from '../../features/socket/actions';
+import { fetchBillAsync } from '../../features/transaction/actions';
+import { showSnackbarAction } from '../../features/ui/actions';
 import { Call, Seat } from 'ServiceModels';
 import { Transaction, Order } from 'TransactionModels';
 

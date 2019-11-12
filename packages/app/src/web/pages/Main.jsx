@@ -5,9 +5,9 @@ import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContain
 import ResponsiveGrid from 'web/components/ResponsiveGrid';
 import Typography from '@material-ui/core/Typography';
 import RestaurantListItem from 'web/components/RestaurantListItem';
-import { fetchRestaurantsAsync } from 'ducks/restaurant/actions.ts';
-import { getRestaurantsList } from 'ducks/restaurant/selectors';
-import { getGeolocationAsync } from 'ducks/user/actions.ts';
+import { fetchRestaurantsAsync } from 'features/restaurant/actions.ts';
+import { getRestaurantsList } from 'features/restaurant/selectors';
+import { getGeolocationAsync } from 'features/user/actions.ts';
 
 const Main = ({ restaurantsList, fetchRestaurants, getGeolocation }) => {
   

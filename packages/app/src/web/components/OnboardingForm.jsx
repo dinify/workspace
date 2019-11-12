@@ -9,7 +9,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 // import GoogleLogo from 'icons/GoogleLogo';
 import FacebookLogo from 'icons/FacebookLogo';
-import { fbAuthInit } from 'ducks/auth/actions';
+import { fbAuthInit } from 'features/auth/actions';
 import Login from 'web/components/Login';
 import Signup from 'web/components/Signup';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';

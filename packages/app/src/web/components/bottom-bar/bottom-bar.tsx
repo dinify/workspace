@@ -5,7 +5,7 @@ import { useSpring, animated } from 'react-spring';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import { Subtotal } from 'CartModels';
-import { getOrderItemCount as getCartCount } from '../../../ducks/cart/selectors';
+import { getOrderItemCount as getCartCount } from '../../../features/cart/selectors';
 import { select } from '@dinify/common/src/lib/platform';
 import { withTheme } from '@material-ui/core/styles';
 import CartIcon from '@material-ui/icons/ShoppingCartRounded';

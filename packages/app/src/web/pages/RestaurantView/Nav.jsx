@@ -10,7 +10,7 @@ import CalendarClock from '@dinify/common/src/icons/CalendarClock';
 import Place from '@material-ui/icons/PlaceRounded';
 import FavoriteToggle from 'web/components/FavoriteToggle';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import { favRestaurantAsync } from 'ducks/restaurant/actions.ts';
+import { favRestaurantAsync } from 'features/restaurant/actions.ts';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 const styles = theme => ({

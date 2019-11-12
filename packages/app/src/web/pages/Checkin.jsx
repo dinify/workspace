@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { planCheckinAction } from 'ducks/restaurant/actions.ts';
+import { planCheckinAction } from 'features/restaurant/actions.ts';
 import QRscanner from './QRscanner';
 
 class Checkin extends React.PureComponent {

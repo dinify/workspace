@@ -1,5 +1,5 @@
 import React from 'react';
-import { closeDialogAction, DialogType } from '../ducks/ui/actions';
+import { closeDialogAction, DialogType } from '../features/ui/actions';
 import { useSelector } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import { ServicesScreen } from './screens';

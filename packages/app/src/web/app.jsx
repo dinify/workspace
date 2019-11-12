@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
-import { openDialogAction } from 'ducks/ui/actions';
+import { openDialogAction } from 'features/ui/actions';
 import { matchPath, Redirect } from 'react-router';
 import { connect } from 'react-redux';
-// import { getOrderItemCount as getCartCount } from 'ducks/cart/selectors';
+// import { getOrderItemCount as getCartCount } from 'features/cart/selectors';
 import * as routes from 'web/routes';
 import Checkin from 'web/pages/Checkin';
 import RestaurantView from 'web/pages/RestaurantView';
@@ -16,9 +16,9 @@ import Main from 'web/pages/Main';
 import Navigation from 'web/components/Navigation';
 import { ServicesButtonContainer } from 'web/components/services-button';
 import { BottomBar } from 'web/components/bottom-bar';
-import { fetchStatusAsync } from 'ducks/restaurant/actions.ts';
-import { fetchBillAsync } from 'ducks/transaction/actions.ts';
-import { fetchCartAsync } from 'ducks/cart/actions.ts';
+import { fetchStatusAsync } from 'features/restaurant/actions.ts';
+import { fetchBillAsync } from 'features/transaction/actions.ts';
+import { fetchCartAsync } from 'features/cart/actions.ts';
 
 import withRoot from 'withRoot.js';
 import Dialogs from './dialogs.tsx';

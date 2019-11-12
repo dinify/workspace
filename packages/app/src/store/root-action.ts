@@ -1,9 +1,9 @@
-import * as cartActions from '../ducks/cart/actions';
-import * as restaurantActions from '../ducks/restaurant/actions';
-import * as menuCatrgoryActions from '../ducks/menuItem/actions';
-import * as menuItemActions from '../ducks/menuItem/actions';
-import * as transactionActions from '../ducks/transaction/actions';
-import * as serviceActions from '../ducks/service/actions';
+import * as cartActions from '../features/cart/actions';
+import * as restaurantActions from '../features/restaurant/actions';
+import * as menuCatrgoryActions from '../features/menuItem/actions';
+import * as menuItemActions from '../features/menuItem/actions';
+import * as transactionActions from '../features/transaction/actions';
+import * as serviceActions from '../features/service/actions';
 
 export default {
   cart: cartActions,
