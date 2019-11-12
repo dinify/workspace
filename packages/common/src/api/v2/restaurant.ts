@@ -21,7 +21,7 @@ export const GetRestaurantById = ({ restaurantId, populateWith }: any) => {
 }
 
 export const GetMenuCategoriesOfSubdomain = ({ subdomain }: any) => Get({
-  path: `restaurant/subdomain/${subdomain}/menu/categories`
+  path: `restaurants/subdomain/${subdomain}/menu/categories`
 });
 
 export const GetSeatsOfWaiterboard = ({ waiterboardId }: any): Promise<any> => Get({
@@ -123,12 +123,12 @@ export const GetServicesOfRestaurant = ({ restaurantId, defLang }: any): Promise
     append = '?defLang=true'
   }
   return Get({
-    path: `restaurant/${restaurantId}/services${append}`
+    path: `restaurants/${restaurantId}/services${append}`
   });
 }
 
 export const GetLanguagesOfRestaurant = ({ restaurantId }: { restaurantId: string }): Promise<any> => Get({
-  path: `restaurant/${restaurantId}/languages`
+  path: `restaurants/${restaurantId}/languages`
 });
 
 type CreateRestaurantBody = {
@@ -153,7 +153,7 @@ export const CreateService = (body: CreateServiceBody): Promise<any> => Post({
 }, body);
 
 export const GetMenuCategories = ({ restaurantId }: any, lang?: string): Promise<any> => Get({
-  path: `restaurant/${restaurantId}/menuCategories`,
+  path: `restaurants/${restaurantId}/menuCategories`,
   lang
 });
 

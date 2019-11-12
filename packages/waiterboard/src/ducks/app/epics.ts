@@ -1,19 +1,27 @@
 import { of } from 'rxjs';
 import { mergeMap, mapTo, filter } from 'rxjs/operators';
-import { ofType } from 'redux-observable';
+import { ofType, Epic } from 'redux-observable';
 import { push } from 'connected-react-router';
-import { appBootstrap } from 'ducks/app/actions';
 import { actionTypes } from 'react-redux-firebase';
-import * as appTypes from 'ducks/app/types';
-import * as restaurantTypes from 'ducks/restaurant/types';
-import * as bookingTypes from 'ducks/booking/types';
-import * as orderTypes from 'ducks/order/types';
-import * as billTypes from 'ducks/bill/types';
-import * as callTypes from 'ducks/call/types';
-import * as seatTypes from 'ducks/seat/types';
+import * as appTypes from './types';
+import { appBootstrap } from './actions';
+import * as restaurantTypes from '../restaurant/types';
+import * as bookingTypes from '../booking/types';
+import * as orderTypes from '../order/types';
+import * as billTypes from '../bill/types';
+import * as callTypes from '../call/types';
+import * as seatTypes from '../seat/types';
 import { fetchManagedAsync } from '../restaurant/actions';
 
-const bootstrapEpic = (action$) =>
+const fetchRestaurantInit = () => ({
+  type: restaurantTypes.FETCH_RESTAURANT_INIT,
+  payload: {
+    populateWith: 'waiterboards.tables',
+    node: true
+  }
+})
+
+const bootstrapEpic: Epic = (action$) =>
   action$.pipe(
     ofType('persist/PERSIST'),
     mergeMap(() => {
@@ -21,13 +29,13 @@ const bootstrapEpic = (action$) =>
     })
   );
 
-const selectWBRedirectEpic = (action$) =>
+const selectWBRedirectEpic: Epic = (action$) =>
   action$.pipe(
     ofType(appTypes.SELECT_WAITERBOARD),
     mapTo(push('/board'))
   );
 
-const getLoggedEpic = (action$, state$) =>
+const getLoggedEpic: Epic = (action$, state$) =>
   action$.pipe(
     filter(action => {
       const triggerOn = [
@@ -43,13 +51,7 @@ const getLoggedEpic = (action$, state$) =>
 
       const selectedRestaurant = state$.value.app.selectedRestaurant;
       if (selectedRestaurant) {
-        reactions.push({
-          type: restaurantTypes.FETCH_RESTAURANT_INIT,
-          payload: {
-            populateWith: 'waiterboards.tables',
-            node: true
-          }
-        });
+        reactions.push(fetchRestaurantInit());
         reactions.push({
           type: 'GET_SERVICES_INIT',
         });
@@ -63,7 +65,13 @@ const getLoggedEpic = (action$, state$) =>
     })
   );
 
-const guestsPollingEpic = (action$, state$) =>
+declare global {
+  interface Window { initSocket: any; }
+}
+
+window.initSocket = window.initSocket || {};
+
+const guestsPollingEpic: Epic = (action$, state$) =>
   action$.pipe(
     ofType(appTypes.LOAD_STATE_INIT),
     mergeMap(() => {
