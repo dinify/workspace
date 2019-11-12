@@ -17,7 +17,7 @@ export default function reducer(state = initialState, action: any) {
   switch (type) {
 
     case getType(fetchSeatsAsync.success): {
-      const list = payload.res;
+      const list = payload;
       return assoc('all', ListToMap(list))(state);
     }
 
@@ -28,13 +28,13 @@ export default function reducer(state = initialState, action: any) {
 
     case getType(checkoutTableAsync.success): {
       const tableId = payload.table.id;
-      const filteredGuests = filter((guest: any) => guest.table_id !== tableId, state.all);
+      const filteredGuests = filter((seat: any) => seat.tableId !== tableId, state.all);
       return assoc('all', filteredGuests)(state);
     }
 
     case getType(checkoutUserAsync.success): {
       const userId = payload.userId;
-      const filteredGuests = filter((guest: any) => guest.user_id !== userId, state.all);
+      const filteredGuests = filter((seat: any) => seat.userId !== userId, state.all);
       return assoc('all', filteredGuests)(state);
     }
 

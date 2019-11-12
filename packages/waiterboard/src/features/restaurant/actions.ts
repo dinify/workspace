@@ -12,4 +12,4 @@ export const fetchRestaurantAsync = createAsyncAction(
   `${p}/GET_RESTAURANT_INIT`,
   `${p}/GET_RESTAURANT_DONE`,
   `${p}/GET_RESTAURANT_FAIL`,
-)<any, any, any>();
+)<undefined, any, any>();

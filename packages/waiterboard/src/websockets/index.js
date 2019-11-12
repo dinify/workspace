@@ -62,7 +62,7 @@ const websockets = (store) => {
     const userId = payload.order.initiator;
     dispatch(fetchAllUsersAsync.request({ ids: [userId], cache: true }));
     
-    dispatch(orderReceivedAction(payload.order));
+    dispatch(orderReceivedAction(payload));
 
     playChime();
   })

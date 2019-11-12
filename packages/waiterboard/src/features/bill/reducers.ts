@@ -18,7 +18,7 @@ export default function reducer(state = initialState, action: any) {
   switch (type) {
 
     case getType(fetchBillsAsync.success): {
-      const list = payload.res;
+      const list = payload;
       return assoc('all', mergeDeepRight(state.all, ListToMap(list)))(state);
     }
 

@@ -5,20 +5,11 @@ import { push } from 'connected-react-router';
 import { actionTypes } from 'react-redux-firebase';
 import * as appTypes from './types';
 import { appBootstrap } from './actions';
-import * as restaurantTypes from '../restaurant/types';
-import { fetchManagedAsync } from '../restaurant/actions';
+import { fetchManagedAsync, fetchRestaurantAsync } from '../restaurant/actions';
 import { fetchBillsAsync } from '../bill/actions';
 import { fetchOrdersAsync } from '../order/actions';
 import { fetchCallsAsync } from '../call/actions';
 import { fetchSeatsAsync } from '../seat/actions';
-
-const fetchRestaurantInit = () => ({
-  type: restaurantTypes.FETCH_RESTAURANT_INIT,
-  payload: {
-    populateWith: 'waiterboards.tables',
-    node: true
-  }
-})
 
 const bootstrapEpic: Epic = (action$) =>
   action$.pipe(
@@ -50,7 +41,7 @@ const getLoggedEpic: Epic = (action$, state$) =>
 
       const selectedRestaurant = state$.value.app.selectedRestaurant;
       if (selectedRestaurant) {
-        reactions.push(fetchRestaurantInit());
+        reactions.push(fetchRestaurantAsync.request());
         reactions.push({
           type: 'GET_SERVICES_INIT',
         });

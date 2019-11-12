@@ -30,7 +30,7 @@ const getRestaurantEpic: Epic = (action$, state$) =>
 
       const restaurantId = state$.value.app.selectedRestaurant;
 
-      return from(API.GetRestaurantById({ restaurantId })).pipe(
+      return from(API.GetRestaurantById({ restaurantId, populateWith: 'waiterboards.tables' })).pipe(
         map(fetchRestaurantAsync.success),
         catchError(error =>
           handleEpicAPIError({

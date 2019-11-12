@@ -75,7 +75,7 @@ export default compose(
   connect(
 		state => ({
 			services: state.service.all,
-			confirming: state.order.confirming
+			confirming: state.call.confirming
 		}),
 		{
 			confirmCall: confirmCallAsync.request
