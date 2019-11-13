@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { clearUser } from 'features/table/actions';
+import { checkoutUserAsync } from 'features/table/actions';
 import { getUserName } from '../../lib/utils';
 import Bill from './Events/Bill';
 import Order from './Events/Order';
@@ -47,7 +47,7 @@ const Body = styled.div`
 const ModalUser = ({
   payload: { userId },
   users,
-  clearUser,
+  checkoutUser,
   shown
 }) => {
 
@@ -69,7 +69,7 @@ const ModalUser = ({
         <Button
           color="primary"
           variant="contained"          
-          onClick={() => clearUser({ userId })}
+          onClick={() => checkoutUser({ userId })}
         >
           <span>Check Out</span>
         </Button>
@@ -99,6 +99,6 @@ export default connect(
     users: state.user.all,
   }),
   {
-    clearUser,
+    checkoutUser: checkoutUserAsync.request,
   }
 )(ModalUser);

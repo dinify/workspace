@@ -19,8 +19,8 @@ import MuiButton from '@material-ui/core/Button';
 import AccountExistsDialog from '../dialogs/AccountExistsDialog';
 import ResponsiveContainer from '../ResponsiveContainer';
 
-import { setPage } from '../../ducks/auth/actions';
-import { openDialog as openDialogAction } from '../../ducks/ui/actions';
+import { setPage } from '../../features/auth/actions';
+import { openDialog as openDialogAction } from '../../features/ui/actions';
 
 import Fields from './fields';
 

@@ -1,19 +1,28 @@
-import * as types from './types';
+import { createAsyncAction } from 'typesafe-actions';
 
+const p = 'dinify/table';
 
-export const clearTable = (payload: types.ClearTable) => ({
-  type: types.CLEAR_TABLE_INIT,
-  payload
-})
+export const checkoutUserAsync = createAsyncAction(
+  `${p}/CHECKOUT_USER_INIT`,
+  `${p}/CHECKOUT_USER_DONE`,
+  `${p}/CHECKOUT_USER_FAIL`,
+  `${p}/CHECKOUT_USER_CANCEL`,
+)<any, any, any, any>();
 
+export const checkoutTableAsync = createAsyncAction(
+  `${p}/CHECKOUT_TABLE_INIT`,
+  `${p}/CHECKOUT_TABLE_DONE`,
+  `${p}/CHECKOUT_TABLE_FAIL`,
+  `${p}/CHECKOUT_TABLE_CANCEL`,
+)<any, any, any, any>();
 
-export const clearUser = (payload: types.ClearUser) => ({
-  type: types.CLEAR_USER_INIT,
-  payload
-})
+type UpdateTable = {
+  id: string;
+  offline: boolean;
+}
 
-
-export const updateTableInit = (payload: types.UpdateTable) => ({
-  type: types.UPDATE_TABLE_INIT,
-  payload
-})
+export const updateTableAsync = createAsyncAction(
+  `${p}/UPD_TABLE_INIT`,
+  `${p}/UPD_TABLE_DONE`,
+  `${p}/UPD_TABLE_FAIL`,
+)<UpdateTable, any, any>();

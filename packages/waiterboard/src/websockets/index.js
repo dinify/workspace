@@ -1,10 +1,11 @@
 import io from 'socket.io-client';
-import * as orderTypes from 'features/order/types';
-import * as billTypes from 'features/bill/types';
-import * as callTypes from 'features/call/types';
-import * as seatTypes from 'features/seat/types';
+
 import * as commonTypes from 'features/common/types';
-import { fetchAllUsers } from 'features/user/actions';
+import { fetchAllUsersAsync } from 'features/user/actions';
+import { seatReceivedAction, fetchSeatsAsync } from '../features/seat/actions';
+import { orderReceivedAction } from '../features/order/actions';
+import { billReceivedAction } from '../features/bill/actions';
+import { callReceivedAction } from '../features/call/actions';
 // import * as types from './types';
 
 const socket = io('https://ws.dinify.app');
@@ -38,9 +39,10 @@ const websockets = (store) => {
   socket.on('checkin', (payload) => {
     console.log('checkin', payload);
     
-    const userId = payload.seat.user_id;
-    dispatch(fetchAllUsers({ ids: [userId], cache: true }));
-    dispatch({ type: seatTypes.SEAT_RECEIVED, payload });
+    const userId = payload.seat.userId;
+    dispatch(fetchAllUsersAsync.request({ ids: [userId], cache: true }));
+
+    dispatch(seatReceivedAction(payload));
 
     playChime();
   })
@@ -51,15 +53,16 @@ const websockets = (store) => {
 
   socket.on('checkout', (data) => {
     console.log('checkout', data);
-    dispatch({ type: seatTypes.LOAD_SEATS_INIT });
+    dispatch(fetchSeatsAsync.request());
   })
 
   socket.on('order-incoming', (payload) => {
     console.log('order-incoming', payload);
 
     const userId = payload.order.initiator;
-    dispatch(fetchAllUsers({ ids: [userId], cache: true }));
-    dispatch({ type: orderTypes.ORDER_RECEIVED, payload });
+    dispatch(fetchAllUsersAsync.request({ ids: [userId], cache: true }));
+    
+    dispatch(orderReceivedAction(payload));
 
     playChime();
   })
@@ -68,13 +71,9 @@ const websockets = (store) => {
     console.log('transaction-incoming', payload);
 
     const userId = payload.trasaction.initiator;
-    dispatch(fetchAllUsers({ ids: [userId], cache: true }));
-    dispatch({
-      type: billTypes.PAYMENT_RECEIVED,
-      payload: {
-        payment: payload.trasaction
-      }
-    });
+    dispatch(fetchAllUsersAsync.request({ ids: [userId], cache: true }));
+
+    dispatch(billReceivedAction(payload.trasaction));
 
     playChime();
   })
@@ -82,9 +81,9 @@ const websockets = (store) => {
   socket.on('call-incoming', (payload) => {
     console.log('call-incoming', payload);
 
-    dispatch({ type: callTypes.CALL_RECEIVED, payload });
-    const userId = payload.call.user_id;
-    dispatch(fetchAllUsers({ ids: [userId], cache: true }));
+    const userId = payload.call.userId;
+    dispatch(fetchAllUsersAsync.request({ ids: [userId], cache: true }));
+    dispatch(callReceivedAction(payload));
 
     playChime();
   })
