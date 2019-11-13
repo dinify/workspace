@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import io from "socket.io-client";
-import { SocketContext, Socket, SocketStatus } from ".";
+import { SocketContext, SocketState, SocketStatus } from ".";
 
 export interface SocketConfig {
   uri: string;
@@ -8,45 +8,25 @@ export interface SocketConfig {
 }
 
 export class SocketProvider extends Component {
-  socket: Socket;
-  state: {
-    status: SocketStatus;
-  } = {
+  socket: SocketIOClient.Socket;
+  state: SocketState = {
     status: "initialized"
   };
 
   constructor(props: SocketConfig) {
     super(props);
-    this.socket = io(props.uri, props.options);
-    this.socket.on("connect", () => {
-      this.setState({ status: "connected" });
-      this.socket.status = "connected";
-    });
-
-    this.socket.on("disconnect", () => {
-      this.setState({ status: "disconnected" });
-      this.socket.status = "disconnected";
-    });
-
-    this.socket.on("error", (error: any) => {
-      this.setState({ status: "failed" });
-      this.socket.status = "failed";
-    });
-
-    this.socket.on("reconnect", (data: any) => {
-      this.setState({ status: "connected" });
-      this.socket.status = "connected";
-    });
-
-    this.socket.on("reconnecting", () => {
-      this.setState({ status: "reconnecting" });
-      this.socket.status = "reconnecting";
-    });
-
-    this.socket.on("reconnect_failed", (error: any) => {
-      this.setState({ status: "failed" });
-      this.socket.status = "failed";
-    });
+    const socket = io(props.uri, props.options);
+    const handler = (s: SocketStatus) => () => {
+      const { status } = this.state;
+      if (status !== s) this.setState({ status: s });
+    };
+    socket.on("connect", handler("connected"));
+    socket.on("disconnect", handler("disconnected"));
+    socket.on("error", handler("failed"));
+    socket.on("reconnect", handler("connected"));
+    socket.on("reconnecting", handler("reconnecting"));
+    socket.on("reconnect_failed", handler("failed"));
+    this.socket = socket;
   }
 
   mergeOptions(options = {}) {
@@ -64,7 +44,7 @@ export class SocketProvider extends Component {
 
   render() {
     return (
-      <SocketContext.Provider value={this.socket}>
+      <SocketContext.Provider value={{ ...this.state, socket: this.socket }}>
         {this.props.children}
       </SocketContext.Provider>
     );

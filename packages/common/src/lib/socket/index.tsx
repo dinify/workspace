@@ -7,11 +7,12 @@ export type SocketStatus =
   | "disconnected"
   | "reconnecting";
 
-export interface Socket extends SocketIOClient.Socket {
+export interface SocketState {
   status?: SocketStatus;
+  socket?: SocketIOClient.Socket;
 }
 
-export const SocketContext = createContext<Socket | null>(null);
+export const SocketContext = createContext<SocketState>({});
 
 export const useSocket = () => {
   return useContext(SocketContext);

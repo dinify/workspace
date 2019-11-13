@@ -7,6 +7,7 @@ import {
 } from '@dinify/common/src/lib/socket';
 import { RootState } from 'typesafe-actions';
 import { useSubscriber } from './subscriber';
+// import io from 'socket.io-client';
 
 const socketConfig: SocketConfig = {
   uri: 'https://ws.dinify.app',
@@ -14,12 +15,16 @@ const socketConfig: SocketConfig = {
 
 const SubscriberProvider = (props: React.PropsWithChildren<any>) => {
   const uid = useSelector<RootState, string>(state => state.firebase.auth.uid);
-  const socket = useSocket();
+  const { socket } = useSocket();
 
   // emit init event after socket and user id is available, and socket is connected
   useEffect(() => {
-    if (uid && socket !== null && socket.connected) {
+    if (uid && socket && socket.connected) {
       socket.emit('init', `user/${uid}`);
+      // Temporary solution for reconnect
+      setTimeout(() => {
+        socket.emit('init', `user/${uid}`);
+      }, 1000);
     }
   });
 
