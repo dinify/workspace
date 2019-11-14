@@ -1,8 +1,8 @@
-import { createAsyncAction, createStandardAction } from 'typesafe-actions';
+import { createAsyncAction, createAction } from 'typesafe-actions';
 
 const p = 'dinify/bill';
 
-export const billReceivedAction = createStandardAction(`${p}/BILL_RECEIVED`)<any>();
+export const billReceivedAction = createAction(`${p}/BILL_RECEIVED`)<any>();
 
 export const fetchBillsAsync = createAsyncAction(
   `${p}/GET_BILLS_INIT`,

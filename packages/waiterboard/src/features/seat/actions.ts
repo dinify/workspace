@@ -1,8 +1,8 @@
-import { createAsyncAction, createStandardAction } from 'typesafe-actions';
+import { createAsyncAction, createAction } from 'typesafe-actions';
 
 const p = 'dinify/seat';
 
-export const seatReceivedAction = createStandardAction(`${p}/SEAT_RECEIVED`)<any>();
+export const seatReceivedAction = createAction(`${p}/SEAT_RECEIVED`)<any>();
 
 export const fetchSeatsAsync = createAsyncAction(
   `${p}/GET_SEATS_INIT`,

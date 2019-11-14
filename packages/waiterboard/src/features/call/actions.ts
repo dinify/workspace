@@ -1,8 +1,8 @@
-import { createAsyncAction, createStandardAction } from 'typesafe-actions';
+import { createAsyncAction, createAction } from 'typesafe-actions';
 
 const p = 'dinify/call';
 
-export const callReceivedAction = createStandardAction(`${p}/CALL_RECEIVED`)<any>();
+export const callReceivedAction = createAction(`${p}/CALL_RECEIVED`)<any>();
 
 export const fetchCallsAsync = createAsyncAction(
   `${p}/GET_CALLS_INIT`,

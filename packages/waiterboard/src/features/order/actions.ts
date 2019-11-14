@@ -1,8 +1,8 @@
-import { createAsyncAction, createStandardAction } from 'typesafe-actions';
+import { createAsyncAction, createAction } from 'typesafe-actions';
 
 const p = 'dinify/order';
 
-export const orderReceivedAction = createStandardAction(`${p}/ORDER_RECEIVED`)<any>();
+export const orderReceivedAction = createAction(`${p}/ORDER_RECEIVED`)<any>();
 
 export const fetchOrdersAsync = createAsyncAction(
   `${p}/GET_ORDERS_INIT`,
