@@ -10,6 +10,7 @@ import User from './user';
 import { colorsByStages } from '../../colors';
 import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, FoodItem } from '../styled/Events';
 import { confirmOrderAsync } from 'features/order/actions';
+import Price from '@dinify/common/src/components/Price';
 
 const styles = () => ({
   progress: {
@@ -19,7 +20,9 @@ const styles = () => ({
 
 const color = colorsByStages.s2;
 
-const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, raw, datetime }) => (
+const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, raw, datetime }) => {
+
+	return (
 	<ActionBox className={removed ? 'vhs-zoom vhs-reverse Order' : 'Order'}>
 		{!raw ?
 			<Header>
@@ -96,7 +99,9 @@ const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, r
 								})}
 							</Td>}
 
-							<Td style={{textAlign: 'right'}}>{N(item.subtotal.amount).format('0.00')} €</Td>
+							<Td style={{textAlign: 'right'}}>
+								<Price original price={item.subtotal} />
+							</Td>
 	          </Tr>)
 					}): ''}
 					{order.subtotal &&
@@ -114,6 +119,7 @@ const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, r
 
 	</ActionBox>
 )
+}
 
 
 export default compose(
