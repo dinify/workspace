@@ -13,6 +13,8 @@ const errorNotFound = (msg: string, path: string) => {
   }
 };
 
+export let currentT = (...args: any[]) => "";
+
 // useTranslation hook
 export default () => {
   const context = useIntl();
@@ -20,9 +22,14 @@ export default () => {
     config,
     state: { locale, messages, cldr }
   } = context;
-  const { schema } = schemas[config.namespace];
   const getTemplate = (path: any): string => {
-    if (!messages || !schema) return "\u00a0";
+    if (
+      !messages ||
+      !schemas[config.namespace] ||
+      !schemas[config.namespace].schema
+    )
+      return "\u00a0";
+    const { schema } = schemas[config.namespace];
     if (schema.indexOf(path) === -1)
       errorNotFound(`Path not found in ${messages.length} messages:`, path);
     return messages[schema.indexOf(path)] || "\u00a0";
@@ -31,5 +38,6 @@ export default () => {
     const template = getTemplate(path);
     return format(locale, cldr, template, [...values(data)], data);
   };
+  currentT = t;
   return { t, cldr };
 };

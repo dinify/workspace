@@ -26,27 +26,20 @@ export interface Snackbar {
   action?: string | TResolver;
 }
 
-export const showSnackbarAction = createAction(
-  `${p}/SNACKBAR_SHOW`,
-  action => (payload: Snackbar) => action(payload),
-);
+export const showSnackbarAction = createAction(`${p}/SNACKBAR_SHOW`)<
+  Snackbar
+>();
 
-export const hideSnackbarAction = createAction(
-  `${p}/SNACKBAR_HIDE`,
-  action => (id: SnackbarId) => action(id),
-);
+export const hideSnackbarAction = createAction(`${p}/SNACKBAR_HIDE`)<
+  SnackbarId
+>();
 
-export const openDialogAction = createAction(
-  `${p}/DIALOG_OPEN`,
-  action => (payload: DialogType | Dialog) => action(payload),
-);
+export const openDialogAction = createAction(`${p}/DIALOG_OPEN`)<
+  DialogType | Dialog
+>();
 
-export const closeDialogAction = createAction(
-  `${p}/DIALOG_CLOSE`,
-  action => (type: DialogType) => action(type),
-);
+export const closeDialogAction = createAction(`${p}/DIALOG_CLOSE`)<
+  DialogType
+>();
 
-export const toggleThemeAction = createAction(
-  `${p}/TOGGLE_THEME`,
-  action => () => action(),
-);
+export const toggleThemeAction = createAction(`${p}/TOGGLE_THEME`);

@@ -17,6 +17,23 @@ const SubscriberProvider = (props: React.PropsWithChildren<any>) => {
   const uid = useSelector<RootState, string>(state => state.firebase.auth.uid);
   const { socket } = useSocket();
 
+  if (socket) {
+    socket.on('connect', () => {
+      socket.emit('init', `user/${uid}`);
+      // Temporary solution for reconnect
+      setTimeout(() => {
+        socket.emit('init', `user/${uid}`);
+      }, 1000);
+    });
+    socket.on('reconnect', () => {
+      socket.emit('init', `user/${uid}`);
+      // Temporary solution for reconnect
+      setTimeout(() => {
+        socket.emit('init', `user/${uid}`);
+      }, 1000);
+    });
+  }
+
   // emit init event after socket and user id is available, and socket is connected
   useEffect(() => {
     if (uid && socket && socket.connected) {
