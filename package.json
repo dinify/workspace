@@ -7,28 +7,32 @@
     "packages": [
       "packages/*"
     ],
-    "nohoist": []
+    "nohoist": [
+      "**/fsevents"
+    ]
   },
   "scripts": {
-    "admin:dev": "cd packages/admin && yarn start-dev",
-    "admin:build": "cd packages/admin && yarn build",
-    "admin:deploy": "cd packages/admin && yarn deploy",
-    "app:dev": "cd packages/app && yarn start-dev",
-    "app:build": "cd packages/app && yarn build",
-    "app:deploy": "cd packages/app && yarn deploy",
-    "common:build": "cd packages/common && yarn build",
-    "landing:dev": "cd packages/landing && yarn start-dev",
-    "landing:build": "cd packages/landing && yarn build",
-    "landing:deploy": "cd packages/landing && yarn deploy",
-    "functions:dev": "cd packages/functions && yarn start",
-    "functions:build": "cd packages/functions && yarn build",
-    "functions:deploy": "cd packages/functions && yarn deploy",
-    "dash:dev": "cd packages/dashboard && yarn start-dev",
-    "dash:build": "cd packages/dashboard && yarn build",
-    "dash:deploy": "cd packages/dashboard && yarn deploy",
-    "waiter:dev": "cd packages/waiterboard && yarn start-dev",
-    "waiter:build": "cd packages/waiterboard && yarn build",
-    "waiter:deploy": "cd packages/waiterboard && yarn deploy",
+    "bootstrap": "lerna bootstrap && npm run cert:add",
+    "cert:add": "openssl x509 -outform der -in ./node_modules/webpack-dev-server/ssl/server.pem -out ./node_modules/webpack-dev-server/ssl/server.crt && security add-trusted-cert -k ~/Library/Keychains/login.keychain ./node_modules/webpack-dev-server/ssl/server.crt",
+    "admin:dev": "cd packages/admin && npm start",
+    "admin:build": "cd packages/admin && npm build",
+    "admin:deploy": "cd packages/admin && npm deploy",
+    "app:dev": "cd packages/app && npm start",
+    "app:build": "cd packages/app && npm build",
+    "app:deploy": "cd packages/app && npm deploy",
+    "common:build": "cd packages/common && npm build",
+    "landing:dev": "cd packages/landing && npm start",
+    "landing:build": "cd packages/landing && npm build",
+    "landing:deploy": "cd packages/landing && npm deploy",
+    "functions:dev": "cd packages/functions && npm start",
+    "functions:build": "cd packages/functions && npm build",
+    "functions:deploy": "cd packages/functions && npm deploy",
+    "dash:dev": "cd packages/dashboard && npm start",
+    "dash:build": "cd packages/dashboard && npm build",
+    "dash:deploy": "cd packages/dashboard && npm deploy",
+    "waiter:dev": "cd packages/waiterboard && npm start",
+    "waiter:build": "cd packages/waiterboard && npm build",
+    "waiter:deploy": "cd packages/waiterboard && npm deploy",
     "jest": "jest --coverage --verbose --color"
   },
   "devDependencies": {

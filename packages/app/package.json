@@ -60,11 +60,11 @@
     "typescript": "^3.5.3"
   },
   "scripts": {
-    "start": "serve -s build",
-    "start-dev": "react-app-rewired start",
+    "serve": "serve -s build",
+    "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
-    "deploy": "yarn build && firebase deploy --only hosting:app",
+    "deploy": "npm run build && firebase deploy --only hosting:app",
     "eject": "react-scripts eject",
     "format": "prettier --write '**/*.{js,jsx}'"
   },

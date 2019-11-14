@@ -33,7 +33,7 @@
     "reactstrap": "6.5.0"
   },
   "scripts": {
-    "start-dev": "react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "react-scripts build && firebase deploy --only hosting:admin",
     "test": "react-scripts test --env=jsdom",
