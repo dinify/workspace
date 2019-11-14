@@ -24,7 +24,7 @@ const coerce = (arg: any) => {
   }
 };
 
-const getFormatters = (cldr: CLDR) => ({
+export const getFormatters = (cldr: CLDR) => ({
   date: (args: MessageArg[], options: string[]) => {
     const width = options[0] as FormatWidthType;
     return cldr.Calendars.formatDate(args[0] as ZonedDateTime, { date: width });
