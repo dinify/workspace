@@ -9,28 +9,31 @@ import EnglishPack from "@phensley/cldr/packs/en.json";
 import localizedLanguagesResource from "./localized-languages.json";
 import defaultLanguagesResource from "./default-languages.json";
 import wretch from "wretch";
+import { createContext } from "react";
 
 // IDEA: use ICU compiled to webassembly !
-
-// TODO: move this to static.dinify.app
-const packurl = `https://cdn.jsdelivr.net/npm/@phensley/cldr@0.19.4/packs`;
-const staticRoot = "https://static.dinify.app";
-
-export type Namespace =
-  | "app"
-  | "dashboard"
-  | "landing"
-  | "waiterboard"
-  | "common";
+const staticRoot =
+  process.env.NODE_ENV === "production"
+    ? "static.dinify.app"
+    : "static.dinify.dev";
 
 export interface IntlState {
-  namespace?: Exclude<Namespace, "common">;
-  locale?: Locale;
-  translations?: any;
+  locale: Locale;
+  messages?: string[];
   cldr: CLDR;
 }
 
-export type IntlConfig = Pick<IntlState, "namespace" | "locale">;
+export abstract class MessageConfig<T> {
+  constructor(public schema: string[]) {}
+
+  getId = (locale: Locale) => locale.tag.language;
+  abstract getUri: (id: string) => string;
+}
+
+export type IntlConfig<T> = {
+  locale?: Locale;
+  messages: MessageConfig<T>;
+};
 
 export interface IntlContextType {
   state: IntlState;
@@ -51,52 +54,28 @@ const loader = (language: string): any => {
   return EnglishPack;
 };
 
-export const translatedNamespaces: Namespace[] = [
-  "app",
-  "common",
-  "dashboard",
-  "landing"
-];
-
 // fetch the language resource pack for this version
 const asyncLoader = (language: string) =>
-  wretch(`${packurl}/${language}.json`)
+  wretch(`https://${staticRoot}/i18n/packs/${language}`)
     .get()
     .json()
     .catch((err: Error) => console.log(err));
 
 // translation loader
-export const loadTranslations = ({
-  locale = getDetectedLocale().locale,
-  namespace
-}: Pick<IntlState, "namespace" | "locale">) => {
-  const language = locale.tag.language();
-  const namespaces: Namespace[] = namespace
-    ? ["common", namespace]
-    : ["common"];
-  return Promise.all(
-    namespaces
-      .filter(ns => translatedNamespaces.includes(ns))
-      .map(cns => {
-        return new Promise((resolve, reject) => {
-          wretch(`${staticRoot}/i18n/translations/${language}/${cns}`)
-            .get()
-            .json(json => {
-              resolve(json);
-            })
-            .catch(err => reject(err));
-        });
+export function loadMessages(config: IntlConfig): Promise<string[]> {
+  const {
+    locale = getDetectedLocale().locale,
+    messages: { getId = (locale: Locale) => locale.tag.language() }
+  } = config;
+  return new Promise((resolve, reject) => {
+    wretch(config.messages.getUri(getId(locale)))
+      .get()
+      .json(json => {
+        resolve(json as string[]);
       })
-  )
-    .then(values => {
-      let aggr: any = {};
-      values.forEach(v => {
-        aggr = { ...aggr, ...v };
-      });
-      return aggr;
-    })
-    .catch(err => console.log(err));
-};
+      .catch(err => reject(err));
+  });
+}
 
 export const framework = new CLDRFramework({
   loader,
@@ -143,6 +122,17 @@ export const localeMatcher = new LocaleMatcher(supportedLocales.map(l => l.id));
 
 export const English = framework.get("en");
 
-export { IntlContext, useIntl } from "./context";
+const initialState: IntlState = {
+  cldr: English,
+  locale: getDetectedLocale().locale
+};
+
+export const IntlContext = createContext<IntlContextType>({
+  state: initialState,
+  setLocale: () => {}
+});
+
+export { useIntl } from "./context";
 export * from "./provider";
 export { default as useTranslation } from "./translations";
+export * from "./messages";

@@ -1,59 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import { Locale } from '@phensley/cldr';
-import { getDetectedLocale, framework, localeMatcher, IntlConfig, IntlContext, loadTranslations, English, IntlState } from '.';
+import React, { useState, useEffect } from "react";
+import { Locale } from "@phensley/cldr";
+import {
+  getDetectedLocale,
+  framework,
+  localeMatcher,
+  IntlConfig,
+  IntlContext,
+  loadMessages,
+  English,
+  IntlState
+} from ".";
 /**
  * Internationalization context provider.
- * 
+ *
  * @param props The namespace and locale to create this i18n context for. Leave locale empty for detection.
  */
 
- // getDetectedLocale().locale
- // Pick<OptionalLocale, 'namespace'|'locale'>
+// getDetectedLocale().locale
+// Pick<OptionalLocale, 'namespace'|'locale'>
 
- export const IntlProvider = (props: React.PropsWithChildren<IntlConfig>) => {
+export function IntlProvider(props: React.PropsWithChildren<IntlConfig>) {
   const [state, setState] = useState<IntlState>({
     cldr: English,
-    namespace: props.namespace,
-    locale: props.locale || getDetectedLocale().locale,
+    locale: props.locale || getDetectedLocale().locale
   });
 
   // load of the bundles: initial on component mount and locale update
   useEffect(() => {
-    const { locale, namespace } = state;
-    if (!namespace || !locale) {
-      console.error('Undefined namespace. The i18n.init() function needs to be called with a namespace argument');
-      return;
-    }
+    const { locale } = state;
     // TODO: combine bundles somehow for better performance
-    loadTranslations({ locale, namespace }).then(translations => {
-      framework.getAsync(locale).then(cldr => {
-        setState({ ...state, cldr, translations });
-      }).catch(err => {
-        setState({ ...state, translations });
-        console.error(err);
-      });
+    loadMessages({ ...props, locale }).then(messages => {
+      framework
+        .getAsync(locale)
+        .then(cldr => {
+          setState({ ...state, cldr, messages });
+        })
+        .catch(err => {
+          setState({ ...state, messages });
+          console.error(err);
+        });
     });
-    
   }, [state.locale]);
-  
-  const setLocale = (action: Locale|string) => {
+
+  const setLocale = (action: Locale | string) => {
     let locale: Locale;
-    if (typeof action === 'string') locale = localeMatcher.match(action as string).locale;
+    if (typeof action === "string")
+      locale = localeMatcher.match(action as string).locale;
     else locale = action as Locale;
 
     setState({ ...state, locale });
   };
   // console.log('State', {
-  //   locale: state.locale.id, 
-  //   cldr: state.cldr.General.locale().id, 
+  //   locale: state.locale.id,
+  //   cldr: state.cldr.General.locale().id,
   //   translations: state.translations ? state.translations.gratuity : ''
   // });
   return (
-    <IntlContext.Provider value={{
-      state,
-      setLocale
-    }}>
+    <IntlContext.Provider
+      value={{
+        state,
+        setLocale
+      }}
+    >
       {props.children}
     </IntlContext.Provider>
   );
-};
+}

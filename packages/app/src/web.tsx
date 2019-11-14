@@ -28,28 +28,45 @@ import history from './services/history';
 import syncHistoryWithStore from './features/router/sync';
 
 if (process.env.NODE_ENV !== 'development') {
-  Sentry.init({ dsn: "https://5b5ebbbbdbcd4c8cac74a6b6115afcc8@sentry.io/1808340" });
+  Sentry.init({
+    dsn: 'https://5b5ebbbbdbcd4c8cac74a6b6115afcc8@sentry.io/1808340',
+  });
 }
 //  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 //  import HTML5Backend from 'react-dnd-html5-backend'
 //  import { DragDropContextProvider } from 'react-dnd'
 
 // TODO: move these to environment variables
+const staticRoot =
+  process.env.NODE_ENV === 'production'
+    ? 'static.dinify.app'
+    : 'storage.googleapis.com/static.dinify.dev';
 
-const intlConfig: IntlConfig = {
-  namespace: 'app',
-  // bundleUri: 'https://cdn.jsdelivr.net/npm/@phensley/cldr@0.19.3/packs', // TODO: move this to static.dinify.app
-  // translationsUri: 'https://static.dinify.app/i18n/translations'
-};
 const langCookie = getCookie('language');
+let locale;
 if (langCookie) {
   try {
     const content = JSON.parse(langCookie);
-    intlConfig.locale = localeMatcher.match(content.primary).locale;
+    locale = localeMatcher.match(content.primary).locale;
   } catch (e) {
     console.error('JSON parse error', e);
   }
 }
+
+const intlConfig: IntlConfig = {
+  locale,
+  messages: {
+    getUri: locale => {
+      let id = locale.tag.language();
+      // Traditional and simplified chinese
+      // have the script tag in their bundle identifier
+      if (id === 'zh') {
+        id = `zh-${locale.tag.script()}`;
+      }
+      return `https://${staticRoot}/i18n/messages/${id}/core.app`;
+    },
+  },
+};
 
 // react-redux-firebase config
 const rrfConfig: Partial<ReactReduxFirebaseConfig> = {

@@ -4,7 +4,6 @@ import values from 'ramda/es/values';
 import { Addon, MenuAddon } from 'AddonModels';
 import { Translation } from 'CartModels';
 import { useIntl } from '@dinify/common/src/lib/i18n';
-import { Locale } from '@phensley/cldr';
 
 export type AddonView = Addon &
   MenuAddon &
@@ -13,7 +12,7 @@ export type AddonView = Addon &
   };
 
 export const useAddonView = (menuItemId: string) => {
-  const locale: Locale | undefined = useIntl(ctx => ctx.state.locale);
+  const locale = useIntl(ctx => ctx.state.locale);
   const selectTranslation = (translations: [Translation]): Translation => {
     if (locale)
       return (
