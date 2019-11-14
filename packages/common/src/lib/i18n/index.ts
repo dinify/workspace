@@ -12,10 +12,12 @@ import wretch from "wretch";
 import { createContext } from "react";
 
 // IDEA: use ICU compiled to webassembly !
+
+// TODO: move this to ENV
 const staticRoot =
   process.env.NODE_ENV === "production"
-    ? "static.dinify.app"
-    : "storage.googleapis.com/static.dinify.dev";
+    ? "https://static.dinify.app"
+    : "https://storage.googleapis.com/static.dinify.dev";
 
 export interface IntlState {
   locale: Locale;
@@ -23,14 +25,9 @@ export interface IntlState {
   cldr: CLDR;
 }
 
-export type MessageConfig = {
-  getUri: (locale: Locale) => string;
-  schema: string[];
-};
-
 export type IntlConfig = {
   locale?: Locale;
-  messages: MessageConfig;
+  namespace: string;
 };
 
 export interface IntlContextType {
@@ -55,7 +52,7 @@ const loader = (language: string): any => {
 
 // fetch the language resource pack for this version
 const asyncLoader = (language: string) =>
-  wretch(`https://${staticRoot}/i18n/packs/${language}`)
+  wretch(`${staticRoot}/i18n/packs/${language}`)
     .get()
     .json()
     .catch((err: Error) => console.log(err));
@@ -63,8 +60,14 @@ const asyncLoader = (language: string) =>
 // translation loader
 export function loadMessages(config: IntlConfig): Promise<string[]> {
   const { locale = getDetectedLocale().locale } = config;
+  let id = locale.tag.language();
+  // Traditional and simplified chinese
+  // have the script tag in their bundle identifier
+  if (id === "zh") {
+    id = `zh-${locale.tag.script()}`;
+  }
   return new Promise((resolve, reject) => {
-    wretch(config.messages.getUri(locale))
+    wretch(`${staticRoot}/i18n/messages/${id}/core.app`)
       .get()
       .json(json => {
         resolve(json as string[]);

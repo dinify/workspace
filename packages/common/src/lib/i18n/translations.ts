@@ -1,25 +1,7 @@
-import { CLDR, Locale } from "@phensley/cldr";
 import { useIntl } from ".";
 import { format } from "./formatter";
 import values from "ramda/es/values";
-
-const i18nextFormatter = (value: any, format: string, cldr: CLDR): any => {
-  switch (format) {
-    case "time:short":
-      return cldr.Calendars.formatDate(value, { time: "short" });
-    case "number":
-      return cldr.Numbers.formatDecimal(value, { style: "short" });
-    case "list":
-      return cldr.General.formatList(value, "and");
-    default:
-      console.warn("Unrecognized format: ", format);
-      break;
-  }
-  return value;
-};
-
-// example template
-// "Testing interpolation ${cldr.Calendars.formatDate(time, { time: 'short' })}";
+import schemas from "./schemas";
 
 export type TFunction = (path: string[] | string, data?: any) => string;
 
@@ -38,7 +20,7 @@ export default () => {
     config,
     state: { locale, messages, cldr }
   } = context;
-  const { schema } = config.messages;
+  const { schema } = schemas[config.namespace];
   const getTemplate = (path: any): string => {
     if (!messages || !schema) return "\u00a0";
     if (schema.indexOf(path) === -1)

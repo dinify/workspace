@@ -26,7 +26,6 @@ import { SocketReduxProvider } from './lib/socket';
 import CheckinExecutor from './features/restaurant/checkin-executor';
 import history from './services/history';
 import syncHistoryWithStore from './features/router/sync';
-import { schema } from './lib/messages';
 
 if (process.env.NODE_ENV !== 'development') {
   Sentry.init({
@@ -36,12 +35,6 @@ if (process.env.NODE_ENV !== 'development') {
 //  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 //  import HTML5Backend from 'react-dnd-html5-backend'
 //  import { DragDropContextProvider } from 'react-dnd'
-
-// TODO: move these to environment variables
-const staticRoot =
-  process.env.NODE_ENV === 'production'
-    ? 'static.dinify.app'
-    : 'storage.googleapis.com/static.dinify.dev';
 
 const langCookie = getCookie('language');
 let locale;
@@ -56,18 +49,7 @@ if (langCookie) {
 
 const intlConfig: IntlConfig = {
   locale,
-  messages: {
-    getUri: locale => {
-      let id = locale.tag.language();
-      // Traditional and simplified chinese
-      // have the script tag in their bundle identifier
-      if (id === 'zh') {
-        id = `zh-${locale.tag.script()}`;
-      }
-      return `https://${staticRoot}/i18n/messages/${id}/core.app`;
-    },
-    schema,
-  },
+  namespace: 'core.app',
 };
 
 // react-redux-firebase config
