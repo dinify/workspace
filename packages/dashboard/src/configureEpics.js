@@ -12,7 +12,7 @@ import ingredientEpics from './features/ingredient/epics.ts';
 import serviceEpics from './features/service/epics';
 import transactionEpics from './features/transaction/epics.ts';
 
-import { translationEpics } from './features/translation';
+import translationEpics from './features/translation/epics';
 
 const rootEpic = (action$, state$, firebase, ...rest) => {
   const epic = combineEpics(

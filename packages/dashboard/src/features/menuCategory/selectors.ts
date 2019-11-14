@@ -4,20 +4,20 @@ import pipe from 'ramda/es/pipe';
 import sort from 'ramda/es/sort';
 import { MapToList } from '@dinify/common/src/lib/FN';
 
-export const allCategories = state => state.menuCategory.all;
-export const selectedRestaurantId = state => state.restaurant.selectedRestaurant;
+export const allCategories = (state: any) => state.menuCategory.all;
+export const selectedRestaurantId = (state: any) => state.restaurant.selectedRestaurant;
 
 export const relevantCategoriesList = createSelector(
   [
     allCategories,
     selectedRestaurantId
   ],
-  (all, id) => {
+  (all: any, id: any) => {
     if (!id) return [];
     return pipe(
-      (col) => pickBy((s) => s.restaurantId === id, col),
-      MapToList,
-      (arr) => sort((a, b) => a.precedence - b.precedence, arr)
+      (col: any) => pickBy((s: any) => s.restaurantId === id, col),
+      (m: any) => MapToList(m),
+      (arr: any) => sort((a: any, b: any) => a.precedence - b.precedence, arr)
     )(all);
   }
 );
