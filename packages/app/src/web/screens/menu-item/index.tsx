@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { MenuItem, MenuItemTranslation } from 'MenuItemsModels';
 import { RootState } from 'typesafe-actions';
 import { useRouteMatch, useHistory } from 'react-router';
 import {
@@ -27,21 +26,7 @@ import { useAddonView } from '../../../features/addon/selectors';
 import { useIngredientView } from '../../../features/ingredient/selectors';
 import { useOptionView } from '../../../features/option/selectors';
 import { useAction } from '@dinify/common/src/lib/util';
-
-type MenuItemTranslated = MenuItem & MenuItemTranslation;
-
-export const useMenuItem = (menuItemId: string | null) => {
-  return useSelector<RootState, MenuItemTranslated | null>(state => {
-    if (menuItemId) {
-      const selected = state.menuItem.all[menuItemId];
-      if (selected) {
-        // Assuming Accecpt-Language header was set on the request
-        return { ...selected.translations[0], ...selected };
-      }
-    }
-    return null;
-  });
-};
+import { useMenuItemView } from '../../../features/menuItem/selectors';
 
 export const MenuItemScreen = ({  }: {}) => {
   const clearCustomizations = useAction(clearCustomizationsAction);
@@ -52,7 +37,7 @@ export const MenuItemScreen = ({  }: {}) => {
   const history = useHistory();
   const { t } = useTranslation();
   const menuItemId = match ? match.params.id : '';
-  const menuItem = useMenuItem(menuItemId);
+  const menuItem = useMenuItemView(menuItemId);
   const imageUrls = useSelector<RootState, string[]>(state => {
     if (!menuItem) return [];
     return menuItem.images

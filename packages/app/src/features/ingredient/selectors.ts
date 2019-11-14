@@ -3,7 +3,6 @@ import { Ingredient, MenuIngredient } from 'IngredientModels';
 import { Translation } from 'CartModels';
 import { RootState } from 'typesafe-actions';
 import { values } from 'ramda';
-import { Locale } from '@phensley/cldr';
 import { useIntl } from '@dinify/common/src/lib/i18n';
 
 export type IngredientView = Ingredient &
@@ -13,7 +12,7 @@ export type IngredientView = Ingredient &
   };
 
 export const useIngredientView = (menuItemId: string) => {
-  const locale: Locale | undefined = useIntl(ctx => ctx.state.locale);
+  const locale = useIntl(ctx => ctx.state.locale);
   const selectTranslation = (translations: [Translation]): Translation => {
     if (locale)
       return (

@@ -20,16 +20,17 @@ import {
 // Pick<OptionalLocale, 'namespace'|'locale'>
 
 export function IntlProvider(props: React.PropsWithChildren<IntlConfig>) {
+  const { children, ...config } = props;
   const [state, setState] = useState<IntlState>({
     cldr: English,
-    locale: props.locale || getDetectedLocale().locale
+    locale: config.locale || getDetectedLocale().locale
   });
 
   // load of the bundles: initial on component mount and locale update
   useEffect(() => {
     const { locale } = state;
     // TODO: combine bundles somehow for better performance
-    loadMessages({ ...props, locale }).then(messages => {
+    loadMessages({ ...config, locale }).then(messages => {
       framework
         .getAsync(locale)
         .then(cldr => {
@@ -58,6 +59,7 @@ export function IntlProvider(props: React.PropsWithChildren<IntlConfig>) {
   return (
     <IntlContext.Provider
       value={{
+        config,
         state,
         setLocale
       }}

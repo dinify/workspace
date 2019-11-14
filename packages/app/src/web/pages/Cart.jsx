@@ -26,35 +26,28 @@ import { rmFromCartAsync, orderAsync } from 'features/cart/actions.ts';
 
 const styles = theme => ({
   primary: {
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
   },
   secondary: {
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   rounded: {
     borderRadius: 20,
-    border: `1px solid ${theme.palette.divider}`
+    border: `1px solid ${theme.palette.divider}`,
   },
   popover: {
-    boxShadow: theme.shadows[2]
+    boxShadow: theme.shadows[2],
   },
 });
 
-const Cart = ({
-  cart,
-  rmFromCart,
-  editing,
-  setEditing,
-  checkedin,
-  order,
-}) => {
+const Cart = ({ cart, rmFromCart, editing, setEditing, checkedin, order }) => {
   const { t } = useTranslation();
   const notCheckedIn = !checkedin; // !checkedInRestaurant;
 
   if (!cart) return null;
   const count = cart.count === undefined ? 0 : cart.count;
   return (
-    <div style={{paddingBottom: 64}}>
+    <div style={{ paddingBottom: 64 }}>
       {/* cartItemsList.map(item =>
         <div key={item.id} style={{paddingTop: 16}}>
           <SwipableItem
@@ -66,30 +59,37 @@ const Cart = ({
         </div>
       ) */}
       <ResponsiveContainer>
-        <div style={{display: 'flex', alignItems: 'center', paddingTop: 16}}>
-          <div style={{flex: 1}}>
-            <Typography variant="subtitle1">
-              {t('cart.title')}
-            </Typography>
+        <div style={{ display: 'flex', alignItems: 'center', paddingTop: 16 }}>
+          <div style={{ flex: 1 }}>
+            <Typography variant="subtitle1">{t('cart.title')}</Typography>
             <Typography variant="caption">
-              {t('cart.itemCount', { count, context: count === 0 ? 'none' : undefined })}
+              {t('cart.itemCount', { count })}
             </Typography>
           </div>
 
-          <IconButton disabled={cart.count === 0} onClick={() => setEditing(!editing)}>
+          <IconButton
+            disabled={cart.count === 0}
+            onClick={() => setEditing(!editing)}
+          >
             {editing ? <Done /> : <Delete />}
           </IconButton>
         </div>
-        {cart && FN.MapToList(cart.restaurants).map(restaurant =>
-          FN.MapToList(restaurant.items).map(item =>
-            <div key={item.id} style={{marginTop: 16}}>
-              <CartItem rmFromCart={rmFromCart} editing={editing} item={item} />
-            </div>
-          )
-        )}
-        <Divider style={{marginTop: 16, marginBottom: 16}}/>
-        {notCheckedIn && false && <div>
-          {/* <Typography variant="overline" color="textSecondary">
+        {cart &&
+          FN.MapToList(cart.restaurants).map(restaurant =>
+            FN.MapToList(restaurant.items).map(item => (
+              <div key={item.id} style={{ marginTop: 16 }}>
+                <CartItem
+                  rmFromCart={rmFromCart}
+                  editing={editing}
+                  item={item}
+                />
+              </div>
+            )),
+          )}
+        <Divider style={{ marginTop: 16, marginBottom: 16 }} />
+        {notCheckedIn && false && (
+          <div>
+            {/* <Typography variant="overline" color="textSecondary">
             Order type
           </Typography>
           <RadioGroup
@@ -101,59 +101,61 @@ const Cart = ({
             <FormControlLabel value="AHEAD" control={<Radio />} label="Order ahead" />
             <FormControlLabel value="DELIVERY" disabled control={<Radio />} label="Delivery (coming soon!)" />
           </RadioGroup> */}
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <Typography style={{flex: 1}} variant="caption">
-              {t('subtotal')}
-            </Typography>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Typography style={{ flex: 1 }} variant="caption">
+                {t('subtotal')}
+              </Typography>
 
-            <Typography variant="overline">
-              <Price price={cart.subtotal} />
-            </Typography>
+              <Typography variant="overline">
+                <Price price={cart.subtotal} />
+              </Typography>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Typography style={{ flex: 1 }} variant="caption">
+                {t('serviceFee')}
+              </Typography>
+
+              <Typography variant="overline"></Typography>
+            </div>
           </div>
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <Typography style={{flex: 1}} variant="caption">
-              {t('serviceFee')}
-            </Typography>
-
-            <Typography variant="overline">
-
-            </Typography>
-          </div>
-        </div>}
+        )}
         {cart.count > 0 && (
-          <div style={{paddingLeft: notCheckedIn ? 0 : 72}}>
+          <div style={{ paddingLeft: notCheckedIn ? 0 : 72 }}>
             <TotalPrice price={cart.subtotal} />
           </div>
         )}
         <Fab
-          disabled={notCheckedIn || cart.count === 0 || cart === null }
-          style={{marginTop: 16, width: '100%'}}
+          disabled={notCheckedIn || cart.count === 0 || cart === null}
+          style={{ marginTop: 16, width: '100%' }}
           variant="extended"
           color="primary"
-          onClick={() => order()}>
-          <RestaurantMenu style={{marginRight: 16}} />
+          onClick={() => order()}
+        >
+          <RestaurantMenu style={{ marginRight: 16 }} />
           {t('order')}
         </Fab>
       </ResponsiveContainer>
     </div>
-  )
-}
+  );
+};
 
 export default connect(
-  (state) => ({
+  state => ({
     cart: null,
     checkedin: state.seat.checkedin,
-    checkedInRestaurant: state.restaurant.checkedInRestaurant
+    checkedInRestaurant: state.restaurant.checkedInRestaurant,
   }),
   {
     rmFromCart: rmFromCartAsync.request,
-    order: orderAsync.request
-  }
-)(withStateHandlers(
-  {
-    editing: false,
+    order: orderAsync.request,
   },
-  {
-    setEditing: () => (editing) => ({ editing }),
-  }
-)(withStyles(styles)(Cart)));
+)(
+  withStateHandlers(
+    {
+      editing: false,
+    },
+    {
+      setEditing: () => editing => ({ editing }),
+    },
+  )(withStyles(styles)(Cart)),
+);

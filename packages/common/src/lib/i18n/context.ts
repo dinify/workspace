@@ -4,7 +4,7 @@ import { useContext } from "react";
 export function useIntl<T = IntlContextType>(
   selector?: (ctx: IntlContextType) => T
 ): T {
-  const ctx = useContext(IntlContext);
-  if (selector) return selector(ctx);
-  return ctx as any;
+  const context = useContext<IntlContextType>(IntlContext);
+  if (!selector) return context as any;
+  return selector(context);
 }

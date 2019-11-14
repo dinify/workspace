@@ -15,7 +15,7 @@ import { createContext } from "react";
 const staticRoot =
   process.env.NODE_ENV === "production"
     ? "static.dinify.app"
-    : "static.dinify.dev";
+    : "storage.googleapis.com/static.dinify.dev";
 
 export interface IntlState {
   locale: Locale;
@@ -23,19 +23,18 @@ export interface IntlState {
   cldr: CLDR;
 }
 
-export abstract class MessageConfig<T> {
-  constructor(public schema: string[]) {}
+export type MessageConfig = {
+  getUri: (locale: Locale) => string;
+  schema: string[];
+};
 
-  getId = (locale: Locale) => locale.tag.language;
-  abstract getUri: (id: string) => string;
-}
-
-export type IntlConfig<T> = {
+export type IntlConfig = {
   locale?: Locale;
-  messages: MessageConfig<T>;
+  messages: MessageConfig;
 };
 
 export interface IntlContextType {
+  config: IntlConfig;
   state: IntlState;
   setLocale: (locale: Locale | string) => any;
 }
@@ -63,12 +62,9 @@ const asyncLoader = (language: string) =>
 
 // translation loader
 export function loadMessages(config: IntlConfig): Promise<string[]> {
-  const {
-    locale = getDetectedLocale().locale,
-    messages: { getId = (locale: Locale) => locale.tag.language() }
-  } = config;
+  const { locale = getDetectedLocale().locale } = config;
   return new Promise((resolve, reject) => {
-    wretch(config.messages.getUri(getId(locale)))
+    wretch(config.messages.getUri(locale))
       .get()
       .json(json => {
         resolve(json as string[]);
@@ -135,4 +131,3 @@ export const IntlContext = createContext<IntlContextType>({
 export { useIntl } from "./context";
 export * from "./provider";
 export { default as useTranslation } from "./translations";
-export * from "./messages";

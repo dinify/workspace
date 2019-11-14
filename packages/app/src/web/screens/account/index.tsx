@@ -9,6 +9,8 @@ import Avatar from './avatar';
 import Settings from './settings';
 import RolesSection from './roles-section';
 import Dialogs from './dialogs';
+import { openDialogAction } from '../../../features/ui/actions';
+import { useAction } from '@dinify/common/src/lib/util';
 
 export const AccountScreen: React.FC = () => {
   const firebase = useFirebase();
@@ -16,31 +18,50 @@ export const AccountScreen: React.FC = () => {
   const [claims, setClaims] = useState();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
+    if (!mounted) setMounted(true);
+  }, []);
+  useEffect(() => {
     if (auth.currentUser) {
-      auth.currentUser.getIdTokenResult()
+      auth.currentUser
+        .getIdTokenResult()
         .then(result => setClaims(result.claims));
     }
-    setMounted(true);
   }, [auth.currentUser]);
   const transitions = useTransition(mounted, null, spec.lateral);
   const { t } = useTranslation();
+  const openDialog = useAction(openDialogAction);
 
   const account = (
-    <div style={{
-      maxWidth: 660,
-      marginTop: 56,
-      marginRight: 'auto',
-      marginLeft: 'auto',
-      paddingLeft: 16,
-      paddingRight: 16
-    }}>
-      <Avatar user={auth.currentUser}/>
+    <div
+      style={{
+        maxWidth: 660,
+        marginTop: 56,
+        marginRight: 'auto',
+        marginLeft: 'auto',
+        paddingLeft: 16,
+        paddingRight: 16,
+      }}
+    >
+      <Avatar user={auth.currentUser} />
       <Settings />
-      {claims && claims.roles && <RolesSection roles={claims.roles}/>}
-      <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 16, paddingBottom: 16}}>
-        <Button style={{boxShadow: 'none', height: 40}} variant="contained" onClick={() => {
-          firebase.logout();
-        }} color="primary">
+      {claims && claims.roles && <RolesSection roles={claims.roles} />}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          marginTop: 16,
+          paddingBottom: 16,
+        }}
+      >
+        <Button
+          disabled={!auth.currentUser}
+          style={{ boxShadow: 'none', height: 40 }}
+          variant="contained"
+          onClick={() => {
+            openDialog('logout');
+          }}
+          color="primary"
+        >
           {t('user.logOut')}
         </Button>
       </div>
@@ -50,11 +71,16 @@ export const AccountScreen: React.FC = () => {
   return (
     <>
       <Dialogs />
-      <Header/>
-      {transitions.map(({ item, key, props }) => 
-        item
-          ? <animated.div key="account-screen" style={props}>{account}</animated.div>
-          : <React.Fragment key="account-transition-fragment"/>
+      <Header />
+      {/* <div key="account-screen">{account}</div> */}
+      {transitions.map(({ item, key, props }) =>
+        item ? (
+          <animated.div key="account-screen" style={props}>
+            {account}
+          </animated.div>
+        ) : (
+          <React.Fragment key="account-transition-fragment" />
+        ),
       )}
     </>
   );

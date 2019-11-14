@@ -1,37 +1,76 @@
 import React from 'react';
-import { useSpring, animated } from 'react-spring';
 import Avatar from '@material-ui/core/Avatar';
 import Image from '../../components/Image';
 import Typography from '@material-ui/core/Typography';
 import Person from '@material-ui/icons/PersonRounded';
 import { User } from 'firebase';
+import Button from '@material-ui/core/Button';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
+import { useHistory } from 'react-router';
+import * as routes from '../../routes';
 
 export default ({ user }: { user: User | null }) => {
-  const fadeStyle = useSpring({opacity: user === null ? 0 : 1});
-  const AnimatedImage = animated(Image);
-  const AnimatedTypography = animated(Typography);
-
+  const { t } = useTranslation();
+  const history = useHistory();
   // user.isAnonymous
+  const trans = {
+    transition: 'opacity 100ms',
+    opacity: user === null ? 0 : 1,
+  };
   return (
-    <div style={{
-      padding: 32,
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }}>
-      <Avatar style={{width: 96, height: 96}}>
-        {user && user.photoURL ?
-          <AnimatedImage style={fadeStyle} aspect={1} image={user.photoURL} title={user.displayName || ''} /> :
-          <Person style={{width: 56, height: 56}} />
-        }
+    <div
+      style={{
+        padding: 32,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Avatar
+        style={{
+          position: 'relative',
+          width: 96,
+          height: 96,
+          opacity: 1,
+        }}
+      >
+        <Person style={{ position: 'absolute', width: 56, height: 56 }} />
+        {user !== null && user.photoURL && (
+          <Image
+            style={{ position: 'absolute', top: 0, ...trans }}
+            aspect={1}
+            image={user.photoURL}
+            title={user.displayName || ''}
+          />
+        )}
       </Avatar>
-      <AnimatedTypography style={{marginTop: 8, minHeight: '1.75rem', ...fadeStyle}} variant="h5">
-        {user && user.displayName}
-      </AnimatedTypography>
-      <AnimatedTypography style={{minHeight: '1.5rem', ...fadeStyle}} variant="subtitle1">
-        {user && user.email}
-      </AnimatedTypography>
+      {!user && (
+        <Button
+          style={{ boxShadow: 'none', height: 40, marginTop: 16 }}
+          variant="contained"
+          onClick={() => history.push(routes.SIGNIN)}
+          color="primary"
+        >
+          {t('user.signIn')}
+        </Button>
+      )}
+      {user && user.displayName && (
+        <Typography
+          style={{ marginTop: 8, minHeight: '1.75rem', ...trans }}
+          variant="h5"
+        >
+          {user.displayName}
+        </Typography>
+      )}
+      {user && user.email && (
+        <Typography
+          style={{ minHeight: '1.5rem', ...trans }}
+          variant="subtitle1"
+        >
+          {user.email}
+        </Typography>
+      )}
     </div>
   );
-}
+};

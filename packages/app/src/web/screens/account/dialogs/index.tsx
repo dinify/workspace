@@ -7,9 +7,10 @@ import {
   closeDialogAction,
   Dialog,
   DialogType,
-} from '../../../features/ui/actions';
+} from '../../../../features/ui/actions';
 import { useIntl } from '@dinify/common/src/lib/i18n';
 import { useAction } from '@dinify/common/src/lib/util';
+import LogoutDialog from './logout';
 
 export default () => {
   const closeDialog = useAction(closeDialogAction);
@@ -19,7 +20,8 @@ export default () => {
   } = useIntl();
 
   const getHandler = (type: DialogType) => (...params: any[]) => {
-    (dialogs[type] as Dialog).handler(...params);
+    if ((dialogs[type] as Dialog).handler)
+      (dialogs[type] as Dialog).handler(...params);
     closeDialog(type);
   };
 
@@ -35,6 +37,8 @@ export default () => {
         initialSelectedLanguage={locale.tag.language()}
         onClose={getHandler('language')}
       />
+
+      <LogoutDialog open={!!dialogs['logout']} onClose={getHandler('logout')} />
     </>
   );
 };

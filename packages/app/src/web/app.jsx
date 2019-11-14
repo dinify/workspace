@@ -53,8 +53,12 @@ const App = props => {
 
   const match = (...paths) => {
     let matched = false;
+    const get = path => {
+      const m = matchPath(location.pathname, { path });
+      return m === null ? false : m.isExact;
+    };
     paths.forEach(path => {
-      matched = matched || matchPath(location.pathname, { path }) != null;
+      matched = matched || get(path);
     });
     return matched;
   };
@@ -62,18 +66,14 @@ const App = props => {
   const isAccountTab = match(routes.ACCOUNT) || match(routes.SIGNIN);
 
   const onNavigate = (evt, val) => {
-    if (val === 0) {
-      if (matchPath(location.pathname, { path: routes.MENUITEM })) {
-        const lastRpath = findLast(p =>
-          matchPath(p, { path: routes.RESTAURANT }),
-        )(pathnames);
-
-        if (lastRpath) return push(lastRpath);
-      }
-
+    if (val === 0 && !match(routes.HOMEPAGE)) {
       push(routes.HOMEPAGE);
-    } else if (val === 1 && !isAccountTab) {
+    }
+    if (val === 1 && !match(routes.ACCOUNT)) {
       push(routes.ACCOUNT);
+    }
+    if (val === 0 || val === 1) {
+      // TODO: current screen content scroll to top
     }
   };
 
@@ -98,12 +98,7 @@ const App = props => {
             }
           />
 
-          <Route
-            path={routes.ACCOUNT}
-            component={() =>
-              user.isEmpty ? <Redirect to={routes.SIGNIN} /> : <AccountScreen />
-            }
-          />
+          <Route path={routes.ACCOUNT} component={AccountScreen} />
 
           <Route path={routes.CHECKIN} component={Checkin} />
           <Route path={routes.SERVICES} component={Services} />

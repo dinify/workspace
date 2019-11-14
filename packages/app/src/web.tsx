@@ -26,6 +26,7 @@ import { SocketReduxProvider } from './lib/socket';
 import CheckinExecutor from './features/restaurant/checkin-executor';
 import history from './services/history';
 import syncHistoryWithStore from './features/router/sync';
+import { schema } from './lib/messages';
 
 if (process.env.NODE_ENV !== 'development') {
   Sentry.init({
@@ -65,6 +66,7 @@ const intlConfig: IntlConfig = {
       }
       return `https://${staticRoot}/i18n/messages/${id}/core.app`;
     },
+    schema,
   },
 };
 
