@@ -10,7 +10,7 @@ import User from './user';
 import { colorsByStages } from '../../colors';
 import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, FoodItem } from '../styled/Events';
 import { confirmOrderAsync } from 'features/order/actions';
-import Price from '@dinify/common/src/components/Price';
+import Price from '@dinify/common/src/components/price';
 
 const styles = () => ({
   progress: {
@@ -110,7 +110,7 @@ const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, r
 						<Td></Td>
 						<Td></Td>
 						<Td></Td>
-						<Td>{N(order.subtotal.amount).format('0.00')} {order.subtotal.currency === 'EUR' ? '€' : order.subtotal.currency}</Td>
+						<Td><Price original price={order.subtotal} /></Td>
 					</Tr>
 					}
 

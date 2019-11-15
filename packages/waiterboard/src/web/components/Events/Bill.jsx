@@ -11,6 +11,7 @@ import { ActionBox, Header, TableId, CheckButton, TableTag, Th, Tr, Td, Text } f
 import { colorsByStages } from '../../colors';
 import User from './user';
 import Elapsed from './Elapsed';
+import { useFormatters } from "@dinify/common/src/lib/i18n/formatter";
 
 const styles = () => ({
   progress: {
@@ -21,10 +22,16 @@ const styles = () => ({
 const color = colorsByStages.s5;
 
 const Bill = ({ bill, confirmBill, removed, noconfirm, confirming, classes }) => {
-  if (!bill || !bill.subtotal) return null
+  if (!bill || !bill.subtotal) return null;
+
+  const currencyFormatter = useFormatters().currency;
+
+  const currency = bill.subtotal.currency;
+
   const subtotal = Number(bill.subtotal.amount);
   const gratuityPercentage = Number(bill.gratuity/100);
   const gratuityAmount = gratuityPercentage * subtotal;
+
   const total = subtotal + gratuityAmount;
   let orderItems = [];
   orderItems = FN.MapToList(bill.orders).map((order) => {
@@ -90,19 +97,25 @@ const Bill = ({ bill, confirmBill, removed, noconfirm, confirming, classes }) =>
                 <Tr key={item.id}>
     	            <Td>{item.menuItem.translations[0].name}</Td>
     	            <Td>1</Td>
-    	            <Td style={{textAlign: 'right'}}>{N(item.subtotal.amount).format('0.00')} €</Td>
+    	            <Td style={{textAlign: 'right'}}>
+                    {currencyFormatter([{ amount: item.subtotal.amount, currency }], ["short"])}
+                  </Td>
     	          </Tr>
               )]
   					)}
   					<Tr className="boldline">
   	          <Td>Gratuity</Td>
   	          <Td>{bill.gratuity}%</Td>
-  	          <Td style={{textAlign: 'right'}}>{N(gratuityAmount).format('0.00')} €</Td>
+  	          <Td style={{textAlign: 'right'}}>
+                {currencyFormatter([{ amount: gratuityAmount, currency }], ["short"])}
+              </Td>
   	        </Tr>
   					<Tr>
   	          <Td bold color={color}>TOTAL</Td>
   	          <Td></Td>
-  	          <Td bold color={color} style={{textAlign: 'right'}}>{N(total).format('0.00')} €</Td>
+  	          <Td bold color={color} style={{textAlign: 'right'}}>
+                {currencyFormatter([{ amount: total, currency }], ["short"])}
+              </Td>
   	        </Tr>
           </tbody>
         </TableTag>

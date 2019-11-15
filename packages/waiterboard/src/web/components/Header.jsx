@@ -23,6 +23,8 @@ import { getOrderList } from 'features/order/selectors';
 import { selectedRestaurant } from 'features/restaurant/selectors';
 import { colorsByStages } from '../colors';
 
+import { useFormatters } from "@dinify/common/src/lib/i18n/formatter";
+
 const Label = styled.span`
   color: rgb(180, 185, 190);
   line-height: 50px;
@@ -146,10 +148,17 @@ const Header = ({
   const confirmedOrdersCount = confirmedOrders.length;
   const totalOrdersCount = confirmedOrdersCount + unconfirmedOrders.length;
 
+  let currency = 'EUR';
+
   const amounts = confirmedOrders.map((o) => {
-    const itemSubtotals = o.items.map((item) => Number(item.subtotal.amount));
+    const itemSubtotals = o.items.map((item) => {
+      currency = item.subtotal.currency;
+      return Number(item.subtotal.amount)
+    });
     return sum(itemSubtotals);
   });
+
+  const currencyFormatter = useFormatters().currency;
 
   const salesVolume = sum(amounts);
 
@@ -196,7 +205,10 @@ const Header = ({
               <Value></Value>
               <Label>Tables</Label><Value>{tablesCount}</Value>
               <Label>Orders</Label><Value>{totalOrdersCount}</Value>
-              <Label>Sales</Label><Value>{numeral(salesVolume).format('0')}€</Value>
+              <Label>Sales</Label>
+              <Value>
+                {salesVolume > 0 ? currencyFormatter([{ amount: salesVolume, currency }], ["short"]) : '0'}
+              </Value>
 
               <IconButton onClick={() => firebase.logout()}>
                 <ExitToApp />
