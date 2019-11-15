@@ -1,13 +1,13 @@
-import { createReducer } from 'typesafe-actions';
+import { createReducer, createAction } from 'typesafe-actions';
 import { combineReducers } from 'redux';
-
-type State = any;
 
 /**
  * This action type will be dispatched when your history
  * receives a location change.
  */
-export const LOCATION_CHANGE = '@@router/LOCATION_CHANGE'
+export const LOCATION_CHANGE = '@@router/LOCATION_CHANGE';
+
+const locationChange = createAction(LOCATION_CHANGE)<any>();
 
 /**
  * This reducer will update the state with the most recent location history
@@ -16,13 +16,13 @@ export const LOCATION_CHANGE = '@@router/LOCATION_CHANGE'
  * this state is discouraged, you little shit. :P
  */
 
-export const locationBeforeTransitions = createReducer<State, any>(null)
-  .handleAction(LOCATION_CHANGE, (state, action) => {
+export const locationBeforeTransitions = createReducer({})
+  .handleAction(locationChange, (state, action) => {
     return {...state, ...action.payload };
   });
 
-export const pathnames = createReducer<State, any>([])
-  .handleAction(LOCATION_CHANGE, (state, action) => {
+export const pathnames = createReducer([] as any[])
+  .handleAction(locationChange, (state, action) => {
     return [...state, action.payload.pathname];
   });
 

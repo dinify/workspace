@@ -4,13 +4,12 @@ import { OptionNMap, ChoiceMap } from 'OptionModels';
 import { fetchMenuItemAsync } from '../menuItem/actions';
 import { fetchCartAsync } from '../cart/actions';
 
-export const all = createReducer({} as OptionNMap).handleAction(
-  fetchMenuItemAsync.success,
-  (state, action) => {
+export const all = createReducer({} as OptionNMap)
+  .handleAction(fetchMenuItemAsync.success, (state, action) => {
     const options = action.payload.entities.options;
     return { ...state, ...options };
-  },
-);
+  });
+
 
 export const choices = createReducer({} as ChoiceMap)
   .handleAction(fetchCartAsync.success, (state, action) => {

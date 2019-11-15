@@ -3,7 +3,7 @@ import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import * as actions from './actions';
 import * as wsActions from '../socket/actions';
-import { createReducer, ActionType } from 'typesafe-actions';
+import { createReducer, ActionType, createAction } from 'typesafe-actions';
 import { combineReducers } from 'redux';
 import { actionTypes as fActionTypes } from 'react-redux-firebase';
 import { ListToMap } from '@dinify/common/src/lib/FN';
@@ -39,23 +39,23 @@ export const all = createReducer<State, Action>({})
   });
 
 
-export const checkedInRestaurant = createReducer<State, any>(null)
+export const checkedInRestaurant = createReducer(null)
   .handleAction(actions.fetchStatusAsync.success, (state, action) => {
     return action.payload.checkedInRestaurant;
   })
   .handleAction([
     wsActions.checkoutAllAction,
-    fActionTypes.LOGOUT
+    createAction(fActionTypes.LOGOUT)<any>()
   ], () => null);
 
-export const checkinPlan = createReducer<State, any>(null)
+export const checkinPlan = createReducer(null)
   .handleAction(actions.planCheckinAction, (state, action) => {
     return action.payload;
   })
   .handleAction([
     actions.execCheckinAsync.success,
     actions.execCheckinAsync.failure,
-    fActionTypes.LOGOUT
+    createAction(fActionTypes.LOGOUT)<any>()
   ], () => null);
 
 const restaurantReducer = combineReducers({

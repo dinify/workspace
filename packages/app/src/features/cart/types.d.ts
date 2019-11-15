@@ -2,6 +2,8 @@ declare module 'CartModels' {
   import { MenuItem, MenuItemMap, Choice, Addon, Ingredient } from 'MenuItemsModels';
   import { AddonMap } from 'AddonModels';
   import { IngredientMap } from 'IngredientModels';
+  import { ChoiceMap } from 'OptionModels';
+
 
   export type Translation = {
     locale: string;
@@ -109,7 +111,8 @@ declare module 'CartModels' {
       orderItems: OrderItemNMap,
       addons: AddonMap,
       orderAddons: OrderAddonMap,
-      excludes: IngredientMap
+      excludes: IngredientMap,
+      choices: ChoiceMap
     },
     result: {
       subtotal: Subtotal

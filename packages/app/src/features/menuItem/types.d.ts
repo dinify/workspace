@@ -2,7 +2,7 @@ declare module 'MenuItemsModels' {
   import { Price, Translation } from 'CartModels';
   import { Ingredient, IngredientMap } from 'IngredientModels';
   import { Addon, AddonMap } from 'AddonModels';
-  import { Choice, Option, OptionMap, ChoiceMap } from 'OptionModels';
+  import { Choice, Option, OptionMap, ChoiceMap, OptionNMap } from 'OptionModels';
 
   export type MenuItemTranslation = {
     name: string;
@@ -50,11 +50,11 @@ declare module 'MenuItemsModels' {
       menuItems: MenuItemMap;
       addons: AddonMap;
       ingredients: IngredientMap;
-      options: OptionMap;
+      options: OptionNMap;
       choices: ChoiceMap;
       menuAddons: any;
       menuOptions: any;
       menuIngredients: any;
-    };
+    }
   };
 }

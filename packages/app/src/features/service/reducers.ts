@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import { createReducer } from 'typesafe-actions';
+import { createReducer, createAction } from 'typesafe-actions';
 import { combineReducers } from 'redux';
 import { ServiceMap } from 'ServiceModels';
 import { ListToMap } from '@dinify/common/src/lib/FN';
@@ -11,7 +11,7 @@ export const all = createReducer({} as ServiceMap)
     return { ...services };
   });
 
-export const status = createReducer<any, any>({})
+export const status = createReducer({} as any)
   .handleAction(actions.callServiceAsync.request, (state, action) => {
     const service = action.payload;
     if (values(state).includes('SENDING')) return state;
@@ -22,10 +22,11 @@ export const status = createReducer<any, any>({})
     return { ...state, [service.serviceId]: 'SENT' };
   })
   .handleAction(actions.callServiceAsync.failure, (state, action) => {
-    const service = action.initPayload;
+    const { initPayload } = (action as any);
+    const service = initPayload;
     return { ...state, [service.serviceId]: 'FAILED' };
   })
-  .handleAction('dinify/ws/CONFIRMED_CALL', (state, action) => {
+  .handleAction(createAction('dinify/ws/CONFIRMED_CALL')<any>(), (state, action) => {
     const call = action.payload.call;
     return { ...state, [call.serviceId]: 'READY' };
   });

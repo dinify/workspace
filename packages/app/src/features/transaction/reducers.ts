@@ -1,6 +1,6 @@
 import * as actions from './actions';
 // import * as wsActions from '../../websockets/actions';
-import { createReducer } from 'typesafe-actions';
+import { createReducer, createAction } from 'typesafe-actions';
 import { combineReducers } from 'redux';
 import { Subtotal, OrderItemNMap, OrderItemN } from 'CartModels';
 import { OrderNMap } from 'TransactionModels';
@@ -9,17 +9,17 @@ import { actionTypes as fActionTypes } from 'react-redux-firebase';
 
 const resetActions = [
   actions.fetchBillAsync.failure,
-  fActionTypes.LOGOUT
+  createAction(fActionTypes.LOGOUT)<any>()
 ];
 
-export const orders = createReducer<any, any>({} as OrderNMap)
+export const orders = createReducer({} as OrderNMap)
   .handleAction(actions.fetchBillAsync.success, (state, action) => {
     return action.payload.entities.orders;
   })
   .handleAction(resetActions, () => ({}));
 
 
-export const orderItemsCount = createReducer<any, any>(0 as number)
+export const orderItemsCount = createReducer(0 as number)
   .handleAction(actions.fetchBillAsync.success, (state, action) => {
     return action.payload.result.count;
   })
@@ -32,7 +32,7 @@ const defaultSubtotal: Subtotal = {
   precision: 2
 }
 
-export const subtotal = createReducer<any, any>(defaultSubtotal as Subtotal)
+export const subtotal = createReducer(defaultSubtotal as Subtotal)
   .handleAction(actions.fetchBillAsync.success, (state, action) => {
     return action.payload.result.subtotal;
   })
@@ -41,7 +41,7 @@ export const subtotal = createReducer<any, any>(defaultSubtotal as Subtotal)
 
 const identity = (o: any) => !!o && o !== 'pivotUndefined';
 
-export const items = createReducer<any, any>({} as OrderItemNMap)
+export const items = createReducer({} as OrderItemNMap)
   .handleAction(actions.fetchBillAsync.success, (state, action) => {
     const orderItems: OrderItemNMap = mapObjIndexed((orderItem: OrderItemN) => {
       

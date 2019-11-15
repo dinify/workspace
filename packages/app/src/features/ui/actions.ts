@@ -42,4 +42,4 @@ export const closeDialogAction = createAction(`${p}/DIALOG_CLOSE`)<
   DialogType
 >();
 
-export const toggleThemeAction = createAction(`${p}/TOGGLE_THEME`);
+export const toggleThemeAction = createAction(`${p}/TOGGLE_THEME`)();

@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import { createReducer } from 'typesafe-actions';
+import { createReducer, createAction } from 'typesafe-actions';
 import { combineReducers } from 'redux';
 import {
   OrderItemNMap,
@@ -10,12 +10,12 @@ import { actionTypes as fActionTypes } from 'react-redux-firebase';
 
 const resetActions = [
   actions.fetchCartAsync.failure,
-  fActionTypes.LOGOUT
+  createAction(fActionTypes.LOGOUT)<any>()
 ];
 
 const identity = (o: any) => !!o && o !== 'pivotUndefined';
 
-export const items = createReducer<any, any>({} as OrderItemNMap)
+export const items = createReducer({} as OrderItemNMap)
   .handleAction(actions.fetchCartAsync.success, (state, action) => {
     const orderItems: OrderItemNMap = mapObjIndexed((orderItem: OrderItemN) => {
       
@@ -40,7 +40,7 @@ export const items = createReducer<any, any>({} as OrderItemNMap)
   .handleAction(resetActions, () => ({}));
 
 
-export const orderAddons = createReducer<any, any>({} as OrderAddonMap)
+export const orderAddons = createReducer({} as OrderAddonMap)
   .handleAction(
     actions.fetchCartAsync.success,
     (state, action) => action.payload.entities.orderAddons
@@ -53,7 +53,7 @@ const defaultSubtotal: Subtotal = {
   currency: 'CZK',
   precision: 2
 }
-export const subtotal = createReducer<any, any>(defaultSubtotal as Subtotal)
+export const subtotal = createReducer(defaultSubtotal as Subtotal)
 
   .handleAction(actions.fetchCartAsync.success, (state, action) => 
     action.payload.result.subtotal

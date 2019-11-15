@@ -9,12 +9,7 @@ export const fetchMenuItemAsync = createAsyncAction(
   `${p}/GET_MENUITEM_FAIL`,
 )<MenuItemRequest, MenuItemResponseNormalized, string>();
 
-export const clearCustomizationsAction = createAction(
-  `${p}/CLEAR_CUSTOMIZATIONS`,
-  action => {
-    return ({ menuItemId }: { menuItemId: string }) => action({ menuItemId });
-  },
-);
+export const clearCustomizationsAction = createAction(`${p}/CLEAR_CUSTOMIZATIONS`)<any>();
 
 export const fetchMenuitemsInit = (payload: any) => ({
   type: 'FETCH_MENUITEMS_INIT',

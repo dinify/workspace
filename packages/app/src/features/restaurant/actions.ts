@@ -39,13 +39,13 @@ export const planCheckinAction = createAction(
     createdAt: Date.now(),
     ...payload
   })
-);
+)<any>();
 
 export const execCheckinAsync = createAsyncAction(
   `${p}/CHECKIN_INIT`,
   `${p}/CHECKIN_DONE`,
   `${p}/CHECKIN_FAIL`
-)<undefined, object, any>();
+)<undefined, any, any>();
 
 export const favRestaurantAsync = createAsyncAction(
   `${p}/FAV_RESTAURANT_INIT`, // { fav, id }

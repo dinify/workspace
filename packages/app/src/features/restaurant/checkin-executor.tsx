@@ -1,28 +1,20 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { connect } from 'react-redux';
 import { matchPath } from 'react-router';
 import * as routes from '../../web/routes';
 import { planCheckinAction, execCheckinAsync } from './actions';
 import queryString from 'query-string';
 import { RootState } from 'typesafe-actions';
-import { FirebaseReducer } from 'react-redux-firebase';
-
-type CheckinExecutorProps = {
-  checkinPlan: object;
-  user: FirebaseReducer.AuthState;
-  planCheckin: (o: any) => void;
-  execCheckin: () => void;
-}
 
 let redirectedOnce = false;
 
-const CheckinExecutor: React.FC<CheckinExecutorProps> = ({ 
-  checkinPlan,
-  user,
-  planCheckin,
-  execCheckin
-}) => {
+const CheckinExecutor: React.FC = () => {
+
+  const dispatch = useDispatch();
+
+  const checkinPlan = useSelector((state: RootState) => state.restaurant.checkinPlan);
+  const user = useSelector((state: RootState) => state.firebase.auth);
 
   const { location, push } = useHistory();
   
@@ -36,7 +28,7 @@ const CheckinExecutor: React.FC<CheckinExecutorProps> = ({
     // If user is at restaurant page and qr param is present in URL
     // checkin plan will be created and qr param will be cleared
     if (match(routes.RESTAURANT) && qr) {
-      planCheckin({ qr, pathname });
+      dispatch(planCheckinAction({ qr, pathname }));
       push(pathname);
     }
   } else {
@@ -45,7 +37,7 @@ const CheckinExecutor: React.FC<CheckinExecutorProps> = ({
     if (user.isLoaded) {
 
       if (!user.isEmpty) {
-        execCheckin();
+        dispatch(execCheckinAsync.request());
       }
       else if (!match(routes.SIGNIN) && !redirectedOnce) {
         push(routes.SIGNIN);
@@ -58,13 +50,4 @@ const CheckinExecutor: React.FC<CheckinExecutorProps> = ({
   return <></>;
 }
 
-export default connect(
-  (state: RootState) => ({
-    user: state.firebase.auth,
-    checkinPlan: state.restaurant.checkinPlan
-  }),
-  {
-    planCheckin: planCheckinAction,
-    execCheckin: execCheckinAsync.request,
-  }
-)(CheckinExecutor);
+export default CheckinExecutor;
