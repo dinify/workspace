@@ -38,11 +38,12 @@ const Price: React.FC<PriceProps> = ({
     : display || displayCurrency || price.currency;
 
   const converted = useConverter(price, currency);
+  const fractions = cldr.Numbers.getCurrencyFractions(currency);
   return (
     <span style={{ textTransform: "none" }}>
       {cldr.Numbers.formatCurrency(converted.amount, converted.currency, {
-        style: "short",
-        divisor: 1
+        style: "symbol",
+        maximumFractionDigits: fractions.cashDigits
       })}
     </span>
   );

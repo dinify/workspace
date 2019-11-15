@@ -6,10 +6,6 @@ import { coerce } from "./formatter";
 
 const defaultContext: MathContext = { precision: 28 };
 
-const modes = {
-  0: "down"
-};
-
 // TODO: copy this to server side
 export const useConverter = (price: Price, currency: CurrencyType) => {
   const cldr = useIntl(ctx => ctx.state.cldr);

@@ -7,15 +7,24 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Carousel from './Carousel';
 import convertDistance from 'geolib/es/convertDistance';
+import { useIntl } from '@dinify/common/src/lib/i18n';
 
-const formatDistance = (m) => {
+const distanceFormatter = cldr => m => {
+  let value = m;
+  let unit = 'meter';
   if (!m) return '';
-  if (m < 1000) {
-    return `${Math.round(m)} m`;
+  if (m >= 1000) {
+    value = m / 1000;
+    unit = 'kilometer';
   }
-  const km = convertDistance(m, 'km');
-  return `${Math.round(km)} km`;
-}
+  return cldr.Units.formatQuantity(
+    { value, unit },
+    {
+      length: 'short',
+      maximumFractionDigits: 1,
+    },
+  );
+};
 
 const styles = theme => ({
   image: {
@@ -42,7 +51,7 @@ const styles = theme => ({
     transition: theme.transitions.create('opacity'),
   },
   price: {
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   imageSrc: {
     position: 'absolute',
@@ -55,23 +64,26 @@ const styles = theme => ({
   },
 });
 
-
-const RestaurantListItem = ({
-  classes,
-  restaurant
-}) => {
-
-
+const RestaurantListItem = ({ classes, restaurant }) => {
+  const cldr = useIntl(ctx => ctx.state.cldr);
   const images = pluck('url')(FN.MapToList(restaurant.images));
   const allTags = FN.MapToList(restaurant.tags);
   const tags = [];
   allTags.forEach(tag => {
     if (tags.join().length + tag.name.length <= 25) {
-      tags.push(tag.name.split('_').join(' '))
+      tags.push(tag.name.split('_').join(' '));
     }
   });
 
-  const RestaurantLink = props => <Link to={`/restaurant/${restaurant.subdomain}${FN.isInstalled() ? '?source=pwa' : ''}`} {...props}/>
+  const RestaurantLink = props => (
+    <Link
+      to={`/restaurant/${restaurant.subdomain}${
+        FN.isInstalled() ? '?source=pwa' : ''
+      }`}
+      {...props}
+    />
+  );
+  const format = distanceFormatter(cldr);
   return (
     <RestaurantLink
       style={{
@@ -79,11 +91,11 @@ const RestaurantListItem = ({
         width: '100%',
       }}
     >
-      <div style={{width: '100%'}}>
-        <div style={{width: '100%'}} className={classes.image}>
+      <div style={{ width: '100%' }}>
+        <div style={{ width: '100%' }} className={classes.image}>
           <Carousel
             borderRadius={4}
-            aspectRatio={3/2}
+            aspectRatio={3 / 2}
             images={images}
             backdrop={<span className={classes.imageBackdrop} />}
           />
@@ -99,17 +111,19 @@ const RestaurantListItem = ({
           </Typography>
         )}
         <Typography variant="h6">{restaurant.name}</Typography>
-        <Typography variant="caption" color="textSecondary">
-          {formatDistance(restaurant.distance)}
+        <Typography
+          style={{ marginTop: 8 }}
+          variant="caption"
+          color="textSecondary"
+        >
+          {format(restaurant.distance)}
         </Typography>
-        { /* <Typography >{restaurant.description}</Typography> */}
+        {/* <Typography >{restaurant.description}</Typography> */}
       </div>
     </RestaurantLink>
   );
 };
 
-export default connect(
-  (state) => ({
-    userGeolocation: state.user.geolocation
-  })
-)(withStyles(styles)(RestaurantListItem));
+export default connect(state => ({
+  userGeolocation: state.user.geolocation,
+}))(withStyles(styles)(RestaurantListItem));
