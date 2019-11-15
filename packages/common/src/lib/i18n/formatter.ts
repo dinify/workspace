@@ -15,6 +15,7 @@ import {
   ListPatternType
 } from "@phensley/cldr";
 import { Price } from "@dinify/types";
+import { useIntl } from ".";
 
 const coerce = (arg: any) => {
   try {
@@ -24,41 +25,59 @@ const coerce = (arg: any) => {
   }
 };
 
-export const getFormatters = (cldr: CLDR) => ({
-  date: (args: MessageArg[], options: string[]) => {
-    const width = options[0] as FormatWidthType;
-    return cldr.Calendars.formatDate(args[0] as ZonedDateTime, { date: width });
-  },
-  time: (args: MessageArg[], options: string[]) => {
-    const width = options[0] as FormatWidthType;
-    return cldr.Calendars.formatDate(args[0] as ZonedDateTime, { time: width });
-  },
-  datetime: (args: MessageArg[], options: string[]) => {
-    const width = options[0] as FormatWidthType;
+export const useFormatters = () => {
+  const cldr = useIntl(ctx => ctx.state.cldr);
+  return getFormatters(cldr);
+};
+
+interface Options<T> {
+  [0]: T;
+}
+
+type Formatter<T> = (args: MessageArg[], options: Options<T>) => string;
+
+interface Formatters {
+  date: Formatter<FormatWidthType>;
+  time: Formatter<FormatWidthType>;
+  datetime: Formatter<FormatWidthType>;
+  currency: Formatter<CurrencyFormatStyleType>;
+  number: Formatter<DecimalFormatStyleType>;
+  decimal: Formatter<DecimalFormatStyleType>;
+  list: Formatter<ListPatternType>;
+}
+
+export const getFormatters = (cldr: CLDR): Formatters => ({
+  date: (args, options) => {
     return cldr.Calendars.formatDate(args[0] as ZonedDateTime, {
-      datetime: width
+      date: options[0]
     });
   },
-  currency: (args: MessageArg[], options: string[]) => {
-    const arg = args[0] as Price;
-    const style = options[0] as CurrencyFormatStyleType;
-    return cldr.Numbers.formatCurrency(coerce(arg.amount), arg.currency, {
-      style
+  time: (args, options) => {
+    return cldr.Calendars.formatDate(args[0] as ZonedDateTime, {
+      time: options[0]
     });
   },
-  number: (args: MessageArg[], options: string[]) => {
-    const style = options[0] as DecimalFormatStyleType;
+  datetime: (args, options) => {
+    return cldr.Calendars.formatDate(args[0] as ZonedDateTime, {
+      datetime: options[0]
+    });
+  },
+  currency: (args, options) => {
+    const price = args[0] as Price;
+    return cldr.Numbers.formatCurrency(coerce(price.amount), price.currency, {
+      style: options[0]
+    });
+  },
+  number: (args, options) => {
     return cldr.Numbers.formatDecimal(coerce(args[0]), {
-      style: style || "short"
+      style: options[0] || "short"
     });
   },
-  decimal: (args: MessageArg[], options: string[]) => {
-    const style = options[0] as DecimalFormatStyleType;
-    return cldr.Numbers.formatDecimal(coerce(args[0]), { style });
+  decimal: (args, options) => {
+    return cldr.Numbers.formatDecimal(coerce(args[0]), { style: options[0] });
   },
-  list: (args: MessageArg[], options: string[]) => {
-    const type = options[0] as ListPatternType;
-    return cldr.General.formatList(args[0], type);
+  list: (args, options) => {
+    return cldr.General.formatList(args[0], options[0]);
   }
 });
 

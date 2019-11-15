@@ -1,7 +1,7 @@
 declare module "@dinify/types" {
-  import { CurrencyType } from "@phensley/cldr";
+  import { CurrencyType, Decimal } from "@phensley/cldr";
   export type Price = {
-    amount: number;
+    amount: Decimal;
     currency: CurrencyType;
   };
 }
