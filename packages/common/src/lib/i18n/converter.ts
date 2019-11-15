@@ -2,35 +2,34 @@ import { CurrencyType, Decimal, MathContext } from "@phensley/cldr";
 import { Price } from "@dinify/types";
 import rates from "../currencyRates.json";
 import { useIntl } from ".";
+import { coerce } from "./formatter";
 
 const defaultContext: MathContext = { precision: 28 };
 
+const modes = {
+  0: "down"
+};
+
 // TODO: copy this to server side
-export const useConverter = (price: Price, currency: CurrencyType): Price => {
+export const useConverter = (price: Price, currency: CurrencyType) => {
   const cldr = useIntl(ctx => ctx.state.cldr);
-  const fractions = cldr.Numbers.getCurrencyFractions(price.currency);
+  const fractions = cldr.Numbers.getCurrencyFractions(currency);
 
   const make = (amount: Decimal) => ({
     amount,
     currency
   });
-  const amt = price.amount;
+  const amt = coerce(price.amount);
   const from = price.currency;
   const to = currency;
 
-  if (from === to) return price;
-
   const context: MathContext = {
     ...defaultContext,
-    precision: fractions.digits
+    scale: fractions.digits
   };
-  const fromRate = new Decimal((rates.rates as any)[from]);
-  const fromRateInverse = new Decimal(1 / (rates.rates as any)[from]);
-  const toRate = new Decimal((rates.rates as any)[to]);
-  if (from === rates.base) {
-    return make(amt.multiply(fromRate, context));
-  }
+  const fromRate = (rates.rates as any)[from];
+  const toRate = (rates.rates as any)[to];
+  const rateInverse = (1 / fromRate) * toRate;
 
-  const toBase = amt.multiply(fromRateInverse, context);
-  return make(toBase.multiply(toRate, context));
+  return from === to ? price : make(amt.multiply(coerce(rateInverse), context));
 };

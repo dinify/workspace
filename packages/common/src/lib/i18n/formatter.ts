@@ -12,12 +12,13 @@ import {
   Decimal,
   DecimalConstants,
   DecimalFormatStyleType,
-  ListPatternType
+  ListPatternType,
+  MessageFormatFuncMap
 } from "@phensley/cldr";
 import { Price } from "@dinify/types";
 import { useIntl } from ".";
 
-const coerce = (arg: any) => {
+export const coerce = (arg: any) => {
   try {
     return new Decimal(arg);
   } catch (e) {
@@ -30,13 +31,10 @@ export const useFormatters = () => {
   return getFormatters(cldr);
 };
 
-interface Options<T> {
-  [0]: T;
-}
+type Formatter<T> = (args: any[], options: T[]) => string;
 
-type Formatter<T> = (args: MessageArg[], options: Options<T>) => string;
-
-interface Formatters {
+interface Formatters extends MessageFormatFuncMap {
+  [key: string]: any;
   date: Formatter<FormatWidthType>;
   time: Formatter<FormatWidthType>;
   datetime: Formatter<FormatWidthType>;
@@ -65,7 +63,8 @@ export const getFormatters = (cldr: CLDR): Formatters => ({
   currency: (args, options) => {
     const price = args[0] as Price;
     return cldr.Numbers.formatCurrency(coerce(price.amount), price.currency, {
-      style: options[0]
+      style: options[0],
+      divisor: 1
     });
   },
   number: (args, options) => {

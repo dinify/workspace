@@ -5,11 +5,12 @@ import { useSelector } from "react-redux";
 import { useFormatters } from "../lib/i18n/formatter";
 import { useConverter } from "../lib/i18n/converter";
 import { CurrencyType } from "@phensley/cldr";
-import { Price } from "@dinify/types";
+import { Price as PriceType } from "@dinify/types";
+import { useIntl } from "../lib/i18n";
 
 interface PriceProps {
   display?: CurrencyType;
-  price: Price;
+  price: PriceType;
   original?: boolean;
 }
 
@@ -20,8 +21,14 @@ interface PriceProps {
  * @param price The price object to format, can be in any currency type.
  * @param display The currency type to display this price in. Defaults to profile currency.
  */
-export default ({ price, display, original = false, ...props }: PriceProps) => {
+const Price: React.FC<PriceProps> = ({
+  price,
+  display,
+  original = false,
+  ...props
+}) => {
   if (!price) return null;
+  const cldr = useIntl(ctx => ctx.state.cldr);
 
   const displayCurrency = useSelector(
     (state: any) => state.firebase.profile.displayCurrency
@@ -30,13 +37,15 @@ export default ({ price, display, original = false, ...props }: PriceProps) => {
     ? price.currency
     : display || displayCurrency || price.currency;
 
-  // coerce function builtin to the formatter
-  const currencyFormatter = useFormatters().currency;
-
-  const convertedPrice = useConverter(price, currency);
+  const converted = useConverter(price, currency);
   return (
     <span style={{ textTransform: "none" }}>
-      {currencyFormatter([convertedPrice], ["short"])}
+      {cldr.Numbers.formatCurrency(converted.amount, converted.currency, {
+        style: "short",
+        divisor: 1
+      })}
     </span>
   );
 };
+
+export default Price;
