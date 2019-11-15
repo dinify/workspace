@@ -4,7 +4,7 @@ import { withTheme } from '@material-ui/core/styles';
 import { RootState } from 'typesafe-actions';
 import { Translation, OrderItemN } from 'CartModels';
 import Typography from '@material-ui/core/Typography';
-import Price from '../../components/Price';
+import Price from '@dinify/common/src/components/price';
 import { MenuItem, MenuItemMap } from 'MenuItemsModels';
 
 export interface BillItemProps {

@@ -15,7 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContainer';
 import Typography from '@material-ui/core/Typography';
 import CartItem from 'web/components/CartItem';
-import Price from 'web/components/Price';
+import Price from '@dinify/common/src/components/price';
 import TotalPrice from 'web/components/TotalPrice';
 // import Radio from '@material-ui/core/Radio';
 // import RadioGroup from '@material-ui/core/RadioGroup';

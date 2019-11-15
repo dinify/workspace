@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import { withStyles, StyleRulesCallback } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import Price from '../../components/Price';
+import Price from '@dinify/common/src/components/price';
 import { selectChoice as selectChoiceAction } from '../../../features/menuItem/actions';
 import { useAction } from '@dinify/common/src/lib/util';
 

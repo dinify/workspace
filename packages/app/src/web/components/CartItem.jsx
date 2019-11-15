@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import * as FN from '@dinify/common/src/lib/FN';
 import uniqueId from 'lodash.uniqueid';
-import Price from 'web/components/Price';
+import Price from '@dinify/common/src/components/price';
 
 const styles = theme => ({
   cartItemImage: {

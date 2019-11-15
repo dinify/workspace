@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import * as FN from '@dinify/common/src/lib/FN';
-import Price from 'web/components/Price';
+import Price from '@dinify/common/src/components/price';
 
 const styles = theme => ({
   image: {

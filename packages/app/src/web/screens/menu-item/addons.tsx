@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircle from '@material-ui/icons/AddCircleRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
-import Price from '../../components/Price';
+import Price from '@dinify/common/src/components/price';
 import { incAddonQty as incAddonQtyAction } from '../../../features/menuItem/actions';
 import { useAddonView } from '../../../features/addon/selectors';
 import { useAction } from '@dinify/common/src/lib/util';

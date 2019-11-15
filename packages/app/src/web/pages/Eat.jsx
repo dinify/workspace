@@ -32,7 +32,7 @@ import CartItem from 'web/components/CartItem';
 import BillItem from 'web/components/BillItem';
 import PaymentOptionsDialog from '@dinify/common/src/components/dialogs/PaymentOptionsDialog';
 import ContextMenu from 'web/components/ContextMenu';
-import Price from 'web/components/Price';
+import Price from '@dinify/common/src/components/price';
 import TotalPrice from 'web/components/TotalPrice';
 import Cart from 'web/pages/Cart';
 

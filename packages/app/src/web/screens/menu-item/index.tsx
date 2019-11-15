@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
 import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContainer';
-import Price from '../../components/Price';
+import Price from '@dinify/common/src/components/price';
 import FavoriteToggle from '../../components/FavoriteToggle';
 import NutritionFacts from '../../pages/MenuItemView/NutritionFacts';
 import Fab from '@material-ui/core/Fab';

@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import * as FN from '@dinify/common/src/lib/FN';
-import Price from 'web/components/Price';
+import Price from '@dinify/common/src/components/price';
 
 const styles = theme => ({
   image: {
@@ -12,11 +12,11 @@ const styles = theme => ({
     backgroundColor: theme.palette.divider,
     overflow: 'hidden !important',
     '&:hover': {
-      zIndex: 1
+      zIndex: 1,
     },
   },
   price: {
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   imageSrc: {
     position: 'absolute',
@@ -29,33 +29,32 @@ const styles = theme => ({
   },
 });
 
-const OrderItemCard = ({
-  classes,
-  orderItem
-}) => {
-  const images = FN.MapToList(orderItem.menu_item.images).map(image => image.url)
+const OrderItemCard = ({ classes, orderItem }) => {
+  const images = FN.MapToList(orderItem.menu_item.images).map(
+    image => image.url,
+  );
   return (
     <div>
       <div
         className={classes.image}
         style={{
           width: '100%',
-          paddingTop: '66.6667%'
-        }}>
+          paddingTop: '66.6667%',
+        }}
+      >
         <span
           className={classes.imageSrc}
           style={{
-            backgroundImage: `url(${images[0]})`
-          }}/>
+            backgroundImage: `url(${images[0]})`,
+          }}
+        />
       </div>
-      <Typography
-        className={classes.price}
-        variant="overline">
+      <Typography className={classes.price} variant="overline">
         <Price price={orderItem.menu_item.price} />
       </Typography>
       <Typography variant="subtitle1">{orderItem.menu_item.name}</Typography>
-      <div style={{width: 1000}} />
-      { /* <Typography noWrap >{orderItem.menu_item.description}</Typography> */ }
+      <div style={{ width: 1000 }} />
+      {/* <Typography noWrap >{orderItem.menu_item.description}</Typography> */}
     </div>
   );
 };

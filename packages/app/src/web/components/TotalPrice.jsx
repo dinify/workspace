@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
-import Price from 'web/components/Price';
+import Price from '@dinify/common/src/components/price';
 import Typography from '@material-ui/core/Typography';
 
 const TotalPrice = ({

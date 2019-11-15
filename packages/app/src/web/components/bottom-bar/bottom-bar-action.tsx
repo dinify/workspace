@@ -1,12 +1,11 @@
 import React from 'react';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 
-import Price from '../../../web/components/Price';
-
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { Subtotal } from 'CartModels';
 import { BackgroundColorProperty } from 'csstype';
+import Price from '@dinify/common/src/components/price';
 
 const BottomBarAction: React.FC<{
   style?: React.CSSProperties;

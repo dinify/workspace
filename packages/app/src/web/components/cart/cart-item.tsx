@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteRounded';
 import { OrderItemN, Translation, Price as PriceType, OrderAddonMap } from 'CartModels';
-import Price from '../../components/Price';
+import Price from '@dinify/common/src/components/price';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import { rmFromCartAsync } from '../../../features/cart/actions';

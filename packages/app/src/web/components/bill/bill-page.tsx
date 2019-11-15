@@ -9,7 +9,7 @@ import Wallet from '@material-ui/icons/AccountBalanceWalletRounded';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import Slider from '@material-ui/lab/Slider';
-import Price from '../Price';
+import Price from '@dinify/common/src/components/price';
 import { BillSection } from './bill-section';
 import { initTransactionAsync } from '../../../features/transaction/actions';
 import { AppBar, AppBarAction, AppBarTitle } from '../app-bar';
