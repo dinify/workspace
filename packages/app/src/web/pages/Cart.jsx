@@ -62,9 +62,7 @@ const Cart = ({ cart, rmFromCart, editing, setEditing, checkedin, order }) => {
         <div style={{ display: 'flex', alignItems: 'center', paddingTop: 16 }}>
           <div style={{ flex: 1 }}>
             <Typography variant="subtitle1">{t('cart.title')}</Typography>
-            <Typography variant="caption">
-              {t('itemCount', [], { count })}
-            </Typography>
+            <Typography variant="caption">{t('itemCount', [count])}</Typography>
           </div>
 
           <IconButton

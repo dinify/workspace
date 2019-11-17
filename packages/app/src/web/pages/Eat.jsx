@@ -251,7 +251,7 @@ class Eat extends React.Component {
                           <Typography variant="caption">
                             {editingCart && userIsMe
                               ? t('editing')
-                              : t('itemCount', [], { count: cartCount })}
+                              : t('itemCount', [cartCount])}
                           </Typography>
                         </div>
                         {userIsMe && seat.cart && (
@@ -317,7 +317,7 @@ class Eat extends React.Component {
                           {t('bill.title')}
                         </Typography>
                         <Typography variant="caption">
-                          {t('itemCount', [], { count: billCount })}
+                          {t('itemCount', [billCount])}
                         </Typography>
                       </div>
 
@@ -529,9 +529,7 @@ class Eat extends React.Component {
                   color="inherit"
                   variant="caption"
                 >
-                  {t('itemCountSelected', [], {
-                    count: selectedBillItems.length,
-                  })}
+                  {t('itemCountSelected', [selectedBillItems.length])}
                 </Typography>
               </div>
               {!splitLoading && (
