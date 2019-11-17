@@ -69,7 +69,7 @@ const BottomBarAction: React.FC<{
       >
         <Typography variant="subtitle1">{title}</Typography>
         <Typography variant="caption" color="textSecondary">
-          {t('cart.itemCount', { count })}
+          {t('itemCount', [], { count })}
         </Typography>
       </div>
       {!flipped && subtotal && (

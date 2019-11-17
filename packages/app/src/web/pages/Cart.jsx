@@ -63,7 +63,7 @@ const Cart = ({ cart, rmFromCart, editing, setEditing, checkedin, order }) => {
           <div style={{ flex: 1 }}>
             <Typography variant="subtitle1">{t('cart.title')}</Typography>
             <Typography variant="caption">
-              {t('cart.itemCount', { count })}
+              {t('itemCount', [], { count })}
             </Typography>
           </div>
 

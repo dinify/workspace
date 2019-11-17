@@ -251,7 +251,7 @@ class Eat extends React.Component {
                           <Typography variant="caption">
                             {editingCart && userIsMe
                               ? t('editing')
-                              : t('cart.itemCount', { count: cartCount })}
+                              : t('itemCount', [], { count: cartCount })}
                           </Typography>
                         </div>
                         {userIsMe && seat.cart && (
@@ -317,9 +317,7 @@ class Eat extends React.Component {
                           {t('bill.title')}
                         </Typography>
                         <Typography variant="caption">
-                          {t('cart.itemCount', {
-                            count: billCount,
-                          })}
+                          {t('itemCount', [], { count: billCount })}
                         </Typography>
                       </div>
 
@@ -519,13 +517,10 @@ class Eat extends React.Component {
                   variant="subtitle2"
                   color="inherit"
                 >
-                  {selectedSeats.length <= 3
-                    ? t('bill.splittingWith', {
-                        list: splitingWithNames,
-                      })
-                    : t('bill.splittingCount', {
-                        count: selectedSeats.length || 0,
-                      })}
+                  {t('bill.splittingWith', [
+                    splitingWithNames,
+                    splitingWithNames.length,
+                  ])}
                 </Typography>
                 <Typography
                   style={{
@@ -534,7 +529,7 @@ class Eat extends React.Component {
                   color="inherit"
                   variant="caption"
                 >
-                  {t('bill.itemCountSelected', {
+                  {t('itemCountSelected', [], {
                     count: selectedBillItems.length,
                   })}
                 </Typography>

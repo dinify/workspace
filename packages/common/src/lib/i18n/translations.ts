@@ -1,9 +1,13 @@
 import { useIntl } from ".";
 import { format } from "./formatter";
-import values from "ramda/es/values";
 import schemas from "./schemas";
+import { MessageArg, MessageNamedArgs } from "@phensley/cldr";
 
-export type TFunction = (path: string[] | string, data?: any) => string;
+export type TFunction = (
+  path: string[] | string,
+  positional?: MessageArg[],
+  named?: MessageNamedArgs
+) => string;
 
 const notFound: string[] = [];
 const errorNotFound = (msg: string, path: string) => {
@@ -34,9 +38,9 @@ export default () => {
       errorNotFound(`Path not found in ${messages.length} messages:`, path);
     return messages[schema.indexOf(path)] || "\u00a0";
   };
-  const t: TFunction = (path, data) => {
+  const t: TFunction = (path, positional, named) => {
     const template = getTemplate(path);
-    return format(locale, cldr, template, [...values(data)], data);
+    return format(locale, cldr, template, positional, named);
   };
   currentT = t;
   return { t, cldr };

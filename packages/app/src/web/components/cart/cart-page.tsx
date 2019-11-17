@@ -38,9 +38,7 @@ const CartView: React.FC<{
         {!editMode && <AppBarAction type="close" onClick={onClose} />}
         <AppBarTitle
           title={t('cart.title')}
-          subtitle={t('cart.itemCount', {
-            count: cartItemCount,
-          })}
+          subtitle={t('itemCount', [], { count: cartItemCount })}
         />
         <AppBarAction
           type={editMode ? 'done' : 'edit'}

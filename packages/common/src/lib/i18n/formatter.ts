@@ -96,7 +96,7 @@ export const format = (
   locale: Locale,
   cldr: CLDR,
   message: string,
-  positional: MessageArg[],
+  positional: MessageArg[] = [],
   named: MessageNamedArgs = {}
 ) => {
   const engine = new MessageEngine(

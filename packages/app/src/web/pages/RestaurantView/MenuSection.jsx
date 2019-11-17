@@ -70,7 +70,7 @@ let MenuSection = ({
         <Grid item>
           <Typography variant="subtitle1">{t('menu.title')}</Typography>
           <Typography variant="caption">
-            {t('menu.caption', { restaurant: restaurant.name })}
+            {t('menu.caption', [restaurant.name])}
           </Typography>
         </Grid>
       </Grid>

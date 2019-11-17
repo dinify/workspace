@@ -3,12 +3,20 @@ import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
 import uniq from 'ramda/es/uniq';
-import * as menuCategoryTypes from 'features/menuCategory/types';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import { getType } from 'typesafe-actions';
 import { fetchMenuCategoriesAsync } from '../menuCategory/actions';
 import * as types from './types';
-import { fetchMenuItemAsync, createMenuItemAsync, assignIngredientAsync, unassignIngredientAsync, assignAddonAsync, unassignAddonAsync, assignOptionAsync, unassignOptionAsync } from './actions';
+import {
+  fetchMenuItemAsync,
+  createMenuItemAsync,
+  assignIngredientAsync,
+  unassignIngredientAsync,
+  assignAddonAsync,
+  unassignAddonAsync,
+  assignOptionAsync,
+  unassignOptionAsync,
+} from './actions';
 
 const initialState = {
   all: {},
@@ -18,10 +26,10 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   const { type, payload } = action;
 
-  switch (type) {    
+  switch (type) {
     case getType(fetchMenuCategoriesAsync.success): {
       const items = payload.entities.menuItems;
-      return assoc('all', {...state.all, ...items})(state);
+      return assoc('all', { ...state.all, ...items })(state);
     }
 
     case getType(fetchMenuItemAsync.success): {
@@ -39,10 +47,7 @@ export default function reducer(state = initialState, action) {
       const compoundId = `${menuItemId}.${ingredientId}`;
       return assocPath(
         ['all', menuItemId, 'menuIngredients'],
-        uniq([
-          ...state.all[menuItemId].menuIngredients,
-          compoundId
-        ])
+        uniq([...state.all[menuItemId].menuIngredients, compoundId]),
       )(state);
     }
 
@@ -51,7 +56,7 @@ export default function reducer(state = initialState, action) {
       const compoundId = `${menuItemId}.${ingredientId}`;
       return assocPath(
         ['all', menuItemId, 'menuIngredients'],
-        state.all[menuItemId].menuIngredients.filter((id) => id !== compoundId)
+        state.all[menuItemId].menuIngredients.filter(id => id !== compoundId),
       )(state);
     }
 
@@ -60,10 +65,7 @@ export default function reducer(state = initialState, action) {
       const compoundId = `${menuItemId}.${addonId}`;
       return assocPath(
         ['all', menuItemId, 'menuAddons'],
-        uniq([
-          ...state.all[menuItemId].menuAddons,
-          compoundId
-        ])
+        uniq([...state.all[menuItemId].menuAddons, compoundId]),
       )(state);
     }
 
@@ -72,7 +74,7 @@ export default function reducer(state = initialState, action) {
       const compoundId = `${menuItemId}.${addonId}`;
       return assocPath(
         ['all', menuItemId, 'menuAddons'],
-        state.all[menuItemId].menuAddons.filter((id) => id !== compoundId)
+        state.all[menuItemId].menuAddons.filter(id => id !== compoundId),
       )(state);
     }
 
@@ -81,10 +83,7 @@ export default function reducer(state = initialState, action) {
       const compoundId = `${menuItemId}.${optionId}`;
       return assocPath(
         ['all', menuItemId, 'menuOptions'],
-        uniq([
-          ...state.all[menuItemId].menuOptions,
-          compoundId
-        ])
+        uniq([...state.all[menuItemId].menuOptions, compoundId]),
       )(state);
     }
 
@@ -93,7 +92,7 @@ export default function reducer(state = initialState, action) {
       const compoundId = `${menuItemId}.${optionId}`;
       return assocPath(
         ['all', menuItemId, 'menuOptions'],
-        state.all[menuItemId].menuOptions.filter((id) => id !== compoundId)
+        state.all[menuItemId].menuOptions.filter(id => id !== compoundId),
       )(state);
     }
 
@@ -108,7 +107,7 @@ export default function reducer(state = initialState, action) {
       const { id } = payload;
       return pipe(
         assocPath(['backup', id], state.all[id]),
-        dissocPath(['all', id])
+        dissocPath(['all', id]),
       )(state);
     }
 

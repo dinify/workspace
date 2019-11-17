@@ -73,7 +73,7 @@ const BillPageComponent: React.FC<BillPageProps> = props => {
         {!splitMode && <AppBarAction type="close" onClick={onClose} />}
         <AppBarTitle
           title={t('bill.title')}
-          subtitle={t('cart.itemCount', { count: orderItemCount })}
+          subtitle={t('cart.itemCount', [], { count: orderItemCount })}
         />
         {false && (
           <AppBarAction
