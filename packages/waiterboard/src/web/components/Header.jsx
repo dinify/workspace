@@ -23,7 +23,7 @@ import { getOrderList } from 'features/order/selectors';
 import { selectedRestaurant } from 'features/restaurant/selectors';
 import { colorsByStages } from '../colors';
 
-import { useFormatters } from "@dinify/common/src/lib/i18n/formatter";
+import Price from '@dinify/common/src/components/price';
 
 const Label = styled.span`
   color: rgb(180, 185, 190);
@@ -52,7 +52,6 @@ const Value = styled.span`
   }
 `;
 
-
 const Container = styled.div`
   margin: 0 auto;
   width: 1200px;
@@ -65,13 +64,12 @@ const Container = styled.div`
   }
 `;
 
-
 const SwipeButton = styled.button`
   height: 50px;
   min-width: 130px;
   width: 100%;
   border: none;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   font-size: 12px;
   color: white;
   font-weight: 300;
@@ -79,50 +77,50 @@ const SwipeButton = styled.button`
   outline: none;
   @keyframes color {
     0% {
-      background-color: rgb(231,76,60);
+      background-color: rgb(231, 76, 60);
     }
     25% {
-      background-color: rgb(255,143,0);
+      background-color: rgb(255, 143, 0);
     }
     50% {
-      background-color: rgb(144,19,254);
+      background-color: rgb(144, 19, 254);
     }
     75% {
-      background-color: rgb(33,150,243);
+      background-color: rgb(33, 150, 243);
     }
     0% {
-      background-color: rgb(231,76,60);
+      background-color: rgb(231, 76, 60);
     }
   }
   &.warn {
-    background-color: rgb(231,76,60);
+    background-color: rgb(231, 76, 60);
     animation-name: color;
     animation-duration: 4s;
     animation-iteration-count: infinite;
   }
-`
+`;
 
 const BookingBadge = styled.span`
   span span {
     background-color: ${colorsByStages.booking};
   }
-`
+`;
 const BillsBadge = styled.span`
   span span {
     background-color: ${colorsByStages.s2};
   }
-`
+`;
 
 const styles = {
   appbar: {
-    background: 'rgba(255,255,255,0.1)'
+    background: 'rgba(255,255,255,0.1)',
   },
   toolbar: {
     height: 50,
     minHeight: 50,
-    padding: 0
-  }
-}
+    padding: 0,
+  },
+};
 
 const Header = ({
   tablesCount = 0,
@@ -134,9 +132,9 @@ const Header = ({
   // bookings,
   anyAction,
   confirmedOrders,
-  unconfirmedOrders
+  unconfirmedOrders,
 }) => {
-  const frames = ['actions','tables']
+  const frames = ['actions', 'tables'];
 
   let restaurantName = '';
   if (restaurant) restaurantName = restaurant.name;
@@ -148,25 +146,24 @@ const Header = ({
   const confirmedOrdersCount = confirmedOrders.length;
   const totalOrdersCount = confirmedOrdersCount + unconfirmedOrders.length;
 
-  let currency = 'EUR';
+  // TODO: remove this hardcoded value
+  let currency = 'EUR'; // restaurant.settings.defaultCurrency
 
-  const amounts = confirmedOrders.map((o) => {
-    const itemSubtotals = o.items.map((item) => {
+  const amounts = confirmedOrders.map(o => {
+    const itemSubtotals = o.items.map(item => {
       currency = item.subtotal.currency;
-      return Number(item.subtotal.amount)
+      return Number(item.subtotal.amount);
     });
     return sum(itemSubtotals);
   });
 
-  const currencyFormatter = useFormatters().currency;
-
+  // TODO: sales volume is the sum of confirmed transactions
   const salesVolume = sum(amounts);
 
   return (
     <AppBar position="static" style={styles.appbar}>
       <Container>
         <Toolbar style={styles.toolbar}>
-
           <Grid container spacing={8} alignItems="center">
             <Grid item xs={2}>
               <SwipeButton
@@ -187,27 +184,31 @@ const Header = ({
                   </IconButton>
                 */}
 
-              <IconButton onClick={() => toggleModal({ open: true, type: 'ListOfOrders' })}>
+              <IconButton
+                onClick={() =>
+                  toggleModal({ open: true, type: 'ListOfOrders' })
+                }
+              >
                 <BillsBadge>
                   <Badge badgeContent={confirmedOrdersCount}>
                     <RestaurantMenu />
                   </Badge>
                 </BillsBadge>
               </IconButton>
-
             </Grid>
-            <Grid item xs={8} style={{textAlign: 'right'}}>
-            
+            <Grid item xs={8} style={{ textAlign: 'right' }}>
               <Link to="/select">
                 <Value>{restaurantName}</Value>
               </Link>
 
               <Value></Value>
-              <Label>Tables</Label><Value>{tablesCount}</Value>
-              <Label>Orders</Label><Value>{totalOrdersCount}</Value>
+              <Label>Tables</Label>
+              <Value>{tablesCount}</Value>
+              <Label>Orders</Label>
+              <Value>{totalOrdersCount}</Value>
               <Label>Sales</Label>
               <Value>
-                {salesVolume > 0 ? currencyFormatter([{ amount: salesVolume, currency }], ["short"]) : '0'}
+                <Price original price={{ amount: salesVolume, currency }} />
               </Value>
 
               <IconButton onClick={() => firebase.logout()}>
@@ -215,12 +216,11 @@ const Header = ({
               </IconButton>
             </Grid>
           </Grid>
-
         </Toolbar>
-    </Container>
+      </Container>
     </AppBar>
-  )
-}
+  );
+};
 
 export default connect(
   state => ({
@@ -229,10 +229,10 @@ export default connect(
     // bookings: state.booking.all,
     restaurant: selectedRestaurant(state),
     confirmedOrders: getOrderList({ confirmed: true, today: true })(state),
-    unconfirmedOrders: getOrderList({ confirmed: false })(state)
+    unconfirmedOrders: getOrderList({ confirmed: false })(state),
   }),
   {
     toggleFrames,
-    toggleModal
-  }
-)(withFirebase(Header))
+    toggleModal,
+  },
+)(withFirebase(Header));

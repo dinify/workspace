@@ -16,7 +16,6 @@ import {
   MessageFormatFuncMap
 } from "@phensley/cldr";
 import { Price } from "@dinify/types";
-import { useIntl } from ".";
 
 export const coerce = (arg: any) => {
   try {
@@ -24,11 +23,6 @@ export const coerce = (arg: any) => {
   } catch (e) {
     return DecimalConstants.NAN;
   }
-};
-
-export const useFormatters = () => {
-  const cldr = useIntl(ctx => ctx.state.cldr);
-  return getFormatters(cldr);
 };
 
 type Formatter<T> = (args: any[], options: T[]) => string;
