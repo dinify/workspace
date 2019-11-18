@@ -7,6 +7,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import Price from '@dinify/common/src/components/price';
 import { selectChoice as selectChoiceAction } from '../../../features/menuItem/actions';
 import { useAction } from '@dinify/common/src/lib/util';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 const styles: StyleRulesCallback = theme => ({
   chipContainer: {
@@ -47,13 +48,17 @@ export default withStyles(styles)(
   ({ classes, menuItemId }: { classes: any; menuItemId: string }) => {
     const options = useOptionView(menuItemId);
     const selectChoice = useAction(selectChoiceAction);
+    const { t } = useTranslation();
     return (
       <>
+        {options.length > 0 && <Typography variant="caption" color="textSecondary" style={{ marginTop: 16 }}>
+          {t('cart.requiredChoices')}
+        </Typography>}
         {options.map(option => (
           <div key={option.id}>
             <Typography
-              style={{ marginTop: 32 }}
-              color="textSecondary"
+              style={{ marginTop: 16 }}
+              color="primary"
               variant="overline"
             >
               {option.name}
