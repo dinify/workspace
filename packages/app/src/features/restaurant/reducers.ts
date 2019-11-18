@@ -49,7 +49,7 @@ export const checkedInRestaurant = createReducer(null)
   ], () => null);
 
 export const checkinPlan = createReducer(null)
-  .handleAction(actions.planCheckinAction, (state, action) => {
+  .handleAction(actions.planCheckinAction, (state, action): any => {
     return action.payload;
   })
   .handleAction([

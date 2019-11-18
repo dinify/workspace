@@ -13,8 +13,10 @@ class Checkin extends React.PureComponent {
         try {
           const url = new URL(data.data);
           const qr = url.searchParams.get('qr');
+
           if (!checkinPlan && qr && !initiated) {
             initiated = true;
+            console.log(qr, url.pathname);
             planCheckin({ qr, pathname: url.pathname });
           }
         } catch (e) {

@@ -35,11 +35,11 @@ type PlanCheckinPayload = {
 
 export const planCheckinAction = createAction(
   `${p}/PLAN_CHECKIN`,
-  action => (payload: PlanCheckinPayload) => action({
+  (payload: PlanCheckinPayload) => ({
     createdAt: Date.now(),
     ...payload
   })
-)<any>();
+)();
 
 export const execCheckinAsync = createAsyncAction(
   `${p}/CHECKIN_INIT`,
