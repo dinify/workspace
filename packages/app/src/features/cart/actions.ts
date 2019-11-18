@@ -6,7 +6,7 @@ import {
   CartResponseN,
   AddToCartResponseN,
 } from 'CartModels';
-import { createAction, createAsyncAction } from 'typesafe-actions';
+import { createAsyncAction } from 'typesafe-actions';
 
 const p = 'dinify/cart';
 
@@ -34,7 +34,3 @@ export const orderAsync = createAsyncAction(
   `${p}/ORDER_DONE`, // res
   `${p}/ORDER_FAIL`,
 )<undefined, OrderResponse, string>();
-
-export const setOrderTypeAction = createAction(`${p}/SET_ORDERTYPE`, action => {
-  return (orderType: string) => action(orderType);
-});

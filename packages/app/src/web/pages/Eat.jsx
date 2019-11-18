@@ -11,7 +11,6 @@ import {
 import {
   rmFromCartAsync,
   orderAsync,
-  setOrderTypeAction,
 } from 'features/cart/actions.ts';
 import {
   checkSelecting,
@@ -612,7 +611,6 @@ Eat = connect(
     splitBill: splitBillInit,
     transferBill: transferBillInit,
     initTransaction: initTransactionInit,
-    setOrderType: setOrderTypeAction,
     selectBillItem: selectBillItemAction,
     selectSeat: selectSeatAction,
     clearSelectedBillItems: clearSelectedBillItemsAction,
