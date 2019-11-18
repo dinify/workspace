@@ -2,9 +2,8 @@ import React from 'react';
 import { closeDialogAction, DialogType } from '../features/ui/actions';
 import { useSelector } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
-import { ServicesScreen } from './screens';
-import { CartPage } from './components/cart';
-import { BillPage } from './components/bill';
+import { ServicesScreen, CartScreen } from './screens';
+import { BillPage } from './screens/bill';
 import { RootState } from 'typesafe-actions';
 import { useAction } from '@dinify/common/src/lib/util';
 
@@ -16,7 +15,7 @@ export default () => {
   return (
     <>
       <Dialog fullScreen open={!!dialogs['cart']} onClose={getHandler('cart')}>
-        <CartPage onClose={getHandler('cart')} />
+        <CartScreen onClose={getHandler('cart')} />
       </Dialog>
       <Dialog fullScreen open={!!dialogs['bill']} onClose={getHandler('bill')}>
         <BillPage onClose={getHandler('bill')} />

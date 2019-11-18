@@ -12,7 +12,7 @@ import Slider from '@material-ui/lab/Slider';
 import Price from '@dinify/common/src/components/price';
 import { BillSection } from './bill-section';
 import { initTransactionAsync } from '../../../features/transaction/actions';
-import { AppBar, AppBarAction, AppBarTitle } from '../app-bar';
+import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
 const PaymentOptionsDialog = require('@dinify/common/src/components/dialogs/PaymentOptionsDialog')
   .default;
 
@@ -26,7 +26,7 @@ export interface BillPageProps {
 
 const BillPageComponent: React.FC<BillPageProps> = props => {
   const {
-    onClose = () => {},
+    onClose = () => { },
     subtotal,
     orderItemCount,
     initTransaction,
@@ -171,7 +171,7 @@ const BillPageComponent: React.FC<BillPageProps> = props => {
             aria-label={t('pay')}
           >
             <Wallet style={{ marginRight: 8 }} />
-            Cash
+            {t('pay.method.cash')}
           </Fab>
           <Fab
             style={{
@@ -186,7 +186,7 @@ const BillPageComponent: React.FC<BillPageProps> = props => {
             aria-label={t('pay')}
           >
             <CreditCard style={{ marginRight: 8 }} />
-            Card
+            {t('pay.method.card')}
           </Fab>
         </div>
         {statusComponent}
