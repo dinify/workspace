@@ -1,9 +1,6 @@
 import { getCookie } from '../../lib/FN';
 
-type FetchOptions = {
-  method?: string;
-  body?: BodyInit;
-  headers?: Record<string, string>;
+interface FetchOptions extends RequestInit {
   lang?: string;
 }
 
@@ -24,12 +21,12 @@ export const Request = (url: string, options: FetchOptions = {}) => new Promise(
     defaultOptions.headers = options.headers;
   }
   if (token.length > 0) {
-    defaultOptions.headers['Authorization'] = `Bearer ${token}`;
+    defaultOptions.headers = { 'Authorization': `Bearer ${token}`, ...defaultOptions.headers };
   }
   if (lang) {
-    defaultOptions.headers['Accept-Language'] = lang;
+    defaultOptions.headers = { 'Accept-Language': lang, ...defaultOptions.headers };
   }
-  
+
   const allOptions = Object.assign(options, defaultOptions);
 
   fetch(url, allOptions)
@@ -56,7 +53,7 @@ export const Request = (url: string, options: FetchOptions = {}) => new Promise(
       } else {
         // error
         if (json) {
-          reject({...json, statusCode: status });
+          reject({ ...json, statusCode: status });
           return;
         }
         reject(new Error('No JSON in response'));
@@ -111,7 +108,7 @@ export const Patch = (urlParts: UrlTypes, body = {}) => Request(
 );
 
 export const Delete = (urlParts: UrlTypes, body = {}) => Request(
-  buildURL(urlParts), 
+  buildURL(urlParts),
   {
     method: 'DELETE',
     body: JSON.stringify(body),
