@@ -72,4 +72,8 @@ const onCreateFailSnackbarsEpic: Epic = action$ =>
     ),
   );
 
-export default [fetchAddonsEpic, createAddonEpic, onCreateFailSnackbarsEpic];
+export default [
+  fetchAddonsEpic,
+  createAddonEpic,
+  onCreateFailSnackbarsEpic
+];

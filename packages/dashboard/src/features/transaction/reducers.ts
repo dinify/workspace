@@ -4,7 +4,7 @@ import { fetchTransactionsAsync } from './actions';
 
 export const all = createReducer({} as any)
 
-  .handleAction(fetchTransactionsAsync.success, (state, action) => {
+  .handleAction(fetchTransactionsAsync.success, (state: any, action: any) => {
     const transactions = action.payload;
     return transactions;
   });
