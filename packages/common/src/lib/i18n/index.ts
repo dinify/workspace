@@ -67,7 +67,7 @@ export function loadMessages(config: IntlConfig): Promise<string[]> {
     id = `zh-${locale.tag.script()}`;
   }
   return new Promise((resolve, reject) => {
-    wretch(`${staticRoot}/i18n/messages/${id}/core.app`)
+    wretch(`${staticRoot}/i18n/messages/${id}/${config.namespace}`)
       .get()
       .json(json => {
         resolve(json as string[]);
@@ -128,7 +128,7 @@ const initialState: IntlState = {
 
 export const IntlContext = createContext<IntlContextType>({
   state: initialState,
-  setLocale: () => {}
+  setLocale: () => { }
 });
 
 export { useIntl } from "./context";

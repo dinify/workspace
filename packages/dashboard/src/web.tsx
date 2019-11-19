@@ -26,14 +26,14 @@ import configureStore from './configureStore';
 import './index.css';
 
 if (process.env.NODE_ENV !== 'development') {
-  Sentry.init({dsn: "https://fe2fe060b40240a38b19bf4a1416bc83@sentry.io/1808391"});
+  Sentry.init({ dsn: "https://fe2fe060b40240a38b19bf4a1416bc83@sentry.io/1808391" });
 }
 
 const history = createBrowserHistory();
 const { store, persistor } = configureStore(history);
 
 const intlConfig: IntlConfig = {
-  namespace: 'dashboard',
+  namespace: 'core.dashboard',
 };
 const langCookie = getCookie('language');
 if (langCookie) {
