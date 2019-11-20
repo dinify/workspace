@@ -9,7 +9,7 @@ import RemoveCircleOutline from '@material-ui/icons/RemoveCircleOutline';
 import {
   assignIngredientAsync,
   unassignIngredientAsync,
-  setIngredientExcludability
+  setIngredientExcludabilityAsync
 } from 'features/menuItem/actions';
 import { listOfIngredients } from 'features/ingredient/selectors';
 import { fetchIngredientsAsync } from 'features/ingredient/actions';
@@ -17,7 +17,8 @@ import ListOfCustomizations from './ListOfCustomizations';
 import { getT } from '@dinify/common/src/lib/translation.ts';
 
 const Excludability = ({ selectedFoodId, setIngredientExcludability }) => ({ ingredient }) => {
-  const excludable = ingredient.pivot ? ingredient.pivot.excludable : true;
+  const excludable = ingredient.excludable;
+  console.log(ingredient);
   return (
     <Tooltip
       placement="left"
@@ -43,6 +44,7 @@ const Excludability = ({ selectedFoodId, setIngredientExcludability }) => ({ ing
 
 
 const ItemIngredients = ({
+  menuIngredients,
   selectedFood,
   ingredientsList,
   ingredientsMap,
@@ -70,7 +72,7 @@ const ItemIngredients = ({
   if (selectedFood.menuIngredients) {
     assignedIngredients = selectedFood.menuIngredients.map((compoundId) => {
       const ingredientId = compoundId.split('.')[1];
-      return ingredientsMap[ingredientId];
+      return { ...ingredientsMap[ingredientId], ...menuIngredients[compoundId] };
     });
   }
 
@@ -115,6 +117,7 @@ export default connect(
   state => ({
     ingredientsMap: state.ingredient.all,
     ingredientsList: listOfIngredients(state),
+    menuIngredients: state.menuItem.menuIngredients,
     ingredientsLoaded: state.ingredient.loaded,
     defaultLang: state.restaurant.defaultLanguage
   }),
@@ -122,6 +125,6 @@ export default connect(
     fetchIngredients: fetchIngredientsAsync.request,
     assignIngredient: assignIngredientAsync.request,
     unassignIngredient: unassignIngredientAsync.request,
-    setIngredientExcludability
+    setIngredientExcludability: setIngredientExcludabilityAsync.request
   },
 )(ItemIngredients);

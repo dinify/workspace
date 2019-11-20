@@ -36,6 +36,12 @@ export const unassignIngredientAsync = createAsyncAction(
   `${p}/UNASSIGN_INGREDIENT_FAIL`
 )();
 
+export const setIngredientExcludabilityAsync = createAsyncAction(
+  `${p}/SET_INGREDIENT_EXCLUDABILITY_INIT`,
+  `${p}/SET_INGREDIENT_EXCLUDABILITY_DONE`,
+  `${p}/SET_INGREDIENT_EXCLUDABILITY_FAIL`
+)();
+
 export const assignAddonAsync = createAsyncAction(
   `${p}/ASSIGN_ADDON_INIT`,
   `${p}/ASSIGN_ADDON_DONE`,
@@ -82,11 +88,6 @@ export const assignIngredient = payload => ({
 
 export const unassignIngredient = payload => ({
   type: types.UNASSIGN_INGREDIENT_INIT,
-  payload,
-});
-
-export const setIngredientExcludability = payload => ({
-  type: types.SET_INGREDIENT_EXCLUDABILITY_INIT,
   payload,
 });
 

@@ -16,10 +16,12 @@ import {
   unassignAddonAsync,
   assignOptionAsync,
   unassignOptionAsync,
+  setIngredientExcludabilityAsync,
 } from './actions';
 
 const initialState = {
   all: {},
+  menuIngredients: {},
   backup: {},
 };
 
@@ -33,8 +35,17 @@ export default function reducer(state = initialState, action) {
     }
 
     case getType(fetchMenuItemAsync.success): {
-      const menuItems = payload.entities.menuItems;
-      return assoc('all', { ...state.all, ...menuItems })(state);
+      const { menuItems, menuIngredients } = payload.entities;
+      return pipe(
+        assoc('all', { ...state.all, ...menuItems }),
+        assoc('menuIngredients', { ...state.menuIngredients, ...menuIngredients})
+      )(state);
+    }
+
+    case getType(setIngredientExcludabilityAsync.success): {
+      const { menuItemId, ingredientId, excludable } = payload;
+      const compoundId = `${menuItemId}.${ingredientId}`;
+      return assocPath(['menuIngredients', compoundId, 'excludable'], excludable)(state);
     }
 
     case getType(createMenuItemAsync.success): {

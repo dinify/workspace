@@ -12,7 +12,7 @@ import assocPath from 'ramda/es/assocPath';
 import { ListToMap, handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { getType } from 'typesafe-actions';
-import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync, assignIngredientAsync, unassignIngredientAsync, assignAddonAsync, unassignAddonAsync, assignOptionAsync, unassignOptionAsync } from './actions';
+import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync, assignIngredientAsync, unassignIngredientAsync, assignAddonAsync, unassignAddonAsync, assignOptionAsync, unassignOptionAsync, setIngredientExcludabilityAsync } from './actions';
 import { normalize } from 'normalizr';
 import * as types from './types';
 import { menuItem } from './schemas.ts';
@@ -144,36 +144,29 @@ export const unassignIngredientEpic = (action$) =>
     })
   );
 
-export const setIngredientExcludabilityEpic = (action$, state$) =>
+export const setIngredientExcludabilityEpic = (action$) =>
   action$.pipe(
-    ofType(types.SET_INGREDIENT_EXCLUDABILITY_INIT),
+    ofType(getType(setIngredientExcludabilityAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, ingredientId, excludable } = payload;
-      const ingredient = state$.value.ingredient.all[ingredientId];
-      const menuItem = state$.value.menuItem.all[menuItemId];
-      if (!ingredient || !menuItem) {
-        return of({
-          type: types.UNASSIGN_INGREDIENT_FAIL,
-          payload: 'ingredient and menuItem required'
-        });
-      }
-      
-      const newIngredients = menuItem.ingredients;
-      const index = findIndex(propEq('id', ingredientId))(newIngredients);
-      newIngredients[index] = pipe(
-        assocPath(['pivot', 'excludable'], excludable),
-        assoc('excludable', excludable)
-      )(newIngredients[index]);
 
-      const updatePayload = {
-        id: menuItemId,
-        ingredients: newIngredients
+      const body = {
+        excludable
       }
-      return of({
-        type: types.UPDATE_MENUITEM_INIT,
-        payload: updatePayload,
-      });
+
+      return fromPromise(API.UpdateMenuItemIngredient(menuItemId, ingredientId, body)).pipe(
+        map((res) => ({
+          type: getType(setIngredientExcludabilityAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(setIngredientExcludabilityAsync.failure),
+          initAction: action
+        }))
+      );
     })    
   )
 

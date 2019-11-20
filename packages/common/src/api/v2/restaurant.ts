@@ -186,6 +186,10 @@ export const UnassignIngredient = (menuItemId: string, body: any) => Delete({
   path: `menuItems/${menuItemId}/ingredients/${body.ingredientId}`
 });
 
+export const UpdateMenuItemIngredient = (menuItemId: string, ingredientId: string, body: any): Promise<any> => Patch({
+  path: `menuItems/${menuItemId}/ingredients/${ingredientId}`
+}, body);
+
 export const AssignAddon = (menuItemId: string, body: any) => Post({
   path: `menuItems/${menuItemId}/addons`
 }, body);
