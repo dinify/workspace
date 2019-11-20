@@ -17,6 +17,11 @@ export const createMenuItemAsync = createAsyncAction(
   `${p}/POST_ITEM_FAIL`
 )();
 
+export const removeMenuItemAsync = createAsyncAction(
+  `${p}/DELETE_ITEM_INIT`,
+  `${p}/DELETE_ITEM_DONE`,
+  `${p}/DELETE_ITEM_FAIL`
+)();
 
 export const updateMenuItemAsync = createAsyncAction(
   `${p}/PATCH_ITEM_INIT`,
@@ -66,48 +71,8 @@ export const unassignOptionAsync = createAsyncAction(
   `${p}/UNASSIGN_OPTION_FAIL`
 )();
 
-export const updateMenuitemInit = payload => ({
-  type: types.UPDATE_MENUITEM_INIT,
-  payload,
-});
-
-export const removeMenuitemInit = payload => ({
-  type: types.REMOVE_MENUITEM_INIT,
-  payload,
-});
-
 export const reorderItemsInit = payload => ({
   type: types.REORDER_MENUITEM_INIT,
-  payload,
-});
-
-export const assignIngredient = payload => ({
-  type: types.ASSIGN_INGREDIENT_INIT,
-  payload,
-});
-
-export const unassignIngredient = payload => ({
-  type: types.UNASSIGN_INGREDIENT_INIT,
-  payload,
-});
-
-export const assignAddon = payload => ({
-  type: types.ASSIGN_ADDON_INIT,
-  payload,
-});
-
-export const unassignAddon = payload => ({
-  type: types.UNASSIGN_ADDON_INIT,
-  payload,
-});
-
-export const assignOption = payload => ({
-  type: types.ASSIGN_OPTION_INIT,
-  payload,
-});
-
-export const unassignOption = payload => ({
-  type: types.UNASSIGN_OPTION_INIT,
   payload,
 });
 

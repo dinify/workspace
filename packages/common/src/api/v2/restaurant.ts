@@ -178,6 +178,10 @@ export const UpdateMenuItem = (menuItemId: string, body: any): Promise<any> => P
   path: `menuItems/${menuItemId}`
 }, body);
 
+export const RemoveMenuItem = (menuItemId: string): Promise<any> => Delete({
+  path: `menuItems/${menuItemId}`
+});
+
 export const AssignIngredient = (menuItemId: string, body: any) => Post({
   path: `menuItems/${menuItemId}/ingredients`
 }, body);

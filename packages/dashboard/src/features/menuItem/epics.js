@@ -12,7 +12,7 @@ import assocPath from 'ramda/es/assocPath';
 import { ListToMap, handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { getType } from 'typesafe-actions';
-import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync, assignIngredientAsync, unassignIngredientAsync, assignAddonAsync, unassignAddonAsync, assignOptionAsync, unassignOptionAsync, setIngredientExcludabilityAsync } from './actions';
+import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync, assignIngredientAsync, unassignIngredientAsync, assignAddonAsync, unassignAddonAsync, assignOptionAsync, unassignOptionAsync, setIngredientExcludabilityAsync, removeMenuItemAsync } from './actions';
 import { normalize } from 'normalizr';
 import * as types from './types';
 import { menuItem } from './schemas.ts';
@@ -75,7 +75,7 @@ const updateMenuItemEpic = (action$) =>
 
       const payload = action.payload;
 
-      const body = pick(['name', 'description', 'price'], payload);
+      const body = pick(['name', 'description', 'price', 'published'], payload);
 
       const menuItemId = payload.menuItemId;
 
@@ -88,6 +88,30 @@ const updateMenuItemEpic = (action$) =>
         catchError(error => handleEpicAPIError({
           error,
           failActionType: getType(updateMenuItemAsync.failure),
+          initAction: action
+        }))
+      );
+    })
+  );
+
+const deleteMenuItemEpic = (action$) =>
+  action$.pipe(
+    ofType(getType(removeMenuItemAsync.request)),
+    mergeMap((action) => {
+
+      const { payload } = action;
+
+      const { menuItemId } = payload;
+
+      return fromPromise(API.RemoveMenuItem(menuItemId)).pipe(
+        map((res) => ({
+          type: getType(removeMenuItemAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(removeMenuItemAsync.failure),
           initAction: action
         }))
       );
@@ -273,6 +297,7 @@ export const unassignOptionEpic = (action$) =>
 export default [
   fetchMenuItemEpic,
   createMenuItemEpic,
+  deleteMenuItemEpic,
   updateMenuItemEpic,
   assignIngredientEpic,
   unassignIngredientEpic,

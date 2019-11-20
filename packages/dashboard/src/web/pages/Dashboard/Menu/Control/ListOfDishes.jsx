@@ -27,8 +27,8 @@ import { getT } from '@dinify/common/src/lib/translation.ts';
 
 import {
   createMenuItemAsync,
-  updateMenuitemInit,
-  removeMenuitemInit,
+  updateMenuItemAsync,
+  removeMenuItemAsync,
   reorderItemsInit
 } from 'features/menuItem/actions';
 import {
@@ -138,7 +138,7 @@ const SortableItem = SortableElement(
           <Tooltip placement="left" title={t('delete')}>
             <IconButton
               aria-label={t('delete')}
-              onClick={() => removeItem({ id: item.id })}
+              onClick={() => removeItem({ menuItemId: item.id })}
             >
               <DeleteIcon />
             </IconButton>
@@ -156,9 +156,9 @@ const SortableItem = SortableElement(
             checkedIcon={<Visibility />}
             icon={<VisibilityOff />}
             color="primary"
-            defaultChecked={item.published}
+            checked={item.published}
             onChange={(o, checked) =>
-              updateItem({ id: item.id, published: checked })
+              updateItem({ menuItemId: item.id, published: checked })
             }
           />
         </Tooltip>
@@ -255,9 +255,9 @@ export default connect(
     errorsMap: state.ui.errorsMap,
     lang: state.restaurant.defaultLanguage,
   }), {
-    updateItem: updateMenuitemInit,
+    updateItem: updateMenuItemAsync.request,
     createItem: createMenuItemAsync.request,
-    removeItem: removeMenuitemInit,
+    removeItem: removeMenuItemAsync.request,
     reorderItems: reorderItemsInit,
     selectFood: selectFoodAction,
   },

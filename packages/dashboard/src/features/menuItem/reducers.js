@@ -17,6 +17,8 @@ import {
   assignOptionAsync,
   unassignOptionAsync,
   setIngredientExcludabilityAsync,
+  updateMenuItemAsync,
+  removeMenuItemAsync,
 } from './actions';
 
 const initialState = {
@@ -26,9 +28,10 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  const { type, payload } = action;
+  const { type, payload, meta } = action;
 
   switch (type) {
+
     case getType(fetchMenuCategoriesAsync.success): {
       const items = payload.entities.menuItems;
       return assoc('all', { ...state.all, ...items })(state);
@@ -42,15 +45,25 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case getType(setIngredientExcludabilityAsync.success): {
-      const { menuItemId, ingredientId, excludable } = payload;
-      const compoundId = `${menuItemId}.${ingredientId}`;
-      return assocPath(['menuIngredients', compoundId, 'excludable'], excludable)(state);
-    }
+    case getType(updateMenuItemAsync.success): {
+      const { menuItemId } = meta;
+      return assocPath(['all', menuItemId], { ...state.all[menuItemId], ...meta })(state);
+    }    
 
     case getType(createMenuItemAsync.success): {
       const newItem = payload;
       return assocPath(['all', newItem.id], newItem)(state);
+    }
+
+    case getType(removeMenuItemAsync.success): {
+      const { menuItemId } = meta;
+      return dissocPath(['all', menuItemId])(state);
+    }
+
+    case getType(setIngredientExcludabilityAsync.success): {
+      const { menuItemId, ingredientId, excludable } = payload;
+      const compoundId = `${menuItemId}.${ingredientId}`;
+      return assocPath(['menuIngredients', compoundId, 'excludable'], excludable)(state);
     }
 
     case getType(assignIngredientAsync.request): {
@@ -107,34 +120,16 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case types.UPDATE_MENUITEM_INIT: {
-      const { id } = payload;
-      const original = state.all[id];
-
-      return assocPath(['all', id], { ...original, ...payload })(state);
-    }
-
-    case types.REMOVE_MENUITEM_INIT: {
-      const { id } = payload;
-      return pipe(
-        assocPath(['backup', id], state.all[id]),
-        dissocPath(['all', id]),
-      )(state);
-    }
-
-    case type.REMOVE_MENUITEM_FAIL: {
-      const id = payload.initPayload.id;
-      return assocPath(['all', id], state.backup[id])(state);
-    }
-
     case types.UPDATE_ITEMIMAGE_DONE: {
       const foodId = payload.initPayload.id;
       const image = payload.res;
       return assocPath(['all', foodId, 'images', image.id], image)(state);
     }
+    
     case firebaseTypes.LOGOUT: {
       return initialState;
     }
+
     default:
       return state;
   }
