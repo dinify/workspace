@@ -32,7 +32,7 @@ primary_900    #B1312F
 // from: https://material.io/design/color/dark-theme.html
 // TODO: desaturate primary color to meet WCAG 4.5:1
 
-const getTheme = ({type = 'light'}) => {
+export const getTheme = ({ type = 'light' }) => {
   const dark = type === 'dark';
 
   // Rounded corners
@@ -136,5 +136,3 @@ const getTheme = ({type = 'light'}) => {
     }
   );
 };
-
-export default getTheme;

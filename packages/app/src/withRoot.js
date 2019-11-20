@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import getTheme from "@dinify/common/src/theme";
+import { getTheme } from "@dinify/common/src/theme";
 
 // A theme with custom primary and secondary color.
 // It's optional.
@@ -36,8 +36,8 @@ function withRoot(Component) {
     );
   }
   return connect(state => ({
-      theme: state.ui.theme,
-    }), { }
+    theme: state.ui.theme,
+  }), {}
   )(WithRoot);
 }
 

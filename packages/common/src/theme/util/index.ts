@@ -1,21 +1,23 @@
 import typographyData from '../../lib/typography.json';
 
-export function pxToRem(px, unit = 'rem') {
+export function pxToRem(px: number, unit = 'rem') {
   return `${px / 16}${unit}`;
 }
 
-export function round(value) {
+export function round(value: number) {
   return Math.round(value * 1e5) / 1e5;
 }
 
-export function getLineHeight(px) {
+export function getLineHeight(px: number) {
   //using baseline grid of 4dp
   return Math.ceil(px / 4) * 4;
 }
 
-export function getWeight(name) {
+export type TypographyVariant = 'headline1' | 'headline2' | 'headline3' | 'headline4' | 'headline5' | 'headline6' | 'body1' | 'body2' | 'subtitle1' | 'subtitle2' | 'button' | 'button2' | 'caption' | 'overline';
+export type WeightType = 'Hairline' | 'Thin' | 'ExtraLight' | 'UltraLight' | 'Light' | 'Normal' | 'Regular' | 'Medium' | 'DemiBold' | 'SemiBold' | 'Bold' | 'ExtraBold' | 'UltraBold' | 'Black' | 'Heavy';
+export function getWeight(name: WeightType) {
   let fontWeight;
-  switch(name) {
+  switch (name) {
     case 'Hairline':
     case 'Thin':
       fontWeight = 100;
@@ -54,11 +56,15 @@ export function getWeight(name) {
   return fontWeight;
 }
 
+interface Params {
+  variants: TypographyVariant[],
+  map: { [key: string]: string }
+}
 export function getTypographyVariants({
   variants,
   map
-}) {
-  let paramVariants = [
+}: Params) {
+  const paramVariants: TypographyVariant[] = [
     'headline1',
     'headline2',
     'headline3',
@@ -75,13 +81,13 @@ export function getTypographyVariants({
     'overline'
   ] || variants;
 
-  const getStyleForVariant = (variant) => {
-    const data = typographyData[variant];
+  const getStyleForVariant = (variant: TypographyVariant) => {
+    const data = (typographyData as any)[variant];
 
     let fontFamily = data.font;
     let fontWeight = getWeight(data.weight);
 
-    const processedData = {
+    const processedData: React.CSSProperties = {
       fontFamily,
       fontWeight,
       fontSize: pxToRem(data.size),
@@ -124,9 +130,9 @@ export function getTypographyVariants({
     }
   };
 
-  let styles = {};
+  const styles: { [key: string]: React.CSSProperties } = {};
   paramVariants.forEach(variant => {
-    let mappedVariant = variant;
+    let mappedVariant: string = variant;
     if (map && map[variant]) mappedVariant = map[variant];
     styles[mappedVariant] = getStyleForVariant(variant);
   });
