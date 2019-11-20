@@ -35,11 +35,11 @@ const { store, persistor } = configureStore(history);
 const intlConfig: IntlConfig = {
   namespace: 'core.dashboard',
 };
-const langCookie = getCookie('language');
-if (langCookie) {
+const localeCookie = getCookie('locale');
+if (localeCookie) {
   try {
-    // const content = JSON.parse(langCookie);
-    intlConfig.locale = localeMatcher.match(langCookie).locale;
+    // const content = JSON.parse(localeCookie);
+    intlConfig.locale = localeMatcher.match(localeCookie).locale;
   } catch (e) {
     console.error('JSON parse error', e);
   }

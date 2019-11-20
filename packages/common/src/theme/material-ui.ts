@@ -86,6 +86,15 @@ export const getTheme = ({ type = 'light' }) => {
         ].join(','),
         ...nextVariants
       },
+      props: {
+        MuiButtonBase: {
+          // TODO: disable ripple on iOS
+          // disableRipple: true,
+        },
+        MuiFilledInput: {
+          disableUnderline: true
+        }
+      },
       overrides: {
         MuiSnackbarContent: {
           root: {
@@ -116,20 +125,6 @@ export const getTheme = ({ type = 'light' }) => {
                 transform: 'translate(12px, 7px) scale(1)'
               }
             }
-          }
-        },
-        MuiFilledInput: {
-          root: {
-            borderRadius: shapeBorderRadius,
-            overflow: 'hidden'
-          },
-          underline: {
-            '&:before': {
-              borderBottom: 'none',
-            },
-            '&:hover:not($disabled):not($focused):not($error):before': {
-              borderBottom: 'none',
-            },
           }
         }
       }

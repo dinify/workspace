@@ -2,12 +2,7 @@ import React from 'react';
 import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
-import {
-  useTranslation,
-  useIntl,
-  supportedLocales,
-  localeMatcher,
-} from '@dinify/common/src/lib/i18n';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -19,6 +14,7 @@ import {
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import Flag from '@dinify/common/src/components/Flag';
+import { LanguageSelect } from '@dinify/common/src/components/language-select';
 import { getCookie, setCookie } from '@dinify/common/src/lib/FN';
 
 import List from '@material-ui/core/List';
@@ -72,10 +68,6 @@ const contentTheme = createMuiTheme({
     },
   },
 });
-
-const locales = ['en-GB', 'cs'].map(id =>
-  supportedLocales.find(l => l.id === id),
-);
 
 const styles = theme => ({
   sidebar: {
@@ -190,7 +182,7 @@ const shouldOpen = (openedIndex, index, location, section) => {
   return openedIndex === index;
 };
 
-const ConditionalLink = ({ condition, children, ...otherProps}) => {
+const ConditionalLink = ({ condition, children, ...otherProps }) => {
   if (condition) return (<Link {...otherProps}>{children}</Link>);
   return <>{children}</>;
 }
@@ -205,13 +197,9 @@ const Dashboard = ({
   publishRestaurant,
 }) => {
   const { t } = useTranslation();
-  const { state, setLocale } = useIntl();
-  const selectedLocale = state.locale;
-  console.log(selectedLocale, locales);
 
-  const changeLocale = locale => {
-    setLocale(locale);
-    setCookie('language', locale.id, 30);
+  const setLocaleCookie = locale => {
+    setCookie('locale', locale.id, 30);
   };
   const sections = [
     {
@@ -340,8 +328,8 @@ const Dashboard = ({
                       (shouldOpen(openedIndex, index, location, section) ? (
                         <ExpandLess className={classes.anchor} />
                       ) : (
-                        <ExpandMore className={classes.anchor} />
-                      ))}
+                          <ExpandMore className={classes.anchor} />
+                        ))}
                   </ListItem>
                 </ConditionalLink>
                 {section.subsections && (
@@ -450,25 +438,13 @@ const Dashboard = ({
               )}
             </Stepper>
           )}
-
-          <Grid container justify="center">
-            {locales.map(locale => (
-              <Grid item key={locale.id}>
-                <IconButton
-                  onClick={() => changeLocale(locale)}
-                  className={
-                    classes.flag +
-                    ' ' +
-                    (locale.id === selectedLocale.id
-                      ? classes.flagSelected
-                      : '')
-                  }
-                >
-                  <Flag country={locale.tag.region()} />
-                </IconButton>
-              </Grid>
-            ))}
-          </Grid>
+          <div style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            <LanguageSelect tags={['en-GB', 'es', 'cs']} onChange={setLocaleCookie} />
+          </div>
 
           <div
             style={{
