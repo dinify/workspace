@@ -59,7 +59,7 @@ export const useSubscriber = (uid: string) => {
       if (payload.order.initiator === uid) {
         dispatch(
           showSnackbarAction({
-            message: t => t('orderConfirmed'),
+            message: t => t('order.confirmed'),
           }),
         );
       }
@@ -69,7 +69,7 @@ export const useSubscriber = (uid: string) => {
     ) {
       dispatch(
         showSnackbarAction({
-          message: t => t('orderCancelled'),
+          message: t => t('order.cancelled'),
         }),
       );
     }
