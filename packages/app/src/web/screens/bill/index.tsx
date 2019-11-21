@@ -73,7 +73,7 @@ const BillPageComponent: React.FC<BillPageProps> = props => {
         {!splitMode && <AppBarAction type="close" onClick={onClose} />}
         <AppBarTitle
           title={t('bill.title')}
-          subtitle={t('cart.itemCount', [orderItemCount])}
+          subtitle={t('itemCount', [orderItemCount])}
         />
         {false && (
           <AppBarAction
@@ -168,7 +168,6 @@ const BillPageComponent: React.FC<BillPageProps> = props => {
             onClick={() => onChoosePayment({ type: 'CASH' })}
             color="primary"
             variant="extended"
-            aria-label={t('pay')}
           >
             <Wallet style={{ marginRight: 8 }} />
             {t('pay.method.cash')}
@@ -183,7 +182,6 @@ const BillPageComponent: React.FC<BillPageProps> = props => {
             onClick={() => onChoosePayment({ type: 'CARD' })}
             color="primary"
             variant="extended"
-            aria-label={t('pay')}
           >
             <CreditCard style={{ marginRight: 8 }} />
             {t('pay.method.card')}
