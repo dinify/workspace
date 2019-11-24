@@ -28,11 +28,11 @@ const BillSectionComponent: React.FC<BillSectionProps> = (props) => {
   if (emptySection) return null;
   return (
     <>
-      <Typography style={{marginTop: 16, marginBottom: 16}} variant="overline">
+      <Typography style={{ marginTop: 16, marginBottom: 16 }} variant="overline">
         {sectionLabel}
       </Typography>
       {orderItemIds.map(itemId => (
-        <BillItem key={itemId} orderItemId={itemId}/>
+        <BillItem style={{ padding: '8px 0px' }} key={itemId} orderItemId={itemId} />
       ))}
       {emptySection && (
         <Typography color="textSecondary" variant="caption">

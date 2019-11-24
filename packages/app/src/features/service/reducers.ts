@@ -1,5 +1,6 @@
 import * as actions from './actions';
-import { createReducer, createAction } from 'typesafe-actions';
+import * as wsActions from '../socket/actions'
+import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
 import { ServiceMap } from 'ServiceModels';
 import { ListToMap } from '@dinify/common/src/lib/FN';
@@ -26,7 +27,7 @@ export const status = createReducer({} as any)
     const service = initPayload;
     return { ...state, [service.serviceId]: 'FAILED' };
   })
-  .handleAction(createAction('dinify/ws/CONFIRMED_CALL')<any>(), (state, action) => {
+  .handleAction(wsActions.confirmedCallAction, (state, action) => {
     const call = action.payload.call;
     return { ...state, [call.serviceId]: 'READY' };
   });

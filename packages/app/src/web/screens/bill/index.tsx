@@ -47,9 +47,13 @@ const BillPageComponent: React.FC<BillPageProps> = props => {
   const { t } = useTranslation();
   const billPayable = subtotal.amount > 0 && !splitMode && !waitingPayment;
   const paymentTextColor = billPayable ? 'textPrimary' : 'textSecondary';
+  const gratitudeSubtotal = {
+    ...subtotal,
+    amount: subtotal ? subtotal.amount * (gratitude / 100) : 0,
+  } as Subtotal;
   const total = {
     ...subtotal,
-    amount: subtotal ? subtotal.amount * (1 + gratitude / 100) : 0,
+    amount: subtotal ? subtotal.amount + gratitudeSubtotal.amount : 0,
   } as Subtotal;
 
   let statusComponent = null;
@@ -110,7 +114,7 @@ const BillPageComponent: React.FC<BillPageProps> = props => {
             {t('subtotal')}
           </Typography>
           <Typography color={paymentTextColor}>
-            <Price price={subtotal} />
+            <Price original price={subtotal} />
           </Typography>
         </div>
         <div
@@ -138,7 +142,28 @@ const BillPageComponent: React.FC<BillPageProps> = props => {
             {t('gratuity')}
           </Typography>
           <Typography color={paymentTextColor}>
-            <Price price={total} />
+            <Price original price={gratitudeSubtotal} />
+          </Typography>
+
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            marginTop: 8,
+            marginBottom: 16,
+          }}
+        >
+          <Typography
+            variant="button"
+            color={paymentTextColor}
+            style={{
+              flex: 1,
+            }}
+          >
+            {t('total')}
+          </Typography>
+          <Typography variant="subtitle1" color={paymentTextColor}>
+            <Price original price={total} />
           </Typography>
         </div>
         <Slider

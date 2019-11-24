@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import MenuItemCard from 'web/components/MenuItemCard';
 import * as FN from '@dinify/common/src/lib/FN';
 import sort from 'ramda/es/sort';
-import uniqueId from 'lodash.uniqueid';
 import { getCategoriesBySubdomain } from 'features/menuCategory/selectors';
 import { getT } from 'lib/translation.ts';
 import { getUserLang } from 'features/user/selectors.ts';
@@ -77,12 +76,12 @@ let MenuSection = ({
       {sort((a, b) => a.precedence - b.precedence, menuCategoriesList).map(
         (category, i) => {
           const categoryItems = FN.MapToList(category.items);
-          if (categoryItems.length === 0) return <div />;
+          if (categoryItems.length === 0) return <div key={category.id} />;
           return (
             <div
               className={mobile ? classes.expand : null}
               style={{ marginTop: i === 0 ? 32 : 0 }}
-              key={uniqueId()}
+              key={category.id}
             >
               {i > 0 && (
                 <Divider
@@ -123,21 +122,21 @@ let MenuSection = ({
                   ))}
                 </div>
               ) : (
-                <Grid container spacing={mediumScreen ? 24 : 16}>
-                  {sort(
-                    (a, b) => a.precedence - b.precedence,
-                    FN.MapToList(category.items),
-                  ).map(menuItem => (
-                    <Grid item xs={6} sm={4} md={6} key={uniqueId()}>
-                      <MenuItemCard
-                        getT={getT}
-                        userLang={userLang}
-                        menuItem={menuItem}
-                      />
-                    </Grid>
-                  ))}
-                </Grid>
-              )}
+                  <Grid container spacing={mediumScreen ? 24 : 16}>
+                    {sort(
+                      (a, b) => a.precedence - b.precedence,
+                      FN.MapToList(category.items),
+                    ).map(menuItem => (
+                      <Grid item xs={6} sm={4} md={6} key={menuItem.id}>
+                        <MenuItemCard
+                          getT={getT}
+                          userLang={userLang}
+                          menuItem={menuItem}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                )}
             </div>
           );
         },

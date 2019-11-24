@@ -5,7 +5,6 @@ import Fab from '@material-ui/core/Fab';
 
 import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
 import CartItem from './cart-item';
-import TotalPrice from '../../components/TotalPrice';
 import { RootState } from 'typesafe-actions';
 
 import { Subtotal } from 'CartModels';
@@ -14,6 +13,7 @@ import { getOrderItemIds } from '../../../features/cart/selectors';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import { Typography } from '@material-ui/core';
 import { useAction } from '@dinify/common/src/lib/util';
+import Price from '@dinify/common/src/components/price';
 
 export const CartScreen: React.FC<{
   onClose?: () => void;
@@ -55,7 +55,14 @@ export const CartScreen: React.FC<{
               orderItemId={itemId}
             />
           ))}
-          <TotalPrice price={subtotal} />
+          <div style={{ marginTop: 8, display: 'flex', alignItems: 'center' }}>
+            <Typography style={{ flex: 1 }} variant="button">
+              {t('total')}
+            </Typography>
+            <Typography variant="subtitle1">
+              <Price original price={subtotal} />
+            </Typography>
+          </div>
           <Fab
             disabled={!canOrder}
             style={{ marginTop: 16, width: '100%' }}
