@@ -9,7 +9,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import auth from '@dinify/common/src/features/auth';
+import auth from '@dinify/common/src/features/auth/reducers';
 import restaurant from 'features/restaurant/reducers';
 import ui from 'features/ui/reducers';
 import menuCategory from 'features/menuCategory/reducers.ts';

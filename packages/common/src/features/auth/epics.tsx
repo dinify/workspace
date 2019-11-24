@@ -1,10 +1,9 @@
 import React from 'react';
-import { Observable, of, from } from 'rxjs';
+import { of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter, tap, mapTo } from 'rxjs/operators';
-import { ofType } from 'redux-observable';
+import { ofType, Epic } from 'redux-observable';
 import AccountExistsDialog from '../../components/dialogs/AccountExistsDialog';
 
-import * as API from '../../api/user';
 // import { checkinInit } from 'features/restaurant/actions';
 // import { loadUserData } from 'features/app/actions';
 import { setCookie } from '../../lib/FN';
@@ -14,7 +13,7 @@ import { setPage, setLinkProviders } from './actions';
 import { openDialog } from '../ui/actions';
 import { UNAUTHORIZED } from './types';
 
-const accessTokenEpic = (action$, state$) =>
+const accessTokenEpic: Epic = (action$, state$) =>
   action$.pipe(
     filter(({ type }) => {
       return type.includes('@@reactReduxFirebase');
@@ -31,14 +30,14 @@ const accessTokenEpic = (action$, state$) =>
 
 const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
 
-const refreshTokenEpic = (action$, state$, { firebase }) =>
+const refreshTokenEpic: Epic = (action$, state$, { firebase }) =>
   action$.pipe(
     ofType(UNAUTHORIZED),
     mergeMap(({ payload: { type, payload } }) => {
       const auth = firebase.auth();
       if (!auth.currentUser) return of({ type: REFRESH_TOKEN_FAILED, error: true });
       return from(auth.currentUser.getIdToken()).pipe(
-        tap(t => setCookie('access_token', t, 90)),
+        tap((t: any) => setCookie('access_token', t, 90)),
         mapTo({
           type,
           payload,
@@ -61,7 +60,7 @@ const refreshTokenEpic = (action$, state$, { firebase }) =>
 //   });
 // });
 
-const loginErrorHandled = (error) => of(
+const loginErrorHandled = (error?: any) => of(
   { type: 'LOGIN_ERROR_HANDLED', error }
 )
 
@@ -69,7 +68,7 @@ const loginLinkHandled = () => of(
   { type: 'LOGIN_LINK_HANDLED' }
 )
 
-const loginLinkEpic = (action$, state$) =>
+const loginLinkEpic: Epic = (action$, state$) =>
   action$.pipe(
     ofType(actionTypes.LOGIN),
     mergeMap(({ auth }) => {
@@ -90,8 +89,19 @@ const loginLinkEpic = (action$, state$) =>
     })
   );
 
+const DialogComponent = (props: any) => {
+  const { authError, methods } = props.deps;
+  return (
+    <AccountExistsDialog
+      providerName={authError.credential.providerId}
+      email={authError.email}
+      methods={methods}
+      {...props}
+    />
+  );
+}
 
-const loginErrorEpic = (action$, state$, { firebase }) =>
+const loginErrorEpic: Epic = (action$, state$, { firebase }) =>
   action$.pipe(
     ofType(actionTypes.LOGIN_ERROR),
     mergeMap(({ authError }) => {
@@ -99,7 +109,7 @@ const loginErrorEpic = (action$, state$, { firebase }) =>
       if (authError.code === 'auth/account-exists-with-different-credential') {
         const promise = firebase.auth().fetchSignInMethodsForEmail(authError.email);
         return from(promise).pipe(
-          mergeMap((methods) => {
+          mergeMap((methods: any) => {
             if (methods.includes('password')) {
               return of(
                 setPage('signIn'),
@@ -118,11 +128,7 @@ const loginErrorEpic = (action$, state$, { firebase }) =>
                 }),
                 openDialog({
                   id: 'account-exists',
-                  component: (props) => <AccountExistsDialog
-                    providerName={authError.credential.providerId}
-                    email={authError.email}
-                    methods={methods}
-                    {...props}/>
+                  component: <DialogComponent deps={{ authError, methods }} />
                 })
               );
             }
