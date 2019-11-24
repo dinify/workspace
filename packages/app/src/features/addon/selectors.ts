@@ -2,25 +2,39 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import values from 'ramda/es/values';
 import { Addon, MenuAddon } from 'AddonModels';
-import { Translation } from 'CartModels';
+import { Translation, OrderItemN } from 'CartModels';
 import { useIntl } from '@dinify/common/src/lib/i18n';
+import { selectTranslation } from '../menuItem/selectors';
 
 export type AddonView = Addon &
   MenuAddon &
   Translation & {
     amount: number;
   };
+export const useAddonOrderView = (orderItemId: string) => {
+  const locale = useIntl(ctx => ctx.state.locale);
+  const orderItem = useSelector<RootState, OrderItemN>(state => state.cart.items[orderItemId]);
+  return useSelector<RootState, AddonView[]>(state =>
+    orderItem.orderAddons
+      .map(orderAddonId => {
+        const addonId = orderAddonId.split('.')[1];
+        const addon = state.addon.all[addonId];
+        const orderAddon = state.cart.orderAddons[`${orderItem.id}.${addonId}`];
+        const amount = orderAddon ? orderAddon.amount : 0;
+        const menuAddon = values(state.menuItem.menuAddons)
+          .find(item => item.menuItemId === orderItem.menuItemId) as MenuAddon;
+        return {
+          ...menuAddon,
+          ...addon,
+          ...selectTranslation(locale, addon.translations),
+          amount,
+        };
+      }),
+  );
+};
 
 export const useAddonView = (menuItemId: string) => {
   const locale = useIntl(ctx => ctx.state.locale);
-  const selectTranslation = (translations: [Translation]): Translation => {
-    if (locale)
-      return (
-        translations.find(t => t.locale === locale.tag.language()) ||
-        translations[0]
-      );
-    else return translations[0];
-  };
   return useSelector<RootState, AddonView[]>(state =>
     values(state.menuItem.menuAddons)
       .filter(item => item.menuItemId === menuItemId)
@@ -34,7 +48,7 @@ export const useAddonView = (menuItemId: string) => {
         return {
           ...value,
           ...addon,
-          ...selectTranslation(addon.translations),
+          ...selectTranslation(locale, addon.translations),
           amount,
         };
       }),

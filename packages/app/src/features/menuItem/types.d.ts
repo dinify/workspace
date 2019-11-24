@@ -4,10 +4,8 @@ declare module 'MenuItemsModels' {
   import { Addon, AddonMap } from 'AddonModels';
   import { Choice, Option, OptionMap, ChoiceMap, OptionNMap } from 'OptionModels';
 
-  export type MenuItemTranslation = {
-    name: string;
+  export interface MenuItemTranslation extends Translation {
     description: string;
-    locale: string;
   };
 
   export type Image = {

@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import { Option, MenuOption, Choice } from 'OptionModels';
-import { Translation } from 'CartModels';
+import { Translation, OrderItemN } from 'CartModels';
 import values from 'ramda/es/values';
 import { useIntl } from '@dinify/common/src/lib/i18n';
+import { selectTranslation } from '../menuItem/selectors';
 
 export type OptionView = Omit<Option, 'choices'> &
   MenuOption &
@@ -22,16 +23,23 @@ export type ChoiceView = Choice & Translation & { selected: boolean };
 //   ]
 // );
 
+export const useChoiceOrderView = (orderItemId: string): ChoiceView[] => {
+  const locale = useIntl(ctx => ctx.state.locale);
+  const orderItem = useSelector<RootState, OrderItemN>(state => state.cart.items[orderItemId]);
+  return useSelector<RootState, ChoiceView[]>(state => {
+    return orderItem.orderChoices.map(choiceId => {
+      const choice = state.option.choices[choiceId];
+      return {
+        ...choice,
+        ...selectTranslation(locale, choice.translations),
+        selected: true
+      };
+    }) as [ChoiceView];
+  });
+};
+
 export const useOptionView = (menuItemId: string) => {
   const locale = useIntl(ctx => ctx.state.locale);
-  const selectTranslation = (translations: [Translation]): Translation => {
-    if (locale)
-      return (
-        translations.find(t => t.locale === locale.tag.language()) ||
-        translations[0]
-      );
-    else return translations[0];
-  };
   return useSelector<RootState, OptionView[]>(state =>
     values(state.menuItem.menuOptions)
       .filter(item => item.menuItemId === menuItemId)
@@ -51,14 +59,14 @@ export const useOptionView = (menuItemId: string) => {
               : false;
           return {
             ...choice,
-            ...selectTranslation(choice.translations),
+            ...selectTranslation(locale, choice.translations),
             selected,
           };
         }) as [ChoiceView];
         return {
           ...value,
           ...option,
-          ...selectTranslation(option.translations),
+          ...selectTranslation(locale, option.translations),
           choices,
         };
       }),
