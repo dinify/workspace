@@ -1,6 +1,6 @@
 import { combineEpics } from 'redux-observable';
 import { epics as crud } from '@dinify/common/src/features/crudEpics';
-import { authEpics as auth } from '@dinify/common/src/features/auth';
+import authEpics from '@dinify/common/src/features/auth/epics.tsx';
 import { reportingEpics as reporting } from '@dinify/common/src/features/reporting';
 
 import restaurantEpics from './features/restaurant/epics';
@@ -16,7 +16,7 @@ import translationEpics from './features/translation/epics';
 
 const rootEpic = (action$, state$, firebase, ...rest) => {
   const epic = combineEpics(
-    ...auth,
+    ...authEpics,
     ...restaurantEpics,
     ...menuCategoryEpics,
     ...menuItemEpics,
