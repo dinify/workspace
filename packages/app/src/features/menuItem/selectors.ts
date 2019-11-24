@@ -5,7 +5,9 @@ import values from 'ramda/es/values';
 import { MenuItem, MenuItemTranslation } from 'MenuItemsModels';
 import { RootState } from 'typesafe-actions';
 import { useSelector } from 'react-redux';
-import { useIntl } from '@dinify/common/src/lib/i18n';
+import { useIntl, localeMatcher } from '@dinify/common/src/lib/i18n';
+import { Locale } from '@phensley/cldr';
+import { Translation } from 'CartModels';
 
 export const getItemsOfCategory = createSelector<any, any, any, any, any>(
   [(state, categoryId) => categoryId, state => state.menuItem.all],
@@ -14,28 +16,26 @@ export const getItemsOfCategory = createSelector<any, any, any, any, any>(
   },
 );
 
-type MenuItemView = MenuItem & MenuItemTranslation;
+export const selectTranslation = <T extends Translation>(
+  locale: Locale,
+  translations: [T],
+): T => {
+  if (locale) {
+    return (
+      translations.find(t => {
+        return localeMatcher.match(t.locale).locale.id === locale.id
+      }) || translations[0]
+    );
+  }
+  else return translations[0];
+};
 
-export const useMenuItemView = (menuItemId: string | null) => {
+export type MenuItemView = MenuItem & MenuItemTranslation;
+
+export const useMenuItemView = (menuItemId: string): MenuItemView => {
   const locale = useIntl(ctx => ctx.state.locale);
-  const selectTranslation = (
-    translations: [MenuItemTranslation],
-  ): MenuItemTranslation => {
-    if (locale)
-      return (
-        translations.find(t => t.locale === locale.tag.language()) ||
-        translations[0]
-      );
-    else return translations[0];
-  };
-  return useSelector<RootState, MenuItemView | null>(state => {
-    if (menuItemId) {
-      const selected = state.menuItem.all[menuItemId];
-      if (selected) {
-        // Assuming Accecpt-Language header was set on the request
-        return { ...selectTranslation(selected.translations), ...selected };
-      }
-    }
-    return null;
-  });
+
+  return useSelector<RootState, MenuItemView>(state => (
+    { ...selectTranslation(locale, state.menuItem.all[menuItemId].translations), ...state.menuItem.all[menuItemId] }
+  ));
 };
