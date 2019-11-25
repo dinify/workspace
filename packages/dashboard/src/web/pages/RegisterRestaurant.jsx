@@ -23,6 +23,7 @@ import {
   selectRestaurant,
   setOnboardingToken
 } from 'features/restaurant/actions';
+import { useFirebase } from 'react-redux-firebase';
 
 const styles = {
   wrapperCard: {
@@ -125,6 +126,7 @@ const RegisterRestaurant = (props) => {
   } = props;
   const params = queryString.parse(location.search) || {};
   const { t } = useTranslation();
+  const firebase = useFirebase();
   useEffect(() => {
     if (auth.isEmpty) setOngoingRegistration(true);
     else setOngoingRegistration(false);
@@ -184,6 +186,15 @@ const RegisterRestaurant = (props) => {
               language: fields.language
             })}
           />
+          <Button 
+            onClick={() => firebase.logout()}
+            color="default"
+            variant="outlined"
+            fullWidth
+            style={{marginTop: 20}}
+          >
+            {t('user.logOut')}
+          </Button>
         </CardContent>
       </Card>
     </div>
