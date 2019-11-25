@@ -20,6 +20,8 @@ declare module 'ServiceModels' {
   };
 
   export type Call = {
+    id: string;
+    serviceId: string;
     status: 'CONFIRMED' | 'PENDING' | 'CANCELLED';
   };
 

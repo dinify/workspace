@@ -6,7 +6,7 @@ import { actionTypes } from 'react-redux-firebase';
 
 const languageHeaderEpic = (action$, state$) =>
   action$.pipe(
-    ofType(actionTypes.SET_PROFILE),
+    ofType(actionTypes.PROFILE_UPDATE_SUCCESS),
     mergeMap(() => {
       const profile = state$.value.firebase.profile;
       if (profile.language) {

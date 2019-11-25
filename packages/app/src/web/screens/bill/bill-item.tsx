@@ -15,7 +15,7 @@ export interface BillItemProps {
 }
 
 const BillItem: React.FC<BillItemProps> = ({
-  theme, 
+  theme,
   style,
   orderItem,
   menuItems,
@@ -38,17 +38,17 @@ const BillItem: React.FC<BillItemProps> = ({
         backgroundColor: theme.palette.divider,
         overflow: 'hidden'
       }}>
-        <img src={menuItem.images[0] && menuItem.images[0].url} style={{ width: 56, height: 56 }}/>
+        <img src={menuItem.images[0] && `${menuItem.images[0].url}=s112-c`} style={{ width: 56, height: 56 }} />
       </div>
-      <div style={{flex: 1, marginLeft: 16, position: 'relative'}}>
-        <div style={{display: 'flex'}}>
-          <Typography style={{flex: 1, marginRight: 32}} >
+      <div style={{ flex: 1, marginLeft: 16, position: 'relative' }}>
+        <div style={{ display: 'flex' }}>
+          <Typography style={{ flex: 1, marginRight: 32 }} >
             {getName(menuItem.translations)}
           </Typography>
           <Typography
             variant="overline"
-            style={{alignSelf: 'flex-end'}}>
-            <Price price={menuItem.price}/>
+            style={{ alignSelf: 'flex-end' }}>
+            <Price original price={menuItem.price} />
           </Typography>
         </div>
       </div>

@@ -17,12 +17,11 @@ const CartItemComponent: React.FC<CartItemProps & {
   theme?: any,
   style?: React.CSSProperties,
   editMode: boolean,
-  orderItemId: string,
 }> = ({
+  orderItemId,
   theme,
   style,
   editMode = false,
-  orderItemId,
 }) => {
     const { t } = useTranslation();
     const removeFromCart = useAction(rmFromCartAsync.request);
@@ -41,7 +40,7 @@ const CartItemComponent: React.FC<CartItemProps & {
           backgroundColor: theme.palette.divider,
           overflow: 'hidden'
         }}>
-          <img src={menuItem.images[0] && menuItem.images[0].url} style={{ width: 56, height: 56 }} />
+          <img src={menuItem.images[0] && `${menuItem.images[0].url}=s112-c`} style={{ width: 56, height: 56 }} />
         </div>
         <div style={{ flex: 1, marginLeft: 16, position: 'relative' }}>
           <div style={{ display: 'flex' }}>
@@ -51,7 +50,7 @@ const CartItemComponent: React.FC<CartItemProps & {
             <Typography
               variant="overline"
               style={{ alignSelf: 'flex-end', opacity: editMode ? 0 : 1 }}>
-              <Price price={menuItem.price} />
+              <Price original price={menuItem.price} />
             </Typography>
           </div>
           {customizations.length ? customizations.map((customization, i) =>
@@ -72,7 +71,7 @@ const CartItemComponent: React.FC<CartItemProps & {
                 variant="overline">
                 {customization.amount && customization.amount > 1 ? `${customization.amount} × ` : ''}
                 {parseFloat(String(customization.price.amount)) > 0 && (
-                  <Price price={customization.price} />
+                  <Price original price={customization.price} />
                 )}
               </Typography>}
             </div>
