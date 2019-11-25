@@ -11,7 +11,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 import app from 'features/app/reducers';
-import auth from '@dinify/common/src/features/auth';
+import auth from '@dinify/common/src/features/auth/reducers';
 import table from 'features/table/reducers';
 import ui from 'features/ui/reducers';
 import restaurant from 'features/restaurant/reducers';

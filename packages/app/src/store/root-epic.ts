@@ -1,6 +1,6 @@
 import { combineEpics } from 'redux-observable';
 
-import auth from '@dinify/common/src/features/auth/epicsTS';
+import auth from '@dinify/common/src/features/auth/epics';
 
 import transaction from '../features/transaction/epics';
 import cart from '../features/cart/epics';

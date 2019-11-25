@@ -1,5 +1,5 @@
 import { combineEpics } from 'redux-observable';
-import { authEpics as auth } from '@dinify/common/src/features/auth';
+import authEpics from '@dinify/common/src/features/auth/epics.tsx';
 import appEpics from 'features/app/epics';
 import commonEpics from 'features/common/epics';
 import restaurantEpics from 'features/restaurant/epics';
@@ -14,7 +14,7 @@ import serviceEpics from 'features/service/epics';
 
 const rootEpic = (action$, state$, firebase, ...rest) => {
   const epic = combineEpics(
-    ...auth,
+    ...authEpics,
     ...appEpics,
     ...commonEpics,
     ...restaurantEpics,
