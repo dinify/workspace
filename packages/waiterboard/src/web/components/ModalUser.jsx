@@ -7,6 +7,7 @@ import { checkoutUserAsync } from 'features/table/actions';
 import { getUserName } from '../../lib/utils';
 import Bill from './Events/Bill';
 import Order from './Events/Order';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 const Header = styled.div`
   position: absolute;
@@ -50,6 +51,7 @@ const ModalUser = ({
   checkoutUser,
   shown
 }) => {
+  const { t } = useTranslation();
 
   const user = users[userId];
 
@@ -71,7 +73,7 @@ const ModalUser = ({
           variant="contained"          
           onClick={() => checkoutUser({ userId })}
         >
-          <span>Check Out</span>
+          <span>{t('check-out')}</span>
         </Button>
 
 

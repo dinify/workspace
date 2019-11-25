@@ -5,20 +5,22 @@ import Order from './Events/Order';
 import { colorsByStages } from '../colors';
 
 import { Head, Body, BodyPlaceholder } from './styled/Modal';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 const ModalListOfOrders = ({
   orders, shown
 }) => {
 
   if (!shown) return (<div />)
+  const { t } = useTranslation();
 
   return (
     <div>
       <Head bg={colorsByStages.s2}>
-        Orders of today
+        {t('orders-of-today')}
       </Head>
       <Body>
-        {orders.length < 1 ? <BodyPlaceholder>No confirmed orders</BodyPlaceholder> : ''}
+        {orders.length < 1 ? <BodyPlaceholder>{t('no-confirmed-orders')}</BodyPlaceholder> : ''}
         {orders.map((order) =>
           <Order key={order.id} order={order} noconfirm datetime />
         )}

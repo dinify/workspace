@@ -24,6 +24,7 @@ import { selectedRestaurant } from 'features/restaurant/selectors';
 import { colorsByStages } from '../colors';
 
 import Price from '@dinify/common/src/components/price';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 const Label = styled.span`
   color: rgb(180, 185, 190);
@@ -134,7 +135,7 @@ const Header = ({
   confirmedOrders,
   unconfirmedOrders,
 }) => {
-  const frames = ['actions', 'tables'];
+  const { t } = useTranslation();
 
   let restaurantName = '';
   if (restaurant) restaurantName = restaurant.name;
@@ -170,7 +171,7 @@ const Header = ({
                 onClick={() => toggleFrames(frameIndex ? 0 : 1)}
                 className={frameIndex === 0 && anyAction ? 'warn' : ''}
               >
-                Slide to {frames[frameIndex]}
+                {frameIndex === 1 ? t('slide-to-tables') : t('slide-to-actions')}
               </SwipeButton>
             </Grid>
             <Grid item xs={2}>
@@ -202,11 +203,11 @@ const Header = ({
               </Link>
 
               <Value></Value>
-              <Label>Tables</Label>
+              <Label>{t('tables')}</Label>
               <Value>{tablesCount}</Value>
-              <Label>Orders</Label>
+              <Label>{t('orders')}</Label>
               <Value>{totalOrdersCount}</Value>
-              <Label>Sales</Label>
+              <Label>{t('sales')}</Label>
               <Value>
                 <Price original price={{ amount: salesVolume, currency }} />
               </Value>

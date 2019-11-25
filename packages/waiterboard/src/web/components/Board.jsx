@@ -11,6 +11,7 @@ import { getBookingList } from 'features/booking/selectors';
 import { getOrderList } from 'features/order/selectors';
 import { getCallList } from 'features/call/selectors';
 import { getSeatList } from 'features/seat/selectors';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 import Header from './Header';
 import FrameOfTables from './FrameOfTables';
@@ -84,6 +85,7 @@ const Board = ({
   toggleFrames,
   toggleModal,
 }) => {
+  const { t } = useTranslation();
 
   const closeModal = (e) => {
     if (e.target.className.indexOf('modal-area') > -1) toggleModal({ open: false });
@@ -129,7 +131,7 @@ const Board = ({
                 )}
               </Container>
               :
-              <EventsPlaceholder>Everything is done.</EventsPlaceholder>
+              <EventsPlaceholder>{t('everything-is-done')}</EventsPlaceholder>
             }
         </Frame>
         <Frame n={1}>

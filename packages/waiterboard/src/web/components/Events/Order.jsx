@@ -11,6 +11,7 @@ import { colorsByStages } from '../../colors';
 import { ActionBox, Header, TableId, Text, CheckButton, TableTag, Th, Tr, Td, FoodItem } from '../styled/Events';
 import { confirmOrderAsync } from 'features/order/actions';
 import Price from '@dinify/common/src/components/price';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 const styles = () => ({
   progress: {
@@ -21,6 +22,7 @@ const styles = () => ({
 const color = colorsByStages.s2;
 
 const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, raw, datetime }) => {
+	const { t } = useTranslation();
 
 	return (
 	<ActionBox className={removed ? 'vhs-zoom vhs-reverse Order' : 'Order'}>
@@ -57,11 +59,11 @@ const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, r
       <TableTag>
         <thead>
           <tr>
-            <Th color={color}>NAME</Th>
-            <Th color={color}>CHOICES</Th>
-            <Th color={color}>EXCLUDE</Th>
-            <Th color={color}>ADD-ON</Th>
-						<Th color={color}>PRICE</Th>
+            <Th color={color}>{t('menu-item-name')}</Th>
+            <Th color={color}>{t('choices')}</Th>
+            <Th color={color}>{t('exclude')}</Th>
+            <Th color={color}>{t('addon')}</Th>
+						<Th color={color}>{t('price')}</Th>
           </tr>
         </thead>
         <tbody>
@@ -106,7 +108,7 @@ const Order = ({ classes, order, confirmOrder, removed, confirming, noconfirm, r
 					}): ''}
 					{order.subtotal &&
 						<Tr>
-						<Td>TOTAL</Td>
+						<Td>{t('total')}</Td>
 						<Td></Td>
 						<Td></Td>
 						<Td></Td>

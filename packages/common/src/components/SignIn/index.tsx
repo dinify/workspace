@@ -78,6 +78,9 @@ let SignInForm = ({
     if (!firstName) errors.firstName = 'Required';
     if (!lastName) errors.lastName = 'Required';
     if (Object.keys(errors).length !== 0) throw new SubmissionError(errors);
+
+    console.log(`${firstName} ${lastName}`, 'KUNDO');
+
     firebase.createUser(
       { email, password },
       {

@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import { MapToList, getInitials } from '@dinify/common/src/lib/FN';
 import { withFirebase } from 'react-redux-firebase';
 import { FormBox, FormBoxHead, FormBoxBody } from './styled/FormBox';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 const Content = styled.div`
   position: relative;
@@ -51,11 +52,13 @@ const SelectWB = ({
   managedRestaurants,
   firebase,
   classes
-}) =>
-  (<Content>
+}) => {
+  const { t } = useTranslation();
+
+  return (<Content>
     <FormBox className="vhs-pop">
       <FormBoxHead>
-        Select waiterboard
+        {t('select-waiterboard')}
       </FormBoxHead>
       <FormBoxBody>
 
@@ -94,6 +97,8 @@ const SelectWB = ({
       </FormBoxBody>
     </FormBox>
   </Content>);
+}
+  
 
 const enhance = compose(
   withFirebase,

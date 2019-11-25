@@ -22,6 +22,7 @@ import { colorsByStages } from '../../colors';
 import User from './user';
 import Elapsed from './Elapsed';
 import Price from '@dinify/common/src/components/price';
+import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 const styles = () => ({
   progress: {
@@ -40,6 +41,8 @@ const Bill = ({
   classes,
 }) => {
   if (!bill || !bill.subtotal) return null;
+
+  const { t } = useTranslation();
 
   const currency = bill.subtotal.currency;
 
@@ -104,9 +107,9 @@ const Bill = ({
       <TableTag>
         <thead>
           <tr>
-            <Th color={color}>DESCRIPTION</Th>
-            <Th color={color}>Q'TY</Th>
-            <Th color={color}>AMOUNT</Th>
+            <Th color={color}>{t('menu-item-description')}</Th>
+            <Th color={color}>{t('quantity')}</Th>
+            <Th color={color}>{t('amount')}</Th>
           </tr>
         </thead>
         <tbody>
@@ -132,7 +135,7 @@ const Bill = ({
             )),
           ])}
           <Tr className="boldline">
-            <Td>Gratuity</Td>
+            <Td>{t('gratuity')}</Td>
             <Td>{bill.gratuity}%</Td>
             <Td style={{ textAlign: 'right' }}>
               <Price original price={{ amount: gratuityAmount, currency }} />
@@ -140,7 +143,7 @@ const Bill = ({
           </Tr>
           <Tr>
             <Td bold color={color}>
-              TOTAL
+              {t('total')}
             </Td>
             <Td></Td>
             <Td bold color={color} style={{ textAlign: 'right' }}>

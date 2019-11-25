@@ -34,7 +34,7 @@ const history = createBrowserHistory();
 const { store, persistor } = configureStore(history);
 
 const intlConfig: IntlConfig = {
-  namespace: 'core',
+  namespace: 'core.waiterboard',
 };
 const langCookie = getCookie('language');
 if (langCookie) {
