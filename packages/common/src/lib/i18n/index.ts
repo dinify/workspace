@@ -13,11 +13,13 @@ import { createContext } from "react";
 
 // IDEA: use ICU compiled to webassembly !
 
-// TODO: move this to ENV
+// TODO: move these to ENV
 const staticRoot =
   process.env.NODE_ENV === "production"
     ? "https://static.dinify.app"
     : "https://storage.googleapis.com/static.dinify.dev";
+
+const version = '0.1.1';
 
 export interface IntlState {
   locale: Locale;
@@ -52,7 +54,7 @@ const loader = (language: string): any => {
 
 // fetch the language resource pack for this version
 const asyncLoader = (language: string) =>
-  wretch(`${staticRoot}/i18n/packs/${language}`)
+  wretch(`${staticRoot}/i18n/packs/${language}?v=${version}`)
     .get()
     .json()
     .catch((err: Error) => console.log(err));
@@ -67,7 +69,7 @@ export function loadMessages(config: IntlConfig): Promise<string[]> {
     id = `zh-${locale.tag.script()}`;
   }
   return new Promise((resolve, reject) => {
-    wretch(`${staticRoot}/i18n/messages/${id}/${config.namespace}`)
+    wretch(`${staticRoot}/i18n/messages/${id}/${config.namespace}?v=${version}`)
       .get()
       .json(json => {
         resolve(json as string[]);
@@ -128,7 +130,10 @@ const initialState: IntlState = {
 
 export const IntlContext = createContext<IntlContextType>({
   state: initialState,
-  setLocale: () => { }
+  setLocale: () => { },
+  config: {
+    namespace: 'core'
+  }
 });
 
 export { useIntl } from "./context";
