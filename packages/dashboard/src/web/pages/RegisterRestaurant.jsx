@@ -145,7 +145,7 @@ const RegisterRestaurant = (props) => {
   }
   return (
     <div>
-      {managedRestaurants.length > 0 &&
+      {(managedRestaurants && managedRestaurants.length > 0) &&
         <Card className={classes.wrapperCard}>
           <CardContent>
             <Typography className={classes.title} variant="h1" align="center" gutterBottom>
