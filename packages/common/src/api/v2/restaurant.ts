@@ -145,6 +145,10 @@ export const CreateRestaurant = (body: CreateRestaurantBody): Promise<any> => Po
   path: `restaurants`
 }, body);
 
+export const FavRestaurant = ({ restaurantId }: any): Promise<any> => Post({
+  path: `restaurants/${restaurantId}/favorite`
+});
+
 type CreateServiceBody = {
 	name: string;
 	restaurantId: string;

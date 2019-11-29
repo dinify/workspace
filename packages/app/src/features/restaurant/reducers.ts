@@ -19,23 +19,28 @@ export const all = createReducer<State, Action>({})
   })
 
   .handleAction(actions.fetchRestaurantAsync.success, (state, action) => {
-    const restaurant: Restaurant = action.payload.res;
+    const restaurant: Restaurant = action.payload;
     return assoc(restaurant.id, restaurant)(state);
   })
 
   .handleAction(actions.favRestaurantAsync.request, (state, action) => {
-    const { id, fav }: FavRestaurantRequest = action.payload;
-    return assocPath([id, 'favorite'], fav)(state);
+    const { restaurantId, fav }: FavRestaurantRequest = action.payload;
+    return assocPath([restaurantId, 'favorite'], fav)(state);
   })
 
   .handleAction(actions.favRestaurantAsync.success, (state, action) => {
-    const { id, fav }: FavRestaurantRequest = action.payload.initPayload;
-    return assocPath([id, 'favorite'], fav)(state);
+    const { restaurantId, fav }: FavRestaurantRequest = action.payload.initPayload;
+    return assocPath([restaurantId, 'favorite'], fav)(state);
   })
 
-  .handleAction(actions.favRestaurantAsync.failure, (state, action) => {
-    const { id, fav } = action.payload.initPayload;
-    return assocPath([id, 'favorite'], !fav)(state);
+  .handleAction(actions.favRestaurantAsync.failure, (state, action: any) => {
+    const { restaurantId, fav } = action.initPayload;
+
+    if (action.payload.errorType === 'already-favorite') {
+      return assocPath([restaurantId, 'favorite'], true)(state);
+    }
+    
+    return assocPath([restaurantId, 'favorite'], !fav)(state);
   });
 
 

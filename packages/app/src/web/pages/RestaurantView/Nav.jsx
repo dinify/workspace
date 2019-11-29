@@ -72,7 +72,7 @@ let Nav = ({
           checked={restaurant.favorite}
           onChange={() => favRestaurant({
             fav: !restaurant.favorite,
-            id: restaurant.id
+            restaurantId: restaurant.id
           })}
         />
       </Grid>

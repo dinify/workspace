@@ -13,10 +13,7 @@ import service from '../features/service/epics';
 import ui from '../features/ui/epics';
 import user from '../features/user/epics';
 
-const crud = require('@dinify/common/src/features/crudEpics.js').epics;
-
 export default combineEpics(
-  ...crud,
   ...auth,
   ...language,
   ...user,

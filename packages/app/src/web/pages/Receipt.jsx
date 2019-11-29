@@ -104,7 +104,7 @@ Receipt = connect(
     lastBill: state.bill.lastBill
   }),
   {
-    fetchReceipt: fetchReceiptInit
+    fetchReceipt: () => ({})
   }
 )(Receipt)
 

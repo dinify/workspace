@@ -6,9 +6,7 @@ declare module 'RestaurantModels' {
     favorite: boolean;
   };
 
-  export type RestaurantResponse = {
-    res: Restaurant;
-  }
+  export type RestaurantResponse = Restaurant;
 
   export type RestaurantsResponse = Restaurant[];
 
@@ -17,7 +15,7 @@ declare module 'RestaurantModels' {
   };
 
   export type FavRestaurantRequest = {
-    id: string;
+    restaurantId: string;
     fav: boolean;
   }
 

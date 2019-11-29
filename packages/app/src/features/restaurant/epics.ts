@@ -1,13 +1,12 @@
 import { of, from } from 'rxjs';
 import { mergeMap, exhaustMap, map, catchError, debounceTime, tap } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
-import { execCheckinAsync, fetchStatusAsync, favRestaurantAsync, fetchRestaurantsAsync } from './actions';
+import { execCheckinAsync, fetchStatusAsync, favRestaurantAsync, fetchRestaurantsAsync, fetchRestaurantAsync } from './actions';
 import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import * as uiActions from '../ui/actions';
-const APIv1 = require('@dinify/common/src/api/restaurant');
 
 const fetchRestaurantsEpic: Epic = (action$) =>
   action$.pipe(
@@ -20,6 +19,25 @@ const fetchRestaurantsEpic: Epic = (action$) =>
         return handleEpicAPIError({
           error,
           failActionType: getType(fetchRestaurantsAsync.failure),
+          initAction: action
+        })
+      })
+    ))
+  );
+
+const fetchRestaurantEpic: Epic = (action$) =>
+  action$.pipe(
+    ofType(getType(fetchRestaurantAsync.request)),
+    mergeMap((action) => from(API.GetRestaurantById({ 
+      restaurantId: action.payload.subdomain
+    })).pipe(
+      map((res: any) => {
+        return fetchRestaurantAsync.success(res);
+      }),
+      catchError(error => {
+        return handleEpicAPIError({
+          error,
+          failActionType: getType(fetchRestaurantAsync.failure),
           initAction: action
         })
       })
@@ -82,7 +100,7 @@ const favEpic: Epic = (action$) =>
     debounceTime(500),
     exhaustMap((action: any) => {
       const { payload } = action;
-      return from(APIv1.FavRestaurant(payload)).pipe(
+      return from(API.FavRestaurant(payload)).pipe(
         map((res: any) => favRestaurantAsync.success({ res, initPayload: payload })),
         catchError(error => handleEpicAPIError({
           error,
@@ -95,6 +113,7 @@ const favEpic: Epic = (action$) =>
 
 export default [
   fetchRestaurantsEpic,
+  fetchRestaurantEpic,
   fetchCheckinStatusEpic,
   checkinEpic,
   favEpic

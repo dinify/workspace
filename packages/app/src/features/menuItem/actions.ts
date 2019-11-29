@@ -11,16 +11,6 @@ export const fetchMenuItemAsync = createAsyncAction(
 
 export const clearCustomizationsAction = createAction(`${p}/CLEAR_CUSTOMIZATIONS`)<any>();
 
-export const fetchMenuitemsInit = (payload: any) => ({
-  type: 'FETCH_MENUITEMS_INIT',
-  payload,
-});
-
-export const fetchMenuitemInit = (payload: any) => ({
-  type: 'FETCH_MENUITEM_INIT',
-  payload,
-});
-
 export const favMenuitemInit = (payload: any) => ({
   type: 'FAV_MENUITEM_INIT',
   payload,

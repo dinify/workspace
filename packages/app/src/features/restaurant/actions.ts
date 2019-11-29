@@ -17,9 +17,9 @@ export const fetchRestaurantsAsync = createAsyncAction(
 )<undefined, RestaurantsResponse, string>();
 
 export const fetchRestaurantAsync = createAsyncAction(
-  `${p}/FETCH_RESTAURANT_INIT`,
-  `${p}/FETCH_RESTAURANT_DONE`,
-  `${p}/FETCH_RESTAURANT_FAIL`
+  `${p}/GET_RESTAURANT_INIT`,
+  `${p}/GET_RESTAURANT_DONE`,
+  `${p}/GET_RESTAURANT_FAIL`
 )<undefined, RestaurantResponse, string>();
 
 export const fetchStatusAsync = createAsyncAction(

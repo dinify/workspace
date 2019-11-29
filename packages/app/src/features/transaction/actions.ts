@@ -21,24 +21,6 @@ export const initTransactionAsync = createAsyncAction(
 )<InitTransactionRequest, Transaction, string>();
 
 
-export const fetchBillInit = () => ({
-  type: `${p}/FETCH_BILL_INIT`,
-})
-
-export const fetchBillFail = (e: any) => ({
-  type: `${p}/FETCH_BILL_FAIL`,
-  payload: e
-})
-
-export const fetchReceiptInit = () => ({
-  type: `${p}/FETCH_RECEIPT_INIT`,
-})
-
-export const fetchReceiptFail = (e: any) => ({
-  type: `${p}/FETCH_RECEIPT_FAIL`,
-  payload: e
-})
-
 export const selectBillItem = ({ selected, seatIndex, billItemIndex }: any) => ({
   type: `${p}/SELECT_BILLITEM`,
   payload: { selected, seatIndex, billItemIndex  }
