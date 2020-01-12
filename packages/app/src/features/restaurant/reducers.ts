@@ -39,7 +39,7 @@ export const all = createReducer<State, Action>({})
     if (action.payload.errorType === 'already-favorite') {
       return assocPath([restaurantId, 'favorite'], true)(state);
     }
-    
+
     return assocPath([restaurantId, 'favorite'], !fav)(state);
   });
 
@@ -72,20 +72,20 @@ const restaurantReducer = combineReducers({
 export default restaurantReducer;
 export type RestaurantState = ReturnType<typeof restaurantReducer>;
 
-    // TODO
-    // case wsTypes.CHECKOUT_ALL: {
-    //   const s = assoc('checkedInRestaurant', null)(state);
-    //   return assoc('status', null)(s);
-    // }
+// TODO
+// case wsTypes.CHECKOUT_ALL: {
+//   const s = assoc('checkedInRestaurant', null)(state);
+//   return assoc('status', null)(s);
+// }
 
-    // case getType(fetchStatusAsync.failure): {
-    //   const payload = action.payload;
-    //   if (payload instanceof Array && payload[0].status === 401) {
-    //     return assoc('checkedInRestaurant', null)(state);
-    //   }
-    //   return state;
-    // }
+// case getType(fetchStatusAsync.failure): {
+//   const payload = action.payload;
+//   if (payload instanceof Array && payload[0].status === 401) {
+//     return assoc('checkedInRestaurant', null)(state);
+//   }
+//   return state;
+// }
 
-    // case authTypes.LOGOUT_DONE: {
-    //   return assoc('checkedInRestaurant', null)(state);
-    // }
+// case authTypes.LOGOUT_DONE: {
+//   return assoc('checkedInRestaurant', null)(state);
+// }

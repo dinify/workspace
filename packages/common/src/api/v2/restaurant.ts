@@ -145,8 +145,13 @@ export const CreateRestaurant = (body: CreateRestaurantBody): Promise<any> => Po
   path: `restaurants`
 }, body);
 
-export const FavRestaurant = ({ restaurantId }: any): Promise<any> => Post({
+export const FavRestaurant = ({ restaurantId, fav }: any): Promise<any> => Post({
   path: `restaurants/${restaurantId}/favorite`
+}, { fav });
+
+
+export const GetFavRestaurants = (): Promise<any> => Get({
+  path: `restaurants/favorites`
 });
 
 type CreateServiceBody = {
@@ -185,6 +190,14 @@ export const UpdateMenuItem = (menuItemId: string, body: any): Promise<any> => P
 export const RemoveMenuItem = (menuItemId: string): Promise<any> => Delete({
   path: `menuItems/${menuItemId}`
 });
+
+export const GetFavMenuItems = (): Promise<any> => Get({
+  path: `menuItems/favorites`
+});
+
+export const FavMenuItem = ({ menuItemId, fav }: any): Promise<any> => Post({
+  path: `menuItems/${menuItemId}/favorite`
+}, { fav });
 
 export const AssignIngredient = (menuItemId: string, body: any) => Post({
   path: `menuItems/${menuItemId}/ingredients`

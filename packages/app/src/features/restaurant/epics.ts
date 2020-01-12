@@ -100,7 +100,8 @@ const favEpic: Epic = (action$) =>
     debounceTime(500),
     exhaustMap((action: any) => {
       const { payload } = action;
-      return from(API.FavRestaurant(payload)).pipe(
+      const { restaurantId, fav } = payload;
+      return from(API.FavRestaurant({ restaurantId, fav })).pipe(
         map((res: any) => favRestaurantAsync.success({ res, initPayload: payload })),
         catchError(error => handleEpicAPIError({
           error,
