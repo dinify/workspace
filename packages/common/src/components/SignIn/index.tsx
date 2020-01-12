@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux'
-import { useFirebase } from 'react-redux-firebase';
 import { withStyles } from '@material-ui/core/styles';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { Motion, spring } from 'react-motion';
@@ -46,10 +45,12 @@ let SignInForm = ({
   setPage,
   openDialog,
   env,
+  firebase
 }: any) => {
+  console.log(firebase);
 
   const [dialog, setDialog] = useState<any>(null);
-  const firebase = useFirebase();
+
   const { t } = useTranslation();
 
   const validateEmail = (email: string) => {
@@ -87,7 +88,19 @@ let SignInForm = ({
         username: `${firstName} ${lastName}`,
         email
       }
-    )
+    ).then((data) => {
+      console.log(data,'daaa')
+      const credential = firebase.auth.EmailAuthProvider.credential(email, password);
+
+      firebase.linkWithCredential(credential).then((usercred: any) => {
+        const user = usercred.user;
+        console.log("Anonymous account successfully upgraded", user);
+      }, (error: any) => {
+        console.log("Error upgrading anonymous account", error);
+      });
+    });
+
+    
   }
 
   const decide = ({ email }: any) => {

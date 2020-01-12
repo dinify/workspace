@@ -25,6 +25,7 @@ import Dialogs from './dialogs.tsx';
 import Snackbars from './snackbars.tsx';
 import findLast from 'ramda/es/findLast';
 import { MenuItemScreen, AccountScreen } from './screens';
+import { useFirebase } from 'react-redux-firebase';
 
 const App = props => {
   const {
@@ -34,7 +35,6 @@ const App = props => {
     fetchStatus,
     fetchCart,
     fetchBill,
-    pathnames,
   } = props;
 
   useEffect(() => {
@@ -82,6 +82,8 @@ const App = props => {
   //   history.goBack();
   // }
 
+  const firebase = useFirebase();
+
   return (
     <div style={{ position: 'relative' }}>
       <div style={{ marginBottom: match(routes.CHECKIN) ? 0 : 56 }}>
@@ -90,11 +92,11 @@ const App = props => {
 
           <Route
             path={routes.SIGNIN}
-            component={() =>
+            component={(props) =>
               !user.isEmpty && !user.isAnonymous ? (
                 <Redirect to={routes.ACCOUNT} />
               ) : (
-                <SignIn user={user} />
+                <SignIn {...props} user={user} firebase={firebase} />
               )
             }
           />
