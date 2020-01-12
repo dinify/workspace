@@ -80,8 +80,6 @@ const onDemandAnonymousAuthEpic: Epic = (action$, state$, { firebase }) =>
 
       const user = state$.value.firebase.auth;
 
-      console.log(user);
-
       if (user.isEmpty) {
         return from(firebase.auth().signInAnonymously()).pipe(
           rxMap(() => {

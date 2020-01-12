@@ -63,7 +63,7 @@ const SelectWB = ({
       <FormBoxBody>
 
         <List className={classes.root}>
-          {managedRestaurants.map((restaurant) => 
+          {managedRestaurants && managedRestaurants.map((restaurant) => 
             <ListItem className={classes.listItem} key={`r-item-${restaurant.id}`}>
               <Avatar
                 src={Object.keys(restaurant.images).length  ? MapToList(restaurant.images)[0].url : ''}

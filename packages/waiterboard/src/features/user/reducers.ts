@@ -13,7 +13,7 @@ export default function reducer(state = initialState, action: any) {
   switch (type) {
 
     case getType(fetchUserAsync.success): {
-      const user = payload;
+      const user = payload.user;
       return assocPath(['all', user.uid], user)(state);
     }
 
