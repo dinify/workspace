@@ -11,12 +11,18 @@ import RolesSection from './roles-section';
 import Dialogs from './dialogs';
 import { openDialogAction } from '../../../features/ui/actions';
 import { useAction } from '@dinify/common/src/lib/util';
+import { RootState } from 'typesafe-actions';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import Typography from '@material-ui/core/Typography';
+import * as routes from '../../routes';
 
 export const AccountScreen: React.FC = () => {
   const firebase = useFirebase();
   const auth = firebase.auth();
   const [claims, setClaims] = useState();
   const [mounted, setMounted] = useState(false);
+  const user = useSelector((state: RootState) => state.firebase.auth);
   useEffect(() => {
     if (!mounted) setMounted(true);
   }, []);
@@ -30,6 +36,7 @@ export const AccountScreen: React.FC = () => {
   const transitions = useTransition(mounted, null, spec.lateral);
   const { t } = useTranslation();
   const openDialog = useAction(openDialogAction);
+  const { push } = useHistory();
 
   const account = (
     <div
@@ -42,7 +49,31 @@ export const AccountScreen: React.FC = () => {
         paddingRight: 16,
       }}
     >
-      <Avatar user={auth.currentUser} />
+      {!user.isEmpty && !user.isAnonymous ?
+        <Avatar user={auth.currentUser} />
+        :
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: 94,
+            paddingBottom: 16,
+          }}
+        >
+          {user.isAnonymous && <Typography>Anonymously authorized</Typography>}
+          <Button
+            style={{ boxShadow: 'none', height: 40 }}
+            variant="contained"
+            onClick={() => {
+              push(routes.SIGNIN);
+            }}
+            color="primary"
+          >
+            {t('auth.createAccount')}
+          </Button>
+        </div>
+      }
+      
       <Settings />
       {claims && claims.roles && <RolesSection roles={claims.roles} />}
       <div

@@ -14,10 +14,10 @@ export default () => {
       {t('nav.settings')}
     </Typography>
     <Card>
-      <ToggleTheme />
       <Currency />
       <Divider />
       <Languages />
+      <ToggleTheme />
     </Card>
   </>;
 };

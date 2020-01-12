@@ -66,12 +66,6 @@ const rrfProps: ReactReduxFirebaseProviderProps = {
   // createFirestoreInstance // <- needed if using firestore
 };
 
-firebase.auth().onAuthStateChanged(async user => {
-  if (!user) {
-    await firebase.auth().signInAnonymously();
-  }
-});
-
 const syncedHistory = syncHistoryWithStore(history, store);
 
 ReactDOM.render(

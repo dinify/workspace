@@ -87,10 +87,11 @@ const App = props => {
       <div style={{ marginBottom: match(routes.CHECKIN) ? 0 : 56 }}>
         <Switch>
           <Route exact path={routes.HOMEPAGE} render={() => <Main />} />
+
           <Route
             path={routes.SIGNIN}
             component={() =>
-              !user.isEmpty ? (
+              !user.isEmpty && !user.isAnonymous ? (
                 <Redirect to={routes.ACCOUNT} />
               ) : (
                 <SignIn user={user} />

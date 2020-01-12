@@ -72,9 +72,32 @@ const processCustomizations = (
   return Object.keys(relevantCol).map(id => ({ id, ...relevantCol[id] }));
 };
 
-const addToCartEpic: Epic = (action$, state$) =>
+const onDemandAnonymousAuthEpic: Epic = (action$, state$, { firebase }) =>
   action$.pipe(
     ofType(getType(addToCartAsync.request)),
+    mergeMap(action => {
+      const { payload, type } = action;
+
+      const user = state$.value.firebase.auth;
+
+      console.log(user);
+
+      if (user.isEmpty) {
+        return from(firebase.auth().signInAnonymously()).pipe(
+          rxMap(() => {
+            return { type: `${type}_AUTHED`, payload }
+          })
+        );
+      } else {
+        return of({ type: `${type}_AUTHED`, payload });
+      }
+
+    })
+  )
+
+const addToCartEpic: Epic = (action$, state$) =>
+  action$.pipe(
+    ofType(`${getType(addToCartAsync.request)}_AUTHED`),
     debounceTime(500),
     mergeMap(action => {
       const {
@@ -207,5 +230,6 @@ export default [
   addToCartErrorEpic,
   rmFromCartEpic,
   orderEpic,
+  onDemandAnonymousAuthEpic
   // updateAfterEditEpic
 ];
