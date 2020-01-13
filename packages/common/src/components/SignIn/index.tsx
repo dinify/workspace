@@ -47,7 +47,7 @@ let SignInForm = ({
   env,
   firebase
 }: any) => {
-  console.log(firebase);
+  console.log(firebase, 'tyvole');
 
   const [dialog, setDialog] = useState<any>(null);
 
@@ -214,7 +214,7 @@ let SignInForm = ({
             </Typography>
           </div>
           <div style={{height: 185, overflow: 'hidden'}}>
-            <Fields env={env} t={t} />
+            <Fields env={env} t={t} firebase={firebase} />
           </div>
 
           <div style={{

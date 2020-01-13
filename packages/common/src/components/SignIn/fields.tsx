@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { compose } from 'redux'
-import { useFirebase } from 'react-redux-firebase'
+import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import { Motion, spring } from 'react-motion';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
@@ -47,8 +46,11 @@ const Fields = ({
   setPage,
   setShowPassword,
   env,
-  authError
+  authError,
+  firebase
 }: any) => {
+
+  console.log(firebase,'inf');
 
   const [errors, setErrors] = useState({});
   const { t } = useTranslation();
@@ -84,7 +86,6 @@ const Fields = ({
     setErrors({ errors });
   });
 
-  const firebase = useFirebase();
 
   const animConfig = { stiffness: 480, damping: 48 };
 

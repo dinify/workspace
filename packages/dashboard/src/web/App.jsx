@@ -13,6 +13,7 @@ import { reportCampaignAction } from '@dinify/common/src/features/reporting/acti
 import CircularProgress from '@material-ui/core/CircularProgress';
 import withRoot from 'withRoot.js';
 import QRsPrint from './pages/QRsPrint';
+import { useFirebase } from 'react-redux-firebase';
 
 const SignInWithRoot = withRoot(SignIn);
 const RegisterRestaurantWithRoot = withRoot(RegisterRestaurant);
@@ -44,6 +45,7 @@ const App = ({
   reportCampaignAction,
   classes
 }) => {
+  const firebase = useFirebase();
   if (ongoingRegistration && !window.location.pathname.includes('/register') && !user.isEmpty) {
     window.location.replace('/register');
   }
@@ -61,7 +63,7 @@ const App = ({
           <Route path="/qr/:code" component={Qr} />
           <Route path="/qrsprint" component={QRsPrint} />
           <Route path="/signin" component={({location}) => {
-            return user.isEmpty ? <SignInWithRoot env="DASHBOARD" user={user} location={location} /> :
+            return user.isEmpty ? <SignInWithRoot firebase={firebase} env="DASHBOARD" user={user} location={location} /> :
             <Redirect to="/"/>
           }} />
           <Route path="/register" component={({location}) => {
