@@ -4,6 +4,7 @@ declare module 'RestaurantModels' {
     id: string;
     title: string;
     favorite: boolean;
+    settings: any;
   };
 
   export type RestaurantResponse = Restaurant;

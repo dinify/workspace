@@ -17,6 +17,7 @@ import {
   fetchCartAsync,
   orderAsync,
   rmFromCartAsync,
+  fetchUserCartAsync
 } from './actions';
 import * as transactionActions from '../transaction/actions';
 import * as uiActions from '../ui/actions';
@@ -61,6 +62,38 @@ const getCartEpic: Epic = action$ =>
         takeUntil(action$.pipe(filter(isActionOf(fetchCartAsync.cancel)))),
       ),
     ),
+  );
+
+const getUserCartEpic: Epic = (action$, state$) =>
+  action$.pipe(
+    ofType(getType(fetchUserCartAsync.request)),
+    switchMap(action => {
+      const { userId, restaurantId } = action.payload;
+      return from(API.GetUserCart({ userId, restaurantId })).pipe(
+        rxMap(res => {
+          if (!!res && !!res.items && res.items.length > 0) {
+            return res;
+          } else {
+            throw new Error('Invalid response structure');
+          }
+        }),
+        rxMap((res: CartResponse) => {
+          return fetchUserCartAsync.success({
+            ...res,
+            userId,
+            restaurantId
+          });
+        }),
+        catchError(error => {
+          console.log(error);
+          return handleEpicAPIError({
+            error,
+            failActionType: getType(fetchUserCartAsync.failure),
+            initAction: action,
+          });
+        }),
+      );
+    }),
   );
 
 const processCustomizations = (
@@ -224,6 +257,7 @@ const orderEpic: Epic = action$ =>
 
 export default [
   getCartEpic,
+  getUserCartEpic,
   addToCartEpic,
   addToCartErrorEpic,
   rmFromCartEpic,

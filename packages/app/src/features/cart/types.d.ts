@@ -89,6 +89,8 @@ declare module 'CartModels' {
   export type Cart = {
     subtotal: Subtotal;
     items: OrderItem[];
+    restaurantId?: string;
+    userId?: string;
   }
 
   export type CartResponse = Cart;

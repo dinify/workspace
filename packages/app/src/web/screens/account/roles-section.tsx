@@ -21,6 +21,9 @@ const restaurantsMap: any = {
 };
 
 export default ({ roles }: { roles: Role[] }) => {
+  console.log(roles,'sev');
+  if (!roles || !roles[0]) return <></>;
+
   const openInNewTab = (url: string) => {
     const win = window.open(url, '_blank');
     if (win !== null) win.focus();

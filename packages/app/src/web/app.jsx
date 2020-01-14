@@ -12,6 +12,7 @@ import SignIn from '@dinify/common/src/components/SignIn';
 import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
+import { TakeOrder } from 'web/pages/TakeOrder';
 
 import Navigation from 'web/components/Navigation';
 import { ServicesButtonContainer } from 'web/components/services-button';
@@ -111,6 +112,7 @@ const App = props => {
           <Route path={routes.MENUITEM} component={MenuItemScreen} />
 
           <Route path={routes.RECEIPT} component={Receipt} />
+          <Route path={routes.TAKEORDER} component={TakeOrder} />
         </Switch>
       </div>
 
@@ -131,7 +133,6 @@ const App = props => {
         />
         : ''
       }
-
 
       {!isAccountTab && (
         <BottomBar style={{ bottom: 56 }} onSelect={type => openDialog(type)} />

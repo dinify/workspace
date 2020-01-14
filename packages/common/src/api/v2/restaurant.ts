@@ -53,6 +53,10 @@ export const GetCart = (): Promise<any> => Get({
   path: `cart`
 });
 
+export const GetUserCart = ({ restaurantId, userId }: any): Promise<any> => Get({
+  path: `restaurants/${restaurantId}/carts/${userId}`
+});
+
 export const GetBill = (): Promise<any> => Get({
   path: `bill`
 });

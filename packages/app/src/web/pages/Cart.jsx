@@ -40,7 +40,7 @@ const styles = theme => ({
   },
 });
 
-const Cart = ({ cart, rmFromCart, editing, setEditing, checkedin, order }) => {
+const Cart = ({ cart, rmFromCart, editing, setEditing, checkedin, restaurant, order }) => {
   const { t } = useTranslation();
   const notCheckedIn = !checkedin; // !checkedInRestaurant;
 
@@ -122,16 +122,19 @@ const Cart = ({ cart, rmFromCart, editing, setEditing, checkedin, order }) => {
             <TotalPrice price={cart.subtotal} />
           </div>
         )}
-        <Fab
-          disabled={notCheckedIn || cart.count === 0 || cart === null}
-          style={{ marginTop: 16, width: '100%' }}
-          variant="extended"
-          color="primary"
-          onClick={() => order()}
-        >
-          <RestaurantMenu style={{ marginRight: 16 }} />
-          {t('order')}
-        </Fab>
+        {restaurant && restaurant.settings.orders ?
+          <Fab
+            disabled={notCheckedIn || cart.count === 0 || cart === null}
+            style={{ marginTop: 16, width: '100%' }}
+            variant="extended"
+            color="primary"
+            onClick={() => order()}
+          >
+            <RestaurantMenu style={{ marginRight: 16 }} />
+            {t('order')}
+          </Fab>
+          : ''
+        }
       </ResponsiveContainer>
     </div>
   );
@@ -142,6 +145,10 @@ export default connect(
     cart: null,
     checkedin: state.seat.checkedin,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
+    restaurant: state.restaurant.checkedInRestaurant ? 
+      state.restaurant.all[state.restaurant.checkedInRestaurant]
+      :
+      null,
   }),
   {
     rmFromCart: rmFromCartAsync.request,
