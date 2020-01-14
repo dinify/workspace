@@ -35,6 +35,7 @@ const App = props => {
     fetchStatus,
     fetchCart,
     fetchBill,
+    restaurant
   } = props;
 
   useEffect(() => {
@@ -123,11 +124,14 @@ const App = props => {
           return 0;
         })()}
       />
+      {checkedInRestaurant && restaurant && restaurant.settings.serviceCalls ?
+        <ServicesButtonContainer
+          anchor={56}
+          onClick={() => openDialog('services')}
+        />
+        : ''
+      }
 
-      <ServicesButtonContainer
-        anchor={56}
-        onClick={() => openDialog('services')}
-      />
 
       {!isAccountTab && (
         <BottomBar style={{ bottom: 56 }} onSelect={type => openDialog(type)} />
@@ -144,6 +148,10 @@ export default connect(
   state => ({
     user: state.firebase.auth,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
+    restaurant: state.restaurant.checkedInRestaurant ? 
+      state.restaurant.all[state.restaurant.checkedInRestaurant]
+      :
+      null,
     // bottomBarOpen: getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0,
     pathnames: state.router.pathnames,
   }),

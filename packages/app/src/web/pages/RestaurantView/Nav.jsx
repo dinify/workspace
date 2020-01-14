@@ -89,17 +89,19 @@ let Nav = ({
           <CalendarClock className={classes.secondary} />
         </IconButton>
       </Grid>}
-
-      <Button disabled={checkedInHere} style={{
-        height: 40, 
-        boxShadow: 'none',
-        alignSelf: 'center',
-        marginLeft: 'auto'
-      }} variant="contained" color="primary" onClick={() => {
-        history.push("/camera");
-      }}>
-        {checkedInHere ? t('checkedIn') : t('checkIn')}
-      </Button>
+      {restaurant.settings && (restaurant.settings.orders || restaurant.settings.serviceCalls) ?
+        <Button disabled={checkedInHere} style={{
+          height: 40, 
+          boxShadow: 'none',
+          alignSelf: 'center',
+          marginLeft: 'auto'
+        }} variant="contained" color="primary" onClick={() => {
+          history.push("/camera");
+        }}>
+          {checkedInHere ? t('checkedIn') : t('checkIn')}
+        </Button>
+        : ''
+      }
     </Grid>
   )
 }
