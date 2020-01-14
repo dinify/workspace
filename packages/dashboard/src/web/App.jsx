@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import queryString from 'query-string';
 import { appIsRunning } from 'selectors/restaurant';
 import { withStyles } from '@material-ui/core/styles';
+import { useFirebase } from 'react-redux-firebase';
 
 import SignIn from '@dinify/common/src/components/SignIn';
 import Dashboard from 'web/pages/Dashboard';
@@ -13,7 +14,6 @@ import { reportCampaignAction } from '@dinify/common/src/features/reporting/acti
 import CircularProgress from '@material-ui/core/CircularProgress';
 import withRoot from 'withRoot.js';
 import QRsPrint from './pages/QRsPrint';
-import { useFirebase } from 'react-redux-firebase';
 
 const SignInWithRoot = withRoot(SignIn);
 const RegisterRestaurantWithRoot = withRoot(RegisterRestaurant);

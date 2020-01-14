@@ -8,10 +8,10 @@ import {
   FormBoxHead,
   FormBoxBody,
 } from 'web/components/styled/FormBox';
-import { updateNameInitAction } from 'features/restaurant/actions';
 import Progress from 'web/components/Progress';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
+import { updateRestaurantAsync } from 'features/restaurant/actions';
 
 let NameForm = ({ handleSubmit, t }) => {
   return (
@@ -33,7 +33,7 @@ NameForm = reduxForm({
   destroyOnUnmount: false
 })(NameForm);
 
-const Name = ({ updateName, name }) => {
+const Name = ({ updateRestaurant, name }) => {
   const { t } = useTranslation();
   return (
     <FormBox>
@@ -42,12 +42,12 @@ const Name = ({ updateName, name }) => {
         <Progress type={'UPDATE_NAME'} />
       </FormBoxHead>
       <FormBoxBody material>
-        <NameForm onSubmit={updateName} initialValues={{ name }} t={t} />
+        <NameForm onSubmit={updateRestaurant} initialValues={{ name }} t={t} />
       </FormBoxBody>
     </FormBox>
   );
 };
 
-export default connect(state => ({}), {
-  updateName: updateNameInitAction,
+export default connect(null, {
+  updateRestaurant: updateRestaurantAsync.request,
 })(Name);

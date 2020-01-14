@@ -9,6 +9,13 @@ export const fetchManagedAsync = createAsyncAction(
   `${p}/GET_MANAGED_FAIL`,
 )();
 
+export const updateRestaurantAsync = createAsyncAction(
+  `${p}/UPD_RESTAURANT_INIT`,
+  `${p}/UPD_RESTAURANT_DONE`,
+  `${p}/UPD_RESTAURANT_FAIL`,
+)();
+
+
 export const fetchWaiterboards = payload => ({
   type: types.FETCH_RESTAURANTWAITERBOARDS_INIT,
   payload,

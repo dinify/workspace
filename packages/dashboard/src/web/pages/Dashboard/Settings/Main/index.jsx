@@ -14,6 +14,8 @@ import Image from './Image';
 import Name from './Name';
 import Wifi from './Wifi';
 // import Tags from './Tags';
+import Features from './Features';
+
 
 const Column = styled.div`
   width: 290px;
@@ -31,6 +33,7 @@ const Main = ({ restaurant }) => {
           {/* <Tags /> */}
           {/* <Type type={restaurant.type} /> */}
           <Image restaurant={restaurant} />
+          <Features restaurant={restaurant} />
           <Contact contact={restaurant.contact} />
         </Column>
 
@@ -47,6 +50,7 @@ const Main = ({ restaurant }) => {
         </Column>
 
         <Column>
+          
           {/* <BusinessHours openHours={restaurant.open_hours} /> */}
         </Column>
       </div>

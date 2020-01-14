@@ -13,7 +13,7 @@ import { reportCampaignAction } from '@dinify/common/src/features/reporting/acti
 import * as APIv1 from '@dinify/common/src/api/restaurant';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import * as types from './types';
-import { selectRestaurant, fetchManagedAsync } from './actions';
+import { selectRestaurant, fetchManagedAsync, updateRestaurantAsync } from './actions';
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
@@ -207,11 +207,34 @@ const editImageEpic = (action$, state$) =>
     }),
   );
 
+const updateRestaurantEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(getType(updateRestaurantAsync.request)),
+    mergeMap(action => {
+      const restaurant = {
+        id: state$.value.restaurant.selectedRestaurant,
+        ...action.payload
+      };
+      return from(API.UpdateRestaurant(restaurant)).pipe(
+        map(res => {
+          return updateRestaurantAsync.success(res);
+        }),
+        catchError(error =>
+          handleEpicAPIError({
+            error,
+            failActionType: getType(updateRestaurantAsync.failure),
+            initAction: action,
+          }),
+        ),
+      );
+    })
+  );
+
 const onUpdateDoneSnackbarsEpic = action$ =>
   action$.pipe(
     filter(
       action =>
-        action.type.includes('UPDATE_') && action.type.endsWith('_DONE'),
+        action.type.includes('UPD_') && action.type.endsWith('_DONE'),
     ),
     mergeMap(() => {
       return of(
@@ -226,7 +249,7 @@ const onUpdateFailSnackbarsEpic = action$ =>
   action$.pipe(
     filter(
       action =>
-        action.type.includes('UPDATE_') && action.type.endsWith('_FAIL'),
+        action.type.includes('UPD_') && action.type.endsWith('_FAIL'),
     ),
     mergeMap(() => {
       return of(
@@ -293,6 +316,7 @@ const onUpdateWifiSnackbarsEpic = action$ =>
 export default [
   getManagedEpic,
   loadRestaurant,
+  updateRestaurantEpic,
   bootstrapEpic,
   getLoggedEpic,
   registerRestaurantEpic,

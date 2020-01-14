@@ -145,6 +145,21 @@ export const CreateRestaurant = (body: CreateRestaurantBody): Promise<any> => Po
   path: `restaurants`
 }, body);
 
+type UpdateRestaurantBody = {
+  id: string;
+  name?: string;
+  settings?: {
+    paymentCollection: string,
+    paymentMethods: [],
+    orders: boolean,
+    serviceCalls: boolean
+  };
+}
+
+export const UpdateRestaurant = (restaurant: UpdateRestaurantBody): Promise<any> => Patch({
+  path: `restaurants/${restaurant.id}`
+}, restaurant);
+
 export const FavRestaurant = ({ restaurantId, fav }: any): Promise<any> => Post({
   path: `restaurants/${restaurantId}/favorite`
 }, { fav });
