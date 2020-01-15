@@ -71,7 +71,7 @@ const getUserCartEpic: Epic = (action$, state$) =>
       const { userId, restaurantId } = action.payload;
       return from(API.GetUserCart({ userId, restaurantId })).pipe(
         rxMap(res => {
-          if (!!res && !!res.items && res.items.length > 0) {
+          if (!!res && !!res.items) {
             return res;
           } else {
             throw new Error('Invalid response structure');

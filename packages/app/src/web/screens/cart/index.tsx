@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { useSelector } from 'react-redux';
 import Fab from '@material-ui/core/Fab';
-
+import QRCode from 'qrcode.react';
 import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
 import CartItem from './cart-item';
 import { RootState } from 'typesafe-actions';
@@ -29,6 +29,7 @@ export const CartScreen: React.FC<{
   const checkedInRestaurant = useSelector<RootState, any>(state => state.restaurant.checkedInRestaurant);
   const orderItemIds = useSelector<RootState, string[]>(state => getOrderItemIds(state.cart));
   const subtotal = useSelector<RootState, Subtotal>(state => state.cart.subtotal);
+  const user = useSelector<RootState, any>(state => state.firebase.auth);
   const restaurant = useSelector<RootState, Restaurant>(state =>
     checkedInRestaurant ? state.restaurant.all[checkedInRestaurant] : null
   );
@@ -84,7 +85,9 @@ export const CartScreen: React.FC<{
             {t('order.instruction')}
           </Typography>}
         </>
-        : ''}
+        :
+        <QRCode value={`https://web.dinify.app/takeorder/${user.uid}/${restaurant.id}`} />
+        }
         
       </div>
     </div>
