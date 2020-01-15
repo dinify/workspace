@@ -34,6 +34,7 @@ export const CartScreen: React.FC<{
   const restaurant = useSelector<RootState, Restaurant>(state =>
     checkedInRestaurant ? state.restaurant.all[checkedInRestaurant] : null
   );
+
   const restaurantIdOfCart = useSelector<RootState, string>(state => {
     const items = state.cart.items;
     const sampleItem = MapToList(items)[0];
@@ -44,6 +45,7 @@ export const CartScreen: React.FC<{
     const category = (state.menuCategory.all as any)[menuCategoryId];
     return category.restaurantId;
   });
+
   const order = useAction(orderAsync.request);
 
   const cartItemCount = orderItemIds.length;

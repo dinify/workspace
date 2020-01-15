@@ -42,10 +42,63 @@ export const TakeOrder: React.FC<{
         />
       </AppBar>
       <div style={{ padding: '0 16px', marginTop: 56 }}>
-        {cart.items.map(item => (
-          <div key={item.id}>
-            {item.menuItem.translations[0].name}
+
+        {cart.items.map(({ menuItem }) => (
+          <div
+          style={{
+            minWidth: '100%', display: 'flex', alignItems: 'top',
+          }}>
+          <div style={{
+            width: 56,
+            height: 56,
+            borderRadius: 4,
+            // backgroundColor: theme.palette.divider,
+            overflow: 'hidden'
+          }}>
+            <img src={menuItem.images[0] && `${menuItem.images[0].url}=s112-c`} style={{ width: 56, height: 56 }} />
           </div>
+          <div style={{ flex: 1, marginLeft: 16, position: 'relative' }}>
+            <div style={{ display: 'flex' }}>
+              <Typography style={{ flex: 1, marginRight: 32 }} >
+                {menuItem.translations[0].name}
+              </Typography>
+              <Typography
+                variant="overline"
+                style={{ alignSelf: 'flex-end', opacity: 1 }}>
+                <Price original price={menuItem.price} />
+              </Typography>
+            </div>
+            {/* customizations.length ? customizations.map((customization, i) =>
+              <div key={i} style={{ display: 'flex' }}>
+                <Typography style={{
+                  flex: 1,
+                  marginRight: 32,
+                  textDecoration: customization.crossover ? 'line-through' : 'none',
+                }} color="textSecondary" variant="caption">
+                  {customization.name}
+                </Typography>
+                {customization.price && <Typography
+                  color="textSecondary"
+                  style={{
+                    alignSelf: 'flex-end',
+                    opacity: editMode ? 0 : 1,
+                  }}
+                  variant="overline">
+                  {customization.amount && customization.amount > 1 ? `${customization.amount} × ` : ''}
+                  {parseFloat(String(customization.price.amount)) > 0 && (
+                    <Price original price={customization.price} />
+                  )}
+                </Typography>}
+              </div>
+            ) :
+              <Typography variant="caption" color="textSecondary" style={{
+                opacity: editMode ? 0 : 1,
+              }}>
+                {t('cart.item.original')}
+              </Typography>
+            */}
+          </div>
+        </div>
         ))}
 
         <div style={{ marginTop: 8, display: 'flex', alignItems: 'center' }}>
