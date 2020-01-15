@@ -16,6 +16,7 @@ import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import { Typography } from '@material-ui/core';
 import { useAction } from '@dinify/common/src/lib/util';
 import Price from '@dinify/common/src/components/price';
+import { MapToList } from '@dinify/common/src/lib/FN';
 
 export const CartScreen: React.FC<{
   onClose?: () => void;
@@ -33,6 +34,16 @@ export const CartScreen: React.FC<{
   const restaurant = useSelector<RootState, Restaurant>(state =>
     checkedInRestaurant ? state.restaurant.all[checkedInRestaurant] : null
   );
+  const restaurantIdOfCart = useSelector<RootState, string>(state => {
+    const items = state.cart.items;
+    const sampleItem = MapToList(items)[0];
+    if (!sampleItem) return '';
+    const { menuItemId } = sampleItem;
+    const menuItem = state.menuItem.all[menuItemId];
+    const { menuCategoryId } = menuItem;
+    const category = (state.menuCategory.all as any)[menuCategoryId];
+    return category.restaurantId;
+  });
   const order = useAction(orderAsync.request);
 
   const cartItemCount = orderItemIds.length;
@@ -86,7 +97,12 @@ export const CartScreen: React.FC<{
           </Typography>}
         </>
         :
-        <QRCode value={`https://web.dinify.app/takeorder/${user.uid}/${restaurant.id}`} />
+        <div style={{margin: 8, textAlign: 'center'}}>
+          <Typography style={{ margin: '8px 0' }} variant="caption" color="textSecondary">
+            To make an order show this code to the waiter
+          </Typography>
+          <QRCode value={`https://web.dinify.app/takeorder/${user.uid}/${restaurantIdOfCart}`} />
+        </div>
         }
         
       </div>

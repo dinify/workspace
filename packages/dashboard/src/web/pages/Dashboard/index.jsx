@@ -193,7 +193,7 @@ const Dashboard = ({
   location,
   openedIndex,
   toggleSection,
-  restaurant = {},
+  restaurant = { settings: {} },
   publishRestaurant,
 }) => {
   const { t } = useTranslation();
@@ -214,10 +214,12 @@ const Dashboard = ({
         {
           name: t('nav.services'),
           path: '/settings/services',
+          cond: !!restaurant.settings.serviceCalls
         },
         {
           name: t('nav.tables'),
           path: '/settings/tables',
+          cond: !!restaurant.settings.orders || !!restaurant.settings.serviceCalls
         },
         {
           name: t('nav.tableCodes'),
@@ -340,6 +342,7 @@ const Dashboard = ({
                   >
                     <List component="div" disablePadding>
                       {section.subsections.map((subsection, subIndex) => (
+                        (subsection.cond === true || subsection.cond === undefined) &&
                         <Link
                           to={subsection.path}
                           key={`nav-section-${index}-${subIndex}`}
