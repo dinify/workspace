@@ -57,6 +57,10 @@ export const GetUserCart = ({ restaurantId, userId }: any): Promise<any> => Get(
   path: `restaurants/${restaurantId}/carts/${userId}`
 });
 
+export const MakeCartDone = ({ restaurantId, userId }: any): Promise<any> => Patch({
+  path: `restaurants/${restaurantId}/carts/${userId}`
+});
+
 export const GetBill = (): Promise<any> => Get({
   path: `bill`
 });

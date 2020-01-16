@@ -5,8 +5,9 @@ import { useRouteMatch } from 'react-router';
 import { AppBar, AppBarTitle } from '../components/app-bar';
 import { RootState } from 'typesafe-actions';
 import { Cart } from 'CartModels';
+import Fab from '@material-ui/core/Fab';
 
-import { fetchUserCartAsync } from '../../features/cart/actions';
+import { fetchUserCartAsync, makeCartDoneAsync } from '../../features/cart/actions';
 import { Typography } from '@material-ui/core';
 import { useAction } from '@dinify/common/src/lib/util';
 import Price from '@dinify/common/src/components/price';
@@ -22,6 +23,7 @@ export const TakeOrder: React.FC<{
   const match = useRouteMatch<{ userId: string, restaurantId: string }>();
   const { userId, restaurantId } = match ? match.params : { userId: null, restaurantId: null };
   const fetchUserCart = useAction(fetchUserCartAsync.request);
+  const makeCartDone = useAction(makeCartDoneAsync.request);
 
   useEffect(() => {
     if (userId && restaurantId) {
@@ -109,7 +111,17 @@ export const TakeOrder: React.FC<{
             <Price original price={cart.subtotal} />
           </Typography>
         </div>
-        
+
+        <Fab
+          disabled={!cart.items || cart.items.length < 1 || cart.done}
+          style={{ marginTop: 16, width: '100%' }}
+          variant="extended"
+          color="primary"
+          onClick={() => makeCartDone({ userId, restaurantId })}
+        >
+          {t('done')}
+        </Fab>
+
       </div>
     </div>
   );

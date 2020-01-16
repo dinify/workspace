@@ -24,6 +24,13 @@ export const fetchUserCartAsync = createAsyncAction(
   `${p}/GET_USERCART_CANCEL`,
 )<undefined, CartResponse, string>();
 
+export const makeCartDoneAsync = createAsyncAction(
+  `${p}/MAKECARTDONE_INIT`,
+  `${p}/MAKECARTDONE_DONE`,
+  `${p}/MAKECARTDONE_FAIL`,
+  `${p}/MAKECARTDONE_CANCEL`,
+)<undefined, any, string>();
+
 export const addToCartAsync = createAsyncAction(
   `${p}/ADD_TO_CART_INIT`,
   `${p}/ADD_TO_CART_DONE`,

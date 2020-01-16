@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { updateNameInitAction } from 'features/restaurant/actions';
 import { removeServiceInit, fetchServicesInit } from 'features/service/actions';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Avatar from '@material-ui/core/Avatar';
@@ -123,7 +122,6 @@ export default connect(
   }),
   {
     fetchServices: fetchServicesInit,
-    updateName: updateNameInitAction,
     removeService: removeServiceInit,
     switchTab
   },

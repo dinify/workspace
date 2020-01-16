@@ -60,10 +60,17 @@ export const subtotal = createReducer(defaultSubtotal as Subtotal)
   )
   .handleAction(resetActions, () => defaultSubtotal);
 
+  
 export const guestsCart = createReducer(null as any)
 
   .handleAction(actions.fetchUserCartAsync.success, (state, action) =>
     action.payload
+  )
+  .handleAction(actions.makeCartDoneAsync.success, (state, action) =>
+    ({
+      ...state,
+      done: true
+    })
   )
 
 const cartReducer = combineReducers({
