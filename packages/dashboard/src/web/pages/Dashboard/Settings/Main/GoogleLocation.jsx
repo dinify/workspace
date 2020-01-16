@@ -10,8 +10,7 @@ import {
   FormBoxBody,
 } from 'web/components/styled/FormBox';
 import {
-	updateLocationInitAction,
-	updateAddressInitAction
+	updateRestaurantAsync
 } from 'features/restaurant/actions';
 import Progress from 'web/components/Progress';
 import PlacesAutocomplete, {
@@ -172,7 +171,6 @@ const MapComponent = compose(
       draggable
       onDragEnd={o => {
         props.updateLocation({
-          name: 'name must be here',
           longitude: o.latLng.lng(),
           latitude: o.latLng.lat(),
         });
@@ -186,7 +184,7 @@ const MapComponent = compose(
   </GoogleMap>
 ));
 
-const Location = ({ updateLocation, restaurant, updateAddress, address, setFormFields }) => {
+const Location = ({ updateRestaurant, restaurant, address, setFormFields }) => {
   if (!restaurant) return <div />;
   const { t } = useTranslation();
   const latitude = Number(restaurant.latitude) || 50.08730075;
@@ -208,33 +206,36 @@ const Location = ({ updateLocation, restaurant, updateAddress, address, setFormF
 						if (a.postalCode) setFormFields('settings/address', 'postal_code', a.postalCode);
 					}}
 					setMapPosition={(latlng) =>
-						updateLocation({
-							name: 'name must be here',
+						updateRestaurant({
 							longitude: latlng.lng,
 							latitude: latlng.lat,
 						})
 					}
 				/>
 				<MapComponent
-          updateLocation={updateLocation}
+          updateLocation={updateRestaurant}
           restaurant={restaurant}
           latitude={latitude}
           longitude={longitude}					
 				/>
-        <AddressForm onSubmit={(fields) => updateAddress({
-          street: fields.street,
-          locality: fields.locality, // city
-          postal_code: fields.postal_code,
-          country: 'Czechia',
-          region: 'Prague'
-        })} initialValues={address} />				
+        <AddressForm onSubmit={(fields) => updateRestaurant(
+          {address: {
+            business:
+            {
+              street: fields.street,
+              locality: fields.locality, // city
+              postal_code: fields.postal_code,
+              country: 'Czechia',
+              region: 'Prague'
+            }
+          }}
+        )} initialValues={address} />				
       </FormBoxBody>
     </FormBox>
   );
 };
 
-export default connect(state => ({}), {
-	updateLocation: updateLocationInitAction,
-	updateAddress: updateAddressInitAction,
+export default connect(null, {
+	updateRestaurant: updateRestaurantAsync.request,
 	setFormFields
 })(Location);

@@ -8,7 +8,7 @@ import {
   FormBoxHead,
   FormBoxBody,
 } from 'web/components/styled/FormBox';
-import { updateSocialInitAction } from 'features/restaurant/actions';
+import { updateRestaurantAsync } from 'features/restaurant/actions';
 import Progress from 'web/components/Progress';
 import Button from '@material-ui/core/Button';
 import Text from 'web/components/MaterialInputs/Text';
@@ -60,7 +60,7 @@ SocialForm = reduxForm({
 })(SocialForm);
 
 
-const Social = ({ updateSocial, social }) => {
+const Social = ({ updateRestaurant, social }) => {
   const { t } = useTranslation();
   const initialValues = {facebook: '', instagram: ''};
   if (social) {
@@ -73,7 +73,7 @@ const Social = ({ updateSocial, social }) => {
     const obj = {};
     if (facebook.length > 0) obj.facebook = facebook;
     if (instagram.length > 0) obj.instagram = instagram;
-    updateSocial(obj);
+    updateRestaurant({ social: obj });
   }
   return (
     <FormBox>
@@ -88,6 +88,6 @@ const Social = ({ updateSocial, social }) => {
   );
 };
 
-export default connect(state => ({}), {
-  updateSocial: updateSocialInitAction,
+export default connect(null, {
+  updateRestaurant: updateRestaurantAsync.request,
 })(Social);

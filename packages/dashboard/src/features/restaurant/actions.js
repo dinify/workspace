@@ -15,7 +15,6 @@ export const updateRestaurantAsync = createAsyncAction(
   `${p}/UPD_RESTAURANT_FAIL`,
 )();
 
-
 export const fetchWaiterboards = payload => ({
   type: types.FETCH_RESTAURANTWAITERBOARDS_INIT,
   payload,
@@ -38,42 +37,6 @@ export const prefillRestaurantName = payload => ({ type: 'PREFILL_RESTAURANTNAME
 export const setOngoingRegistration = payload => ({ type: 'SET_ONGOINGREGISTRATION', payload })
 
 export const selectFoodAction = payload => ({ type: 'SELECT_FOOD', payload });
-export const updateNameInitAction = payload => ({
-  type: 'UPDATE_NAME_INIT',
-  payload,
-});
-export const updateDoneAction = () => ({ type: 'UPDATE_DONE' });
-
-export const updateCategoryInitAction = payload => ({
-  type: 'UPDATE_CATEGORY_INIT',
-  payload,
-});
-
-export const updateContactInitAction = payload => ({
-  type: 'UPDATE_CONTACT_INIT',
-  payload,
-});
-export const updateSocialInitAction = payload => ({
-  type: 'UPDATE_SOCIAL_INIT',
-  payload,
-});
-export const updateLocationInitAction = payload => ({
-  type: 'UPDATE_LOCATION_INIT',
-  payload,
-});
-export const updateBankInitAction = payload => ({
-  type: 'UPDATE_BANK_INIT',
-  payload,
-});
-export const updateAddressInitAction = payload => ({
-  type: 'UPDATE_ADDRESS_INIT',
-  payload,
-});
-
-export const updateHoursInitAction = payload => ({
-  type: 'UPDATE_HOURS_INIT',
-  payload,
-});
 
 export const loggedFetchedAction = payload => ({
   type: types.FETCH_RESTAURANT_DONE,
@@ -139,15 +102,7 @@ export const reorderCategoriesAction = payload => ({
 
 export const rmFoodInitAction = payload => ({ type: 'RM_FOOD_INIT', payload });
 
-export const addFoodInitAction = payload => ({
-  type: 'CREATE_FOOD_INIT',
-  payload,
-});
 
-export const updateFoodInitAction = payload => ({
-  type: 'UPDATE_MENUITEM_INIT',
-  payload,
-});
 export const uploadMainImageInitAction = payload => ({
   type: 'UPDATE_IMAGE_INIT',
   payload,
@@ -155,15 +110,6 @@ export const uploadMainImageInitAction = payload => ({
 
 export const updateFoodNutritionInit = payload => ({
   type: 'UPDATE_NUTRITION_INIT',
-  payload,
-});
-
-export const addDayToBusinessHours = payload => ({
-  type: 'ADD_DAY_TO_BUSINESSHOURS',
-  payload,
-});
-export const addRangeToBusinessHours = payload => ({
-  type: 'ADD_RANGE_TO_BUSINESSHOURS',
   payload,
 });
 
