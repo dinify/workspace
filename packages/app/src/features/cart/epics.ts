@@ -17,7 +17,8 @@ import {
   fetchCartAsync,
   orderAsync,
   rmFromCartAsync,
-  fetchUserCartAsync
+  fetchUserCartAsync,
+  makeCartDoneAsync
 } from './actions';
 import * as transactionActions from '../transaction/actions';
 import * as uiActions from '../ui/actions';
@@ -64,7 +65,7 @@ const getCartEpic: Epic = action$ =>
     ),
   );
 
-const getUserCartEpic: Epic = (action$, state$) =>
+const getUserCartEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(fetchUserCartAsync.request)),
     switchMap(action => {
@@ -85,10 +86,29 @@ const getUserCartEpic: Epic = (action$, state$) =>
           });
         }),
         catchError(error => {
-          console.log(error);
           return handleEpicAPIError({
             error,
             failActionType: getType(fetchUserCartAsync.failure),
+            initAction: action,
+          });
+        }),
+      );
+    }),
+  );
+
+const makeCartDoneEpic: Epic = (action$) =>
+  action$.pipe(
+    ofType(getType(makeCartDoneAsync.request)),
+    switchMap(action => {
+      const { userId, restaurantId } = action.payload;
+      return from(API.MakeCartDone({ userId, restaurantId })).pipe(
+        rxMap((res) => {
+          return makeCartDoneAsync.success(res);
+        }),
+        catchError(error => {
+          return handleEpicAPIError({
+            error,
+            failActionType: getType(makeCartDoneAsync.failure),
             initAction: action,
           });
         }),
@@ -257,6 +277,7 @@ const orderEpic: Epic = action$ =>
 
 export default [
   getCartEpic,
+  makeCartDoneEpic,
   getUserCartEpic,
   addToCartEpic,
   addToCartErrorEpic,

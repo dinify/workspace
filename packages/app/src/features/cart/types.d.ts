@@ -91,6 +91,7 @@ declare module 'CartModels' {
     items: OrderItem[];
     restaurantId?: string;
     userId?: string;
+    done?: boolean;
   }
 
   export type CartResponse = Cart;
