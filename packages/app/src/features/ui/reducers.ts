@@ -5,6 +5,7 @@ import { AnyAction } from 'redux';
 import { getType } from 'typesafe-actions';
 import * as actions from './actions';
 import { Dialog, Snackbar } from './actions';
+import dissocPath from 'ramda/es/dissocPath';
 
 export type ThemeType = 'light'|'dark';
 export interface UiState {
@@ -69,7 +70,8 @@ export default function reducer(state: UiState = initialState, action: AnyAction
       return assocPath<boolean|Dialog, UiState>(['dialogs', path], value)(state);
     }
     case getType(actions.closeDialogAction): {
-      return assoc('dialogs', {})(state);
+      let path = action.payload;
+      return dissocPath<UiState>(['dialogs', path])(state);
     }
     case getType(actions.showSnackbarAction): {
       let snackbar = action.payload as Snackbar;

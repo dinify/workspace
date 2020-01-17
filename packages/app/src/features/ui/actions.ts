@@ -5,6 +5,7 @@ const p = 'dinify/ui';
 
 export type DialogType =
   | 'cart'
+  | 'clear-order'
   | 'bill'
   | 'services'
   | 'language'
