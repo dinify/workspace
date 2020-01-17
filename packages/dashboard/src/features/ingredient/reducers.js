@@ -4,9 +4,13 @@ import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
 import { ListToMap } from '@dinify/common/src/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
-import * as types from './types';
 import { getType } from 'typesafe-actions';
-import { fetchIngredientsAsync, createIngredientAsync } from './actions';
+import {
+  fetchIngredientsAsync,
+  createIngredientAsync,
+  updateIngredientAsync,
+  removeIngredientAsync
+} from './actions';
 import { fetchMenuItemAsync } from '../menuItem/actions';
 
 const initialState = {
@@ -39,12 +43,12 @@ export default function reducer(state = initialState, action) {
     }
 
 
-    case types.UPDATE_INGREDIENT_INIT: {
+    case getType(updateIngredientAsync.request): {
       const { id, excludable } = payload;
       return assocPath(['all', id, 'excludable'], excludable)(state);
     }
 
-    case types.REMOVE_INGREDIENT_INIT: {
+    case getType(removeIngredientAsync.request): {
       const { id } = payload;
       const ingredientObj = state.all[id];
       return pipe(
@@ -52,8 +56,8 @@ export default function reducer(state = initialState, action) {
         dissocPath(['all', id]),
       )(state);
     }
-    case types.REMOVE_INGREDIENT_FAIL: {
-      const { id } = payload.initPayload;
+    case getType(removeIngredientAsync.failure): {
+      const { id } = action.initPayload;
       return assocPath(['all', id], state.backup[id])(state);
     }
 

@@ -10,7 +10,6 @@ import { actionTypes } from 'react-redux-firebase';
 import { setCookie, handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 import { reportCampaignAction } from '@dinify/common/src/features/reporting/actions';
-import * as APIv1 from '@dinify/common/src/api/restaurant';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import * as types from './types';
 import { selectRestaurant, fetchManagedAsync, updateRestaurantAsync } from './actions';
@@ -194,8 +193,8 @@ const editImageEpic = (action$, state$) =>
       const maxPrecedence = sort((a, b) => b.precedence - a.precedence)(
         values(images),
       )[0].precedence;
-      return from(APIv1.EditImage({ id, precedence: maxPrecedence + 1 })).pipe(
-        map(res => ({ type: ' EDIT_IMAGE_DONE', payload: res })),
+      return from(API.EditImage({ id, precedence: maxPrecedence + 1 })).pipe(
+        map(res => ({ type: 'EDIT_IMAGE_DONE', payload: res })),
         catchError(error =>
           handleEpicAPIError({
             error,
@@ -288,7 +287,8 @@ const publishRestaurantEpic = (action$, state$) =>
     ofType(types.SEND_PUBLISHREQUEST_INIT),
     mergeMap(action => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
-      return from(APIv1.SendPublishRequest({ restaurantId })).pipe(
+      const subdomain = state$.value.restaurant.all[restaurantId].subdomain;
+      return from(API.SendPublishRequest({ subdomain })).pipe(
         map(res => ({ type: types.SEND_PUBLISHREQUEST_DONE, payload: res })),
         catchError(error =>
           handleEpicAPIError({

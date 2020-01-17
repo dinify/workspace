@@ -4,9 +4,8 @@ import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
 import { ListToMap } from '@dinify/common/src/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
-import * as types from './types';
 import { getType } from 'typesafe-actions';
-import { fetchAddonsAsync, createAddonAsync } from './actions';
+import { fetchAddonsAsync, createAddonAsync, removeAddonAsync } from './actions';
 import { fetchMenuItemAsync } from '../menuItem/actions';
 
 const initialState = {
@@ -36,7 +35,8 @@ export default function reducer(state = initialState, action) {
       const newAddon = payload;
       return assocPath(['all', newAddon.id], newAddon)(state);
     }
-    case types.REMOVE_ADDON_INIT: {
+
+    case getType(removeAddonAsync.request): {
       const { id } = payload;
       const addonObj = state.all[id];
       return pipe(
@@ -44,10 +44,11 @@ export default function reducer(state = initialState, action) {
         dissocPath(['all', id]),
       )(state);
     }
-    case types.REMOVE_ADDON_FAIL: {
-      const { id } = payload.initPayload;
+    case getType(removeAddonAsync.failure): {
+      const { id } = action.initPayload;
       return assocPath(['all', id], state.backup[id])(state);
     }
+    
     case firebaseTypes.LOGOUT: {
       return initialState;
     }

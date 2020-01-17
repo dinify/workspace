@@ -1,11 +1,10 @@
 import { from as fromPromise } from 'rxjs';
 import { mergeMap, map, catchError, map as rxMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import * as types from './types';
 import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
-import { fetchAddonsAsync, createAddonAsync } from './actions';
+import { fetchAddonsAsync, createAddonAsync, removeAddonAsync } from './actions';
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
@@ -62,9 +61,30 @@ const createAddonEpic: Epic = (action$, state$) =>
     }),
   );
 
+const removeAddonEpic: Epic = (action$, state$) =>
+  action$.pipe(
+    ofType(getType(removeAddonAsync.request)),
+    mergeMap(action => {
+      const payload = action.payload;
+
+      return fromPromise(API.RemoveIngredient({ id: payload.id })).pipe(
+        rxMap((res: any) => {
+          return removeAddonAsync.success(res);
+        }),
+        catchError(error =>
+          handleEpicAPIError({
+            error,
+            failActionType: getType(removeAddonAsync.failure),
+            initAction: action,
+          }),
+        ),
+      );
+    }),
+  );
+
 const onCreateFailSnackbarsEpic: Epic = action$ =>
   action$.pipe(
-    ofType(types.CREATE_ADDON_FAIL),
+    ofType(getType(removeAddonAsync.failure)),
     map(() =>
       snackbar.show({
         message: t('createAddonFail'),
@@ -75,5 +95,6 @@ const onCreateFailSnackbarsEpic: Epic = action$ =>
 export default [
   fetchAddonsEpic,
   createAddonEpic,
+  removeAddonEpic,
   onCreateFailSnackbarsEpic
 ];

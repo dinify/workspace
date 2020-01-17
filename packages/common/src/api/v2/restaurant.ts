@@ -4,13 +4,13 @@ export const GetListOfRestaurants = () => {
   return Get({
     path: `restaurants`
   });
-}
+};
 
 export const GetManagedRestaurants = () => {
   return Get({
     path: `restaurants/managed`
   });
-}
+};
 
 export const GetRestaurantById = ({ restaurantId, populateWith }: any) => {
   let scopes = '';
@@ -18,6 +18,16 @@ export const GetRestaurantById = ({ restaurantId, populateWith }: any) => {
   return Get({
     path: `restaurants/${restaurantId}${scopes}`
   });
+};
+
+export const SendPublishRequest = ({ subdomain }: any) => {
+  return Post({
+    path: `restaurants/${subdomain}/publish/request`
+  });
+};
+
+export const EditImage = ({ id, precedence, published }: any) => {
+  return Patch({ path: `images/${id}` }, { precedence, published });
 }
 
 export const GetMenuCategoriesOfSubdomain = ({ subdomain }: any) => Get({
@@ -259,6 +269,10 @@ export const CreateIngredient = (body: any): Promise<any> => Post({
   path: `ingredients`
 }, body);
 
+export const RemoveIngredient = ({ id }: any) => {
+  return Delete({ path: `ingredients/${id}` });
+}
+
 export const GetRestaurantAddons = ({ restaurantId }: any, lang?: string): Promise<any> => Get({
   path: `restaurants/${restaurantId}/addons`,
   lang
@@ -267,6 +281,10 @@ export const GetRestaurantAddons = ({ restaurantId }: any, lang?: string): Promi
 export const CreateAddon = (body: any): Promise<any> => Post({
   path: `addons`
 }, body);
+
+export const RemoveAddon = ({ id }: any) => {
+  return Delete({ path: `addons/${id}` });
+}
 
 export const GetRestaurantOptions = ({ restaurantId }: any, lang?: string): Promise<any> => Get({
   path: `restaurants/${restaurantId}/options`,

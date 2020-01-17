@@ -24,8 +24,8 @@ import { getT } from '@dinify/common/src/lib/translation.ts';
 import {
   fetchIngredientsAsync,
   createIngredientAsync,
-  removeIngredientInit,
-  updateIngredientInit,
+  removeIngredientAsync,
+  updateIngredientAsync,
 } from 'features/ingredient/actions.ts';
 import { listOfIngredients } from 'features/ingredient/selectors';
 
@@ -137,8 +137,8 @@ export default connect(
   }),
   {
     createIngredient: createIngredientAsync.request,
-    removeIngredient: removeIngredientInit,
-    updateIngredient: updateIngredientInit,
+    removeIngredient: removeIngredientAsync.request,
+    updateIngredient: updateIngredientAsync.request,
     fetchIngredients: fetchIngredientsAsync.request
   },
 )(Ingredients);

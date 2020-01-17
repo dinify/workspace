@@ -1,10 +1,11 @@
 import { from as fromPromise } from 'rxjs';
 import { mergeMap, map, catchError, map as rxMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import * as types from './types';
 import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
-import { fetchIngredientsAsync, createIngredientAsync } from './actions';
+import {
+  fetchIngredientsAsync, createIngredientAsync, removeIngredientAsync
+} from './actions';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import pick from 'ramda/es/pick';
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
@@ -60,9 +61,30 @@ const createIngredientEpic: Epic = (action$, state$) =>
     }),
   );
 
+const removeIngredientEpic: Epic = (action$, state$) =>
+  action$.pipe(
+    ofType(getType(removeIngredientAsync.request)),
+    mergeMap(action => {
+      const payload = action.payload;
+
+      return fromPromise(API.RemoveIngredient({ id: payload.id })).pipe(
+        rxMap((res: any) => {
+          return removeIngredientAsync.success(res);
+        }),
+        catchError(error =>
+          handleEpicAPIError({
+            error,
+            failActionType: getType(removeIngredientAsync.failure),
+            initAction: action,
+          }),
+        ),
+      );
+    }),
+  );
+
 const onCreateFailSnackbarsEpic: Epic = action$ =>
   action$.pipe(
-    ofType(types.CREATE_INGREDIENT_FAIL),
+    ofType(getType(removeIngredientAsync.failure)),
     map(() =>
       snackbar.show({
         message: t('createIngredientFail'),
@@ -73,5 +95,6 @@ const onCreateFailSnackbarsEpic: Epic = action$ =>
 export default [
   fetchIngredientsEpic,
   createIngredientEpic,
+  removeIngredientEpic,
   onCreateFailSnackbarsEpic,
 ];

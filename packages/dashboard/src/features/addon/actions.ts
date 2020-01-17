@@ -1,7 +1,6 @@
 import {
   createAsyncAction
 } from 'typesafe-actions';
-import * as types from './types';
 
 const p = 'dinify/addon';
 
@@ -17,8 +16,8 @@ export const createAddonAsync = createAsyncAction(
   `${p}/POST_ADDON_FAIL`
 )<any, any, any>();
 
-
-export const removeAddonInit = (payload: any) => ({
-  type: types.REMOVE_ADDON_INIT,
-  payload,
-});
+export const removeAddonAsync = createAsyncAction(
+  `${p}/DEL_ADDON_INIT`,
+  `${p}/DEL_ADDON_DONE`,
+  `${p}/DEL_ADDON_FAIL`
+)<any, any, any>();
