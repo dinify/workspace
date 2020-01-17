@@ -53,7 +53,6 @@ const getCartEpic: Epic = action$ =>
           return fetchCartAsync.success(normalized);
         }),
         catchError(error => {
-          console.log(error);
           return handleEpicAPIError({
             error,
             failActionType: getType(fetchCartAsync.failure),

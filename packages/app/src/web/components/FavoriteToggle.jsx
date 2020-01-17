@@ -10,9 +10,6 @@ const FavoriteToggle = ({
   theme,
   checked
 }) => {
-
-  // console.log(checked);
-
   return (
     <IconButton style={{width: 48, height: 48}} onClick={onChange}>
       <Motion

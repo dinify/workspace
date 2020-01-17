@@ -11,8 +11,6 @@ const LightbulbToggle = ({
   defaultChecked = false,
   checked
 }) => {
-
-  // console.log(checked);
   const isDark = theme === 'dark';
   return (
       <div style={{

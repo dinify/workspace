@@ -57,13 +57,6 @@ export const items = createReducer({} as OrderItemNMap)
   })
   .handleAction(resetActions, () => ({}));
 
-// export const all = createReducer({} as TransactionMap)
-//     .handleAction(getType(wsActions.confirmedPayment), (state, action) => {
-//       console.log('hello', action.payload);
-//       return {};
-//     });
-
-
 const transactionReducer = combineReducers({
   orders,
   orderItemsCount,
