@@ -1,7 +1,6 @@
 import {
   createAsyncAction
 } from 'typesafe-actions';
-import * as types from './types';
 
 const p = 'dinify/menuItem';
 
@@ -71,12 +70,14 @@ export const unassignOptionAsync = createAsyncAction(
   `${p}/UNASSIGN_OPTION_FAIL`
 )();
 
-export const reorderItemsInit = payload => ({
-  type: types.REORDER_MENUITEM_INIT,
-  payload,
-});
+export const reorderItemsAsync = createAsyncAction(
+  `${p}/REORDER_MENUITEM_INIT`,
+  `${p}/REORDER_MENUITEM_DONE`,
+  `${p}/REORDER_MENUITEM_FAIL`
+)();
 
-export const uploadItemImageInit = payload => ({
-  type: types.UPDATE_ITEMIMAGE_INIT,
-  payload,
-});
+export const uploadItemImageAsync = createAsyncAction(
+  `${p}/UPLOAD_ITEMIMAGE_INIT`,
+  `${p}/UPLOAD_ITEMIMAGE_DONE`,
+  `${p}/UPLOAD_ITEMIMAGE_FAIL`
+)();

@@ -5,7 +5,7 @@ import Dropzone from 'react-dropzone';
 import {
   fetchMenuItemAsync,
   updateMenuItemAsync,
-  uploadItemImageInit
+  uploadItemImageAsync
 } from 'features/menuItem/actions';
 import Progress from 'web/components/Progress';
 import { Field, reduxForm } from 'redux-form';
@@ -188,6 +188,6 @@ export default connect((state) => ({
   }), {
     fetchMenuitem: fetchMenuItemAsync.request,
     updateMenuItem: updateMenuItemAsync.request,
-    uploadItemImage: uploadItemImageInit,
+    uploadItemImage: uploadItemImageAsync.request,
   },
 )(ItemDetail);

@@ -29,7 +29,7 @@ import {
   createMenuItemAsync,
   updateMenuItemAsync,
   removeMenuItemAsync,
-  reorderItemsInit
+  reorderItemsAsync
 } from 'features/menuItem/actions';
 import {
   selectFoodAction,
@@ -258,7 +258,7 @@ export default connect(
     updateItem: updateMenuItemAsync.request,
     createItem: createMenuItemAsync.request,
     removeItem: removeMenuItemAsync.request,
-    reorderItems: reorderItemsInit,
+    reorderItems: reorderItemsAsync.request,
     selectFood: selectFoodAction,
   },
 )(ListOfDishes);

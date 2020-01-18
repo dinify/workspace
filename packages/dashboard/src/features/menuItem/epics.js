@@ -1,25 +1,17 @@
-import { from as fromPromise, of } from 'rxjs';
+import { from as fromPromise } from 'rxjs';
 import { mergeMap, catchError, map } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import findIndex from 'ramda/es/findIndex';
-import propEq from 'ramda/es/propEq';
-import pipe from 'ramda/es/pipe';
-import filter from 'ramda/es/filter';
-import assoc from 'ramda/es/assoc';
 import pick from 'ramda/es/pick';
-
-import assocPath from 'ramda/es/assocPath';
-import { ListToMap, handleEpicAPIError } from '@dinify/common/src/lib/FN';
+import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import { getType } from 'typesafe-actions';
-import { fetchMenuItemAsync, createMenuItemAsync, updateMenuItemAsync, assignIngredientAsync, unassignIngredientAsync, assignAddonAsync, unassignAddonAsync, assignOptionAsync, unassignOptionAsync, setIngredientExcludabilityAsync, removeMenuItemAsync } from './actions';
+import * as actions from './actions';
 import { normalize } from 'normalizr';
-import * as types from './types';
 import { menuItem } from './schemas.ts';
 
 const fetchMenuItemEpic = (action$, state$) =>
   action$.pipe(
-    ofType(getType(fetchMenuItemAsync.request)),
+    ofType(getType(actions.fetchMenuItemAsync.request)),
     mergeMap((action) => {
       const { id } = action.payload;
 
@@ -29,11 +21,11 @@ const fetchMenuItemEpic = (action$, state$) =>
         map((res) => {
           const normalized = normalize(res, menuItem);
 
-          return fetchMenuItemAsync.success(normalized);
+          return actions.fetchMenuItemAsync.success(normalized);
         }),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(fetchMenuItemAsync.failure),
+          failActionType: getType(actions.fetchMenuItemAsync.failure),
           initAction: action
         }))
       );
@@ -42,7 +34,7 @@ const fetchMenuItemEpic = (action$, state$) =>
 
 const createMenuItemEpic = (action$, state$) =>
   action$.pipe(
-    ofType(getType(createMenuItemAsync.request)),
+    ofType(getType(actions.createMenuItemAsync.request)),
     mergeMap((action) => {
 
       const restaurantId = state$.value.restaurant.selectedRestaurant;
@@ -55,13 +47,13 @@ const createMenuItemEpic = (action$, state$) =>
 
       return fromPromise(API.CreateMenuItem(body)).pipe(
         map((res) => ({
-          type: getType(createMenuItemAsync.success),
+          type: getType(actions.createMenuItemAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(createMenuItemAsync.failure),
+          failActionType: getType(actions.createMenuItemAsync.failure),
           initAction: action
         }))
       );
@@ -70,7 +62,7 @@ const createMenuItemEpic = (action$, state$) =>
 
 const updateMenuItemEpic = (action$) =>
   action$.pipe(
-    ofType(getType(updateMenuItemAsync.request)),
+    ofType(getType(actions.updateMenuItemAsync.request)),
     mergeMap((action) => {
 
       const payload = action.payload;
@@ -81,13 +73,13 @@ const updateMenuItemEpic = (action$) =>
 
       return fromPromise(API.UpdateMenuItem(menuItemId, body)).pipe(
         map((res) => ({
-          type: getType(updateMenuItemAsync.success),
+          type: getType(actions.updateMenuItemAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(updateMenuItemAsync.failure),
+          failActionType: getType(actions.updateMenuItemAsync.failure),
           initAction: action
         }))
       );
@@ -96,7 +88,7 @@ const updateMenuItemEpic = (action$) =>
 
 const deleteMenuItemEpic = (action$) =>
   action$.pipe(
-    ofType(getType(removeMenuItemAsync.request)),
+    ofType(getType(actions.removeMenuItemAsync.request)),
     mergeMap((action) => {
 
       const { payload } = action;
@@ -105,13 +97,13 @@ const deleteMenuItemEpic = (action$) =>
 
       return fromPromise(API.RemoveMenuItem(menuItemId)).pipe(
         map((res) => ({
-          type: getType(removeMenuItemAsync.success),
+          type: getType(actions.removeMenuItemAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(removeMenuItemAsync.failure),
+          failActionType: getType(actions.removeMenuItemAsync.failure),
           initAction: action
         }))
       );
@@ -120,7 +112,7 @@ const deleteMenuItemEpic = (action$) =>
 
 export const assignIngredientEpic = (action$) => 
   action$.pipe(
-    ofType(getType(assignIngredientAsync.request)),
+    ofType(getType(actions.assignIngredientAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, ingredientId } = payload;
@@ -133,13 +125,13 @@ export const assignIngredientEpic = (action$) =>
 
       return fromPromise(API.AssignIngredient(menuItemId, body)).pipe(
         map((res) => ({
-          type: getType(assignIngredientAsync.success),
+          type: getType(actions.assignIngredientAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(assignIngredientAsync.failure),
+          failActionType: getType(actions.assignIngredientAsync.failure),
           initAction: action
         }))
       );
@@ -148,20 +140,20 @@ export const assignIngredientEpic = (action$) =>
 
 export const unassignIngredientEpic = (action$) => 
   action$.pipe(
-    ofType(getType(unassignIngredientAsync.request)),
+    ofType(getType(actions.unassignIngredientAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, ingredientId } = payload;
 
       return fromPromise(API.UnassignIngredient(menuItemId, { ingredientId })).pipe(
         map((res) => ({
-          type: getType(unassignIngredientAsync.success),
+          type: getType(actions.unassignIngredientAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(unassignIngredientAsync.failure),
+          failActionType: getType(actions.unassignIngredientAsync.failure),
           initAction: action
         }))
       );
@@ -170,7 +162,7 @@ export const unassignIngredientEpic = (action$) =>
 
 export const setIngredientExcludabilityEpic = (action$) =>
   action$.pipe(
-    ofType(getType(setIngredientExcludabilityAsync.request)),
+    ofType(getType(actions.setIngredientExcludabilityAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, ingredientId, excludable } = payload;
@@ -181,13 +173,13 @@ export const setIngredientExcludabilityEpic = (action$) =>
 
       return fromPromise(API.UpdateMenuItemIngredient(menuItemId, ingredientId, body)).pipe(
         map((res) => ({
-          type: getType(setIngredientExcludabilityAsync.success),
+          type: getType(actions.setIngredientExcludabilityAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(setIngredientExcludabilityAsync.failure),
+          failActionType: getType(actions.setIngredientExcludabilityAsync.failure),
           initAction: action
         }))
       );
@@ -196,7 +188,7 @@ export const setIngredientExcludabilityEpic = (action$) =>
 
 export const assignAddonEpic = (action$) => 
   action$.pipe(
-    ofType(getType(assignAddonAsync.request)),
+    ofType(getType(actions.assignAddonAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, addonId } = payload;
@@ -209,13 +201,13 @@ export const assignAddonEpic = (action$) =>
 
       return fromPromise(API.AssignAddon(menuItemId, body)).pipe(
         map((res) => ({
-          type: getType(assignAddonAsync.success),
+          type: getType(actions.assignAddonAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(assignAddonAsync.failure),
+          failActionType: getType(actions.assignAddonAsync.failure),
           initAction: action
         }))
       );
@@ -224,20 +216,20 @@ export const assignAddonEpic = (action$) =>
 
 export const unassignAddonEpic = (action$) => 
   action$.pipe(
-    ofType(getType(unassignAddonAsync.request)),
+    ofType(getType(actions.unassignAddonAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, addonId } = payload;
 
       return fromPromise(API.UnassignAddon(menuItemId, { addonId })).pipe(
         map((res) => ({
-          type: getType(unassignAddonAsync.success),
+          type: getType(actions.unassignAddonAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(unassignAddonAsync.failure),
+          failActionType: getType(actions.unassignAddonAsync.failure),
           initAction: action
         }))
       );
@@ -247,7 +239,7 @@ export const unassignAddonEpic = (action$) =>
 
 export const assignOptionEpic = (action$) => 
   action$.pipe(
-    ofType(getType(assignOptionAsync.request)),
+    ofType(getType(actions.assignOptionAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, optionId } = payload;
@@ -259,13 +251,13 @@ export const assignOptionEpic = (action$) =>
 
       return fromPromise(API.AssignOption(menuItemId, body)).pipe(
         map((res) => ({
-          type: getType(assignOptionAsync.success),
+          type: getType(actions.assignOptionAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(assignOptionAsync.failure),
+          failActionType: getType(actions.assignOptionAsync.failure),
           initAction: action
         }))
       );
@@ -274,25 +266,70 @@ export const assignOptionEpic = (action$) =>
 
 export const unassignOptionEpic = (action$) => 
   action$.pipe(
-    ofType(getType(unassignOptionAsync.request)),
+    ofType(getType(actions.unassignOptionAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const { menuItemId, optionId } = payload;
 
       return fromPromise(API.UnassignOption(menuItemId, { optionId })).pipe(
         map((res) => ({
-          type: getType(unassignOptionAsync.success),
+          type: getType(actions.unassignOptionAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(unassignOptionAsync.failure),
+          failActionType: getType(actions.unassignOptionAsync.failure),
           initAction: action
         }))
       );
     })
-  );  
+  );
+
+const reorderEpic = action$ =>
+  action$.pipe(
+    ofType(getType(actions.reorderItemsAsync.request)),
+    mergeMap(({ payload }) => {
+
+      const changed = [];
+      payload.forEach((o, i) => {
+        if (o.precedence !== i) changed.push({ ...o, newPrecedence: i });
+      });
+
+      return changed
+        .map(o => actions.updateMenuItemAsync.request({
+          menuItemId: o.id,
+          precedence: o.newPrecedence,
+        }))
+        .concat({
+          type: getType(actions.reorderItemsAsync.success),
+        });
+    }),
+  );
+
+const uploadItemImageEpic = (action$) =>
+  action$.pipe(
+    ofType(getType(actions.uploadItemImageAsync.request)),
+    mergeMap((action) => {
+
+      const payload = action.payload;
+
+      const { file, id } = payload;
+
+      return fromPromise(API.UploadMenuItemImage({ file, id })).pipe(
+        map((res) => ({
+          type: getType(actions.uploadItemImageAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(actions.uploadItemImageAsync.failure),
+          initAction: action
+        }))
+      );
+    })
+  );
 
 export default [
   fetchMenuItemEpic,
@@ -305,5 +342,7 @@ export default [
   assignAddonEpic,
   unassignAddonEpic,
   assignOptionEpic,
-  unassignOptionEpic
+  unassignOptionEpic,
+  reorderEpic,
+  uploadItemImageEpic
 ];

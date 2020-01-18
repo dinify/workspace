@@ -6,20 +6,7 @@ import uniq from 'ramda/es/uniq';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import { getType } from 'typesafe-actions';
 import { fetchMenuCategoriesAsync } from '../menuCategory/actions';
-import * as types from './types';
-import {
-  fetchMenuItemAsync,
-  createMenuItemAsync,
-  assignIngredientAsync,
-  unassignIngredientAsync,
-  assignAddonAsync,
-  unassignAddonAsync,
-  assignOptionAsync,
-  unassignOptionAsync,
-  setIngredientExcludabilityAsync,
-  updateMenuItemAsync,
-  removeMenuItemAsync,
-} from './actions';
+import * as actions from './actions';
 
 const initialState = {
   all: {},
@@ -37,7 +24,7 @@ export default function reducer(state = initialState, action) {
       return assoc('all', { ...state.all, ...items })(state);
     }
 
-    case getType(fetchMenuItemAsync.success): {
+    case getType(actions.fetchMenuItemAsync.success): {
       const { menuItems, menuIngredients } = payload.entities;
       return pipe(
         assoc('all', { ...state.all, ...menuItems }),
@@ -45,28 +32,28 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case getType(updateMenuItemAsync.success): {
+    case getType(actions.updateMenuItemAsync.success): {
       const { menuItemId } = meta;
       return assocPath(['all', menuItemId], { ...state.all[menuItemId], ...meta })(state);
     }    
 
-    case getType(createMenuItemAsync.success): {
+    case getType(actions.createMenuItemAsync.success): {
       const newItem = payload;
       return assocPath(['all', newItem.id], newItem)(state);
     }
 
-    case getType(removeMenuItemAsync.success): {
+    case getType(actions.removeMenuItemAsync.success): {
       const { menuItemId } = meta;
       return dissocPath(['all', menuItemId])(state);
     }
 
-    case getType(setIngredientExcludabilityAsync.success): {
+    case getType(actions.setIngredientExcludabilityAsync.success): {
       const { menuItemId, ingredientId, excludable } = payload;
       const compoundId = `${menuItemId}.${ingredientId}`;
       return assocPath(['menuIngredients', compoundId, 'excludable'], excludable)(state);
     }
 
-    case getType(assignIngredientAsync.request): {
+    case getType(actions.assignIngredientAsync.request): {
       const { menuItemId, ingredientId } = payload;
       const compoundId = `${menuItemId}.${ingredientId}`;
       return assocPath(
@@ -75,7 +62,7 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case getType(unassignIngredientAsync.request): {
+    case getType(actions.unassignIngredientAsync.request): {
       const { menuItemId, ingredientId } = payload;
       const compoundId = `${menuItemId}.${ingredientId}`;
       return assocPath(
@@ -84,7 +71,7 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case getType(assignAddonAsync.request): {
+    case getType(actions.assignAddonAsync.request): {
       const { menuItemId, addonId } = payload;
       const compoundId = `${menuItemId}.${addonId}`;
       return assocPath(
@@ -93,7 +80,7 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case getType(unassignAddonAsync.request): {
+    case getType(actions.unassignAddonAsync.request): {
       const { menuItemId, addonId } = payload;
       const compoundId = `${menuItemId}.${addonId}`;
       return assocPath(
@@ -102,7 +89,7 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case getType(assignOptionAsync.request): {
+    case getType(actions.assignOptionAsync.request): {
       const { menuItemId, optionId } = payload;
       const compoundId = `${menuItemId}.${optionId}`;
       return assocPath(
@@ -111,7 +98,7 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case getType(unassignOptionAsync.request): {
+    case getType(actions.unassignOptionAsync.request): {
       const { menuItemId, optionId } = payload;
       const compoundId = `${menuItemId}.${optionId}`;
       return assocPath(
@@ -120,7 +107,7 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case types.UPDATE_ITEMIMAGE_DONE: {
+    case getType(actions.uploadItemImageAsync.success): {
       const foodId = payload.initPayload.id;
       const image = payload.res;
       return assocPath(['all', foodId, 'images', image.id], image)(state);

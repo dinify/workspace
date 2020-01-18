@@ -152,34 +152,6 @@ const registerRestaurantEpic = (action$, state$, { firebase }) =>
     }),
   );
 
-const reorderEpic = action$ =>
-  action$.pipe(
-    filter(
-      action =>
-        action.type.startsWith('REORDER_') && action.type.endsWith('_INIT'),
-    ),
-    mergeMap(({ payload, type }) => {
-      const middle = type.split('_')[1]; // 'CATEGORY'
-
-      const changed = [];
-      payload.forEach((o, i) => {
-        if (o.precedence !== i) changed.push({ ...o, newPrecedence: i });
-      });
-
-      return changed
-        .map(o => ({
-          type: `UPDATE_${middle}_INIT`,
-          payload: {
-            id: o.id,
-            precedence: o.newPrecedence,
-          },
-        }))
-        .concat({
-          type: `REORDER_${middle}_DONE`,
-        });
-    }),
-  );
-
 const editImageEpic = (action$, state$) =>
   action$.pipe(
     ofType('UPDATE_IMAGE_DONE'),
@@ -320,7 +292,6 @@ export default [
   bootstrapEpic,
   getLoggedEpic,
   registerRestaurantEpic,
-  reorderEpic,
   editImageEpic,
   selectRestaurantEpic,
   onUpdateDoneSnackbarsEpic,
