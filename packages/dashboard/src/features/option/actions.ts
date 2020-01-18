@@ -1,7 +1,6 @@
 import {
   createAsyncAction
 } from 'typesafe-actions';
-import * as types from './types';
 
 const p = 'dinify/option';
 
@@ -17,10 +16,11 @@ export const createOptionAsync = createAsyncAction(
   `${p}/POST_OPTION_FAIL`
 )<any, any, any>();
 
-export const removeOptionInit = (payload: any) => ({
-  type: types.REMOVE_OPTION_INIT,
-  payload,
-});
+export const removeOptionAsync = createAsyncAction(
+  `${p}/DEL_OPTION_INIT`,
+  `${p}/DEL_OPTION_DONE`,
+  `${p}/DEL_OPTION_FAIL`
+)<any, any, any>();
 
 export const createChoiceAsync = createAsyncAction(
   `${p}/POST_CHOICE_INIT`,
@@ -28,12 +28,13 @@ export const createChoiceAsync = createAsyncAction(
   `${p}/POST_CHOICE_FAIL`
 )<any, any, any>();
 
-export const removeChoiceInit = (payload: any) => ({
-  type: types.REMOVE_CHOICE_INIT,
-  payload,
-});
+export const removeChoiceAsync = createAsyncAction(
+  `${p}/DEL_CHOICE_INIT`,
+  `${p}/DEL_CHOICE_DONE`,
+  `${p}/DEL_CHOICE_FAIL`
+)<any, any, any>();
 
 export const collapseOptionInit = (payload: any) => ({
-  type: types.COLLAPSE_OPTION_INIT,
+  type: 'COLLAPSE_OPTION',
   payload,
 });

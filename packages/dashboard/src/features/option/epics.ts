@@ -1,35 +1,28 @@
 import { from as fromPromise } from 'rxjs';
 import { mergeMap, catchError, map as rxMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
-import * as types from './types';
 import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
-import {
-  fetchOptionsAsync,
-  createOptionAsync,
-  createChoiceAsync,
-} from './actions';
+import * as actions from './actions';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { normalize } from 'normalizr';
 import { options } from '../menuItem/schemas';
-import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
-import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 const fetchOptionsEpic: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(getType(fetchOptionsAsync.request)),
+    ofType(getType(actions.fetchOptionsAsync.request)),
     mergeMap(action => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
       const lang = state$.value.restaurant.defaultLanguage;
       return fromPromise(API.GetRestaurantOptions({ restaurantId }, lang)).pipe(
         rxMap((res: any) => {
           const normalized = normalize(res, options);
-          return fetchOptionsAsync.success(normalized);
+          return actions.fetchOptionsAsync.success(normalized);
         }),
         catchError(error => {
           return handleEpicAPIError({
             error,
-            failActionType: getType(fetchOptionsAsync.failure),
+            failActionType: getType(actions.fetchOptionsAsync.failure),
             initAction: action,
           });
         }),
@@ -39,7 +32,7 @@ const fetchOptionsEpic: Epic = (action$, state$) =>
 
 const createOptionEpic: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(getType(createOptionAsync.request)),
+    ofType(getType(actions.createOptionAsync.request)),
     mergeMap(action => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
       const payload = action.payload;
@@ -50,12 +43,33 @@ const createOptionEpic: Epic = (action$, state$) =>
       };
       return fromPromise(API.CreateOption(body)).pipe(
         rxMap((res: any) => {
-          return createOptionAsync.success(res);
+          return actions.createOptionAsync.success(res);
         }),
         catchError(error =>
           handleEpicAPIError({
             error,
-            failActionType: getType(createOptionAsync.failure),
+            failActionType: getType(actions.createOptionAsync.failure),
+            initAction: action,
+          }),
+        ),
+      );
+    }),
+  );
+
+const removeOptionEpic: Epic = (action$, state$) =>
+  action$.pipe(
+    ofType(getType(actions.removeOptionAsync.request)),
+    mergeMap(action => {
+      const payload = action.payload;
+      const { id } = payload;
+      return fromPromise(API.RemoveOption({ id })).pipe(
+        rxMap((res: any) => {
+          return actions.removeOptionAsync.success(res);
+        }),
+        catchError(error =>
+          handleEpicAPIError({
+            error,
+            failActionType: getType(actions.removeOptionAsync.failure),
             initAction: action,
           }),
         ),
@@ -65,7 +79,7 @@ const createOptionEpic: Epic = (action$, state$) =>
 
 const createChoiceEpic: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(getType(createChoiceAsync.request)),
+    ofType(getType(actions.createChoiceAsync.request)),
     mergeMap(action => {
       const payload = action.payload;
 
@@ -80,7 +94,7 @@ const createChoiceEpic: Epic = (action$, state$) =>
       return fromPromise(API.CreateChoice(body)).pipe(
         rxMap((res: any) => {
           return {
-            type: getType(createChoiceAsync.success),
+            type: getType(actions.createChoiceAsync.success),
             payload: res,
             meta: body,
           };
@@ -88,7 +102,7 @@ const createChoiceEpic: Epic = (action$, state$) =>
         catchError(error =>
           handleEpicAPIError({
             error,
-            failActionType: getType(createChoiceAsync.failure),
+            failActionType: getType(actions.createChoiceAsync.failure),
             initAction: action,
           }),
         ),
@@ -96,19 +110,32 @@ const createChoiceEpic: Epic = (action$, state$) =>
     }),
   );
 
-const onCreateFailSnackbarsEpic: Epic = action$ =>
+const removeChoiceEpic: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(types.CREATE_OPTION_FAIL),
-    rxMap(() =>
-      snackbar.show({
-        message: t('createOptionFail'),
-      }),
-    ),
+    ofType(getType(actions.removeChoiceAsync.request)),
+    mergeMap(action => {
+      const payload = action.payload;
+      const { id } = payload;
+      return fromPromise(API.RemoveChoice({ id })).pipe(
+        rxMap((res: any) => {
+          return actions.removeChoiceAsync.success(res);
+        }),
+        catchError(error =>
+          handleEpicAPIError({
+            error,
+            failActionType: getType(actions.removeChoiceAsync.failure),
+            initAction: action,
+          }),
+        ),
+      );
+    }),
   );
+
 
 export default [
   fetchOptionsEpic,
   createOptionEpic,
+  removeOptionEpic,
   createChoiceEpic,
-  onCreateFailSnackbarsEpic,
+  removeChoiceEpic
 ];

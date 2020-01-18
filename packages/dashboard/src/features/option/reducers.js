@@ -5,11 +5,9 @@ import map from 'ramda/es/map';
 import lensProp from 'ramda/es/lensProp';
 import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
-import { ListToMap } from '@dinify/common/src/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
-import * as types from './types';
 import { getType } from 'typesafe-actions';
-import { fetchOptionsAsync, createOptionAsync, createChoiceAsync } from './actions';
+import * as actions from './actions';
 import { fetchMenuItemAsync } from '../menuItem/actions';
 
 const initialState = {
@@ -24,7 +22,7 @@ export default function reducer(state = initialState, action) {
 
   switch (type) {
 
-    case getType(fetchOptionsAsync.success): {
+    case getType(actions.fetchOptionsAsync.success): {
       const { options, choices } = payload.entities;
       return pipe(
         assoc('all', { ...state.all, ...options }),
@@ -33,12 +31,12 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case getType(createOptionAsync.success): {
+    case getType(actions.createOptionAsync.success): {
       const newOption = { ...payload, choices: [] };
       return assocPath(['all', newOption.id], newOption)(state);
     }
 
-    case getType(createChoiceAsync.success): {
+    case getType(actions.createChoiceAsync.success): {
       const price = action.meta.difference;
       const newChoice = { ...payload, price };
       const oldChoicesIds = state.all[newChoice.optionId].choices;
@@ -56,7 +54,7 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case types.COLLAPSE_OPTION_INIT: {
+    case 'COLLAPSE_OPTION': {
       const { id } = payload;
       return over(
         lensProp('all'),
@@ -64,12 +62,7 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case types.CREATE_OPTION_DONE: {
-      const newOption = payload.res;
-      return assocPath(['all', newOption.id], newOption)(state);
-    }
-
-    case types.REMOVE_OPTION_INIT: {
+    case getType(actions.removeOptionAsync.request): {
       const { id } = payload;
       const optionObj = state.all[id];
       return pipe(
@@ -78,18 +71,12 @@ export default function reducer(state = initialState, action) {
       )(state);
     }
 
-    case types.REMOVE_OPTION_FAIL: {
-      const { id } = payload.initPayload;
+    case getType(actions.removeOptionAsync.failure): {
+      const { id } = action.initPayload;
       return assocPath(['all', id], state.backup[id])(state);
     }
 
-    case types.CREATE_CHOICE_DONE: {
-      const { optionId } = payload.initPayload;
-      const newChoice = payload.res;
-      return assocPath(['all', optionId, 'choices', newChoice.id], newChoice)(state);
-    }
-
-    case types.REMOVE_CHOICE_INIT: {
+    case getType(actions.removeChoiceAsync.request): {
       const { id, optionId } = payload;
       const oldChoicesIds = state.all[optionId].choices;
       const newChoicesIds = oldChoicesIds.filter(ch => ch !== id);

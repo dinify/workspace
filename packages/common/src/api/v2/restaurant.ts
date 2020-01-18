@@ -317,9 +317,17 @@ export const CreateOption = (body: any): Promise<any> => Post({
   path: `options`
 }, body);
 
+export const RemoveOption = ({ id }: any): Promise<any> => Delete({
+  path: `options/${id}`
+});
+
 export const CreateChoice = (body: any): Promise<any> => Post({
   path: `choices`
 }, body);
+
+export const RemoveChoice = ({ id }: any): Promise<any> => Delete({
+  path: `choices/${id}`
+});
 
 type NotifyBody = {
   sendTo: string | string[];

@@ -28,9 +28,9 @@ import {
   fetchOptionsAsync,
   collapseOptionInit,
   createOptionAsync,
-  removeOptionInit,
+  removeOptionAsync,
   createChoiceAsync,
-  removeChoiceInit,
+  removeChoiceAsync,
 } from 'features/option/actions.ts';
 import { listOfOptions } from 'features/option/selectors';
 
@@ -243,7 +243,7 @@ export default connect(
     createOption: createOptionAsync.request,
     createChoice: createChoiceAsync.request,
     collapseOption: collapseOptionInit,
-    removeChoice: removeChoiceInit,
-    removeOption: removeOptionInit,
+    removeChoice: removeChoiceAsync.request,
+    removeOption: removeOptionAsync.request,
   },
 )(Options);
