@@ -12,7 +12,6 @@ import SignIn from '@dinify/common/src/components/SignIn';
 import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
 import Main from 'web/pages/Main';
-import { TakeOrder } from 'web/pages/TakeOrder';
 
 import Navigation from 'web/components/Navigation';
 import { ServicesButtonContainer } from 'web/components/services-button';
@@ -25,7 +24,7 @@ import { withRoot } from 'withRoot';
 import Dialogs from './dialogs.tsx';
 import Snackbars from './snackbars.tsx';
 import findLast from 'ramda/es/findLast';
-import { MenuItemScreen, AccountScreen } from './screens';
+import { MenuItemScreen, AccountScreen, OrderScreen } from './screens';
 import { useFirebase } from 'react-redux-firebase';
 
 const App = props => {
@@ -66,6 +65,7 @@ const App = props => {
   };
 
   const isAccountTab = match(routes.ACCOUNT) || match(routes.SIGNIN);
+  const isOrderScreen = match(routes.TAKEORDER);
 
   const onNavigate = (evt, val) => {
     if (val === 0 && !match(routes.HOMEPAGE)) {
@@ -112,7 +112,7 @@ const App = props => {
           <Route path={routes.MENUITEM} component={MenuItemScreen} />
 
           <Route path={routes.RECEIPT} component={Receipt} />
-          <Route path={routes.TAKEORDER} component={TakeOrder} />
+          <Route path={routes.TAKEORDER} component={OrderScreen} />
         </Switch>
       </div>
 
@@ -134,7 +134,7 @@ const App = props => {
         : ''
       }
 
-      {!isAccountTab && (
+      {!isAccountTab && !isOrderScreen && (
         <BottomBar style={{ bottom: 56 }} onSelect={type => openDialog(type)} />
       )}
 

@@ -39,8 +39,11 @@ export const getOrderItemCount = createSelector(
   }
 );
 
+export type CustomizationType = 'addon'|'exclude'|'choice';
+
 export interface CustomizationView {
   name: string,
+  type: CustomizationType,
   price?: Price,
   crossover?: boolean
   amount?: number
@@ -61,15 +64,18 @@ export const useCartItemView = (orderItemId: string): CartItemView => {
   const customizations: CustomizationView[] = [];
   selectedChoices.forEach(c => customizations.push({
     name: c.name,
+    type: 'choice',
     price: c.price
   }));
   selectedAddons.forEach(a => customizations.push({
     name: a.name,
+    type: 'addon',
     price: a.price,
     amount: a.amount
   }));
   excluded.forEach(i => customizations.push({
     name: i.name,
+    type: 'exclude',
     crossover: true
   }));
 
@@ -81,7 +87,7 @@ export const useCartItemView = (orderItemId: string): CartItemView => {
 };
 
 
-export const useCartRestaurant = () => useSelector<RootState, string>(state => {
+export const useCartRestaurant = () => useSelector<RootState, string|undefined>(state => {
   const items = state.cart.items;
   const sampleItem = MapToList(items)[0];
   if (!sampleItem) return '';
@@ -89,5 +95,5 @@ export const useCartRestaurant = () => useSelector<RootState, string>(state => {
   const menuItem = state.menuItem.all[menuItemId];
   const { menuCategoryId } = menuItem;
   const category = (state.menuCategory.all as any)[menuCategoryId];
-  return category.restaurantId;
+  return category ? category.restaurantId : undefined;
 });

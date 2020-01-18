@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import Fab from '@material-ui/core/Fab';
 import QRCode from 'qrcode.react';
 import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
-import CartItem from './cart-item';
 import { RootState } from 'typesafe-actions';
 
 import { Subtotal } from 'CartModels';
@@ -17,6 +16,7 @@ import Add from '@material-ui/icons/AddRounded';
 import { Typography, Button, Divider } from '@material-ui/core';
 import { useAction } from '@dinify/common/src/lib/util';
 import Price from '@dinify/common/src/components/price';
+import { OrderItem } from '../../components/order-item';
 
 export const CartScreen: React.FC<{
   onClose?: () => void;
@@ -41,6 +41,9 @@ export const CartScreen: React.FC<{
 
   const cartItemCount = orderItemIds.length;
   const canOrder = cartItemCount > 0 && checkedInRestaurant !== null;
+
+  const domain = process.env.REACT_APP_DOMAIN || 'web.dinify.app';
+  const orderUrl = `https://${domain}/order/${user.uid}/${restaurantIdOfCart}`;
   return (
     <div {...otherProps}>
       <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
@@ -58,15 +61,15 @@ export const CartScreen: React.FC<{
       </AppBar>
       <div style={{ padding: '0 16px', marginTop: 56 }}>
         {orderItemIds.map(itemId => (
-          <CartItem
+          <OrderItem
             style={{ padding: '8px 0' }}
             key={itemId}
             editMode={editMode}
-            orderItemId={itemId}
+            id={itemId}
           />
         ))}
         <div style={{ marginTop: 8, display: 'flex', alignItems: 'center' }}>
-          <Typography style={{ flex: 1 }} variant="button">
+          <Typography style={{ flex: 1 }} variant="subtitle1">
             {t('total')}
           </Typography>
           <Typography variant="subtitle1">
@@ -103,7 +106,7 @@ export const CartScreen: React.FC<{
           <Typography style={{ margin: '32px 0 8px 0' }} variant="caption" color="textSecondary">
             To make an order show this code to the waiter
           </Typography>
-          <QRCode value={`https://web.dinify.app/takeorder/${user.uid}/${restaurantIdOfCart}`} />
+          <QRCode value={orderUrl} />
         </div>
         }
         
