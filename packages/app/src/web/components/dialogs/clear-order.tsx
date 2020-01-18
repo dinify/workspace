@@ -21,8 +21,7 @@ export const ClearOrderDialog = ({
         <DialogContent>
           <DialogContentText id="clear-order-dialog-description">
             <Typography component="span" variant="subtitle1">
-              To add items from other restaurants, you need to start a new order.
-              Would you like to clear your order, and start a new one?
+              Would you like to clear your current order?
             </Typography>
           </DialogContentText>
           <FormGroup row>
@@ -46,7 +45,7 @@ export const ClearOrderDialog = ({
             Dismiss
           </Button>
           <Button onClick={() => onConfirm(true)} color="primary" autoFocus>
-            New order
+            Clear order
           </Button>
         </DialogActions>
       </Dialog>

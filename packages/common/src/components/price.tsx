@@ -12,6 +12,7 @@ interface PriceProps {
   display?: CurrencyType;
   price: PriceType;
   original?: boolean;
+  style?: any;
 }
 
 /**
@@ -25,6 +26,7 @@ const Price: React.FC<PriceProps> = ({
   price,
   display,
   original = false,
+  style,
   ...props
 }) => {
   if (!price) return null;
@@ -40,7 +42,10 @@ const Price: React.FC<PriceProps> = ({
   const converted = useConverter(price, currency);
   const fractions = cldr.Numbers.getCurrencyFractions(currency);
   return (
-    <span style={{ textTransform: "none" }}>
+    <span style={{ 
+      textTransform: "none",
+      fontFeatureSettings: '"tnum"'
+    }}>
       {cldr.Numbers.formatCurrency(converted.amount, converted.currency, {
         style: "symbol",
         maximumFractionDigits: fractions.cashDigits

@@ -21,7 +21,7 @@ import { fetchStatusAsync } from 'features/restaurant/actions.ts';
 import { fetchBillAsync } from 'features/transaction/actions.ts';
 import { fetchCartAsync } from 'features/cart/actions.ts';
 
-import withRoot from 'withRoot.js';
+import { withRoot } from 'withRoot';
 import Dialogs from './dialogs.tsx';
 import Snackbars from './snackbars.tsx';
 import findLast from 'ramda/es/findLast';

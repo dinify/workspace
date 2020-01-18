@@ -11,13 +11,12 @@ import { Subtotal } from 'CartModels';
 import { Restaurant } from 'RestaurantModels';
 
 import { orderAsync } from '../../../features/cart/actions';
-import { getOrderItemIds } from '../../../features/cart/selectors';
+import { getOrderItemIds, useCartRestaurant } from '../../../features/cart/selectors';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import Add from '@material-ui/icons/AddRounded';
-import { Typography } from '@material-ui/core';
+import { Typography, Button, Divider } from '@material-ui/core';
 import { useAction } from '@dinify/common/src/lib/util';
 import Price from '@dinify/common/src/components/price';
-import { MapToList } from '@dinify/common/src/lib/FN';
 
 export const CartScreen: React.FC<{
   onClose?: () => void;
@@ -36,16 +35,7 @@ export const CartScreen: React.FC<{
     checkedInRestaurant ? state.restaurant.all[checkedInRestaurant] : null
   );
 
-  const restaurantIdOfCart = useSelector<RootState, string>(state => {
-    const items = state.cart.items;
-    const sampleItem = MapToList(items)[0];
-    if (!sampleItem) return '';
-    const { menuItemId } = sampleItem;
-    const menuItem = state.menuItem.all[menuItemId];
-    const { menuCategoryId } = menuItem;
-    const category = (state.menuCategory.all as any)[menuCategoryId];
-    return category.restaurantId;
-  });
+  const restaurantIdOfCart = useCartRestaurant();
 
   const order = useAction(orderAsync.request);
 
@@ -83,11 +73,20 @@ export const CartScreen: React.FC<{
             <Price original price={subtotal} />
           </Typography>
         </div>
+        <div
+        style={{  margin: '16px 0', minWidth: '100%', display: 'flex', alignItems: 'top', justifyContent: "flex-end" }} >
+          <Button variant="outlined" color="primary">
+            Add <Add />
+          </Button>
+        </div>
+      </div>
+      <Divider />
+      <div style={{ padding: '0 16px', marginTop: 56 }}>
         {restaurant && restaurant.settings.orders ?
         <>
           <Fab
             disabled={!canOrder}
-            style={{ marginTop: 16, width: '100%', boxShadow: 'none' }}
+            style={{ marginTop: 16, width: '100%' }}
             variant="extended"
             color="primary"
             onClick={() => order({})}
@@ -105,18 +104,6 @@ export const CartScreen: React.FC<{
             To make an order show this code to the waiter
           </Typography>
           <QRCode value={`https://web.dinify.app/takeorder/${user.uid}/${restaurantIdOfCart}`} />
-          
-          <Fab
-            style={{ marginTop: 32, width: '100%', boxShadow: 'none' }}
-            variant="extended"
-            color="primary"
-            onClick={() => {
-              // TODO: navigate to restaurant menu
-            }}
-          >
-            <Add style={{ marginRight: 16 }} />
-            Add to order
-          </Fab>
         </div>
         }
         
