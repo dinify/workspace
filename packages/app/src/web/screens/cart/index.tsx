@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from '@dinify/common/src/lib/i18n';
+import { useTranslation, useIntl } from '@dinify/common/src/lib/i18n';
 import { useSelector } from 'react-redux';
 import Fab from '@material-ui/core/Fab';
 import QRCode from 'qrcode.react';
@@ -12,11 +12,17 @@ import { Restaurant } from 'RestaurantModels';
 import { orderAsync } from '../../../features/cart/actions';
 import { getOrderItemIds, useCartRestaurant } from '../../../features/cart/selectors';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
+import MoreVert from '@material-ui/icons/MoreVert';
+
 import Add from '@material-ui/icons/AddRounded';
-import { Typography, Button, Divider } from '@material-ui/core';
+import { Typography, Button, Divider, IconButton } from '@material-ui/core';
 import { useAction } from '@dinify/common/src/lib/util';
 import Price from '@dinify/common/src/components/price';
 import { OrderItem } from '../../components/order-item';
+import Switch from '@material-ui/core/Switch';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { Profile } from '../../../store/root-reducer';
 
 export const CartScreen: React.FC<{
   onClose?: () => void;
@@ -24,8 +30,25 @@ export const CartScreen: React.FC<{
   onClose = () => { },
   ...otherProps
 }) => {
-  const [editMode, setEditMode] = useState(false);
   const { t } = useTranslation();
+  const { setLocale } = useIntl();
+  const profile = useSelector((state: RootState) => state.firebase.profile);
+  const isLanguageSet = profile ? !!profile.language : false;
+  const language = profile.language as Profile['language'];
+  
+  const [editMode, setEditMode] = useState(false);
+  const [anchor, setAnchor] = useState();
+  const toggleDefaultLanguage = () => {
+    if (isLanguageSet && !useDefaultLanguage) {
+      setLocale(language.primary);
+    }
+    else {
+      setLocale('es');
+    }
+    setUseDefaultLanguage(!useDefaultLanguage);
+  };
+  const [useDefaultLanguage, setUseDefaultLanguage] = useState(true);
+  const menuOpen = Boolean(anchor);
 
   const checkedInRestaurant = useSelector<RootState, any>(state => state.restaurant.checkedInRestaurant);
   const orderItemIds = useSelector<RootState, string[]>(state => getOrderItemIds(state.cart));
@@ -58,6 +81,32 @@ export const CartScreen: React.FC<{
             setEditMode(!editMode);
           }}
         />
+        <IconButton
+          aria-label="More"
+          aria-owns={open ? 'long-menu' : undefined}
+          aria-haspopup="true"
+          onClick={(evt) => setAnchor(evt.currentTarget)}
+        >
+          <MoreVert />
+        </IconButton>
+        <Menu
+          id="long-menu"
+          anchorEl={anchor}
+          open={menuOpen}
+          onClose={() => setAnchor(null)}
+        >
+          <MenuItem onClick={toggleDefaultLanguage}>
+            <Switch color="primary" checked={useDefaultLanguage} onChange={toggleDefaultLanguage} />
+            <div>
+              <Typography variant="caption" color="textSecondary">
+                {t('language.default')}
+              </Typography>
+              <Typography variant="caption">
+                {!useDefaultLanguage ? 'Español' : 'English'}
+              </Typography>
+            </div>
+          </MenuItem>
+        </Menu>        
       </AppBar>
       <div style={{ padding: '0 16px', marginTop: 56 }}>
         {orderItemIds.map(itemId => (
