@@ -13,6 +13,7 @@ import { Restaurant } from 'RestaurantModels';
 import { orderAsync } from '../../../features/cart/actions';
 import { getOrderItemIds } from '../../../features/cart/selectors';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
+import Add from '@material-ui/icons/AddRounded';
 import { Typography } from '@material-ui/core';
 import { useAction } from '@dinify/common/src/lib/util';
 import Price from '@dinify/common/src/components/price';
@@ -86,7 +87,7 @@ export const CartScreen: React.FC<{
         <>
           <Fab
             disabled={!canOrder}
-            style={{ marginTop: 16, width: '100%' }}
+            style={{ marginTop: 16, width: '100%', boxShadow: 'none' }}
             variant="extended"
             color="primary"
             onClick={() => order({})}
@@ -99,11 +100,23 @@ export const CartScreen: React.FC<{
           </Typography>}
         </>
         :
-        <div style={{margin: 8, textAlign: 'center'}}>
-          <Typography style={{ margin: '8px 0' }} variant="caption" color="textSecondary">
+        <div style={{textAlign: 'center'}}>
+          <Typography style={{ margin: '32px 0 8px 0' }} variant="caption" color="textSecondary">
             To make an order show this code to the waiter
           </Typography>
           <QRCode value={`https://web.dinify.app/takeorder/${user.uid}/${restaurantIdOfCart}`} />
+          
+          <Fab
+            style={{ marginTop: 32, width: '100%', boxShadow: 'none' }}
+            variant="extended"
+            color="primary"
+            onClick={() => {
+              // TODO: navigate to restaurant menu
+            }}
+          >
+            <Add style={{ marginRight: 16 }} />
+            Add to order
+          </Fab>
         </div>
         }
         
