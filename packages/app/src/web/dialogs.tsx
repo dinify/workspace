@@ -9,10 +9,9 @@ import { useAction } from '@dinify/common/src/lib/util';
 import { ClearOrderDialog } from './components/dialogs/clear-order';
 import { useCartRestaurant } from '../features/cart/selectors';
 import { Restaurant } from 'RestaurantModels';
-import { useLocation } from 'react-router';
+import { clearCartAsync } from '../features/cart/actions';
 
 export default () => {
-  const location = useLocation();
   const closeDialog = useAction(closeDialogAction);
   const openDialog = useAction(openDialogAction);
   const dialogs = useSelector((state: RootState) => state.ui.dialogs);
@@ -21,6 +20,7 @@ export default () => {
   const restaurant = useSelector<RootState, Restaurant>(state =>
     restaurantId ? state.restaurant.all[restaurantId] : null
   );
+  const clearCartAction = useAction(clearCartAsync.request);
   
   const getHandler = (id: DialogType) => () => {
     if (id === 'cart') {
@@ -35,9 +35,9 @@ export default () => {
   };
   const clearOrderHandler = (confirmed: boolean) => {
     if (confirmed) {
-      // set buttons to disabled
-      // TODO: dispatch clear cart action
-      // callback: closeDialog('clear-order');
+      // dispatch clear cart action
+      closeDialog('clear-order');
+      clearCartAction();
     }
     else {
       closeDialog('clear-order');

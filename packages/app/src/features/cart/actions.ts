@@ -43,6 +43,13 @@ export const rmFromCartAsync = createAsyncAction(
   `${p}/RM_FROM_CART_FAIL`,
 )<RmFromCartRequest, CartResponse, string>();
 
+export const clearCartAsync = createAsyncAction(
+  `${p}/CLEAR_CART_INIT`,
+  `${p}/CLEAR_CART_DONE`,
+  `${p}/CLEAR_CART_FAIL`,
+  `${p}/CLEAR_CART_CANCEL`,
+)<void, any, string>();
+
 export const orderAsync = createAsyncAction(
   `${p}/ORDER_INIT`, // items
   `${p}/ORDER_DONE`, // res

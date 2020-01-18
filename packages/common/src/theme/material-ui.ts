@@ -96,9 +96,9 @@ export const getTheme = ({ type = 'light' }) => {
         }
       },
       overrides: {
-        MuiButton: {
-          raised: {
-            boxShadow: 'none'
+        MuiButtonBase: {
+          root: {
+            boxShadow: 'none !important'
           }
         },
         MuiSnackbarContent: {
