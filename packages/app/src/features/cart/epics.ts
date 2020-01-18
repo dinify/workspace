@@ -18,7 +18,8 @@ import {
   orderAsync,
   rmFromCartAsync,
   fetchUserCartAsync,
-  makeCartDoneAsync
+  makeCartDoneAsync,
+  clearCartAsync
 } from './actions';
 import * as transactionActions from '../transaction/actions';
 import * as uiActions from '../ui/actions';
@@ -111,6 +112,32 @@ const makeCartDoneEpic: Epic = (action$) =>
             initAction: action,
           });
         }),
+      );
+    }),
+  );
+
+const clearCartEpic: Epic = (action$) =>
+  action$.pipe(
+    ofType(getType(clearCartAsync.request)),
+    switchMap(action => {
+      return from(API.ClearCart()).pipe(
+        mergeMap((res: any) =>
+          of(
+            clearCartAsync.success(res),
+            fetchCartAsync.request(),
+            uiActions.showSnackbarAction({
+              message: t => t('successMessages.removed-from-cart'),
+            }),
+          ),
+        ),
+        catchError(error => {
+          return handleEpicAPIError({
+            error,
+            failActionType: getType(clearCartAsync.failure),
+            initAction: action,
+          });
+        }),
+        takeUntil(action$.pipe(filter(isActionOf(clearCartAsync.cancel)))),
       );
     }),
   );
@@ -281,6 +308,7 @@ export default [
   addToCartEpic,
   addToCartErrorEpic,
   rmFromCartEpic,
+  clearCartEpic,
   orderEpic,
   onDemandAnonymousAuthEpic
   // updateAfterEditEpic

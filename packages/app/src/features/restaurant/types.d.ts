@@ -5,6 +5,7 @@ declare module 'RestaurantModels' {
     title: string;
     favorite: boolean;
     settings: any;
+    subdomain: string;
   };
 
   export type RestaurantResponse = Restaurant;

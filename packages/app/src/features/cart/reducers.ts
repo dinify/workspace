@@ -10,7 +10,8 @@ import { actionTypes as fActionTypes } from 'react-redux-firebase';
 
 const resetActions = [
   actions.fetchCartAsync.failure,
-  createAction(fActionTypes.LOGOUT)<any>()
+  createAction(fActionTypes.LOGOUT)<any>(),
+  actions.clearCartAsync.success
 ];
 
 const identity = (o: any) => !!o && o !== 'pivotUndefined';

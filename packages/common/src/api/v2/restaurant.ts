@@ -86,6 +86,10 @@ export const RemoveFromCart = ({ orderItemId }: RemoveFromCartProps) => Delete({
   path: `cart/item/${orderItemId}`
 });
 
+export const ClearCart = () => Delete({
+  path: `cart`
+});
+
 export const Order = () => Post({
   path: 'order/dinein'
 });

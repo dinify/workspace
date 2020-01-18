@@ -18,11 +18,12 @@ primary_700    #CE3F40
 primary_800    #C13939
 primary_900    #B1312F
 */
+export const lightTheme = getTheme({ type: 'light' });
+export const darkTheme = getTheme({ type: 'dark' });
 
-function withRoot(Component) {
-  const lightTheme = getTheme({ type: 'light' });
-  const darkTheme = getTheme({ type: 'dark' });
-  function WithRoot(props) {
+export function withRoot(Component: any) {
+  
+  function WithRoot(props: any) {
     // MuiThemeProvider makes the theme available down the React tree
     // thanks to React context.
     // eslint-disable-next-line react/destructuring-assignment
@@ -35,10 +36,8 @@ function withRoot(Component) {
       </MuiThemeProvider>
     );
   }
-  return connect(state => ({
+  return connect((state: any) => ({
     theme: state.ui.theme,
   }), {}
   )(WithRoot);
 }
-
-export default withRoot;

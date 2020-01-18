@@ -7,24 +7,37 @@ import { BillPage } from './screens/bill';
 import { RootState } from 'typesafe-actions';
 import { useAction } from '@dinify/common/src/lib/util';
 import { ClearOrderDialog } from './components/dialogs/clear-order';
+import { useCartRestaurant } from '../features/cart/selectors';
+import { Restaurant } from 'RestaurantModels';
+import { clearCartAsync } from '../features/cart/actions';
 
 export default () => {
   const closeDialog = useAction(closeDialogAction);
   const openDialog = useAction(openDialogAction);
   const dialogs = useSelector((state: RootState) => state.ui.dialogs);
+
+  const restaurantId = useCartRestaurant();
+  const restaurant = useSelector<RootState, Restaurant>(state =>
+    restaurantId ? state.restaurant.all[restaurantId] : null
+  );
+  const clearCartAction = useAction(clearCartAsync.request);
+  
   const getHandler = (id: DialogType) => () => {
     if (id === 'cart') {
-      // console.log('handler');
-      // closeDialog(id);
-      openDialog('clear-order');
+      closeDialog(id);
+      let presentDialog = true;
+      if (restaurant) {
+        presentDialog = !location.pathname.includes(restaurant.subdomain);
+      }
+      if (presentDialog) openDialog('clear-order');
     }
     else closeDialog(id);
   };
   const clearOrderHandler = (confirmed: boolean) => {
     if (confirmed) {
-      closeDialog('cart');
+      // dispatch clear cart action
       closeDialog('clear-order');
-      // TODO: dispatch clear cart action
+      clearCartAction();
     }
     else {
       closeDialog('clear-order');

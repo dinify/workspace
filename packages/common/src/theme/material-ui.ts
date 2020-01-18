@@ -96,6 +96,11 @@ export const getTheme = ({ type = 'light' }) => {
         }
       },
       overrides: {
+        MuiButtonBase: {
+          root: {
+            boxShadow: 'none !important'
+          }
+        },
         MuiSnackbarContent: {
           root: {
             margin: 8,

@@ -79,3 +79,15 @@ export const useCartItemView = (orderItemId: string): CartItemView => {
     customizations,
   };
 };
+
+
+export const useCartRestaurant = () => useSelector<RootState, string>(state => {
+  const items = state.cart.items;
+  const sampleItem = MapToList(items)[0];
+  if (!sampleItem) return '';
+  const { menuItemId } = sampleItem;
+  const menuItem = state.menuItem.all[menuItemId];
+  const { menuCategoryId } = menuItem;
+  const category = (state.menuCategory.all as any)[menuCategoryId];
+  return category.restaurantId;
+});
