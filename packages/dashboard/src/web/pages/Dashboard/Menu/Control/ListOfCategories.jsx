@@ -24,15 +24,15 @@ import CardContent from '@material-ui/core/CardContent';
 import Translation from 'web/components/Translation';
 
 import {
-  updateMenucategoryInitAction,
-  deleteMenucategoryInitAction,
   selectCategoryAction,
   reorderCategoriesAction
 } from 'features/restaurant/actions';
 
 import {
   fetchMenuCategoriesAsync,
-  createMenuCategoryAsync
+  createMenuCategoryAsync,
+  updateMenuCategoryAsync,
+  removeMenuCategoryAsync,
 } from 'features/menuCategory/actions.ts';
 import { relevantCategoriesList } from 'features/menuCategory/selectors';
 
@@ -252,8 +252,8 @@ export default connect(
   {
     fetchCategories: fetchMenuCategoriesAsync.request,
     createCategory: createMenuCategoryAsync.request,
-    updateCategory: updateMenucategoryInitAction,
-    deleteCategory: deleteMenucategoryInitAction,
+    updateCategory: updateMenuCategoryAsync.request,
+    deleteCategory: removeMenuCategoryAsync.request,
     reorderCategories: reorderCategoriesAction,
     selectCategory: selectCategoryAction,
   },

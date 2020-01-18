@@ -4,7 +4,7 @@ import assocPath from 'ramda/es/assocPath';
 import dissocPath from 'ramda/es/dissocPath';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import { getType } from 'typesafe-actions';
-import { fetchMenuCategoriesAsync, createMenuCategoryAsync } from './actions';
+import * as actions from './actions';
 
 const initialState: any = {
   all: {},
@@ -16,23 +16,23 @@ export default function reducer(state = initialState, action: any) {
 
   switch (type) {
 
-    case getType(fetchMenuCategoriesAsync.success): {
+    case getType(actions.fetchMenuCategoriesAsync.success): {
       const categories = payload.entities.menuCategories;
       return assoc('all', {...state.all, ...categories})(state);
     }
 
-    case getType(createMenuCategoryAsync.success): {
+    case getType(actions.createMenuCategoryAsync.success): {
       const newCategory = payload;
       return assocPath(['all', newCategory.id], newCategory)(state);
     }
 
-    case 'UPDATE_MENUCATEGORY_INIT': {
+    case getType(actions.updateMenuCategoryAsync.request): {
       const { id } = payload;
       const original = state.all[id];
       return assocPath(['all', id], { ...original, ...payload })(state);
     }
 
-    case 'REMOVE_MENUCATEGORY_INIT': {
+    case getType(actions.removeMenuCategoryAsync.request): {
       const { id } = payload;
       return pipe(
         assocPath(['backup', id], state.all[id]),
@@ -40,8 +40,8 @@ export default function reducer(state = initialState, action: any) {
       )(state);
     }
 
-    case 'REMOVE_MENUCATEGORY_FAIL': {
-      const id = payload.initPayload.id;
+    case getType(actions.removeMenuCategoryAsync.failure): {
+      const id = action.initPayload.id;
       return assocPath(['all', id], state.backup[id])(state);
     }
 

@@ -207,6 +207,18 @@ export const CreateMenuCategory = (body: any): Promise<any> => Post({
   path: `menuCategories`
 }, body);
 
+export const UpdateMenuCategory = (category: any): Promise<any> => {
+  const { id } = category;
+  delete category.id;
+  return Patch({
+    path: `menuCategories/${id}`
+  }, category);
+}
+
+export const RemoveMenuCategory = ({ id }: any): Promise<any> => Delete({
+  path: `menuCategories/${id}`
+});
+
 export const GetMenuItem = ({ menuItemId }: any, lang?: string): Promise<any> => Get({
   path: `menu/item/${menuItemId}`,
   lang

@@ -67,7 +67,7 @@ const removeAddonEpic: Epic = (action$, state$) =>
     mergeMap(action => {
       const payload = action.payload;
 
-      return fromPromise(API.RemoveIngredient({ id: payload.id })).pipe(
+      return fromPromise(API.RemoveAddon({ id: payload.id })).pipe(
         rxMap((res: any) => {
           return removeAddonAsync.success(res);
         }),

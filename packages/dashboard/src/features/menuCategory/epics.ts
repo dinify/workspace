@@ -7,7 +7,12 @@ import { menuCategories } from './schemas';
 import { mergeMap, map, catchError, filter, map as rxMap} from 'rxjs/operators';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import pick from 'ramda/es/pick';
-import { fetchMenuCategoriesAsync, createMenuCategoryAsync } from './actions';
+import {
+  fetchMenuCategoriesAsync,
+  createMenuCategoryAsync,
+  updateMenuCategoryAsync,
+  removeMenuCategoryAsync
+} from './actions';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 
 
@@ -62,7 +67,53 @@ const createMenuCategoryEpic: Epic = (action$, state$) =>
     })
   );
 
+const updateMenuCategoryEpic: Epic = (action$) =>
+  action$.pipe(
+    ofType(getType(updateMenuCategoryAsync.request)),
+    mergeMap((action) => {
+
+      const payload = action.payload;
+
+      return fromPromise(API.UpdateMenuCategory(payload)).pipe(
+        map((res) => ({
+          type: getType(updateMenuCategoryAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(updateMenuCategoryAsync.failure),
+          initAction: action
+        }))
+      );
+    })
+  );
+
+const deleteMenuCategoryEpic: Epic = (action$, $) =>
+  action$.pipe(
+    ofType(getType(removeMenuCategoryAsync.request)),
+    mergeMap((action) => {
+      const { payload } = action;
+      const id = payload;
+
+      return fromPromise(API.RemoveMenuCategory(id)).pipe(
+        map((res) => ({
+          type: getType(removeMenuCategoryAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(removeMenuCategoryAsync.failure),
+          initAction: action
+        }))
+      );
+    })
+  );
+
 export default [
   fetchMenuCategoriesEpic,
-  createMenuCategoryEpic
+  createMenuCategoryEpic,
+  updateMenuCategoryEpic,
+  deleteMenuCategoryEpic
 ];

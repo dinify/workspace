@@ -86,22 +86,10 @@ export const rmCategoryInitAction = payload => ({
   payload,
 });
 
-export const updateMenucategoryInitAction = payload => ({
-  type: 'UPDATE_MENUCATEGORY_INIT',
-  payload,
-});
-export const deleteMenucategoryInitAction = payload => ({
-  type: 'REMOVE_MENUCATEGORY_INIT',
-  payload,
-});
 export const reorderCategoriesAction = payload => ({
   type: 'REORDER_MENUCATEGORY_INIT',
   payload,
 });
-
-
-export const rmFoodInitAction = payload => ({ type: 'RM_FOOD_INIT', payload });
-
 
 export const uploadMainImageInitAction = payload => ({
   type: 'UPDATE_IMAGE_INIT',

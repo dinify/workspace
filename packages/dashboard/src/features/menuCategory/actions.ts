@@ -22,7 +22,7 @@ export const updateMenuCategoryAsync = createAsyncAction(
   `${p}/UPD_CATEGORIES_FAIL`
 )<undefined, any, string>();
 
-export const deleteMenuCategoryAsync = createAsyncAction(
+export const removeMenuCategoryAsync = createAsyncAction(
   `${p}/DEL_CATEGORIES_INIT`,
   `${p}/DEL_CATEGORIES_DONE`,
   `${p}/DEL_CATEGORIES_FAIL`
