@@ -6,6 +6,13 @@ declare module 'RestaurantModels' {
     favorite: boolean;
     settings: any;
     subdomain: string;
+    menuLanguages: MenuLanguage[];
+  };
+  
+  export type MenuLanguage = {
+    published: boolean;
+    default: boolean;
+    language: string;
   };
 
   export type RestaurantResponse = Restaurant;

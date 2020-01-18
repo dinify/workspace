@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { useTranslation, useIntl } from '@dinify/common/src/lib/i18n';
+import {
+  useIntl,
+  useTranslation,
+  localizedLanguages,
+} from '@dinify/common/src/lib/i18n';
 import { useSelector } from 'react-redux';
 import Fab from '@material-ui/core/Fab';
 import QRCode from 'qrcode.react';
@@ -31,7 +35,7 @@ export const CartScreen: React.FC<{
   ...otherProps
 }) => {
   const { t } = useTranslation();
-  const { setLocale } = useIntl();
+  const { state, setLocale } = useIntl();
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const isLanguageSet = profile ? !!profile.language : false;
   const language = profile.language as Profile['language'];
@@ -43,7 +47,13 @@ export const CartScreen: React.FC<{
       setLocale(language.primary);
     }
     else {
-      setLocale('es');
+      if (restaurant && restaurant.menuLanguages) {
+        const menuLanguage = restaurant.menuLanguages.find(m => m.default);
+        if (menuLanguage) setLocale(menuLanguage.language);
+      }
+      else {
+        // TODO: fetch restaurant if not available in state
+      }
     }
     setUseDefaultLanguage(!useDefaultLanguage);
   };
@@ -54,11 +64,13 @@ export const CartScreen: React.FC<{
   const orderItemIds = useSelector<RootState, string[]>(state => getOrderItemIds(state.cart));
   const subtotal = useSelector<RootState, Subtotal>(state => state.cart.subtotal);
   const user = useSelector<RootState, any>(state => state.firebase.auth);
-  const restaurant = useSelector<RootState, Restaurant>(state =>
-    checkedInRestaurant ? state.restaurant.all[checkedInRestaurant] : null
-  );
-
   const restaurantIdOfCart = useCartRestaurant();
+  const restaurant = useSelector<RootState, Restaurant>(state =>
+    state.restaurant.all[checkedInRestaurant] || null
+  );
+  const getLocalName = (language: string) => {
+    return (localizedLanguages as any)[language];
+  };
 
   const order = useAction(orderAsync.request);
 
@@ -102,7 +114,7 @@ export const CartScreen: React.FC<{
                 {t('language.default')}
               </Typography>
               <Typography variant="caption">
-                {!useDefaultLanguage ? 'Español' : 'English'}
+                {getLocalName(state.locale.tag.language())}
               </Typography>
             </div>
           </MenuItem>
