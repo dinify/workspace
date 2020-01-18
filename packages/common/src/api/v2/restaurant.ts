@@ -237,10 +237,8 @@ export const RemoveMenuItem = (menuItemId: string): Promise<any> => Delete({
 });
 
 export const UploadMenuItemImage = ({ file, id }: any): Promise<any> => Post({
-  path: 'images'
+  path: `menuItems/${id}/images`
 }, {
-  itemType: 'MenuItem',
-  itemId: id,
   image: file
 });
 
