@@ -1,8 +1,10 @@
 import React from 'react';
+import { animated, useSpring } from 'react-spring';
 import { withTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteRounded';
+import CheckCircle from '@material-ui/icons/CheckCircleRounded';
 import Price from '@dinify/common/src/components/price';
 import { rmFromCartAsync } from '../../../features/cart/actions';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
@@ -13,7 +15,9 @@ import toPairs from 'ramda/es/toPairs';
 export interface OrderItemProps {
   id: string,
   editMode?: boolean,
-  expanded?: boolean
+  expanded?: boolean,
+  selected?: boolean,
+  onClick?: () => any,
 }
 
 const OrderItem: React.FC<OrderItemProps & {
@@ -25,11 +29,23 @@ const OrderItem: React.FC<OrderItemProps & {
   style,
   editMode = false,
   expanded = false,
+  selected = false,
+  onClick = () => {}
 }) => {
     const { t } = useTranslation();
+    const animatedBackgroundStyle = useSpring({ opacity: selected ? 0.12 : 0, config: { tension: 400, clamp: true } });
+    const animatedOpacityStyle = useSpring({ 
+      opacity: selected ? 1 : 0,
+      config: { tension: 600, clamp: true } 
+    });
+    const rippleRadius = Math.sqrt(56**2 + 56**2);
+    const animatedScaleStyle = useSpring({ 
+      transform: !selected ? `scale(0, 0)` : `scale(1, 1)`,
+      config: { tension: 400 } 
+    });
+
     const removeFromCart = useAction(rmFromCartAsync.request);
     const { orderItem, menuItem, customizations } = useCartItemView(id);
-
     const byType = customizations.reduce<{ [key: string]: CustomizationView[] }>((acc, curr) => {
       acc[curr.type] = [...(acc[curr.type] || []), curr];
       return acc;
@@ -37,11 +53,26 @@ const OrderItem: React.FC<OrderItemProps & {
 
     return (
       <div
+        onClick={onClick}
         style={{
+          position: 'relative',
           minWidth: '100%', display: 'flex', alignItems: 'top',
           ...style
         }} >
+        <animated.div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: theme.palette.primary.main,
+          ...animatedBackgroundStyle
+        }}/>
         <div style={{
+          position: 'relative',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
           width: 56,
           height: 56,
           borderRadius: 4,
@@ -49,6 +80,23 @@ const OrderItem: React.FC<OrderItemProps & {
           overflow: 'hidden'
         }}>
           <img src={menuItem.images[0] && `${menuItem.images[0].url}=s112-c`} style={{ width: 56, height: 56 }} />
+          <animated.div style={{
+            position: 'absolute',
+            backgroundColor: '#c13939',
+            borderRadius: rippleRadius / 2,
+            minHeight: rippleRadius,
+            minWidth: rippleRadius,
+            ...animatedOpacityStyle,
+            ...animatedScaleStyle
+          }}/>
+          <animated.div style={{
+            position: 'absolute',
+            color: '#fff',
+            ...animatedOpacityStyle,
+            ...animatedScaleStyle
+          }}>
+            <CheckCircle />
+          </animated.div>
         </div>
         <div style={{ flex: 1, marginLeft: 16, position: 'relative' }}>
           <div style={{ display: 'flex' }}>

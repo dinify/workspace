@@ -2,12 +2,15 @@ import React from 'react';
 import AppBarAction from './app-bar-action';
 import AppBarTitle from './app-bar-title';
 
-import { withTheme } from '@material-ui/core/styles';
 import { select } from '@dinify/common/src/lib/platform';
+import { useSelector } from 'react-redux';
+import { RootState } from 'typesafe-actions';
+import { getTheme } from '@dinify/common/src/theme';
+import { MuiThemeProvider } from '@material-ui/core';
 
 interface AppBarProps {
     style?: React.CSSProperties,
-    theme?: any,
+    invert?: boolean,
 }
 
 export interface IAppBar extends React.FC<AppBarProps> {
@@ -20,11 +23,16 @@ export interface IAppBar extends React.FC<AppBarProps> {
  * Should be used directly in page view components.
  */
 const AppBar: IAppBar = ({
-    theme,
     style,
     children,
+    invert = false,
     ...otherProps
 }) => {
+    const theme = useSelector<RootState, any>(state => {
+        let type = state.ui.theme;
+        if (invert) type = type === 'light' ? 'dark' : 'light';
+        return getTheme({ type });
+    });
     const { palette: { background: { paper }, divider }} = theme;
       const coupertino = {
         backgroundColor: theme.coupertino.backgroundColor,
@@ -41,22 +49,25 @@ const AppBar: IAppBar = ({
         ios: coupertino
       });
     return (
-        <div style={{
-            zIndex: 50,
-            display: 'flex',
-            alignItems: 'center',
-            height: 56,
-            paddingLeft: 16,
-            paddingRight: 16,
-            ...appBarStyle,
-            ...style
-        }} {...otherProps}>
-            {children}
-        </div>
+        <MuiThemeProvider theme={theme}>
+            <div style={{
+                zIndex: 50,
+                display: 'flex',
+                alignItems: 'center',
+                height: 56,
+                paddingLeft: 16,
+                paddingRight: 16,
+                ...appBarStyle,
+                ...style
+            }} {...otherProps}>
+                {children}
+            </div>
+        </MuiThemeProvider>
+        
     );
 };
 
 AppBar.Action = AppBarAction;
 AppBar.Title = AppBarTitle;
 
-export default withTheme()(AppBar);
+export default AppBar;

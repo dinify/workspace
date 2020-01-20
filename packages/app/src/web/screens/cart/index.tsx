@@ -4,6 +4,7 @@ import {
   useTranslation,
   localizedLanguages,
 } from '@dinify/common/src/lib/i18n';
+import { animated, useSpring } from 'react-spring';
 import { useSelector } from 'react-redux';
 import Fab from '@material-ui/core/Fab';
 import QRCode from 'qrcode.react';
@@ -19,7 +20,9 @@ import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import MoreVert from '@material-ui/icons/MoreVert';
 
 import Add from '@material-ui/icons/AddRounded';
-import { Typography, Button, Divider, IconButton } from '@material-ui/core';
+import Delete from '@material-ui/icons/DeleteRounded';
+import { Button, Divider, IconButton } from '@material-ui/core';
+import { Typography } from '../../components/typography'
 import { useAction } from '@dinify/common/src/lib/util';
 import Price from '@dinify/common/src/components/price';
 import { OrderItem } from '../../components/order-item';
@@ -27,6 +30,7 @@ import Switch from '@material-ui/core/Switch';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Profile } from '../../../store/root-reducer';
+import toPairs from 'ramda/es/toPairs';
 
 export const CartScreen: React.FC<{
   onClose?: () => void;
@@ -41,6 +45,22 @@ export const CartScreen: React.FC<{
   const language = profile.language as Profile['language'];
   
   const [editMode, setEditMode] = useState(false);
+  const [selectedItems, setSelectedItems] = useState<{[key: string]: boolean}>({});
+  const selectedItemCount = toPairs(selectedItems).filter(([k,v]) => v).length;
+  const handleItemClick = (itemId: string) => {
+    // TODO: open menu item customizations instead
+    if (!editMode) setEditMode(true);
+    selectItem(itemId);
+  };
+  const selectItem = (itemId: string) => {
+    const org = selectedItems[itemId] || false;
+    setSelectedItems({...selectedItems, [itemId]: !org});
+  };
+  const animatedStyle = useSpring({
+    transform: `translate3d(0, ${editMode ? 8 : 0}px, 0)`,
+    opacity: editMode ? 0 : 1,
+    config: { tension: 400 }
+  });
   const [anchor, setAnchor] = useState();
   const toggleDefaultLanguage = () => {
     if (isLanguageSet && !useDefaultLanguage) {
@@ -79,28 +99,35 @@ export const CartScreen: React.FC<{
 
   const domain = process.env.REACT_APP_DOMAIN || 'web.dinify.app';
   const orderUrl = `https://${domain}/order/${user.uid}/${restaurantIdOfCart}`;
+  let title = t('cart.title');
+  let subtitle = t('itemCount', [cartItemCount]);
+  if (editMode) {
+    title = 'Editing';
+    subtitle = t('itemCountSelected', [selectedItemCount])
+  }
   return (
     <div {...otherProps}>
       <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
         {!editMode && <AppBarAction type="close" onClick={onClose} />}
         <AppBarTitle
-          title={t('cart.title')}
-          subtitle={t('itemCount', [cartItemCount])}
+          title={title}
+          subtitle={subtitle}
         />
-        <AppBarAction
-          type={editMode ? 'done' : 'edit'}
+        {editMode && <AppBarAction
+          type={'done'}
           onClick={() => {
-            setEditMode(!editMode);
+            setSelectedItems({});
+            setEditMode(false);
           }}
-        />
-        <IconButton
+        />}
+        {!editMode && <IconButton
           aria-label="More"
           aria-owns={open ? 'long-menu' : undefined}
           aria-haspopup="true"
           onClick={(evt) => setAnchor(evt.currentTarget)}
         >
           <MoreVert />
-        </IconButton>
+        </IconButton>}
         <Menu
           id="long-menu"
           anchorEl={anchor}
@@ -120,15 +147,19 @@ export const CartScreen: React.FC<{
           </MenuItem>
         </Menu>        
       </AppBar>
-      <div style={{ padding: '0 16px', marginTop: 56 }}>
+      <div style={{ marginTop: 56 }}>
         {orderItemIds.map(itemId => (
           <OrderItem
-            style={{ padding: '8px 0' }}
+            style={{ padding: '8px 16px' }}
+            onClick={() => handleItemClick(itemId)}
+            selected={selectedItems[itemId] || false}
             key={itemId}
-            editMode={editMode}
             id={itemId}
           />
         ))}
+      </div>
+      <div style={{ padding: '0 16px' }}>
+        
         <div style={{ marginTop: 8, display: 'flex', alignItems: 'center' }}>
           <Typography style={{ flex: 1 }} variant="subtitle1">
             {t('total')}
@@ -139,13 +170,27 @@ export const CartScreen: React.FC<{
         </div>
         <div
         style={{  margin: '16px 0', minWidth: '100%', display: 'flex', alignItems: 'top', justifyContent: "flex-end" }} >
-          <Button variant="outlined" color="primary">
-            Add <Add />
+          <Button style={{marginRight: 8, marginLeft: 8}} variant="text" color="primary">
+            <Typography variant="button2" color="inherit">
+              Clear order
+            </Typography>
           </Button>
+          {editMode && <Button variant="outlined" color="primary">
+            <Typography variant="button2" color="inherit">
+              Delete
+            </Typography>
+            <Delete style={{ marginLeft: 8 }}/>
+          </Button>}
+          {!editMode && <Button variant="outlined" color="primary">
+            <Typography variant="button2" color="inherit">
+              Add
+            </Typography>
+            <Add style={{ marginLeft: 8 }}/>
+          </Button>}
         </div>
       </div>
       <Divider />
-      <div style={{ padding: '0 16px', marginTop: 56 }}>
+      <animated.div style={{ padding: '0 16px', marginTop: 56, ...animatedStyle }}>
         {restaurant && restaurant.settings.orders ?
         <>
           <Fab
@@ -171,7 +216,7 @@ export const CartScreen: React.FC<{
         </div>
         }
         
-      </div>
+      </animated.div>
     </div>
   );
 };
