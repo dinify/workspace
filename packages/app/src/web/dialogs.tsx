@@ -1,5 +1,5 @@
 import React from 'react';
-import { openDialogAction, closeDialogAction, DialogType } from '../features/ui/actions';
+import { closeDialogAction, DialogType } from '../features/ui/actions';
 import { useSelector } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import { ServicesScreen, CartScreen } from './screens';
@@ -8,36 +8,24 @@ import { RootState } from 'typesafe-actions';
 import { useAction } from '@dinify/common/src/lib/util';
 import { ClearOrderDialog } from './components/dialogs/clear-order';
 import { useCartRestaurant } from '../features/cart/selectors';
-import { Restaurant } from 'RestaurantModels';
-import { clearCartAsync } from '../features/cart/actions';
+import { makeCartDoneAsync } from '../features/cart/actions';
 
 export default () => {
+  const userId = useSelector<RootState, string>(state => state.firebase.auth.uid);
   const closeDialog = useAction(closeDialogAction);
-  const openDialog = useAction(openDialogAction);
   const dialogs = useSelector((state: RootState) => state.ui.dialogs);
 
   const restaurantId = useCartRestaurant();
-  const restaurant = useSelector<RootState, Restaurant>(state =>
-    restaurantId ? state.restaurant.all[restaurantId] : null
-  );
-  const clearCartAction = useAction(clearCartAsync.request);
+  const clearOrderAction = useAction(makeCartDoneAsync.request);
   
   const getHandler = (id: DialogType) => () => {
-    if (id === 'cart') {
-      closeDialog(id);
-      let presentDialog = true;
-      if (restaurant) {
-        presentDialog = !location.pathname.includes(restaurant.subdomain);
-      }
-      if (presentDialog) openDialog('clear-order');
-    }
-    else closeDialog(id);
+     closeDialog(id);
   };
   const clearOrderHandler = (confirmed: boolean) => {
     if (confirmed) {
       // dispatch clear cart action
       closeDialog('clear-order');
-      clearCartAction();
+      if (restaurantId && userId) clearOrderAction({ restaurantId, userId });
     }
     else {
       closeDialog('clear-order');

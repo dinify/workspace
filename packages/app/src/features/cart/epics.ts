@@ -227,6 +227,11 @@ const addToCartErrorEpic: Epic = action$ =>
       const {
         payload: { errorType },
       } = action;
+      if (errorType === 'cart-already-exists') {
+        return of(
+          uiActions.openDialogAction('clear-order')
+        );
+      }
       return of(
         uiActions.showSnackbarAction({
           message: t => t(`errorMessages.${errorType}`),

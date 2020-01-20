@@ -5,6 +5,7 @@ import {
   OrderResponse,
   CartResponseN,
   AddToCartResponseN,
+  MarkCartDoneRequest,
 } from 'CartModels';
 import { createAsyncAction } from 'typesafe-actions';
 
@@ -29,7 +30,7 @@ export const makeCartDoneAsync = createAsyncAction(
   `${p}/MAKECARTDONE_DONE`,
   `${p}/MAKECARTDONE_FAIL`,
   `${p}/MAKECARTDONE_CANCEL`,
-)<undefined, any, string>();
+)<MarkCartDoneRequest, any, string>();
 
 export const addToCartAsync = createAsyncAction(
   `${p}/ADD_TO_CART_INIT`,

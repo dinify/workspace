@@ -126,6 +126,11 @@ declare module 'CartModels' {
     orderItemId: string;
   }
 
+  export type MarkCartDoneRequest = {
+    restaurantId: string;
+    userId: string;
+  }
+
   export type OrderRequest = {
     items: [];
   }

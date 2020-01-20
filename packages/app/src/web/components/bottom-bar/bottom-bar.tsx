@@ -34,10 +34,14 @@ let BottomBar: React.FC<{
   const billVisible = billItemCount > 0;
   const showBottomBar = cartVisible || billVisible;
   const animatedStyle = useSpring({
-    transform: showBottomBar ? 'translate3d(0, 0px, 0)' : 'translate3d(0, 56px, 0)'
+    transform: showBottomBar ? 'translate3d(0, 0px, 0)' : 'translate3d(0, 56px, 0)',
+    config: {
+      tension: 380,
+      friction: 48
+    }
   });
   const cartAnimatedStyle = useSpring({
-    transform: `translate3d(${(cartVisible ? 0 : -50)}%, 0, 0)`,
+    transform: `translate3d(0%, 0, 0)`, // (cartVisible ? 0 : -50)
     opacity: cartVisible ? 1 : 0
   });
   const billAnimatedStyle = useSpring({

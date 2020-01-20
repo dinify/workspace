@@ -20,8 +20,8 @@ export const ClearOrderDialog = ({
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="clear-order-dialog-description">
-            <Typography component="span" variant="subtitle1">
-              Would you like to clear your current order?
+            <Typography component="span" variant="body2">
+              You already have some items in your order from different restaurant. Would you like to clear your current order? 
             </Typography>
           </DialogContentText>
           <FormGroup row>
