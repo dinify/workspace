@@ -34,7 +34,7 @@ export default () => {
 
       <LanguagePickerDialog
         open={!!dialogs['language']}
-        initialSelectedLanguage={locale.tag.language()}
+        initialSelectedLocale={locale}
         onClose={getHandler('language')}
       />
 

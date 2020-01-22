@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from '../../lib/i18n';
+import { useTranslation, localeMatcher } from '../../lib/i18n';
 import { languageCountries as languageCountriesUnlocalized } from '../../lib';
 import defaultLanguages from '../../lib/i18n/default-languages.json';
 import match from 'autosuggest-highlight/umd/match';
@@ -15,17 +15,18 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CheckCircle from '@material-ui/icons/CheckCircleRounded';
 
 const LanguagePickerDialog = ({
   open = false,
-  initialSelectedLanguage = '',
-  onClose = () => {},
+  initialSelectedLocale = null,
+  onClose = () => { },
   locale,
   theme,
   ...otherProps
 }) => {
-  const [selectedLanguage, setSelectedLanguage] = useState(initialSelectedLanguage);
+  const [selectedLocale, setSelectedLocale] = useState(initialSelectedLocale);
   const [filter, setFilter] = useState('');
   const { t, cldr } = useTranslation(locale);
 
@@ -57,19 +58,19 @@ const LanguagePickerDialog = ({
 
   return (
     <Dialog fullScreen open={open} onClose={() => {
-      setSelectedLanguage('');
+      setSelectedLocale(null);
       setFilter('');
       onClose(null);
-    }} {...otherProps}>
+    }} style={{ height: '100vh', overflow: 'hidden', ...otherProps.style }} {...otherProps}>
       <DialogTitle>
         {t('selectLanguage')}
       </DialogTitle>
       <div style={{
-        height: '100%',
+        height: 'calc(100vh - 118px)',
         display: 'flex',
         flexDirection: 'column'
       }}>
-        <div style={{padding: '0px 24px'}}>
+        <div style={{ padding: '0px 24px' }}>
           <TextField
             fullWidth
             name={t('search')}
@@ -77,9 +78,9 @@ const LanguagePickerDialog = ({
             hint={t('search')}
             variant="filled"
             value={filter}
-            onChange={event => setFilter(event.target.value)}/>
+            onChange={event => setFilter(event.target.value)} />
         </div>
-        <Divider style={{marginTop: 16}}/>
+        <Divider style={{ marginTop: 16 }} />
         <div style={{
           overflowY: 'scroll',
           paddingTop: 8,
@@ -91,14 +92,16 @@ const LanguagePickerDialog = ({
             let secondary = highlightBold(lang.name);
 
             let selected = false;
-            if (selectedLanguage) selected = selectedLanguage.split('-')[0] === lang.code;
+            if (selectedLocale) selected = selectedLocale.tag.expanded() === localeMatcher.match(lang.code).locale.tag.expanded();
             return (
               <ListItem
                 key={i} dense button selected={selected}
-                style={{paddingLeft: 24, paddingRight: 24}}
-                onClick={() => setSelectedLanguage(lang.code)}>
-                <ListItemText primary={primary} secondary={secondary}/>
-                {selected && <CheckCircle style={{color: theme.palette.background.paper}}/>}
+                style={{ paddingLeft: 24, paddingRight: 24 }}
+                onClick={() => setSelectedLocale(localeMatcher.match(lang.code).locale)}>
+                <ListItemText primary={primary} secondary={secondary} />
+                {selected && <ListItemIcon>
+                  <CheckCircle style={{ color: theme.palette.background.paper }} />
+                </ListItemIcon>}
               </ListItem>
             );
           })}
@@ -109,7 +112,7 @@ const LanguagePickerDialog = ({
         <Button
           color="primary"
           onClick={() => {
-            setSelectedLanguage('');
+            setSelectedLocale(null);
             setFilter('');
             onClose(null)
           }}>
@@ -117,10 +120,10 @@ const LanguagePickerDialog = ({
         </Button>
         <Button
           color="primary"
-          disabled={!selectedLanguage}
+          disabled={!selectedLocale}
           onClick={() => {
             setFilter('');
-            onClose(selectedLanguage)
+            onClose(selectedLocale)
           }}>
           {t('select')}
         </Button>

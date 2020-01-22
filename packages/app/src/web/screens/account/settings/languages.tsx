@@ -4,6 +4,7 @@ import {
   useIntl,
   useTranslation,
   localizedLanguages,
+  localeMatcher,
 } from '@dinify/common/src/lib/i18n';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
 import ArrowUpward from '@material-ui/icons/ArrowUpwardRounded';
@@ -18,7 +19,7 @@ import { openDialogAction } from '../../../../features/ui/actions';
 import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { RootState } from 'typesafe-actions';
-import { LanguageIdType } from '@phensley/cldr';
+import { Locale } from '@phensley/cldr';
 import { Profile } from '../../../../store/root-reducer';
 import { useAction } from '@dinify/common/src/lib/util';
 
@@ -32,24 +33,25 @@ export default () => {
   const language = profile.language as Profile['language'];
   const isPrimarySet = isLanguageSet && !!language.primary;
   const isOtherSet = isLanguageSet && !!language.other;
-
-  const handlePrimary = (langtag: LanguageIdType | null) => {
-    if (langtag) {
-      setLocale(langtag);
+  console.log(profile);
+  const handlePrimary = (locale: Locale | null) => {
+    if (locale) {
+      setLocale(locale);
       firebase.updateProfile({
         language: {
           ...language,
-          primary: langtag,
+          primary: locale.tag.compact(),
         },
       });
     }
   };
-  const handleOther = (langtag: LanguageIdType | null) => {
-    if (langtag) {
+  const handleOther = (locale: Locale | null) => {
+    if (locale) {
+      const compact = locale.tag.compact();
       firebase.updateProfile({
         language: {
           ...language,
-          other: [...language.other, langtag],
+          other: [...(language.other || []), compact],
         },
       });
     }
@@ -75,14 +77,15 @@ export default () => {
     });
   };
   const getClickHandler = (
-    handler: (langtag: LanguageIdType | null) => any,
+    handler: (langtag: Locale | null) => any,
   ) => () => {
     openDialog({
       type: 'language',
       handler,
     });
   };
-  const getLocalName = (language: string) => {
+  const getLocalName = (languageId: string) => {
+    const language = localeMatcher.match(languageId).locale.tag.language();
     return (localizedLanguages as any)[language];
   };
 
@@ -108,12 +111,12 @@ export default () => {
           <ChevronRight color="action" />
         </ListItem>
       ) : (
-        <div style={{ padding: '16px 24px' }}>
-          <Button onClick={primaryClickHandler} variant="text" color="primary">
-            {t('language.setPrimary')}
-          </Button>
-        </div>
-      )}
+          <div style={{ padding: '16px 24px' }}>
+            <Button onClick={primaryClickHandler} variant="text" color="primary">
+              {t('language.setPrimary')}
+            </Button>
+          </div>
+        )}
       <Divider />
       <Typography
         style={{ padding: '16px 24px' }}
