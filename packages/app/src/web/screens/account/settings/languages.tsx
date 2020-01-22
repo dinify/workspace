@@ -33,7 +33,6 @@ export default () => {
   const language = profile.language as Profile['language'];
   const isPrimarySet = isLanguageSet && !!language.primary;
   const isOtherSet = isLanguageSet && !!language.other;
-  console.log(profile);
   const handlePrimary = (locale: Locale | null) => {
     if (locale) {
       setLocale(locale);
@@ -85,8 +84,9 @@ export default () => {
     });
   };
   const getLocalName = (languageId: string) => {
-    const language = localeMatcher.match(languageId).locale.tag.language();
-    return (localizedLanguages as any)[language];
+    const tag = localeMatcher.match(languageId).locale.tag;
+    const id = tag.language() === 'zh' ? `zh-${tag.script()}` : tag.language();
+    return (localizedLanguages as any)[id];
   };
 
   // TODO className={classes.button2}
