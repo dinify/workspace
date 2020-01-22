@@ -2,21 +2,24 @@ import React from 'react';
 import { animated, useSpring } from 'react-spring';
 import { withTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/DeleteRounded';
+// import IconButton from '@material-ui/core/IconButton';
+// import DeleteIcon from '@material-ui/icons/DeleteRounded';
+// import { rmFromCartAsync } from '../../../features/cart/actions';
+// import { useAction } from '@dinify/common/src/lib/util';
 import CheckCircle from '@material-ui/icons/CheckCircleRounded';
 import Price from '@dinify/common/src/components/price';
-import { rmFromCartAsync } from '../../../features/cart/actions';
-import { useTranslation } from '@dinify/common/src/lib/i18n';
-import { useAction } from '@dinify/common/src/lib/util';
+import { useTranslation, useIntl } from '@dinify/common/src/lib/i18n';
 import { useCartItemView, CustomizationView } from '../../../features/cart/selectors';
 import toPairs from 'ramda/es/toPairs';
+import { OrderItem as OrderItemType } from 'CartModels';
+import { selectTranslation, MenuItemView } from '../../../features/menuItem/selectors';
 
 export interface OrderItemProps {
   id: string,
   editMode?: boolean,
   expanded?: boolean,
   selected?: boolean,
+  orderItem?: OrderItemType,
   onClick?: () => any,
 }
 
@@ -27,12 +30,14 @@ const OrderItem: React.FC<OrderItemProps & {
   id,
   theme,
   style,
+  orderItem,
   editMode = false,
   expanded = false,
   selected = false,
   onClick = () => {}
 }) => {
     const { t } = useTranslation();
+    const locale = useIntl(ctx => ctx.state.locale);
     const animatedBackgroundStyle = useSpring({ opacity: selected ? 0.12 : 0, config: { tension: 400, clamp: true } });
     const animatedOpacityStyle = useSpring({ 
       opacity: selected ? 1 : 0,
@@ -44,8 +49,36 @@ const OrderItem: React.FC<OrderItemProps & {
       config: { tension: 400 } 
     });
 
-    const removeFromCart = useAction(rmFromCartAsync.request);
-    const { orderItem, menuItem, customizations } = useCartItemView(id);
+    // const removeFromCart = useAction(rmFromCartAsync.request);
+    let menuItem: MenuItemView;
+    let customizations: CustomizationView[];
+    // if the not normalized prop was supplied
+    if (orderItem) {
+      menuItem = {...orderItem.menuItem, ...selectTranslation(locale, orderItem.menuItem.translations)};
+      customizations = [];
+      orderItem.orderChoices.filter(c => c.choice !== null).map(c => c.choice).forEach(c => customizations.push({
+        name: selectTranslation(locale, c.translations).name,
+        type: 'choice',
+        price: c.price
+      }));
+      orderItem.orderAddons.filter(c => c.addon !== null).map(c => c.addon).forEach(c => customizations.push({
+        name: selectTranslation(locale, c.translations).name,
+        type: 'addon',
+        price: c.price,
+        amount: c.amount
+      }));
+      orderItem.orderExcludes.filter(c => c.ingredient !== null).map(c => c.ingredient).forEach(c => customizations.push({
+        name: selectTranslation(locale, c.translations).name,
+        type: 'exclude',
+        crossover: true
+      }));
+    }
+    else {
+      const cartItemView = useCartItemView(id);
+      menuItem = cartItemView.menuItem;
+      customizations = cartItemView.customizations;
+    }
+
     const byType = customizations.reduce<{ [key: string]: CustomizationView[] }>((acc, curr) => {
       acc[curr.type] = [...(acc[curr.type] || []), curr];
       return acc;
@@ -144,12 +177,12 @@ const OrderItem: React.FC<OrderItemProps & {
               )}
             </div>
           )}
-          {toPairs(byType).length === 0 && <Typography variant="caption" color="textSecondary" style={{
+          {toPairs(byType).length === 0 && <Typography variant="caption" color={expanded ? "textPrimary" : "textSecondary"} style={{
               opacity: editMode ? 0 : 1,
             }}>
               {t('cart.item.original')}
             </Typography>}
-          {editMode &&
+          {/* {editMode &&
             <div style={{
               position: 'absolute',
               display: 'flex',
@@ -161,7 +194,7 @@ const OrderItem: React.FC<OrderItemProps & {
                 <DeleteIcon />
               </IconButton>
             </div>
-          }
+          } */}
         </div>
       </div>
     );

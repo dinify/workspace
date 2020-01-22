@@ -31,6 +31,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Profile } from '../../../store/root-reducer';
 import toPairs from 'ramda/es/toPairs';
+import { openDialogAction } from '../../../features/ui/actions';
 
 export const CartScreen: React.FC<{
   onClose?: () => void;
@@ -93,6 +94,7 @@ export const CartScreen: React.FC<{
   };
 
   const order = useAction(orderAsync.request);
+  const openDialog = useAction(openDialogAction);
 
   const cartItemCount = orderItemIds.length;
   const canOrder = cartItemCount > 0 && checkedInRestaurant !== null;
@@ -170,21 +172,15 @@ export const CartScreen: React.FC<{
         </div>
         <div
         style={{  margin: '16px 0', minWidth: '100%', display: 'flex', alignItems: 'top', justifyContent: "flex-end" }} >
-          <Button style={{marginRight: 8, marginLeft: 8}} variant="text" color="primary">
-            <Typography variant="button2" color="inherit">
-              Clear order
-            </Typography>
+          <Button onClick={() => openDialog('clear-order')} style={{marginRight: 8, marginLeft: 8}} variant="text" color="primary">
+            Clear order
           </Button>
           {editMode && <Button variant="outlined" color="primary">
-            <Typography variant="button2" color="inherit">
-              Delete
-            </Typography>
+            Delete
             <Delete style={{ marginLeft: 8 }}/>
           </Button>}
           {!editMode && <Button variant="outlined" color="primary">
-            <Typography variant="button2" color="inherit">
-              Add
-            </Typography>
+            Add
             <Add style={{ marginLeft: 8 }}/>
           </Button>}
         </div>

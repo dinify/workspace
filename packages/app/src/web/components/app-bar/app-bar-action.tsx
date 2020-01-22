@@ -9,7 +9,6 @@ import BackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Button from '@material-ui/core/Button';
 
 import { select } from '@dinify/common/src/lib/platform';
-import { Typography } from '../../components/typography'
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 type AppBarActionType = 'close' | 'cancel' | 'edit' | 'done' | 'back';
@@ -25,9 +24,7 @@ const AppBarAction: React.FC<{
     const { t } = useTranslation();
     const getTextButton = (text: string) => (
       <Button onClick={onClick} {...otherProps}>
-        <Typography color="primary" variant="button2">
-          {text}
-        </Typography>
+        {text}
       </Button>
     );
 
@@ -42,15 +39,13 @@ const AppBarAction: React.FC<{
         ios: (
           <Button onClick={onClick} {...otherProps}>
             <BackIosIcon/>
-            <Typography color="primary" variant="button2">
-              {t('appBar.back')} {/* TODO: possibly previous screen name */}
-            </Typography>
+            {t('appBar.back')} {/* TODO: possibly previous screen name */}
           </Button>
         ),
         standard: getIconButton(<BackIcon/>)
       }),
       close: select({
-        ios: getTextButton(t('appBar.cancel')),
+        ios: getTextButton('Close'),
         standard: getIconButton(<CloseIcon/>)
       }),
       edit: select({

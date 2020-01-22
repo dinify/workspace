@@ -116,7 +116,7 @@ const App = props => {
         </Switch>
       </div>
 
-      <Navigation
+      {!isOrderScreen && <Navigation
         key="bottom-navigation"
         // borderVisible={!bottomBarOpen || isAccountTab}
         handleChange={onNavigate}
@@ -125,7 +125,7 @@ const App = props => {
           if (isAccountTab) return 1;
           return 0;
         })()}
-      />
+      />}
       {checkedInRestaurant && restaurant && restaurant.settings.serviceCalls ?
         <ServicesButtonContainer
           anchor={56}

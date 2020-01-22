@@ -6,6 +6,7 @@ import { getType } from 'typesafe-actions';
 import * as actions from './actions';
 import { Dialog, Snackbar } from './actions';
 import dissocPath from 'ramda/es/dissocPath';
+import { makeCartDoneAsync } from '../cart/actions';
 
 export type ThemeType = 'light'|'dark';
 export interface UiState {
@@ -72,6 +73,9 @@ export default function reducer(state: UiState = initialState, action: AnyAction
     case getType(actions.closeDialogAction): {
       let path = action.payload;
       return dissocPath<UiState>(['dialogs', path])(state);
+    }
+    case getType(makeCartDoneAsync.success): {
+      return dissocPath<UiState>(['dialogs', 'cart'])(state);
     }
     case getType(actions.showSnackbarAction): {
       let snackbar = action.payload as Snackbar;

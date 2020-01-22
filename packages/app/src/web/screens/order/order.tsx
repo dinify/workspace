@@ -11,7 +11,6 @@ import { fetchUserCartAsync, makeCartDoneAsync } from '../../../features/cart/ac
 import { Typography } from '@material-ui/core';
 import { useAction } from '@dinify/common/src/lib/util';
 import Price from '@dinify/common/src/components/price';
-import { getOrderItemIds } from '../../../features/cart/selectors';
 import { OrderItem } from '../../components/order-item';
 
 export const OrderScreen: React.FC<{
@@ -26,8 +25,6 @@ export const OrderScreen: React.FC<{
   const { userId, restaurantId } = match ? match.params : { userId: null, restaurantId: null };
   const fetchUserCart = useAction(fetchUserCartAsync.request);
   const makeCartDone = useAction(makeCartDoneAsync.request);
-  const orderItemIds = useSelector<RootState, string[]>(state => getOrderItemIds(state.cart));
-
   useEffect(() => {
     if (userId && restaurantId) {
       fetchUserCart({ userId, restaurantId });
@@ -47,11 +44,12 @@ export const OrderScreen: React.FC<{
         />
       </AppBar>
       <div style={{ padding: '0 16px', marginTop: 56 }}>
-        {orderItemIds.map(itemId => (
+        {cart.items.map(item => (
           <OrderItem
             style={{ padding: '8px 0' }}
-            key={itemId}
-            id={itemId}
+            key={item.id}
+            id={item.id}
+            orderItem={item}
             expanded
           />
         ))}

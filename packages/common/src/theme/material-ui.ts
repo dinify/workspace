@@ -31,7 +31,6 @@ primary_900    #B1312F
 
 // from: https://material.io/design/color/dark-theme.html
 // TODO: desaturate primary color to meet WCAG 4.5:1
-
 export const getTheme = ({ type = 'light' }) => {
   const dark = type === 'dark';
 
@@ -96,6 +95,11 @@ export const getTheme = ({ type = 'light' }) => {
         }
       },
       overrides: {
+        MuiButton: {
+          label: {
+            ...nextVariants['button2']
+          }
+        },
         MuiButtonBase: {
           root: {
             boxShadow: 'none !important'

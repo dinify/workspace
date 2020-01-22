@@ -8,7 +8,7 @@ import dissoc from 'ramda/es/dissoc';
 import mapObjIndexed from 'ramda/es/mapObjIndexed';
 import { actionTypes as fActionTypes } from 'react-redux-firebase';
 
-const resetActions = [
+export const resetActions = [
   actions.fetchCartAsync.failure,
   createAction(fActionTypes.LOGOUT)<any>(),
   actions.makeCartDoneAsync.success
