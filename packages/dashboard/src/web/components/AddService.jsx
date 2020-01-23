@@ -19,8 +19,8 @@ class AddServiceComponent extends React.PureComponent {
     const { selectedImage } = this.state;
 
     const filteredImages = filter((img) => {
-      if (serviceType === 'TABLEWARE') return img.item_type === `Internal\\Service\\Tableware`;
-      return img.item_type === 'Internal\\Service\\Condiments';
+      if (serviceType === 'TABLEWARE') return img.itemType === `Internal\\Service\\Tableware`;
+      return img.itemType === 'Internal\\Service\\Condiments';
     }, images);
 
     return (<>

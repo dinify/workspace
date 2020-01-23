@@ -21,15 +21,16 @@ export const updateRestaurantAsync = createAsyncAction(
   `${p}/UPD_RESTAURANT_FAIL`,
 )();
 
-export const fetchWaiterboards = payload => ({
-  type: types.FETCH_RESTAURANTWAITERBOARDS_INIT,
-  payload,
-});
+export const fetchWaiterboardsAsync = createAsyncAction(
+  `${p}/GET_WAITERBOARDS_INIT`,
+  `${p}/GET_WAITERBOARDS_DONE`,
+  `${p}/GET_WAITERBOARDS_FAIL`,
+)();
 
 export const selectCategoryAction = payload => ({
-    type: 'SELECT_CATEGORY',
-    payload,
-  });
+  type: 'SELECT_CATEGORY',
+  payload,
+});
 export const registerRestaurant = payload => ({
   type: 'REGISTER_RESTAURANT_INIT',
   payload
@@ -41,15 +42,8 @@ export const setOnboardingToken = ({ token }) => ({
 export const prefillEmail = payload => ({ type: 'PREFILL_EMAIL', payload });
 export const prefillRestaurantName = payload => ({ type: 'PREFILL_RESTAURANTNAME', payload });
 export const setOngoingRegistration = payload => ({ type: 'SET_ONGOINGREGISTRATION', payload })
-
 export const selectFoodAction = payload => ({ type: 'SELECT_FOOD', payload });
-
-export const loggedFetchedAction = payload => ({
-  type: types.FETCH_RESTAURANT_DONE,
-  payload,
-});
 export const signupInitAction = payload => ({ type: 'SIGNUP_INIT', payload });
-
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
 
 export const createWaiterboardInitAction = payload => ({
@@ -84,7 +78,7 @@ export const updateFoodNutritionInit = payload => ({
   payload,
 });
 
-export const selectRestaurant = ({id}) => ({ type: 'SELECT_RESTAURANT', payload: { id } });
+export const selectRestaurant = ({ id }) => ({ type: 'SELECT_RESTAURANT', payload: { id } });
 
 export const publishRestaurant = () => ({
   type: types.SEND_PUBLISHREQUEST_INIT

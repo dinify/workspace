@@ -13,7 +13,7 @@ import { reportCampaignAction } from '@dinify/common/src/features/reporting/acti
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import * as types from './types';
 import {
-  fetchRestaurantAsync, selectRestaurant, fetchManagedAsync, updateRestaurantAsync
+  fetchRestaurantAsync, selectRestaurant, fetchManagedAsync, updateRestaurantAsync, fetchWaiterboardsAsync
 } from './actions';
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
@@ -42,6 +42,25 @@ const fetchRestaurantEpic = (action$) =>
         return handleEpicAPIError({
           error,
           failActionType: getType(fetchRestaurantAsync.failure),
+          initAction: action
+        })
+      })
+    ))
+  );
+
+const fetchWaiterboardsEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(getType(fetchWaiterboardsAsync.request)),
+    mergeMap((action) => from(API.GetWaiterboardsOfRestaurant({ 
+      restaurantId: state$.value.restaurant.selectedRestaurant
+    })).pipe(
+      map((res) => {
+        return fetchWaiterboardsAsync.success(res);
+      }),
+      catchError(error => {
+        return handleEpicAPIError({
+          error,
+          failActionType: getType(fetchWaiterboardsAsync.failure),
           initAction: action
         })
       })
@@ -98,7 +117,7 @@ const loadRestaurant = (action$, state$) =>
         fetchRestaurantAsync.request({ restaurantId }),
         { type: 'FETCH_LANGUAGES_INIT' },
         { type: 'FETCH_TRANSLATIONS_INIT' },
-        // {type: 'FETCH_RESTAURANTSETTINGS_INIT'},
+        { type: 'GET_SERVICEIMAGES_INIT' },
         { type: 'FETCH_MENULANGUAGES_INIT' },
       );
     }),
@@ -304,6 +323,7 @@ const onUpdateWifiSnackbarsEpic = action$ =>
 export default [
   fetchRestaurantEpic,
   getManagedEpic,
+  fetchWaiterboardsEpic,
   loadRestaurant,
   updateRestaurantEpic,
   bootstrapEpic,

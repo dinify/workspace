@@ -30,7 +30,7 @@ import {
   createTableInitAction,
   deleteTableInitAction,
   updateTableInitAction,
-  fetchWaiterboards
+  fetchWaiterboardsAsync
 } from 'features/restaurant/actions';
 
 import styles from './WaiterboardsStyles';
@@ -384,7 +384,7 @@ export default compose(
       createTable: createTableInitAction,
       deleteTable: deleteTableInitAction,
       updateTable: updateTableInitAction,
-      fetchWaiterboards
+      fetchWaiterboards: fetchWaiterboardsAsync.request
     },
   )
 )(Waiterboards);

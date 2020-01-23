@@ -33,8 +33,8 @@ export default function reducer(state = initialState, action) {
       return assocPath(['all', id], state.backup[id])(state);
     }
 
-    case 'FETCH_SERVICEIMAGES_DONE': {
-      return assoc('images', payload.res)(state);
+    case 'GET_SERVICEIMAGES_DONE': {
+      return assoc('images', payload)(state);
     }
 
     case 'POST_SERVICE_INIT': {

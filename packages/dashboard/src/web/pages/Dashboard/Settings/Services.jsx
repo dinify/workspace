@@ -98,9 +98,9 @@ const ServiceCalls = ({
             </Typography>
             <div style={{ width: 400, margin: '0 auto' }}>
               <Typography variant="caption" gutterBottom align="left">
-                <div>{t('services.step1')}</div>
-                <div>{t('services.step2')}</div>
-                <div>{t('services.step3')}</div>
+                <div>1. {t('services.step1')}</div>
+                <div>2. {t('services.step2')}</div>
+                <div>3. {t('services.step3', [t('add').toLocaleUpperCase()])}</div>
               </Typography>
             </div>
           </div>

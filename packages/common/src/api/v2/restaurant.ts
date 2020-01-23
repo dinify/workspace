@@ -34,6 +34,10 @@ export const GetMenuCategoriesOfSubdomain = ({ subdomain }: any) => Get({
   path: `restaurants/subdomain/${subdomain}/menu/categories`
 });
 
+export const GetWaiterboardsOfRestaurant = ({ restaurantId }: any): Promise<any> => Get({
+  path: `restaurants/${restaurantId}/waiterboards`
+});
+
 export const GetSeatsOfWaiterboard = ({ waiterboardId }: any): Promise<any> => Get({
   path: `waiterboards/${waiterboardId}/seats`
 });
@@ -371,3 +375,7 @@ export const AddTranslation = ({ type, id, locale, name, description, restaurant
 export const TranslateAll = ({ restaurantId }: any) => {
   return Post({ path: `restaurant/${restaurantId}/menu/translate/all` });
 }
+
+export const GetServiceImages = (): Promise<any> => Get({
+  path: `images?scopes=services`
+});

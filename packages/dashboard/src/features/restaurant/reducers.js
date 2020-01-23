@@ -6,7 +6,7 @@ import { ListToMap, setCookie } from '@dinify/common/src/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 import { getType } from 'typesafe-actions';
-import { fetchManagedAsync, updateRestaurantAsync, fetchRestaurantAsync } from './actions';
+import { fetchManagedAsync, updateRestaurantAsync, fetchRestaurantAsync, fetchWaiterboardsAsync } from './actions';
 
 const preferredLanguagesInitial = [
   "ar", "az", "bg", "cs", "da", "de",
@@ -138,9 +138,9 @@ export default function reducer(state = initialState, action) {
     case 'SELECT_FOOD':
       return assoc('selectedFoodId', payload.foodId)(state);
 
-    case types.FETCH_RESTAURANTWAITERBOARDS_DONE: {
+    case getType(fetchWaiterboardsAsync.success): {
       return pipe(
-        assoc('waiterboards', ListToMap(payload.res)),
+        assoc('waiterboards', ListToMap(payload)),
         assoc('waiterboardsLoaded', true),
       )(state);
     }

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import { selectedRestaurant } from 'features/restaurant/selectors';
-import { fetchWaiterboards } from 'features/restaurant/actions';
+import { fetchWaiterboardsAsync } from 'features/restaurant/actions';
 import Loading from 'web/components/Loading';
 
 const styles = () => ({
@@ -95,6 +95,6 @@ export default compose(
     waiterboards: state.restaurant.waiterboards,
     restaurant: selectedRestaurant(state)
   }), {
-    fetchWaiterboards
+    fetchWaiterboards: fetchWaiterboardsAsync.request
   })
 )(QRs);

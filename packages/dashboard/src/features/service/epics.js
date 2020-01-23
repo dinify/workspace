@@ -28,6 +28,26 @@ const fetchServicesEpic = (action$, state$) =>
     }),
   );
 
+const fetchServiceImagesEpic = (action$) =>
+  action$.pipe(
+    ofType('GET_SERVICEIMAGES_INIT'),
+    mergeMap(action => {
+      return fromPromise(API.GetServiceImages()).pipe(
+        map(res => ({
+          type: 'GET_SERVICEIMAGES_DONE',
+          payload: res,
+        })),
+        catchError(error =>
+          handleEpicAPIError({
+            error,
+            failActionType: 'GET_SERVICEIMAGES_FAIL',
+            initAction: action,
+          }), 
+        ),
+      );
+    }),
+  );
+
 const createServiceEpic = (action$, state$) =>
   action$.pipe(
     ofType('POST_SERVICE_INIT'),
@@ -78,4 +98,9 @@ const onCreateDoneSnackbarEpic = action$ =>
     }),
   );
 
-export default [fetchServicesEpic, createServiceEpic, onCreateDoneSnackbarEpic];
+export default [
+  fetchServicesEpic,
+  fetchServiceImagesEpic,
+  createServiceEpic,
+  onCreateDoneSnackbarEpic
+];
