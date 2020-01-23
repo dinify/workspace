@@ -7,18 +7,13 @@ import { menuCategories } from './schemas';
 import { mergeMap, map, catchError, filter, map as rxMap} from 'rxjs/operators';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import pick from 'ramda/es/pick';
-import {
-  fetchMenuCategoriesAsync,
-  createMenuCategoryAsync,
-  updateMenuCategoryAsync,
-  removeMenuCategoryAsync
-} from './actions';
+import * as actions from './actions';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 
 
 const fetchMenuCategoriesEpic: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(getType(fetchMenuCategoriesAsync.request)),
+    ofType(getType(actions.fetchMenuCategoriesAsync.request)),
     mergeMap((action) => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
       const lang = state$.value.restaurant.defaultLanguage;
@@ -26,12 +21,12 @@ const fetchMenuCategoriesEpic: Epic = (action$, state$) =>
         filter((res: any) => !!res),
         rxMap((res: any) => {
           const normalized: any = normalize(res, menuCategories);
-          return fetchMenuCategoriesAsync.success(normalized);
+          return actions.fetchMenuCategoriesAsync.success(normalized);
         }),
         catchError(error => {
           return handleEpicAPIError({
             error,
-            failActionType: getType(fetchMenuCategoriesAsync.failure),
+            failActionType: getType(actions.fetchMenuCategoriesAsync.failure),
             initAction: action
           })
         })
@@ -41,7 +36,7 @@ const fetchMenuCategoriesEpic: Epic = (action$, state$) =>
 
 const createMenuCategoryEpic: Epic = (action$, state$) =>
   action$.pipe(
-    ofType(getType(createMenuCategoryAsync.request)),
+    ofType(getType(actions.createMenuCategoryAsync.request)),
     mergeMap((action) => {
 
       const restaurantId = state$.value.restaurant.selectedRestaurant;
@@ -54,13 +49,13 @@ const createMenuCategoryEpic: Epic = (action$, state$) =>
 
       return fromPromise(API.CreateMenuCategory(body)).pipe(
         map((res) => ({
-          type: getType(createMenuCategoryAsync.success),
+          type: getType(actions.createMenuCategoryAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(createMenuCategoryAsync.failure),
+          failActionType: getType(actions.createMenuCategoryAsync.failure),
           initAction: action
         }))
       );
@@ -69,20 +64,20 @@ const createMenuCategoryEpic: Epic = (action$, state$) =>
 
 const updateMenuCategoryEpic: Epic = (action$) =>
   action$.pipe(
-    ofType(getType(updateMenuCategoryAsync.request)),
+    ofType(getType(actions.updateMenuCategoryAsync.request)),
     mergeMap((action) => {
 
       const payload = action.payload;
 
       return fromPromise(API.UpdateMenuCategory(payload)).pipe(
         map((res) => ({
-          type: getType(updateMenuCategoryAsync.success),
+          type: getType(actions.updateMenuCategoryAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(updateMenuCategoryAsync.failure),
+          failActionType: getType(actions.updateMenuCategoryAsync.failure),
           initAction: action
         }))
       );
@@ -91,29 +86,51 @@ const updateMenuCategoryEpic: Epic = (action$) =>
 
 const deleteMenuCategoryEpic: Epic = (action$, $) =>
   action$.pipe(
-    ofType(getType(removeMenuCategoryAsync.request)),
+    ofType(getType(actions.removeMenuCategoryAsync.request)),
     mergeMap((action) => {
       const { payload } = action;
       const id = payload;
 
       return fromPromise(API.RemoveMenuCategory(id)).pipe(
         map((res) => ({
-          type: getType(removeMenuCategoryAsync.success),
+          type: getType(actions.removeMenuCategoryAsync.success),
           payload: res,
           meta: payload
         })),
         catchError(error => handleEpicAPIError({
           error,
-          failActionType: getType(removeMenuCategoryAsync.failure),
+          failActionType: getType(actions.removeMenuCategoryAsync.failure),
           initAction: action
         }))
       );
     })
   );
 
+const reorderEpic: Epic = action$ =>
+  action$.pipe(
+    ofType(getType(actions.reorderCategoriesAsync.request)),
+    mergeMap(({ payload }) => {
+
+      const changed: any = [];
+      payload.forEach((o: any, i: number) => {
+        if (o.precedence !== i) changed.push({ ...o, newPrecedence: i });
+      });
+
+      return changed
+        .map((o: any) => actions.updateMenuCategoryAsync.request({
+          id: o.id,
+          precedence: o.newPrecedence,
+        }))
+        .concat({
+          type: getType(actions.reorderCategoriesAsync.success),
+        });
+    }),
+  );
+
 export default [
   fetchMenuCategoriesEpic,
   createMenuCategoryEpic,
   updateMenuCategoryEpic,
-  deleteMenuCategoryEpic
+  deleteMenuCategoryEpic,
+  reorderEpic
 ];

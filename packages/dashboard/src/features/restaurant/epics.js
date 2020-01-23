@@ -12,7 +12,9 @@ import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 import { reportCampaignAction } from '@dinify/common/src/features/reporting/actions';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import * as types from './types';
-import { selectRestaurant, fetchManagedAsync, updateRestaurantAsync } from './actions';
+import {
+  fetchRestaurantAsync, selectRestaurant, fetchManagedAsync, updateRestaurantAsync
+} from './actions';
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
@@ -25,6 +27,25 @@ const bootstrapEpic = action$ =>
       setCookie('lang', 'en', 30);
       return of(appBootstrap());
     }),
+  );
+
+const fetchRestaurantEpic = (action$) =>
+  action$.pipe(
+    ofType(getType(fetchRestaurantAsync.request)),
+    mergeMap((action) => from(API.GetRestaurantById({ 
+      restaurantId: action.payload.restaurantId
+    })).pipe(
+      map((res) => {
+        return fetchRestaurantAsync.success(res);
+      }),
+      catchError(error => {
+        return handleEpicAPIError({
+          error,
+          failActionType: getType(fetchRestaurantAsync.failure),
+          initAction: action
+        })
+      })
+    ))
   );
 
 const selectRestaurantEpic = action$ =>
@@ -68,20 +89,15 @@ const getManagedEpic = (action$) =>
     })
   );
 
-const loadRestaurant = action$ =>
+const loadRestaurant = (action$, state$) =>
   action$.pipe(
     ofType('LOAD_RESTAURANT'),
     mergeMap(() => {
+      const restaurantId = state$.value.restaurant.selectedRestaurant;
       return of(
-        {
-          type: types.FETCH_RESTAURANT_INIT,
-          payload: {
-            node: true,
-          },
-        },
+        fetchRestaurantAsync.request({ restaurantId }),
         { type: 'FETCH_LANGUAGES_INIT' },
         { type: 'FETCH_TRANSLATIONS_INIT' },
-        { type: 'FETCH_SERVICEIMAGES_INIT' },
         // {type: 'FETCH_RESTAURANTSETTINGS_INIT'},
         { type: 'FETCH_MENULANGUAGES_INIT' },
       );
@@ -286,6 +302,7 @@ const onUpdateWifiSnackbarsEpic = action$ =>
   );
 
 export default [
+  fetchRestaurantEpic,
   getManagedEpic,
   loadRestaurant,
   updateRestaurantEpic,

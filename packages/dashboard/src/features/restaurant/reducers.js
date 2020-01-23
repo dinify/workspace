@@ -6,7 +6,7 @@ import { ListToMap, setCookie } from '@dinify/common/src/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 import { getType } from 'typesafe-actions';
-import { fetchManagedAsync, updateRestaurantAsync } from './actions';
+import { fetchManagedAsync, updateRestaurantAsync, fetchRestaurantAsync } from './actions';
 
 const preferredLanguagesInitial = [
   "ar", "az", "bg", "cs", "da", "de",
@@ -45,8 +45,8 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case types.FETCH_RESTAURANT_DONE: {
-      const restaurant = payload.res;
+    case getType(fetchRestaurantAsync.success): {
+      const restaurant = payload;
       return pipe(
         assocPath(['all', restaurant.id], restaurant),
       )(state);

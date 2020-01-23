@@ -3,6 +3,12 @@ import * as types from './types';
 
 const p = 'dinify/restaurant';
 
+export const fetchRestaurantAsync = createAsyncAction(
+  `${p}/GET_RESTAURANT_INIT`, // { populateWith: `images` }
+  `${p}/GET_RESTAURANT_DONE`,
+  `${p}/GET_RESTAURANT_FAIL`
+)();
+
 export const fetchManagedAsync = createAsyncAction(
   `${p}/GET_MANAGED_INIT`,
   `${p}/GET_MANAGED_DONE`,
@@ -65,29 +71,6 @@ export const updateTableInitAction = payload => ({
 });
 export const deleteTableInitAction = payload => ({
   type: 'REMOVE_TABLE_INIT',
-  payload,
-});
-
-export const getBillsInitAction = payload => ({
-  type: 'GET_BILLS_INIT',
-  payload,
-});
-export const getBillsDoneAction = payload => ({
-  type: 'GET_BILLS_DONE',
-  payload,
-});
-export const getCategoriesInitAction = () => ({ type: 'GET_CATEGORIES_INIT' });
-export const getCategoriesDoneAction = payload => ({
-  type: 'GET_CATEGORIES_DONE',
-  payload,
-});
-export const rmCategoryInitAction = payload => ({
-  type: 'RM_CATEGORY_INIT',
-  payload,
-});
-
-export const reorderCategoriesAction = payload => ({
-  type: 'REORDER_MENUCATEGORY_INIT',
   payload,
 });
 

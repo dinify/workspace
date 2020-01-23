@@ -3,8 +3,8 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import find from 'ramda/es/find';
 import propEq from 'ramda/es/propEq';
-import * as API from '@dinify/common/src/api/restaurant';
-import { Post } from '@dinify/common/src/api/Network';
+import * as API from '@dinify/common/src/api/v2/restaurant';
+import { Post } from '@dinify/common/src/api/v2/Network';
 import { change as changeForm } from 'redux-form';
 import { MapToList, handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux'

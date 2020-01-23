@@ -1,5 +1,4 @@
 import { combineEpics } from 'redux-observable';
-import { epics as crud } from '@dinify/common/src/features/crudEpics';
 import authEpics from '@dinify/common/src/features/auth/epics.tsx';
 import { reportingEpics as reporting } from '@dinify/common/src/features/reporting';
 
@@ -25,7 +24,6 @@ const rootEpic = (action$, state$, firebase, ...rest) => {
     ...optionEpics,
     ...ingredientEpics,
     ...serviceEpics,
-    ...crud,
     ...reporting,
     ...transactionEpics
   );

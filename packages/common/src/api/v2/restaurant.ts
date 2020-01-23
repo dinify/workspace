@@ -344,3 +344,30 @@ export const Notify = ({ sendTo, type, payload }: NotifyBody) => {
     { sendTo, type, payload },
   );
 }
+
+export const ReportCampaignAction = ({
+  token,
+  status,
+  type = 'default',
+  campaign = 'default'
+}: any) => {
+  return Post({
+    endpoint: 'https://europe-west1-dinify.cloudfunctions.net/',
+    path: 'reportCampaignAction'
+  }, {
+    token,
+    status,
+    type,
+    campaign
+  });
+}
+
+export const AddTranslation = ({ type, id, locale, name, description, restaurantId }: any) => {
+  const body: any = { type, id, locale, name };
+  if (description) body.description = description;
+  return Post({ path: `restaurant/${restaurantId}/translation/add` }, body);
+}
+
+export const TranslateAll = ({ restaurantId }: any) => {
+  return Post({ path: `restaurant/${restaurantId}/menu/translate/all` });
+}

@@ -3,7 +3,7 @@ import { Observable, of, from } from 'rxjs';
 import { mergeMap, map, catchError, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 
-import * as API from '../../api/restaurant';
+import * as API from '../../api/v2/restaurant';
 import * as types from './types';
 
 const reportCampaignActionEpic = (action$, state$) =>

@@ -20,10 +20,16 @@ export const updateMenuCategoryAsync = createAsyncAction(
   `${p}/UPD_CATEGORIES_INIT`,
   `${p}/UPD_CATEGORIES_DONE`,
   `${p}/UPD_CATEGORIES_FAIL`
-)<undefined, any, string>();
+)<any, any, string>();
 
 export const removeMenuCategoryAsync = createAsyncAction(
   `${p}/DEL_CATEGORIES_INIT`,
   `${p}/DEL_CATEGORIES_DONE`,
   `${p}/DEL_CATEGORIES_FAIL`
 )<undefined, any, string>();
+
+export const reorderCategoriesAsync = createAsyncAction(
+  `${p}/REORDER_MENUCATEGORY_INIT`,
+  `${p}/REORDER_MENUCATEGORY_DONE`,
+  `${p}/REORDER_MENUCATEGORY_FAIL`
+)();

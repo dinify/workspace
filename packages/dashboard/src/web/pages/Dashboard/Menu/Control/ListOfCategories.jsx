@@ -25,7 +25,6 @@ import Translation from 'web/components/Translation';
 
 import {
   selectCategoryAction,
-  reorderCategoriesAction
 } from 'features/restaurant/actions';
 
 import {
@@ -33,6 +32,7 @@ import {
   createMenuCategoryAsync,
   updateMenuCategoryAsync,
   removeMenuCategoryAsync,
+  reorderCategoriesAsync
 } from 'features/menuCategory/actions.ts';
 import { relevantCategoriesList } from 'features/menuCategory/selectors';
 
@@ -254,7 +254,7 @@ export default connect(
     createCategory: createMenuCategoryAsync.request,
     updateCategory: updateMenuCategoryAsync.request,
     deleteCategory: removeMenuCategoryAsync.request,
-    reorderCategories: reorderCategoriesAction,
+    reorderCategories: reorderCategoriesAsync.request,
     selectCategory: selectCategoryAction,
   },
 )(ListOfCategories);
