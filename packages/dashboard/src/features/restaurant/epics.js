@@ -48,25 +48,6 @@ const fetchRestaurantEpic = (action$) =>
     ))
   );
 
-const fetchWaiterboardsEpic = (action$, state$) =>
-  action$.pipe(
-    ofType(getType(fetchWaiterboardsAsync.request)),
-    mergeMap((action) => from(API.GetWaiterboardsOfRestaurant({ 
-      restaurantId: state$.value.restaurant.selectedRestaurant
-    })).pipe(
-      map((res) => {
-        return fetchWaiterboardsAsync.success(res);
-      }),
-      catchError(error => {
-        return handleEpicAPIError({
-          error,
-          failActionType: getType(fetchWaiterboardsAsync.failure),
-          initAction: action
-        })
-      })
-    ))
-  );
-
 const selectRestaurantEpic = action$ =>
   action$.pipe(
     ofType('SELECT_RESTAURANT'),
@@ -323,7 +304,6 @@ const onUpdateWifiSnackbarsEpic = action$ =>
 export default [
   fetchRestaurantEpic,
   getManagedEpic,
-  fetchWaiterboardsEpic,
   loadRestaurant,
   updateRestaurantEpic,
   bootstrapEpic,

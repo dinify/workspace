@@ -363,7 +363,7 @@ const Waiterboards = ({
         <FormBoxBody material>
           <CreateWaiterboardForm onSubmit={createWaiterboard} />
         </FormBoxBody>
-      </FormBox>        
+      </FormBox>
       */}
 
       </div>
@@ -375,16 +375,16 @@ export default compose(
   withStyles(styles),
   connect(
     state => ({
-      waiterboards: MapToList(state.restaurant.waiterboards),
-      waiterboardsLoaded: state.restaurant.waiterboardsLoaded
+      waiterboards: MapToList(state.waiterboard.all),
+      waiterboardsLoaded: state.waiterboard.loaded
     }),
-    {
+    ({ waiterboard: { fetchForSelectedRestaurant } }) => ({
       createWaiterboard: createWaiterboardInitAction,
       deleteWaiterboard: deleteWaiterboardInitAction,
       createTable: createTableInitAction,
       deleteTable: deleteTableInitAction,
       updateTable: updateTableInitAction,
-      fetchWaiterboards: fetchWaiterboardsAsync.request
-    },
+      fetchWaiterboards: fetchForSelectedRestaurant
+    }),
   )
 )(Waiterboards);

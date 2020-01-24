@@ -1,5 +1,4 @@
 import { createEpicMiddleware } from 'redux-observable';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
@@ -8,18 +7,20 @@ import { firebaseReducer } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import { init, RematchRootState } from '@rematch/core';
+import * as models from './models';
 
 import auth from '@dinify/common/src/features/auth/reducers';
-import restaurant from 'features/restaurant/reducers';
-import ui from 'features/ui/reducers';
-import menuCategory from 'features/menuCategory/reducers.ts';
-import menuItem from 'features/menuItem/reducers';
-import option from 'features/option/reducers';
-import ingredient from 'features/ingredient/reducers';
-import addon from 'features/addon/reducers';
-import service from 'features/service/reducers';
-import translation from 'features/translation/reducers';
-import transaction from 'features/transaction/reducers';
+import restaurant from './features/restaurant/reducers';
+import ui from './features/ui/reducers';
+import menuCategory from './features/menuCategory/reducers';
+import menuItem from './features/menuItem/reducers';
+import option from './features/option/reducers';
+import ingredient from './features/ingredient/reducers';
+import addon from './features/addon/reducers';
+import service from './features/service/reducers';
+import translation from './features/translation/reducers';
+import transaction from './features/transaction/reducers';
 
 import firebaseConfig from '@dinify/common/firebaseConfig.json';
 
@@ -29,12 +30,6 @@ import rootEpic from './configureEpics';
 
 // react-redux-firebase config
 firebase.initializeApp(firebaseConfig);
-
-const rootPersistConfig = {
-  key: 'root',
-  storage,
-  whitelist: [],
-};
 
 const restaurantPersistConfig = {
   key: 'restaurant',
@@ -76,14 +71,7 @@ const commonReducers = {
 
 const epicMiddleware = createEpicMiddleware();
 
-export default history => {
-  const rootReducer = combineReducers({
-    form: formReducer,
-    router: connectRouter(history),
-    ...commonReducers,
-  });
-
-  const persistedReducers = persistReducer(rootPersistConfig, rootReducer);
+const makeStore = (history: any) => {
 
   const middlewares = [epicMiddleware, routerMiddleware(history)];
 
@@ -91,7 +79,17 @@ export default history => {
     middlewares.push(createLogger({ diff: true, collapsed: true }));
   }
 
-  const store = createStore(persistedReducers, applyMiddleware(...middlewares));
+  const store = init({
+    redux: {
+      reducers: {
+        form: formReducer,
+        router: connectRouter(history),
+        ...commonReducers,
+      },
+      middlewares
+    },
+    models
+  });
 
   epicMiddleware.run((action$, state$, ...rest) =>
     rootEpic(action$, state$, firebase, ...rest),
@@ -104,3 +102,11 @@ export default history => {
     persistor,
   };
 };
+
+export default makeStore;
+
+const store = makeStore({}).store;
+
+export type Store = typeof store
+export type Dispatch = typeof store.dispatch
+export type iRootState = RematchRootState<typeof models>
