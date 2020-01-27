@@ -2,10 +2,10 @@ import React from 'react';
 import { animated, useSpring } from 'react-spring';
 import { withTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-// import IconButton from '@material-ui/core/IconButton';
-// import DeleteIcon from '@material-ui/icons/DeleteRounded';
-// import { rmFromCartAsync } from '../../../features/cart/actions';
-// import { useAction } from '@dinify/common/src/lib/util';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/DeleteRounded';
+import { rmFromCartAsync } from '../../../features/cart/actions';
+import { useAction } from '@dinify/common/src/lib/util';
 import CheckCircle from '@material-ui/icons/CheckCircleRounded';
 import Price from '@dinify/common/src/components/price';
 import { useTranslation, useIntl } from '@dinify/common/src/lib/i18n';
@@ -13,7 +13,6 @@ import { useCartItemView, CustomizationView } from '../../../features/cart/selec
 import toPairs from 'ramda/es/toPairs';
 import { OrderItem as OrderItemType } from 'CartModels';
 import { selectTranslation, MenuItemView } from '../../../features/menuItem/selectors';
-
 export interface OrderItemProps {
   id: string,
   editMode?: boolean,
@@ -49,8 +48,9 @@ const OrderItem: React.FC<OrderItemProps & {
       config: { tension: 400 } 
     });
 
-    // const removeFromCart = useAction(rmFromCartAsync.request);
+    const rmFromCart = useAction(rmFromCartAsync.request);
     let menuItem: MenuItemView;
+    let cartItemView: any;
     let customizations: CustomizationView[];
     // if the not normalized prop was supplied
     if (orderItem) {
@@ -74,7 +74,7 @@ const OrderItem: React.FC<OrderItemProps & {
       }));
     }
     else {
-      const cartItemView = useCartItemView(id);
+      cartItemView = useCartItemView(id);
       menuItem = cartItemView.menuItem;
       customizations = cartItemView.customizations;
     }
@@ -136,9 +136,18 @@ const OrderItem: React.FC<OrderItemProps & {
             <Typography variant={expanded ? "body1" : "body2"} style={{ fontWeight: expanded ? 500: 400, flex: 1, marginRight: 32 }} >
               {menuItem.name}
             </Typography>
+            {!!cartItemView && 
+              <IconButton
+              aria-label="Remove"
+              style={{ position: 'absolute', right: 64, top: 4 }}
+              onClick={() => rmFromCart({ orderItemId: cartItemView.orderItem.id })}
+            >
+              <DeleteIcon />
+            </IconButton>            
+            }
             <Typography
               variant="overline"
-              style={{ alignSelf: 'flex-end', opacity: editMode ? 0 : 1 }}>
+              style={{ position: 'absolute', right: 0, top: 20 }}>
               <Price original price={menuItem.price} />
             </Typography>
           </div>
