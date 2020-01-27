@@ -8,6 +8,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import { init, RematchRootState } from '@rematch/core';
+import createLoadingPlugin from '@rematch/loading';
 import * as models from './models';
 
 import auth from '@dinify/common/src/features/auth/reducers';
@@ -71,6 +72,10 @@ const commonReducers = {
 
 const epicMiddleware = createEpicMiddleware();
 
+const loading = createLoadingPlugin({
+  
+});
+
 const makeStore = (history: any) => {
 
   const middlewares = [epicMiddleware, routerMiddleware(history)];
@@ -88,7 +93,8 @@ const makeStore = (history: any) => {
       },
       middlewares
     },
-    models
+    models,
+    plugins: [loading],
   });
 
   epicMiddleware.run((action$, state$, ...rest) =>
@@ -105,8 +111,8 @@ const makeStore = (history: any) => {
 
 export default makeStore;
 
-const store = makeStore({}).store;
+const s = makeStore({}).store;
 
-export type Store = typeof store
-export type Dispatch = typeof store.dispatch
-export type iRootState = RematchRootState<typeof models>
+export type Store = typeof s;
+export type Dispatch = typeof s.dispatch;
+export type iRootState = RematchRootState<typeof models>;

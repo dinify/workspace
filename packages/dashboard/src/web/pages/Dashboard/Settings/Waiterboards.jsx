@@ -209,14 +209,14 @@ const Waiterboards = ({
   classes,
   fetchWaiterboards,
   waiterboards,
+  loading
 }) => {
   const { t } = useTranslation();
 
-  const shouldLoad = waiterboards.length < 1 ;
   useEffect(() => {
     fetchWaiterboards();
   }, []);
-  if (shouldLoad) return <Loading />;
+  if (loading) return <Loading />;
 
   const wbs = waiterboards.map(wb => {
     const tables = MapToList(wb.tables).sort(
@@ -376,7 +376,7 @@ export default compose(
   connect(
     state => ({
       waiterboards: MapToList(state.waiterboard.all),
-      waiterboardsLoaded: state.waiterboard.loaded
+      loading: state.loading.effects.waiterboard.fetchForSelectedRestaurant
     }),
     ({ waiterboard: { fetchForSelectedRestaurant } }) => ({
       createWaiterboard: createWaiterboardInitAction,

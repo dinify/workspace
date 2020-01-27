@@ -54,6 +54,7 @@ let MenuSection = ({
   menuCategoriesList,
   userLang,
 }) => {
+  console.log(userLang);
   const { t } = useTranslation();
   if (!restaurant) {
     return <div />;

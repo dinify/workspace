@@ -7,7 +7,7 @@ export const getUserLang = createSelector(
     if (profile.language && profile.language.primary) {
       userLang = profile.language.primary;
     }
-    return userLang;
+    return userLang.split('-')[0];
   }
 )
 
