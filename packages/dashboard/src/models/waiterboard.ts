@@ -5,7 +5,7 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 
 const initialState = {
   all: {},
-  loaded: false
+  loaded: false,
 }
 
 export type WaiterboardState = typeof initialState;
@@ -19,6 +19,7 @@ export default createModel({
 
     setLoaded: (state: WaiterboardState): any =>
       assoc('loaded', true)(state),
+
   },
 
   effects: {
