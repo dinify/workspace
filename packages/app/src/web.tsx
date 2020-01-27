@@ -16,6 +16,9 @@ import {
   IntlConfig,
   IntlProvider,
 } from '@dinify/common/src/lib/i18n';
+import {
+  NavigationProvider,
+} from '@dinify/common/src/lib/navigation';
 import { getCookie } from '@dinify/common/src/lib/FN';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
@@ -74,10 +77,12 @@ ReactDOM.render(
       <IntlProvider {...intlConfig}>
         <ReactReduxFirebaseProvider {...rrfProps}>
           <SocketReduxProvider>
-            <Router history={syncedHistory}>
-              <CheckinExecutor />
-              <App />
-            </Router>
+            <NavigationProvider>
+              <Router history={syncedHistory}>
+                <CheckinExecutor />
+                <App />
+              </Router>
+            </NavigationProvider>
           </SocketReduxProvider>
         </ReactReduxFirebaseProvider>
       </IntlProvider>

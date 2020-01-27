@@ -1,4 +1,4 @@
-{
+export default {
   "en": "English",
   "af": "Afrikaans",
   "am": "አማርኛ",
@@ -82,4 +82,4 @@
   "zh-Hans": "简体中文",
   "zh-Hant": "繁體中文",
   "zu": "IsiZulu"
-}
+};

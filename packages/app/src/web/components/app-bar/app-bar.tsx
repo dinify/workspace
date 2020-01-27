@@ -3,10 +3,8 @@ import AppBarAction from './app-bar-action';
 import AppBarTitle from './app-bar-title';
 
 import { select } from '@dinify/common/src/lib/platform';
-import { useSelector } from 'react-redux';
-import { RootState } from 'typesafe-actions';
-import { getTheme } from '@dinify/common/src/theme';
 import { MuiThemeProvider } from '@material-ui/core';
+import { useTheme } from '../../../features/ui/selectors';
 
 interface AppBarProps {
     style?: React.CSSProperties,
@@ -28,26 +26,22 @@ const AppBar: IAppBar = ({
     invert = false,
     ...otherProps
 }) => {
-    const theme = useSelector<RootState, any>(state => {
-        let type = state.ui.theme;
-        if (invert) type = type === 'light' ? 'dark' : 'light';
-        return getTheme({ type });
-    });
-    const { palette: { background: { paper }, divider }} = theme;
-      const coupertino = {
+    const theme = useTheme();
+    const { palette: { background: { paper }, divider } } = theme;
+    const coupertino = {
         backgroundColor: theme.coupertino.backgroundColor,
         WebkitBackdropFilter: theme.coupertino.backdropFilter,
         backdropFilter: theme.coupertino.backdropFilter,
         borderBottom: `1px solid ${theme.coupertino.borderColor}`
-      };
-      const appBarStyle = select({
+    };
+    const appBarStyle = select({
         standard: {
             backgroundColor: paper,
             borderBottom: `1px solid ${divider}`
         },
         osx: coupertino,
         ios: coupertino
-      });
+    });
     return (
         <MuiThemeProvider theme={theme}>
             <div style={{
@@ -63,7 +57,7 @@ const AppBar: IAppBar = ({
                 {children}
             </div>
         </MuiThemeProvider>
-        
+
     );
 };
 

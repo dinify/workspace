@@ -3,7 +3,8 @@ import remove from 'ramda/es/remove';
 import {
   useIntl,
   useTranslation,
-  localizedLanguages,
+  getNativeName,
+  getTranslationId,
   localeMatcher,
 } from '@dinify/common/src/lib/i18n';
 import ChevronRight from '@material-ui/icons/ChevronRightRounded';
@@ -15,18 +16,21 @@ import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
-import { openDialogAction } from '../../../../features/ui/actions';
 import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { RootState } from 'typesafe-actions';
 import { Locale } from '@phensley/cldr';
 import { Profile } from '../../../../store/root-reducer';
-import { useAction } from '@dinify/common/src/lib/util';
+import { useHistory } from 'react-router';
+import * as routes from '../../../routes';
+import { useNavigation } from '@dinify/common/src/lib/navigation';
 
 export default () => {
   const { t } = useTranslation();
   const { setLocale } = useIntl();
-  const openDialog = useAction(openDialogAction);
+  // const openDialog = useAction(openDialogAction);
+  const history = useHistory();
+  const navigation = useNavigation();
   const firebase = useFirebase();
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const isLanguageSet = profile ? !!profile.language : false;
@@ -76,22 +80,30 @@ export default () => {
     });
   };
   const getClickHandler = (
+    language: string | null,
     handler: (langtag: Locale | null) => any,
   ) => () => {
-    openDialog({
-      type: 'language',
-      handler,
-    });
-  };
-  const getLocalName = (languageId: string) => {
-    const tag = localeMatcher.match(languageId).locale.tag;
-    const id = tag.language() === 'zh' ? `zh-${tag.script()}` : tag.language();
-    return (localizedLanguages as any)[id];
+    let selectedLanguage;
+    if (language) selectedLanguage = getTranslationId(language);
+    function onSelect(language: string) {
+      // match locale which includes default region tag for this language
+      const locale = localeMatcher.match(language).locale;
+      handler(locale);
+    }
+    navigation.setState({
+      selectedLanguage,
+      onSelect
+    })
+    history.push(routes.LANGUAGE);
+    // openDialog({
+    //   type: 'language',
+    //   handler,
+    // });
   };
 
   // TODO className={classes.button2}
-  const primaryClickHandler = getClickHandler(handlePrimary);
-  const otherClickHandler = getClickHandler(handleOther);
+  const primaryClickHandler = getClickHandler(isPrimarySet ? language.primary : null, handlePrimary);
+  const otherClickHandler = getClickHandler(null, handleOther);
   return (
     <>
       <Typography
@@ -107,7 +119,7 @@ export default () => {
           button
           onClick={primaryClickHandler}
         >
-          <ListItemText primary={getLocalName(language.primary)} />
+          <ListItemText primary={getNativeName(language.primary)} />
           <ChevronRight color="action" />
         </ListItem>
       ) : (
@@ -128,7 +140,7 @@ export default () => {
       {isOtherSet &&
         language.other.map((lang, i) => (
           <ListItem key={lang} style={{ paddingLeft: 24, paddingRight: 24 }}>
-            <ListItemText primary={getLocalName(lang)} />
+            <ListItemText primary={getNativeName(lang)} />
             <IconButton onClick={getRemoveHandler(i)}>
               <Delete />
             </IconButton>

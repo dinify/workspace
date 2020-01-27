@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation, localeMatcher } from '../../lib/i18n';
 import { languageCountries as languageCountriesUnlocalized } from '../../lib';
-import defaultLanguages from '../../lib/i18n/default-languages.json';
+import defaultLanguages from '../../lib/i18n/default-languages';
 import match from 'autosuggest-highlight/umd/match';
 import parse from 'autosuggest-highlight/umd/parse';
 

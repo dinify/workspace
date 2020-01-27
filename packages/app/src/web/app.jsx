@@ -24,7 +24,7 @@ import { withRoot } from 'withRoot';
 import Dialogs from './dialogs.tsx';
 import Snackbars from './snackbars.tsx';
 import findLast from 'ramda/es/findLast';
-import { MenuItemScreen, AccountScreen, OrderScreen } from './screens';
+import { MenuItemScreen, AccountScreen, OrderScreen, SelectLanguageScreen } from './screens';
 import { useFirebase } from 'react-redux-firebase';
 
 const App = props => {
@@ -64,7 +64,8 @@ const App = props => {
     return matched;
   };
 
-  const isAccountTab = match(routes.ACCOUNT) || match(routes.SIGNIN);
+  const isAccountTab = match(routes.ACCOUNT) || match(routes.SIGNIN) || match(routes.LANGUAGE);
+  const isLanguageSelect = match(routes.LANGUAGE);
   const isOrderScreen = match(routes.TAKEORDER);
 
   const onNavigate = (evt, val) => {
@@ -98,11 +99,12 @@ const App = props => {
               !user.isEmpty && !user.isAnonymous ? (
                 <Redirect to={routes.ACCOUNT} />
               ) : (
-                <SignIn {...props} user={user} firebase={firebase} />
-              )
+                  <SignIn {...props} user={user} firebase={firebase} />
+                )
             }
           />
 
+          <Route path={routes.LANGUAGE} component={SelectLanguageScreen} />
           <Route path={routes.ACCOUNT} component={AccountScreen} />
 
           <Route path={routes.CHECKIN} component={Checkin} />
@@ -116,25 +118,25 @@ const App = props => {
         </Switch>
       </div>
 
-      {!isOrderScreen && <Navigation
-        key="bottom-navigation"
-        // borderVisible={!bottomBarOpen || isAccountTab}
-        handleChange={onNavigate}
-        checkedInRestaurant={checkedInRestaurant}
-        value={(() => {
-          if (isAccountTab) return 1;
-          return 0;
-        })()}
-      />}
-      {checkedInRestaurant && restaurant && restaurant.settings.serviceCalls ?
-        <ServicesButtonContainer
-          anchor={56}
-          onClick={() => openDialog('services')}
+      {!isOrderScreen && !isLanguageSelect && <>
+        <Navigation
+          key="bottom-navigation"
+          // borderVisible={!bottomBarOpen || isAccountTab}
+          handleChange={onNavigate}
+          checkedInRestaurant={checkedInRestaurant}
+          value={(() => {
+            if (isAccountTab) return 1;
+            return 0;
+          })()}
         />
-        : ''
-      }
-
-      {!isAccountTab && !isOrderScreen && (
+        {checkedInRestaurant && restaurant && restaurant.settings.serviceCalls &&
+          <ServicesButtonContainer
+            anchor={56}
+            onClick={() => openDialog('services')}
+          />
+        }
+      </>}
+      {!isAccountTab && !isOrderScreen && !isLanguageSelect && (
         <BottomBar style={{ bottom: 56 }} onSelect={type => openDialog(type)} />
       )}
 
@@ -149,7 +151,7 @@ export default connect(
   state => ({
     user: state.firebase.auth,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
-    restaurant: state.restaurant.checkedInRestaurant ? 
+    restaurant: state.restaurant.checkedInRestaurant ?
       state.restaurant.all[state.restaurant.checkedInRestaurant]
       :
       null,
