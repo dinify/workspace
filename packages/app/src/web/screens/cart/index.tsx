@@ -17,18 +17,16 @@ import { Restaurant } from 'RestaurantModels';
 import { orderAsync } from '../../../features/cart/actions';
 import { getOrderItemIds, useCartRestaurant } from '../../../features/cart/selectors';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
-import MoreVert from '@material-ui/icons/MoreVert';
+// import MoreVert from '@material-ui/icons/MoreVert';
 
-import Add from '@material-ui/icons/AddRounded';
+// import Add from '@material-ui/icons/AddRounded';
 import Delete from '@material-ui/icons/DeleteRounded';
-import { Button, Divider, IconButton } from '@material-ui/core';
+import { Button, Divider } from '@material-ui/core';
 import { Typography } from '../../components/typography'
 import { useAction } from '@dinify/common/src/lib/util';
 import Price from '@dinify/common/src/components/price';
 import { OrderItem } from '../../components/order-item';
 import Switch from '@material-ui/core/Switch';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import { Profile } from '../../../store/root-reducer';
 import toPairs from 'ramda/es/toPairs';
 import { openDialogAction } from '../../../features/ui/actions';
@@ -62,7 +60,6 @@ export const CartScreen: React.FC<{
     opacity: editMode ? 0 : 1,
     config: { tension: 400 }
   });
-  const [anchor, setAnchor] = useState();
   const toggleDefaultLanguage = () => {
     if (isLanguageSet && !useDefaultLanguage) {
       setLocale(language.primary);
@@ -79,7 +76,6 @@ export const CartScreen: React.FC<{
     setUseDefaultLanguage(!useDefaultLanguage);
   };
   const [useDefaultLanguage, setUseDefaultLanguage] = useState(true);
-  const menuOpen = Boolean(anchor);
 
   const checkedInRestaurant = useSelector<RootState, any>(state => state.restaurant.checkedInRestaurant);
   const orderItemIds = useSelector<RootState, string[]>(state => getOrderItemIds(state.cart));
@@ -122,32 +118,25 @@ export const CartScreen: React.FC<{
             setEditMode(false);
           }}
         />}
-        {!editMode && <IconButton
+        {/*!editMode && <IconButton
           aria-label="More"
           aria-owns={open ? 'long-menu' : undefined}
           aria-haspopup="true"
-          onClick={(evt) => setAnchor(evt.currentTarget)}
+          onClick={(evt) => {}}
         >
           <MoreVert />
-        </IconButton>}
-        <Menu
-          id="long-menu"
-          anchorEl={anchor}
-          open={menuOpen}
-          onClose={() => setAnchor(null)}
-        >
-          <MenuItem onClick={toggleDefaultLanguage}>
-            <Switch color="primary" checked={useDefaultLanguage} onChange={toggleDefaultLanguage} />
-            <div>
-              <Typography variant="caption" color="textSecondary">
-                {t('language.default')}
-              </Typography>
-              <Typography variant="caption">
-                {getLocalName(state.locale.tag.language())}
-              </Typography>
-            </div>
-          </MenuItem>
-        </Menu>        
+        </IconButton>*/}
+
+        <div>
+          <Typography variant="caption" color="textSecondary">
+            {t('language.default')}
+          </Typography>
+          <Typography variant="caption">
+            {getLocalName(state.locale.tag.language())}
+          </Typography>
+        </div>
+        <Switch color="primary" checked={useDefaultLanguage} onChange={toggleDefaultLanguage} />
+
       </AppBar>
       <div style={{ marginTop: 56 }}>
         {orderItemIds.map(itemId => (
@@ -179,10 +168,10 @@ export const CartScreen: React.FC<{
             Delete
             <Delete style={{ marginLeft: 8 }}/>
           </Button>}
-          {!editMode && <Button variant="outlined" color="primary">
+          {/*!editMode && <Button variant="outlined" color="primary">
             Add
             <Add style={{ marginLeft: 8 }}/>
-          </Button>}
+        </Button>*/}
         </div>
       </div>
       <Divider />
