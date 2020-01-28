@@ -6,10 +6,10 @@ import {
   Locale
 } from "@phensley/cldr";
 import EnglishPack from "@phensley/cldr/packs/en.json";
-import localizedLanguagesResource from "./localized-languages.json";
-import defaultLanguagesResource from "./default-languages.json";
 import wretch from "wretch";
 import { createContext } from "react";
+import nativeLanguageNames from "./native-names";
+import defaultLanguages from "./default-languages";
 
 // IDEA: use ICU compiled to webassembly !
 
@@ -78,6 +78,39 @@ export function loadMessages(config: IntlConfig): Promise<string[]> {
   });
 }
 
+export const getNativeName = (arg: string | Locale) => {
+  const id = getTranslationId(arg);
+  return (nativeLanguageNames as any)[id];
+};
+
+/**
+ * Makes sure the argument is Locale type.
+ * 
+ * @param arg The input value can be a string or Locale
+ */
+export const coerce = (arg: string | Locale): Locale => {
+  if (typeof arg === 'string') {
+    return CLDRFramework.resolveLocale(arg);
+  }
+  return arg;
+}
+
+/**
+ * The translation id is the key in the translations object received from the API.
+ * Equivalent to the "locale" field in the translations tables in the database.
+ * 
+ * Appends script tag to the language tag in case of Chinese (zh)
+ * to distinguish Simlified (zh-Hans) and Traditional (zh-Hant) scripts 
+ */
+export const getTranslationId = (arg: string | Locale) => {
+  const tag = coerce(arg).tag;
+  let id = tag.language();
+  if (tag.language() === 'zh') {
+    id = `zh-${tag.script()}`;
+  }
+  return id;
+}
+
 export const framework = new CLDRFramework({
   loader,
   asyncLoader,
@@ -89,24 +122,16 @@ const allLocales = CLDRFramework.availableLocales();
 
 export const supportedLocales = allLocales
   // place the default locale at the front of the supported list
-  .sort(l => (l.tag.expanded() === "en-Latn-US" ? -1 : 1));
-
-export const supportedLanguages: string[] = allLocales
   .sort(l => (l.tag.expanded() === "en-Latn-US" ? -1 : 1))
-  .map(l => l.tag.language())
-  .reduce(
-    (unique: string[], item) =>
-      unique.includes(item) ? unique : [...unique, item],
-    []
-  );
-
-export const defaultLanguages: string[] = supportedLanguages.filter(l =>
-  defaultLanguagesResource.includes(l)
-);
-
-export const localizedLanguages: {
-  [key: string]: string;
-} = localizedLanguagesResource;
+  // filter for default languages list, do not disregard the region tag.
+  .filter(l => {
+    const translationId = getTranslationId(l);
+    // Chinese is a special case, we cannot match the language
+    if (translationId.includes('zh')) {
+      return true;
+    }
+    return l.tag.language() === translationId;
+  });
 
 export const getRegionsForLanguage = (language: string): string[] =>
   allLocales
@@ -139,3 +164,4 @@ export const IntlContext = createContext<IntlContextType>({
 export { useIntl } from "./context";
 export * from "./provider";
 export { default as useTranslation } from "./translations";
+export { nativeLanguageNames, defaultLanguages };

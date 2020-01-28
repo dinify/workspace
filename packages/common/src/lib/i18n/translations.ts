@@ -1,4 +1,4 @@
-import { useIntl } from ".";
+import { useIntl, IntlContextType } from ".";
 import { format } from "./formatter";
 import schemas from "./schemas";
 import { MessageArg, MessageNamedArgs } from "@phensley/cldr";
@@ -21,7 +21,7 @@ export let currentT = (...args: any[]) => "";
 
 // useTranslation hook
 export default () => {
-  const context = useIntl();
+  const context = useIntl<IntlContextType>();
   const {
     config,
     state: { locale, messages, cldr }
