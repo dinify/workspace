@@ -19,7 +19,7 @@ const staticRoot =
     ? "https://static.dinify.app"
     : "https://storage.googleapis.com/static.dinify.dev";
 
-const version = '0.1.1';
+const version = '0.1.2';
 
 export interface IntlState {
   locale: Locale;
