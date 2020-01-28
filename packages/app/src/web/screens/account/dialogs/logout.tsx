@@ -22,11 +22,10 @@ export default (props: any) => {
   };
   return (
     <Dialog {...props}>
-      <DialogTitle id="alert-dialog-title">Are you sure?</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t('dialogs.logOut.title')}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          If you log out, you won't be able to use favorites, and a lot of other
-          useful features.
+          {t('dialogs.logOut.message')}
         </DialogContentText>
       </DialogContent>
       <DialogActions>

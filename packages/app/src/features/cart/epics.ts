@@ -229,7 +229,10 @@ const addToCartErrorEpic: Epic = action$ =>
       } = action;
       if (errorType === 'cart-already-exists') {
         return of(
-          uiActions.openDialogAction('clear-order')
+          uiActions.openDialogAction({
+            type: 'clear-order',
+            props: { error: true }
+          })
         );
       }
       return of(

@@ -17,9 +17,9 @@ export default () => {
 
   const restaurantId = useCartRestaurant();
   const clearOrderAction = useAction(makeCartDoneAsync.request);
-  
+
   const getHandler = (id: DialogType) => () => {
-     closeDialog(id);
+    closeDialog(id);
   };
   const clearOrderHandler = (confirmed: boolean) => {
     if (confirmed) {
@@ -31,6 +31,11 @@ export default () => {
       closeDialog('clear-order');
     }
   };
+
+  let clearOrderProps = {};
+  if (dialogs['clear-order'] && (dialogs['clear-order'] as any).props) {
+    clearOrderProps = (dialogs['clear-order'] as any).props;
+  }
 
   return (
     <>
@@ -47,7 +52,7 @@ export default () => {
       >
         <ServicesScreen onClose={getHandler('services')} />
       </Dialog>
-      <ClearOrderDialog open={!!dialogs['clear-order']} onClose={() => clearOrderHandler(false)} onConfirm={clearOrderHandler} />
+      <ClearOrderDialog open={!!dialogs['clear-order']} onClose={() => clearOrderHandler(false)} onConfirm={clearOrderHandler} {...clearOrderProps} />
     </>
   );
 };

@@ -13,7 +13,8 @@ export type DialogType =
   | 'logout';
 export interface Dialog {
   type: DialogType;
-  handler: (...params: any[]) => any;
+  props?: any;
+  handler?: (...params: any[]) => any;
 }
 
 export type TResolver = (t: TFunction) => string;

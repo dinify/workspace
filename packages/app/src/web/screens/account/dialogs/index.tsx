@@ -15,8 +15,8 @@ export default () => {
   const { dialogs } = useSelector((state: RootState) => state.ui);
 
   const getHandler = (type: DialogType) => (...params: any[]) => {
-    if ((dialogs[type] as Dialog).handler)
-      (dialogs[type] as Dialog).handler(...params);
+    if ((dialogs[type] as Dialog).handler && typeof (dialogs[type] as Dialog).handler === 'function')
+      (dialogs[type] as any).handler(...params);
     closeDialog(type);
   };
 

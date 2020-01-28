@@ -136,12 +136,11 @@ export const CartScreen: React.FC<{
             <Button
               onClick={() => openDialog('clear-order')}
               style={{ marginRight: 8, marginLeft: 8 }}
-              variant="text"
+              variant="outlined"
               color="primary"
-              fullWidth
             >
-              Clear order
-          </Button>
+              {t('dialogs.clearOrder.action')}
+            </Button>
             {/*!editMode && <Button variant="outlined" color="primary">
             Add
             <Add style={{ marginLeft: 8 }}/>
@@ -169,8 +168,8 @@ export const CartScreen: React.FC<{
             :
             <div style={{ textAlign: 'center' }}>
               <Typography style={{ margin: '32px 0 8px 0' }} variant="caption" color="textSecondary">
-                To make an order show this code to the waiter
-          </Typography>
+                {t('cart.scanInstruction')}
+              </Typography>
               <QRCode value={orderUrl} />
             </div>
           }
