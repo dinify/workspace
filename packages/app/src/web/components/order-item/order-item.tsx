@@ -147,7 +147,7 @@ const OrderItem: React.FC<OrderItemProps & {
             }
             <Typography
               variant="overline"
-              style={{ position: 'absolute', right: 0, top: 20 }}>
+              style={{ alignSelf: 'flex-end' }}>
               <Price original price={menuItem.price} />
             </Typography>
           </div>
