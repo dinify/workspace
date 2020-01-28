@@ -78,7 +78,10 @@ export const CartScreen: React.FC<{
     const cartItemCount = orderItemIds.length;
     const canOrder = cartItemCount > 0 && checkedInRestaurant !== null;
 
-    const domain = process.env.REACT_APP_DOMAIN || 'web.dinify.app';
+    let domain = 'web.dinify.app';
+    if (process.env.NODE_ENV === 'development') {
+      domain = process.env.REACT_APP_DOMAIN || 'web.dinify.app';
+    }
     const orderUrl = `https://${domain}/order/${user.uid}/${restaurantIdOfCart}`;
     let title = t('cart.title');
     let subtitle = t('itemCount', [cartItemCount]);
