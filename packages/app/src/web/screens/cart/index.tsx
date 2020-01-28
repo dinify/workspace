@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useIntl,
   useTranslation,
@@ -28,6 +28,7 @@ import { OrderItem } from '../../components/order-item';
 import Switch from '@material-ui/core/Switch';
 import { Profile } from '../../../store/root-reducer';
 import { openDialogAction } from '../../../features/ui/actions';
+import { fetchRestaurantAsync } from '../../../features/restaurant/actions';
 
 export const CartScreen: React.FC<{
   onClose?: () => void;
@@ -51,6 +52,14 @@ export const CartScreen: React.FC<{
     const restaurant = useSelector<RootState, Restaurant>(state =>
       restaurantIdOfCart ? state.restaurant.all[restaurantIdOfCart] : null
     );
+
+    const fetchRestaurant = useAction(fetchRestaurantAsync.request);
+    useEffect(() => {
+      if (restaurantIdOfCart && (!restaurant || !restaurant.menuLanguages)) {
+        fetchRestaurant({ subdomain: restaurantIdOfCart });
+      }
+    }, [restaurantIdOfCart]);
+
     const fetchCart = useAction(fetchCartAsync.request);
     const toggleDefaultLanguage = () => {
       if (isLanguageSet && !useDefaultLanguage) {
@@ -64,9 +73,6 @@ export const CartScreen: React.FC<{
             setLocale(menuLanguage.language);
             fetchCart({});
           }
-        }
-        else {
-          // TODO: fetch restaurant if not available in state
         }
       }
       setUseDefaultLanguage(!useDefaultLanguage);
