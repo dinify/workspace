@@ -12,8 +12,8 @@ import { bill } from '../cart/schemas';
 
 
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
-import * as uiActions from '../ui/actions';
-
+import { actions as uiActions} from '../../models/ui';
+import { TFunction } from '@dinify/common/src/lib/i18n/translations';
 // const splitEpic = (action$) =>
 //   action$.pipe(
 //     ofType(types.SPLIT_BILL_INIT),
@@ -81,8 +81,8 @@ const initTransactionEpic: Epic = (action$) =>
       return from(promise).pipe(
         mergeMap((res: Transaction) => of(
           initTransactionAsync.success(res),
-          uiActions.showSnackbarAction({
-            message: t => t('successMessages.payment-request-sent'),
+          uiActions.showSnackbar({
+            message: (t: TFunction) => t('successMessages.payment-request-sent'),
           })
         )),
         catchError(error => handleEpicAPIError({

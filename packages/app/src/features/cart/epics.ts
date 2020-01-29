@@ -29,11 +29,13 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import keys from 'ramda/es/keys';
 import values from 'ramda/es/values';
+import { actions as _uiActions} from '../../models/ui';
+import { TFunction } from '@dinify/common/src/lib/i18n/translations';
 
 // const keyedPropsOfList = (keyProp: string, valProp: string) =>
 // (list: any[]) => zipObj(pluck(keyProp)(list), pluck(valProp)(list));
 
-const getCartEpic: Epic = action$ =>
+const getCartEpic: Epic = (action$, state$) =>
   action$.pipe(
     ofType(getType(fetchCartAsync.request)),
     switchMap(action =>
@@ -125,8 +127,8 @@ const clearCartEpic: Epic = (action$) =>
           of(
             clearCartAsync.success(res),
             fetchCartAsync.request(),
-            uiActions.showSnackbarAction({
-              message: t => t('successMessages.removed-from-cart'),
+            _uiActions.showSnackbar({
+              message: (t: TFunction) => t('successMessages.removed-from-cart'),
             }),
           ),
         ),
@@ -200,12 +202,12 @@ const addToCartEpic: Epic = (action$, state$) =>
           of(
             addToCartAsync.success(res),
             fetchCartAsync.request(),
-            uiActions.showSnackbarAction({
-              message: t => t('successMessages.added-to-cart'),
+            _uiActions.showSnackbar({
+              message: (t: TFunction) => t('successMessages.added-to-cart'),
               handler: () => {
                 console.error('Not implemented: undo');
               },
-              action: t => t('undo'),
+              action: (t: TFunction) => t('undo'),
             }),
           ),
         ),
@@ -236,8 +238,8 @@ const addToCartErrorEpic: Epic = action$ =>
         );
       }
       return of(
-        uiActions.showSnackbarAction({
-          message: t => t(`errorMessages.${errorType}`),
+        _uiActions.showSnackbar({
+          message: (t: TFunction) => t(`errorMessages.${errorType}`),
         }),
       );
     }),
@@ -254,8 +256,8 @@ const rmFromCartEpic: Epic = action$ =>
           of(
             rmFromCartAsync.success(res),
             fetchCartAsync.request(),
-            uiActions.showSnackbarAction({
-              message: t => t('successMessages.removed-from-cart'),
+            _uiActions.showSnackbar({
+              message: (t: TFunction) => t('successMessages.removed-from-cart'),
             }),
           ),
         ),
@@ -281,8 +283,8 @@ const orderEpic: Epic = action$ =>
             fetchCartAsync.request(),
             transactionActions.fetchBillAsync.request(),
             uiActions.closeDialogAction('cart'),
-            uiActions.showSnackbarAction({
-              message: t => t('successMessages.order-has-been-placed'),
+            _uiActions.showSnackbar({
+              message: (t: TFunction) => t('successMessages.order-has-been-placed'),
             }),
           ),
         ),

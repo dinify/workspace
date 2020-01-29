@@ -23,8 +23,8 @@ const defaultProps: Partial<SnackbarProps> = {
 export default (props: any) => {
   const hideSnackbar = useAction(hideSnackbarAction);
   const { t } = useTranslation();
-  const snackbars = useSelector<RootState, UiState['snackbars']>(
-    state => state.ui.snackbars,
+  const snackbars = useSelector<any, UiState['snackbars']>(
+    state => state._ui.snackbars,
   );
   const fullScreenDialogOpen = useSelector<RootState, boolean>(state => {
     return (

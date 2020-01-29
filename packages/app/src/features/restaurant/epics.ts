@@ -6,7 +6,8 @@ import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
-import * as uiActions from '../ui/actions';
+import { actions as uiActions} from '../../models/ui';
+import { TFunction } from '@dinify/common/src/lib/i18n/translations';
 
 const fetchRestaurantsEpic: Epic = (action$) =>
   action$.pipe(
@@ -81,8 +82,8 @@ const checkinEpic: Epic = (action$, state$, { history }) =>
         mergeMap((res: any) => of(
           execCheckinAsync.success(res),
           fetchStatusAsync.request(),
-          uiActions.showSnackbarAction({
-            message: t => t('successMessages.you-are-now-checked-in')
+          uiActions.showSnackbar({
+            message: (t: TFunction) => t('successMessages.you-are-now-checked-in')
           })
         )),
         catchError(error => handleEpicAPIError({
