@@ -5,7 +5,7 @@ import * as FN from '@dinify/common/src/lib/FN';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import Carousel from './Carousel';
+// import Carousel from './Carousel';
 import convertDistance from 'geolib/es/convertDistance';
 import { useIntl } from '@dinify/common/src/lib/i18n';
 
@@ -79,7 +79,7 @@ const RestaurantListItem = ({ classes, restaurant }) => {
     <Link
       to={`/restaurant/${restaurant.subdomain}${
         FN.isInstalled() ? '?source=pwa' : ''
-      }`}
+        }`}
       {...props}
     />
   );
@@ -93,12 +93,12 @@ const RestaurantListItem = ({ classes, restaurant }) => {
     >
       <div style={{ width: '100%' }}>
         <div style={{ width: '100%' }} className={classes.image}>
-          <Carousel
+          {/* <Carousel
             borderRadius={4}
             aspectRatio={3 / 2}
             images={images}
             backdrop={<span className={classes.imageBackdrop} />}
-          />
+          /> */}
         </div>
         {tags && (
           <Typography

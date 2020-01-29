@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import Typography from '@material-ui/core/Typography';
 import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContainer';
-import Carousel from 'web/components/Carousel';
+// import Carousel from 'web/components/Carousel';
 import { fetchMenuCategoriesAsync } from 'features/menuCategory/actions.ts';
 import { getRestaurantBySubdomain } from 'features/restaurant/selectors';
 import { fetchRestaurantAsync } from 'features/restaurant/actions.ts';
@@ -89,7 +89,7 @@ let RestaurantView = props => {
 
   return (
     <div style={{ paddingBottom: 56 + 16 }}>
-      {extraSmallScreen && <Carousel images={images.map(image => image.url)} />}
+      {/* {extraSmallScreen && <Carousel images={images.map(image => image.url)} />} */}
       {!extraSmallScreen && (
         <Grid
           container
@@ -113,8 +113,8 @@ let RestaurantView = props => {
                     i === 0
                       ? '0 0 4px 0'
                       : i === images.length - 1
-                      ? '0 0 0 4px'
-                      : '0 0 4px 4px',
+                        ? '0 0 0 4px'
+                        : '0 0 4px 4px',
                   backgroundImage: `url(${image.url})`,
                 }}
               />

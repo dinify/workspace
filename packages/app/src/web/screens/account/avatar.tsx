@@ -1,6 +1,6 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Image from '../../components/Image';
+import { Image } from '../../components/image';
 import Typography from '@material-ui/core/Typography';
 import Person from '@material-ui/icons/PersonRounded';
 import { User } from 'firebase';
@@ -39,9 +39,8 @@ export default ({ user }: { user: User | null }) => {
         {user !== null && user.photoURL && (
           <Image
             style={{ position: 'absolute', top: 0, ...trans }}
-            aspect={1}
-            image={user.photoURL}
-            title={user.displayName || ''}
+            url={user.photoURL}
+            alt={user.displayName || ''}
           />
         )}
       </Avatar>

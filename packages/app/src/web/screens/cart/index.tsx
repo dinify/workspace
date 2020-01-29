@@ -95,7 +95,7 @@ export const CartScreen: React.FC<{
     return (
       <div {...otherProps}>
         <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
-          <AppBarAction type="close" onClick={onClose} />
+          <AppBarAction style={{ marginRight: 8 }} type="close" onClick={onClose} />
           <AppBarTitle
             title={title}
             subtitle={subtitle}

@@ -1,14 +1,45 @@
 declare module 'RestaurantModels' {
 
-  export type Restaurant = {
+  export interface Restaurant {
     id: string;
     title: string;
     favorite: boolean;
-    settings: any;
     subdomain: string;
+    images: Image[];
     menuLanguages: MenuLanguage[];
+
+    published: boolean;
+    priceCategory: string | null;
+    rating: number | null;
+    ratingCount: number | null;
+    name: string;
+    type: "CLASSIC" | "QLESS";
+    latitude: number;
+    longitude: number;
+    payout: null;
+    address: Address;
+    social: any;
+    contact: any;
+    settings: {
+      currency: CurrencyCode;
+      reservations: boolean;
+      paymentMethods: array;
+      paymentCollection: string;
+      orders: boolean;
+    };
+    createdAt: DateTime;
+    updatedAt: DateTime;
+    favorite: boolean;
+    publishRequestPending: any;
   };
-  
+
+  export type Image = {
+    published: boolean;
+    item_id: string;
+    url: string;
+    precedence: number;
+  };
+
   export type MenuLanguage = {
     published: boolean;
     default: boolean;

@@ -16,6 +16,7 @@ type AppBarActionType = 'close' | 'cancel' | 'edit' | 'done' | 'back';
 const AppBarAction: React.FC<{
   onClick?: () => void,
   type: AppBarActionType,
+  style?: React.CSSProperties,
 }> = ({
   onClick = () => { },
   type,
@@ -34,27 +35,27 @@ const AppBarAction: React.FC<{
       </IconButton>
     );
 
-    const appBarActions: {[key: string]: any} = {
+    const appBarActions: { [key: string]: any } = {
       back: select({
         ios: (
           <Button onClick={onClick} {...otherProps}>
-            <BackIosIcon/>
+            <BackIosIcon style={{ marginRight: -8 }} />
             {t('appBar.back')} {/* TODO: possibly previous screen name */}
           </Button>
         ),
-        standard: getIconButton(<BackIcon/>)
+        standard: getIconButton(<BackIcon />)
       }),
       close: select({
         ios: getTextButton('Close'),
-        standard: getIconButton(<CloseIcon/>)
+        standard: getIconButton(<CloseIcon />)
       }),
       edit: select({
         ios: getTextButton(t('appBar.edit')),
-        standard: getIconButton(<EditIcon/>)
+        standard: getIconButton(<EditIcon />)
       }),
       done: select({
         ios: getTextButton(t('appBar.done')),
-        standard: getIconButton(<DoneIcon/>)
+        standard: getIconButton(<DoneIcon />)
       })
     };
     return appBarActions[type];

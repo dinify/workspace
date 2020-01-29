@@ -96,6 +96,9 @@ export const getTheme = ({ type = 'light' }) => {
       },
       overrides: {
         MuiButton: {
+          root: {
+            minHeight: 36,
+          },
           label: {
             ...nextVariants['button2']
           }

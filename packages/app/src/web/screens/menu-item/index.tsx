@@ -7,7 +7,7 @@ import {
   fetchMenuItemAsync,
   clearCustomizationsAction,
 } from '../../../features/menuItem/actions';
-import Carousel from '../../components/Carousel';
+// import Carousel from '../../components/Carousel';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -28,7 +28,7 @@ import { useOptionView } from '../../../features/option/selectors';
 import { useAction } from '@dinify/common/src/lib/util';
 import { useMenuItemView } from '../../../features/menuItem/selectors';
 
-export const MenuItemScreen = ({  }: {}) => {
+export const MenuItemScreen = ({ }: {}) => {
   const clearCustomizations = useAction(clearCustomizationsAction);
   const fetchMenuItem = useAction(fetchMenuItemAsync.request);
   const favMenuitem = useAction(favMenuitemInit);
@@ -44,6 +44,7 @@ export const MenuItemScreen = ({  }: {}) => {
       .sort((a, b) => b.precedence - a.precedence)
       .map(img => img.url);
   });
+  console.log([...imageUrls].length);
   const addons = useAddonView(menuItemId);
   const ingredients = useIngredientView(menuItemId);
   const options = useOptionView(menuItemId);
@@ -74,7 +75,7 @@ export const MenuItemScreen = ({  }: {}) => {
 
   return (
     <div>
-      {imageUrls.length > 0 && <Carousel images={imageUrls} />}
+      {/* {imageUrls.length > 0 && <Carousel images={imageUrls} />} */}
       <ResponsiveContainer>
         <Grid container spacing={16} style={{ marginTop: 16 }}>
           <Grid item xs={12} md={6}>
