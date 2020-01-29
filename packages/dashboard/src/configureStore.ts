@@ -72,9 +72,7 @@ const commonReducers = {
 
 const epicMiddleware = createEpicMiddleware();
 
-const loading = createLoadingPlugin({
-  
-});
+const loading = createLoadingPlugin({});
 
 const makeStore = (history: any) => {
 
@@ -115,4 +113,4 @@ const s = makeStore({}).store;
 
 export type Store = typeof s;
 export type Dispatch = typeof s.dispatch;
-export type iRootState = RematchRootState<typeof models>;
+export type RootState = RematchRootState<typeof models>;
