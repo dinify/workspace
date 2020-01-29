@@ -1,6 +1,6 @@
 import React from 'react';
 import FilledInput from '@material-ui/core/FilledInput';
-import { supportedLocales, useIntl, localizedLanguages, IntlContextType } from '../../lib/i18n';
+import { supportedLocales, useIntl, nativeLanguageNames, IntlContextType } from '../../lib/i18n';
 import { Locale } from '@phensley/cldr';
 import NativeSelect from '@material-ui/core/NativeSelect';
 
@@ -42,7 +42,7 @@ export const LanguageSelect = ({ tags, onChange }: Props) => {
       .filter(l => (tags === undefined || tags.includes(l.id)))
       .map((locale) => (
         <option style={{ height: 24 }} key={locale.id} value={locale.id}>
-          {`${getEmoji(locale.tag.region())} ${localizedLanguages[locale.tag.language()]}`}
+          {`${getEmoji(locale.tag.region())} ${(nativeLanguageNames as any)[locale.tag.language()]}`}
         </option>
       ))}
   </NativeSelect>;
