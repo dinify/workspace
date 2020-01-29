@@ -1,6 +1,7 @@
 import {
   buildMessageMatcher,
   parseMessagePattern,
+  pluralRules,
   MessageArg,
   MessageEngine,
   MessageNamedArgs,
@@ -93,8 +94,9 @@ export const format = (
   positional: MessageArg[] = [],
   named: MessageNamedArgs = {}
 ) => {
+  const plurals = pluralRules.get(locale.tag.language(), locale.tag.hasRegion() ? locale.tag.region() : undefined);
   const engine = new MessageEngine(
-    locale.tag.language(),
+    plurals,
     getFormatters(cldr),
     parse(message)
   );
