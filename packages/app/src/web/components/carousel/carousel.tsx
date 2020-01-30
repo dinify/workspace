@@ -13,12 +13,14 @@ export interface CarouselProps {
   backdrop?: string,
   fixed?: boolean,
   alt: string,
+  style?: React.CSSProperties,
 }
 
 const Carousel: React.FC<CarouselProps> = ({
   images = [],
   alt,
-  aspectRatio = 16 / 9
+  aspectRatio = 16 / 9,
+  style
 }) => {
   const [selectedPage, setSelectedPage] = useState(0);
   const ratio = Math.round((1 / aspectRatio) * 100 * 10000) / 10000;
@@ -42,15 +44,15 @@ const Carousel: React.FC<CarouselProps> = ({
     };
   }, [count, selectedPage]);
   return (
-    <div style={{ position: 'relative', paddingTop: `${ratio}%`, width: '100%' }}>
+    <div style={{ position: 'relative', paddingTop: `${ratio}%`, width: '100%', ...style }}>
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
-        <div ref={container} style={styles.container} className="hide-scollbar">
+        <figure ref={container} style={styles.container} className="hide-scollbar">
           {images.sort(
             comparator((a, b) => a.precedence < b.precedence)
           ).map((image, i) => (
-            <Image style={styles.image} key={image.url} url={image.url} alt={`${alt} ${i}`} />
+            <Image style={styles.image} key={image.url} url={image.url} alt={`${alt} ${i + 1}`} />
           ))}
-        </div>
+        </figure>
       </div>
       {count > 1 && <div style={{
         paddingBottom: 8,
