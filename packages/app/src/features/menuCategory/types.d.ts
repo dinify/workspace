@@ -5,7 +5,11 @@ declare module 'MenuCategoriesModels' {
   export type MenuCategory = {
     id: string;
     restaurantId: string;
-    translations: [Translation];    
+    published: boolean;
+    subdomain: string;
+    precedence: number;
+    items: string[];
+    translations: [Translation];
   }
 
   export type MenuCategoryMap = {

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Image as ImageType } from 'RestaurantModels';
 import styles from './styles';
-import comparator from 'ramda/es/comparator';
 import { Image } from '../image';
 import PageIndicator from '../PageIndicator';
 
@@ -19,7 +18,7 @@ export interface CarouselProps {
 const Carousel: React.FC<CarouselProps> = ({
   images = [],
   alt,
-  aspectRatio = 16 / 9,
+  aspectRatio = 3 / 2,
   style
 }) => {
   const [selectedPage, setSelectedPage] = useState(0);
@@ -47,14 +46,16 @@ const Carousel: React.FC<CarouselProps> = ({
     <div style={{ position: 'relative', paddingTop: `${ratio}%`, width: '100%', ...style }}>
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
         <figure ref={container} style={styles.container} className="hide-scollbar">
-          {images.sort(
-            comparator((a, b) => a.precedence < b.precedence)
-          ).map((image, i) => (
+          {images.map((image, i) => (
             <Image style={styles.image} key={image.url} url={image.url} alt={`${alt} ${i + 1}`} />
           ))}
         </figure>
       </div>
       {count > 1 && <div style={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
         paddingBottom: 8,
         display: 'flex',
         justifyContent: 'center',

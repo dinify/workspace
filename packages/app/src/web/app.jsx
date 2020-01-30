@@ -24,7 +24,14 @@ import { withRoot } from 'withRoot';
 import Dialogs from './dialogs.tsx';
 import Snackbars from './snackbars.tsx';
 import findLast from 'ramda/es/findLast';
-import { MenuItemScreen, AccountScreen, OrderScreen, SelectLanguageScreen, RestaurantViewScreen } from './screens';
+import {
+  MenuItemScreen,
+  AccountScreen,
+  OrderScreen,
+  SelectLanguageScreen,
+  RestaurantViewScreen,
+  RestaurantInfoScreen
+} from './screens';
 import { useFirebase } from 'react-redux-firebase';
 
 const App = props => {
@@ -110,6 +117,7 @@ const App = props => {
           <Route path={routes.CHECKIN} component={Checkin} />
           <Route path={routes.SERVICES} component={Services} />
 
+          <Route path={routes.INFO} component={RestaurantInfoScreen} />
           <Route path={routes.RESTAURANT} component={RestaurantViewScreen} />
           <Route path={routes.MENUITEM} component={MenuItemScreen} />
 

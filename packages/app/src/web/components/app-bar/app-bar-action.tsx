@@ -5,13 +5,16 @@ import CloseIcon from '@material-ui/icons/CloseRounded';
 import EditIcon from '@material-ui/icons/EditRounded';
 import DoneIcon from '@material-ui/icons/DoneRounded';
 import BackIcon from '@material-ui/icons/ArrowBackRounded';
-import BackIosIcon from '@material-ui/icons/ArrowBackIos';
+import BackIosIcon from '@material-ui/icons/ArrowBackIosRounded';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import MoreIosIcon from '@material-ui/icons/MoreHoriz';
+
 import Button from '@material-ui/core/Button';
 
 import { select } from '@dinify/common/src/lib/platform';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 
-type AppBarActionType = 'close' | 'cancel' | 'edit' | 'done' | 'back';
+type AppBarActionType = 'close' | 'cancel' | 'edit' | 'done' | 'back' | 'more';
 
 const AppBarAction: React.FC<{
   onClick?: () => void,
@@ -58,6 +61,10 @@ const AppBarAction: React.FC<{
       done: select({
         ios: getTextButton(t('appBar.done')),
         standard: getIconButton(<DoneIcon />)
+      }),
+      more: select({
+        ios: getIconButton(<MoreIosIcon />),
+        standard: getIconButton(<MoreIcon />)
       })
     };
     if (!type) {
