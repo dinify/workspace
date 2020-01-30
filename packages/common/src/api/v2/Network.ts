@@ -89,6 +89,20 @@ export const Post = (urlParts: UrlTypes, body = {}) => Request(
   }
 );
 
+export const PostImage = (urlParts: UrlTypes, body: any) => {
+  const formdata = new FormData();
+  formdata.append("image", body.file);
+  return Request(
+    buildURL(urlParts),
+    {
+      method: 'POST',
+      body: formdata,
+      lang: urlParts.lang,
+      headers: {}
+    }
+  );
+}
+
 export const Put = (urlParts: UrlTypes, body = {}) => Request(
   buildURL(urlParts),
   {

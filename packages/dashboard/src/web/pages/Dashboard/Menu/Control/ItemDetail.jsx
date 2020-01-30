@@ -134,7 +134,7 @@ let ItemDetail = ({
       <CardContent>
         <Dropzone
           accept="image/jpg, image/jpeg, image/png"
-          onDrop={(accepted, rejected) => {
+          onDrop={(accepted) => {
             if (accepted && accepted.length > 0)
               uploadItemImage({ file: accepted[0], id: selectedFoodId });
           }}

@@ -108,9 +108,8 @@ export default function reducer(state = initialState, action) {
     }
 
     case getType(actions.uploadItemImageAsync.success): {
-      const foodId = payload.initPayload.id;
-      const image = payload.res;
-      return assocPath(['all', foodId, 'images', image.id], image)(state);
+      const foodId = meta.id;
+      return assocPath(['all', foodId, 'images', payload.id], payload)(state);
     }
     
     case firebaseTypes.LOGOUT: {

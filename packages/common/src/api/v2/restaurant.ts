@@ -1,4 +1,4 @@
-import { Get, Post, Patch, Delete } from './Network';
+import { Get, Post, Patch, Delete, PostImage } from './Network';
 
 export const GetListOfRestaurants = () => {
   return Get({
@@ -244,10 +244,10 @@ export const RemoveMenuItem = (menuItemId: string): Promise<any> => Delete({
   path: `menuItems/${menuItemId}`
 });
 
-export const UploadMenuItemImage = ({ file, id }: any): Promise<any> => Post({
+export const UploadMenuItemImage = ({ file, id }: any): Promise<any> => PostImage({
   path: `menuItems/${id}/images`
 }, {
-  image: file
+  file
 });
 
 export const GetFavMenuItems = (): Promise<any> => Get({
