@@ -8,6 +8,10 @@ const Qr = ({ match, restaurant }) => {
   if (match.params.code.includes('WIFI')) {
     value = match.params.code;
   }
+  if (match.params.code.includes('restaurant-link-')) {
+    const subdomain = match.params.code.replace('restaurant-link-', '');
+    value = `https://web.dinify.app/restaurant/${subdomain}`;
+  }
   return (
     <div style={{
       position: 'absolute',

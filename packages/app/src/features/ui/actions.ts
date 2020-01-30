@@ -28,10 +28,6 @@ export interface Snackbar {
   action?: string | TResolver;
 }
 
-export const showSnackbarAction = createAction(`${p}/SNACKBAR_SHOW`)<
-  Snackbar
->();
-
 export const hideSnackbarAction = createAction(`${p}/SNACKBAR_HIDE`)<
   SnackbarId
 >();

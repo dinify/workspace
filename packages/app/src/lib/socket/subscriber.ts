@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import { getType } from 'typesafe-actions';
 import * as actions from '../../features/socket/actions';
 import { fetchBillAsync } from '../../features/transaction/actions';
-import { showSnackbarAction } from '../../features/ui/actions';
+import { actions as uiActions} from '../../models/ui';
+import { TFunction } from '@dinify/common/src/lib/i18n/translations';
 import { Call, Seat } from 'ServiceModels';
 import { Transaction, Order } from 'TransactionModels';
 
@@ -35,15 +36,15 @@ export const useSubscriber = (uid: string) => {
         dispatch(actions.confirmedPaymentAction(payload));
         if (me) {
           dispatch(
-            showSnackbarAction({
-              message: t => t('paymentConfirmed'),
+            uiActions.showSnackbar({
+              message: (t: TFunction) => t('paymentConfirmed'),
             }),
           );
         }
       } else if (me) {
         dispatch(
-          showSnackbarAction({
-            message: t => t('paymentCancelled'),
+          uiActions.showSnackbar({
+            message: (t: TFunction) => t('paymentCancelled'),
           }),
         );
       }
@@ -58,8 +59,8 @@ export const useSubscriber = (uid: string) => {
       dispatch(actions.confirmedOrderAction(payload));
       if (payload.order.initiator === uid) {
         dispatch(
-          showSnackbarAction({
-            message: t => t('order.confirmed'),
+          uiActions.showSnackbar({
+            message: (t: TFunction) => t('order.confirmed'),
           }),
         );
       }
@@ -68,8 +69,8 @@ export const useSubscriber = (uid: string) => {
       payload.order.initiator === uid
     ) {
       dispatch(
-        showSnackbarAction({
-          message: t => t('order.cancelled'),
+        uiActions.showSnackbar({
+          message: (t: TFunction) => t('order.cancelled'),
         }),
       );
     }
@@ -79,14 +80,14 @@ export const useSubscriber = (uid: string) => {
     if (payload.call.status === 'CONFIRMED') {
       dispatch(actions.confirmedCallAction(payload));
       dispatch(
-        showSnackbarAction({
-          message: t => t('serviceCallConfirmed'),
+        uiActions.showSnackbar({
+          message: (t: TFunction) => t('serviceCallConfirmed'),
         }),
       );
     } else if (payload.call.status === 'CANCELLED') {
       dispatch(
-        showSnackbarAction({
-          message: t => t('serviceCallCancelled'),
+        uiActions.showSnackbar({
+          message: (t: TFunction) => t('serviceCallCancelled'),
         }),
       );
     }
@@ -96,8 +97,8 @@ export const useSubscriber = (uid: string) => {
     dispatch(actions.checkinAction({ ...payload, me }));
     if (!me) {
       dispatch(
-        showSnackbarAction({
-          message: t => t('guestJoinedTable'),
+        uiActions.showSnackbar({
+          message: (t: TFunction) => t('guestJoinedTable'),
         }),
       );
     }
@@ -106,15 +107,15 @@ export const useSubscriber = (uid: string) => {
     if (payload.seat.userId === uid) {
       dispatch(actions.checkoutAllAction(payload));
       dispatch(
-        showSnackbarAction({
-          message: t => t('checkedOut'),
+        uiActions.showSnackbar({
+          message: (t: TFunction) => t('checkedOut'),
         }),
       );
     } else {
       dispatch(actions.checkoutAction(payload));
       dispatch(
-        showSnackbarAction({
-          message: t => t('guestLeftTable'),
+        uiActions.showSnackbar({
+          message: (t: TFunction) => t('guestLeftTable'),
         }),
       );
     }
@@ -122,8 +123,8 @@ export const useSubscriber = (uid: string) => {
   useSubscription('checkout-all', payload => {
     dispatch(actions.checkoutAllAction(payload));
     dispatch(
-      showSnackbarAction({
-        message: t => t('checkedOut'),
+      uiActions.showSnackbar({
+        message: (t: TFunction) => t('checkedOut'),
       }),
     );
   });
@@ -133,8 +134,8 @@ export const useSubscriber = (uid: string) => {
   useSubscription('split', payload => {
     dispatch(actions.splitAction(payload));
     dispatch(
-      showSnackbarAction({
-        message: t => t('newBillSplitItems'),
+      uiActions.showSnackbar({
+        message: (t: TFunction) => t('newBillSplitItems'),
       }),
     );
   });

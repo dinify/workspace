@@ -15,6 +15,7 @@ import Name from './Name';
 import Wifi from './Wifi';
 // import Tags from './Tags';
 import Features from './Features';
+import RestaurantQR from './RestaurantQR';
 
 
 const Column = styled.div`
@@ -44,6 +45,7 @@ const Main = ({ restaurant }) => {
 
         <Column>
           <Social social={restaurant.social} />
+          <RestaurantQR />
           <Wifi />
         </Column>
 

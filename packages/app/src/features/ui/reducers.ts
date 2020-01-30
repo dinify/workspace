@@ -78,13 +78,6 @@ export default function reducer(state: UiState = initialState, action: AnyAction
       return dissocPath<UiState>(['dialogs', 'cart'])(state);
     }
     
-    //case getType(actions.showSnackbarAction): {
-    //  let snackbar = action.payload as Snackbar;
-    //  const id = snackbar.id || Math.random().toString(36).substring(7);
-    //  const value = { ...snackbar, id, visible: true };
-    //  return assocPath<Snackbar, UiState>(['snackbars', id], value)(state);
-    //}
-//
     case getType(actions.hideSnackbarAction): {
       return assocPath<boolean, UiState>(['snackbars', action.payload, 'visible'], false)(state);
     }
