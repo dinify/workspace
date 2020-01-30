@@ -6,7 +6,10 @@ import { ListToMap, setCookie } from '@dinify/common/src/lib/FN';
 import { actionTypes as firebaseTypes } from 'react-redux-firebase';
 import * as types from './types';
 import { getType } from 'typesafe-actions';
-import { fetchManagedAsync, updateRestaurantAsync, fetchRestaurantAsync, fetchWaiterboardsAsync } from './actions';
+import {
+  fetchManagedAsync, updateRestaurantAsync, fetchRestaurantAsync, fetchWaiterboardsAsync,
+  uploadMainImageAsync
+} from './actions';
 
 const preferredLanguagesInitial = [
   "ar", "az", "bg", "cs", "da", "de",
@@ -112,9 +115,8 @@ export default function reducer(state = initialState, action) {
       return assocPath(['all', restaurantId, 'name'], name)(state);
     }
 
-    case 'UPDATE_IMAGE_DONE': {
-      const { restaurantId, res } = payload;
-      return assocPath(['all', restaurantId, 'uploadedImage'], res.url)(state);
+    case getType(uploadMainImageAsync.success): {
+      return assocPath(['all', action.meta.id, 'uploadedImage'], payload.url)(state);
     }
 
     case 'UPDATE_LOCATION_INIT': {

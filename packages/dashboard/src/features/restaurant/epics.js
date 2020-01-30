@@ -4,17 +4,13 @@ import { ofType } from 'redux-observable';
 import { getType } from 'typesafe-actions';
 import { push } from 'connected-react-router';
 import { reset } from 'redux-form';
-import sort from 'ramda/es/sort';
-import values from 'ramda/es/values';
 import { actionTypes } from 'react-redux-firebase';
 import { setCookie, handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 import { reportCampaignAction } from '@dinify/common/src/features/reporting/actions';
 import * as API from '@dinify/common/src/api/v2/restaurant.ts';
 import * as types from './types';
-import {
-  fetchRestaurantAsync, selectRestaurant, fetchManagedAsync, updateRestaurantAsync, fetchWaiterboardsAsync
-} from './actions';
+import * as actions from './actions';
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 export const appBootstrap = () => ({ type: 'BOOTSTRAP' });
@@ -31,17 +27,17 @@ const bootstrapEpic = action$ =>
 
 const fetchRestaurantEpic = (action$) =>
   action$.pipe(
-    ofType(getType(fetchRestaurantAsync.request)),
+    ofType(getType(actions.fetchRestaurantAsync.request)),
     mergeMap((action) => from(API.GetRestaurantById({ 
       restaurantId: action.payload.restaurantId
     })).pipe(
       map((res) => {
-        return fetchRestaurantAsync.success(res);
+        return actions.fetchRestaurantAsync.success(res);
       }),
       catchError(error => {
         return handleEpicAPIError({
           error,
-          failActionType: getType(fetchRestaurantAsync.failure),
+          failActionType: getType(actions.fetchRestaurantAsync.failure),
           initAction: action
         })
       })
@@ -65,7 +61,7 @@ const getLoggedEpic = (action$, state$) =>
       return triggerOn.includes(action.type);
     }),
     mergeMap(() => {
-      const reactions = [fetchManagedAsync.request()];
+      const reactions = [actions.fetchManagedAsync.request()];
       const selectedRestaurant = state$.value.restaurant.selectedRestaurant;
       if (selectedRestaurant) reactions.push({ type: 'LOAD_RESTAURANT' });
       return reactions;
@@ -74,14 +70,14 @@ const getLoggedEpic = (action$, state$) =>
 
 const getManagedEpic = (action$) =>
   action$.pipe(
-    ofType(getType(fetchManagedAsync.request)),
+    ofType(getType(actions.fetchManagedAsync.request)),
     mergeMap((action) => {
       return from(API.GetManagedRestaurants()).pipe(
-        map(fetchManagedAsync.success),
+        map(actions.fetchManagedAsync.success),
         catchError(error =>
           handleEpicAPIError({
             error,
-            failActionType: getType(fetchManagedAsync.failure),
+            failActionType: getType(actions.fetchManagedAsync.failure),
             initAction: action,
           }),
         ),
@@ -95,7 +91,7 @@ const loadRestaurant = (action$, state$) =>
     mergeMap(() => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
       return of(
-        fetchRestaurantAsync.request({ restaurantId }),
+        actions.fetchRestaurantAsync.request({ restaurantId }),
         { type: 'FETCH_LANGUAGES_INIT' },
         { type: 'FETCH_TRANSLATIONS_INIT' },
         { type: 'GET_SERVICEIMAGES_INIT' },
@@ -145,7 +141,7 @@ const registerRestaurantEpic = (action$, state$, { firebase }) =>
               setCookie('access_token', t.token, 90);
               return of(
                 { type: 'REGISTER_RESTAURANT_DONE', payload: { res } },
-                selectRestaurant({ id: res.id }),
+                actions.selectRestaurant({ id: res.id }),
                 reportCampaignAction({
                   token: onboardingToken,
                   status: 'restaurant:created',
@@ -168,35 +164,34 @@ const registerRestaurantEpic = (action$, state$, { firebase }) =>
     }),
   );
 
-const editImageEpic = (action$, state$) =>
+const uploadMainImageEpic = (action$, state$) =>
   action$.pipe(
-    ofType('UPDATE_IMAGE_DONE'),
-    mergeMap(action => {
-      const {
-        payload: { res },
-      } = action;
-      const { id } = res;
-      const selectedRestaurant = state$.value.restaurant.selectedRestaurant;
-      const images = state$.value.restaurant.all[selectedRestaurant].images;
-      const maxPrecedence = sort((a, b) => b.precedence - a.precedence)(
-        values(images),
-      )[0].precedence;
-      return from(API.EditImage({ id, precedence: maxPrecedence + 1 })).pipe(
-        map(res => ({ type: 'EDIT_IMAGE_DONE', payload: res })),
-        catchError(error =>
-          handleEpicAPIError({
-            error,
-            failActionType: 'EDIT_IMAGE_FAIL',
-            initAction: action,
-          }),
-        ),
+    ofType(getType(actions.uploadMainImageAsync.request)),
+    mergeMap((action) => {
+
+      const payload = action.payload;
+
+      const { file } = payload;
+      const id = state$.value.restaurant.selectedRestaurant;
+
+      return from(API.UploadRestaurantImage({ file, id })).pipe(
+        map((res) => ({
+          type: getType(actions.uploadMainImageAsync.success),
+          payload: res,
+          meta: payload
+        })),
+        catchError(error => handleEpicAPIError({
+          error,
+          failActionType: getType(actions.uploadMainImageAsync.failure),
+          initAction: action
+        }))
       );
-    }),
+    })
   );
 
 const updateRestaurantEpic = (action$, state$) =>
   action$.pipe(
-    ofType(getType(updateRestaurantAsync.request)),
+    ofType(getType(actions.updateRestaurantAsync.request)),
     mergeMap(action => {
       const restaurant = {
         id: state$.value.restaurant.selectedRestaurant,
@@ -204,12 +199,12 @@ const updateRestaurantEpic = (action$, state$) =>
       };
       return from(API.UpdateRestaurant(restaurant)).pipe(
         map(res => {
-          return updateRestaurantAsync.success(res);
+          return actions.updateRestaurantAsync.success(res);
         }),
         catchError(error =>
           handleEpicAPIError({
             error,
-            failActionType: getType(updateRestaurantAsync.failure),
+            failActionType: getType(actions.updateRestaurantAsync.failure),
             initAction: action,
           }),
         ),
@@ -309,7 +304,7 @@ export default [
   bootstrapEpic,
   getLoggedEpic,
   registerRestaurantEpic,
-  editImageEpic,
+  uploadMainImageEpic,
   selectRestaurantEpic,
   onUpdateDoneSnackbarsEpic,
   onUpdateFailSnackbarsEpic,

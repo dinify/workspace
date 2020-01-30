@@ -8,7 +8,7 @@ import {
   FormBoxHead,
   FormBoxBody,
 } from 'web/components/styled/FormBox';
-import { uploadMainImageInitAction } from 'features/restaurant/actions';
+import { uploadMainImageAsync } from 'features/restaurant/actions';
 import Progress from 'web/components/Progress';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 
@@ -31,7 +31,7 @@ const Image = ({ uploadMainImage, restaurant }) => {
       <FormBoxBody>
         <Dropzone
           accept="image/jpg, image/jpeg, image/png"
-          onDrop={(accepted, rejected) => {
+          onDrop={(accepted) => {
             if (accepted && accepted.length > 0)
               uploadMainImage({ file: accepted[0] });
           }}
@@ -55,5 +55,5 @@ const Image = ({ uploadMainImage, restaurant }) => {
 };
 
 export default connect(state => ({}), {
-  uploadMainImage: uploadMainImageInitAction,
+  uploadMainImage: uploadMainImageAsync.request,
 })(Image);

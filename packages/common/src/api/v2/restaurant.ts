@@ -186,6 +186,12 @@ export const UpdateRestaurant = (restaurant: UpdateRestaurantBody): Promise<any>
   path: `restaurants/${restaurant.id}`
 }, restaurant);
 
+export const UploadRestaurantImage = ({ file, id }: any): Promise<any> => PostImage({
+  path: `restaurants/${id}/images`
+}, {
+  file
+});
+
 export const FavRestaurant = ({ restaurantId, fav }: any): Promise<any> => Post({
   path: `restaurants/${restaurantId}/favorite`
 }, { fav });

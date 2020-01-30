@@ -68,10 +68,11 @@ export const deleteTableInitAction = payload => ({
   payload,
 });
 
-export const uploadMainImageInitAction = payload => ({
-  type: 'UPDATE_IMAGE_INIT',
-  payload,
-});
+export const uploadMainImageAsync = createAsyncAction(
+  `${p}/UPLOAD_MAINIMAGE_INIT`,
+  `${p}/UPLOAD_MAINIMAGE_DONE`,
+  `${p}/UPLOAD_MAINIMAGE_FAIL`
+)();
 
 export const updateFoodNutritionInit = payload => ({
   type: 'UPDATE_NUTRITION_INIT',
