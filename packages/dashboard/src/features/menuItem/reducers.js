@@ -12,6 +12,7 @@ const initialState = {
   all: {},
   menuIngredients: {},
   backup: {},
+  uploading: false
 };
 
 export default function reducer(state = initialState, action) {
@@ -106,12 +107,19 @@ export default function reducer(state = initialState, action) {
         state.all[menuItemId].menuOptions.filter(id => id !== compoundId),
       )(state);
     }
-
+    case getType(actions.uploadItemImageAsync.request): {
+      return assoc('uploading', true)(state);
+    }
     case getType(actions.uploadItemImageAsync.success): {
       const foodId = meta.id;
-      return assocPath(['all', foodId, 'images', payload.id], payload)(state);
+      return pipe(
+        assoc('uploading', false),
+        assocPath(['all', foodId, 'images', payload.id], payload)
+      )(state);
     }
-    
+    case getType(actions.uploadItemImageAsync.failure): {
+      return assoc('uploading', false)(state);
+    }    
     case firebaseTypes.LOGOUT: {
       return initialState;
     }

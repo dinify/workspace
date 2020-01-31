@@ -16,6 +16,7 @@ import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { CardLabel } from 'web/components/styled/FormBox';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
@@ -84,7 +85,12 @@ const styles = {
     height: 270,
     position: 'relative',
     backgroundColor: 'black',
+    textAlign: 'center'
   },
+  upload: {
+    color: 'white',
+    margin: 116
+  }
 };
 
 const theme = createMuiTheme({
@@ -101,7 +107,8 @@ let ItemDetail = ({
   menuItems,
   classes,
   fetchMenuitem,
-  defaultLang
+  defaultLang,
+  uploading
 }) => {
   const { t } = useTranslation();
   const selectedFood = menuItems[selectedFoodId];
@@ -128,6 +135,7 @@ let ItemDetail = ({
         title={menuItemName}
       >
         <MuiThemeProvider theme={theme}>
+          {uploading && <CircularProgress className={classes.upload} />}
           <ItemNutrition selectedFoodId={selectedFoodId} />
         </MuiThemeProvider>
       </CardMedia>
@@ -184,7 +192,8 @@ let ItemDetail = ({
 ItemDetail = withStyles(styles)(ItemDetail);
 
 export default connect((state) => ({
-  defaultLang: state.restaurant.defaultLanguage
+  defaultLang: state.restaurant.defaultLanguage,
+  uploading: state.menuItem.uploading
   }), {
     fetchMenuitem: fetchMenuItemAsync.request,
     updateMenuItem: updateMenuItemAsync.request,
