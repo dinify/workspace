@@ -45,7 +45,7 @@ const Carousel: React.FC<CarouselProps> = ({
   return (
     <div style={{ position: 'relative', paddingTop: `${ratio}%`, width: '100%', ...style }}>
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
-        <figure ref={container} style={styles.container} className="hide-scollbar">
+        <figure ref={container} style={styles.container} className="hide-scrollbar">
           {images.map((image, i) => (
             <Image style={styles.image} key={image.url} url={image.url} alt={`${alt} ${i + 1}`} />
           ))}

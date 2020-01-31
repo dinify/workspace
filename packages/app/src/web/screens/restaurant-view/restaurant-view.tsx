@@ -50,32 +50,31 @@ export default () => {
   }, []);
 
   return <>
-    <AppBar type="gradient">
-      <AppBarAction type="back" onClick={handleBack} />
-      <AppBarTitle title={restaurant && restaurant.name} />
-      <AppBarAction>
-        <FavoriteToggle checked={favorite} onChange={() => setFavorite(!favorite)} />
-      </AppBarAction>
-      {(navigator as any).share && <AppBarAction>
-        <IconButton onClick={handleShare}>
+    <AppBar style={{ padding: 0 }} type="gradient">
+      <AppBarAction color="inherit" type="back" onClick={handleBack} />
+      <AppBarTitle color="inherit" title={restaurant && restaurant.name} />
+      <FavoriteToggle checked={favorite} onChange={() => setFavorite(!favorite)} />
+      {(navigator as any).share &&
+        <IconButton color="inherit" onClick={handleShare}>
           <Share />
         </IconButton>
-      </AppBarAction>}
-      <AppBarAction>
-        <IconButton onClick={handleInfo}>
-          <Info />
-        </IconButton>
-      </AppBarAction>
+      }
+      <IconButton color="inherit" onClick={handleInfo}>
+        <Info />
+      </IconButton>
     </AppBar>
     <Carousel style={{
-      marginTop: -56,
+      marginTop: -48,
     }} alt={restaurant && restaurant.name} images={restaurant ? restaurant.images : []} />
     <div style={{
-      padding: 16
+      // padding: 16
+      width: '100vw'
     }}>
       <div style={{
+        width: '100%',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: 16,
       }}>
         <RestaurantMenu color="primary" />
         <div style={{ padding: '0 16px' }}>
@@ -85,7 +84,7 @@ export default () => {
           </Typography>
         </div>
       </div>
-      {menuCategoryIds.map(id => (
+      {menuCategoryIds.map((id, i) => (
         <MenuCategory menuCategoryId={id} />
       ))}
     </div>

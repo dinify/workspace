@@ -6,6 +6,7 @@ import Gradient from './gradient';
 import { select } from '@dinify/common/src/lib/platform';
 import { MuiThemeProvider } from '@material-ui/core';
 import { useTheme } from '../../../features/ui/selectors';
+import { getTheme } from '@dinify/common/src/theme';
 
 interface AppBarProps {
     style?: React.CSSProperties,
@@ -29,7 +30,8 @@ const AppBar: IAppBar = ({
     invert = false,
     ...otherProps
 }) => {
-    const theme = useTheme({ type: type === 'gradient' ? 'dark' : undefined, invert: false });
+    let theme = useTheme();
+    if (type === 'gradient') theme = getTheme({ type: 'dark' });
     const { palette: { background: { paper }, divider } } = theme;
     const coupertino = {
         backgroundColor: theme.coupertino.backgroundColor,
@@ -48,6 +50,7 @@ const AppBar: IAppBar = ({
     if (type === 'gradient') {
         appBarStyle = {
             position: 'relative',
+            color: 'white'
         };
     }
     return (
@@ -56,9 +59,7 @@ const AppBar: IAppBar = ({
                 zIndex: 50,
                 display: 'flex',
                 alignItems: 'center',
-                height: 56,
-                paddingLeft: 16,
-                paddingRight: 16,
+                height: 48,
                 ...appBarStyle,
                 ...style
             }} {...otherProps}>

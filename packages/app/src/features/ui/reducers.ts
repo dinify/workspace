@@ -7,16 +7,17 @@ import * as actions from './actions';
 import { Dialog, Snackbar } from './actions';
 import dissocPath from 'ramda/es/dissocPath';
 import { makeCartDoneAsync } from '../cart/actions';
+import { PaletteType } from '@material-ui/core';
 
-export type ThemeType = 'light'|'dark';
+export type ThemeType = 'light' | 'dark';
 export interface UiState {
   progressMap: any,
   errorsMap: { [key: string]: ErrorMessage },
-  dialogs: { [key: string]: boolean|Dialog },
+  dialogs: { [key: string]: boolean | Dialog },
   snackbars: { [key: string]: Snackbar },
   transactionStatus: any,
   bottomBarOpen: boolean,
-  theme: ThemeType
+  theme: PaletteType
 };
 export interface ErrorMessage {
   message: string,
@@ -62,13 +63,13 @@ export default function reducer(state: UiState = initialState, action: AnyAction
 
     case getType(actions.openDialogAction): {
       let path = action.payload;
-      let value: boolean|Dialog = true;
+      let value: boolean | Dialog = true;
       if (typeof action.payload === 'object') {
         const payload = action.payload as Dialog;
         path = payload.type;
         value = payload;
       }
-      return assocPath<boolean|Dialog, UiState>(['dialogs', path], value)(state);
+      return assocPath<boolean | Dialog, UiState>(['dialogs', path], value)(state);
     }
     case getType(actions.closeDialogAction): {
       let path = action.payload;
@@ -77,14 +78,14 @@ export default function reducer(state: UiState = initialState, action: AnyAction
     case getType(makeCartDoneAsync.success): {
       return dissocPath<UiState>(['dialogs', 'cart'])(state);
     }
-    
+
     //case getType(actions.showSnackbarAction): {
     //  let snackbar = action.payload as Snackbar;
     //  const id = snackbar.id || Math.random().toString(36).substring(7);
     //  const value = { ...snackbar, id, visible: true };
     //  return assocPath<Snackbar, UiState>(['snackbars', id], value)(state);
     //}
-//
+    //
     case getType(actions.hideSnackbarAction): {
       return assocPath<boolean, UiState>(['snackbars', action.payload, 'visible'], false)(state);
     }

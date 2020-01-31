@@ -2,15 +2,18 @@ import React from 'react';
 
 import { select } from '@dinify/common/src/lib/platform';
 import { Typography } from '../../components/typography'
+import { PropTypes } from '@material-ui/core';
 
 const AppBarTitle: React.FC<{
   title?: string,
   subtitle?: string,
   style?: React.CSSProperties,
+  color?: PropTypes.Color | 'textPrimary' | 'textSecondary' | 'error',
 }> = ({
   title = '',
   subtitle = '',
   style,
+  color,
 }) => {
     const titleStyle = select({
       standard: {
@@ -38,10 +41,10 @@ const AppBarTitle: React.FC<{
         alignItems: 'center'
       }}>
         <div style={{ ...titleStyle, ...style }}>
-          <Typography variant="h6">
+          <Typography color={color} variant="h6">
             {title}
           </Typography>
-          <Typography variant="caption">
+          <Typography color={color} variant="caption">
             {subtitle}
           </Typography>
         </div>

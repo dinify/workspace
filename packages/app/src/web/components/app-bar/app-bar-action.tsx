@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 
 import { select } from '@dinify/common/src/lib/platform';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
+import { PropTypes } from '@material-ui/core';
 
 type AppBarActionType = 'close' | 'cancel' | 'edit' | 'done' | 'back' | 'more';
 
@@ -20,22 +21,24 @@ const AppBarAction: React.FC<{
   onClick?: () => void,
   type?: AppBarActionType,
   style?: React.CSSProperties,
+  color?: PropTypes.Color,
 }> = ({
   onClick = () => { },
   children,
   type,
+  color,
   ...otherProps
 }) => {
     const pe: any = { pointerEvents: 'auto' };
     const { t } = useTranslation();
     const getTextButton = (text: string) => (
-      <Button style={pe} onClick={onClick} {...otherProps}>
+      <Button color={color} style={pe} onClick={onClick} {...otherProps}>
         {text}
       </Button>
     );
 
     const getIconButton = (icon: any) => (
-      <IconButton style={pe} onClick={onClick} {...otherProps}>
+      <IconButton color={color} style={pe} onClick={onClick} {...otherProps}>
         {icon}
       </IconButton>
     );
@@ -43,8 +46,8 @@ const AppBarAction: React.FC<{
     const appBarActions: { [key: string]: any } = {
       back: select({
         ios: (
-          <Button style={pe} onClick={onClick} {...otherProps}>
-            <BackIosIcon style={{ marginRight: -8 }} />
+          <Button color={color} style={pe} onClick={onClick} {...otherProps}>
+            <BackIosIcon style={{ marginRight: -4 }} />
             {t('appBar.back')} {/* TODO: possibly previous screen name */}
           </Button>
         ),

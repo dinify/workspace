@@ -2,6 +2,7 @@
 import { createMuiTheme, Theme } from "@material-ui/core/styles";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import { getTypographyVariants } from "./util";
+import { PaletteType } from '@material-ui/core';
 
 const nextVariants = getTypographyVariants({
   map: {
@@ -37,8 +38,6 @@ export interface AppTheme extends Theme {
     borderThickColor: string,
   },
 }
-
-export type PaletteType = 'light' | 'dark' | undefined;
 
 // from: https://material.io/design/color/dark-theme.html
 // TODO: desaturate primary color to meet WCAG 4.5:1
