@@ -4,6 +4,7 @@ import { useMenuCategoryView } from '../../../features/menuCategory/selectors';
 import { Grid } from '@material-ui/core';
 import { useTheme } from '../../../features/ui/selectors';
 import MenuItem from './menu-item';
+import * as FN from '@dinify/common/src/lib/FN';
 
 export default ({
   menuCategoryId
@@ -12,6 +13,7 @@ export default ({
 }) => {
   const theme = useTheme();
   const menuCategory = useMenuCategoryView(menuCategoryId);
+  const mobile = FN.isMobile();
   return <>
     <div className="sticky" style={{
       zIndex: 50,
@@ -27,11 +29,11 @@ export default ({
         {menuCategory.name}
       </Typography>
     </div>
-    <div className="hide-scrollbar" style={{
-      display: 'none',
+    {mobile && <div className="hide-scrollbar" style={{
       overflowX: 'auto',
       overflowY: 'hidden',
       width: '100%',
+      paddingTop: 16,
       paddingBottom: 32,
       WebkitScrollSnapType: 'mandatory',
       scrollSnapType: 'x mandatory',
@@ -52,18 +54,16 @@ export default ({
             marginRight: arr.length - 1 === i ? 16 : 0,
           }}
         >
-          <div>
-            {id}
-          </div>
+          <MenuItem style={{ width: '100%' }} menuItemId={id} />
         </div>
       ))}
-    </div>
-    <Grid style={{ padding: 16 }} container spacing={16}>
+    </div>}
+    {!mobile && <Grid style={{ padding: 16 }} container spacing={16}>
       {menuCategory.items.map(id => (
         <Grid item xs={6} sm={4} md={6} key={id}>
           <MenuItem style={{ width: '100%' }} menuItemId={id} />
         </Grid>
       ))}
-    </Grid>
+    </Grid>}
   </>;
 };

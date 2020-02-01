@@ -7,7 +7,7 @@ import assocPath from 'ramda/es/assocPath';
 // import keys from 'ramda/es/keys';
 import { UNAUTHORIZED } from '../features/auth/types';
 
-export const MapToList = (items: {[id: string]: any}, _options?: any) => {
+export const MapToList = (items: { [id: string]: any }, _options?: any) => {
   let { sortBy, sortType } = { sortBy: 'id', sortType: String };
   if (_options) {
     sortBy = _options.sortBy;
@@ -22,7 +22,7 @@ export const MapToList = (items: {[id: string]: any}, _options?: any) => {
 
 export const ListToMap = (items: any[]) => {
   if (!items || !items.forEach) return {};
-  const obj: {[id: string]: any} = {};
+  const obj: { [id: string]: any } = {};
   items.forEach((item: any) => {
     obj[item.id] = item;
   });
@@ -65,7 +65,7 @@ function getUA() {
   return navigator.userAgent || navigator.vendor;
 }
 
-export function isMobile(ua: any) {
+export function isMobile(ua?: any) {
   if (!ua && typeof navigator !== 'undefined') ua = getUA();
   if (ua && ua.headers && typeof ua.headers['user-agent'] === 'string') {
     ua = ua.headers['user-agent'];
@@ -95,7 +95,7 @@ export function supportsScrollSnap() {
 
 export function supportsWebp() {
   if (!self.createImageBitmap) return new Promise((resolve) => { resolve(false); });
-  
+
   const webpData = 'data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=';
   return new Promise((resolve, reject) => {
     fetch(webpData)

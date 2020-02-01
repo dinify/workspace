@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { AppBar } from '@material-ui/core';
-import { AppBarAction } from '../../components/app-bar';
+import { AppBar, AppBarAction } from '../../components/app-bar';
 import { useAction } from '@dinify/common/src/lib/util';
 import { fetchRestaurantAsync } from '../../../features/restaurant/actions';
 import { useParams, useHistory } from 'react-router';
