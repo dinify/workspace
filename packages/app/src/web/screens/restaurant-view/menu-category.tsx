@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import { useMenuCategoryView } from '../../../features/menuCategory/selectors';
 import { Grid } from '@material-ui/core';
 import { useTheme } from '../../../features/ui/selectors';
+import MenuItem from './menu-item';
 
 export default ({
   menuCategoryId
@@ -13,6 +14,7 @@ export default ({
   const menuCategory = useMenuCategoryView(menuCategoryId);
   return <>
     <div className="sticky" style={{
+      zIndex: 50,
       top: 0,
       display: 'flex',
       alignItems: 'center',
@@ -56,12 +58,10 @@ export default ({
         </div>
       ))}
     </div>
-    <Grid container spacing={16}>
+    <Grid style={{ padding: 16 }} container spacing={16}>
       {menuCategory.items.map(id => (
         <Grid item xs={6} sm={4} md={6} key={id}>
-          <code style={{ height: 100, display: 'block' }}>
-            {id}
-          </code>
+          <MenuItem style={{ width: '100%' }} menuItemId={id} />
         </Grid>
       ))}
     </Grid>

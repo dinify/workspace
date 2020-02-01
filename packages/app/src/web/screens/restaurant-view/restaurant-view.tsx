@@ -85,7 +85,7 @@ export default () => {
         </div>
       </div>
       {menuCategoryIds.map((id, i) => (
-        <MenuCategory menuCategoryId={id} />
+        <MenuCategory key={id} menuCategoryId={id} />
       ))}
     </div>
   </>;
