@@ -50,8 +50,6 @@ const Fields = ({
   firebase
 }: any) => {
 
-  console.log(firebase,'inf');
-
   const [errors, setErrors] = useState({});
   const { t } = useTranslation();
 

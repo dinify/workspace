@@ -38,6 +38,10 @@ export const GetWaiterboardsOfRestaurant = ({ restaurantId }: any): Promise<any>
   path: `restaurants/${restaurantId}/waiterboards`
 });
 
+export const GetTranslationsOfRestaurant = ({ restaurantId }: any): Promise<any> => Get({
+  path: `restaurants/${restaurantId}/translations`
+});
+
 export const GetSeatsOfWaiterboard = ({ waiterboardId }: any): Promise<any> => Get({
   path: `waiterboards/${waiterboardId}/seats`
 });
