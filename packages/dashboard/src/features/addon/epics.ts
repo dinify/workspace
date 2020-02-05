@@ -8,6 +8,7 @@ import { fetchAddonsAsync, createAddonAsync, removeAddonAsync } from './actions'
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
+import { getDefaultCurrency } from '../restaurant/selectors';
 
 const fetchAddonsEpic: Epic = (action$, state$) =>
   action$.pipe(
@@ -37,11 +38,12 @@ const createAddonEpic: Epic = (action$, state$) =>
       const restaurantId = state$.value.restaurant.selectedRestaurant;
       const payload = action.payload;
 
+      const currency = getDefaultCurrency(state$.value);
       const body = {
         name: payload.name,
         price: {
           amount: payload.price,
-          currency: 'EUR',
+          currency
         },
         maximum: '1',
         restaurantId,

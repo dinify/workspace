@@ -35,6 +35,7 @@ import {
   selectFoodAction,
 } from 'features/restaurant/actions';
 import { selectedMenuItems } from 'features/menuItem/selectors';
+import { getDefaultCurrency } from 'features/restaurant/selectors';
 
 import Typography from '@material-ui/core/Typography';
 import Translation from 'web/components/Translation';
@@ -194,7 +195,8 @@ const ListOfDishes = ({
   reorderItems,
   progressMap,
   errorsMap,
-  lang
+  lang,
+  currency
 }) => {
   if (!selectedCategoryId || !categoriesMap[selectedCategoryId]) {
     return <div />;
@@ -216,8 +218,8 @@ const ListOfDishes = ({
                 precedence: menuItemsList.length,
                 menuCategoryId: selectedCategoryId,
                 price: {
-                  amount: 100,
-                  currency: 'EUR'
+                  amount: currency === 'CZK' ? 100 : 5,
+                  currency
                 },
                 form: 'menu/createItem'
               });
@@ -254,6 +256,7 @@ export default connect(
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
     lang: state.restaurant.defaultLanguage,
+    currency: getDefaultCurrency(state)
   }), {
     updateItem: updateMenuItemAsync.request,
     createItem: createMenuItemAsync.request,

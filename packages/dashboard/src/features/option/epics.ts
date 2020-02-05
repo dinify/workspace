@@ -7,6 +7,7 @@ import * as actions from './actions';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { normalize } from 'normalizr';
 import { options } from '../menuItem/schemas';
+import { getDefaultCurrency } from '../restaurant/selectors';
 
 const fetchOptionsEpic: Epic = (action$, state$) =>
   action$.pipe(
@@ -82,13 +83,13 @@ const createChoiceEpic: Epic = (action$, state$) =>
     ofType(getType(actions.createChoiceAsync.request)),
     mergeMap(action => {
       const payload = action.payload;
-
+      const currency = getDefaultCurrency(state$.value);
       const body = {
         name: payload.name,
         optionId: payload.optionId,
         difference: {
           amount: payload.price,
-          currency: 'EUR',
+          currency
         },
       };
       return fromPromise(API.CreateChoice(body)).pipe(

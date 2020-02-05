@@ -22,3 +22,15 @@ export const selectedRestaurantWifi = createSelector(
   }
 );
 
+export const getDefaultCurrency = createSelector(
+  [
+    selectedRestaurant
+  ],
+  (restaurant) => {
+    let currency = 'EUR';
+    if (restaurant) {
+      currency = restaurant.settings.currency;
+    }
+    return currency;
+  }
+);
