@@ -25,7 +25,8 @@ export default ({ menuItemId, style }: { menuItemId: string, style?: React.CSSPr
       <div style={{
         position: 'relative',
         paddingTop: '66.6666667%',
-        borderRadius: 4
+        borderRadius: 4,
+        overflow: 'hidden'
       }}>
         <div style={{
           position: 'absolute',
