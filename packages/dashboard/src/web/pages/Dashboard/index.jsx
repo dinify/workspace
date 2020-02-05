@@ -246,11 +246,11 @@ const Dashboard = ({
         },
       ],
     },
-    {
-      name: 'Transactions',
-      icon: <AttachMoney />,
-      path: '/transactions',
-    },
+    // {
+    //   name: 'Transactions',
+    //   icon: <AttachMoney />,
+    //   path: '/transactions',
+    // },
   ];
   let subsectionNames = [];
   sections.forEach(section => {
