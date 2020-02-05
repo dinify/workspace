@@ -111,10 +111,9 @@ export default function reducer(state = initialState, action) {
       return assoc('uploading', true)(state);
     }
     case getType(actions.uploadItemImageAsync.success): {
-      const foodId = meta.id;
       return pipe(
         assoc('uploading', false),
-        assocPath(['all', foodId, 'images', payload.id], payload)
+        assocPath(['all', meta.id, 'images'], {[payload.id] : payload})
       )(state);
     }
     case getType(actions.uploadItemImageAsync.failure): {
