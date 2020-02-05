@@ -50,7 +50,7 @@ const MenuItemCard = ({
   getT,
   userLang
 }) => {
-  const images = FN.MapToList(menuItem.images).map(image => image.url)
+  const images = FN.MapToList(menuItem.images).sort((a,b) => a.precedence - b.precedence).map(image => image.url)
   const MenuItemLink = props => <Link to={`/menu/item/${menuItem.id}${FN.isInstalled() ? '?source=pwa' : ''}`} {...props}/>
 
   return (

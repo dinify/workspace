@@ -41,7 +41,7 @@ export const MenuItemScreen = ({  }: {}) => {
   const imageUrls = useSelector<RootState, string[]>(state => {
     if (!menuItem) return [];
     return menuItem.images
-      .sort((a, b) => b.precedence - a.precedence)
+      .sort((a, b) => a.precedence - b.precedence)
       .map(img => img.url);
   });
   const addons = useAddonView(menuItemId);
