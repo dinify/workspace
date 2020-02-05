@@ -16,6 +16,7 @@ import mapObjIndexed from 'ramda/es/mapObjIndexed';
 import { languageCountries as languagesArray } from '@dinify/common/src/lib'
 import Typography from '@material-ui/core/Typography';
 // import ArrowForward from '@material-ui/icons/KeyboardArrowRight';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
@@ -131,7 +132,7 @@ const Translations = ({
           <Divider style={{marginBottom: '10px'}} />
       </CardContent>
 
-      {defaultLanguage !== selectedLang ?
+      {defaultLanguage !== selectedLang && translations[selectedLang] ?
         <div>
           <Tabs
             value={activeTab}
@@ -204,7 +205,7 @@ const enhance = compose(
       menuLanguages: state.restaurant.menuLanguages,
       preferredLanguages: state.restaurant.preferredLanguages,
       preSelectedLanguages: state.restaurant.preferredLanguagesInitial,
-      defaultLanguage: state.restaurant.defaultLanguage,
+      defaultLanguage: getDefaultLanguage(state),
       langs: state.trans.langs,
       selectedLang: state.trans.selectedLang,
       activeTab: state.trans.activeTab,

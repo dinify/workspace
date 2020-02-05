@@ -224,6 +224,7 @@ const Dashboard = ({
         {
           name: t('nav.tableCodes'),
           path: '/settings/tablecodes',
+          cond: !!restaurant.settings.orders || !!restaurant.settings.serviceCalls
         },
       ],
     },
