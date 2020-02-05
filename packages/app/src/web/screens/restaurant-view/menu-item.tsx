@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { useMenuItemView } from '../../../features/menuItem/selectors';
 import Price from '@dinify/common/src/components/price';
-import { Image } from '../../components/image';
+import { Image, Aspect } from '../../components/image';
 import { useHistory } from 'react-router';
 import * as routes from '../../routes';
 
@@ -22,22 +22,12 @@ export default ({ menuItemId, style }: { menuItemId: string, style?: React.CSSPr
       ...style
     }}>
     {menuItem.images && menuItem.images.length &&
-      <div style={{
-        position: 'relative',
-        paddingTop: '66.6666667%',
+      <Aspect ratio={3 / 2} style={{
         borderRadius: 4,
         overflow: 'hidden'
       }}>
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0
-        }}>
-          <Image style={{ width: '100%', height: '100%' }} alt={menuItem.name} url={menuItem.images[0].url} />
-        </div>
-      </div>
+        <Image style={{ width: '100%', height: '100%' }} alt={menuItem.name} url={menuItem.images[0].url} />
+      </Aspect>
     }
     <Typography style={{
       textOverflow: 'ellipsis',
