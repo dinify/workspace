@@ -28,7 +28,7 @@ import ItemAddons from './ItemAddons';
 import ItemOptions from './ItemOptions';
 import ItemNutrition from './ItemNutrition';
 
-let DetailForm = ({ handleSubmit }) => {
+let DetailForm = ({ handleSubmit, currency }) => {
   const style = { height: '64px' };
   const { t } = useTranslation();
   return (
@@ -59,7 +59,7 @@ let DetailForm = ({ handleSubmit }) => {
         componentProps={{
           type: 'number',
           min: 0,
-          label: t('menu.price'),
+          label: `${t('menu.price')} (${currency})`,
           fullWidth: true,
           step: 1,
           margin: 'normal',
@@ -172,6 +172,7 @@ let ItemDetail = ({
                },
             });
           }}
+          currency={currency}
           initialValues={{
             name: menuItemName,
             description: getT(selectedFood.translations, defaultLang, 'description'),

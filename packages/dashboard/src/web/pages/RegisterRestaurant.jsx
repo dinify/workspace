@@ -91,6 +91,7 @@ let RegistrationForm = ({ t, handleSubmit }) => {
         options={ [
           {label: 'English', value: 'en'},
           {label: 'Čeština', value: 'cs'},
+          {label: 'Español', value: 'es'},
         ]}
         componentProps={{
           label: t('defaultLanguageLabel'), 
@@ -100,7 +101,20 @@ let RegistrationForm = ({ t, handleSubmit }) => {
       />
       <Typography variant="caption">
         {t('defaultLanguageRecom')}
-      </Typography>   
+      </Typography>
+      <Field
+        name="currency"
+        component={Select}
+        options={ [
+          {label: 'Euro €', value: 'EUR'},
+          {label: 'Koruna česká Kč', value: 'CZK'},
+        ]}
+        componentProps={{
+          label: 'Currency', 
+          fullWidth: true,
+          margin: 'normal'
+        }}
+      />
       <Button type="submit" color="primary" variant="outlined" fullWidth style={{marginTop: 20}}>
         {t('register')}
       </Button>
@@ -137,7 +151,8 @@ const RegisterRestaurant = (props) => {
   const initialValues = {
     restaurantName: params.restaurantName || '',
     subdomain: params.name || '',
-    language: 'en'
+    language: 'en',
+    currency: 'EUR'
   };
   if (prefill.restaurantName) {
     initialValues.restaurantName = prefill.restaurantName;
@@ -183,7 +198,8 @@ const RegisterRestaurant = (props) => {
             onSubmit={(fields) => registerRestaurant({
               restaurantName: fields.restaurantName,
               subdomain: createSubdomain(fields.subdomain),
-              language: fields.language
+              language: fields.language,
+              currency: fields.currency
             })}
           />
           <Button 

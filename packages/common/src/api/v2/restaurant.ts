@@ -169,6 +169,7 @@ type CreateRestaurantBody = {
   name: string;
   subdomain: string;
   language: string;
+  currency: string;
 }
 
 export const CreateRestaurant = (body: CreateRestaurantBody): Promise<any> => Post({

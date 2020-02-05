@@ -123,13 +123,14 @@ const registerRestaurantEpic = (action$, state$, { firebase }) =>
     ofType('REGISTER_RESTAURANT_INIT'),
     mergeMap(action => {
       const {
-        payload: { restaurantName, subdomain, language },
+        payload: { restaurantName, subdomain, language, currency },
       } = action;
       const onboardingToken = state$.value.restaurant.onboardingToken;
       const createRestaurantPayload = {
         name: restaurantName,
         subdomain,
-        language
+        language,
+        currency
       };
       if (onboardingToken) {
         createRestaurantPayload.token = onboardingToken;
