@@ -7,14 +7,14 @@ import * as actions from './actions';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { normalize } from 'normalizr';
 import { options } from '../menuItem/schemas';
-import { getDefaultCurrency } from '../restaurant/selectors';
+import { getDefaultCurrency, getDefaultLanguage } from '../restaurant/selectors';
 
 const fetchOptionsEpic: Epic = (action$, state$) =>
   action$.pipe(
     ofType(getType(actions.fetchOptionsAsync.request)),
     mergeMap(action => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
-      const lang = state$.value.restaurant.defaultLanguage;
+      const lang = getDefaultLanguage(state$.value);
       return fromPromise(API.GetRestaurantOptions({ restaurantId }, lang)).pipe(
         rxMap((res: any) => {
           const normalized = normalize(res, options);

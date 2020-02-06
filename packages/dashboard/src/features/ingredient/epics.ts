@@ -11,13 +11,14 @@ import pick from 'ramda/es/pick';
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
+import { getDefaultLanguage } from '../restaurant/selectors';
 
 const fetchIngredientsEpic: Epic = (action$, state$) =>
   action$.pipe(
     ofType(getType(fetchIngredientsAsync.request)),
     mergeMap(action => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
-      const lang = state$.value.restaurant.defaultLanguage;
+      const lang = getDefaultLanguage(state$.value);
       return fromPromise(
         API.GetRestaurantIngredients({ restaurantId }, lang),
       ).pipe(

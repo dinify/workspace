@@ -4,6 +4,7 @@ import Chip from '@material-ui/core/Chip';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import { getT } from '@dinify/common/src/lib/translation.ts';
 import { connect } from 'react-redux';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 export const Customizations = styled.div`
   margin-top: 10px;
@@ -69,6 +70,6 @@ const ListOfCustomizations = ({ list, rmButtonFunction, classes, ActionComponent
 
 export default connect(
   (state) => ({
-    lang: state.restaurant.defaultLanguage,
+    lang: getDefaultLanguage(state),
   })
 )(withStyles(styles)(ListOfCustomizations));

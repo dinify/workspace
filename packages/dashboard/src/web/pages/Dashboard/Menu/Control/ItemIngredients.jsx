@@ -15,6 +15,7 @@ import { listOfIngredients } from 'features/ingredient/selectors';
 import { fetchIngredientsAsync } from 'features/ingredient/actions';
 import ListOfCustomizations from './ListOfCustomizations';
 import { getT } from '@dinify/common/src/lib/translation.ts';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 const Excludability = ({ selectedFoodId, setIngredientExcludability }) => ({ ingredient }) => {
   const excludable = ingredient.excludable;
@@ -119,7 +120,7 @@ export default connect(
     ingredientsList: listOfIngredients(state),
     menuIngredients: state.menuItem.menuIngredients,
     ingredientsLoaded: state.ingredient.loaded,
-    defaultLang: state.restaurant.defaultLanguage
+    defaultLang: getDefaultLanguage(state)
   }),
   {
     fetchIngredients: fetchIngredientsAsync.request,

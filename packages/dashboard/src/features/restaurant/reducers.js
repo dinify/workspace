@@ -39,7 +39,6 @@ const initialState = {
   menuLanguages: [],
   preferredLanguagesInitial,
   preferredLanguages: preferredLanguagesInitial,
-  defaultLanguage: 'en',
   waiterboards: [],
   waiterboardsLoaded: false,
   wifi: {}
@@ -87,21 +86,15 @@ export default function reducer(state = initialState, action) {
     }
 
     case 'PREFILL_RESTAURANTNAME':
-      return assocPath(['prefill', 'restaurantName'], payload.restaurantName)(
-        state,
-      );
+      return assocPath(['prefill', 'restaurantName'], payload.restaurantName)(state);
+    
     case 'SET_ONGOINGREGISTRATION':
       return assoc('ongoingRegistration', !!payload)(state);
 
     case 'FETCH_MENULANGUAGES_DONE': {
-      let defaultLanguage = 'en';
       const menuLanguages = payload.res;
-      const defaultMenuLanguages = menuLanguages.filter(lang => lang.default);
-      if (defaultMenuLanguages.length > 0) defaultLanguage = defaultMenuLanguages[0].language;
-      setCookie('lang', defaultLanguage, 30);
       return pipe(
         assoc('menuLanguages', menuLanguages),
-        assoc('defaultLanguage', defaultLanguage)
       )(state);
     }
     case 'CREATE_MENULANGUAGE_DONE': {

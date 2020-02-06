@@ -9,6 +9,7 @@ import { listOfAddons } from 'features/addon/selectors';
 
 import ListOfCustomizations from './ListOfCustomizations';
 import { getT } from '@dinify/common/src/lib/translation.ts';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 
 const ItemAddons = ({
@@ -82,7 +83,7 @@ export default connect(
     addonsList: listOfAddons(state),
     addonsMap: state.addon.all,
     addonsLoaded: state.addon.loaded,
-    defaultLang: state.restaurant.defaultLanguage
+    defaultLang: getDefaultLanguage(state)
   }),
   {
     fetchAddons: fetchAddonsAsync.request,

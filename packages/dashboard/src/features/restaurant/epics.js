@@ -130,7 +130,7 @@ const registerRestaurantEpic = (action$, state$, { firebase }) =>
         name: restaurantName,
         subdomain,
         language,
-        currency
+        settings: { currency }
       };
       if (onboardingToken) {
         createRestaurantPayload.token = onboardingToken;

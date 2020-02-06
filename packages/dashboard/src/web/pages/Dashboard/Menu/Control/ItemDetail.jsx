@@ -21,7 +21,7 @@ import { CardLabel } from 'web/components/styled/FormBox';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 import { getT } from '@dinify/common/src/lib/translation.ts';
-import { getDefaultCurrency } from 'features/restaurant/selectors';
+import { getDefaultCurrency, getDefaultLanguage } from 'features/restaurant/selectors';
 
 import ItemIngredients from './ItemIngredients';
 import ItemAddons from './ItemAddons';
@@ -195,7 +195,7 @@ let ItemDetail = ({
 ItemDetail = withStyles(styles)(ItemDetail);
 
 export default connect((state) => ({
-  defaultLang: state.restaurant.defaultLanguage,
+  defaultLang: getDefaultLanguage(state),
   uploading: state.menuItem.uploading,
   currency: getDefaultCurrency(state)
   }), {

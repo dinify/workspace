@@ -22,6 +22,7 @@ import Text from 'web/components/MaterialInputs/Text';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Translation from 'web/components/Translation';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 import {
   selectCategoryAction,
@@ -246,7 +247,7 @@ export default connect(
   state => ({
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
-    lang: state.restaurant.defaultLanguage,
+    lang: getDefaultLanguage(state),
     categoriesList: relevantCategoriesList(state)
   }),
   {

@@ -5,6 +5,7 @@ import { Label } from 'web/components/styled/FormBox';
 import Avatar from '@material-ui/core/Avatar';
 import { createServiceInit } from 'features/service/actions';
 import ServiceForm from 'web/components/ServiceForm';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 class AddServiceComponent extends React.PureComponent {
   constructor(props) {
@@ -69,7 +70,7 @@ class AddServiceComponent extends React.PureComponent {
 export default connect(
   (state) => ({
     images: state.service.images,
-    defaultLanguage: state.restaurant.defaultLanguage,
+    defaultLanguage: getDefaultLanguage(state),
     selectedRestaurant: state.restaurant.selectedRestaurant
   }), {
     createService: createServiceInit,

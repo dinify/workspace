@@ -39,6 +39,7 @@ import { getDefaultCurrency } from 'features/restaurant/selectors';
 
 import Typography from '@material-ui/core/Typography';
 import Translation from 'web/components/Translation';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 const FoodItem = styled.div`
   position: relative;
@@ -255,7 +256,7 @@ export default connect(
     menuItemsList: selectedMenuItems(state.menuItem, props),
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
-    lang: state.restaurant.defaultLanguage,
+    lang: getDefaultLanguage(state),
     currency: getDefaultCurrency(state)
   }), {
     updateItem: updateMenuItemAsync.request,

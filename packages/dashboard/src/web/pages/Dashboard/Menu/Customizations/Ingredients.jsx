@@ -28,6 +28,7 @@ import {
   updateIngredientAsync,
 } from 'features/ingredient/actions.ts';
 import { listOfIngredients } from 'features/ingredient/selectors';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 let AddIngredientForm = ({ handleSubmit, progress, errorMessage, t }) => {
   return (
@@ -133,7 +134,7 @@ export default connect(
     ingredientsLoaded: state.ingredient.loaded,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
-    lang: state.restaurant.defaultLanguage
+    lang: getDefaultLanguage(state)
   }),
   {
     createIngredient: createIngredientAsync.request,

@@ -9,6 +9,7 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 import pick from 'ramda/es/pick';
 import * as actions from './actions';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
+import { getDefaultLanguage } from '../restaurant/selectors';
 
 
 const fetchMenuCategoriesEpic: Epic = (action$, state$) =>
@@ -16,7 +17,7 @@ const fetchMenuCategoriesEpic: Epic = (action$, state$) =>
     ofType(getType(actions.fetchMenuCategoriesAsync.request)),
     mergeMap((action) => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
-      const lang = state$.value.restaurant.defaultLanguage;
+      const lang = getDefaultLanguage(state$.value);
       return fromPromise(API.GetMenuCategories({ restaurantId }, lang)).pipe(
         filter((res: any) => !!res),
         rxMap((res: any) => {

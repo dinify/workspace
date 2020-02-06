@@ -11,6 +11,7 @@ import S from 'string';
 import { assignOptionAsync, unassignOptionAsync } from 'features/menuItem/actions';
 import { getT } from '@dinify/common/src/lib/translation.ts';
 import assoc from 'ramda/es/assoc';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 const choicesEnumText = (choicesList, defaultLang) => {
   let text = ''
@@ -112,7 +113,7 @@ export default connect(
     optionsMap: state.option.all,
     choicesMap: state.option.choices,
     optionsLoaded: state.option.loaded,
-    defaultLang: state.restaurant.defaultLanguage
+    defaultLang: getDefaultLanguage(state)
   }),
   {
     fetchOptions: fetchOptionsAsync.request,

@@ -20,6 +20,7 @@ import { switchServicesTab as switchTab } from 'features/ui/actions';
 import AddServiceComponent from 'web/components/AddService';
 import { selectedServicesList } from 'features/service/selectors';
 import { getT } from '@dinify/common/src/lib/translation.ts';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 function TabContainer(props) {
   const { children } = props;
@@ -118,7 +119,7 @@ export default connect(
     servicesList: selectedServicesList(state),
     images: state.service.images,
     tabIndex: state.ui.servicesTabIndex,
-    defaultLang: state.restaurant.defaultLanguage
+    defaultLang: getDefaultLanguage(state)
   }),
   {
     fetchServices: fetchServicesInit,

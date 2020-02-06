@@ -8,6 +8,7 @@ import { getType } from 'typesafe-actions';
 import * as actions from './actions';
 import { normalize } from 'normalizr';
 import { menuItem } from './schemas.ts';
+import { getDefaultLanguage } from '../restaurant/selectors';
 
 const fetchMenuItemEpic = (action$, state$) =>
   action$.pipe(
@@ -15,7 +16,7 @@ const fetchMenuItemEpic = (action$, state$) =>
     mergeMap((action) => {
       const { id } = action.payload;
 
-      const lang = state$.value.restaurant.defaultLanguage;
+      const lang = getDefaultLanguage(state$.value);
 
       return fromPromise(API.GetMenuItem({ menuItemId: id }, lang)).pipe(
         map((res) => {

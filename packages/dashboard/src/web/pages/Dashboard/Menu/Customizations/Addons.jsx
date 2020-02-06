@@ -24,6 +24,7 @@ import { getT } from '@dinify/common/src/lib/translation.ts';
 import { fetchAddonsAsync, createAddonAsync, removeAddonAsync } from 'features/addon/actions.ts';
 import { listOfAddons } from 'features/addon/selectors';
 import { getCurrencySymbol } from './util';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 let AddAddonForm = ({ t, handleSubmit, progress, errorMessage  }) => {
   return (
@@ -139,7 +140,7 @@ export default connect(
     adddonsLoaded: state.addon.loaded,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
-    lang: state.restaurant.defaultLanguage
+    lang: getDefaultLanguage(state)
   }),
   {
     fetchAddons: fetchAddonsAsync.request,

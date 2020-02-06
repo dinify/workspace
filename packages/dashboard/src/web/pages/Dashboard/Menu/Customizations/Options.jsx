@@ -34,6 +34,7 @@ import {
 import { listOfOptions } from 'features/option/selectors';
 
 import { getCurrencySymbol } from './util';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 
 let AddChoiceForm = ({ t, handleSubmit, progress, errorMessage }) => {
@@ -240,7 +241,7 @@ export default connect(
     optionsLoaded: state.option.loaded,
     progressMap: state.ui.progressMap,
     errorsMap: state.ui.errorsMap,
-    lang: state.restaurant.defaultLanguage
+    lang: getDefaultLanguage(state)
   }),
   {
     fetchOptions: fetchOptionsAsync.request,

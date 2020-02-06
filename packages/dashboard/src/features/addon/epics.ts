@@ -8,14 +8,14 @@ import { fetchAddonsAsync, createAddonAsync, removeAddonAsync } from './actions'
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
-import { getDefaultCurrency } from '../restaurant/selectors';
+import { getDefaultCurrency, getDefaultLanguage } from '../restaurant/selectors';
 
 const fetchAddonsEpic: Epic = (action$, state$) =>
   action$.pipe(
     ofType(getType(fetchAddonsAsync.request)),
     mergeMap(action => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
-      const lang = state$.value.restaurant.defaultLanguage;
+      const lang = getDefaultLanguage(state$.value);
       return fromPromise(API.GetRestaurantAddons({ restaurantId }, lang)).pipe(
         rxMap((res: any) => {
           return fetchAddonsAsync.success(res);

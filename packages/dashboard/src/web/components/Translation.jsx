@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getT } from '@dinify/common/src/lib/translation.ts';
+import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 const Translation = ({ object, defaultLang }) => {
   return (
@@ -12,6 +13,6 @@ const Translation = ({ object, defaultLang }) => {
 
 export default connect(
   state => ({
-    defaultLang: state.restaurant.defaultLanguage
+    defaultLang: getDefaultLanguage(state)
   })
 )(Translation);
