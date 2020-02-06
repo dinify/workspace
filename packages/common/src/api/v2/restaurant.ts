@@ -383,6 +383,19 @@ export const AddTranslation = ({ type, id, locale, name, description, restaurant
   return Post({ path: `restaurant/${restaurantId}/translation/add` }, body);
 }
 
+type UpdateTranslationBody = {
+	restaurantId: string;
+	id: string;
+	type: string;
+	locale: string;
+  description?: string;
+  name?: string;
+}
+
+export const UpdateTranslation = (body: UpdateTranslationBody) => {
+  return Patch({ path: 'translations/updateTranslation' }, body);
+}
+
 export const TranslateAll = ({ restaurantId }: any) => {
   return Post({ path: `restaurant/${restaurantId}/menu/translate/all` });
 }

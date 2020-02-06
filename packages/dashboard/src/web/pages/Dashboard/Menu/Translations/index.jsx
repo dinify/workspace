@@ -22,7 +22,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import {
   addLanguage,
-  pushTranslation,
   selectLanguage,
   confirmPreferredLanguages,
   translateAll
@@ -93,7 +92,7 @@ const Translations = ({
   classes,
   selectLang,
   selectedLang,
-  pushTranslation,
+  pushTranslations,
   activeTab,
   switchTab,
   defaultLanguage,
@@ -158,9 +157,9 @@ const Translations = ({
                   originalsList={translations[defaultLanguage][type.type] || []}
                   initialValues={initialValues}
                   onSubmit={(submitValues, dispatch, props) => {
-                    const { initialValues } = props
-                    const changedValues = diff(initialValues, submitValues)
-                    pushTranslation({
+                    const { initialValues } = props;
+                    const changedValues = diff(initialValues, submitValues);
+                    pushTranslations({
                       changes: changedValues,
                       locale: selectedLang,
                       type: type.type,
@@ -211,10 +210,10 @@ const enhance = compose(
       activeTab: state.trans.activeTab,
       trans: state.trans
     }),
-    ({ trans: { fetchTranslations, selectLang, switchTab } }) => ({
+    ({ trans: { fetchTranslations, selectLang, switchTab, pushTranslations } }) => ({
       addLanguage,
       selectLang,
-      pushTranslation,
+      pushTranslations,
       switchTab,
       selectLanguage,
       confirmPreferredLanguages,
