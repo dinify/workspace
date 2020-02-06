@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { MapToList } from '@dinify/common/src/lib/FN';
 import { Field, reduxForm } from 'redux-form';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
-import Loading from 'web/components/Loading';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -34,10 +33,8 @@ import {
 } from 'features/option/actions.ts';
 import { listOfOptions } from 'features/option/selectors';
 
-const cSymbol = {
-  EUR: '€',
-  CZK: 'Kč'
-}
+import { getCurrencySymbol } from './util';
+
 
 let AddChoiceForm = ({ t, handleSubmit, progress, errorMessage }) => {
   return (
@@ -190,7 +187,7 @@ const Options = ({
                         <span>
                           {getT(choice.translations, lang)}{' '}
                           {choice.price ?
-                          `${Number.parseFloat(choice.price.amount).toFixed(2)} ${cSymbol[choice.price.currency]}`
+                          `${Number.parseFloat(choice.price.amount).toFixed(2)} ${getCurrencySymbol(choice.price)}`
                           : ''}
                         </span>
                       }
