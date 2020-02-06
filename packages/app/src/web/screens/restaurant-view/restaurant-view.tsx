@@ -8,12 +8,14 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import { Restaurant } from 'RestaurantModels';
 import { Carousel } from '../../components/carousel';
-import { Typography } from '@material-ui/core';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { getCategoriesBySubdomain } from '../../../features/menuCategory/selectors';
 import MenuCategory from './menu-category';
 import Header from './header-simple';
+import Nav from './nav';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 export default () => {
   const params = useParams<{ subdomain: string }>();
@@ -33,14 +35,18 @@ export default () => {
       marginTop: -48,
     }} alt={restaurant && restaurant.name} images={restaurant ? restaurant.images : []} />
     <div style={{
-      // padding: 16
       width: '100vw'
     }}>
+      <Typography style={{ padding: 16 }} variant="h6">
+        {restaurant && restaurant.name}
+      </Typography>
+      <Nav restaurant={restaurant} />
+      <Divider />
       <div style={{
+        padding: 16,
         width: '100%',
         display: 'flex',
-        alignItems: 'center',
-        padding: 16,
+        alignItems: 'center'
       }}>
         <RestaurantMenu color="primary" />
         <div style={{ padding: '0 16px' }}>

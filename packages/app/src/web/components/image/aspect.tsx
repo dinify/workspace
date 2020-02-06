@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface AspectProps {
   ratio?: number,
   style?: React.CSSProperties

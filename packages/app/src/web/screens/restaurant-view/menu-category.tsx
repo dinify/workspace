@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { useMenuCategoryView } from '../../../features/menuCategory/selectors';
 import { Grid } from '@material-ui/core';
@@ -12,10 +12,28 @@ export default ({
   menuCategoryId: string
 }) => {
   const theme = useTheme();
+  const [divider, setDivider] = useState(false);
   const menuCategory = useMenuCategoryView(menuCategoryId);
   const mobile = FN.isMobile();
+  const container = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const listener = () => {
+      if (container.current) {
+        const box = container.current.getBoundingClientRect();
+        console.log(box.top);
+        if (box.top === 0 && !divider) {
+          setDivider(true);
+        }
+      }
+
+    };
+    document.body.addEventListener('scroll', listener);
+    return function cleanup() {
+      document.body.removeEventListener('scroll', listener);
+    }
+  });
   return <>
-    <div className="sticky" style={{
+    <div ref={container} className="sticky" style={{
       zIndex: 50,
       top: 0,
       display: 'flex',
@@ -23,7 +41,7 @@ export default ({
       height: 32,
       padding: '0 16px',
       backgroundColor: theme.palette.background.paper,
-      borderBottom: `1px solid ${theme.palette.divider}`
+      borderBottom: divider ? `1px solid ${theme.palette.divider}` : 'none'
     }}>
       <Typography variant="h6">
         {menuCategory.name}

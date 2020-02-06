@@ -23,6 +23,7 @@ declare module 'RestaurantModels' {
     settings: {
       currency: CurrencyCode;
       reservations: boolean;
+      serviceCalls: boolean;
       paymentMethods: array;
       paymentCollection: string;
       orders: boolean;

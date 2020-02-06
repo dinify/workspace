@@ -14,7 +14,7 @@ import { getRestaurantBySubdomain } from 'features/restaurant/selectors';
 import { fetchRestaurantAsync } from 'features/restaurant/actions.ts';
 import InfoSection from './InfoSection';
 import MenuSection from './MenuSection';
-import Nav from './Nav';
+// import Nav from './Nav';
 
 const styles = theme => ({
   category: {
@@ -138,7 +138,7 @@ let RestaurantView = props => {
             <Typography gutterBottom variant="h6">
               {restaurant.name}
             </Typography>
-            <Nav history={history} restaurant={restaurant} />
+            {/* <Nav history={history} restaurant={restaurant} /> */}
 
             {/* <Typography style={{marginTop: 8}} gutterBottom variant="subtitle1">{restaurant.description}</Typography>
             <Typography

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 // import Carousel from './Carousel';
 import convertDistance from 'geolib/es/convertDistance';
 import { useIntl } from '@dinify/common/src/lib/i18n';
+import { Aspect, Image } from './image';
 
 const distanceFormatter = cldr => m => {
   let value = m;
@@ -92,14 +93,12 @@ const RestaurantListItem = ({ classes, restaurant }) => {
       }}
     >
       <div style={{ width: '100%' }}>
-        <div style={{ width: '100%' }} className={classes.image}>
-          {/* <Carousel
-            borderRadius={4}
-            aspectRatio={3 / 2}
-            images={images}
-            backdrop={<span className={classes.imageBackdrop} />}
-          /> */}
-        </div>
+        <Aspect style={{
+          borderRadius: 4,
+          overflow: 'hidden'
+        }}>
+          <Image style={{ width: '100%', height: '100%' }} url={restaurant.images[0].url} />
+        </Aspect>
         {tags && (
           <Typography
             gutterBottom

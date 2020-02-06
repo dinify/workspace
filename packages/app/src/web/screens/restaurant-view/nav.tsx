@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
@@ -8,36 +7,37 @@ import FacebookBox from '@dinify/common/src/icons/FacebookBox';
 import Instagram from '@dinify/common/src/icons/Instagram';
 import CalendarClock from '@dinify/common/src/icons/CalendarClock';
 import Place from '@material-ui/icons/PlaceRounded';
-import FavoriteToggle from 'web/components/FavoriteToggle';
+import FavoriteToggle from '../../components/FavoriteToggle';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import { favRestaurantAsync } from 'features/restaurant/actions.ts';
+import { favRestaurantAsync } from '../../../features/restaurant/actions';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
+import { Restaurant } from 'RestaurantModels';
+import { RootState } from 'typesafe-actions';
+import { useAction } from '@dinify/common/src/lib/util';
+import { useHistory } from 'react-router';
+import { useTheme } from '../../../features/ui/selectors';
 
-const styles = theme => ({
-  secondary: {
-    color: theme.palette.text.secondary
-  },
-});
+export interface NavProps {
+  restaurant: Restaurant
+}
 
-let Nav = ({
-  classes,
-  checkedInRestaurant,
-  restaurant,
-  favRestaurant,
-  history
-}) => {
-  const social = restaurant.social;
+const Nav: React.FC<NavProps> = ({ restaurant }) => {
+  const social = restaurant && restaurant.social;
   const bookingElement = document.getElementById('booking');
-  const checkedInHere = checkedInRestaurant === restaurant.id;
+  const history = useHistory();
+  const favRestaurant = useAction(favRestaurantAsync.request);
+  const theme = useTheme();
+  const checkedInHere = useSelector<RootState, boolean>(state => state.restaurant.checkedInRestaurant === (restaurant && restaurant.id));
   const { t } = useTranslation();
   return (
-    <Grid container style={{marginLeft: -16}} spacing={8}>
-
+    <Grid style={{
+      color: theme.palette.text.secondary
+    }} container spacing={8}>
       {!!social && !!social.facebook &&
         <Grid item>
-          <a href={social.facebook} target="_blank" rel="noopener noreferrer">
-            <IconButton>
-              <FacebookBox className={classes.secondary} />
+          <a style={{ color: 'inherit' }} href={social.facebook} target="_blank" rel="noopener noreferrer">
+            <IconButton color="inherit">
+              <FacebookBox />
             </IconButton>
           </a>
         </Grid>
@@ -45,9 +45,9 @@ let Nav = ({
 
       {!!social && !!social.instagram &&
         <Grid item>
-          <a href={social.instagram} target="_blank" rel="noopener noreferrer">
-            <IconButton>
-              <Instagram className={classes.secondary} />
+          <a style={{ color: 'inherit' }} href={social.instagram} target="_blank" rel="noopener noreferrer">
+            <IconButton color="inherit">
+              <Instagram />
             </IconButton>
           </a>
         </Grid>
@@ -55,21 +55,24 @@ let Nav = ({
 
       <Grid item>
         <IconButton
+          color="inherit"
           onClick={() => {
             const node = document.getElementById('map');
-            scrollIntoView(node, {
-              behavior: 'smooth',
-              scrollMode: 'always',
-              block: 'start',
-            });
+            if (node) {
+              scrollIntoView(node, {
+                behavior: 'smooth',
+                scrollMode: 'always',
+                block: 'start',
+              });
+            }
           }}>
-          <Place className={classes.secondary} />
+          <Place />
         </IconButton>
       </Grid>
 
       <Grid item>
         <FavoriteToggle
-          checked={restaurant.favorite}
+          checked={restaurant && restaurant.favorite}
           onChange={() => favRestaurant({
             fav: !restaurant.favorite,
             restaurantId: restaurant.id
@@ -79,6 +82,7 @@ let Nav = ({
 
       {bookingElement !== null && <Grid item>
         <IconButton
+          color="inherit"
           onClick={() => {
             scrollIntoView(bookingElement, {
               behavior: 'smooth',
@@ -86,12 +90,12 @@ let Nav = ({
               block: 'start',
             });
           }}>
-          <CalendarClock className={classes.secondary} />
+          <CalendarClock />
         </IconButton>
       </Grid>}
-      {restaurant.settings && (restaurant.settings.orders || restaurant.settings.serviceCalls) ?
+      {restaurant && restaurant.settings && (restaurant.settings.orders || restaurant.settings.serviceCalls) ?
         <Button disabled={checkedInHere} style={{
-          height: 40, 
+          height: 40,
           boxShadow: 'none',
           alignSelf: 'center',
           marginLeft: 'auto'
@@ -106,13 +110,4 @@ let Nav = ({
   )
 }
 
-Nav = connect(
-  (state) => ({
-    checkedInRestaurant: state.restaurant.checkedInRestaurant
-  }), 
-  {
-    favRestaurant: favRestaurantAsync.request,
-  }
-)(Nav)
-
-export default withStyles(styles)(Nav);
+export default Nav;
