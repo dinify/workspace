@@ -34,6 +34,11 @@ import {
 } from 'features/option/actions.ts';
 import { listOfOptions } from 'features/option/selectors';
 
+const cSymbol = {
+  EUR: '€',
+  CZK: 'Kč'
+}
+
 let AddChoiceForm = ({ t, handleSubmit, progress, errorMessage }) => {
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -184,7 +189,9 @@ const Options = ({
                       secondary={
                         <span>
                           {getT(choice.translations, lang)}{' '}
-                          {choice.price ? Number.parseFloat(choice.price.amount).toFixed(2) : ''} €
+                          {choice.price ?
+                          `${Number.parseFloat(choice.price.amount).toFixed(2)} ${cSymbol[choice.price.currency]}`
+                          : ''}
                         </span>
                       }
                     />

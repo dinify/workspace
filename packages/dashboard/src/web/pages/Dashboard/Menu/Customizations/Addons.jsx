@@ -24,6 +24,11 @@ import { getT } from '@dinify/common/src/lib/translation.ts';
 import { fetchAddonsAsync, createAddonAsync, removeAddonAsync } from 'features/addon/actions.ts';
 import { listOfAddons } from 'features/addon/selectors';
 
+const cSymbol = {
+  EUR: '€',
+  CZK: 'Kč'
+}
+
 let AddAddonForm = ({ t, handleSubmit, progress, errorMessage  }) => {
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -115,7 +120,7 @@ const Addons = ({
           <div key={addon.id}>
             <ListItem dense style={styles.ListItem}>
               <ListItemText primary={getT(addon.translations, lang)} />
-              {addon.price ? addon.price.amount : '0'} €
+              {addon.price ? addon.price.amount : '0'} {cSymbol[addon.price.currency]}
               <Tooltip placement="left" title={t('delete')}>
                 <IconButton
                   aria-label={t('delete')}
