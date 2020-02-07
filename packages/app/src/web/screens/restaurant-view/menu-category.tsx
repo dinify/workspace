@@ -20,16 +20,18 @@ export default ({
     const listener = () => {
       if (container.current) {
         const box = container.current.getBoundingClientRect();
-        console.log(box.top);
         if (box.top === 0 && !divider) {
           setDivider(true);
+        }
+        else if (box.top !== 0 && divider) {
+          setDivider(false);
         }
       }
 
     };
-    document.body.addEventListener('scroll', listener);
+    document.addEventListener('scroll', listener);
     return function cleanup() {
-      document.body.removeEventListener('scroll', listener);
+      document.removeEventListener('scroll', listener);
     }
   });
   return <>

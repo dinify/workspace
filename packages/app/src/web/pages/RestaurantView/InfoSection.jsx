@@ -13,7 +13,7 @@ import Email from '@material-ui/icons/EmailRounded';
 import Phone from '@material-ui/icons/PhoneRounded';
 import Place from '@material-ui/icons/PlaceRounded';
 import Schedule from '@material-ui/icons/ScheduleRounded';
-import StaticMap from 'web/components/StaticMap';
+// import StaticMap from 'web/components/StaticMap';
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
@@ -116,7 +116,7 @@ const InfoSection = ({ classes, restaurant }) => {
       formatted = cldr.Calendars.formatDateInterval(start, end, {
         skeleton: intervalSkeleton,
       });
-    } catch (e) {}
+    } catch (e) { }
     return formatted;
   };
 
@@ -128,9 +128,9 @@ const InfoSection = ({ classes, restaurant }) => {
         href={`https://www.google.com/maps/search/${restaurant.name}/@${restaurant.latitude},${restaurant.longitude},17z`}
         style={{ textDecoration: 'none', display: 'block' }}
       >
-        <div id="map" style={{ width: '100%' }}>
+        {/* <div id="map" style={{ width: '100%' }}>
           <StaticMap restaurant={restaurant} />
-        </div>
+        </div> */}
         {addr && (
           <ListItem>
             <ListItemIcon>
@@ -194,8 +194,8 @@ const InfoSection = ({ classes, restaurant }) => {
                               {index === 0 ? (
                                 <b>{localizedDay}</b>
                               ) : (
-                                localizedDay
-                              )}
+                                  localizedDay
+                                )}
                             </Typography>
                           </td>
                         )}

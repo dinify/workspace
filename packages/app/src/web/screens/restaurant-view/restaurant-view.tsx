@@ -16,6 +16,7 @@ import Header from './header-simple';
 import Nav from './nav';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import { StaticMap } from '../../components/map';
 
 export default () => {
   const params = useParams<{ subdomain: string }>();
@@ -59,6 +60,9 @@ export default () => {
       {menuCategoryIds.map((id, i) => (
         <MenuCategory key={id} menuCategoryId={id} />
       ))}
+      <div id="map" style={{ width: '100%' }}>
+        <StaticMap restaurant={restaurant} />
+      </div>
     </div>
   </>;
 }
