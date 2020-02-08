@@ -8,7 +8,7 @@ import FacebookBox from '@dinify/common/src/icons/FacebookBox';
 import Instagram from '@dinify/common/src/icons/Instagram';
 import CalendarClock from '@dinify/common/src/icons/CalendarClock';
 import Place from '@material-ui/icons/PlaceRounded';
-import FavoriteToggle from 'web/components/FavoriteToggle';
+// import FavoriteToggle from 'web/components/FavoriteToggle';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { favRestaurantAsync } from 'features/restaurant/actions.ts';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
@@ -67,6 +67,7 @@ let Nav = ({
         </IconButton>
       </Grid>
 
+      {/*
       <Grid item>
         <FavoriteToggle
           checked={restaurant.favorite}
@@ -75,7 +76,9 @@ let Nav = ({
             restaurantId: restaurant.id
           })}
         />
-      </Grid>
+      </Grid>      
+       */}
+
 
       {bookingElement !== null && <Grid item>
         <IconButton

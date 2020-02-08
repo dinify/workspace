@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import { useRouteMatch, useHistory } from 'react-router';
 import {
-  favMenuitemInit,
+  // favMenuitemInit,
   fetchMenuItemAsync,
   clearCustomizationsAction,
 } from '../../../features/menuItem/actions';
@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
 import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContainer';
 import Price from '@dinify/common/src/components/price';
-import FavoriteToggle from '../../components/FavoriteToggle';
+// import FavoriteToggle from '../../components/FavoriteToggle';
 import NutritionFacts from '../../pages/MenuItemView/NutritionFacts';
 import Fab from '@material-ui/core/Fab';
 import { addToCartAsync } from '../../../features/cart/actions';
@@ -31,7 +31,7 @@ import { useMenuItemView } from '../../../features/menuItem/selectors';
 export const MenuItemScreen = ({  }: {}) => {
   const clearCustomizations = useAction(clearCustomizationsAction);
   const fetchMenuItem = useAction(fetchMenuItemAsync.request);
-  const favMenuitem = useAction(favMenuitemInit);
+  // const favMenuitem = useAction(favMenuitemInit);
   const addToCart = useAction(addToCartAsync.request);
   const match = useRouteMatch<{ id: string }>();
   const history = useHistory();
@@ -61,11 +61,11 @@ export const MenuItemScreen = ({  }: {}) => {
 
   if (!menuItem) return null;
 
-  const handleToggleFavorite = () =>
-    favMenuitem({
-      fav: !menuItem.favorite,
-      id: menuItem.id,
-    });
+  // const handleToggleFavorite = () =>
+  //   favMenuitem({
+  //     fav: !menuItem.favorite,
+  //     id: menuItem.id,
+  //   });
 
   const handleAddCart = () => {
     addToCart({ menuItemId: menuItem.id });
@@ -85,12 +85,14 @@ export const MenuItemScreen = ({  }: {}) => {
                   <Price price={menuItem.price} />
                 </Typography>
               </Grid>
-              <Grid item>
-                <FavoriteToggle
-                  checked={menuItem.favorite}
-                  onChange={handleToggleFavorite}
-                />
-              </Grid>
+              {/*
+                <Grid item>
+                  <FavoriteToggle
+                    checked={menuItem.favorite}
+                    onChange={handleToggleFavorite}
+                  />
+                </Grid>
+                */}
             </Grid>
             <Typography>{menuItem.description}</Typography>
             {menuItem.calories && (
