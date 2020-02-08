@@ -104,8 +104,11 @@ const makeCartDoneEpic: Epic = (action$) =>
     switchMap(action => {
       const { userId, restaurantId } = action.payload;
       return from(API.MakeCartDone({ userId, restaurantId })).pipe(
-        rxMap((res) => {
-          return makeCartDoneAsync.success(res);
+        mergeMap((res) => {
+          return of(
+            makeCartDoneAsync.success(res),
+            fetchUserCartAsync.request({ userId, restaurantId })
+          );
         }),
         catchError(error => {
           return handleEpicAPIError({

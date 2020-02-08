@@ -90,6 +90,7 @@ const OrderItem: React.FC<OrderItemProps & {
         style={{
           position: 'relative',
           minWidth: '100%', display: 'flex', alignItems: 'top',
+          opacity: orderItem && orderItem.status === 'DONE' ? 0.5 : 1,
           ...style
         }} >
         <animated.div style={{
@@ -133,7 +134,10 @@ const OrderItem: React.FC<OrderItemProps & {
         </div>
         <div style={{ flex: 1, marginLeft: 16, position: 'relative' }}>
           <div style={{ display: 'flex' }}>
-            <Typography variant={expanded ? "body1" : "body2"} style={{ fontWeight: expanded ? 500: 400, flex: 1, marginRight: 32 }} >
+            <Typography variant={expanded ? "body1" : "body2"} style={{
+              fontWeight: expanded ? 500: 400, flex: 1, marginRight: 32,
+              textDecoration: orderItem && orderItem.status === 'DONE' ? 'line-through' : 'inherit'
+            }}>
               {menuItem.name}
             </Typography>
             {!!cartItemView && 

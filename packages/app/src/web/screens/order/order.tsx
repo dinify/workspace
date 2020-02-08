@@ -6,6 +6,7 @@ import { AppBar, AppBarTitle } from '../../components/app-bar';
 import { RootState } from 'typesafe-actions';
 import { Cart } from 'CartModels';
 import Fab from '@material-ui/core/Fab';
+import { Divider } from '@material-ui/core';
 
 import { fetchUserCartAsync, makeCartDoneAsync } from '../../../features/cart/actions';
 import { Typography } from '@material-ui/core';
@@ -35,6 +36,9 @@ export const OrderScreen: React.FC<{
 
   if (!cart || cart.restaurantId !== restaurantId || cart.userId !== userId) return <></>;
 
+  const oldItems = cart.items.filter(item => item.status === 'DONE');
+  const newItems = cart.items.filter(item => item.status !== 'DONE');
+
   return (
     <div {...otherProps}>
       <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
@@ -44,7 +48,23 @@ export const OrderScreen: React.FC<{
         />
       </AppBar>
       <div style={{ padding: '0 16px', marginTop: 56 }}>
-        {cart.items.map(item => (
+        {oldItems.length > 0 ? <>
+          <Typography variant="caption">Processed orders</Typography>
+        </> : ''}
+        {oldItems.map(item => (
+          <OrderItem
+            style={{ padding: '8px 0' }}
+            key={item.id}
+            id={item.id}
+            orderItem={item}
+            expanded
+          />
+        ))}
+        {oldItems.length > 0 && newItems.length > 0 ? <>
+          <Divider />
+          <Typography variant="caption">New orders</Typography>
+        </> : ''}
+        {newItems.map(item => (
           <OrderItem
             style={{ padding: '8px 0' }}
             key={item.id}
@@ -64,7 +84,7 @@ export const OrderScreen: React.FC<{
         </div>
 
         <Fab
-          disabled={!cart.items || cart.items.length < 1 || cart.done}
+          disabled={!cart.items || cart.items.length < 1 || newItems.length < 1}
           style={{ marginTop: 16, width: '100%' }}
           variant="extended"
           color="primary"
