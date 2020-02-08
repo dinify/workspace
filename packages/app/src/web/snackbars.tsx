@@ -6,7 +6,7 @@ import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { useSelector } from 'react-redux';
 import { UiState } from '../features/ui/reducers';
 import { RootState } from 'typesafe-actions';
-import { hideSnackbarAction } from '../features/ui/actions';
+import { actions as uiActions} from '../models/ui';
 import { Button } from '@material-ui/core';
 import toPairs from 'ramda/es/toPairs';
 import { useAction } from '@dinify/common/src/lib/util';
@@ -21,7 +21,7 @@ const defaultProps: Partial<SnackbarProps> = {
 };
 
 export default (props: any) => {
-  const hideSnackbar = useAction(hideSnackbarAction);
+  const hideSnackbar = useAction(uiActions.hideSnackbar);
   const { t } = useTranslation();
   const snackbars = useSelector<any, UiState['snackbars']>(
     state => state._ui.snackbars,
@@ -45,7 +45,6 @@ export default (props: any) => {
         let rest: any = {};
         const closeHandler = getHandler(id);
         if (snackbar.action) {
-          const closeHandler = getHandler(id);
           const actionHandler = () => {
             if (snackbar.handler) snackbar.handler();
             closeHandler();

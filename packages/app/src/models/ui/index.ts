@@ -28,6 +28,9 @@ const UImodel = createModel({
       const id = snackbar.id || Math.random().toString(36).substring(7);
       const value = { ...snackbar, id, visible: true };
       return assocPath<Snackbar, UIState>(['snackbars', id], value)(state);
+    },
+    hideSnackbar: (state: UIState, payload: any): any => {
+      return assocPath<boolean, UIState>(['snackbars', payload, 'visible'], false)(state);
     }
 
   },

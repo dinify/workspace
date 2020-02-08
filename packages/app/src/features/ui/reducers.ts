@@ -77,10 +77,7 @@ export default function reducer(state: UiState = initialState, action: AnyAction
     case getType(makeCartDoneAsync.success): {
       return dissocPath<UiState>(['dialogs', 'cart'])(state);
     }
-    
-    case getType(actions.hideSnackbarAction): {
-      return assocPath<boolean, UiState>(['snackbars', action.payload, 'visible'], false)(state);
-    }
+
     case getType(actions.toggleThemeAction): {
       return assoc('theme', state.theme === 'dark' ? 'light' : 'dark')(state);
     }
