@@ -26,7 +26,11 @@ export default ({ menuItemId, style }: { menuItemId: string, style?: React.CSSPr
         borderRadius: 4,
         overflow: 'hidden'
       }}>
-        <Image style={{ width: '100%', height: '100%' }} alt={menuItem.name} url={menuItem.images[0].url} />
+        <Image
+          url={menuItem.images[0].url}
+          alt={menuItem.name}
+          options={{ original: true }}
+          style={{ width: '100%', height: '100%' }} />
       </Aspect>
     }
     <Typography style={{

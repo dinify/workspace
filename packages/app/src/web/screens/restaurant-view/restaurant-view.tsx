@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
-import { useAction } from '@dinify/common/src/lib/util';
+import { useAction, useBreakpoints } from '@dinify/common/src/lib/util';
 import { getRestaurantBySubdomain } from '../../../features/restaurant/selectors';
 import { fetchRestaurantAsync } from '../../../features/restaurant/actions';
 import { fetchMenuCategoriesAsync } from '../../../features/menuCategory/actions';
@@ -30,13 +30,23 @@ export default () => {
     fetchMenucategories({ subdomain: params.subdomain });
   }, []);
 
+  const match = useBreakpoints({
+    0: 3 / 2,
+    600: 16 / 9,
+    750: 2.39 / 1,
+    960: 4 / 1
+  });
+
+  const images = restaurant ? restaurant.images : [];
   return <>
     <Header />
-    <Carousel style={{
+    <Carousel aspectRatio={match[1]} imageOptions={{ original: true }} style={{
       marginTop: -48,
-    }} alt={restaurant && restaurant.name} images={restaurant ? restaurant.images : []} />
+    }} alt={restaurant && restaurant.name} images={images} />
     <div style={{
-      width: '100vw'
+      width: '100vw', // TODO: make responsive
+      maxWidth: 960,
+      margin: '0 auto'
     }}>
       <Typography style={{ padding: 16 }} variant="h6">
         {restaurant && restaurant.name}
@@ -58,7 +68,7 @@ export default () => {
         </div>
       </div>
       {menuCategoryIds.map((id, i) => (
-        <MenuCategory key={id} menuCategoryId={id} />
+        <MenuCategory key={id} menuCategoryId={id} index={i} />
       ))}
       <div id="map" style={{ width: '100%' }}>
         <StaticMap restaurant={restaurant} />

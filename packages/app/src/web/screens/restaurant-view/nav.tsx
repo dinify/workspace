@@ -7,13 +7,10 @@ import FacebookBox from '@dinify/common/src/icons/FacebookBox';
 import Instagram from '@dinify/common/src/icons/Instagram';
 import CalendarClock from '@dinify/common/src/icons/CalendarClock';
 import Place from '@material-ui/icons/PlaceRounded';
-import FavoriteToggle from '../../components/FavoriteToggle';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import { favRestaurantAsync } from '../../../features/restaurant/actions';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { Restaurant } from 'RestaurantModels';
 import { RootState } from 'typesafe-actions';
-import { useAction } from '@dinify/common/src/lib/util';
 import { useHistory } from 'react-router';
 import { useTheme } from '../../../features/ui/selectors';
 
@@ -25,12 +22,12 @@ const Nav: React.FC<NavProps> = ({ restaurant }) => {
   const social = restaurant && restaurant.social;
   const bookingElement = document.getElementById('booking');
   const history = useHistory();
-  const favRestaurant = useAction(favRestaurantAsync.request);
   const theme = useTheme();
   const checkedInHere = useSelector<RootState, boolean>(state => state.restaurant.checkedInRestaurant === (restaurant && restaurant.id));
   const { t } = useTranslation();
   return (
     <Grid style={{
+      overflow: 'hidden',
       color: theme.palette.text.secondary
     }} container spacing={8}>
       {!!social && !!social.facebook &&
@@ -68,16 +65,6 @@ const Nav: React.FC<NavProps> = ({ restaurant }) => {
           }}>
           <Place />
         </IconButton>
-      </Grid>
-
-      <Grid item>
-        <FavoriteToggle
-          checked={restaurant && restaurant.favorite}
-          onChange={() => favRestaurant({
-            fav: !restaurant.favorite,
-            restaurantId: restaurant.id
-          })}
-        />
       </Grid>
 
       {bookingElement !== null && <Grid item>

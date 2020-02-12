@@ -25,15 +25,18 @@ const StaticMap: React.FC<StaticMapProps> = ({
       const height = container.current.clientHeight;
       setDimensions({ width, height });
     }
-  });
+  }, [restaurant]);
 
-  const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const { width, height } = dimensions;
 
   if (!(restaurant && restaurant.longitude && restaurant.latitude)) return null;
 
   const ratio = Math.round((1 / aspectRatio) * 100 * 10000) / 10000;
-  const url = `https://api.mapbox.com/styles/v1/${mapStyle}/static/${restaurant.longitude},${restaurant.latitude},${zoom},0,0/${width}x${height}@2x?access_token=${token}`
-
+  let url;
+  if (width !== 0 && height !== 0) {
+    url = `https://api.mapbox.com/styles/v1/${mapStyle}/static/${restaurant.longitude},${restaurant.latitude},${zoom},0,0/${width}x${height}@2x?access_token=${token}`
+  }
   return (
     <div
       ref={container}

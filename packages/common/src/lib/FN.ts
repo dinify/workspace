@@ -110,6 +110,14 @@ export function supportsWebp() {
   });
 }
 
+export function supportsWebpSync() {
+  var elem = document.createElement('canvas');
+  if (!!(elem.getContext && elem.getContext('2d'))) {
+    return elem.toDataURL('image/webp').indexOf('data:image/webp') == 0;
+  }
+  return false;
+}
+
 /**
  * Determine the mobile operating system.
  * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'other'.

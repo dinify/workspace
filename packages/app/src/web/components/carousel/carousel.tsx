@@ -3,6 +3,7 @@ import { Image as ImageType } from 'RestaurantModels';
 import styles from './styles';
 import { Image } from '../image';
 import PageIndicator from '../PageIndicator';
+import { ImageURIOptions } from '../image/image';
 
 export interface CarouselProps {
   classes?: string,
@@ -13,13 +14,15 @@ export interface CarouselProps {
   fixed?: boolean,
   alt: string,
   style?: React.CSSProperties,
+  imageOptions?: Partial<ImageURIOptions>
 }
 
 const Carousel: React.FC<CarouselProps> = ({
   images = [],
   alt,
   aspectRatio = 3 / 2,
-  style
+  style,
+  imageOptions
 }) => {
   const [selectedPage, setSelectedPage] = useState(0);
   const ratio = Math.round((1 / aspectRatio) * 100 * 10000) / 10000;
@@ -47,7 +50,7 @@ const Carousel: React.FC<CarouselProps> = ({
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
         <figure ref={container} style={styles.container} className="hide-scrollbar">
           {images.map((image, i) => (
-            <Image style={styles.image} key={image.url} url={image.url} alt={`${alt} ${i + 1}`} />
+            <Image options={imageOptions} style={styles.image} key={`${image.url}`} url={image.url} alt={`${alt} ${i + 1}`} />
           ))}
         </figure>
       </div>

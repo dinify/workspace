@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import toPairs from 'ramda/es/toPairs';
+import { supportsWebpSync } from '@dinify/common/src/lib/FN';
 
 export interface ImageProps {
   url: string;
   alt: string;
-  sizes?: string;
   style?: React.CSSProperties;
   className?: string;
-  options?: ImageURIOptions;
+  options?: Partial<ImageURIOptions>;
 }
 
 /**
@@ -118,6 +118,8 @@ export type ImageURIOptions = {
   imageCrop: boolean,
   circleCrop: boolean,
   expiration: number,     // set cache-control max-age header (in days)
+  requestWebp: boolean,
+  noWebp: boolean,
 }
 
 export const ImageURIParams: { [key: string]: string } = {
@@ -129,6 +131,8 @@ export const ImageURIParams: { [key: string]: string } = {
   centerCrop: 'n',
   circleCrop: 'cc',
   expiration: 'e',
+  requestWebp: 'rw',
+  noWebp: 'nw'
 }
 
 const getUrl = (url: string, options?: Partial<ImageURIOptions>) => {
@@ -136,46 +140,53 @@ const getUrl = (url: string, options?: Partial<ImageURIOptions>) => {
     const params = toPairs(options).map(([k, v]) => {
       let key = ImageURIParams[k];
       if (k === 'original') return 's0';
-      if (typeof v === 'boolean') return key;
+      if (typeof v === 'boolean') {
+        if (v === true) return key;
+        return null;
+      }
       return `${key}${v}`;
-    });
+    }).filter(v => v !== null);
     return `${url}=${params.join('-')}`;
   }
   return url;
 };
 
-const Image: React.FC<ImageProps> = ({
+const ImageComponent: React.FC<ImageProps> = ({
   url,
   alt,
-  sizes,// = "(min-width: 600px) 25vw, (min-width: 500px) 50vw, 100vw",
   options,
   className,
   style,
 }) => {
-  const self = useRef<HTMLImageElement>(null);
-  const [dimensions, setDimensions] = useState({ dppx: window.devicePixelRatio, width: 0, height: 0 });
+  const dppx = window.devicePixelRatio;
+  if (options && options.width) options.width *= dppx;
+  if (options && options.height) options.height *= dppx;
+
+  const supportsWebp = supportsWebpSync();
   const src = getUrl(url, {
-    width: dimensions.width,
-    height: dimensions.height,
-    crop: true,
+    requestWebp: supportsWebp,
+    noWebp: !supportsWebp,
     ...options
   });
-  useEffect(() => {
-    if (self.current) {
-      const dppx = window.devicePixelRatio;
-      const width = self.current.clientWidth * dppx;
-      const height = self.current.clientHeight * dppx;
-      setDimensions({ dppx, width, height });
-    }
-  }, []);
-  return <img
+  // useEffect(() => {
+  //   if (self.current) {
+  //     const dppx = window.devicePixelRatio;
+  //     const width = self.current.clientWidth * dppx;
+  //     const height = self.current.clientHeight * dppx;
+  //     setDimensions({ dppx, width, height });
+  //   }
+  // }, []);
+  const imgStyle = {
+    backgroundImage: `url(${src})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
+  };
+  return <div
     className={className}
-    style={style}
-    ref={self}
-    alt={alt}
-    src={src}
-    sizes={sizes}
+    style={{ ...style, ...imgStyle }}
+  // ref={self}
   />;
 }
 
-export default Image;
+export default ImageComponent;
