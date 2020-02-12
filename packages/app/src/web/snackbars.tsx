@@ -4,7 +4,6 @@ import Grow from '@material-ui/core/Grow';
 import { TResolver } from '../features/ui/actions';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { useSelector } from 'react-redux';
-import { UiState } from '../features/ui/reducers';
 import { RootState } from 'typesafe-actions';
 import { actions as uiActions} from '../models/ui';
 import { Button } from '@material-ui/core';
@@ -23,7 +22,7 @@ const defaultProps: Partial<SnackbarProps> = {
 export default (props: any) => {
   const hideSnackbar = useAction(uiActions.hideSnackbar);
   const { t } = useTranslation();
-  const snackbars = useSelector<any, UiState['snackbars']>(
+  const snackbars = useSelector<any, any>(
     state => state._ui.snackbars,
   );
   const fullScreenDialogOpen = useSelector<RootState, boolean>(state => {
@@ -41,7 +40,7 @@ export default (props: any) => {
 
   return (
     <>
-      {toPairs(snackbars).map(([id, snackbar]) => {
+      {toPairs(snackbars).map(([id, snackbar]: [string, any]) => {
         let rest: any = {};
         const closeHandler = getHandler(id);
         if (snackbar.action) {

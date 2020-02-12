@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
 import queryString from 'query-string';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { MapToList } from '@dinify/common/src/lib/FN';
@@ -12,8 +11,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import Text from 'web/components/MaterialInputs/Text';
-import Select from 'web/components/MaterialInputs/Select';
+import { Formik, Form, Field } from 'formik';
+import { TextField, Select } from 'formik-material-ui';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import {
   registerRestaurant,
@@ -54,80 +54,85 @@ const createSubdomain = (subdomain) => {
   return subdomain.replace(/\W/g, '').toLowerCase();
 }
 
-const renderSubdomainField = (t) => (props) => {
-  const { input } = props;
-  let subdomain = <span style={{color: '#888'}}> {t('fillFieldAbove')}</span>;
-  const value = createSubdomain(input.value);
-  if (value !== '') subdomain = value;
+const renderSubdomainHelper = (value) => {
+  const { t } = useTranslation();
+  let subdomain = <span style={{ color: '#888' }}> {t('fillFieldAbove')}</span>;
+  const val = createSubdomain(value);
+  if (val !== '') subdomain = val;
   return (
-    <div>
-      <Text {...props} />
-      <div>web.dinify.app/restaurant/{subdomain}</div>
-    </div>
+    <div>web.dinify.app/restaurant/{subdomain}</div>
   )
 }
-
-let RegistrationForm = ({ t, handleSubmit }) => {
+const validateRegForm = (values) => {
+  const errors = {};
+  if (!values.restaurantName) errors.restaurantName = 'Required';
+  if (!values.subdomain) errors.subdomain = 'Required';
+  return errors;
+}
+const RegForm = ({ initialValues, onSubmit }) => {
+  const { t } = useTranslation();
   return (
-    <form onSubmit={handleSubmit}>
-      <Field
-        name="restaurantName"
-        component={Text}
-        componentProps={{ label: t('nameOfRestaurant'), fullWidth: true, margin: 'normal' }}
-      />
-      <Field
-        name="subdomain"
-        component={renderSubdomainField(t)}
-        componentProps={{
-          label: t('restaurantURL'),
-          fullWidth: true,
-          margin: 'normal',
-        }}
-      />
-      <div style={{height: 20}}></div> 
-      <Field
-        name="language"
-        component={Select}
-        options={ [
-          {label: 'English', value: 'en'},
-          {label: 'Čeština', value: 'cs'},
-          {label: 'Español', value: 'es'},
-        ]}
-        componentProps={{
-          label: t('defaultLanguageLabel'), 
-          fullWidth: true,
-          margin: 'normal'
-        }}
-      />
-      <Typography variant="caption">
-        {t('defaultLanguageRecom')}
-      </Typography>
-      <Field
-        name="currency"
-        component={Select}
-        options={ [
-          {label: 'Euro €', value: 'EUR'},
-          {label: 'Koruna česká Kč', value: 'CZK'},
-        ]}
-        componentProps={{
-          label: 'Currency', 
-          fullWidth: true,
-          margin: 'normal'
-        }}
-      />
-      <Button type="submit" color="primary" variant="outlined" fullWidth style={{marginTop: 20}}>
-        {t('register')}
-      </Button>
-    </form>
+    <Formik
+      initialValues={initialValues}
+      validate={validateRegForm}
+      onSubmit={onSubmit}
+    >
+      {({ isSubmitting, values }) => (
+        <Form>
+          <Field
+            type="text"
+            name="restaurantName"
+            component={TextField}
+            label={t('nameOfRestaurant')}
+            fullWidth
+            margin="normal"
+          />
+
+          <Field
+            type="text"
+            name="subdomain"
+            component={TextField}
+            label={t('restaurantURL')}
+            fullWidth
+            margin="normal"
+          />
+          {renderSubdomainHelper(values.subdomain)}
+
+          <div style={{height: 20}}></div>
+          <Field
+            name="language"
+            component={Select}
+            fullWidth
+            style={{ margin: '20px 0' }}
+            label={t('defaultLanguageLabel')}
+          >
+            <MenuItem value="en">English</MenuItem>
+            <MenuItem value="cs">Čeština</MenuItem>
+            <MenuItem value="es">Español</MenuItem>
+          </Field>
+          <Typography variant="caption">
+            {t('defaultLanguageRecom')}
+          </Typography>
+
+          <Field
+            name="currency"
+            component={Select}
+            fullWidth
+            style={{ margin: '20px 0' }}
+            label="Currency"
+          >
+            <MenuItem value="EUR">Euro €</MenuItem>
+            <MenuItem value="CZK">Koruna česká Kč</MenuItem>
+          </Field>
+
+          <Button type="submit" color="primary" variant="outlined" fullWidth style={{ marginTop: 20 }} disabled={isSubmitting}>
+            {t('register')}
+          </Button>
+        </Form>
+      )}
+    </Formik>
   );
-};
-
-RegistrationForm = reduxForm({
-  form: 'RegisterRestaurantForm',
-  enableReinitialize: true,
-  destroyOnUnmount: false
-})(RegistrationForm);
-
+}
 
 const RegisterRestaurant = (props) => {
   const {
@@ -192,8 +197,7 @@ const RegisterRestaurant = (props) => {
           <Typography className={classes.title} variant="h1" gutterBottom>
             {t('registerNewRestaurant')}
           </Typography>
-          <RegistrationForm
-            t={t}
+          <RegForm
             initialValues={initialValues}
             onSubmit={(fields) => registerRestaurant({
               restaurantName: fields.restaurantName,
