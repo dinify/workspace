@@ -7,22 +7,22 @@ import assocPath from 'ramda/es/assocPath';
 // import keys from 'ramda/es/keys';
 import { UNAUTHORIZED } from '../features/auth/types';
 
-export const MapToList = (items: { [id: string]: any }, _options?: any) => {
+export function MapToList<T>(items: { [id: string]: T }, options?: { sortBy: any, sortType: any }): any {
   let { sortBy, sortType } = { sortBy: 'id', sortType: String };
-  if (_options) {
-    sortBy = _options.sortBy;
-    sortType = _options.sortType;
+  if (options) {
+    sortBy = options.sortBy;
+    sortType = options.sortType;
   }
   const list = toPairs(items).map((pair) => ({ id: pair[0], ...pair[1] }));
   if (sortType === String) {
-    return list.sort((a, b) => a && b ? b[sortBy].localeCompare(a[sortBy], 'en') : 1);
+    return list.sort((a, b) => a && b ? (b as any)[sortBy].localeCompare((b as any)[sortBy], 'en') : 1);
   }
   return list;
 }
 
-export const ListToMap = (items: any[]) => {
+export function ListToMap<T>(items: T[]): any {
   if (!items || !items.forEach) return {};
-  const obj: { [id: string]: any } = {};
+  const obj: { [id: string]: T } = {};
   items.forEach((item: any) => {
     obj[item.id] = item;
   });

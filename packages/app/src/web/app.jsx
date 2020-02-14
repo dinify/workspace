@@ -11,7 +11,6 @@ import RestaurantView from 'web/pages/RestaurantView';
 import SignIn from '@dinify/common/src/components/SignIn';
 import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
-import Main from 'web/pages/Main';
 
 import Navigation from 'web/components/Navigation';
 import { ServicesButtonContainer } from 'web/components/services-button';
@@ -30,7 +29,8 @@ import {
   OrderScreen,
   SelectLanguageScreen,
   RestaurantViewScreen,
-  RestaurantInfoScreen
+  RestaurantInfoScreen,
+  MainScreen
 } from './screens';
 import { useFirebase } from 'react-redux-firebase';
 
@@ -98,7 +98,7 @@ const App = props => {
     <div style={{ position: 'relative' }}>
       <div style={{ marginBottom: match(routes.CHECKIN) ? 0 : 56 }}>
         <Switch>
-          <Route exact path={routes.HOMEPAGE} render={() => <Main />} />
+          <Route exact path={routes.HOMEPAGE} component={MainScreen} />
 
           <Route
             path={routes.SIGNIN}

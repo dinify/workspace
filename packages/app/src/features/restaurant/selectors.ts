@@ -24,17 +24,21 @@ const getDistOfRest = (restaurant: Restaurant, userGeolocation: GeolibInputCoord
   return distance;
 }
 
+export interface RestaurantView extends Restaurant {
+  distance: number
+}
+
 export const getRestaurantsList = createSelector(
   [
     (state: RootState) => state.restaurant.all,
     (state) => state.user.geolocation
   ],
-  (restaurantsMap, userGeolocation: GeolibInputCoordinates) => {
+  (restaurantsMap: any, userGeolocation: any): RestaurantView[] => {
     return MapToList(restaurantsMap)
-      .map(r => {
+      .map((r: Restaurant): RestaurantView => {
         const distance = getDistOfRest(r, userGeolocation);
-        return { ...r, distance };
+        return { ...r, distance: distance !== false ? distance : 0 };
       })
-      .sort((a, b) => a.distance - b.distance);
+      .sort((a: RestaurantView, b: RestaurantView) => a.distance - b.distance);
   }
 )

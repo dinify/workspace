@@ -49,7 +49,7 @@ export const CartScreen: React.FC<{
     const subtotal = useSelector<RootState, Subtotal>(state => state.cart.subtotal);
     const user = useSelector<RootState, any>(state => state.firebase.auth);
     const restaurantIdOfCart = useCartRestaurant();
-    const restaurant = useSelector<RootState, Restaurant>(state =>
+    const restaurant = useSelector<RootState, Restaurant | null>(state =>
       restaurantIdOfCart ? state.restaurant.all[restaurantIdOfCart] : null
     );
 

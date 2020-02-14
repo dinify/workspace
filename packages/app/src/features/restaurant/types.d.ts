@@ -1,5 +1,4 @@
 declare module 'RestaurantModels' {
-
   export interface Restaurant {
     id: string;
     title: string;
@@ -33,6 +32,10 @@ declare module 'RestaurantModels' {
     favorite: boolean;
     publishRequestPending: any;
   };
+
+  export type RestaurantMap = {
+    [id: string]: Restaurant
+  }
 
   export type Image = {
     published: boolean;

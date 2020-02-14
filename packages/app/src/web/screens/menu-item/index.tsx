@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from 'typesafe-actions';
 import { useRouteMatch, useHistory } from 'react-router';
 import {
   favMenuitemInit,
   fetchMenuItemAsync,
   clearCustomizationsAction,
 } from '../../../features/menuItem/actions';
-// import Carousel from '../../components/Carousel';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -25,8 +22,9 @@ import Options from './options';
 import { useAddonView } from '../../../features/addon/selectors';
 import { useIngredientView } from '../../../features/ingredient/selectors';
 import { useOptionView } from '../../../features/option/selectors';
-import { useAction } from '@dinify/common/src/lib/util';
+import { useAction, useBreakpoints } from '@dinify/common/src/lib/util';
 import { useMenuItemView } from '../../../features/menuItem/selectors';
+import { Carousel } from '../../components/carousel';
 
 export const MenuItemScreen = ({ }: {}) => {
   const clearCustomizations = useAction(clearCustomizationsAction);
@@ -38,13 +36,6 @@ export const MenuItemScreen = ({ }: {}) => {
   const { t } = useTranslation();
   const menuItemId = match ? match.params.id : '';
   const menuItem = useMenuItemView(menuItemId);
-  const imageUrls = useSelector<RootState, string[]>(state => {
-    if (!menuItem) return [];
-    return menuItem.images
-      .sort((a, b) => b.precedence - a.precedence)
-      .map(img => img.url);
-  });
-  console.log([...imageUrls].length);
   const addons = useAddonView(menuItemId);
   const ingredients = useIngredientView(menuItemId);
   const options = useOptionView(menuItemId);
@@ -73,10 +64,17 @@ export const MenuItemScreen = ({ }: {}) => {
     history.goBack();
   };
 
+  const breakpointMatch = useBreakpoints({
+    0: 3 / 2,
+    600: 16 / 9,
+    750: 2.39 / 1,
+    960: 4 / 1
+  });
+
   return (
     <div>
-      {/* {imageUrls.length > 0 && <Carousel images={imageUrls} />} */}
-      <ResponsiveContainer>
+      <Carousel aspectRatio={breakpointMatch[1]} alt={menuItem.name} images={menuItem.images} />
+      <ResponsiveContainer style={{ margin: '0 auto' }}>
         <Grid container spacing={16} style={{ marginTop: 16 }}>
           <Grid item xs={12} md={6}>
             <Grid container spacing={0}>

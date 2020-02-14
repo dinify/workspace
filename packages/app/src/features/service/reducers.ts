@@ -2,14 +2,13 @@ import * as actions from './actions';
 import * as wsActions from '../socket/actions'
 import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
-import { ServiceMap } from 'ServiceModels';
+import { ServiceMap, Service } from 'ServiceModels';
 import { ListToMap } from '@dinify/common/src/lib/FN';
 import values from 'ramda/es/values';
 
 export const all = createReducer({} as ServiceMap)
   .handleAction(actions.fetchServicesAsync.success, (state, action) => {
-    const services = ListToMap(action.payload);
-    return { ...services };
+    return ListToMap<Service>(action.payload);
   });
 
 export const status = createReducer({} as any)

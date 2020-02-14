@@ -3,7 +3,6 @@ import { MapToList } from '@dinify/common/src/lib/FN';
 import { TransactionState } from './reducers';
 import { OrderStatus, OrderN, OrderNMap } from 'TransactionModels';
 import pipe from 'ramda/es/pipe';
-import pluck from 'ramda/es/pluck';
 import unnest from 'ramda/es/unnest';
 import filter from 'ramda/es/filter';
 
@@ -32,8 +31,8 @@ export const getOrderItemIdsByStatus = createSelector(
   (orders: OrderNMap) => (status: OrderStatus): string[] => {
     return pipe(
       MapToList,
-      filter((order: OrderN) => order.status === status),
-      (list) => pluck('items', list),
+      filter((order: OrderN) => order.status === status) as any,
+      (list: any[]) => list.map((l: any) => l.items),
       unnest
     )(orders);
   }
@@ -45,8 +44,8 @@ export const getOrderItemIds = createSelector(
   ],
   (orders: OrderNMap): string[] => {
     return pipe(
-      MapToList,
-      (list) => pluck('items', list),
+      MapToList as (orders: OrderNMap) => any,
+      (list: any[]) => list.map((l: any) => l.items),
       unnest
     )(orders);
   }
