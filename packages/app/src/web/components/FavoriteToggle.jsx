@@ -11,31 +11,31 @@ const FavoriteToggle = ({
   checked
 }) => {
   return (
-    <IconButton style={{width: 48, height: 48}} onClick={onChange}>
+    <IconButton style={{ width: 48, height: 48 }} onClick={onChange}>
       <Motion
-        defaultStyle={{x: 0}}
-        style={{x: spring(checked ? 1 : 0, { stiffness: 480, damping: checked ? 12 : 48 })}}>
+        defaultStyle={{ x: 0 }}
+        style={{ x: spring(checked ? 1 : 0, { stiffness: 480, damping: checked ? 12 : 48 }) }}>
         {style =>
           <div style={{
             position: 'relative'
           }}>
             <FavoriteBorder style={{
-              color: theme.palette.text.secondary,
+              color: 'inherit',
               position: 'absolute',
               top: -12,
               left: -12,
               opacity: Math.max(0, 1 - style.x)
-            }}/>
+            }} />
             <div style={{
               position: 'absolute',
               top: -12,
               left: -12,
             }}>
-              <Favorite color="primary" style={{
+              <Favorite color="inherit" style={{
                 opacity: Math.min(1, style.x * 1.2),
                 transform: `scale(${Math.max(0.1, style.x)}, ${Math.max(0.1, style.x)})`,
                 WebkitTransform: `scale(${Math.max(0.1, style.x)}, ${Math.max(0.1, style.x)})`,
-              }}/>
+              }} />
             </div>
           </div>
         }

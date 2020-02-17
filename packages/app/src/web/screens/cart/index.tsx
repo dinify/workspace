@@ -49,7 +49,7 @@ export const CartScreen: React.FC<{
     const subtotal = useSelector<RootState, Subtotal>(state => state.cart.subtotal);
     const user = useSelector<RootState, any>(state => state.firebase.auth);
     const restaurantIdOfCart = useCartRestaurant();
-    const restaurant = useSelector<RootState, Restaurant>(state =>
+    const restaurant = useSelector<RootState, Restaurant | null>(state =>
       restaurantIdOfCart ? state.restaurant.all[restaurantIdOfCart] : null
     );
 
@@ -95,7 +95,7 @@ export const CartScreen: React.FC<{
     return (
       <div {...otherProps}>
         <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
-          <AppBarAction type="close" onClick={onClose} />
+          <AppBarAction style={{ marginRight: 8 }} type="close" onClick={onClose} />
           <AppBarTitle
             title={title}
             subtitle={subtitle}

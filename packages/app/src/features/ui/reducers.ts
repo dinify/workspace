@@ -7,13 +7,14 @@ import * as actions from './actions';
 import { Dialog } from './actions';
 import dissocPath from 'ramda/es/dissocPath';
 import { makeCartDoneAsync } from '../cart/actions';
+import { PaletteType } from '@material-ui/core';
 
-export type ThemeType = 'light'|'dark';
+export type ThemeType = 'light' | 'dark';
 export interface UiState {
-  dialogs: { [key: string]: boolean|Dialog },
+  dialogs: { [key: string]: boolean | Dialog },
   transactionStatus: any,
   bottomBarOpen: boolean,
-  theme: ThemeType
+  theme: PaletteType
 };
 export interface ErrorMessage {
   message: string,
@@ -47,13 +48,13 @@ export default function reducer(state: UiState = initialState, action: AnyAction
 
     case getType(actions.openDialogAction): {
       let path = action.payload;
-      let value: boolean|Dialog = true;
+      let value: boolean | Dialog = true;
       if (typeof action.payload === 'object') {
         const payload = action.payload as Dialog;
         path = payload.type;
         value = payload;
       }
-      return assocPath<boolean|Dialog, UiState>(['dialogs', path], value)(state);
+      return assocPath<boolean | Dialog, UiState>(['dialogs', path], value)(state);
     }
     case getType(actions.closeDialogAction): {
       let path = action.payload;

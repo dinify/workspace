@@ -1,7 +1,8 @@
 
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme, Theme } from "@material-ui/core/styles";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import { getTypographyVariants } from "./util";
+import { PaletteType } from '@material-ui/core';
 
 const nextVariants = getTypographyVariants({
   map: {
@@ -29,14 +30,23 @@ primary_800    #C13939
 primary_900    #B1312F
 */
 
+export interface AppTheme extends Theme {
+  coupertino: {
+    backdropFilter: string,
+    backgroundColor: string,
+    borderColor: string,
+    borderThickColor: string,
+  },
+}
+
 // from: https://material.io/design/color/dark-theme.html
 // TODO: desaturate primary color to meet WCAG 4.5:1
-export const getTheme = ({ type = 'light' }) => {
+export const getTheme = ({ type = 'light' }: { type: PaletteType }): AppTheme => {
   const dark = type === 'dark';
 
   // Rounded corners
   const shapeBorderRadius = 8;
-  return createMuiTheme(
+  let theme = createMuiTheme(
     {
       palette: {
         type,
@@ -58,12 +68,6 @@ export const getTheme = ({ type = 'light' }) => {
           paper: dark ? "#1d1d1d" : "#ffffff",
           default: dark ? "#212121" : "#ffffff"
         }
-      },
-      coupertino: {
-        backdropFilter: 'saturate(180%) blur(20px)',
-        backgroundColor: dark ? 'rgba(29,29,31,0.7)' : 'rgba(255,255,255,0.7)',
-        borderColor: dark ? 'rgba(66,66,69,0.7)' : 'rgba(29, 29, 31, 0.1)',
-        borderThickColor: dark ? 'rgba(66,66,69,0.95)' : 'rgba(29, 29, 31, 0.2)',
       },
       shape: {
         borderRadius: shapeBorderRadius
@@ -96,6 +100,9 @@ export const getTheme = ({ type = 'light' }) => {
       },
       overrides: {
         MuiButton: {
+          root: {
+            minHeight: 36,
+          },
           label: {
             ...nextVariants['button2']
           }
@@ -125,7 +132,7 @@ export const getTheme = ({ type = 'light' }) => {
           }
         },
         MuiInputLabel: {
-          root: nextVariants['caption'],
+          root: nextVariants['caption'] as any,
           filled: {
             transform: 'translate(12px, 18px) scale(1.333)',
             '&$shrink': {
@@ -139,4 +146,14 @@ export const getTheme = ({ type = 'light' }) => {
       }
     }
   );
+
+  return {
+    ...theme,
+    coupertino: {
+      backdropFilter: 'saturate(180%) blur(20px)',
+      backgroundColor: dark ? 'rgba(29,29,31,0.7)' : 'rgba(255,255,255,0.7)',
+      borderColor: dark ? 'rgba(66,66,69,0.7)' : 'rgba(29, 29, 31, 0.1)',
+      borderThickColor: dark ? 'rgba(66,66,69,0.95)' : 'rgba(29, 29, 31, 0.2)',
+    }
+  };
 };

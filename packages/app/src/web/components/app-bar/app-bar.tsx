@@ -1,14 +1,17 @@
 import React from 'react';
 import AppBarAction from './app-bar-action';
 import AppBarTitle from './app-bar-title';
+import Gradient from './gradient';
 
 import { select } from '@dinify/common/src/lib/platform';
 import { MuiThemeProvider } from '@material-ui/core';
 import { useTheme } from '../../../features/ui/selectors';
+import { getTheme } from '@dinify/common/src/theme';
 
 interface AppBarProps {
     style?: React.CSSProperties,
     invert?: boolean,
+    type?: 'filled' | 'gradient'
 }
 
 export interface IAppBar extends React.FC<AppBarProps> {
@@ -23,10 +26,12 @@ export interface IAppBar extends React.FC<AppBarProps> {
 const AppBar: IAppBar = ({
     style,
     children,
+    type = 'filled',
     invert = false,
     ...otherProps
 }) => {
-    const theme = useTheme();
+    let theme = useTheme();
+    if (type === 'gradient') theme = getTheme({ type: 'dark' });
     const { palette: { background: { paper }, divider } } = theme;
     const coupertino = {
         backgroundColor: theme.coupertino.backgroundColor,
@@ -34,7 +39,7 @@ const AppBar: IAppBar = ({
         backdropFilter: theme.coupertino.backdropFilter,
         borderBottom: `1px solid ${theme.coupertino.borderColor}`
     };
-    const appBarStyle = select({
+    let appBarStyle = select({
         standard: {
             backgroundColor: paper,
             borderBottom: `1px solid ${divider}`
@@ -42,18 +47,28 @@ const AppBar: IAppBar = ({
         osx: coupertino,
         ios: coupertino
     });
+    if (type === 'gradient') {
+        appBarStyle = {
+            position: 'relative',
+            color: 'white'
+        };
+    }
     return (
         <MuiThemeProvider theme={theme}>
             <div style={{
                 zIndex: 50,
                 display: 'flex',
                 alignItems: 'center',
-                height: 56,
-                paddingLeft: 16,
-                paddingRight: 16,
+                height: 48,
                 ...appBarStyle,
                 ...style
             }} {...otherProps}>
+                {type === 'gradient' && <Gradient style={{
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    right: 0,
+                }} />}
                 {children}
             </div>
         </MuiThemeProvider>

@@ -1,4 +1,4 @@
-import { Restaurant, FavRestaurantRequest } from 'RestaurantModels';
+import { Restaurant, FavRestaurantRequest, RestaurantMap } from 'RestaurantModels';
 import assoc from 'ramda/es/assoc';
 import assocPath from 'ramda/es/assocPath';
 import * as actions from './actions';
@@ -8,10 +8,9 @@ import { combineReducers } from 'redux';
 import { actionTypes as fActionTypes } from 'react-redux-firebase';
 import { ListToMap } from '@dinify/common/src/lib/FN';
 
-type State = any;
 type Action = ActionType<typeof actions>;
 
-export const all = createReducer<State, Action>({})
+export const all = createReducer<RestaurantMap, Action>({})
 
   .handleAction(actions.fetchRestaurantsAsync.success, (state, action) => {
     const restaurants: Restaurant[] = action.payload;
@@ -25,22 +24,22 @@ export const all = createReducer<State, Action>({})
 
   .handleAction(actions.favRestaurantAsync.request, (state, action) => {
     const { restaurantId, fav }: FavRestaurantRequest = action.payload;
-    return assocPath([restaurantId, 'favorite'], fav)(state);
+    return assocPath<boolean, RestaurantMap>([restaurantId, 'favorite'], fav)(state);
   })
 
   .handleAction(actions.favRestaurantAsync.success, (state, action) => {
     const { restaurantId, fav }: FavRestaurantRequest = action.payload.initPayload;
-    return assocPath([restaurantId, 'favorite'], fav)(state);
+    return assocPath<boolean, RestaurantMap>([restaurantId, 'favorite'], fav)(state);
   })
 
   .handleAction(actions.favRestaurantAsync.failure, (state, action: any) => {
     const { restaurantId, fav } = action.initPayload;
 
     if (action.payload.errorType === 'already-favorite') {
-      return assocPath([restaurantId, 'favorite'], true)(state);
+      return assocPath<boolean, RestaurantMap>([restaurantId, 'favorite'], true)(state);
     }
 
-    return assocPath([restaurantId, 'favorite'], !fav)(state);
+    return assocPath<boolean, RestaurantMap>([restaurantId, 'favorite'], !fav)(state);
   });
 
 
@@ -63,8 +62,15 @@ export const checkinPlan = createReducer(null)
     createAction(fActionTypes.LOGOUT)<any>()
   ], () => null);
 
+export const favorites = createReducer<RestaurantMap, Action>({})
+  .handleAction(actions.fetchFavoriteRestaurantsAsync.success, (state, action) => {
+    const restaurants: Restaurant[] = action.payload;
+    return ListToMap(restaurants);
+  });
+
 const restaurantReducer = combineReducers({
   all,
+  favorites,
   checkedInRestaurant,
   checkinPlan
 });

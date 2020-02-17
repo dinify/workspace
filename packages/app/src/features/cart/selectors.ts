@@ -26,7 +26,7 @@ export const getOrderItemIds = createSelector(
     getOrderItemsList
   ],
   (orderItemsList) => {
-    return orderItemsList.map(item => item.id);
+    return orderItemsList.map((item: any) => item.id);
   }
 );
 
@@ -39,7 +39,7 @@ export const getOrderItemCount = createSelector(
   }
 );
 
-export type CustomizationType = 'addon'|'exclude'|'choice';
+export type CustomizationType = 'addon' | 'exclude' | 'choice';
 
 export interface CustomizationView {
   name: string,
@@ -87,7 +87,7 @@ export const useCartItemView = (orderItemId: string): CartItemView => {
 };
 
 
-export const useCartRestaurant = () => useSelector<RootState, string|undefined>(state => {
+export const useCartRestaurant = () => useSelector<RootState, string | undefined>(state => {
   const items = state.cart.items;
   const sampleItem = MapToList(items)[0];
   if (!sampleItem) return '';

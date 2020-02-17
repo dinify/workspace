@@ -22,6 +22,12 @@ export const fetchRestaurantAsync = createAsyncAction(
   `${p}/GET_RESTAURANT_FAIL`
 )<undefined, RestaurantResponse, string>();
 
+export const fetchFavoriteRestaurantsAsync = createAsyncAction(
+  `${p}/GET_FAV_RESTAURANTS_INIT`,
+  `${p}/GET_FAV_RESTAURANTS_DONE`,
+  `${p}/GET_FAV_RESTAURANTS_FAIL`
+)<undefined, RestaurantsResponse, string>();
+
 export const fetchStatusAsync = createAsyncAction(
   `${p}/GET_STATUS_INIT`,
   `${p}/GET_STATUS_DONE`,

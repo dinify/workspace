@@ -1,4 +1,5 @@
 declare module 'MenuItemsModels' {
+  import { Image } from 'RestaurantModels';
   import { Price, Translation } from 'CartModels';
   import { Ingredient, IngredientMap } from 'IngredientModels';
   import { Addon, AddonMap } from 'AddonModels';
@@ -6,11 +7,6 @@ declare module 'MenuItemsModels' {
 
   export interface MenuItemTranslation extends Translation {
     description: string;
-  };
-
-  export type Image = {
-    url: string;
-    precedence: number;
   };
 
   export type MenuItem = {
@@ -24,11 +20,11 @@ declare module 'MenuItemsModels' {
     promotion: any;
     cookingTime: any;
     translations: [MenuItemTranslation];
-    images: [Image];
+    images: Image[];
     price: Price;
-    options: [Option];
-    addons: [Addon];
-    ingredients: [Ingredient];
+    options: Option[];
+    addons: Addon[];
+    ingredients: Ingredient[];
   };
 
   export type MenuItemMap = {

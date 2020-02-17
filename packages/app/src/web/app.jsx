@@ -11,7 +11,6 @@ import RestaurantView from 'web/pages/RestaurantView';
 import SignIn from '@dinify/common/src/components/SignIn';
 import Receipt from 'web/pages/Receipt';
 import Services from 'web/pages/Services';
-import Main from 'web/pages/Main';
 
 import Navigation from 'web/components/Navigation';
 import { ServicesButtonContainer } from 'web/components/services-button';
@@ -19,12 +18,21 @@ import { BottomBar } from 'web/components/bottom-bar';
 import { fetchStatusAsync } from 'features/restaurant/actions.ts';
 import { fetchBillAsync } from 'features/transaction/actions.ts';
 import { fetchCartAsync } from 'features/cart/actions.ts';
+import { useBottomBarVisible } from 'features/ui/selectors.ts';
 
 import { withRoot } from 'withRoot';
 import Dialogs from './dialogs.tsx';
 import Snackbars from './snackbars.tsx';
 import findLast from 'ramda/es/findLast';
-import { MenuItemScreen, AccountScreen, OrderScreen, SelectLanguageScreen } from './screens';
+import {
+  MenuItemScreen,
+  AccountScreen,
+  OrderScreen,
+  SelectLanguageScreen,
+  RestaurantViewScreen,
+  RestaurantInfoScreen,
+  MainScreen
+} from './screens';
 import { useFirebase } from 'react-redux-firebase';
 
 const App = props => {
@@ -48,6 +56,7 @@ const App = props => {
 
   const { action, push, location } = useHistory();
 
+  // reset scroll position for new routes
   if (action === 'PUSH') {
     window.scrollTo(0, 0);
   }
@@ -64,9 +73,11 @@ const App = props => {
     return matched;
   };
 
+  const isBottomBarVisible = useBottomBarVisible();
   const isAccountTab = match(routes.ACCOUNT) || match(routes.SIGNIN) || match(routes.LANGUAGE);
   const isLanguageSelect = match(routes.LANGUAGE);
   const isOrderScreen = match(routes.TAKEORDER);
+  const isBottomBarRendered = !isAccountTab && !isOrderScreen && !isLanguageSelect;
 
   const onNavigate = (evt, val) => {
     if (val === 0 && !match(routes.HOMEPAGE)) {
@@ -80,6 +91,12 @@ const App = props => {
     }
   };
 
+  const getMarginBottom = () => {
+    let base = match(routes.CHECKIN) ? 0 : 56;
+    if (isBottomBarVisible && isBottomBarRendered) return base + 56;
+    return base;
+  }
+
   // const back = e => {
   //   e.stopPropagation();
   //   history.goBack();
@@ -89,9 +106,9 @@ const App = props => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <div style={{ marginBottom: match(routes.CHECKIN) ? 0 : 56 }}>
+      <div style={{ marginBottom: getMarginBottom() }}>
         <Switch>
-          <Route exact path={routes.HOMEPAGE} render={() => <Main />} />
+          <Route exact path={routes.HOMEPAGE} component={MainScreen} />
 
           <Route
             path={routes.SIGNIN}
@@ -110,7 +127,8 @@ const App = props => {
           <Route path={routes.CHECKIN} component={Checkin} />
           <Route path={routes.SERVICES} component={Services} />
 
-          <Route path={routes.RESTAURANT} component={RestaurantView} />
+          <Route path={routes.INFO} component={RestaurantInfoScreen} />
+          <Route path={routes.RESTAURANT} component={RestaurantViewScreen} />
           <Route path={routes.MENUITEM} component={MenuItemScreen} />
 
           <Route path={routes.RECEIPT} component={Receipt} />
@@ -136,7 +154,7 @@ const App = props => {
           />
         }
       </>}
-      {!isAccountTab && !isOrderScreen && !isLanguageSelect && (
+      {isBottomBarRendered && (
         <BottomBar style={{ bottom: 56 }} onSelect={type => openDialog(type)} />
       )}
 

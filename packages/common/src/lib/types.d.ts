@@ -9,6 +9,15 @@ declare module "@dinify/types" {
     locale: string;
     name: string;
   }
+
+  export interface ModelMap<T> {
+    [id: string]: T
+  }
+
+  export interface ErrorAction<T = any> {
+    initPayload: T,
+    errorType: string
+  }
 }
 
 declare module "CommonModule" {
@@ -21,5 +30,14 @@ declare module "CommonModule" {
   export type Translation = {
     locale: string;
     name: string;
+  }
+
+  export interface ModelMap<T> {
+    [id: string]: T
+  }
+
+  export interface ErrorAction<T = any> {
+    initPayload: T,
+    errorType: string
   }
 }
