@@ -11,8 +11,9 @@ import {
 import { uploadMainImageAsync } from 'features/restaurant/actions';
 import Progress from 'web/components/Progress';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const Image = ({ uploadMainImage, restaurant }) => {
+const Image = ({ uploadMainImage, restaurant, uploading }) => {
   if (!restaurant) return <div />;
   const { t } = useTranslation();
   let imageUrl = '/static/placeholder.png';
@@ -41,12 +42,19 @@ const Image = ({ uploadMainImage, restaurant }) => {
             fontSize: '11px',
             border: '1px dashed #ccc',
             margin: '10px 0',
+            position: 'relative'
           }}
         >
           <p>
             {t('uploadImageGuide')}
           </p>
           <p>{t('uploadImageFormats')}</p>
+          {uploading && <CircularProgress style={{
+            color: 'white',
+            position: 'absolute',
+            left: '100px',
+            bottom: '80px'
+          }}/>}
           <img src={imageUrl} style={{width: 230, borderRadius: '2px', marginTop: 10 }} alt="" />
         </Dropzone>
       </FormBoxBody>
@@ -54,6 +62,8 @@ const Image = ({ uploadMainImage, restaurant }) => {
   );
 };
 
-export default connect(state => ({}), {
+export default connect(state => ({
+  uploading: state.restaurant.uploading
+}), {
   uploadMainImage: uploadMainImageAsync.request,
 })(Image);

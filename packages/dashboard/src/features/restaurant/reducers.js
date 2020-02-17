@@ -41,7 +41,8 @@ const initialState = {
   preferredLanguages: preferredLanguagesInitial,
   waiterboards: [],
   waiterboardsLoaded: false,
-  wifi: {}
+  wifi: {},
+  uploading: false
 };
 
 export default function reducer(state = initialState, action) {
@@ -108,8 +109,19 @@ export default function reducer(state = initialState, action) {
       return assocPath(['all', restaurantId, 'name'], name)(state);
     }
 
+    case getType(uploadMainImageAsync.request): {
+      return assoc('uploading', true)(state);
+    }
+
     case getType(uploadMainImageAsync.success): {
-      return assocPath(['all', action.meta.id, 'uploadedImage'], payload.url)(state);
+      return pipe(
+        assocPath(['all', action.meta.restaurantId, 'uploadedImage'], payload.url),
+        assoc('uploading', false)
+      )(state);
+    }
+
+    case getType(uploadMainImageAsync.failure): {
+      return assoc('uploading', false)(state);
     }
 
     case 'UPDATE_LOCATION_INIT': {

@@ -173,13 +173,13 @@ const uploadMainImageEpic = (action$, state$) =>
       const payload = action.payload;
 
       const { file } = payload;
-      const id = state$.value.restaurant.selectedRestaurant;
+      const restaurantId = state$.value.restaurant.selectedRestaurant;
 
-      return from(API.UploadRestaurantImage({ file, id })).pipe(
+      return from(API.UploadRestaurantImage({ file, id: restaurantId })).pipe(
         map((res) => ({
           type: getType(actions.uploadMainImageAsync.success),
           payload: res,
-          meta: payload
+          meta: { ...payload, restaurantId }
         })),
         catchError(error => handleEpicAPIError({
           error,
