@@ -72,9 +72,14 @@ export default () => {
       {menuCategoryIds.map((id, i) => (
         <MenuCategory key={id} menuCategoryId={id} index={i} />
       ))}
-      <div id="map" style={{ width: '100%' }}>
-        <StaticMap restaurant={restaurant} />
-      </div>
+      {restaurant && <a
+        href={`https://www.google.com/maps/search/${restaurant.name}/@${restaurant.latitude},${restaurant.longitude},17z`}
+        style={{ textDecoration: 'none', display: 'block' }}
+      >
+        <div id="map" style={{ width: '100%' }}>
+          <StaticMap restaurant={restaurant} />
+        </div>
+      </a>}
     </div>
   </>;
 }

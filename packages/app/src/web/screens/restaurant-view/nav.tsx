@@ -8,11 +8,9 @@ import Instagram from '@dinify/common/src/icons/Instagram';
 import CalendarClock from '@dinify/common/src/icons/CalendarClock';
 import Place from '@material-ui/icons/PlaceRounded';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import { favRestaurantAsync } from '../../../features/restaurant/actions';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { Restaurant } from 'RestaurantModels';
 import { RootState } from 'typesafe-actions';
-import { useAction } from '@dinify/common/src/lib/util';
 import { useHistory } from 'react-router';
 import { useTheme } from '../../../features/ui/selectors';
 
