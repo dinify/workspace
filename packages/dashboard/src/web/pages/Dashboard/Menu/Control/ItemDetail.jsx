@@ -61,7 +61,7 @@ let DetailForm = ({ handleSubmit, currency }) => {
           min: 0,
           label: `${t('menu.price')} (${currency})`,
           fullWidth: true,
-          step: 1,
+          inputProps: { step: 0.01 },
           margin: 'normal',
           style,
         }}
@@ -167,7 +167,7 @@ let ItemDetail = ({
               ...fields,
               menuItemId: selectedFoodId,
               price: {
-                amount: Number.parseFloat(fields.price).toFixed(0),
+                amount: Number.parseFloat(fields.price).toFixed(2),
                 currency
                },
             });
@@ -176,7 +176,7 @@ let ItemDetail = ({
           initialValues={{
             name: menuItemName,
             description: getT(selectedFood.translations, defaultLang, 'description'),
-            price: Number.parseFloat(selectedFood.price.amount).toFixed(0),
+            price: Number.parseFloat(selectedFood.price.amount),
           }}
         />
       </CardContent>

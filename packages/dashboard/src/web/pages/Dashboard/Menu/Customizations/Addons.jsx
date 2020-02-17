@@ -53,10 +53,12 @@ let AddAddonForm = ({ t, handleSubmit, progress, errorMessage, reset  }) => {
             <Field
               name="price"
               component={Text}
+              step="0.01"
               componentProps={{
                 label: t('menu.price'),
                 fullWidth: true,
-                type: 'number'
+                type: 'number',
+                inputProps: { step: 0.01 }
               }}
             />
           </Grid>

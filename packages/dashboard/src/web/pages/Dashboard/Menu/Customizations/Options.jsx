@@ -67,7 +67,8 @@ let AddChoiceForm = ({ t, handleSubmit, progress, errorMessage, reset }) => {
             componentProps={{
               label: t('menu.price'),
               fullWidth: true,
-              type: 'number'
+              type: 'number',
+              inputProps: { step: 0.01 }
             }}
           />
         </Grid>
