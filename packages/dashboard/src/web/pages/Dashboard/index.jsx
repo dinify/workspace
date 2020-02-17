@@ -266,18 +266,18 @@ const Dashboard = ({
     location.pathname.includes(s.path),
   )[0];
   const sectionSteps = [
-    {
-      id: 'contactsIn',
-      path: '/settings/main',
-    },
-    {
-      id: 'addTables',
-      path: '/settings/tables',
-    },
-    {
-      id: 'createMenu',
-      path: '/menu/control',
-    },
+  //  {
+  //    id: 'contactsIn',
+  //    path: '/settings/main',
+  //  },
+  //  {
+  //    id: 'addTables',
+  //    path: '/settings/tables',
+  //  },
+  //  {
+  //    id: 'createMenu',
+  //    path: '/menu/control',
+  //  },
   ];
   const publishable = true;
   const publised = restaurant && restaurant.published;
@@ -405,7 +405,18 @@ const Dashboard = ({
                 </Step>
               ))}
 
-              <Step disabled={!publishable}>
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={
+                  !publishable || restaurant.publishRequestPending
+                }
+                onClick={() => publishRestaurant()}
+              >
+                {t('publish')}
+              </Button>
+
+              {/*<Step disabled={!publishable}>
                 <StepLabel>
                   <Tooltip
                     placement="bottom"
@@ -429,7 +440,7 @@ const Dashboard = ({
                     </div>
                   </Tooltip>
                 </StepLabel>
-              </Step>
+                </Step>*/}
 
               {restaurant.publishRequestPending && (
                 <Step>
