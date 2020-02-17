@@ -1,4 +1,4 @@
-import { from as fromPromise } from 'rxjs';
+import { from as fromPromise, of } from 'rxjs';
 import { mergeMap, catchError, map } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import pick from 'ramda/es/pick';
@@ -9,6 +9,8 @@ import * as actions from './actions';
 import { normalize } from 'normalizr';
 import { menuItem } from './schemas.ts';
 import { getDefaultLanguage } from '../restaurant/selectors';
+import { findMenuItemByName } from './selectors';
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 
 const fetchMenuItemEpic = (action$, state$) =>
   action$.pipe(
@@ -40,6 +42,14 @@ const createMenuItemEpic = (action$, state$) =>
 
       const restaurantId = state$.value.restaurant.selectedRestaurant;
       const payload = action.payload;
+      const { name, menuCategoryId } = payload;
+
+      const existing = findMenuItemByName(state$.value, { name, menuCategoryId });
+      if (existing) {
+        return of(actions.createMenuItemAsync.failure({
+          errorType: 'menu-item-unique-name'
+        }));
+      }
 
       const body = {
         ...pick(['precedence', 'name', 'menuCategoryId', 'price'], payload),
@@ -59,6 +69,16 @@ const createMenuItemEpic = (action$, state$) =>
         }))
       );
     })
+  );
+
+const onCreateFailSnackbarEpic = action$ =>
+  action$.pipe(
+    ofType(getType(actions.createMenuItemAsync.failure)),
+    map(() =>
+      snackbar.show({
+        message: `Menu item already exists.`, // TODO Translation
+      }),
+    ),
   );
 
 const updateMenuItemEpic = (action$) =>
@@ -335,6 +355,7 @@ const uploadItemImageEpic = (action$) =>
 export default [
   fetchMenuItemEpic,
   createMenuItemEpic,
+  onCreateFailSnackbarEpic,
   deleteMenuItemEpic,
   updateMenuItemEpic,
   assignIngredientEpic,
