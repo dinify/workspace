@@ -18,20 +18,20 @@ class ResponsiveGrid extends React.Component {
 
   _resize = () => {
     const w = window.innerWidth;
-    if      (w < 360) this.setState({ breakpoint: 0 });
+    if (w < 360) this.setState({ breakpoint: 0 });
     else if (w < 720) this.setState({ breakpoint: 1 });
     else this.setState({ breakpoint: 3 });
   };
 
   render() {
-    const { children, width } = this.props;
+    const { children, width, childClass } = this.props;
     const { breakpoint } = this.state;
 
     return (
       <Grid container spacing={isWidthDown('sm', width) ? 16 : 24}>
         {children &&
           children.map((child, i) => (
-            <Grid item key={i} xs={breakpoint === 0 ? 12 : 6} sm={breakpoint === 1 ? 6 : 4} md={3} lg={3}>
+            <Grid style={{ borderRadius: 8 }} className={childClass} item key={i} xs={breakpoint === 0 ? 12 : 6} sm={breakpoint === 1 ? 6 : 4} md={3} lg={3}>
               {child}
             </Grid>
           ))}

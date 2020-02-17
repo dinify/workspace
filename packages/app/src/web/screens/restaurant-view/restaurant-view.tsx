@@ -51,7 +51,9 @@ export default () => {
       <Typography style={{ padding: 16 }} variant="h6">
         {restaurant && restaurant.name}
       </Typography>
-      <Nav restaurant={restaurant} />
+      <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+        <Nav restaurant={restaurant} />
+      </div>
       <Divider />
       <div style={{
         padding: 16,

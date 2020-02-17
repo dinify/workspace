@@ -18,10 +18,11 @@ import { useHistory } from 'react-router';
 import { useTheme } from '../../../features/ui/selectors';
 
 export interface NavProps {
-  restaurant: Restaurant
+  restaurant: Restaurant,
+  style?: React.CSSProperties
 }
 
-const Nav: React.FC<NavProps> = ({ restaurant }) => {
+const Nav: React.FC<NavProps> = ({ restaurant, style }) => {
   const social = restaurant && restaurant.social;
   const bookingElement = document.getElementById('booking');
   const history = useHistory();
@@ -32,7 +33,8 @@ const Nav: React.FC<NavProps> = ({ restaurant }) => {
   return (
     <Grid style={{
       overflow: 'hidden',
-      color: theme.palette.text.secondary
+      color: theme.palette.text.secondary,
+      ...style
     }} container spacing={8}>
       {!!social && !!social.facebook &&
         <Grid item>

@@ -47,6 +47,9 @@ const RestaurantListItem: React.FC<RestaurantListItemProps> = ({ restaurant }) =
       style={{
         textDecoration: 'none',
         width: '100%',
+        WebkitTapHighlightColor: 'transparent',
+        WebkitTouchCallout: 'none',
+        WebkitUserSelect: 'none'
       }}
     >
       <div style={{ width: '100%' }}>
