@@ -1,4 +1,4 @@
-import { from as fromPromise } from 'rxjs';
+import { from as fromPromise, of } from 'rxjs';
 import { mergeMap, map, catchError, map as rxMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { getType } from 'typesafe-actions';
@@ -7,11 +7,11 @@ import {
   fetchIngredientsAsync, createIngredientAsync, removeIngredientAsync
 } from './actions';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
-import pick from 'ramda/es/pick';
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 import { getDefaultLanguage } from '../restaurant/selectors';
+import { findIngredientByName } from './selectors';
 
 const fetchIngredientsEpic: Epic = (action$, state$) =>
   action$.pipe(
@@ -40,11 +40,17 @@ const createIngredientEpic: Epic = (action$, state$) =>
   action$.pipe(
     ofType(getType(createIngredientAsync.request)),
     mergeMap(action => {
-      const restaurantId = state$.value.restaurant.selectedRestaurant;
       const payload = action.payload;
-
+      const { name } = payload;
+      const existing = findIngredientByName(state$.value, name);
+      if (existing) {
+        return of(createIngredientAsync.failure({
+          errorType: 'ingredient-unique-name'
+        }));
+      }
+      const restaurantId = state$.value.restaurant.selectedRestaurant;
       const body = {
-        ...pick(['name'], payload),
+        name,
         restaurantId,
       };
       return fromPromise(API.CreateIngredient(body)).pipe(
@@ -60,6 +66,16 @@ const createIngredientEpic: Epic = (action$, state$) =>
         ),
       );
     }),
+  );
+
+const onCreateFailSnackbarEpic: Epic = action$ =>
+  action$.pipe(
+    ofType(getType(createIngredientAsync.failure)),
+    map(() =>
+      snackbar.show({
+        message: `${t('createIngredientFail')}. Ingredient already exists.`, // TODO Translation
+      }),
+    ),
   );
 
 const removeIngredientEpic: Epic = (action$, state$) =>
@@ -83,19 +99,9 @@ const removeIngredientEpic: Epic = (action$, state$) =>
     }),
   );
 
-const onCreateFailSnackbarsEpic: Epic = action$ =>
-  action$.pipe(
-    ofType(getType(removeIngredientAsync.failure)),
-    map(() =>
-      snackbar.show({
-        message: t('createIngredientFail'),
-      }),
-    ),
-  );
-
 export default [
   fetchIngredientsEpic,
   createIngredientEpic,
   removeIngredientEpic,
-  onCreateFailSnackbarsEpic,
+  onCreateFailSnackbarEpic,
 ];
