@@ -205,3 +205,15 @@ export const useOldPropIfNewNA = (oldItem: any, propName: any) => (newItem: any)
   }
   return updatedItem;
 }
+
+type MenuContentItem = {
+  translations: [{ name: string }]
+}
+
+export const getNameOfItem = (item: MenuContentItem) => {
+  return item.translations[0].name;
+}
+
+export const sortByName = (a: MenuContentItem, b: MenuContentItem) => {
+  return getNameOfItem(a).localeCompare(getNameOfItem(b));
+}

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
-import Loading from 'web/components/Loading';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -30,9 +29,9 @@ import {
 import { listOfIngredients } from 'features/ingredient/selectors';
 import { getDefaultLanguage } from 'features/restaurant/selectors';
 
-let AddIngredientForm = ({ handleSubmit, progress, errorMessage, t }) => {
+let AddIngredientForm = ({ handleSubmit, progress, errorMessage, t, reset }) => {
   return (
-    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+    <form onSubmit={(...args) => { reset(); handleSubmit(...args) }} style={{ width: '100%' }}>
       <FormControl
         error={progress === 'ERROR'}
         aria-describedby="name-error-text"

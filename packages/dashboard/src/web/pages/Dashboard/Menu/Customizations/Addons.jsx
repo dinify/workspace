@@ -26,9 +26,9 @@ import { listOfAddons } from 'features/addon/selectors';
 import { getCurrencySymbol } from './util';
 import { getDefaultLanguage } from 'features/restaurant/selectors';
 
-let AddAddonForm = ({ t, handleSubmit, progress, errorMessage  }) => {
+let AddAddonForm = ({ t, handleSubmit, progress, errorMessage, reset  }) => {
   return (
-    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+    <form onSubmit={(...args) => { reset(); handleSubmit(...args) }} style={{ width: '100%' }}>
       <FormControl
         error={progress === 'ERROR'}
         aria-describedby="name-error-text"

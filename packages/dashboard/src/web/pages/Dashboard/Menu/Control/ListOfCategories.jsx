@@ -75,10 +75,10 @@ const CategoryItem = styled.div`
   }
 `;
 
-let CreateCategoryForm = ({ handleSubmit, progress, errorMessage }) => {
+let CreateCategoryForm = ({ handleSubmit, progress, errorMessage, reset }) => {
   const { t } = useTranslation();
   return (
-    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+    <form onSubmit={(...args) => { reset(); handleSubmit(...args) }} style={{ width: '100%' }}>
       <FormControl
         error={progress === 'ERROR'}
         aria-describedby="name-error-text"

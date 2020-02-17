@@ -37,9 +37,9 @@ import { getCurrencySymbol } from './util';
 import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 
-let AddChoiceForm = ({ t, handleSubmit, progress, errorMessage }) => {
+let AddChoiceForm = ({ t, handleSubmit, progress, errorMessage, reset }) => {
   return (
-    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+    <form onSubmit={(...args) => { reset(); handleSubmit(...args) }} style={{ width: '100%' }}>
       <FormControl
         error={progress === 'ERROR'}
         aria-describedby="name-error-text"
@@ -92,9 +92,9 @@ AddChoiceForm = reduxForm({
   form: 'customizations/option/choice',
 })(AddChoiceForm);
 
-let AddOptionForm = ({ handleSubmit, t }) => {
+let AddOptionForm = ({ handleSubmit, t, reset }) => {
   return (
-    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+    <form onSubmit={(...args) => { reset(); handleSubmit(...args) }} style={{ width: '100%' }}>
       <Grid container spacing={0} alignItems="flex-end" justify="center">
         <Grid item xs={11}>
           <Field

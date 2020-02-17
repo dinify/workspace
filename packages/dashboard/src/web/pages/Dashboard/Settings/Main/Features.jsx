@@ -32,7 +32,7 @@ let FeaturesForm = ({ handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
 
-      <Field name="orders" component={renderCheckbox} label="Orders" />
+      <Field name="orders" component={renderCheckbox} label="Remote orders" />
       <Field name="serviceCalls" component={renderCheckbox} label="Service calls" />
 
       <Button type="submit" variant="outlined" fullWidth>
