@@ -1,4 +1,4 @@
-import { from as fromPromise } from 'rxjs';
+import { from as fromPromise, of } from 'rxjs';
 import { mergeMap, map, catchError, map as rxMap } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
 import { getType } from 'typesafe-actions';
@@ -9,6 +9,7 @@ import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
 
 import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 import { getDefaultCurrency, getDefaultLanguage } from '../restaurant/selectors';
+import { findAddonByName } from './selectors';
 
 const fetchAddonsEpic: Epic = (action$, state$) =>
   action$.pipe(
@@ -37,12 +38,20 @@ const createAddonEpic: Epic = (action$, state$) =>
     mergeMap(action => {
       const restaurantId = state$.value.restaurant.selectedRestaurant;
       const payload = action.payload;
+      const { name, price } = payload;
+
+      const existing = findAddonByName(state$.value, name);
+      if (existing) {
+        return of(createAddonAsync.failure({
+          errorType: 'addon-unique-name'
+        }));
+      }
 
       const currency = getDefaultCurrency(state$.value);
       const body = {
-        name: payload.name,
+        name,
         price: {
-          amount: payload.price,
+          amount: price,
           currency
         },
         maximum: '1',
@@ -61,6 +70,16 @@ const createAddonEpic: Epic = (action$, state$) =>
         ),
       );
     }),
+  );
+
+const onCreateFailSnackbarEpic: Epic = action$ =>
+  action$.pipe(
+    ofType(getType(createAddonAsync.failure)),
+    map(() =>
+      snackbar.show({
+        message: `${t('createAddonFail')}. Addon already exists.`, // TODO Translation
+      }),
+    ),
   );
 
 const removeAddonEpic: Epic = (action$, state$) =>
@@ -84,19 +103,21 @@ const removeAddonEpic: Epic = (action$, state$) =>
     }),
   );
 
-const onCreateFailSnackbarsEpic: Epic = action$ =>
+const onRemoveFailSnackbarEpic: Epic = action$ =>
   action$.pipe(
     ofType(getType(removeAddonAsync.failure)),
     map(() =>
       snackbar.show({
-        message: t('createAddonFail'),
+        message: `Remove failed`, // TODO Translation
       }),
     ),
   );
 
+  
 export default [
   fetchAddonsEpic,
   createAddonEpic,
   removeAddonEpic,
-  onCreateFailSnackbarsEpic
+  onCreateFailSnackbarEpic,
+  onRemoveFailSnackbarEpic
 ];

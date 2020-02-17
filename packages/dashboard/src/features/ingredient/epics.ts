@@ -99,9 +99,20 @@ const removeIngredientEpic: Epic = (action$, state$) =>
     }),
   );
 
+const onRemoveFailSnackbarEpic: Epic = action$ =>
+  action$.pipe(
+    ofType(getType(removeIngredientAsync.failure)),
+    map(() =>
+      snackbar.show({
+        message: `Ingredient cannot be removed.`, // TODO Translation
+      }),
+    ),
+  );
+
 export default [
   fetchIngredientsEpic,
   createIngredientEpic,
   removeIngredientEpic,
   onCreateFailSnackbarEpic,
+  onRemoveFailSnackbarEpic
 ];
