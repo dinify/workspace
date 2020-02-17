@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { MapToList, getNameOfItem } from '@dinify/common/src/lib/FN';
 import filter from 'ramda/es/filter';
 import find from 'ramda/es/find';
-import { selectedRestaurantId } from '../restaurant/selectors';
+import { relevantCategoriesList } from '../menuCategory/selectors';
 
 export const getMenuItems = (state: any) => state.all;
 
@@ -26,14 +26,11 @@ export const selectedMenuItems = createSelector(
 export const listOfMenuItems = createSelector(
   [
     (state) => state.menuItem.all,
-    (state) => state.menuCategory.all,
-    selectedRestaurantId
+    relevantCategoriesList
   ],
-  (menuItems, menuCategories, restaurantId) => {
+  (menuItems, menuCategoriesList) => {
 
-    const menuCategoriesIds = MapToList(menuCategories)
-      .filter((c: any) => c.restaurantId === restaurantId)
-      .map((c: any) => c.id);
+    const menuCategoriesIds = menuCategoriesList.map((c: any) => c.id);
 
     return filter(
       (item: any) => menuCategoriesIds.includes(item.menuCategoryId),
@@ -55,4 +52,3 @@ export const findMenuItemByName = createSelector(
     )(list);
   }
 );
-

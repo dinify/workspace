@@ -42,12 +42,14 @@ const createIngredientEpic: Epic = (action$, state$) =>
     mergeMap(action => {
       const payload = action.payload;
       const { name } = payload;
+
       const existing = findIngredientByName(state$.value, name);
       if (existing) {
         return of(createIngredientAsync.failure({
           errorType: 'ingredient-unique-name'
         }));
       }
+      
       const restaurantId = state$.value.restaurant.selectedRestaurant;
       const body = {
         name,

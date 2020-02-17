@@ -14,7 +14,7 @@ export const createMenuCategoryAsync = createAsyncAction(
   `${p}/POST_CATEGORIES_INIT`,
   `${p}/POST_CATEGORIES_DONE`,
   `${p}/POST_CATEGORIES_FAIL`
-)<undefined, any, string>();
+)<undefined, any, any>();
 
 export const updateMenuCategoryAsync = createAsyncAction(
   `${p}/UPD_CATEGORIES_INIT`,

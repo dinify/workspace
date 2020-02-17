@@ -1,4 +1,4 @@
-import { from as fromPromise } from 'rxjs';
+import { from as fromPromise, of } from 'rxjs';
 import { ofType, Epic } from 'redux-observable';
 import { getType } from 'typesafe-actions';
 import { normalize } from 'normalizr';
@@ -10,6 +10,8 @@ import pick from 'ramda/es/pick';
 import * as actions from './actions';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { getDefaultLanguage } from '../restaurant/selectors';
+import { findMenuCategoryByName } from './selectors';
+import { snackbarActions as snackbar } from 'material-ui-snackbar-redux';
 
 
 const fetchMenuCategoriesEpic: Epic = (action$, state$) =>
@@ -42,6 +44,14 @@ const createMenuCategoryEpic: Epic = (action$, state$) =>
 
       const restaurantId = state$.value.restaurant.selectedRestaurant;
       const payload = action.payload;
+      const { name } = payload;
+
+      const existing = findMenuCategoryByName(state$.value, name);
+      if (existing) {
+        return of(actions.createMenuCategoryAsync.failure({
+          errorType: 'menu-category-unique-name'
+        }));
+      }
 
       const body = {
         ...pick(['precedence', 'name'], payload),
@@ -62,6 +72,16 @@ const createMenuCategoryEpic: Epic = (action$, state$) =>
       );
     })
   );
+
+const onCreateFailSnackbarEpic: Epic = action$ =>
+  action$.pipe(
+    ofType(getType(actions.createMenuCategoryAsync.failure)),
+    map(() =>
+      snackbar.show({
+        message: `Menu category already exists.`, // TODO Translation
+      }),
+    ),
+  );  
 
 const updateMenuCategoryEpic: Epic = (action$) =>
   action$.pipe(
@@ -131,6 +151,7 @@ const reorderEpic: Epic = action$ =>
 export default [
   fetchMenuCategoriesEpic,
   createMenuCategoryEpic,
+  onCreateFailSnackbarEpic,
   updateMenuCategoryEpic,
   deleteMenuCategoryEpic,
   reorderEpic
