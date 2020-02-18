@@ -30,7 +30,7 @@ export const OrderScreen: React.FC<{
       if (userId && restaurantId) {
         fetchUserCart({ userId, restaurantId });
       }
-    }, [userId, restaurantId])
+    }, [fetchUserCart, userId, restaurantId])
 
     const cart = useSelector<RootState, Cart>(state => state.cart.guestsCart);
 

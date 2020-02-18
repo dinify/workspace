@@ -41,7 +41,7 @@ const Services = ({
     fetchServices({
       restaurantId: checkedInRestaurant,
     });
-  }, []);
+  }, [fetchServices, checkedInRestaurant]);
 
 
   const selectedServicesList = filter((s: Service) => {

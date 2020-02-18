@@ -18,7 +18,7 @@ export default () => {
   const restaurant = useSelector<RootState, Restaurant>(state => getRestaurantBySubdomain(state, params.subdomain));
   useEffect(() => {
     fetchRestaurant({ subdomain: params.subdomain });
-  }, []);
+  }, [fetchRestaurant, params.subdomain]);
   return <>
     <AppBar>
       <AppBarAction type="back" onClick={handleBack} />

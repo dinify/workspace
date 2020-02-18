@@ -38,7 +38,7 @@ const BillItem: React.FC<BillItemProps> = ({
         backgroundColor: theme.palette.divider,
         overflow: 'hidden'
       }}>
-        <img src={menuItem.images[0] && `${menuItem.images[0].url}=s112-c`} style={{ width: 56, height: 56 }} />
+        <img alt={'Bill item'} src={menuItem.images[0] && `${menuItem.images[0].url}=s112-c`} style={{ width: 56, height: 56 }} />
       </div>
       <div style={{ flex: 1, marginLeft: 16, position: 'relative' }}>
         <div style={{ display: 'flex' }}>

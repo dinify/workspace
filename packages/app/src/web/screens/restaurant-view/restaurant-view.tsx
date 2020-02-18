@@ -28,7 +28,7 @@ export default () => {
   useEffect(() => {
     fetchRestaurant({ subdomain: params.subdomain });
     fetchMenucategories({ subdomain: params.subdomain });
-  }, []);
+  }, [fetchRestaurant, fetchMenucategories, params.subdomain]);
 
   const match = useBreakpoints({
     0: 3 / 2,

@@ -58,7 +58,7 @@ export const CartScreen: React.FC<{
       if (restaurantIdOfCart && (!restaurant || !restaurant.menuLanguages)) {
         fetchRestaurant({ subdomain: restaurantIdOfCart });
       }
-    }, [restaurantIdOfCart]);
+    }, [restaurant, fetchRestaurant, restaurantIdOfCart]);
 
     const fetchCart = useAction(fetchCartAsync.request);
     const toggleDefaultLanguage = () => {

@@ -26,7 +26,7 @@ import { useAction, useBreakpoints } from '@dinify/common/src/lib/util';
 import { useMenuItemView } from 'features/menuItem/selectors';
 import { Carousel } from 'web/components/carousel';
 
-export const MenuItemScreen = ({ }: {}) => {
+export const MenuItemScreen = () => {
   const clearCustomizations = useAction(clearCustomizationsAction);
   const fetchMenuItem = useAction(fetchMenuItemAsync.request);
   // const favMenuitem = useAction(favMenuitemInit);
@@ -49,7 +49,7 @@ export const MenuItemScreen = ({ }: {}) => {
       clearCustomizations({ menuItemId });
       fetchMenuItem({ menuItemId });
     }
-  }, [menuItemId]);
+  }, [clearCustomizations, fetchMenuItem, menuItemId]);
 
   const breakpointMatch = useBreakpoints({
     0: 3 / 2,

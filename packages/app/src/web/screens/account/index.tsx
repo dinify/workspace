@@ -25,7 +25,7 @@ export const AccountScreen: React.FC = () => {
   const user = useSelector((state: RootState) => state.firebase.auth);
   useEffect(() => {
     if (!mounted) setMounted(true);
-  }, []);
+  }, [mounted]);
   useEffect(() => {
     if (auth.currentUser) {
       auth.currentUser

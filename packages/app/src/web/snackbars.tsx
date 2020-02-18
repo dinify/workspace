@@ -83,19 +83,3 @@ export default (props: any) => {
     </>
   );
 };
-
-{
-  /* <Snackbar
-      {...defaultProps}
-      {...props}
-      open={!!snackbars['test'] || true}
-      onClose={getHandler('test')}
-      ContentProps={{ 'aria-describedby': 'message-id' }}
-      message={<span id="message-id">Note archived</span>}
-      action={[
-        <Button key="undo" color="primary" size="small" onClick={getHandler('test')}>
-          UNDO
-        </Button>
-      ]}
-    /> */
-}

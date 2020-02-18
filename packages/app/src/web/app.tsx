@@ -49,7 +49,7 @@ const App: React.FC<any> = props => {
       fetchCart();
       fetchBill();
     }
-  }, [user]);
+  }, [user, fetchStatus, fetchCart, fetchBill]);
 
   const { action, push, location } = useHistory();
 

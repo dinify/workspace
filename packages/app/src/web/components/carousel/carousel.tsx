@@ -27,22 +27,25 @@ const Carousel: React.FC<CarouselProps> = ({
   const [selectedPage, setSelectedPage] = useState(0);
   const ratio = Math.round((1 / aspectRatio) * 100 * 10000) / 10000;
   const count = images.length;
-  const handleScroll = (e: any) => {
-    const ratio = e.target.scrollLeft / e.target.scrollWidth;
-    const progress = ratio * count + 0.5;
-    const newPage = Math.floor(Math.max(0, progress));
-    if (newPage !== selectedPage) {
-      setSelectedPage(newPage);
-    }
-  };
   const container = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (container.current) {
-      container.current.addEventListener('scroll', handleScroll);
+    const element = container.current;
+    const handleScroll = (e: any) => {
+      const ratio = e.target.scrollLeft / e.target.scrollWidth;
+      const progress = ratio * count + 0.5;
+      const newPage = Math.floor(Math.max(0, progress));
+      if (newPage !== selectedPage) {
+        setSelectedPage(newPage);
+      }
+    };
+    if (element) {
+      element.addEventListener('scroll', handleScroll);
     }
     return function cleanup() {
-      if (container.current)
-        container.current.removeEventListener('scroll', handleScroll);
+      if (element) {
+        element.removeEventListener('scroll', handleScroll);
+      }
     };
   }, [count, selectedPage]);
   return (

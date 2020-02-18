@@ -112,7 +112,7 @@ const OrderItem: React.FC<OrderItemProps & {
           backgroundColor: theme.palette.divider,
           overflow: 'hidden'
         }}>
-          <img src={menuItem.images[0] && `${menuItem.images.sort((a, b) => a.precedence - b.precedence)[0].url}=s112-c`} style={{ width: 56, height: 56 }} />
+          <img alt={menuItem.name} src={menuItem.images[0] && `${menuItem.images.sort((a, b) => a.precedence - b.precedence)[0].url}=s112-c`} style={{ width: 56, height: 56 }} />
           <animated.div style={{
             position: 'absolute',
             backgroundColor: '#c13939',
