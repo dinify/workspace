@@ -1,5 +1,5 @@
 
-import { createMuiTheme, Theme } from "@material-ui/core/styles";
+import { Theme, createMuiTheme } from '@material-ui/core/styles';
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import { getTypographyVariants } from "./util";
 import { PaletteType } from '@material-ui/core';

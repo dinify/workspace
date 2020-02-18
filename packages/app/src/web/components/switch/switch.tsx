@@ -1,5 +1,6 @@
-import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/styles';
 import Switch from '@material-ui/core/Switch';
+import { Theme } from '@material-ui/core/styles';
 
 export default withStyles((theme: Theme) =>
   createStyles({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Typography from '@material-ui/core/Typography';
 
@@ -23,26 +23,26 @@ const NutritionFacts = ({
         variant="overline">
         {t('nutrition.facts')}
       </Typography>
-      {['fats', 'carbs', 'proteins'].map(key => 
-        <div style={{display: 'flex'}}>
-          <Typography style={{flex: 1}} >
+      {['fats', 'carbs', 'proteins'].map(key =>
+        <div style={{ display: 'flex' }}>
+          <Typography style={{ flex: 1 }} >
             {t('nutrition.fats')}
           </Typography>
           <Typography
-            style={{alignSelf: 'flex-end', textTransform: 'none'}}
+            style={{ alignSelf: 'flex-end', textTransform: 'none' }}
             variant="overline">
-            {cldr.Units.formatQuantity({value: calories.fats, unit: 'gram'}, { length: 'narrow' })}
+            {cldr.Units.formatQuantity({ value: calories.fats, unit: 'gram' }, { length: 'narrow' })}
           </Typography>
         </div>
       )}
-      <div style={{display: 'flex'}}>
-        <Typography style={{flex: 1}} >
+      <div style={{ display: 'flex' }}>
+        <Typography style={{ flex: 1 }} >
           {t('nutrition.calories')}
         </Typography>
         <Typography
-          style={{alignSelf: 'flex-end', textTransform: 'none'}}
+          style={{ alignSelf: 'flex-end', textTransform: 'none' }}
           variant="overline">
-          {cldr.Units.formatQuantity({ value: calories.total, unit: 'foodcalorie' }, { length: 'narrow'})}
+          {cldr.Units.formatQuantity({ value: calories.total, unit: 'foodcalorie' }, { length: 'narrow' })}
         </Typography>
       </div>
     </div>

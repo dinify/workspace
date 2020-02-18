@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles, withTheme } from '@material-ui/styles';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { select } from '@dinify/common/src/lib/platform';
 

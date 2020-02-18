@@ -1,6 +1,6 @@
 import React from 'react';
 import { animated, useSpring } from 'react-spring';
-import { withTheme } from '@material-ui/core/styles';
+import { withTheme } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteRounded';

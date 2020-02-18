@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Day from 'material-ui-pickers/DatePicker/components/Day';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 
 const styles = theme => ({
 
@@ -11,7 +11,7 @@ const ValuePicker = ({
   classes,
   selected,
   options,
-  handleChange = () => {}
+  handleChange = () => { }
 }) => {
   return (
     <Grid container wrap="nowrap" justify="flex-start" alignItems="center">

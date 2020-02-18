@@ -4,7 +4,7 @@ import { MapToList } from '@dinify/common/src/lib/FN';
 import uniqueId from 'lodash.uniqueid';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import Typography from '@material-ui/core/Typography';
 import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContainer';

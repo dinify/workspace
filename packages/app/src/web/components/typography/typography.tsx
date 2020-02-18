@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { withTheme } from '@material-ui/core/styles';
+import { withTheme } from '@material-ui/styles';
 import MuiTypography, { TypographyProps as MuiTypographyProps } from '@material-ui/core/Typography';
 
 type TypographyProps = Omit<MuiTypographyProps, 'variant'> & {

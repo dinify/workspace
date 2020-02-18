@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import omit from 'ramda/es/omit';
 
 const styles = theme => ({
@@ -84,7 +84,7 @@ class ScrollSnapView extends React.Component {
         if (child) {
           // If child is out of window bounds
           if (child.offsetLeft < this.root.scrollLeft ||
-              child.offsetLeft + child.clientWidth > this.root.scrollLeft + this.root.clientWidth) {
+            child.offsetLeft + child.clientWidth > this.root.scrollLeft + this.root.clientWidth) {
             const start = child.offsetLeft;
             const end = child.offsetLeft - this.root.clientWidth + child.clientWidth;
             let target;
@@ -111,7 +111,7 @@ class ScrollSnapView extends React.Component {
 
   alignSwitch = (arr, align = this.props.align) => {
     let alignType;
-    switch(align) {
+    switch (align) {
       case 'start':
         alignType = 0;
         break;
@@ -159,21 +159,21 @@ class ScrollSnapView extends React.Component {
   scrollTo = offset => {
     if (this.root.scrollLeft === offset) return;
     // console.log(this.instanceID + ' scrolling', this.root.scrollLeft, offset);
-    this.setState({animating: true}, () => {
+    this.setState({ animating: true }, () => {
       this.animate(this.root, 'scrollLeft', offset, () => {
-        this.setState({animating: false}, () => {
+        this.setState({ animating: false }, () => {
           this.root.scrollLeft = offset;
         });
       });
     });
   }
 
-  animate = (obj, prop, to, cb = () => {}) => {
+  animate = (obj, prop, to, cb = () => { }) => {
     let currentValue = obj[prop] || 0;
     const startValue = currentValue;
     const duration = Math.min(500, Math.max(100, Math.abs(to - currentValue)));
     const startTime = new Date().getTime();
-    const ease = t => { return 1+(--t)*t*t*t*t };
+    const ease = t => { return 1 + (--t) * t * t * t * t };
     const step = () => {
       const elapsed = new Date().getTime() - startTime;
       const frac = elapsed / duration;
@@ -223,7 +223,7 @@ class ScrollSnapView extends React.Component {
     }
   };
 
-  render () {
+  render() {
     const {
       snap = true,
       direction = 'horizontal',
@@ -237,7 +237,7 @@ class ScrollSnapView extends React.Component {
     } = this.state;
 
     let type;
-    switch(direction) {
+    switch (direction) {
       case 'horizontal':
         type = 0;
         break;
@@ -250,7 +250,7 @@ class ScrollSnapView extends React.Component {
     }
 
     let alignType;
-    switch(align) {
+    switch (align) {
       case 'start':
         alignType = 0;
         break;
@@ -278,9 +278,9 @@ class ScrollSnapView extends React.Component {
         }, style)}
         onScroll={this.handleScroll}
         className={rootClassName}
-        ref={(node) => {this.root = node}}
-        >
-          {/* <div style={{position: 'relative', whiteSpace: 'nowrap'}}>
+        ref={(node) => { this.root = node }}
+      >
+        {/* <div style={{position: 'relative', whiteSpace: 'nowrap'}}>
             {this.tippingPoints.map(point =>
               <div key={`${Math.random()}`} style={{
                 position: 'absolute',
@@ -300,7 +300,7 @@ class ScrollSnapView extends React.Component {
               }}/>
             )}
           </div> */}
-          {this.props.children}
+        {this.props.children}
       </div>
     )
   };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import { withTranslation } from '@dinify/common/src/lib/i18n';
 import Person from '@material-ui/icons/PersonRounded';
 import Typography from '@material-ui/core/Typography';
@@ -29,7 +29,7 @@ class GuestList extends React.Component {
       seats,
       active,
       auth,
-      onGuestClick = () => {},
+      onGuestClick = () => { },
       users
     } = this.props;
     const rippleRadius = 40;
@@ -41,7 +41,7 @@ class GuestList extends React.Component {
           border: 'none',
         }}
         snap={false}
-        ref={(node => {this.root = node})}
+        ref={(node => { this.root = node })}
         selected={active}>
         {seats.map((seat, i, arr) => {
           const me = auth.uid === seat.user_id;
@@ -80,8 +80,8 @@ class GuestList extends React.Component {
                 </div>
               )}
               <Motion
-                defaultStyle={{x: 0}}
-                style={{x: spring(selected ? 1 : 0, { stiffness: 260, damping: 24 })}}>
+                defaultStyle={{ x: 0 }}
+                style={{ x: spring(selected ? 1 : 0, { stiffness: 260, damping: 24 }) }}>
                 {style =>
                   <div style={{
                     position: 'absolute',
@@ -90,13 +90,13 @@ class GuestList extends React.Component {
                     minHeight: rippleRadius,
                     minWidth: rippleRadius,
                     opacity: Math.min(1, style.x * 2),
-                    transform: `translate3d(0,0,0) scale(${Math.max(style.x, 1/rippleRadius)}, ${Math.max(style.x, 1/rippleRadius)})`,
-                  }}/>
+                    transform: `translate3d(0,0,0) scale(${Math.max(style.x, 1 / rippleRadius)}, ${Math.max(style.x, 1 / rippleRadius)})`,
+                  }} />
                 }
               </Motion>
               <Motion
-                defaultStyle={{x: 0}}
-                style={{x: spring(selected ? 1 : 0, { stiffness: 480, damping: selected ? 15 : 24 })}}>
+                defaultStyle={{ x: 0 }}
+                style={{ x: spring(selected ? 1 : 0, { stiffness: 480, damping: selected ? 15 : 24 }) }}>
                 {style =>
                   <div style={{
                     position: 'absolute',
@@ -110,14 +110,14 @@ class GuestList extends React.Component {
                 }
               </Motion>
               <Motion
-                defaultStyle={{x: 0.86}}
-                style={{x: spring(active === i ? 1 : 0.86, { stiffness: 480, damping: selected ? 15 : 24 })}}>
+                defaultStyle={{ x: 0.86 }}
+                style={{ x: spring(active === i ? 1 : 0.86, { stiffness: 480, damping: selected ? 15 : 24 }) }}>
                 {style =>
                   <Typography style={{
                     paddingTop: 8,
                     whiteSpace: 'normal',
                     transform: `translate3d(0,0,0) scale(${style.x}, ${style.x})`,
-                  }}  color={active === i ? 'default' : 'textSecondary'}>
+                  }} color={active === i ? 'default' : 'textSecondary'}>
                     {displayName}
                   </Typography>
                 }

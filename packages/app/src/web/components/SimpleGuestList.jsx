@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import Person from '@material-ui/icons/PersonRounded';
 import Avatar from '@material-ui/core/Avatar';
 

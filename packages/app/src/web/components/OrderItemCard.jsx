@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import * as FN from '@dinify/common/src/lib/FN';
 import Price from '@dinify/common/src/components/price';

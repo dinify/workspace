@@ -1,7 +1,7 @@
 
 import React from 'react';
 import times from 'lodash.times';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import { Motion, StaggeredMotion, spring } from 'react-motion';
 
 const styles = theme => ({
@@ -46,11 +46,11 @@ class SwipableItem extends React.Component {
 
   onScroll = (e) => {
     if (e.target.scrollLeft > 75 && !this.state.actionsActive) {
-      if (!touching) this.setState({actionsActive: true});
+      if (!touching) this.setState({ actionsActive: true });
     }
 
     if (e.target.scrollLeft < -75 && this.state.actionsActive) {
-      if (!touching) this.setState({actionsActive: false});
+      if (!touching) this.setState({ actionsActive: false });
     }
   }
 
@@ -65,8 +65,8 @@ class SwipableItem extends React.Component {
     } = this.state;
 
     return (
-      <div style={{position: 'relative'}}>
-        <Motion defaultStyle={{x: 0}} style={{x: spring(actionsActive ? 50 : 0, {stiffness: 410, damping: 60})}}>
+      <div style={{ position: 'relative' }}>
+        <Motion defaultStyle={{ x: 0 }} style={{ x: spring(actionsActive ? 50 : 0, { stiffness: 410, damping: 60 }) }}>
           {value =>
             <div
               className={classes.scrollContainer}
@@ -78,7 +78,7 @@ class SwipableItem extends React.Component {
                 transform: `translateX(-${value.x}%)`
               }}>
               {children}
-              <div style={{minWidth: 1}}/>
+              <div style={{ minWidth: 1 }} />
             </div>
           }
         </Motion>
@@ -89,8 +89,8 @@ class SwipableItem extends React.Component {
             })}
             styles={prevStyles => prevStyles.map((_, i) => {
               return i === (actionsActive ? prevStyles.length - 1 : 0)
-                ? {x: spring(actionsActive ? 1 : 0, { stiffness: 480, damping: actionsActive ? 15 : 24 })}
-                : {x: spring(prevStyles[i + (actionsActive ? 1 : - 1)].x, { stiffness: 480, damping: actionsActive ? 30 : 48 })}
+                ? { x: spring(actionsActive ? 1 : 0, { stiffness: 480, damping: actionsActive ? 15 : 24 }) }
+                : { x: spring(prevStyles[i + (actionsActive ? 1 : - 1)].x, { stiffness: 480, damping: actionsActive ? 30 : 48 }) }
             })}>
             {interpolatingStyles =>
               <div style={{
@@ -104,13 +104,14 @@ class SwipableItem extends React.Component {
                 right: 0,
               }}>
                 {interpolatingStyles.map((style, i) =>
-                    <div key={i} style={{
-                      width: 48,
-                      height: 48,
-                      transform: `scale(${style.x}, ${style.x})`}}>
-                      {actions[i]}
-                    </div>
-                  )
+                  <div key={i} style={{
+                    width: 48,
+                    height: 48,
+                    transform: `scale(${style.x}, ${style.x})`
+                  }}>
+                    {actions[i]}
+                  </div>
+                )
                 }
               </div>
             }

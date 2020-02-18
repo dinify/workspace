@@ -7,7 +7,7 @@ import { RootState } from 'typesafe-actions';
 import { Subtotal } from 'CartModels';
 import { getOrderItemCount as getCartCount } from 'features/cart/selectors';
 import { select } from '@dinify/common/src/lib/platform';
-import { withTheme } from '@material-ui/core/styles';
+import { withTheme } from '@material-ui/styles';
 import CartIcon from '@material-ui/icons/ShoppingCartRounded';
 import BillIcon from '@material-ui/icons/ReceiptRounded';
 import BottomBarAction from './bottom-bar-action';

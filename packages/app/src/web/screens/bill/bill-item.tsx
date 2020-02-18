@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withTheme } from '@material-ui/core/styles';
+import { withTheme } from '@material-ui/styles';
 import { RootState } from 'typesafe-actions';
 import { Translation, OrderItemN } from 'CartModels';
 import Typography from '@material-ui/core/Typography';
