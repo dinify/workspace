@@ -23,6 +23,8 @@ const Main: React.FC = () => {
     fetchRestaurants();
     getGeolocation();
     fetchFavoriteRestaurants();
+    // onComponentMount lifecycle
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // const favoriteRestaurantsList = useSelector<RootState, Restaurant[]>(state => {
   //   return MapToList(state.restaurant.favorites) as Restaurant[];

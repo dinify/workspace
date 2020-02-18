@@ -103,7 +103,7 @@ const App: React.FC<any> = props => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <div style={{ marginBottom: getMarginBottom() }}>
+      <div style={{ paddingBottom: getMarginBottom() }}>
         <Switch>
           <Route exact path={routes.HOMEPAGE} component={MainScreen} />
 

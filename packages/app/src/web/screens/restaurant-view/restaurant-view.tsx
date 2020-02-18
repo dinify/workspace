@@ -28,7 +28,9 @@ export default () => {
   useEffect(() => {
     fetchRestaurant({ subdomain: params.subdomain });
     fetchMenucategories({ subdomain: params.subdomain });
-  }, [fetchRestaurant, fetchMenucategories, params.subdomain]);
+    // onComponentMount lifecycle
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.subdomain]);
 
   const match = useBreakpoints({
     0: 3 / 2,

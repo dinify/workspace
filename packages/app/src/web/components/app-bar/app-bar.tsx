@@ -7,6 +7,7 @@ import { select } from '@dinify/common/src/lib/platform';
 import { MuiThemeProvider } from '@material-ui/core';
 import { useTheme } from 'features/ui/selectors';
 import { getTheme } from '@dinify/common/src/theme';
+import { useIntl } from '@dinify/common/src/lib/i18n';
 
 interface AppBarProps {
     style?: React.CSSProperties,
@@ -31,7 +32,8 @@ const AppBar: IAppBar = ({
     ...otherProps
 }) => {
     let theme = useTheme();
-    if (type === 'gradient') theme = getTheme({ type: 'dark' });
+    const locale = useIntl(context => context.state.locale);
+    if (type === 'gradient') theme = getTheme({ type: 'dark', locale });
     const { palette: { background: { paper }, divider } } = theme;
     const coupertino = {
         backgroundColor: theme.coupertino.backgroundColor,

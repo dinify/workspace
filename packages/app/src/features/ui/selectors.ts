@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 import { RootState } from 'typesafe-actions';
 import { PaletteType } from '@material-ui/core';
 import { getOrderItemCount } from '../cart/selectors';
+import { useIntl } from '@dinify/common/src/lib/i18n';
 
 export const useTheme = (props: { invert: boolean } = { invert: false }) => {
   const type = usePaletteType(props);
-  return getTheme({ type });
+  const locale = useIntl(context => context.state.locale);
+  return getTheme({ type, locale });
 };
 
 export const usePaletteType = (props: { invert: boolean } = { invert: false }): PaletteType => {
