@@ -10,11 +10,11 @@ import comparator from 'ramda/es/comparator';
 
 export const getCategoriesBySubdomain = createSelector(
   [
-    (state: RootState, subdomain: string) => subdomain,
+    (_: RootState, subdomain: string) => subdomain,
     (state) => state.menuCategory.all,
     (state) => state.menuItem.all,
   ],
-  (subdomain, categoriesMap, menuItemsMap) => {
+  (subdomain, categoriesMap, _) => {
     return values(categoriesMap)
       .filter((c) => c.subdomain === subdomain)
       .filter(c => c.published)

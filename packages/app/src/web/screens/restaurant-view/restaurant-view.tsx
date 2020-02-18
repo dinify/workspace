@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useAction, useBreakpoints } from '@dinify/common/src/lib/util';
-import { getRestaurantBySubdomain } from '../../../features/restaurant/selectors';
-import { fetchRestaurantAsync } from '../../../features/restaurant/actions';
-import { fetchMenuCategoriesAsync } from '../../../features/menuCategory/actions';
+import { getRestaurantBySubdomain } from 'features/restaurant/selectors';
+import { fetchRestaurantAsync } from 'features/restaurant/actions';
+import { fetchMenuCategoriesAsync } from 'features/menuCategory/actions';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typesafe-actions';
 import { Restaurant } from 'RestaurantModels';
-import { Carousel } from '../../components/carousel';
+import { Carousel } from 'web/components/carousel';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
-import { getCategoriesBySubdomain } from '../../../features/menuCategory/selectors';
+import { getCategoriesBySubdomain } from 'features/menuCategory/selectors';
 import MenuCategory from './menu-category';
 import Header from './header-simple';
 import Nav from './nav';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import { StaticMap } from '../../components/map';
+import { StaticMap } from 'web/components/map';
 
 export default () => {
   const params = useParams<{ subdomain: string }>();
@@ -69,8 +69,8 @@ export default () => {
           </Typography>
         </div>
       </div>
-      {menuCategoryIds.map((id, i) => (
-        <MenuCategory key={id} menuCategoryId={id} index={i} />
+      {menuCategoryIds.map(id => (
+        <MenuCategory key={id} menuCategoryId={id} />
       ))}
       {restaurant && <a
         href={`https://www.google.com/maps/search/${restaurant.name}/@${restaurant.latitude},${restaurant.longitude},17z`}

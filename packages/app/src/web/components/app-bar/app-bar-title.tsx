@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { select } from '@dinify/common/src/lib/platform';
-import { Typography } from '../../components/typography'
+import { Typography } from 'web/components/typography'
 import { PropTypes } from '@material-ui/core';
 
 const AppBarTitle: React.FC<{

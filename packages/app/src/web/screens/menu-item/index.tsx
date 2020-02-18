@@ -4,27 +4,27 @@ import {
   // favMenuitemInit,
   fetchMenuItemAsync,
   clearCustomizationsAction,
-} from '../../../features/menuItem/actions';
+} from 'features/menuItem/actions';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCartRounded';
 import ResponsiveContainer from '@dinify/common/src/components/ResponsiveContainer';
 import Price from '@dinify/common/src/components/price';
-// import FavoriteToggle from '../../components/FavoriteToggle';
-import NutritionFacts from '../../pages/MenuItemView/NutritionFacts';
+// import FavoriteToggle from 'web/components/FavoriteToggle';
+import NutritionFacts from 'web/pages/MenuItemView/NutritionFacts';
 import Fab from '@material-ui/core/Fab';
-import { addToCartAsync } from '../../../features/cart/actions';
+import { addToCartAsync } from 'features/cart/actions';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Ingredients from './ingredients';
 import Addons from './addons';
 import Options from './options';
-import { useAddonView } from '../../../features/addon/selectors';
-import { useIngredientView } from '../../../features/ingredient/selectors';
-import { useOptionView } from '../../../features/option/selectors';
+import { useAddonView } from 'features/addon/selectors';
+import { useIngredientView } from 'features/ingredient/selectors';
+import { useOptionView } from 'features/option/selectors';
 import { useAction, useBreakpoints } from '@dinify/common/src/lib/util';
-import { useMenuItemView } from '../../../features/menuItem/selectors';
-import { Carousel } from '../../components/carousel';
+import { useMenuItemView } from 'features/menuItem/selectors';
+import { Carousel } from 'web/components/carousel';
 
 export const MenuItemScreen = ({ }: {}) => {
   const clearCustomizations = useAction(clearCustomizationsAction);
@@ -51,19 +51,6 @@ export const MenuItemScreen = ({ }: {}) => {
     }
   }, [menuItemId]);
 
-  if (!menuItem) return null;
-
-  // const handleToggleFavorite = () =>
-  //   favMenuitem({
-  //     fav: !menuItem.favorite,
-  //     id: menuItem.id,
-  //   });
-
-  const handleAddCart = () => {
-    addToCart({ menuItemId: menuItem.id });
-    history.goBack();
-  };
-
   const breakpointMatch = useBreakpoints({
     0: 3 / 2,
     600: 16 / 9,
@@ -71,6 +58,18 @@ export const MenuItemScreen = ({ }: {}) => {
     960: 4 / 1
   });
 
+  const handleAddCart = () => {
+    addToCart({ menuItemId: menuItem.id });
+    history.goBack();
+  };
+
+  // const handleToggleFavorite = () =>
+  //   favMenuitem({
+  //     fav: !menuItem.favorite,
+  //     id: menuItem.id,
+  //   });
+
+  if (!menuItem) return null;
   return (
     <div>
       <Carousel aspectRatio={breakpointMatch[1]} alt={menuItem.name} images={menuItem.images} />

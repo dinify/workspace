@@ -15,7 +15,7 @@ declare module 'ServiceModels' {
     image: Image;
     imageId: string;
     restaurantId: Restaurant.id;
-    translations: Translation[];
+    translations: [Translation];
     type: 'TABLEWARE' | 'CONDIMENT';
   };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from '../../../features/ui/selectors';
+import { useTheme } from 'features/ui/selectors';
 
 export interface MarkerProps {
   size?: number,

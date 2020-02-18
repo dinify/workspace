@@ -9,8 +9,8 @@ import { RootState } from 'typesafe-actions';
 
 export const getRestaurantBySubdomain = createSelector(
   [
-    (state: RootState, subdomain: string) => subdomain,
-    (state) => state.restaurant.all
+    (_: RootState, subdomain: string) => subdomain,
+    (state: RootState) => state.restaurant.all
   ],
   (subdomain, restaurantsMap) => find(propEq('subdomain', subdomain))(MapToList(restaurantsMap))
 )

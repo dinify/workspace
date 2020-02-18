@@ -1,11 +1,11 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import { useMenuItemView } from '../../../features/menuItem/selectors';
+import { useMenuItemView } from 'features/menuItem/selectors';
 import Price from '@dinify/common/src/components/price';
-import { Image, Aspect } from '../../components/image';
+import { Image, Aspect } from 'web/components/image';
 import { useHistory } from 'react-router';
-import * as routes from '../../routes';
+import * as routes from 'web/routes';
 
 export default ({ menuItemId, style }: { menuItemId: string, style?: React.CSSProperties }) => {
   const menuItem = useMenuItemView(menuItemId);

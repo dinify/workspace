@@ -5,7 +5,7 @@ import Gradient from './gradient';
 
 import { select } from '@dinify/common/src/lib/platform';
 import { MuiThemeProvider } from '@material-ui/core';
-import { useTheme } from '../../../features/ui/selectors';
+import { useTheme } from 'features/ui/selectors';
 import { getTheme } from '@dinify/common/src/theme';
 
 interface AppBarProps {

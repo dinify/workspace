@@ -1,13 +1,13 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import { Image } from '../../components/image';
+import { Image } from 'web/components/image';
 import Typography from '@material-ui/core/Typography';
 import Person from '@material-ui/icons/PersonRounded';
 import { User } from 'firebase';
 import Button from '@material-ui/core/Button';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { useHistory } from 'react-router';
-import * as routes from '../../routes';
+import * as routes from 'web/routes';
 
 export default ({ user }: { user: User | null }) => {
   const { t } = useTranslation();

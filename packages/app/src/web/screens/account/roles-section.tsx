@@ -5,7 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import OpenInNew from '@material-ui/icons/OpenInNewRounded';
 import Person from '@material-ui/icons/PersonRounded';
 import Avatar from '@material-ui/core/Avatar';
-import Card from '../../components/Card';
+import Card from 'web/components/Card';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 
 export interface Role {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
+import { AppBar, AppBarAction, AppBarTitle } from 'web/components/app-bar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
@@ -11,10 +11,10 @@ import CheckCircle from '@material-ui/icons/CheckCircleRounded';
 import { useTranslation, defaultLanguages, getNativeName } from '@dinify/common/src/lib/i18n';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import { useTheme } from '../../../features/ui/selectors';
+import { useTheme } from 'features/ui/selectors';
 import { useHistory } from 'react-router';
 import { useNavigation } from '@dinify/common/src/lib/navigation';
-import * as routes from '../../routes';
+import * as routes from 'web/routes';
 
 export default () => {
   const navigation = useNavigation();

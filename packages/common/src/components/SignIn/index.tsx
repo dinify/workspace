@@ -89,7 +89,7 @@ let SignInForm = ({
         email
       }
     ).then((data) => {
-      console.log(data,'daaa')
+      console.log(data, 'daaa')
       const credential = firebase.auth.EmailAuthProvider.credential(email, password);
 
       firebase.linkWithCredential(credential).then((usercred: any) => {
@@ -100,11 +100,11 @@ let SignInForm = ({
       });
     });
 
-    
+
   }
 
   const decide = ({ email }: any) => {
-   validateEmail(email);
+    validateEmail(email);
     const auth = firebase.auth();
     return auth.fetchSignInMethodsForEmail(email).then(methods => {
       if (methods.length === 0) {
@@ -136,8 +136,8 @@ let SignInForm = ({
     return firebase.auth().sendPasswordResetEmail(email);
   }
 
-  const Button = ({children, ...otherProps}: any) => (
-    <MuiButton classes={{root: classes.button2}} {...otherProps}>{children}</MuiButton>
+  const Button = ({ children, ...otherProps }: any) => (
+    <MuiButton classes={{ root: classes.button2 }} {...otherProps}>{children}</MuiButton>
   );
 
   const animConfig = { stiffness: 480, damping: 48 };
@@ -173,10 +173,10 @@ let SignInForm = ({
   }
 
   return (<>
-    {dialog !== null && <AccountExistsDialog {...dialog} open={dialog !== null} onClose={() => setDialog(null)}/>}
+    {dialog !== null && <AccountExistsDialog {...dialog} open={dialog !== null} onClose={() => setDialog(null)} />}
     <form
       onSubmit={handleSubmit(submitFc)}
-      style={{height: 'calc(100vh - 112px)'}}
+      style={{ height: 'calc(100vh - 112px)' }}
     >
       <ResponsiveContainer style={{
         height: '100%',
@@ -206,14 +206,14 @@ let SignInForm = ({
             }}>
               <LogoText color="inherit" style={{}} />
             </div>
-            <Typography style={{marginTop: 16, marginBottom: 8}} variant="h6">
+            <Typography style={{ marginTop: 16, marginBottom: 8 }} variant="h6">
               {formTitle}
             </Typography>
             <Typography align="center" variant="caption">
               {formSubtitle}
             </Typography>
           </div>
-          <div style={{height: 185, overflow: 'hidden'}}>
+          <div style={{ height: 185, overflow: 'hidden' }}>
             <Fields env={env} t={t} firebase={firebase} />
           </div>
 
@@ -222,10 +222,10 @@ let SignInForm = ({
             marginTop: 16
           }}>
             <Button onClick={leftButtonAction} variant="text" className={classes && classes.uncapitalized}>
-              {formOpen && <ChevronLeft style={{fontSize: '1.3125rem', marginLeft: -12}} />}
+              {formOpen && <ChevronLeft style={{ fontSize: '1.3125rem', marginLeft: -12 }} />}
               {formOpen ? t('back') : t('auth.newAccount')}
             </Button>
-            <div style={{flex: 1}}/>
+            <div style={{ flex: 1 }} />
             <Button
               type="submit"
               disabled={submitting}
@@ -233,18 +233,18 @@ let SignInForm = ({
               color="primary"
               className={classes && classes.uncapitalized}>
               <Motion
-                defaultStyle={{x: 1}}
-                style={{x: spring(submitting ? 0 : 1, animConfig)}}>
+                defaultStyle={{ x: 1 }}
+                style={{ x: spring(submitting ? 0 : 1, animConfig) }}>
                 {(style: any) =>
                   <div style={{ display: 'flex', opacity: style.x }}>
                     {submitButtonText}
-                    {page === 'default' && <ChevronRight style={{fontSize: '1.3125rem', marginRight: -12}} />}
+                    {page === 'default' && <ChevronRight style={{ fontSize: '1.3125rem', marginRight: -12 }} />}
                   </div>
                 }
               </Motion>
               {submitting && <CircularProgress className={classes && classes.colorTextSecondary} style={{
-                  position: 'absolute'
-              }} size={16} thickness={6}/>}
+                position: 'absolute'
+              }} size={16} thickness={6} />}
             </Button>
           </div>
         </div>
@@ -294,4 +294,4 @@ export default compose(
       openDialog: openDialogAction
     }
   )
-)(SignInPage);
+)(SignInPage) as React.FC<any>;

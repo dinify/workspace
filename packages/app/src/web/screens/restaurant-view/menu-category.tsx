@@ -1,17 +1,15 @@
 import React, { useRef } from 'react';
 import Typography from '@material-ui/core/Typography';
-import { useMenuCategoryView } from '../../../features/menuCategory/selectors';
+import { useMenuCategoryView } from 'features/menuCategory/selectors';
 import { Grid, Divider } from '@material-ui/core';
-import { useTheme } from '../../../features/ui/selectors';
+import { useTheme } from 'features/ui/selectors';
 import MenuItem from './menu-item';
 // import * as FN from '@dinify/common/src/lib/FN';
 
 export default ({
-  menuCategoryId,
-  index
+  menuCategoryId
 }: {
-  menuCategoryId: string,
-  index: number
+  menuCategoryId: string
 }) => {
   const theme = useTheme();
   const menuCategory = useMenuCategoryView(menuCategoryId);

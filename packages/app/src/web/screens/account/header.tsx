@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
-import { AppBar, AppBarTitle } from '../../components/app-bar';
+import { AppBar, AppBarTitle } from 'web/components/app-bar';
 
 export default () => {
   const { t } = useTranslation();

@@ -12,7 +12,7 @@ import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { Restaurant } from 'RestaurantModels';
 import { RootState } from 'typesafe-actions';
 import { useHistory } from 'react-router';
-import { useTheme } from '../../../features/ui/selectors';
+import { useTheme } from 'features/ui/selectors';
 
 export interface NavProps {
   restaurant: Restaurant,

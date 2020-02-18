@@ -7,31 +7,30 @@ const ServicesButtonContainer: React.FC<{
   style?: React.CSSProperties,
   anchor?: number,
   onClick?: () => void,
-  checkedInRestaurant: string|null
+  checkedInRestaurant: string | null
 }> = ({
   style,
-  onClick = () => {},
+  onClick = () => { },
   checkedInRestaurant,
-  anchor = 0,
-  ...otherProps
+  anchor = 0
 }) => {
-  return (
-    <div style={{
-      position: 'fixed',
-      display: 'flex',
-      justifyContent: 'center',
-      bottom: anchor,
-      height: 0,
-      width: '100%',
-      content: '""',
-      overflow: 'visible',
-      zIndex: 1300,
-      ...style
-    }}>
-      <ServicesButton onClick={onClick} style={{ marginTop: -28 }} visible={checkedInRestaurant !== null}/>
-    </div>
-  );
-};
+    return (
+      <div style={{
+        position: 'fixed',
+        display: 'flex',
+        justifyContent: 'center',
+        bottom: anchor,
+        height: 0,
+        width: '100%',
+        content: '""',
+        overflow: 'visible',
+        zIndex: 1300,
+        ...style
+      }}>
+        <ServicesButton onClick={onClick} style={{ marginTop: -28 }} visible={checkedInRestaurant !== null} />
+      </div>
+    );
+  };
 
 export default connect(
   (state: RootState) => ({

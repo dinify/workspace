@@ -2,11 +2,11 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import { useIntl } from '@dinify/common/src/lib/i18n';
-import { Aspect, Image } from '../../components/image';
+import { Aspect, Image } from 'web/components/image';
 import comparator from 'ramda/es/comparator';
 import { CLDR, UnitFormatOptions } from '@phensley/cldr';
 import { UnitType } from '@phensley/cldr-types';
-import { RestaurantView } from '../../../features/restaurant/selectors';
+import { RestaurantView } from 'features/restaurant/selectors';
 
 const distanceFormatter = (cldr: CLDR) => (m: number, options?: UnitFormatOptions) => {
   let value = m;

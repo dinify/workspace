@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { matchPath } from 'react-router';
-import * as routes from '../../web/routes';
+import * as routes from 'web/routes';
 import { planCheckinAction, execCheckinAsync } from './actions';
 import queryString from 'query-string';
 import { RootState } from 'typesafe-actions';

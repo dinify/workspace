@@ -1,11 +1,11 @@
 import React from 'react';
-import { useOptionView } from '../../../features/option/selectors';
+import { useOptionView } from 'features/option/selectors';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import { withStyles, StyleRulesCallback } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Price from '@dinify/common/src/components/price';
-import { selectChoice as selectChoiceAction } from '../../../features/menuItem/actions';
+import { selectChoice as selectChoiceAction } from 'features/menuItem/actions';
 import { useAction } from '@dinify/common/src/lib/util';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 

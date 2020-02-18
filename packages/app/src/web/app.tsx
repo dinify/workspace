@@ -5,25 +5,21 @@ import { openDialogAction } from 'features/ui/actions';
 import { matchPath, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 // import { getOrderItemCount as getCartCount } from 'features/cart/selectors';
-import * as routes from 'web/routes';
-import Checkin from 'web/pages/Checkin';
-import RestaurantView from 'web/pages/RestaurantView';
+import * as routes from './routes';
+import Checkin from './pages/Checkin';
 import SignIn from '@dinify/common/src/components/SignIn';
-import Receipt from 'web/pages/Receipt';
-import Services from 'web/pages/Services';
+import Services from './pages/Services';
 
-import Navigation from 'web/components/Navigation';
-import { ServicesButtonContainer } from 'web/components/services-button';
-import { BottomBar } from 'web/components/bottom-bar';
-import { fetchStatusAsync } from 'features/restaurant/actions.ts';
-import { fetchBillAsync } from 'features/transaction/actions.ts';
-import { fetchCartAsync } from 'features/cart/actions.ts';
-import { useBottomBarVisible } from 'features/ui/selectors.ts';
+import Navigation from './components/Navigation';
+import { ServicesButtonContainer } from './components/services-button';
+import { BottomBar } from './components/bottom-bar';
+import { fetchStatusAsync } from 'features/restaurant/actions';
+import { fetchBillAsync } from 'features/transaction/actions';
+import { fetchCartAsync } from 'features/cart/actions';
+import { useBottomBarVisible } from 'features/ui/selectors';
 
-import { withRoot } from 'withRoot';
-import Dialogs from './dialogs.tsx';
-import Snackbars from './snackbars.tsx';
-import findLast from 'ramda/es/findLast';
+import Dialogs from './dialogs';
+import Snackbars from './snackbars';
 import {
   MenuItemScreen,
   AccountScreen,
@@ -34,8 +30,9 @@ import {
   MainScreen
 } from './screens';
 import { useFirebase } from 'react-redux-firebase';
+import { RootState } from 'typesafe-actions';
 
-const App = props => {
+const App: React.FC<any> = props => {
   const {
     checkedInRestaurant,
     user,
@@ -61,9 +58,9 @@ const App = props => {
     window.scrollTo(0, 0);
   }
 
-  const match = (...paths) => {
+  const match = (...paths: string[]) => {
     let matched = false;
-    const get = path => {
+    const get = (path: string) => {
       const m = matchPath(location.pathname, { path });
       return m === null ? false : m.isExact;
     };
@@ -79,7 +76,7 @@ const App = props => {
   const isOrderScreen = match(routes.TAKEORDER);
   const isBottomBarRendered = !isAccountTab && !isOrderScreen && !isLanguageSelect;
 
-  const onNavigate = (evt, val) => {
+  const onNavigate = (_: Event, val: number) => {
     if (val === 0 && !match(routes.HOMEPAGE)) {
       push(routes.HOMEPAGE);
     }
@@ -112,7 +109,7 @@ const App = props => {
 
           <Route
             path={routes.SIGNIN}
-            component={(props) =>
+            component={(props: any) =>
               !user.isEmpty && !user.isAnonymous ? (
                 <Redirect to={routes.ACCOUNT} />
               ) : (
@@ -131,7 +128,6 @@ const App = props => {
           <Route path={routes.RESTAURANT} component={RestaurantViewScreen} />
           <Route path={routes.MENUITEM} component={MenuItemScreen} />
 
-          <Route path={routes.RECEIPT} component={Receipt} />
           <Route path={routes.TAKEORDER} component={OrderScreen} />
         </Switch>
       </div>
@@ -155,7 +151,7 @@ const App = props => {
         }
       </>}
       {isBottomBarRendered && (
-        <BottomBar style={{ bottom: 56 }} onSelect={type => openDialog(type)} />
+        <BottomBar style={{ bottom: 56 }} onSelect={(type: any) => openDialog(type)} />
       )}
 
       <Dialogs />
@@ -166,11 +162,11 @@ const App = props => {
 };
 
 export default connect(
-  state => ({
+  (state: RootState) => ({
     user: state.firebase.auth,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
     restaurant: state.restaurant.checkedInRestaurant ?
-      state.restaurant.all[state.restaurant.checkedInRestaurant]
+      state.restaurant.all[state.restaurant.checkedInRestaurant || '']
       :
       null,
     // bottomBarOpen: getCartCount(state.cart) > 0 || state.transaction.orderItemsCount > 0,
@@ -182,4 +178,4 @@ export default connect(
     fetchCart: fetchCartAsync.request,
     fetchBill: fetchBillAsync.request,
   },
-)(withRoot(App));
+)(App);

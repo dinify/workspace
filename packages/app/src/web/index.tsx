@@ -3,9 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-//  import registerServiceWorker from './registerServiceWorker'
 import { Router } from 'react-router';
-import App from './web/app';
+import App from './app';
 import {
   ReactReduxFirebaseProvider,
   ReactReduxFirebaseProviderProps,
@@ -23,21 +22,18 @@ import { getCookie } from '@dinify/common/src/lib/FN';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
-
-import { store, persistor } from './store';
-import { SocketReduxProvider } from './lib/socket';
-import CheckinExecutor from './features/restaurant/checkin-executor';
-import history from './services/history';
-import syncHistoryWithStore from './features/router/sync';
+import { store, persistor } from 'store';
+import { SocketReduxProvider } from 'lib/socket';
+import CheckinExecutor from 'features/restaurant/checkin-executor';
+import history from 'services/history';
+import syncHistoryWithStore from 'features/router/sync';
+import { ThemeProvider } from 'lib/theme';
 
 if (process.env.NODE_ENV !== 'development') {
   Sentry.init({
     dsn: 'https://5b5ebbbbdbcd4c8cac74a6b6115afcc8@sentry.io/1808340',
   });
 }
-//  import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-//  import HTML5Backend from 'react-dnd-html5-backend'
-//  import { DragDropContextProvider } from 'react-dnd'
 
 const langCookie = getCookie('language');
 let locale;
@@ -66,7 +62,6 @@ const rrfProps: ReactReduxFirebaseProviderProps = {
   firebase,
   config: rrfConfig,
   dispatch: store.dispatch,
-  // createFirestoreInstance // <- needed if using firestore
 };
 
 const syncedHistory = syncHistoryWithStore(history, store);
@@ -80,7 +75,9 @@ ReactDOM.render(
             <NavigationProvider>
               <Router history={syncedHistory}>
                 <CheckinExecutor />
-                <App />
+                <ThemeProvider>
+                  <App />
+                </ThemeProvider>
               </Router>
             </NavigationProvider>
           </SocketReduxProvider>
@@ -90,4 +87,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root'),
 );
-//  registerServiceWorker()

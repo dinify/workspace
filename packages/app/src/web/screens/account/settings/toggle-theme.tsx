@@ -4,11 +4,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
-import LightbulbToggle from '../../../components/LightbulbToggle';
+import LightbulbToggle from 'web/components/LightbulbToggle';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typesafe-actions';
-import { toggleThemeAction } from '../../../../features/ui/actions';
-import { ThemeType } from '../../../../features/ui/reducers';
+import { toggleThemeAction } from 'features/ui/actions';
+import { ThemeType } from 'features/ui/reducers';
 import { useAction } from '@dinify/common/src/lib/util';
 
 export default () => {
