@@ -45,4 +45,4 @@ const FavoriteToggle = ({
 
 }
 
-export default withTheme()(FavoriteToggle);
+export default withTheme(FavoriteToggle);

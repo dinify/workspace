@@ -132,4 +132,4 @@ const LanguagePickerDialog = ({
   );
 };
 
-export default withTheme()(LanguagePickerDialog);
+export default withTheme(LanguagePickerDialog);

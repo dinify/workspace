@@ -62,7 +62,7 @@ let MenuSection = ({
   const mobile = FN.isMobile();
   return (
     <div>
-      <Grid container wrap="nowrap" spacing={16}>
+      <Grid container wrap="nowrap" spacing={2}>
         <Grid item>
           <RestaurantMenu className={classes.primary} />
         </Grid>

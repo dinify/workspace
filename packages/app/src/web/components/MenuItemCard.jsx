@@ -9,7 +9,7 @@ const styles = theme => ({
   image: {
     position: 'relative',
     borderRadius: '4px',
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
     backgroundColor: theme.palette.divider,
     overflow: 'hidden !important',
     '&:hover': {
@@ -50,8 +50,8 @@ const MenuItemCard = ({
   getT,
   userLang
 }) => {
-  const images = FN.MapToList(menuItem.images).sort((a,b) => a.precedence - b.precedence).map(image => image.url)
-  const MenuItemLink = props => <Link to={`/menu/item/${menuItem.id}${FN.isInstalled() ? '?source=pwa' : ''}`} {...props}/>
+  const images = FN.MapToList(menuItem.images).sort((a, b) => a.precedence - b.precedence).map(image => image.url)
+  const MenuItemLink = props => <Link to={`/menu/item/${menuItem.id}${FN.isInstalled() ? '?source=pwa' : ''}`} {...props} />
 
   return (
     <MenuItemLink
@@ -69,7 +69,7 @@ const MenuItemCard = ({
           className={classes.imageSrc}
           style={{
             backgroundImage: `url(${images[0]})`
-          }}/>
+          }} />
       </div>
       <Typography style={{
         textOverflow: 'ellipsis',
@@ -78,10 +78,10 @@ const MenuItemCard = ({
       <Typography
         className={classes.price}
         variant="overline">
-        <Price price={menuItem.price}/>
+        <Price price={menuItem.price} />
       </Typography>
-      <div style={{width: 1000}} />
-      { /* <Typography noWrap >{menuItem.description}</Typography> */ }
+      <div style={{ width: 1000 }} />
+      { /* <Typography noWrap >{menuItem.description}</Typography> */}
     </MenuItemLink>
   );
 };

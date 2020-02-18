@@ -127,7 +127,7 @@ const Services = ({
         </div>
       </div>
       <div style={{ marginTop: 16, width: '100%' }}>
-        <Grid container spacing={16}>
+        <Grid container spacing={2}>
           {selectedServicesList.map(service => {
             const status = serviceStatuses[service.id]
               ? serviceStatuses[service.id]

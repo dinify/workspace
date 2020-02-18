@@ -41,7 +41,7 @@ export default ({ menuItemId }: { menuItemId: string }) => {
                 }}
               >
                 <Typography
-                  color={ingredient.excluded ? 'textSecondary' : 'default'}
+                  color={ingredient.excluded ? 'textSecondary' : 'inherit'}
                   style={{
                     flex: 1,
                     textAlign: 'start',

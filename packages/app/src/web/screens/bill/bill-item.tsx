@@ -61,4 +61,4 @@ export default connect(
     orderItem: state.transaction.items[orderItemId],
     menuItems: state.menuItem.all
   })
-)(withTheme()(BillItem));
+)(withTheme(BillItem));

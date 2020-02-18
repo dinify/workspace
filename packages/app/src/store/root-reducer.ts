@@ -65,7 +65,7 @@ export interface Profile {
   displayCurrency: CurrencyType
 }
 
-const firebaseReducerWrapper = (state: any, action: any) => firebaseReducer<Partial<Profile>>(state, action);
+const firebaseReducerWrapper = (state: any, action: any) => firebaseReducer<any, Partial<Profile>>(state, action);
 
 export const commonReducers = {
   auth,

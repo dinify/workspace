@@ -25,7 +25,7 @@
     "incremental": true,
     "noFallthroughCasesInSwitch": true,
     "isolatedModules": true,
-    "noUnusedLocals": false // TODO: enable this to true and cleanup unused variables
+    "noUnusedLocals": true
   },
   "include": [
     "src/**/*"

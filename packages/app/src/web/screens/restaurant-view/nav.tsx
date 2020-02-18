@@ -31,7 +31,7 @@ const Nav: React.FC<NavProps> = ({ restaurant, style }) => {
       overflow: 'hidden',
       color: theme.palette.text.secondary,
       ...style
-    }} container spacing={8}>
+    }} container spacing={1}>
       {!!social && !!social.facebook &&
         <Grid item>
           <a style={{ color: 'inherit' }} href={social.facebook} target="_blank" rel="noopener noreferrer">

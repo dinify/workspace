@@ -212,4 +212,4 @@ const OrderItem: React.FC<OrderItemProps & {
     );
   };
 
-export default withTheme()(OrderItem);
+export default withTheme(OrderItem);

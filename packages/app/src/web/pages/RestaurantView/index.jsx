@@ -18,7 +18,7 @@ import MenuSection from './MenuSection';
 
 const styles = theme => ({
   category: {
-    paddingTop: theme.spacing.unit,
+    paddingTop: theme.spacing(1),
   },
   imageContainer: {
     height: 256,
@@ -44,7 +44,7 @@ const styles = theme => ({
     color: theme.palette.primary.main,
   },
   chip: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
 });
 
@@ -150,7 +150,7 @@ let RestaurantView = props => {
             </Typography>
             <Typography gutterBottom >{restaurant.about}</Typography> */}
             <Divider style={{ marginTop: 16, marginBottom: 16 }} />
-            {/* <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={16}>
+            {/* <Grid container wrap="nowrap" style={{marginBottom: 8}} alignItems="center" spacing={2}>
               <Grid item>
                 <Today className={classes.primary} />
               </Grid>
@@ -165,7 +165,7 @@ let RestaurantView = props => {
             </Grid>
 
             <Divider style={{marginTop: 16, marginBottom: 16}} />
-            <Grid container wrap="nowrap" style={{marginBottom: 8}} spacing={16}>
+            <Grid container wrap="nowrap" style={{marginBottom: 8}} spacing={2}>
               <Grid item>
                 <Favorite className={classes.primary} />
               </Grid>

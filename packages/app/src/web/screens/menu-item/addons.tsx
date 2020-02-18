@@ -25,7 +25,7 @@ export default ({ menuItemId }: { menuItemId: string }) => {
           container
           wrap="nowrap"
           style={{ marginTop: 8, alignItems: 'center' }}
-          spacing={16}
+          spacing={2}
         >
           <Grid item>
             <IconButton

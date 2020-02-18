@@ -8,27 +8,27 @@ const styles = theme => ({
     paddingTop: theme.mixins.toolbar.offsetHeight
   },
   padded: {
-    paddingLeft: theme.spacing.unit * 15,
-    paddingRight: theme.spacing.unit * 15,
+    paddingLeft: theme.spacing(15),
+    paddingRight: theme.spacing(15),
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: theme.spacing.unit * 8,
-      paddingRight: theme.spacing.unit * 8
+      paddingLeft: theme.spacing(8),
+      paddingRight: theme.spacing(8)
     },
     [theme.breakpoints.down("xs")]: {
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2)
     }
   },
   paddedNarrow: {
-    paddingTop: theme.spacing.unit * 9,
-    paddingLeft: theme.spacing.unit * 3,
-    paddingRight: theme.spacing.unit * 3,
+    paddingTop: theme.spacing(9),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
     [theme.breakpoints.down("md")]: {
-      paddingRight: theme.spacing.unit * 3
+      paddingRight: theme.spacing(3)
     },
     [theme.breakpoints.down("xs")]: {
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2)
     }
   }
 });

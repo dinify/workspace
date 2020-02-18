@@ -23,7 +23,7 @@ const Main: React.FC = () => {
     fetchRestaurants();
     getGeolocation();
     fetchFavoriteRestaurants();
-  }, [fetchRestaurants, getGeolocation, fetchFavoriteRestaurants]);
+  }, []);
   // const favoriteRestaurantsList = useSelector<RootState, Restaurant[]>(state => {
   //   return MapToList(state.restaurant.favorites) as Restaurant[];
   // });

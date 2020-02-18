@@ -7,7 +7,7 @@ import { useTranslation } from '../lib/i18n';
 
 const styles = theme => ({
   leftGutter: {
-    marginLeft: theme.spacing.unit * 2,
+    marginLeft: theme.spacing(2),
   },
   facebookButton: {
     ...theme.typography.button2,

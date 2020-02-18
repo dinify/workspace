@@ -136,7 +136,7 @@ let BottomBar: React.FC<{
   };
 
 export default compose(
-  withTheme(),
+  withTheme,
   connect(
     (state: RootState) => ({
       cartSubtotal: state.cart.subtotal,

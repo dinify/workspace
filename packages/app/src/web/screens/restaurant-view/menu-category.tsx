@@ -69,7 +69,7 @@ export default ({
         width: '100%',
         overflow: 'hidden',
       }}>
-        <Grid style={{ padding: 16 }} container spacing={16}>
+        <Grid style={{ padding: 16 }} container spacing={2}>
           {menuCategory.items.map(id => (
             <Grid key={id} item xs={6} sm={4} >
               <MenuItem style={{ width: '100%' }} menuItemId={id} />

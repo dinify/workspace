@@ -8,7 +8,7 @@ const styles = theme => ({
   image: {
     position: 'relative',
     borderRadius: '4px',
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
     backgroundColor: theme.palette.divider,
     overflow: 'hidden !important',
     '&:hover': {

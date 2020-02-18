@@ -74,7 +74,7 @@ export const MenuItemScreen = () => {
     <div>
       <Carousel aspectRatio={breakpointMatch[1]} alt={menuItem.name} images={menuItem.images} />
       <ResponsiveContainer style={{ margin: '0 auto' }}>
-        <Grid container spacing={16} style={{ marginTop: 16 }}>
+        <Grid container spacing={2} style={{ marginTop: 16 }}>
           <Grid item xs={12} md={6}>
             <Grid container spacing={0}>
               <Grid item style={{ flex: 1 }}>

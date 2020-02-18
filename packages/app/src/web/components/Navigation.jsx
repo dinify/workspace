@@ -33,16 +33,16 @@ const Navigation = ({
   checkedInRestaurant,
   ...otherProps
 }) => {
-  const { palette: { background: { paper }, divider }} = theme;
+  const { palette: { background: { paper }, divider } } = theme;
   const { t } = useTranslation();
   const getColor = selected => selected ? 'primary' : 'action';
   const tabs = [
     {
-      icon: selected => selected ? <LocalLibrary color={getColor(selected)} /> : <LocalLibraryOutlined color={getColor(selected)}/>,
+      icon: selected => selected ? <LocalLibrary color={getColor(selected)} /> : <LocalLibraryOutlined color={getColor(selected)} />,
       text: t('nav.browse')
     },
     {
-      icon: selected => selected ? <AccountCircle color={getColor(selected)}/> : <AccountCircleOutlined color={getColor(selected)}/>,
+      icon: selected => selected ? <AccountCircle color={getColor(selected)} /> : <AccountCircleOutlined color={getColor(selected)} />,
       text: t('profile')
     }
   ];
@@ -55,8 +55,8 @@ const Navigation = ({
   };
   const conidionalStyle = select({
     standard: {
-        backgroundColor: paper,
-        borderTop: borderVisible ? `1px solid ${divider}` : 'none'
+      backgroundColor: paper,
+      borderTop: borderVisible ? `1px solid ${divider}` : 'none'
     },
     osx: coupertino,
     ios: coupertino
@@ -66,31 +66,31 @@ const Navigation = ({
     style,
     ...otherProps
   }) => (
-    <Button style={{
-      display: 'flex',
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      textTransform: 'none',
-      borderRadius: 0,
-      height: '100%',
-      minWidth: 80,
-      maxWidth: 168,
-      ...style
-    }}
-    {...otherProps}>
-      <div style={{
+      <Button style={{
         display: 'flex',
-        flexDirection: 'row',
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-      }}>
-        {children}
-      </div>
-    </Button>
-  );
+        textTransform: 'none',
+        borderRadius: 0,
+        height: '100%',
+        minWidth: 80,
+        maxWidth: 168,
+        ...style
+      }}
+        {...otherProps}>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          {children}
+        </div>
+      </Button>
+    );
   return (
-    <div style={{height: 56, ...conidionalStyle, ...style}} className={classes.root}>
+    <div style={{ height: 56, ...conidionalStyle, ...style }} className={classes.root}>
       <div style={{
         display: 'flex',
         justifyContent: 'center',
@@ -101,9 +101,9 @@ const Navigation = ({
           const selected = value === index;
           return (
             <BottomNavItem key={`bottom-tab-${index}`} selected={selected}
-            onClick={(e) => {handleChange(e, index);}}>
+              onClick={(e) => { handleChange(e, index); }}>
               {tab.icon(selected)}
-              <Typography style={{marginLeft: 8}} variant="body2" color={selected ? 'primary' : 'textSecondary'}>
+              <Typography style={{ marginLeft: 8 }} variant="body2" color={selected ? 'primary' : 'textSecondary'}>
                 {tab.text}
               </Typography>
             </BottomNavItem>
@@ -114,4 +114,4 @@ const Navigation = ({
   );
 }
 
-export default withTheme()(withStyles(styles)(Navigation));
+export default withTheme(withStyles(styles)(Navigation));
