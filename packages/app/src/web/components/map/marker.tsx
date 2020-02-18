@@ -1,5 +1,6 @@
 import React from 'react';
-import { useTheme } from 'features/ui/selectors';
+import { useTheme } from '@material-ui/styles';
+import { AppTheme } from '@dinify/common/src/theme';
 
 export interface MarkerProps {
   size?: number,
@@ -7,7 +8,7 @@ export interface MarkerProps {
 }
 
 const Marker: React.SFC<MarkerProps> = ({ size = 40, onClick }) => {
-  const theme = useTheme();
+  const theme = useTheme<AppTheme>();
   return (
     <svg
       height={size}

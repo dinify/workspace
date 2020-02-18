@@ -12,7 +12,8 @@ import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { Restaurant } from 'RestaurantModels';
 import { RootState } from 'typesafe-actions';
 import { useHistory } from 'react-router';
-import { useTheme } from 'features/ui/selectors';
+import { useTheme } from '@material-ui/styles';
+import { AppTheme } from '@dinify/common/src/theme';
 
 export interface NavProps {
   restaurant: Restaurant,
@@ -23,7 +24,7 @@ const Nav: React.FC<NavProps> = ({ restaurant, style }) => {
   const social = restaurant && restaurant.social;
   const bookingElement = document.getElementById('booking');
   const history = useHistory();
-  const theme = useTheme();
+  const theme = useTheme<AppTheme>();
   const checkedInHere = useSelector<RootState, boolean>(state => state.restaurant.checkedInRestaurant === (restaurant && restaurant.id));
   const { t } = useTranslation();
   return (
