@@ -306,6 +306,10 @@ export const CreateIngredient = (body: any): Promise<any> => Post({
   path: `ingredients`
 }, body);
 
+export const UpdateIngredient = (body: any): Promise<any> => Patch({
+  path: `ingredients`
+}, body);
+
 export const RemoveIngredient = ({ id }: any) => {
   return Delete({ path: `ingredients/${id}` });
 }
