@@ -4,7 +4,7 @@ import { ofType, Epic } from 'redux-observable';
 import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 import {
-  fetchIngredientsAsync, createIngredientAsync, removeIngredientAsync
+  fetchIngredientsAsync, createIngredientAsync, removeIngredientAsync, updateIngredientAsync
 } from './actions';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { currentT as t } from '@dinify/common/src/lib/i18n/translations';
@@ -80,6 +80,34 @@ const onCreateFailSnackbarEpic: Epic = action$ =>
     ),
   );
 
+const updateIngredientEpic: Epic = (action$, state$) =>
+  action$.pipe(
+    ofType(getType(updateIngredientAsync.request)),
+    mergeMap(action => {
+      const payload = action.payload;
+      const { id, allergens } = payload;
+      
+      const restaurantId = state$.value.restaurant.selectedRestaurant;
+      const body = {
+        id,
+        alergens: allergens, // TODO
+        restaurantId,
+      };
+      return fromPromise(API.UpdateIngredient(body)).pipe(
+        rxMap((res: any) => {
+          return updateIngredientAsync.success(res);
+        }),
+        catchError(error =>
+          handleEpicAPIError({
+            error,
+            failActionType: getType(updateIngredientAsync.failure),
+            initAction: action,
+          }),
+        ),
+      );
+    }),
+  );
+
 const removeIngredientEpic: Epic = (action$, state$) =>
   action$.pipe(
     ofType(getType(removeIngredientAsync.request)),
@@ -114,6 +142,7 @@ const onRemoveFailSnackbarEpic: Epic = action$ =>
 export default [
   fetchIngredientsEpic,
   createIngredientEpic,
+  updateIngredientEpic,
   removeIngredientEpic,
   onCreateFailSnackbarEpic,
   onRemoveFailSnackbarEpic
