@@ -49,7 +49,9 @@ export const MenuItemScreen = () => {
       clearCustomizations({ menuItemId });
       fetchMenuItem({ menuItemId });
     }
-  }, [clearCustomizations, fetchMenuItem, menuItemId]);
+    // onComponentMount lifecycle
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [menuItemId]);
 
   const breakpointMatch = useBreakpoints({
     0: 3 / 2,

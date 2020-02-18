@@ -50,10 +50,10 @@ export default () => {
       maxWidth: 960,
       margin: '0 auto'
     }}>
-      <Typography style={{ padding: 16 }} variant="h6">
+      <Typography style={{ padding: 16, paddingBottom: 0 }} variant="h6">
         {restaurant && restaurant.name}
       </Typography>
-      <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+      <div style={{ maxWidth: '100%', overflow: 'hidden', padding: 4 }}>
         <Nav restaurant={restaurant} />
       </div>
       <Divider />
@@ -63,7 +63,7 @@ export default () => {
         display: 'flex',
         alignItems: 'center'
       }}>
-        <RestaurantMenu color="primary" />
+        <RestaurantMenu style={{ color: '#c13939' }} />
         <div style={{ padding: '0 16px' }}>
           <Typography variant="subtitle1">{t('menu.title')}</Typography>
           <Typography variant="caption">

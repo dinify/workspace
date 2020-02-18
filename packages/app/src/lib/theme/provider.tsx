@@ -9,6 +9,7 @@ export const Provider: React.FC<React.PropsWithChildren<any>> = ({ children }) =
   const type = usePaletteType();
   const locale = useIntl(context => context.state.locale);
   const theme = getTheme({ type, locale });
+  console.log(theme);
   return (
     <ThemeProvider theme={theme}>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}

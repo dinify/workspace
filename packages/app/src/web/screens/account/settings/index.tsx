@@ -10,10 +10,10 @@ import Languages from './languages';
 export default () => {
   const { t } = useTranslation();
   return <>
-    <Typography variant="overline" color="textSecondary" style={{ marginBottom: 8 }}>
+    <Typography variant="overline" color="textSecondary">
       {t('nav.settings')}
     </Typography>
-    <Card>
+    <Card style={{ marginTop: 8 }}>
       <Currency />
       <Divider />
       <Languages />

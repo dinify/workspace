@@ -124,7 +124,7 @@ export default () => {
         </ListItem>
       ) : (
           <div style={{ padding: '16px 24px' }}>
-            <Button onClick={primaryClickHandler} variant="text" color="primary">
+            <Button style={{ margin: '0 -8px' }} onClick={primaryClickHandler} variant="text" color="primary">
               {t('language.setPrimary')}
             </Button>
           </div>
@@ -150,7 +150,7 @@ export default () => {
           </ListItem>
         ))}
       <div style={{ padding: '16px 24px' }}>
-        <Button onClick={otherClickHandler} variant="text" color="primary">
+        <Button style={{ margin: '0 -8px' }} onClick={otherClickHandler} variant="text" color="primary">
           {t('language.addOther')}
         </Button>
       </div>

@@ -60,6 +60,7 @@ export default ({ roles }: { roles: Role[] }) => {
               <Person />
             </Avatar>
             <ListItemText
+              style={{ paddingLeft: 16, paddingRight: 16 }}
               primary={t(`roles.${role.id}`)}
               secondary={secondary}
             />

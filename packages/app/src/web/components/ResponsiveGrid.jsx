@@ -24,11 +24,11 @@ class ResponsiveGrid extends React.Component {
   };
 
   render() {
-    const { children, width, childClass } = this.props;
+    const { children, width, childClass, style } = this.props;
     const { breakpoint } = this.state;
 
     return (
-      <Grid container spacing={isWidthDown('sm', width) ? 2 : 3}>
+      <Grid style={style} container spacing={isWidthDown('sm', width) ? 2 : 3}>
         {children &&
           children.map((child, i) => (
             <Grid style={{ borderRadius: 8 }} className={childClass} item key={i} xs={breakpoint === 0 ? 12 : 6} sm={breakpoint === 1 ? 6 : 4} md={3} lg={3}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, withTheme } from '@material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { select } from '@dinify/common/src/lib/platform';
 
@@ -13,8 +13,10 @@ import LocalLibraryOutlined from '@material-ui/icons/LocalLibraryOutlined';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import { useTheme } from '@material-ui/styles';
+import { AppTheme } from '@dinify/common/src/theme';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     width: '100%',
     position: 'fixed',
@@ -29,20 +31,20 @@ const Navigation = ({
   handleChange,
   value,
   style,
-  theme,
   checkedInRestaurant,
   ...otherProps
-}) => {
-  const { palette: { background: { paper }, divider } } = theme;
+}: any) => {
   const { t } = useTranslation();
-  const getColor = selected => selected ? 'primary' : 'action';
+  const theme = useTheme<AppTheme>();
+  const { palette: { primary: { main }, background: { paper }, divider } } = theme;
+
   const tabs = [
     {
-      icon: selected => selected ? <LocalLibrary color={getColor(selected)} /> : <LocalLibraryOutlined color={getColor(selected)} />,
+      icon: (selected: boolean) => selected ? <LocalLibrary style={{ color: main }} /> : <LocalLibraryOutlined color="action" />,
       text: t('nav.browse')
     },
     {
-      icon: selected => selected ? <AccountCircle color={getColor(selected)} /> : <AccountCircleOutlined color={getColor(selected)} />,
+      icon: (selected: boolean) => selected ? <AccountCircle style={{ color: main }} /> : <AccountCircleOutlined color="action" />,
       text: t('profile')
     }
   ];
@@ -65,7 +67,7 @@ const Navigation = ({
     children,
     style,
     ...otherProps
-  }) => (
+  }: any) => (
       <Button style={{
         display: 'flex',
         flex: 1,
@@ -101,7 +103,7 @@ const Navigation = ({
           const selected = value === index;
           return (
             <BottomNavItem key={`bottom-tab-${index}`} selected={selected}
-              onClick={(e) => { handleChange(e, index); }}>
+              onClick={(e: Event) => { handleChange(e, index); }}>
               {tab.icon(selected)}
               <Typography style={{ marginLeft: 8 }} variant="body2" color={selected ? 'primary' : 'textSecondary'}>
                 {tab.text}
@@ -114,4 +116,4 @@ const Navigation = ({
   );
 }
 
-export default withTheme(withStyles(styles)(Navigation));
+export default withStyles(styles as any)(Navigation);

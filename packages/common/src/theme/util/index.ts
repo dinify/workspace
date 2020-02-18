@@ -97,37 +97,7 @@ export function getTypographyVariants({
     if (data.textTransform === 1) processedData.textTransform = 'uppercase';
     else if (data.textTransform === 0) processedData.textTransform = 'none';
 
-    let merge;
-    switch (variant) {
-      case 'headline1':
-      // case 'button':
-      case 'subtitle2':
-        merge = {
-          transform: 'translate(0, -1px)'
-        };
-        break;
-      // case 'button2':
-      case 'body2':
-      case 'headline4':
-      case 'headline6':
-        merge = {
-          transform: 'translate(0, 1px)'
-        };
-        break;
-      case 'headline5':
-      case 'subtitle1':
-        merge = {
-          transform: 'translate(0, 2px)'
-        };
-        break;
-      default:
-        break;
-    }
-
-    return {
-      ...processedData,
-      ...merge
-    }
+    return processedData;
   };
 
   const styles: { [key: string]: React.CSSProperties } = {};
