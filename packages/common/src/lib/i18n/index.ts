@@ -118,7 +118,7 @@ export const framework = new CLDRFramework({
   patternCacheSize: 50
 });
 
-const allLocales = CLDRFramework.availableLocales();
+export const allLocales = CLDRFramework.availableLocales();
 
 export const supportedLocales = allLocales
   // place the default locale at the front of the supported list

@@ -1,5 +1,0 @@
-export default {
-  SELECT_BILLITEM: 'dinify/seat/SELECT_BILLITEM',
-  SELECT_SEAT: 'dinify/seat/SELECT_SEAT',
-  CLEAR_SELECTED_BILLITEMS: 'dinify/seat/CLEAR_SELECTED_BILLITEMS'
-};

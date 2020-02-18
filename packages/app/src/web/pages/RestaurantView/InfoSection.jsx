@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';

@@ -7,7 +7,7 @@ import { ListToMap } from '@dinify/common/src/lib/FN';
 import values from 'ramda/es/values';
 
 export const all = createReducer({} as ServiceMap)
-  .handleAction(actions.fetchServicesAsync.success, (state, action) => {
+  .handleAction(actions.fetchServicesAsync.success, (_, action) => {
     return ListToMap<Service>(action.payload);
   });
 

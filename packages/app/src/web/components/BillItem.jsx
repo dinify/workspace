@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import CheckCircle from '@material-ui/icons/CheckCircleRounded';
@@ -61,8 +61,8 @@ class BillItem extends React.PureComponent {
       onClick,
       seat
     } = this.props;
-    
-    const rippleRadius = Math.sqrt(56**2 + 56**2);
+
+    const rippleRadius = Math.sqrt(56 ** 2 + 56 ** 2);
 
     const images = item.menu_item ? FN.MapToList(item.menu_item.images) : [];
 
@@ -72,8 +72,8 @@ class BillItem extends React.PureComponent {
     // if (item.menu_item.addons.length || item.menu_item.excludes.length)
     return (
       <Motion
-        defaultStyle={{x: 0}}
-        style={{x: spring(item.selected ? 1 : 0, { stiffness: 260, damping: 24 })}}>
+        defaultStyle={{ x: 0 }}
+        style={{ x: spring(item.selected ? 1 : 0, { stiffness: 260, damping: 24 }) }}>
         {style1 =>
           <ButtonBase
             disableRipple
@@ -97,48 +97,48 @@ class BillItem extends React.PureComponent {
                 overflow: 'hidden',
               }}
               className={`${classes.cartItemImage} ${foreign ? classes.foreignItem : (item.locked ? classes.lockedItem : '')}`}
-              ref={(divElement) => {this.divElement = divElement}}>
-                {images.length > 0 &&
-                  <div
-                    className={classes.imageSrc}
-                    style={{
-                      backgroundImage: `url(${images[0].url})`
-                    }}
-                  />
+              ref={(divElement) => { this.divElement = divElement }}>
+              {images.length > 0 &&
+                <div
+                  className={classes.imageSrc}
+                  style={{
+                    backgroundImage: `url(${images[0].url})`
+                  }}
+                />
+              }
+              <Motion
+                defaultStyle={{ x: 0 }}
+                style={{ x: spring(item.selected ? 1 : 0, { stiffness: 260, damping: 24 }) }}>
+                {style =>
+                  <div style={{
+                    position: 'absolute',
+                    backgroundColor: '#c13939',
+                    borderRadius: rippleRadius / 2,
+                    minHeight: rippleRadius,
+                    minWidth: rippleRadius,
+                    opacity: Math.min(1, style.x * 2),
+                    transform: `scale(${Math.max(style.x, 1 / rippleRadius)}, ${Math.max(style.x, 1 / rippleRadius)})`,
+                  }} />
                 }
-                <Motion
-                  defaultStyle={{x: 0}}
-                  style={{x: spring(item.selected ? 1 : 0, { stiffness: 260, damping: 24 })}}>
-                  {style =>
-                    <div style={{
-                      position: 'absolute',
-                      backgroundColor: '#c13939',
-                      borderRadius: rippleRadius / 2,
-                      minHeight: rippleRadius,
-                      minWidth: rippleRadius,
-                      opacity: Math.min(1, style.x * 2),
-                      transform: `scale(${Math.max(style.x, 1/rippleRadius)}, ${Math.max(style.x, 1/rippleRadius)})`,
-                    }}/>
-                  }
-                </Motion>
-                <Motion
-                  defaultStyle={{x: 0}}
-                  style={{x: spring(item.selected ? 1 : 0, { stiffness: 480, damping: item.selected ? 15 : 24 })}}>
-                  {style =>
-                    <div style={{
-                      position: 'absolute',
-                      color: '#fff',
-                      opacity: Math.min(1, style.x),
-                      transform: `translate3d(0,0,0) scale(${style.x}, ${style.x})`,
-                    }}>
-                      <CheckCircle />
-                    </div>
-                  }
-                </Motion>
+              </Motion>
+              <Motion
+                defaultStyle={{ x: 0 }}
+                style={{ x: spring(item.selected ? 1 : 0, { stiffness: 480, damping: item.selected ? 15 : 24 }) }}>
+                {style =>
+                  <div style={{
+                    position: 'absolute',
+                    color: '#fff',
+                    opacity: Math.min(1, style.x),
+                    transform: `translate3d(0,0,0) scale(${style.x}, ${style.x})`,
+                  }}>
+                    <CheckCircle />
+                  </div>
+                }
+              </Motion>
             </div>
-            <div style={{flex: 1, marginLeft: 16, position: 'relative'}}>
-              <div style={{display: 'flex', justifyContent: 'start'}}>
-                <Typography style={{flex: 1,  marginRight: 32}}>
+            <div style={{ flex: 1, marginLeft: 16, position: 'relative' }}>
+              <div style={{ display: 'flex', justifyContent: 'start' }}>
+                <Typography style={{ flex: 1, marginRight: 32 }}>
                   {item.menu_item && item.menu_item.name}
                 </Typography>
                 <Typography
@@ -148,11 +148,11 @@ class BillItem extends React.PureComponent {
                   }}
                   color={divisor > 1 ? 'textSecondary' : 'textPrimary'}
                   variant="overline">
-                  <Price price={divisor > 1 ? item.orgsubtotal : item.subtotal}/>
+                  <Price price={divisor > 1 ? item.orgsubtotal : item.subtotal} />
                 </Typography>
               </div>
-              <div style={{display: 'flex', justifyContent: 'start'}}>
-                <Typography style={{flex: 1,  marginRight: 32}} color="textSecondary" variant="caption">
+              <div style={{ display: 'flex', justifyContent: 'start' }}>
+                <Typography style={{ flex: 1, marginRight: 32 }} color="textSecondary" variant="caption">
                   {(() => {
                     if (divisor === 1) return '';
                     if (item.locked) return 'Partially paid by others';
@@ -160,9 +160,9 @@ class BillItem extends React.PureComponent {
                   })()}
                 </Typography>
                 {divisor > 1 && <Typography
-                  style={{alignSelf: 'flex-end'}}
+                  style={{ alignSelf: 'flex-end' }}
                   variant="overline">
-                  {item && <Price price={item.subtotal}/>}
+                  {item && <Price price={item.subtotal} />}
                 </Typography>}
               </div>
             </div>
@@ -175,9 +175,9 @@ class BillItem extends React.PureComponent {
 
 BillItem = connect(state => ({
 
-  }), {
-    selectBillItem: selectBillItemAction,
-  }
+}), {
+  selectBillItem: selectBillItemAction,
+}
 )(BillItem)
 
 export default withStyles(styles)(BillItem);

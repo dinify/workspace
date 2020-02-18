@@ -1,19 +1,18 @@
 import React, { useRef } from 'react';
 import Typography from '@material-ui/core/Typography';
-import { useMenuCategoryView } from '../../../features/menuCategory/selectors';
+import { useMenuCategoryView } from 'features/menuCategory/selectors';
 import { Grid, Divider } from '@material-ui/core';
-import { useTheme } from '../../../features/ui/selectors';
+import { useTheme } from '@material-ui/styles';
 import MenuItem from './menu-item';
+import { AppTheme } from '@dinify/common/src/theme';
 // import * as FN from '@dinify/common/src/lib/FN';
 
 export default ({
-  menuCategoryId,
-  index
+  menuCategoryId
 }: {
-  menuCategoryId: string,
-  index: number
+  menuCategoryId: string
 }) => {
-  const theme = useTheme();
+  const theme = useTheme<AppTheme>();
   const menuCategory = useMenuCategoryView(menuCategoryId);
   const mobile = false; // FN.isMobile();
   const container = useRef<HTMLDivElement>(null);
@@ -71,7 +70,7 @@ export default ({
         width: '100%',
         overflow: 'hidden',
       }}>
-        <Grid style={{ padding: 16 }} container spacing={16}>
+        <Grid style={{ padding: 16 }} container spacing={2}>
           {menuCategory.items.map(id => (
             <Grid key={id} item xs={6} sm={4} >
               <MenuItem style={{ width: '100%' }} menuItemId={id} />

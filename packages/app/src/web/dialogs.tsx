@@ -1,5 +1,5 @@
 import React from 'react';
-import { closeDialogAction, DialogType } from '../features/ui/actions';
+import { closeDialogAction, DialogType } from 'features/ui/actions';
 import { useSelector } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import { ServicesScreen, CartScreen } from './screens';
@@ -7,8 +7,8 @@ import { BillPage } from './screens/bill';
 import { RootState } from 'typesafe-actions';
 import { useAction } from '@dinify/common/src/lib/util';
 import { ClearOrderDialog } from './components/dialogs/clear-order';
-import { useCartRestaurant } from '../features/cart/selectors';
-import { makeCartDoneAsync } from '../features/cart/actions';
+import { useCartRestaurant } from 'features/cart/selectors';
+import { makeCartDoneAsync } from 'features/cart/actions';
 
 export default () => {
   const userId = useSelector<RootState, string>(state => state.firebase.auth.uid);

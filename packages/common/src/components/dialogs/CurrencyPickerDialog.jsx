@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { compose } from 'redux';
 import { withStateHandlers } from 'recompose';
 import { Motion, spring } from 'react-motion';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import { useTranslation } from '../../lib/i18n';
 
 import match from 'autosuggest-highlight/umd/match';
@@ -116,7 +116,7 @@ const CurrencyPickerDialog = (props) => {
           display: 'flex',
           flexDirection: 'column'
         }}>
-          <div style={{padding: '0px 24px'}}>
+          <div style={{ padding: '0px 24px' }}>
             <TextField
               fullWidth
               name={t('search')}
@@ -124,14 +124,14 @@ const CurrencyPickerDialog = (props) => {
               hint={t('search')}
               variant="filled"
               value={filter || ''}
-              onChange={event => setFilter(event.target.value)}/>
+              onChange={event => setFilter(event.target.value)} />
           </div>
-          <Divider style={{marginTop: 16}}/>
-          <div className={classes.scrollingList} style={{flex: 1}}>
+          <Divider style={{ marginTop: 16 }} />
+          <div className={classes.scrollingList} style={{ flex: 1 }}>
             {sections.map((section, sectionsIndex) => {
               return (
                 <div key={section.title}>
-                  {sectionsIndex > 0 && section.title && <Divider style={{ marginBottom: 8}} />}
+                  {sectionsIndex > 0 && section.title && <Divider style={{ marginBottom: 8 }} />}
                   {section.title && (
                     <Typography
                       variant="overline"
@@ -147,13 +147,15 @@ const CurrencyPickerDialog = (props) => {
                     return (
                       <ListItem
                         key={currency.code} dense button selected={selected}
-                        style={{paddingLeft: 24, paddingRight: 24}}
-                        onClick={() => {currencyClickHandler(currency.code)}}>
+                        style={{ paddingLeft: 24, paddingRight: 24 }}
+                        onClick={() => { currencyClickHandler(currency.code) }}>
                         <ListItemText
-                          primaryTypographyProps={{style: {
-                            whiteSpace: 'nowrap',
-                            textOverflow: 'ellipsis'
-                          }}}
+                          primaryTypographyProps={{
+                            style: {
+                              whiteSpace: 'nowrap',
+                              textOverflow: 'ellipsis'
+                            }
+                          }}
                           primary={primary}
                           secondary={secondary} />
                       </ListItem>
@@ -171,7 +173,7 @@ const CurrencyPickerDialog = (props) => {
           color="primary"
           onClick={() => {
             resetState();
-            onClose({clear: true})
+            onClose({ clear: true })
           }}>
           {t('clear')}
         </Button>

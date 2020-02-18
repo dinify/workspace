@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { AppBarAction, AppBar, AppBarTitle } from '../../components/app-bar';
-import FavoriteToggle from '../../components/FavoriteToggle';
+import { AppBarAction, AppBar, AppBarTitle } from 'web/components/app-bar';
+import FavoriteToggle from 'web/components/FavoriteToggle';
 import Share from '@material-ui/icons/ShareRounded';
 import Info from '@material-ui/icons/InfoRounded';
 import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router';
 import { Restaurant } from 'RestaurantModels';
-import * as routes from '../../routes';
+import * as routes from 'web/routes';
 
 export interface HeaderProps {
   restaurant: Restaurant

@@ -153,7 +153,6 @@ const getUrl = (url: string, options?: Partial<ImageURIOptions>) => {
 
 const ImageComponent: React.FC<ImageProps> = ({
   url,
-  alt,
   options,
   className,
   style,

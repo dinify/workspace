@@ -1,8 +1,10 @@
 
-import { createMuiTheme, Theme } from "@material-ui/core/styles";
+import { Theme, createMuiTheme } from '@material-ui/core/styles';
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import { getTypographyVariants } from "./util";
 import { PaletteType } from '@material-ui/core';
+import * as themeLocales from '@material-ui/core/locale';
+import { Locale, LocaleMatcher } from '@phensley/cldr';
 
 const nextVariants = getTypographyVariants({
   map: {
@@ -39,11 +41,49 @@ export interface AppTheme extends Theme {
   },
 }
 
+const spec = [
+  'en-US',
+  'az-AZ',
+  'bg-BG',
+  'ca-ES',
+  'zh-CN',
+  'cs-CZ',
+  'nl-NL',
+  'et-EE',
+  'fi-FI',
+  'fr-FR',
+  'de-DE',
+  'hu-HU',
+  'is-IS',
+  'id-ID',
+  'it-IT',
+  'ja-JP',
+  'ko-KR',
+  'fa-IR',
+  'pl-PL',
+  'pt-BR',
+  'pt-PT',
+  'ro-RO',
+  'ru-RU',
+  'sk-SK',
+  'es-ES',
+  'sv-SE',
+  'tr-TR',
+  'uk-UA',
+  'vi-VN'
+];
+
+const localeMatcher = new LocaleMatcher(spec);
+
 // from: https://material.io/design/color/dark-theme.html
 // TODO: desaturate primary color to meet WCAG 4.5:1
-export const getTheme = ({ type = 'light' }: { type: PaletteType }): AppTheme => {
+export const getTheme = ({ locale, type = 'light' }: { locale: Locale, type: PaletteType }): AppTheme => {
   const dark = type === 'dark';
 
+  const format = (str: string) => str.replace('-', '');
+  const match = format(localeMatcher.match(locale.id).locale.id);
+
+  // console.log(locale.id, match, (themeLocales as any)[match].props);
   // Rounded corners
   const shapeBorderRadius = 8;
   let theme = createMuiTheme(
@@ -144,7 +184,8 @@ export const getTheme = ({ type = 'light' }: { type: PaletteType }): AppTheme =>
           }
         }
       }
-    }
+    },
+    (themeLocales as any)[match]
   );
 
   return {

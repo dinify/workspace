@@ -3,19 +3,19 @@ import { useTransition, animated } from 'react-spring';
 import { useFirebase } from 'react-redux-firebase';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import Button from '@material-ui/core/Button';
-import { spec } from '../../../lib/transitions';
+import { spec } from 'lib/transitions';
 import Header from './header';
 import Avatar from './avatar';
 import Settings from './settings';
 import RolesSection from './roles-section';
 import Dialogs from './dialogs';
-import { openDialogAction } from '../../../features/ui/actions';
+import { openDialogAction } from 'features/ui/actions';
 import { useAction } from '@dinify/common/src/lib/util';
 import { RootState } from 'typesafe-actions';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Typography from '@material-ui/core/Typography';
-import * as routes from '../../routes';
+import * as routes from 'web/routes';
 
 export const AccountScreen: React.FC = () => {
   const firebase = useFirebase();
@@ -25,7 +25,7 @@ export const AccountScreen: React.FC = () => {
   const user = useSelector((state: RootState) => state.firebase.auth);
   useEffect(() => {
     if (!mounted) setMounted(true);
-  }, []);
+  }, [mounted]);
   useEffect(() => {
     if (auth.currentUser) {
       auth.currentUser
@@ -73,7 +73,7 @@ export const AccountScreen: React.FC = () => {
           </Button>
         </div>
       }
-      
+
       <Settings />
       {claims && claims.roles && <RolesSection roles={claims.roles} />}
       <div
@@ -104,14 +104,14 @@ export const AccountScreen: React.FC = () => {
       <Dialogs />
       <Header />
       {/* <div key="account-screen">{account}</div> */}
-      {transitions.map(({ item, key, props }) =>
+      {transitions.map(({ item, props }) =>
         item ? (
           <animated.div key="account-screen" style={props}>
             {account}
           </animated.div>
         ) : (
-          <React.Fragment key="account-transition-fragment" />
-        ),
+            <React.Fragment key="account-transition-fragment" />
+          ),
       )}
     </>
   );

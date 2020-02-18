@@ -10,7 +10,7 @@ import { Locale } from '@phensley/cldr';
 import { Translation } from 'CartModels';
 
 export const getItemsOfCategory = createSelector<any, any, any, any, any>(
-  [(state, categoryId) => categoryId, state => state.menuItem.all],
+  [(_, categoryId) => categoryId, state => state.menuItem.all],
   (categoryId, itemsMap) => {
     return filter(propEq('menu_category_id', categoryId), values(itemsMap));
   },

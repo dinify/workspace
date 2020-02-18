@@ -1,13 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "./packages",
-    "paths": {
-      "@dinify/common": ["common/src"],
-      "@dinify/app": ["app/src"],
-      "@dinify/dashboard": ["dashboard/src"],
-      "@dinify/waiterboard": ["waiterboard/src"],
-      "@dinify/*": ["*/src"]
-    },
     "outDir": "dist/", // target for compiled files
     "allowSyntheticDefaultImports": true, // no errors with commonjs modules interop
     "esModuleInterop": true, // enable to do "import React ..." instead of "import * as React ..."
@@ -20,9 +13,14 @@
     "importHelpers": true, // importing transpilation helpers from tslib
     "noEmitHelpers": true, // disable inline transpilation helpers in each file
     "jsx": "preserve", // preserving JSX
-    "lib": ["dom", "es2017"], // you will need to include polyfills for es2017 manually
+    "lib": [
+      "dom",
+      "es2017"
+    ], // you will need to include polyfills for es2017 manually
     "skipLibCheck": true,
-    "types": ["jest"], // which global types to use
+    "types": [
+      "jest"
+    ], // which global types to use
     "target": "es5", // "es2015" for ES6+ engines
     "module": "esnext", // "es2015" for tree-shaking
     "moduleResolution": "node",
@@ -37,5 +35,4 @@
     "removeComments": true,
     "sourceMap": true
   }
-
 }

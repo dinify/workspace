@@ -29,13 +29,13 @@ import * as API from '@dinify/common/src/api/v2/restaurant';
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import keys from 'ramda/es/keys';
 import values from 'ramda/es/values';
-import { actions as _uiActions} from '../../models/ui';
+import { actions as _uiActions } from 'models/ui';
 import { TFunction } from '@dinify/common/src/lib/i18n/translations';
 
 // const keyedPropsOfList = (keyProp: string, valProp: string) =>
 // (list: any[]) => zipObj(pluck(keyProp)(list), pluck(valProp)(list));
 
-const getCartEpic: Epic = (action$, state$) =>
+const getCartEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(fetchCartAsync.request)),
     switchMap(action =>

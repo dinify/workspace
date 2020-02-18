@@ -12,7 +12,7 @@ type Action = ActionType<typeof actions>;
 
 export const all = createReducer<RestaurantMap, Action>({})
 
-  .handleAction(actions.fetchRestaurantsAsync.success, (state, action) => {
+  .handleAction(actions.fetchRestaurantsAsync.success, (_, action) => {
     const restaurants: Restaurant[] = action.payload;
     return ListToMap(restaurants);
   })
@@ -44,7 +44,7 @@ export const all = createReducer<RestaurantMap, Action>({})
 
 
 export const checkedInRestaurant = createReducer(null)
-  .handleAction(actions.fetchStatusAsync.success, (state, action) => {
+  .handleAction(actions.fetchStatusAsync.success, (_, action) => {
     return action.payload.checkedInRestaurant;
   })
   .handleAction([
@@ -53,7 +53,7 @@ export const checkedInRestaurant = createReducer(null)
   ], () => null);
 
 export const checkinPlan = createReducer(null)
-  .handleAction(actions.planCheckinAction, (state, action): any => {
+  .handleAction(actions.planCheckinAction, (_, action): any => {
     return action.payload;
   })
   .handleAction([
@@ -63,7 +63,7 @@ export const checkinPlan = createReducer(null)
   ], () => null);
 
 export const favorites = createReducer<RestaurantMap, Action>({})
-  .handleAction(actions.fetchFavoriteRestaurantsAsync.success, (state, action) => {
+  .handleAction(actions.fetchFavoriteRestaurantsAsync.success, (_, action) => {
     const restaurants: Restaurant[] = action.payload;
     return ListToMap(restaurants);
   });

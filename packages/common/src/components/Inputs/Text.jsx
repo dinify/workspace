@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { withTheme } from '@material-ui/core/styles';
+import { withTheme } from '@material-ui/styles';
 import ReactDOM from 'react-dom';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
@@ -21,7 +21,7 @@ const Text = props => {
   const isEmpty = (str) => (!str || str.length === 0);
 
   let other = componentProps;
-  if (typeof componentProps === 'function') other = componentProps({value, error});
+  if (typeof componentProps === 'function') other = componentProps({ value, error });
   return (
     <TextField
       key={theme.palette.type} // Rerender on theme change
@@ -35,9 +35,9 @@ const Text = props => {
   );
 };
 
-const NewText = ({componentProps,
-input: { value, onChange, name },
-meta: { touched, error }}) => {
+const NewText = ({ componentProps,
+  input: { value, onChange, name },
+  meta: { touched, error } }) => {
   const { variant, label } = componentProps;
   return variant !== 'outlined' ? <FormControl
     variant={variant}
@@ -53,12 +53,12 @@ meta: { touched, error }}) => {
     />
     <FormHelperText id="text-component-helper">{error}</FormHelperText>
   </FormControl> :
-  <FormControl
-    error={error ? true : false}
-    variant="outlined"
-    aria-describedby="text-component-helper">
+    <FormControl
+      error={error ? true : false}
+      variant="outlined"
+      aria-describedby="text-component-helper">
       <InputLabel
-        ref={node => {labelRef = ReactDOM.findDOMNode(node)}}
+        ref={node => { labelRef = ReactDOM.findDOMNode(node) }}
         htmlFor="text-component-outlined">
         {label}
       </InputLabel>
@@ -71,7 +71,7 @@ meta: { touched, error }}) => {
         {...componentProps}
       />
       <FormHelperText id="text-component-helper">{error}</FormHelperText>
-  </FormControl>;
+    </FormControl>;
 }
 
-export default withTheme()(Text);
+export default withTheme(Text);

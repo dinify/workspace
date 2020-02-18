@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withTheme } from '@material-ui/core/styles';
+import { withTheme } from '@material-ui/styles';
 import { RootState } from 'typesafe-actions';
 import { Translation, OrderItemN } from 'CartModels';
 import Typography from '@material-ui/core/Typography';
@@ -38,7 +38,7 @@ const BillItem: React.FC<BillItemProps> = ({
         backgroundColor: theme.palette.divider,
         overflow: 'hidden'
       }}>
-        <img src={menuItem.images[0] && `${menuItem.images[0].url}=s112-c`} style={{ width: 56, height: 56 }} />
+        <img alt={'Bill item'} src={menuItem.images[0] && `${menuItem.images[0].url}=s112-c`} style={{ width: 56, height: 56 }} />
       </div>
       <div style={{ flex: 1, marginLeft: 16, position: 'relative' }}>
         <div style={{ display: 'flex' }}>
@@ -61,4 +61,4 @@ export default connect(
     orderItem: state.transaction.items[orderItemId],
     menuItems: state.menuItem.all
   })
-)(withTheme()(BillItem));
+)(withTheme(BillItem));

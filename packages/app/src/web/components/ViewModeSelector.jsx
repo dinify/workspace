@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import ToggleButton from './ToggleButton';
 import VerticalSplit from '@material-ui/icons/VerticalSplitRounded';
 import Public from '@material-ui/icons/PublicRounded';

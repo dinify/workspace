@@ -8,11 +8,11 @@ import CreditCard from '@material-ui/icons/CreditCardRounded';
 import Wallet from '@material-ui/icons/AccountBalanceWalletRounded';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
-import Slider from '@material-ui/lab/Slider';
+import Slider from '@material-ui/core/Slider';
 import Price from '@dinify/common/src/components/price';
 import { BillSection } from './bill-section';
-import { initTransactionAsync } from '../../../features/transaction/actions';
-import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
+import { initTransactionAsync } from 'features/transaction/actions';
+import { AppBar, AppBarAction, AppBarTitle } from 'web/components/app-bar';
 const PaymentOptionsDialog = require('@dinify/common/src/components/dialogs/PaymentOptionsDialog')
   .default;
 
@@ -173,7 +173,7 @@ const BillPageComponent: React.FC<BillPageProps> = props => {
           min={0}
           max={50}
           step={1}
-          onChange={(event, val) => setGratitude(val)}
+          onChange={(_, val) => setGratitude(val as number)}
         />
         <div
           style={{

@@ -1,14 +1,13 @@
 import React from 'react';
-
 import { select } from '@dinify/common/src/lib/platform';
-import { Typography } from '../../components/typography'
-import { PropTypes } from '@material-ui/core';
+import { Typography } from 'web/components/typography';
+import { TypographyProps } from '@material-ui/core/Typography';
 
 const AppBarTitle: React.FC<{
   title?: string,
   subtitle?: string,
   style?: React.CSSProperties,
-  color?: PropTypes.Color | 'textPrimary' | 'textSecondary' | 'error',
+  color?: TypographyProps['color'] | 'textPrimary' | 'textSecondary' | 'error',
 }> = ({
   title = '',
   subtitle = '',

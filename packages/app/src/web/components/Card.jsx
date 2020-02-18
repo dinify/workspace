@@ -1,6 +1,6 @@
 import React from 'react';
 import MuiCard from '@material-ui/core/Card';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 
 const styles = theme => ({
   outlined: {

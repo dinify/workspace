@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import { withStateHandlers } from 'recompose';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 
@@ -145,7 +145,7 @@ export default connect(
     cart: null,
     checkedin: state.seat.checkedin,
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
-    restaurant: state.restaurant.checkedInRestaurant ? 
+    restaurant: state.restaurant.checkedInRestaurant ?
       state.restaurant.all[state.restaurant.checkedInRestaurant]
       :
       null,

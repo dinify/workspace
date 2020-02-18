@@ -3,7 +3,7 @@ import times from 'lodash.times';
 import amber from '@material-ui/core/colors/amber';
 import Star from '@material-ui/icons/StarRounded';
 import StarBorder from '@material-ui/icons/StarBorderRounded';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 
 const styles = theme => ({
   dot: {
@@ -54,7 +54,7 @@ const Rating = ({
             <div className={classes.dotFill} style={{
               height: s,
               width: w// rating > i ? s : (i <= Math.ceil(rating) ? ((rating - Math.floor(rating)) * s) : 0)
-            }}/>
+            }} />
           </div>
         );
         const star = (
@@ -71,7 +71,7 @@ const Rating = ({
               top: 0,
               height: s,
               width: s
-            }}/>
+            }} />
             <div style={{
               position: 'absolute',
               top: 0,
@@ -83,7 +83,7 @@ const Rating = ({
                 position: 'absolute',
                 height: s,
                 width: s
-              }}/>
+              }} />
             </div>
           </div>
         );

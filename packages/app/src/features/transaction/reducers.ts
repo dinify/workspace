@@ -13,14 +13,14 @@ const resetActions = [
 ];
 
 export const orders = createReducer({} as OrderNMap)
-  .handleAction(actions.fetchBillAsync.success, (state, action) => {
+  .handleAction(actions.fetchBillAsync.success, (_, action) => {
     return action.payload.entities.orders;
   })
   .handleAction(resetActions, () => ({}));
 
 
 export const orderItemsCount = createReducer(0 as number)
-  .handleAction(actions.fetchBillAsync.success, (state, action) => {
+  .handleAction(actions.fetchBillAsync.success, (_, action) => {
     return action.payload.result.count;
   })
   .handleAction(resetActions, () => 0);
@@ -33,7 +33,7 @@ const defaultSubtotal: Subtotal = {
 }
 
 export const subtotal = createReducer(defaultSubtotal as Subtotal)
-  .handleAction(actions.fetchBillAsync.success, (state, action) => {
+  .handleAction(actions.fetchBillAsync.success, (_, action) => {
     return action.payload.result.subtotal;
   })
   .handleAction(resetActions, () => defaultSubtotal);
@@ -42,9 +42,9 @@ export const subtotal = createReducer(defaultSubtotal as Subtotal)
 const identity = (o: any) => !!o && o !== 'pivotUndefined';
 
 export const items = createReducer({} as OrderItemNMap)
-  .handleAction(actions.fetchBillAsync.success, (state, action) => {
+  .handleAction(actions.fetchBillAsync.success, (_, action) => {
     const orderItems: OrderItemNMap = mapObjIndexed((orderItem: OrderItemN) => {
-      
+
       const { orderAddons, orderExcludes, orderChoices } = orderItem;
       return {
         ...orderItem,

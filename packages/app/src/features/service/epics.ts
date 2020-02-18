@@ -1,6 +1,6 @@
 import { of, from } from 'rxjs';
 import {
-  mergeMap, catchError, map as rxMap, 
+  mergeMap, catchError, map as rxMap,
   // debounceTime 
 } from 'rxjs/operators';
 import { ofType, Epic } from 'redux-observable';
@@ -9,7 +9,7 @@ import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
 import { callServiceAsync, fetchServicesAsync } from './actions';
 import { getType } from 'typesafe-actions';
 
-import { actions as uiActions} from '../../models/ui';
+import { actions as uiActions } from 'models/ui';
 import { TFunction } from '@dinify/common/src/lib/i18n/translations';
 
 const fetchServicesEpic: Epic = (action$) =>
@@ -50,11 +50,12 @@ const callServiceEpic: Epic = (action$) =>
           initAction: action,
           nextActions: [
             uiActions.showSnackbar({
-              message: (t: TFunction) => 'Error'
-            })            
+              message: () => 'Error'
+            })
           ]
         })),
-    )})
+      )
+    })
   );
 
 export default [

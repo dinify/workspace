@@ -2,7 +2,7 @@ import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Favorite from '@material-ui/icons/FavoriteRounded';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorderRounded';
-import { withTheme } from '@material-ui/core/styles';
+import { withTheme } from '@material-ui/styles';
 import { Motion, spring } from 'react-motion';
 
 const FavoriteToggle = ({
@@ -45,4 +45,4 @@ const FavoriteToggle = ({
 
 }
 
-export default withTheme()(FavoriteToggle);
+export default withTheme(FavoriteToggle);

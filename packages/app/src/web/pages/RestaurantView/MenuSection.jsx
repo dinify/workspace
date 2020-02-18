@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import Grid from '@material-ui/core/Grid';
@@ -62,7 +62,7 @@ let MenuSection = ({
   const mobile = FN.isMobile();
   return (
     <div>
-      <Grid container wrap="nowrap" spacing={16}>
+      <Grid container wrap="nowrap" spacing={2}>
         <Grid item>
           <RestaurantMenu className={classes.primary} />
         </Grid>

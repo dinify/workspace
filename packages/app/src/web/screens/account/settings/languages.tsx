@@ -20,9 +20,9 @@ import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { RootState } from 'typesafe-actions';
 import { Locale } from '@phensley/cldr';
-import { Profile } from '../../../../store/root-reducer';
+import { Profile } from 'store/root-reducer';
 import { useHistory } from 'react-router';
-import * as routes from '../../../routes';
+import * as routes from 'web/routes';
 import { useNavigation } from '@dinify/common/src/lib/navigation';
 
 export default () => {

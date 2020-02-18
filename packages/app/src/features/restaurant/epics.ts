@@ -6,7 +6,7 @@ import { getType } from 'typesafe-actions';
 import * as API from '@dinify/common/src/api/v2/restaurant';
 
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
-import { actions as uiActions} from '../../models/ui';
+import { actions as uiActions } from 'models/ui';
 import { TFunction } from '@dinify/common/src/lib/i18n/translations';
 
 const fetchRestaurantsEpic: Epic = (action$) =>
@@ -29,7 +29,7 @@ const fetchRestaurantsEpic: Epic = (action$) =>
 const fetchRestaurantEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(fetchRestaurantAsync.request)),
-    mergeMap((action) => from(API.GetRestaurantById({ 
+    mergeMap((action) => from(API.GetRestaurantById({
       restaurantId: action.payload.subdomain
     })).pipe(
       map((res: any) => {

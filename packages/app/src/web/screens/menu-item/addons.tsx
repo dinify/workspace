@@ -6,8 +6,8 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircle from '@material-ui/icons/AddCircleRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
 import Price from '@dinify/common/src/components/price';
-import { incAddonQty as incAddonQtyAction } from '../../../features/menuItem/actions';
-import { useAddonView } from '../../../features/addon/selectors';
+import { incAddonQty as incAddonQtyAction } from 'features/menuItem/actions';
+import { useAddonView } from 'features/addon/selectors';
 import { useAction } from '@dinify/common/src/lib/util';
 
 export default ({ menuItemId }: { menuItemId: string }) => {
@@ -25,7 +25,7 @@ export default ({ menuItemId }: { menuItemId: string }) => {
           container
           wrap="nowrap"
           style={{ marginTop: 8, alignItems: 'center' }}
-          spacing={16}
+          spacing={2}
         >
           <Grid item>
             <IconButton

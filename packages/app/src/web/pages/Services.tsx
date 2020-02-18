@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from '@dinify/common/src/lib/i18n';
+import { useTranslation, useIntl } from '@dinify/common/src/lib/i18n';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import { closeDialogAction } from 'features/ui/actions.ts';
+import { closeDialogAction } from 'features/ui/actions';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
@@ -13,12 +13,13 @@ import Tab from '@material-ui/core/Tab';
 import Done from '@material-ui/icons/Done';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ServiceCallGraphic from 'web/components/ServiceCallGraphic';
-import { callServiceAsync, fetchServicesAsync } from 'features/service/actions.ts';
-import { relevantServicesList } from 'features/service/selectors.ts';
+import { callServiceAsync, fetchServicesAsync } from 'features/service/actions';
+import { relevantServicesList } from 'features/service/selectors';
 import { Motion, spring } from 'react-motion';
 import filter from 'ramda/es/filter';
-import { getUserLang } from 'features/user/selectors.ts';
-import { getT } from '../../lib/translation.ts';
+import { selectTranslation } from 'features/menuItem/selectors';
+import { Service } from 'ServiceModels';
+import { RootState } from 'typesafe-actions';
 
 const Services = ({
   fetchServices,
@@ -28,22 +29,22 @@ const Services = ({
   call,
   serviceStatuses,
   style,
-  userLang,
   closeDialog
-}) => {
+}: any) => {
 
   const { t } = useTranslation();
   const history = useHistory();
   const [selectedTab, selectTab] = useState(0);
+  const locale = useIntl(ctx => ctx.state.locale);
 
   useEffect(() => {
     fetchServices({
       restaurantId: checkedInRestaurant,
     });
-  }, []);
+  }, [fetchServices, checkedInRestaurant]);
 
 
-  const selectedServicesList = filter(s => {
+  const selectedServicesList = filter((s: Service) => {
     if (selectedTab === 0) return s.type === 'TABLEWARE';
     if (selectedTab === 1) return s.type === 'CONDIMENT';
     return false;
@@ -118,7 +119,7 @@ const Services = ({
             value={selectedTab}
             indicatorColor="primary"
             textColor="primary"
-            onChange={(e, val) => selectTab(val)}
+            onChange={(_, val) => selectTab(val)}
           >
             <Tab label={t('service.types.tableware')} />
             <Tab label={t('service.types.condiments')} />
@@ -126,7 +127,7 @@ const Services = ({
         </div>
       </div>
       <div style={{ marginTop: 16, width: '100%' }}>
-        <Grid container spacing={16}>
+        <Grid container spacing={2}>
           {selectedServicesList.map(service => {
             const status = serviceStatuses[service.id]
               ? serviceStatuses[service.id]
@@ -210,7 +211,7 @@ const Services = ({
                     )}
                   </div>
                   <Typography style={{ marginTop: 8 }}>
-                    {getT(service.translations, userLang)}
+                    {selectTranslation(locale, service.translations)}
                   </Typography>
                 </ButtonBase>
               </Grid>
@@ -242,16 +243,15 @@ const Services = ({
 }
 
 export default connect(
-  state => ({
-    restaurant: state.restaurant.all[state.restaurant.checkedInRestaurant],
+  (state: RootState) => ({
+    restaurant: state.restaurant.all[state.restaurant.checkedInRestaurant || ''],
     checkedInRestaurant: state.restaurant.checkedInRestaurant,
     serviceStatuses: state.service.status,
-    servicesList: relevantServicesList(state),
-    userLang: getUserLang(state),
+    servicesList: relevantServicesList(state)
   }),
   {
     call: callServiceAsync.request,
     fetchServices: fetchServicesAsync.request,
     closeDialog: closeDialogAction,
   },
-)(Services);
+)(Services) as React.FC<any>;

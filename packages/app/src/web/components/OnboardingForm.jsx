@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import Typography from '@material-ui/core/Typography';
@@ -27,10 +27,10 @@ const styles = theme => ({
     alignItems: 'center',
   },
   leftGutter: {
-    marginLeft: theme.spacing.unit * 2,
+    marginLeft: theme.spacing(2),
   },
   googleButton: {
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
     justifyContent: 'start',
   },
   facebookButton: {
@@ -117,7 +117,7 @@ class OnboardingForm extends React.Component {
         </Tabs>
         <div style={{ padding: 24, paddingBottom: 0 }}>
 
-            {/*<div style={{ paddingBottom: 16 }}>
+          {/*<div style={{ paddingBottom: 16 }}>
               <FacebookLogin
                 appId="123605498281814"
                 fields="name,email,gender,birthday"
@@ -200,7 +200,7 @@ class OnboardingForm extends React.Component {
   }
 }
 
-OnboardingForm =  connect(
+OnboardingForm = connect(
   (state) => ({
     loggedUserId: state.user.loggedUserId,
   }),

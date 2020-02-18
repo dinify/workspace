@@ -12,7 +12,7 @@ import { bill } from '../cart/schemas';
 
 
 import { handleEpicAPIError } from '@dinify/common/src/lib/FN';
-import { actions as uiActions} from '../../models/ui';
+import { actions as uiActions } from 'models/ui';
 import { TFunction } from '@dinify/common/src/lib/i18n/translations';
 // const splitEpic = (action$) =>
 //   action$.pipe(
@@ -50,9 +50,9 @@ const getBillEpic: Epic = (action$) =>
   action$.pipe(
     ofType(getType(fetchBillAsync.request)),
     mergeMap((action) => from(API.GetBill()).pipe(
-      rxMap(res => { 
+      rxMap(res => {
         if (!!res && !!res.orders && res.orders.length > 0) {
-          return res; 
+          return res;
         } else {
           throw new Error('Invalid response structure');
         }
@@ -77,7 +77,7 @@ const initTransactionEpic: Epic = (action$) =>
     mergeMap((action) => {
       const { payload: { type, gratuity } } = action;
       const promise = API.InitiateTransaction({ type, gratuity });
-      
+
       return from(promise).pipe(
         mergeMap((res: Transaction) => of(
           initTransactionAsync.success(res),

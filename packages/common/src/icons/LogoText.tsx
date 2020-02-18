@@ -3,7 +3,7 @@ import React from 'react';
 export default ({
   style,
   ...props
-}) => (
+}: { style?: React.CSSProperties }) => (
   <svg style={{
     width: 78,
     marginLeft: -1,

@@ -6,7 +6,7 @@ import createLoadingPlugin from '@rematch/loading';
 
 import { RootAction, RootState, Services } from 'typesafe-actions';
 
-import * as models from '../models';
+import * as models from 'models';
 import { commonReducers } from './root-reducer';
 import rootEpic from './root-epic';
 import services from '../services';

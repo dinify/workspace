@@ -1,36 +1,36 @@
 // @flow
 import React from 'react';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles, withTheme } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 import GoogleLogo from '../icons/GoogleLogo';
 import { useTranslation } from '../lib/i18n';
 
 const styles = theme => ({
   leftGutter: {
-    marginLeft: theme.spacing.unit * 2,
+    marginLeft: theme.spacing(2),
   },
   googleButton: theme.palette.type === 'light' ? {
     ...theme.typography.button2,
     height: 40,
     justifyContent: 'start',
   } : {
-    ...theme.typography.button2,
-    height: 40,
-    justifyContent: 'start',
-    border: '1px solid transparent',
-    color: 'rgba(0, 0, 0, 0.72)',
-    backgroundColor: 'rgba(255, 255, 255, 0.87)',
-    boxShadow: 'none',
-    '&:hover': {
+      ...theme.typography.button2,
+      height: 40,
+      justifyContent: 'start',
+      border: '1px solid transparent',
+      color: 'rgba(0, 0, 0, 0.72)',
+      backgroundColor: 'rgba(255, 255, 255, 0.87)',
       boxShadow: 'none',
+      '&:hover': {
+        boxShadow: 'none',
+      },
+      '&:active': {
+        boxShadow: 'none',
+      },
+      '&:focus': {
+        boxShadow: 'none',
+      },
     },
-    '&:active': {
-      boxShadow: 'none',
-    },
-    '&:focus': {
-      boxShadow: 'none',
-    },
-  },
   uncapitalized: {
     textTransform: 'none',
   },
@@ -55,4 +55,4 @@ const GoogleButton = ({
   );
 }
 
-export default withTheme()(withStyles(styles)(GoogleButton));
+export default withTheme(withStyles(styles)(GoogleButton));

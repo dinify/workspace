@@ -5,20 +5,19 @@ import storage from 'redux-persist/lib/storage';
 import { reducer as formReducer } from 'redux-form';
 import { firebaseReducer } from 'react-redux-firebase';
 import auth from '@dinify/common/src/features/auth/reducers';
-import ui from '../features/ui/reducers';
-import user from '../features/user/reducers';
-import restaurant from '../features/restaurant/reducers';
-import menuCategory from '../features/menuCategory/reducers';
-import menuItem from '../features/menuItem/reducers';
-import booking from '../features/booking/reducers';
-import cart from '../features/cart/reducers';
-import transaction from '../features/transaction/reducers';
-import service from '../features/service/reducers';
-import seat from '../features/seat/reducers';
-import ingredient from '../features/ingredient/reducers';
-import addon from '../features/addon/reducers';
-import option from '../features/option/reducers';
-import router from '../features/router/reducer';
+import ui from 'features/ui/reducers';
+import user from 'features/user/reducers';
+import restaurant from 'features/restaurant/reducers';
+import menuCategory from 'features/menuCategory/reducers';
+import menuItem from 'features/menuItem/reducers';
+import booking from 'features/booking/reducers';
+import cart from 'features/cart/reducers';
+import transaction from 'features/transaction/reducers';
+import service from 'features/service/reducers';
+import ingredient from 'features/ingredient/reducers';
+import addon from 'features/addon/reducers';
+import option from 'features/option/reducers';
+import router from 'features/router/reducer';
 import { LanguageIdType, RegionIdType, CurrencyType } from '@phensley/cldr';
 
 const restaurantPersistConfig = {
@@ -66,7 +65,7 @@ export interface Profile {
   displayCurrency: CurrencyType
 }
 
-const firebaseReducerWrapper = (state: any, action: any) => firebaseReducer<Partial<Profile>>(state, action);
+const firebaseReducerWrapper = (state: any, action: any) => firebaseReducer<any, Partial<Profile>>(state, action);
 
 export const commonReducers = {
   auth,
@@ -79,7 +78,6 @@ export const commonReducers = {
   cart,
   transaction,
   service: persistReducer(servicePersistConfig, service),
-  seat,
   firebase: firebaseReducerWrapper,
   form: formReducer,
   ingredient,

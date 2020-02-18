@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import { Motion, spring } from 'react-motion';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import GoogleButton from '../GoogleButton';
@@ -104,8 +104,8 @@ const Fields = ({
   };
   return (
     <Motion
-      defaultStyle={{x: 1}}
-      style={{x: spring(formOpen ? 0 : 1, animConfig)}}>
+      defaultStyle={{ x: 1 }}
+      style={{ x: spring(formOpen ? 0 : 1, animConfig) }}>
       {style => {
         return (
           <div style={{

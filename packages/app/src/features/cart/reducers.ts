@@ -3,7 +3,8 @@ import { createReducer, createAction } from 'typesafe-actions';
 import { combineReducers } from 'redux';
 import {
   OrderItemNMap,
-  OrderAddonMap, Subtotal, OrderItemN } from 'CartModels';
+  OrderAddonMap, Subtotal, OrderItemN
+} from 'CartModels';
 import dissoc from 'ramda/es/dissoc';
 import mapObjIndexed from 'ramda/es/mapObjIndexed';
 import { actionTypes as fActionTypes } from 'react-redux-firebase';
@@ -17,9 +18,9 @@ export const resetActions = [
 const identity = (o: any) => !!o && o !== 'pivotUndefined';
 
 export const items = createReducer({} as OrderItemNMap)
-  .handleAction(actions.fetchCartAsync.success, (state, action) => {
+  .handleAction(actions.fetchCartAsync.success, (_, action) => {
     const orderItems: OrderItemNMap = mapObjIndexed((orderItem: OrderItemN) => {
-      
+
       const { orderAddons, orderExcludes, orderChoices } = orderItem;
       return {
         ...orderItem,
@@ -44,7 +45,7 @@ export const items = createReducer({} as OrderItemNMap)
 export const orderAddons = createReducer({} as OrderAddonMap)
   .handleAction(
     actions.fetchCartAsync.success,
-    (state, action) => action.payload.entities.orderAddons
+    (_, action) => action.payload.entities.orderAddons
   )
   .handleAction(resetActions, () => ({}));
 
@@ -56,18 +57,18 @@ const defaultSubtotal: Subtotal = {
 }
 export const subtotal = createReducer(defaultSubtotal as Subtotal)
 
-  .handleAction(actions.fetchCartAsync.success, (state, action) => 
+  .handleAction(actions.fetchCartAsync.success, (_, action) =>
     action.payload.result.subtotal
   )
   .handleAction(resetActions, () => defaultSubtotal);
 
-  
+
 export const guestsCart = createReducer(null as any)
 
-  .handleAction(actions.fetchUserCartAsync.success, (state, action) =>
+  .handleAction(actions.fetchUserCartAsync.success, (_, action) =>
     action.payload
   )
-  .handleAction(actions.makeCartDoneAsync.success, (state, action) =>
+  .handleAction(actions.makeCartDoneAsync.success, (state) =>
     ({
       ...state,
       done: true

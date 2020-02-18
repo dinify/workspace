@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import flags from '../icons/flags';
 import Public from '@material-ui/icons/PublicRounded';
 
@@ -19,9 +19,9 @@ const Flag = ({
   ...props
 }) => {
   const flag = flags[country];
-  if (!flag) return <Public style={{ opacity: 0.54 }} {...props}/>;
+  if (!flag) return <Public style={{ opacity: 0.54 }} {...props} />;
   return (
-    <img alt={country} className={classes.root} src={flag} {...props}/>
+    <img alt={country} className={classes.root} src={flag} {...props} />
   );
 };
 

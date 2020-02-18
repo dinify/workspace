@@ -1,13 +1,13 @@
 // @flow
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 import FacebookLogo from '../icons/FacebookLogo';
 import { useTranslation } from '../lib/i18n';
 
 const styles = theme => ({
   leftGutter: {
-    marginLeft: theme.spacing.unit * 2,
+    marginLeft: theme.spacing(2),
   },
   facebookButton: {
     ...theme.typography.button2,

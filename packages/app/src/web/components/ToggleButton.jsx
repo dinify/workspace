@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import classNames from 'classnames';
 
 const styles = theme => ({
   base: {
-    padding: theme.spacing.unit * 1,
+    padding: theme.spacing(1),
     transition: theme.transitions.create('background-color', {
       duration: theme.transitions.duration.shortest,
     }),

@@ -10,7 +10,7 @@ import CashMultiple from '@dinify/common/src/icons/CashMultiple';
 import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { RootState } from 'typesafe-actions';
-import { openDialogAction } from '../../../../features/ui/actions';
+import { openDialogAction } from 'features/ui/actions';
 import { useAction } from '@dinify/common/src/lib/util';
 
 export default () => {

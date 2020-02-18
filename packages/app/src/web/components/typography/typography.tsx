@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { withTheme } from '@material-ui/core/styles';
+import { withTheme } from '@material-ui/styles';
 import MuiTypography, { TypographyProps as MuiTypographyProps } from '@material-ui/core/Typography';
 
 type TypographyProps = Omit<MuiTypographyProps, 'variant'> & {
-  variant?: MuiTypographyProps['variant']|'button2',
+  variant?: MuiTypographyProps['variant'] | 'button2',
   theme?: any,
   style?: any,
 }
@@ -12,8 +12,8 @@ type TypographyProps = Omit<MuiTypographyProps, 'variant'> & {
 const Typography: React.FC<TypographyProps> = ({
   theme,
   style,
-  variant, 
-  children, 
+  variant,
+  children,
   ...otherProps
 }) => {
   const { typography } = theme;
@@ -26,16 +26,16 @@ const Typography: React.FC<TypographyProps> = ({
   else childVariant = variant as MuiTypographyProps['variant'];
 
   return (
-    <MuiTypography 
+    <MuiTypography
       style={{
         ...childStyle,
         ...style
       }}
-      variant={childVariant} 
+      variant={childVariant}
       {...otherProps}>
       {children}
     </MuiTypography>
   );
 }
 
-export default withTheme()(Typography);
+export default withTheme(Typography);

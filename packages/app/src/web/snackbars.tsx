@@ -1,11 +1,11 @@
 import React from 'react';
 import Snackbar, { SnackbarProps } from '@material-ui/core/Snackbar';
 import Grow from '@material-ui/core/Grow';
-import { TResolver } from '../features/ui/actions';
+import { TResolver } from 'features/ui/actions';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { useSelector } from 'react-redux';
 import { RootState } from 'typesafe-actions';
-import { actions as uiActions} from '../models/ui';
+import { actions as uiActions } from 'models/ui';
 import { Button } from '@material-ui/core';
 import toPairs from 'ramda/es/toPairs';
 import { useAction } from '@dinify/common/src/lib/util';
@@ -83,19 +83,3 @@ export default (props: any) => {
     </>
   );
 };
-
-{
-  /* <Snackbar
-      {...defaultProps}
-      {...props}
-      open={!!snackbars['test'] || true}
-      onClose={getHandler('test')}
-      ContentProps={{ 'aria-describedby': 'message-id' }}
-      message={<span id="message-id">Note archived</span>}
-      action={[
-        <Button key="undo" color="primary" size="small" onClick={getHandler('test')}>
-          UNDO
-        </Button>
-      ]}
-    /> */
-}

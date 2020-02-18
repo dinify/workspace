@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { OrderStatus } from 'TransactionModels';
 import { RootState } from 'typesafe-actions';
-import { getOrderItemIdsByStatus } from '../../../features/transaction/selectors';
+import { getOrderItemIdsByStatus } from 'features/transaction/selectors';
 
 import Typography from '@material-ui/core/Typography';
 import BillItem from './bill-item';

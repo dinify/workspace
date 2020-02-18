@@ -8,27 +8,27 @@ import { animated } from 'react-spring';
 import { useSelector } from 'react-redux';
 import Fab from '@material-ui/core/Fab';
 import QRCode from 'qrcode.react';
-import { AppBar, AppBarAction, AppBarTitle } from '../../components/app-bar';
+import { AppBar, AppBarAction, AppBarTitle } from 'web/components/app-bar';
 import { RootState } from 'typesafe-actions';
 
 import { Subtotal } from 'CartModels';
 import { Restaurant } from 'RestaurantModels';
 
-import { orderAsync, fetchCartAsync } from '../../../features/cart/actions';
-import { getOrderItemIds, useCartRestaurant } from '../../../features/cart/selectors';
+import { orderAsync, fetchCartAsync } from 'features/cart/actions';
+import { getOrderItemIds, useCartRestaurant } from 'features/cart/selectors';
 import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 // import MoreVert from '@material-ui/icons/MoreVert';
 
 // import Add from '@material-ui/icons/AddRounded';
 import { Button, Divider } from '@material-ui/core';
-import { Typography } from '../../components/typography'
+import { Typography } from 'web/components/typography'
 import { useAction } from '@dinify/common/src/lib/util';
 import Price from '@dinify/common/src/components/price';
-import { OrderItem } from '../../components/order-item';
+import { OrderItem } from 'web/components/order-item';
 import Switch from '@material-ui/core/Switch';
-import { Profile } from '../../../store/root-reducer';
-import { openDialogAction } from '../../../features/ui/actions';
-import { fetchRestaurantAsync } from '../../../features/restaurant/actions';
+import { Profile } from 'store/root-reducer';
+import { openDialogAction } from 'features/ui/actions';
+import { fetchRestaurantAsync } from 'features/restaurant/actions';
 
 export const CartScreen: React.FC<{
   onClose?: () => void;
@@ -58,7 +58,7 @@ export const CartScreen: React.FC<{
       if (restaurantIdOfCart && (!restaurant || !restaurant.menuLanguages)) {
         fetchRestaurant({ subdomain: restaurantIdOfCart });
       }
-    }, [restaurantIdOfCart]);
+    }, [restaurant, fetchRestaurant, restaurantIdOfCart]);
 
     const fetchCart = useAction(fetchCartAsync.request);
     const toggleDefaultLanguage = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 
 import { Motion, spring } from 'react-motion';
 
@@ -20,12 +20,12 @@ const ContextMenu = ({
   classes,
   open,
   children,
-  onClose = () => {}
+  onClose = () => { }
 }) => {
   return (
     <Motion
-      defaultStyle={{x: 1}}
-      style={{x: spring(open ? 0 : 1)}}>
+      defaultStyle={{ x: 1 }}
+      style={{ x: spring(open ? 0 : 1) }}>
       {style =>
         <div style={{
           position: 'fixed',
@@ -37,7 +37,7 @@ const ContextMenu = ({
         }}>
           <AppBar position="static" color="primary">
             <Toolbar className={classes.toolbar}>
-              <IconButton style={{marginTop: 4, marginBottom: 4}} onClick={onClose} color="inherit" aria-label="Cancel">
+              <IconButton style={{ marginTop: 4, marginBottom: 4 }} onClick={onClose} color="inherit" aria-label="Cancel">
                 <Close />
               </IconButton>
               {children}

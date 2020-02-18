@@ -4,8 +4,8 @@ import { useTranslation } from '@dinify/common/src/lib/i18n';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import AddCircle from '@material-ui/icons/AddCircleRounded';
 import RemoveCircle from '@material-ui/icons/RemoveCircleRounded';
-import { excludeIngredient as excludeIngredientAction } from '../../../features/menuItem/actions';
-import { useIngredientView } from '../../../features/ingredient/selectors';
+import { excludeIngredient as excludeIngredientAction } from 'features/menuItem/actions';
+import { useIngredientView } from 'features/ingredient/selectors';
 import { useAction } from '@dinify/common/src/lib/util';
 
 export default ({ menuItemId }: { menuItemId: string }) => {
@@ -41,7 +41,7 @@ export default ({ menuItemId }: { menuItemId: string }) => {
                 }}
               >
                 <Typography
-                  color={ingredient.excluded ? 'textSecondary' : 'default'}
+                  color={ingredient.excluded ? 'textSecondary' : 'inherit'}
                   style={{
                     flex: 1,
                     textAlign: 'start',
@@ -65,12 +65,12 @@ export default ({ menuItemId }: { menuItemId: string }) => {
                     {ingredient.excluded ? (
                       <AddCircle color="action" />
                     ) : (
-                      <RemoveCircle color="action" />
-                    )}
+                        <RemoveCircle color="action" />
+                      )}
                   </div>
                 ) : (
-                  <div style={{ height: 40 }} />
-                )}
+                    <div style={{ height: 40 }} />
+                  )}
               </div>
             </ButtonBase>
           </div>

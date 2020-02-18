@@ -6,7 +6,7 @@ import {
   closeDialogAction,
   Dialog,
   DialogType,
-} from '../../../../features/ui/actions';
+} from 'features/ui/actions';
 import { useAction } from '@dinify/common/src/lib/util';
 import LogoutDialog from './logout';
 

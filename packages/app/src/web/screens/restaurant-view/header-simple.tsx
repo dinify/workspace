@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBarAction, AppBar } from '../../components/app-bar';
+import { AppBarAction, AppBar } from 'web/components/app-bar';
 import { useHistory } from 'react-router';
 
 const Header: React.SFC<any> = () => {

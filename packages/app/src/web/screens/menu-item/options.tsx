@@ -1,22 +1,23 @@
 import React from 'react';
-import { useOptionView } from '../../../features/option/selectors';
+import { useOptionView } from 'features/option/selectors';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
-import { withStyles, StyleRulesCallback } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Price from '@dinify/common/src/components/price';
-import { selectChoice as selectChoiceAction } from '../../../features/menuItem/actions';
+import { selectChoice as selectChoiceAction } from 'features/menuItem/actions';
 import { useAction } from '@dinify/common/src/lib/util';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
+import { AppTheme } from '@dinify/common/src/theme';
 
-const styles: StyleRulesCallback = theme => ({
+const styles = (theme: AppTheme) => ({
   chipContainer: {
     display: 'flex',
     flexWrap: 'wrap',
   },
   chip: {
-    marginTop: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginTop: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
   chipDifference: {
     display: 'inline-flex',
@@ -44,7 +45,7 @@ const styles: StyleRulesCallback = theme => ({
   },
 });
 
-export default withStyles(styles)(
+export default withStyles(styles as any)(
   ({ classes, menuItemId }: { classes: any; menuItemId: string }) => {
     const options = useOptionView(menuItemId);
     const selectChoice = useAction(selectChoiceAction);
