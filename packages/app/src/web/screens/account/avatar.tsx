@@ -17,8 +17,6 @@ export default ({ user }: { user: User | null }) => {
     transition: 'opacity 100ms',
     opacity: user === null ? 0 : 1,
   };
-
-  console.log(user);
   return (
     <div
       style={{
