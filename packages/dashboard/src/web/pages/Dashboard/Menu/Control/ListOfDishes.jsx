@@ -96,7 +96,7 @@ let CreateItemForm = ({ handleSubmit, categoryName, progress, errorMessage, rese
               name="name"
               component={Text}
               componentProps={{
-                style: {whiteSpace: 'nowrap'},
+                style: { whiteSpace: 'nowrap' },
                 label: `${t('menu.dishOf')} ${categoryName}`,
                 fullWidth: true,
                 InputLabelProps: {
@@ -117,8 +117,8 @@ let CreateItemForm = ({ handleSubmit, categoryName, progress, errorMessage, rese
         {progress === 'ERROR' ? (
           <FormHelperText>{errorMessage}</FormHelperText>
         ) : (
-          ''
-        )}
+            ''
+          )}
       </FormControl>
     </form>
   );
@@ -146,8 +146,8 @@ const SortableItem = SortableElement(
             </IconButton>
           </Tooltip>
         ) : (
-          ''
-        )}
+            ''
+          )}
       </BinContainer>
       <ToggleContainer item>
         <Tooltip
@@ -199,12 +199,12 @@ const ListOfDishes = ({
   lang,
   currency
 }) => {
+  const { t } = useTranslation();
   if (!selectedCategoryId || !categoriesMap[selectedCategoryId]) {
     return <div />;
   }
 
   const categoryName = getT(categoriesMap[selectedCategoryId].translations, lang);
-  const { t } = useTranslation();
   return (
     <div>
       <Card>
@@ -228,7 +228,7 @@ const ListOfDishes = ({
           />
         </CardContent>
       </Card>
-      {menuItemsList.length < 1 && <div style={{margin: '10px 0'}}>
+      {menuItemsList.length < 1 && <div style={{ margin: '10px 0' }}>
         <Typography variant="caption">{t('menu.categoryEmpty')}</Typography>
       </div>}
       <SortableList
@@ -259,10 +259,10 @@ export default connect(
     lang: getDefaultLanguage(state),
     currency: getDefaultCurrency(state)
   }), {
-    updateItem: updateMenuItemAsync.request,
-    createItem: createMenuItemAsync.request,
-    removeItem: removeMenuItemAsync.request,
-    reorderItems: reorderItemsAsync.request,
-    selectFood: selectFoodAction,
-  },
+  updateItem: updateMenuItemAsync.request,
+  createItem: createMenuItemAsync.request,
+  removeItem: removeMenuItemAsync.request,
+  reorderItems: reorderItemsAsync.request,
+  selectFood: selectFoodAction,
+},
 )(ListOfDishes);

@@ -14,8 +14,8 @@ import { useTranslation } from '@dinify/common/src/lib/i18n';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Image = ({ uploadMainImage, restaurant, uploading }) => {
-  if (!restaurant) return <div />;
   const { t } = useTranslation();
+  if (!restaurant) return <div />;
   let imageUrl = '/static/placeholder.png';
   const images = values(restaurant.images);
   if (images.length > 0) {
@@ -54,8 +54,8 @@ const Image = ({ uploadMainImage, restaurant, uploading }) => {
             position: 'absolute',
             left: '100px',
             bottom: '80px'
-          }}/>}
-          <img src={imageUrl} style={{width: 230, borderRadius: '2px', marginTop: 10 }} alt="" />
+          }} />}
+          <img src={imageUrl} style={{ width: 230, borderRadius: '2px', marginTop: 10 }} alt="" />
         </Dropzone>
       </FormBoxBody>
     </FormBox>

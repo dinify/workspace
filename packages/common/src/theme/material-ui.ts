@@ -4,6 +4,7 @@ import { getTypographyVariants } from "./util";
 import { PaletteType } from '@material-ui/core';
 import * as themeLocales from '@material-ui/core/locale';
 import { Locale, LocaleMatcher } from '@phensley/cldr';
+import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 
 const nextVariants = getTypographyVariants({
   map: {
@@ -74,111 +75,114 @@ const spec = [
 
 const localeMatcher = new LocaleMatcher(spec);
 
-// from: https://material.io/design/color/dark-theme.html
-// TODO: desaturate primary color to meet WCAG 4.5:1
-export const getTheme = ({ locale, type = 'light' }: { locale: Locale, type: PaletteType }): AppTheme => {
+export const getThemeOptions = (type: PaletteType = 'light'): ThemeOptions => {
   const dark = type === 'dark';
-
-  const format = (str: string) => str.replace('-', '');
-  const match = format(localeMatcher.match(locale.id).locale.id);
-
-  // console.log(locale.id, match, (themeLocales as any)[match].props);
-  // Rounded corners
-  const shapeBorderRadius = 8;
-  let theme = createMuiTheme(
-    {
-      palette: {
-        type,
-        primary: {
-          light: DinifyRed[600],
-          main: DinifyRed[800],
-          dark: DinifyRed[900],
+  return {
+    palette: {
+      type,
+      primary: {
+        light: DinifyRed[600],
+        main: DinifyRed[800],
+        dark: DinifyRed[900],
+      },
+      text: {
+        primary: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
+        secondary: dark ? 'rgba(255, 255, 255, 0.54)' : 'rgba(0, 0, 0, 0.38)',
+      },
+      background: {
+        paper: dark ? "#1d1d1d" : "#ffffff",
+        default: dark ? "#212121" : "#ffffff"
+      }
+    },
+    shape: {
+      borderRadius: 8
+    },
+    typography: {
+      useNextVariants: true,
+      fontFamily: [
+        'Lato',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+      ...nextVariants
+    },
+    props: {
+      MuiButtonBase: {
+        // TODO: disable ripple on iOS
+        // disableRipple: true,
+      },
+      MuiFilledInput: {
+        disableUnderline: true
+      }
+    },
+    overrides: {
+      MuiButton: {
+        root: {
+          minHeight: 36,
         },
-        text: {
-          primary: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
-          secondary: dark ? 'rgba(255, 255, 255, 0.54)' : 'rgba(0, 0, 0, 0.38)',
-        },
-        background: {
-          paper: dark ? "#1d1d1d" : "#ffffff",
-          default: dark ? "#212121" : "#ffffff"
+        label: {
+          ...nextVariants['button2']
         }
       },
-      shape: {
-        borderRadius: shapeBorderRadius
-      },
-      typography: {
-        useNextVariants: true,
-        fontFamily: [
-          'Lato',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
-          '"Helvetica Neue"',
-          'Arial',
-          'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-        ].join(','),
-        ...nextVariants
-      },
-      props: {
-        MuiButtonBase: {
-          // TODO: disable ripple on iOS
-          // disableRipple: true,
-        },
-        MuiFilledInput: {
-          disableUnderline: true
+      MuiButtonBase: {
+        root: {
+          boxShadow: 'none !important'
         }
       },
-      overrides: {
-        MuiButton: {
-          root: {
-            minHeight: 36,
-          },
-          label: {
-            ...nextVariants['button2']
+      MuiSnackbarContent: {
+        root: {
+          margin: 8,
+          borderRadius: 8
+        }
+      },
+      MuiInputBase: {
+        root: {
+          ...nextVariants['body2'],
+          [`& > input:-webkit-autofill,
+          & > input:-webkit-autofill:hover,
+          & > input:-webkit-autofill:focus`]: {
+            WebkitTextFillColor: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
+            WebkitBoxShadow: `0 0 0px 1000px rgba(0,0,0,0) inset !important`,
+            WebkitTransitionDelay: '99999s',
+            caretColor: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
           }
-        },
-        MuiButtonBase: {
-          root: {
-            boxShadow: 'none !important'
-          }
-        },
-        MuiSnackbarContent: {
-          root: {
-            margin: 8,
-            borderRadius: 8
-          }
-        },
-        MuiInputBase: {
-          root: {
-            ...nextVariants['body2'],
-            [`& > input:-webkit-autofill,
-              & > input:-webkit-autofill:hover,
-              & > input:-webkit-autofill:focus`]: {
-              WebkitTextFillColor: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
-              WebkitBoxShadow: `0 0 0px 1000px rgba(0,0,0,0) inset !important`,
-              WebkitTransitionDelay: '99999s',
-              caretColor: dark ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.72)',
-            }
-          }
-        },
-        MuiInputLabel: {
-          root: nextVariants['caption'] as any,
-          filled: {
-            transform: 'translate(12px, 18px) scale(1.333)',
-            '&$shrink': {
-              transform: 'translate(12px, 10px) scale(1)',
-              '&$marginDense': {
-                transform: 'translate(12px, 7px) scale(1)'
-              }
+        }
+      },
+      MuiInputLabel: {
+        root: nextVariants['caption'] as any,
+        filled: {
+          transform: 'translate(12px, 18px) scale(1.333)',
+          '&$shrink': {
+            transform: 'translate(12px, 10px) scale(1)',
+            '&$marginDense': {
+              transform: 'translate(12px, 7px) scale(1)'
             }
           }
         }
       }
-    },
+    }
+  };
+};
+
+// from: https://material.io/design/color/dark-theme.html
+// TODO: desaturate primary color to meet WCAG 4.5:1
+export const getTheme = ({ locale, type = 'light' }: { locale: Locale, type: PaletteType }): AppTheme => {
+  const dark = type === 'dark';
+  const format = (str: string) => str.replace('-', '');
+  const match = format(localeMatcher.match(locale.id).locale.id);
+
+  const themeOptions = getThemeOptions(type);
+
+  let theme = createMuiTheme(
+    themeOptions,
     (themeLocales as any)[match]
   );
 
