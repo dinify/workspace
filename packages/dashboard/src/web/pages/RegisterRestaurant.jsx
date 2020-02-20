@@ -54,8 +54,7 @@ const createSubdomain = (subdomain) => {
   return subdomain.replace(/\W/g, '').toLowerCase();
 }
 
-const renderSubdomainHelper = (value) => {
-  const { t } = useTranslation();
+const renderSubdomainHelper = (value, t) => {
   let subdomain = <span style={{ color: '#888' }}> {t('fillFieldAbove')}</span>;
   const val = createSubdomain(value);
   if (val !== '') subdomain = val;
@@ -96,7 +95,7 @@ const RegForm = ({ initialValues, onSubmit }) => {
             fullWidth
             margin="normal"
           />
-          {renderSubdomainHelper(values.subdomain)}
+          {renderSubdomainHelper(values.subdomain, t)}
 
           <div style={{height: 20}}></div>
           <Field

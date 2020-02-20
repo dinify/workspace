@@ -199,12 +199,12 @@ const ListOfDishes = ({
   lang,
   currency
 }) => {
+  const { t } = useTranslation();
   if (!selectedCategoryId || !categoriesMap[selectedCategoryId]) {
     return <div />;
   }
-
   const categoryName = getT(categoriesMap[selectedCategoryId].translations, lang);
-  const { t } = useTranslation();
+  
   return (
     <div>
       <Card>

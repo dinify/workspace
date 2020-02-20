@@ -185,8 +185,8 @@ const MapComponent = compose(
 ));
 
 const Location = ({ updateRestaurant, restaurant, address, setFormFields }) => {
-  if (!restaurant) return <div />;
   const { t } = useTranslation();
+  if (!restaurant) return <div />;
   const latitude = Number(restaurant.latitude) || 50.08730075;
   const longitude = Number(restaurant.longitude) || 14.4207852;
   return (
