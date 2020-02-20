@@ -7,7 +7,7 @@ export interface ImageProps {
   alt: string;
   style?: React.CSSProperties;
   className?: string;
-  options?: Partial<ImageURIOptions>;
+  options?: Partial<ImageURIOptions> | false;
 }
 
 /**
@@ -162,7 +162,7 @@ const ImageComponent: React.FC<ImageProps> = ({
   if (options && options.height) options.height *= dppx;
 
   const supportsWebp = supportsWebpSync();
-  const src = getUrl(url, {
+  const src = options === false ? url : getUrl(url, {
     requestWebp: supportsWebp,
     noWebp: !supportsWebp,
     ...options

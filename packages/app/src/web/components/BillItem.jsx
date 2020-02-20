@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { withStyles } from '@material-ui/styles';
+import { withStyles, useTheme } from '@material-ui/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import CheckCircle from '@material-ui/icons/CheckCircleRounded';
@@ -51,133 +51,122 @@ const styles = theme => ({
   }
 });
 
-class BillItem extends React.PureComponent {
+const BillItem = ({
+  classes,
+  padding,
+  item,
+  onClick,
+  seat
+}) => {
+  const rippleRadius = Math.sqrt(56 ** 2 + 56 ** 2);
 
-  render() {
-    const {
-      classes,
-      padding,
-      item,
-      onClick,
-      seat
-    } = this.props;
+  const images = item.menu_item ? FN.MapToList(item.menu_item.images) : [];
 
-    const rippleRadius = Math.sqrt(56 ** 2 + 56 ** 2);
+  const divisor = FN.MapToList(item.owners).length;
+  const foreign = item.initiator !== seat.user_id;
+  const theme = useTheme();
 
-    const images = item.menu_item ? FN.MapToList(item.menu_item.images) : [];
-
-    const divisor = FN.MapToList(item.owners).length;
-    const foreign = item.initiator !== seat.user_id;
-
-    // if (item.menu_item.addons.length || item.menu_item.excludes.length)
-    return (
-      <Motion
-        defaultStyle={{ x: 0 }}
-        style={{ x: spring(item.selected ? 1 : 0, { stiffness: 260, damping: 24 }) }}>
-        {style1 =>
-          <ButtonBase
-            disableRipple
-            onClick={typeof onClick === 'function' ? onClick : null}
-            className={classes.bg}
+  // if (item.menu_item.addons.length || item.menu_item.excludes.length)
+  return (
+    <Motion
+      defaultStyle={{ x: 0 }}
+      style={{ x: spring(item.selected ? 1 : 0, { stiffness: 260, damping: 24 }) }}>
+      {style1 =>
+        <ButtonBase
+          disableRipple
+          onClick={typeof onClick === 'function' ? onClick : null}
+          className={classes.bg}
+          style={{
+            display: 'flex',
+            minWidth: '100%',
+            textAlign: 'start',
+            borderRadius: 4,
+            paddingLeft: padding ? 16 : 0,
+            paddingRight: padding ? 16 : 0,
+            backgroundColor: `rgba(0,0,0,${Math.min(1, 0.06 * style1.x)})`
+          }} >
+          <div
             style={{
+              position: 'relative',
               display: 'flex',
-              minWidth: '100%',
-              textAlign: 'start',
-              borderRadius: 4,
-              paddingLeft: padding ? 16 : 0,
-              paddingRight: padding ? 16 : 0,
-              backgroundColor: `rgba(0,0,0,${Math.min(1, 0.06 * style1.x)})`
-            }} >
-            <div
-              style={{
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                overflow: 'hidden',
-              }}
-              className={`${classes.cartItemImage} ${foreign ? classes.foreignItem : (item.locked ? classes.lockedItem : '')}`}
-              ref={(divElement) => { this.divElement = divElement }}>
-              {images.length > 0 &&
-                <div
-                  className={classes.imageSrc}
-                  style={{
-                    backgroundImage: `url(${images[0].url})`
-                  }}
-                />
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'hidden',
+            }}
+            className={`${classes.cartItemImage} ${foreign ? classes.foreignItem : (item.locked ? classes.lockedItem : '')}`}
+            ref={(divElement) => { this.divElement = divElement }}>
+            {images.length > 0 &&
+              <div
+                className={classes.imageSrc}
+                style={{
+                  backgroundImage: `url(${images[0].url})`
+                }}
+              />
+            }
+            <Motion
+              defaultStyle={{ x: 0 }}
+              style={{ x: spring(item.selected ? 1 : 0, { stiffness: 260, damping: 24 }) }}>
+              {style =>
+                <div style={{
+                  position: 'absolute',
+                  backgroundColor: theme.palette.primary.main,
+                  borderRadius: rippleRadius / 2,
+                  minHeight: rippleRadius,
+                  minWidth: rippleRadius,
+                  opacity: Math.min(1, style.x * 2),
+                  transform: `scale(${Math.max(style.x, 1 / rippleRadius)}, ${Math.max(style.x, 1 / rippleRadius)})`,
+                }} />
               }
-              <Motion
-                defaultStyle={{ x: 0 }}
-                style={{ x: spring(item.selected ? 1 : 0, { stiffness: 260, damping: 24 }) }}>
-                {style =>
-                  <div style={{
-                    position: 'absolute',
-                    backgroundColor: '#c13939',
-                    borderRadius: rippleRadius / 2,
-                    minHeight: rippleRadius,
-                    minWidth: rippleRadius,
-                    opacity: Math.min(1, style.x * 2),
-                    transform: `scale(${Math.max(style.x, 1 / rippleRadius)}, ${Math.max(style.x, 1 / rippleRadius)})`,
-                  }} />
-                }
-              </Motion>
-              <Motion
-                defaultStyle={{ x: 0 }}
-                style={{ x: spring(item.selected ? 1 : 0, { stiffness: 480, damping: item.selected ? 15 : 24 }) }}>
-                {style =>
-                  <div style={{
-                    position: 'absolute',
-                    color: '#fff',
-                    opacity: Math.min(1, style.x),
-                    transform: `translate3d(0,0,0) scale(${style.x}, ${style.x})`,
-                  }}>
-                    <CheckCircle />
-                  </div>
-                }
-              </Motion>
+            </Motion>
+            <Motion
+              defaultStyle={{ x: 0 }}
+              style={{ x: spring(item.selected ? 1 : 0, { stiffness: 480, damping: item.selected ? 15 : 24 }) }}>
+              {style =>
+                <div style={{
+                  position: 'absolute',
+                  color: '#fff',
+                  opacity: Math.min(1, style.x),
+                  transform: `translate3d(0,0,0) scale(${style.x}, ${style.x})`,
+                }}>
+                  <CheckCircle />
+                </div>
+              }
+            </Motion>
+          </div>
+          <div style={{ flex: 1, marginLeft: 16, position: 'relative' }}>
+            <div style={{ display: 'flex', justifyContent: 'start' }}>
+              <Typography style={{ flex: 1, marginRight: 32 }}>
+                {item.menu_item && item.menu_item.name}
+              </Typography>
+              <Typography
+                style={{
+                  alignSelf: 'flex-end',
+                  textDecoration: divisor > 1 ? 'line-through' : 'none',
+                }}
+                color={divisor > 1 ? 'textSecondary' : 'textPrimary'}
+                variant="overline">
+                <Price price={divisor > 1 ? item.orgsubtotal : item.subtotal} />
+              </Typography>
             </div>
-            <div style={{ flex: 1, marginLeft: 16, position: 'relative' }}>
-              <div style={{ display: 'flex', justifyContent: 'start' }}>
-                <Typography style={{ flex: 1, marginRight: 32 }}>
-                  {item.menu_item && item.menu_item.name}
-                </Typography>
-                <Typography
-                  style={{
-                    alignSelf: 'flex-end',
-                    textDecoration: divisor > 1 ? 'line-through' : 'none',
-                  }}
-                  color={divisor > 1 ? 'textSecondary' : 'textPrimary'}
-                  variant="overline">
-                  <Price price={divisor > 1 ? item.orgsubtotal : item.subtotal} />
-                </Typography>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'start' }}>
-                <Typography style={{ flex: 1, marginRight: 32 }} color="textSecondary" variant="caption">
-                  {(() => {
-                    if (divisor === 1) return '';
-                    if (item.locked) return 'Partially paid by others';
-                    return `Split between ${divisor} people`;
-                  })()}
-                </Typography>
-                {divisor > 1 && <Typography
-                  style={{ alignSelf: 'flex-end' }}
-                  variant="overline">
-                  {item && <Price price={item.subtotal} />}
-                </Typography>}
-              </div>
+            <div style={{ display: 'flex', justifyContent: 'start' }}>
+              <Typography style={{ flex: 1, marginRight: 32 }} color="textSecondary" variant="caption">
+                {(() => {
+                  if (divisor === 1) return '';
+                  if (item.locked) return 'Partially paid by others';
+                  return `Split between ${divisor} people`;
+                })()}
+              </Typography>
+              {divisor > 1 && <Typography
+                style={{ alignSelf: 'flex-end' }}
+                variant="overline">
+                {item && <Price price={item.subtotal} />}
+              </Typography>}
             </div>
-          </ButtonBase>
-        }
-      </Motion>
-    )
-  }
-}
-
-BillItem = connect(state => ({
-
-}), {
-  selectBillItem: selectBillItemAction,
-}
-)(BillItem)
+          </div>
+        </ButtonBase>
+      }
+    </Motion>
+  )
+};
 
 export default withStyles(styles)(BillItem);

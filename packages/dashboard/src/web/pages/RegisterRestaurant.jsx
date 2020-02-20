@@ -25,7 +25,7 @@ import {
 } from 'features/restaurant/actions';
 import { useFirebase } from 'react-redux-firebase';
 
-const styles = {
+const styles = theme => ({
   wrapperCard: {
     maxWidth: '500px',
     background: 'rgba(255,255,255,0.07)',
@@ -48,7 +48,7 @@ const styles = {
     background: 'rgba(255,255,255,0.07)',
     borderRadius: '2px'
   }
-};
+});
 
 const createSubdomain = (subdomain) => {
   return subdomain.replace(/\W/g, '').toLowerCase();
@@ -97,7 +97,7 @@ const RegForm = ({ initialValues, onSubmit }) => {
           />
           {renderSubdomainHelper(values.subdomain, t)}
 
-          <div style={{height: 20}}></div>
+          <div style={{ height: 20 }}></div>
           <Field
             name="language"
             component={Select}
@@ -172,22 +172,22 @@ const RegisterRestaurant = (props) => {
             <Typography className={classes.title} variant="h1" align="center" gutterBottom>
               {t('manageTheseRestaurants')}
             </Typography>
-              {managedRestaurants.map((restaurant) => 
-                <Card className={classes.card} key={`r-item-${restaurant.id}`}>
-                  <CardActionArea onClick={() => selectRestaurant({id: restaurant.id})}>
-                    <CardMedia
-                      className={classes.media}
-                      image={Object.keys(restaurant.images).length  ? MapToList(restaurant.images)[0].url : ''}
-                      title={restaurant.name}
-                    />
-                    <CardContent>
-                      <Typography variant="h6" style={{ whiteSpace: 'nowrap', fontSize: 14 }}>
-                        {restaurant.name || 'noname'}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              )}
+            {managedRestaurants.map((restaurant) =>
+              <Card className={classes.card} key={`r-item-${restaurant.id}`}>
+                <CardActionArea onClick={() => selectRestaurant({ id: restaurant.id })}>
+                  <CardMedia
+                    className={classes.media}
+                    image={Object.keys(restaurant.images).length ? MapToList(restaurant.images)[0].url : ''}
+                    title={restaurant.name}
+                  />
+                  <CardContent>
+                    <Typography variant="h6" style={{ whiteSpace: 'nowrap', fontSize: 14 }}>
+                      {restaurant.name || 'noname'}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            )}
           </CardContent>
         </Card>
       }
@@ -205,12 +205,12 @@ const RegisterRestaurant = (props) => {
               currency: fields.currency
             })}
           />
-          <Button 
+          <Button
             onClick={() => firebase.logout()}
             color="default"
             variant="outlined"
             fullWidth
-            style={{marginTop: 20}}
+            style={{ marginTop: 20 }}
           >
             {t('user.logOut')}
           </Button>

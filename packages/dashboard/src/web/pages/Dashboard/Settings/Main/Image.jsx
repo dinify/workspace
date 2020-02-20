@@ -54,8 +54,8 @@ const Image = ({ uploadMainImage, restaurant, uploading }) => {
             position: 'absolute',
             left: '100px',
             bottom: '80px'
-          }}/>}
-          <img src={imageUrl} style={{width: 230, borderRadius: '2px', marginTop: 10 }} alt="" />
+          }} />}
+          <img src={imageUrl} style={{ width: 230, borderRadius: '2px', marginTop: 10 }} alt="" />
         </Dropzone>
       </FormBoxBody>
     </FormBox>

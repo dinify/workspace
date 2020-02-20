@@ -49,11 +49,13 @@ const RestaurantListItem: React.FC<RestaurantListItemProps> = ({ restaurant }) =
         width: '100%',
         WebkitTapHighlightColor: 'transparent',
         WebkitTouchCallout: 'none',
-        WebkitUserSelect: 'none'
+        WebkitUserSelect: 'none',
+        color: 'inherit'
       }}
     >
       <div style={{ width: '100%' }}>
         <Aspect style={{
+          marginBottom: 8,
           borderRadius: 4,
           overflow: 'hidden'
         }}>

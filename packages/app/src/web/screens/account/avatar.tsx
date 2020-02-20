@@ -38,7 +38,8 @@ export default ({ user }: { user: User | null }) => {
         <Person style={{ position: 'absolute', width: 56, height: 56 }} />
         {user !== null && user.photoURL && (
           <Image
-            style={{ position: 'absolute', top: 0, ...trans }}
+            options={false}
+            style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, ...trans }}
             url={user.photoURL}
             alt={user.displayName || ''}
           />

@@ -31,26 +31,30 @@ const Main: React.FC = () => {
   // });
 
   return (
-    <div>
-      <ResponsiveContainer>
-        <Typography style={{ paddingTop: 24 }} variant="h5" gutterBottom>
+    <ResponsiveContainer>
+      <div style={{
+        paddingTop: 24,
+        paddingBottom: 24
+      }}>
+        <Typography variant="h5" gutterBottom>
           {t('browse.title')}
         </Typography>
         <Typography
-          style={{ paddingBottom: 24 }}
           variant="caption"
           color="textSecondary"
           gutterBottom
         >
           {t('browse.caption')}
         </Typography>
-        <ResponsiveGrid>
-          {restaurantsList.map(restaurant => (
-            <RestaurantListItem restaurant={restaurant} key={restaurant.id} />
-          ))}
-        </ResponsiveGrid>
-      </ResponsiveContainer>
-    </div>
+      </div>
+      <ResponsiveGrid style={{
+        paddingBottom: 16
+      }}>
+        {restaurantsList.map(restaurant => (
+          <RestaurantListItem restaurant={restaurant} key={restaurant.id} />
+        ))}
+      </ResponsiveGrid>
+    </ResponsiveContainer>
   );
 };
 

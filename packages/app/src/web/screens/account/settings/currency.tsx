@@ -70,8 +70,8 @@ export default () => {
       )}
       {!displayCurrency && (
         <div style={{ padding: '0 24px 16px 24px' }}>
-          <Typography variant="body2">{t('currency.original')}</Typography>
-          <Button onClick={openCurrencyDialog} variant="text" color="primary">
+          <Typography style={{ paddingBottom: 12 }} variant="body2">{t('currency.original')}</Typography>
+          <Button style={{ margin: '0 -8px' }} onClick={openCurrencyDialog} variant="text" color="primary">
             {t('currency.set')}
           </Button>
         </div>

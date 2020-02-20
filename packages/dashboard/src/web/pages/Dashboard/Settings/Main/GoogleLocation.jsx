@@ -10,12 +10,12 @@ import {
   FormBoxBody,
 } from 'web/components/styled/FormBox';
 import {
-	updateRestaurantAsync
+  updateRestaurantAsync
 } from 'features/restaurant/actions';
 import Progress from 'web/components/Progress';
 import PlacesAutocomplete, {
-	geocodeByPlaceId,
-	getLatLng,
+  geocodeByPlaceId,
+  getLatLng,
 } from 'react-places-autocomplete';
 import { compose, withProps } from 'recompose';
 import {
@@ -29,45 +29,45 @@ import { change as setFormFields } from 'redux-form';
 
 
 const addressByPlaceId = (placeId) => new Promise((resolve, reject) => {
-	geocodeByPlaceId(placeId)
-	.then(results => {
-		const result = results[0];
-		if (!result) {
-			resolve(null);
-			return;
-		};
-		getLatLng(result)
-		.then((latlng) => {
-			const addressComponents = result.address_components;
+  geocodeByPlaceId(placeId)
+    .then(results => {
+      const result = results[0];
+      if (!result) {
+        resolve(null);
+        return;
+      };
+      getLatLng(result)
+        .then((latlng) => {
+          const addressComponents = result.address_components;
 
-			let route = find((item) => item.types.includes('route'))(addressComponents);
-			if (route) route = route.short_name;
-	
-			let streetNumber = find((item) => anyPass(
-				['street_number','premise'].map((t) => (types) => includes(t, types))
-			)(item.types))(addressComponents);
-			if (streetNumber) streetNumber = streetNumber.short_name;
-	
-			let city = find((item) => anyPass([
-					'locality',
-					'administrative_area_level_3',
-					'administrative_area_level_2',
-					'administrative_area_level_1'
-				].map((t) => (types) => includes(t, types))
-			)(item.types))(addressComponents);
-			if (city) city = city.short_name;
-	
-			let postalCode = find((item) => item.types.includes('postal_code'))(addressComponents);
-			if (postalCode) postalCode = postalCode.short_name;
-	
-			let country = find((item) => item.types.includes('country'))(addressComponents);
-			if (country) country = country.short_name;
-	
-			resolve({ route, streetNumber, city, postalCode, country, latlng });
-		})
-		.catch(reject);
-	})
-	.catch(reject);
+          let route = find((item) => item.types.includes('route'))(addressComponents);
+          if (route) route = route.short_name;
+
+          let streetNumber = find((item) => anyPass(
+            ['street_number', 'premise'].map((t) => (types) => includes(t, types))
+          )(item.types))(addressComponents);
+          if (streetNumber) streetNumber = streetNumber.short_name;
+
+          let city = find((item) => anyPass([
+            'locality',
+            'administrative_area_level_3',
+            'administrative_area_level_2',
+            'administrative_area_level_1'
+          ].map((t) => (types) => includes(t, types))
+          )(item.types))(addressComponents);
+          if (city) city = city.short_name;
+
+          let postalCode = find((item) => item.types.includes('postal_code'))(addressComponents);
+          if (postalCode) postalCode = postalCode.short_name;
+
+          let country = find((item) => item.types.includes('country'))(addressComponents);
+          if (country) country = country.short_name;
+
+          resolve({ route, streetNumber, city, postalCode, country, latlng });
+        })
+        .catch(reject);
+    })
+    .catch(reject);
 })
 
 class LocationSearchInput extends React.Component {
@@ -75,23 +75,23 @@ class LocationSearchInput extends React.Component {
     super(props);
     this.state = { address: '' };
   }
- 
+
   handleChange = address => {
     this.setState({ address });
   };
- 
+
   handleSelect = (a, placeId) => {
-		const { setMapPosition, setAddress } = this.props;
-		addressByPlaceId(placeId).then((address) => {
-			if (address) {
-				setMapPosition(address.latlng);
-				setAddress(address);
-			}
-		}).catch((error) => console.error(error));
+    const { setMapPosition, setAddress } = this.props;
+    addressByPlaceId(placeId).then((address) => {
+      if (address) {
+        setMapPosition(address.latlng);
+        setAddress(address);
+      }
+    }).catch((error) => console.error(error));
   };
- 
+
   render() {
-		const { t } = this.props;
+    const { t } = this.props;
     return (
       <PlacesAutocomplete
         value={this.state.address}
@@ -100,20 +100,20 @@ class LocationSearchInput extends React.Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-						<TextField 
-							fullWidth
+            <TextField
+              fullWidth
               {...getInputProps({
                 placeholder: t('searchPlaces'),
                 className: 'location-search-input',
-              })}						
-						/>
+              })}
+            />
             <div
-							className="autocomplete-dropdown-container"
-							style={{
-								position: 'absolute', zIndex: 2147483647,
-								boxShadow: '0 1px 4px 0 rgba(0,0,0,0.14)'
-							}}
-						>
+              className="autocomplete-dropdown-container"
+              style={{
+                position: 'absolute', zIndex: 2147483647,
+                boxShadow: '0 1px 4px 0 rgba(0,0,0,0.14)'
+              }}
+            >
               {loading && <div>Loading...</div>}
               {suggestions.map(suggestion => {
                 const className = suggestion.active
@@ -127,7 +127,7 @@ class LocationSearchInput extends React.Component {
                   <div
                     {...getSuggestionItemProps(suggestion, {
                       className,
-                      style: {...style, padding: '10px 5px'},
+                      style: { ...style, padding: '10px 5px' },
                     })}
                   >
                     <span>{suggestion.description}</span>
@@ -161,8 +161,8 @@ const MapComponent = compose(
 )(props => (
   <GoogleMap
     defaultZoom={14}
-		defaultCenter={{ lat: props.latitude, lng: props.longitude }}
-		center={{ lat: props.latitude, lng: props.longitude }}
+    defaultCenter={{ lat: props.latitude, lng: props.longitude }}
+    center={{ lat: props.latitude, lng: props.longitude }}
     defaultOptions={{
       scrollwheel: false,
     }}
@@ -179,7 +179,7 @@ const MapComponent = compose(
         lat: props.latitude,
         lng: props.longitude,
       }}
-      onRightClick={() => {}}
+      onRightClick={() => { }}
     />
   </GoogleMap>
 ));
@@ -196,46 +196,48 @@ const Location = ({ updateRestaurant, restaurant, address, setFormFields }) => {
         <Progress type={'UPDATE_LOCATION'} />
       </FormBoxHead>
       <FormBoxBody>
-				<LocationSearchInput
-					t={t}
-					setAddress={(a) => {
-						if (a.route && a.streetNumber) {
-							setFormFields('settings/address', 'street', `${a.route} ${a.streetNumber}`);
-						}
-						if (a.city) setFormFields('settings/address', 'locality', a.city);
-						if (a.postalCode) setFormFields('settings/address', 'postal_code', a.postalCode);
-					}}
-					setMapPosition={(latlng) =>
-						updateRestaurant({
-							longitude: latlng.lng,
-							latitude: latlng.lat,
-						})
-					}
-				/>
-				<MapComponent
+        <LocationSearchInput
+          t={t}
+          setAddress={(a) => {
+            if (a.route && a.streetNumber) {
+              setFormFields('settings/address', 'street', `${a.route} ${a.streetNumber}`);
+            }
+            if (a.city) setFormFields('settings/address', 'locality', a.city);
+            if (a.postalCode) setFormFields('settings/address', 'postal_code', a.postalCode);
+          }}
+          setMapPosition={(latlng) =>
+            updateRestaurant({
+              longitude: latlng.lng,
+              latitude: latlng.lat,
+            })
+          }
+        />
+        <MapComponent
           updateLocation={updateRestaurant}
           restaurant={restaurant}
           latitude={latitude}
-          longitude={longitude}					
-				/>
+          longitude={longitude}
+        />
         <AddressForm onSubmit={(fields) => updateRestaurant(
-          {address: {
-            business:
-            {
-              street: fields.street,
-              locality: fields.locality, // city
-              postal_code: fields.postal_code,
-              country: 'Czechia',
-              region: 'Prague'
+          {
+            address: {
+              business:
+              {
+                street: fields.street,
+                locality: fields.locality, // city
+                postal_code: fields.postal_code,
+                country: 'Czechia',
+                region: 'Prague'
+              }
             }
-          }}
-        )} initialValues={address} />				
+          }
+        )} initialValues={address} />
       </FormBoxBody>
     </FormBox>
   );
 };
 
 export default connect(null, {
-	updateRestaurant: updateRestaurantAsync.request,
-	setFormFields
+  updateRestaurant: updateRestaurantAsync.request,
+  setFormFields
 })(Location);
