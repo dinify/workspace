@@ -15,7 +15,7 @@ export default ({ menuItemId }: { menuItemId: string }) => {
 
   return (
     <div>
-      <Typography style={{ marginTop: 32 }} color="primary" variant="overline">
+      <Typography color="primary" variant="overline">
         {t('ingredients')}
       </Typography>
       {ingredients.map(ingredient => {

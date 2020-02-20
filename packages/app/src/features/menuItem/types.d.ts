@@ -4,6 +4,7 @@ declare module 'MenuItemsModels' {
   import { Ingredient, IngredientMap } from 'IngredientModels';
   import { Addon, AddonMap } from 'AddonModels';
   import { Choice, Option, OptionMap, ChoiceMap, OptionNMap } from 'OptionModels';
+  import { MenuCategory } from 'MenuCategoriesModels';
 
   export interface MenuItemTranslation extends Translation {
     description: string;
@@ -13,6 +14,7 @@ declare module 'MenuItemsModels' {
     id: string;
     favorite: boolean;
     menuCategoryId: string;
+    menuCategory: MenuCategory;
     published: boolean;
     calories: any;
     precedence: number;

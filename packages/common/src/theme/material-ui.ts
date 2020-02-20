@@ -115,6 +115,9 @@ export const getThemeOptions = (type: PaletteType = 'light'): ThemeOptions => {
       ...nextVariants
     },
     props: {
+      MuiTypography: {
+        variant: 'body2'
+      },
       MuiButtonBase: {
         // TODO: disable ripple on iOS
         // disableRipple: true,

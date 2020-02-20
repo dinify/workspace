@@ -47,8 +47,6 @@ let SignInForm = ({
   env,
   firebase
 }: any) => {
-  console.log(firebase, 'tyvole');
-
   const [dialog, setDialog] = useState<any>(null);
 
   const { t } = useTranslation();

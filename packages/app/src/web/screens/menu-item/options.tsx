@@ -18,19 +18,26 @@ const styles = (theme: AppTheme) => ({
   chip: {
     marginTop: theme.spacing(1),
     marginRight: theme.spacing(1),
+    display: 'flex',
+    alignItems: 'baseline',
+    fontWeight: 500,
   },
   chipDifference: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    width: 'auto',
-    backgroundColor: theme.palette.divider,
+    fontWeight: 400,
     paddingLeft: 12,
     paddingRight: 12,
+    display: 'inline-flex',
+    alignItems: 'center',
+    backgroundColor: theme.palette.divider,
     borderRadius: 16,
+    width: 'auto !important',
+    height: '30px !important',
+    marginLeft: '0px !important',
   },
   selected: {
     backgroundColor: fade(theme.palette.primary.main, 0.12),
     color: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
     '&:hover, &:focus': {
       backgroundColor: fade(theme.palette.primary.main, 0.24),
     },
@@ -52,7 +59,7 @@ export default withStyles(styles as any)(
     const { t } = useTranslation();
     return (
       <>
-        {options.length > 0 && <Typography variant="caption" color="textSecondary" style={{ marginTop: 16 }}>
+        {options.length > 0 && <Typography variant="caption" color="textSecondary">
           {t('cart.requiredChoices')}
         </Typography>}
         {options.map(option => (
@@ -67,6 +74,7 @@ export default withStyles(styles as any)(
             <div className={classes.chipContainer}>
               {option.choices.map(choice => (
                 <Chip
+                  style={{ alignItems: choice.price.amount !== 0 ? 'baseline' : 'center' }}
                   variant="outlined"
                   key={choice.id}
                   avatar={
@@ -76,7 +84,7 @@ export default withStyles(styles as any)(
                       }
                       className={classes.chipDifference}
                     >
-                      <Typography variant="caption">
+                      <Typography style={{ height: 15 }} variant="caption">
                         <Price price={choice.price} />
                       </Typography>
                     </div>

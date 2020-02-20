@@ -16,7 +16,7 @@ export default ({ menuItemId }: { menuItemId: string }) => {
   const addons = useAddonView(menuItemId);
   return (
     <div>
-      <Typography style={{ marginTop: 16 }} color="primary" variant="overline">
+      <Typography color="primary" variant="overline">
         {t('addons')}
       </Typography>
       {addons.map(addon => (

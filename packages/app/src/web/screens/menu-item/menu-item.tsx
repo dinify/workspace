@@ -65,6 +65,8 @@ export const MenuItemScreen = () => {
     history.goBack();
   };
 
+  const loaded = menuItem.menuCategory !== undefined;
+
   // const handleToggleFavorite = () =>
   //   favMenuitem({
   //     fav: !menuItem.favorite,
@@ -105,24 +107,24 @@ export const MenuItemScreen = () => {
         <Grid item xs={12} md={6}>
           {ingredients.length > 0 && (
             <>
-              <Divider style={{ marginTop: 16 }} />
+              <Divider style={{ marginTop: 16, marginBottom: 16 }} />
               <Ingredients menuItemId={menuItem.id} />
             </>
           )}
           {addons.length > 0 && (
             <>
-              <Divider style={{ marginTop: 16 }} />
+              <Divider style={{ marginTop: 16, marginBottom: 16 }} />
               <Addons menuItemId={menuItem.id} />
             </>
           )}
           {options.length > 0 && (
             <>
-              <Divider style={{ marginTop: 16 }} />
+              <Divider style={{ marginTop: 16, marginBottom: 16 }} />
               <Options menuItemId={menuItem.id} />
             </>
           )}
 
-          <Fab
+          {loaded && <Fab
             onClick={handleAddCart}
             style={{ marginTop: 24, marginBottom: 64, width: '100%' }}
             disabled={!canAddCart}
@@ -131,7 +133,7 @@ export const MenuItemScreen = () => {
           >
             <AddShoppingCart style={{ marginRight: 16 }} />
             <span>{t('cart.add')}</span>
-          </Fab>
+          </Fab>}
         </Grid>
       </ResponsiveContainer>
     </div>
