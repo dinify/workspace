@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { withTheme } from '@material-ui/styles';
+import { withTheme } from '@material-ui/core/styles';
 import ReactDOM from 'react-dom';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';

@@ -6,7 +6,7 @@ import match from 'autosuggest-highlight/umd/match';
 import parse from 'autosuggest-highlight/umd/parse';
 
 // material-ui
-import { withTheme } from '@material-ui/styles';
+import { withTheme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';

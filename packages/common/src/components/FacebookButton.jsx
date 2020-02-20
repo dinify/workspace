@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FacebookLogo from '../icons/FacebookLogo';
 import { useTranslation } from '../lib/i18n';

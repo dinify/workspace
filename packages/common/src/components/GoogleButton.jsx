@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { withStyles, withTheme } from '@material-ui/styles';
+import { withStyles, withTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import GoogleLogo from '../icons/GoogleLogo';
 import { useTranslation } from '../lib/i18n';

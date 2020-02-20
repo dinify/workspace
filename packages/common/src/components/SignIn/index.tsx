@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux'
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { Motion, spring } from 'react-motion';
 import queryString from 'query-string';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { Motion, spring } from 'react-motion';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import GoogleButton from '../GoogleButton';

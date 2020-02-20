@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { compose } from 'redux';
 import { withStateHandlers } from 'recompose';
 import { Motion, spring } from 'react-motion';
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { useTranslation } from '../../lib/i18n';
 
 import match from 'autosuggest-highlight/umd/match';

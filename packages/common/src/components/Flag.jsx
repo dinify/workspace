@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import flags from '../icons/flags';
 import Public from '@material-ui/icons/PublicRounded';
 
