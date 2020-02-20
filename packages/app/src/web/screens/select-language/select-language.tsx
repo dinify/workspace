@@ -69,13 +69,13 @@ export default () => {
   }
 
   return <>
-    <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0, borderBottom: 'none' }}>
+    <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0, paddingLeft: 8, borderBottom: 'none' }}>
       <AppBarAction type="back" onClick={handleBack} />
       <AppBarTitle
         title={t('selectLanguage')}
       />
     </AppBar>
-    <div style={{ padding: '72px 24px 0 24px' }}>
+    <div style={{ padding: '64px 24px 0 24px' }}>
       <TextField
         fullWidth
         name={t('search')}
@@ -84,7 +84,7 @@ export default () => {
         value={filter}
         onChange={event => setFilter(event.target.value)} />
     </div>
-    <Divider className="sticky" style={{ top: 56, marginTop: 16 }} />
+    <Divider className="sticky" style={{ top: 48, marginTop: 16 }} />
     <List>
       {filtered.map((lang, i) => {
         let primary = highlightBold(lang.nameNative);
@@ -94,10 +94,10 @@ export default () => {
         if (selectedLanguage) selected = selectedLanguage === lang.id;
         return (
           <ListItem
-            key={i} dense button selected={selected}
+            key={i} button selected={selected}
             style={{ paddingLeft: 24, paddingRight: 24 }}
             onClick={() => setSelectedLanguage(lang.id)}>
-            <ListItemText primary={primary} secondary={secondary} />
+            <ListItemText primaryTypographyProps={{ variant: 'body2' }} secondaryTypographyProps={{ variant: 'caption', style: { display: 'block' } }} primary={primary} secondary={secondary} />
           </ListItem>
         );
       })}
