@@ -37,20 +37,20 @@ import { listOfIngredients } from 'features/ingredient/selectors';
 import { getDefaultLanguage } from 'features/restaurant/selectors';
 
 const allergenNames = [
-  'Cereals containing gluten',
-  'Crustaceans',
-  'Eggs',
-  'Fish',
-  'Peanuts',
-  'Soybeans',
-  'Milk',
-  'Nuts',
-  'Celery',
-  'Mustard',
-  'Sesame seeds',
-  'Sulphur dioxide and sulphites',
-  'Lupin',
-  'Molluscs'
+  { id: 1, name: 'Cereals containing gluten'},
+  { id: 2, name: 'Crustaceans'},
+  { id: 3, name: 'Eggs'},
+  { id: 4, name: 'Fish'},
+  { id: 5, name: 'Peanuts'},
+  { id: 6, name: 'Soybeans'},
+  { id: 7, name: 'Milk'},
+  { id: 8, name: 'Nuts'},
+  { id: 9, name: 'Celery'},
+  { id: 10, name: 'Mustard'},
+  { id: 11, name: 'Sesame seeds'},
+  { id: 12, name: 'Sulphur dioxide and sulphites'},
+  { id: 13, name: 'Lupin'},
+  { id: 14, name: 'Molluscs'},
 ];
 
 let AddIngredientForm = ({ handleSubmit, progress, errorMessage, t, reset }) => {
@@ -116,8 +116,8 @@ const Ingredients = ({
   const [selectedAllergens, setSelectedAllergens] = useState([]);
 
   const openDialog = (id) => {
-    if (ingredients[id] && ingredients[id].alergens) {
-      setSelectedAllergens(ingredients[id].alergens);
+    if (ingredients[id] && !!ingredients[id].allergens) {
+      setSelectedAllergens(ingredients[id].allergens.codes);
     } else {
       setSelectedAllergens([]);
     }
@@ -194,14 +194,14 @@ const Ingredients = ({
             <DialogContentText id="alert-dialog-description">
 
               <List dense>
-                {allergenNames.map((allergenName, i) => (
-                  <ListItem key={allergenName} role={undefined} button onClick={() => selectAllergen(i)}>
+                {allergenNames.map((allergenName) => (
+                  <ListItem key={allergenName.name} role={undefined} button onClick={() => selectAllergen(allergenName.id)}>
                     <Checkbox
-                      checked={selectedAllergens.includes(i)}
+                      checked={selectedAllergens.includes(allergenName.id)}
                       tabIndex={-1}
                       disableRipple
                     />
-                    <ListItemText primary={allergenName} />
+                    <ListItemText primary={allergenName.name} />
                   </ListItem>
                 ))}
               </List>
@@ -210,7 +210,7 @@ const Ingredients = ({
           </DialogContent>
           <DialogActions>
             <Button onClick={() => {
-              updateIngredient({id: editingId, allergens: selectedAllergens});
+              updateIngredient({ id: editingId, allergens: selectedAllergens });
               setEditingId(null);
             }} color="primary" autoFocus>
               {t('save')}

@@ -90,12 +90,12 @@ const updateIngredientEpic: Epic = (action$, state$) =>
       const restaurantId = state$.value.restaurant.selectedRestaurant;
       const body = {
         id,
-        alergens: allergens, // TODO
+        allergens,
         restaurantId,
       };
       return fromPromise(API.UpdateIngredient(body)).pipe(
         rxMap((res: any) => {
-          return updateIngredientAsync.success(res);
+          return updateIngredientAsync.success(payload);
         }),
         catchError(error =>
           handleEpicAPIError({

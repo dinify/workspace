@@ -48,6 +48,11 @@ export default function reducer(state = initialState, action) {
       return assocPath(['all', id, 'excludable'], excludable)(state);
     }
 
+    case getType(updateIngredientAsync.success): {
+      const { id, allergens } = payload;
+      return assocPath(['all', id, 'allergens'], { codes: allergens })(state);
+    }
+
     case getType(removeIngredientAsync.request): {
       const { id } = payload;
       const ingredientObj = state.all[id];
