@@ -73,7 +73,7 @@ const BillPageComponent: React.FC<BillPageProps> = props => {
   }
   return (
     <>
-      <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
+      <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0, height: 56 }}>
         {!splitMode && <AppBarAction type="close" onClick={onClose} />}
         <AppBarTitle
           title={t('bill.title')}

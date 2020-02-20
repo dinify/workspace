@@ -43,7 +43,7 @@ const AppBarTitle: React.FC<{
           <Typography color={color} variant="h6">
             {title}
           </Typography>
-          <Typography color={color} variant="caption">
+          <Typography color={color} variant="caption" style={{ display: 'block' }}>
             {subtitle}
           </Typography>
         </div>

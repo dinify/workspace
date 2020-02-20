@@ -94,18 +94,18 @@ export const CartScreen: React.FC<{
 
     return (
       <div {...otherProps}>
-        <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
+        <AppBar style={{ position: 'fixed', top: 0, left: 0, right: 0, height: 56 }}>
           <AppBarAction style={{ marginRight: 8 }} type="close" onClick={onClose} />
           <AppBarTitle
             title={title}
             subtitle={subtitle}
           />
 
-          <div>
+          <div style={{ textAlign: 'right' }}>
             <Typography variant="caption" color="textSecondary">
               {t('language.default')}
             </Typography>
-            <Typography variant="caption">
+            <Typography variant="caption" style={{ display: 'block' }}>
               {getNativeName(state.locale)}
             </Typography>
           </div>
@@ -167,7 +167,7 @@ export const CartScreen: React.FC<{
             </>
             :
             <div style={{ textAlign: 'center' }}>
-              <Typography style={{ margin: '32px 0 8px 0' }} variant="caption" color="textSecondary">
+              <Typography style={{ display: 'block', margin: '32px 0 8px 0' }} variant="caption" color="textSecondary">
                 {t('cart.scanInstruction')}
               </Typography>
               <QRCode value={orderUrl} />
