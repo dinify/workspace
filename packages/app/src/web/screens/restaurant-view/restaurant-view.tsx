@@ -12,7 +12,7 @@ import RestaurantMenu from '@material-ui/icons/RestaurantMenuRounded';
 import { useTranslation } from '@dinify/common/src/lib/i18n';
 import { getCategoriesBySubdomain } from 'features/menuCategory/selectors';
 import MenuCategory from './menu-category';
-import Header from './header-simple';
+import { HeaderBack } from '../headers';
 import Nav from './nav';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -41,7 +41,7 @@ export default () => {
 
   const images = restaurant ? restaurant.images : [];
   return <>
-    <Header />
+    <HeaderBack />
     <Carousel aspectRatio={match[1]} imageOptions={{ original: true }} style={{
       marginTop: -48,
     }} alt={restaurant && restaurant.name} images={images} />

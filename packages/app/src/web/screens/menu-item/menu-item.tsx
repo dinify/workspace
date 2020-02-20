@@ -25,6 +25,7 @@ import { useOptionView } from 'features/option/selectors';
 import { useAction, useBreakpoints } from '@dinify/common/src/lib/util';
 import { useMenuItemView } from 'features/menuItem/selectors';
 import { Carousel } from 'web/components/carousel';
+import { HeaderBack } from '../headers';
 
 export const MenuItemScreen = () => {
   const clearCustomizations = useAction(clearCustomizationsAction);
@@ -75,8 +76,11 @@ export const MenuItemScreen = () => {
 
   if (!menuItem) return null;
   return (
-    <div>
-      <Carousel aspectRatio={breakpointMatch[1]} alt={menuItem.name} images={menuItem.images} />
+    <>
+      <HeaderBack />
+      <Carousel aspectRatio={breakpointMatch[1]} imageOptions={{ original: true }} style={{
+        marginTop: -48,
+      }} alt={menuItem.name} images={menuItem.images} />
       <ResponsiveContainer style={{ margin: '0 auto' }}>
         <Grid container spacing={2} style={{ marginTop: 16 }}>
           <Grid item xs={12} md={6}>
@@ -136,6 +140,6 @@ export const MenuItemScreen = () => {
           </Fab>}
         </Grid>
       </ResponsiveContainer>
-    </div>
+    </>
   );
 };
