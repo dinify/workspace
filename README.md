@@ -3,7 +3,7 @@
 ## How to get started
 
 ```bash
-git clone git@gitlab.com:tabb/frontend-web/dinify.git
+git clone git@github.com:dinify/workspace.git
 yarn global lerna
 lerna bootstrap
 ```
